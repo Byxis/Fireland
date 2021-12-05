@@ -342,25 +342,4 @@ public class factionManager implements Listener, CommandExecutor  {
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
-	 
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-
-	
-
 }

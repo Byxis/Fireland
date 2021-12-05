@@ -1,0 +1,659 @@
+package fr.byxis.main;
+
+//import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
+import fr.byxis.command.*;
+import fr.byxis.db.DatabaseManager;
+import fr.byxis.event.*;
+import fr.byxis.faction.factionManager;
+import fr.byxis.faction.factionManagerTabCompleter;
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.craftbukkit.v1_17_R1.util.UnsafeList.Itr;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.lang.reflect.Field;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
+
+
+public class Main extends JavaPlugin {
+
+	boolean night = false;
+	boolean day = true;
+	boolean moonPhase = true;
+	
+	public Economy eco;
+	//public WorldGuardPlugin worldGuardPlugin;
+	public ConfigManager cfgm;
+	
+	private DatabaseManager databaseManager;
+	
+	private HashMap<String, UUID> faction;
+	
+	@SuppressWarnings("ConstantConditions")
+	public void enableCommand() {
+		getCommand("speedfly").setExecutor(new speedFly());
+		getCommand("heliport").setExecutor(new menu(this));
+		getCommand("thirst").setExecutor(new thirst(this));
+		getCommand("cure").setExecutor(new infectedPlayer(this));
+		getCommand("infect").setExecutor(new infectedPlayer(this));
+		getCommand("rally").setExecutor(new rally(this));
+		getCommand("shop").setExecutor(new shop(this));
+		getCommand("rename").setExecutor(new rename());
+		getCommand("stack").setExecutor(new stack());
+		getCommand("bank").setExecutor(new bank(this));
+		getCommand("ambientsound").setExecutor(new ambientSound(this));
+		getCommand("n").setExecutor(new nightVision());
+		getCommand("faction").setExecutor(new factionManager(this));
+		getCommand("faction").setTabCompleter(new factionManagerTabCompleter());
+		getCommand("discord").setExecutor(new DiscordCommand());
+	}
+	
+	private void enableEvent() {
+		getServer().getPluginManager().registerEvents(new worldGeneration(), this);
+		getServer().getPluginManager().registerEvents(new menu(this), this);
+		getServer().getPluginManager().registerEvents(new thirst(this), this);
+		getServer().getPluginManager().registerEvents(new infectedPlayer(this), this);
+		getServer().getPluginManager().registerEvents(new doorPass(this), this);
+		getServer().getPluginManager().registerEvents(new shop(this), this);
+		getServer().getPluginManager().registerEvents(new spawn(this), this);
+		getServer().getPluginManager().registerEvents(new bank(this), this);
+		getServer().getPluginManager().registerEvents(new parachute(this), this);
+		getServer().getPluginManager().registerEvents(new craft(), this);
+		getServer().getPluginManager().registerEvents(new villagerInteraction(this), this);
+		getServer().getPluginManager().registerEvents(new playerDeath(this), this);
+		getServer().getPluginManager().registerEvents(new removeBedInteraction(), this);
+		getServer().getPluginManager().registerEvents(new fallDamage(), this);
+		getServer().getPluginManager().registerEvents(new ZombieDetection(this), this);
+		getServer().getPluginManager().registerEvents(new ambientSound(this), this);
+		getServer().getPluginManager().registerEvents(new scoreboardPlayer(this), this);
+		getServer().getPluginManager().registerEvents(new silverfishSilent(), this);
+		getServer().getPluginManager().registerEvents(new RemoveInteractionBlock(), this);
+		getServer().getPluginManager().registerEvents(new stairs(this), this);
+		getServer().getPluginManager().registerEvents(new modifiedInteractionItemstackSize(this), this);
+		getServer().getPluginManager().registerEvents(new chatListener(), this);
+		getServer().getPluginManager().registerEvents(new timeAlive(this), this);
+		getServer().getPluginManager().registerEvents(new worldGuardEvent(this), this);
+		getServer().getPluginManager().registerEvents(new quadListener(this), this);
+		getServer().getPluginManager().registerEvents(new cobwebDamage(), this);
+		getServer().getPluginManager().registerEvents(new join(this), this);
+		getServer().getPluginManager().registerEvents(new NVGoogles(), this);
+		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
+		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
+		{
+			@Override
+			public void onPacketReceiving(PacketEvent event) 
+			{
+				if (event.getPacketType() == PacketType.Play.Client.STEER_VEHICLE) 
+				{
+					Player p = event.getPlayer();
+					PacketContainer packet = event.getPacket();
+					Entity vehicle = p.getVehicle();
+					Location loc = vehicle.getLocation();
+					loc.setY(loc.getY()-0.1);
+					Vector vec = loc.getDirection();
+					
+					if(packet.getFloat().getValues().get(0) != 0)
+					{
+						loc.setYaw(loc.getYaw()+(packet.getFloat().getValues().get(0)*-1));
+						loc.setYaw(0);
+						vehicle.teleport(loc);
+					}
+					vehicle.setVelocity(vec.multiply(packet.getFloat().getValues().get(1)*0.8));
+
+					/*locVehicleDestination.setX(locVehicleDestination.getX()+((packet.getFloat().getValues().get(1)*0.8)));
+					locVehicleDestination.setZ(locVehicleDestination.getZ()+((packet.getFloat().getValues().get(0)*-1*0.8)));
+					
+					moveNextTick(vehicle, locVehicleDestination);
+				}
+			}
+		});*/
+	}
+	
+	public void onLoad() {
+		//ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+	}
+	
+	public void onEnable() {
+		System.out.println("================================");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("   Fireland is now enabled !");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("-");
+		System.out.println(" ");
+		
+		databaseManager = new DatabaseManager();
+		faction = new HashMap<String, UUID>();
+		
+		saveDefaultConfig();
+		loadConfigManager();
+		
+		//worldGuardPlugin = getWorldGuard();
+		
+		final scoreboardPlayer scoreboardPlayerClass;
+		final ambientSound ambientSoundClass;
+		final cobwebDamage cobwebDamageClass;
+		final thirst thirst = null;
+		scoreboardPlayerClass = new scoreboardPlayer(this);
+		ambientSoundClass = new ambientSound(this);
+		cobwebDamageClass = new cobwebDamage();
+		
+		enableCommand();
+		enableEvent();
+		
+		//changeItemsStackSize();
+		dateListener();
+		
+		if(!setupEconomy()) {
+			System.out.println(ChatColor.RED+"You must have vault !");
+			getServer().getPluginManager().disablePlugin(this);
+			return;
+		}
+
+		final FileConfiguration playerDBConfig = cfgm.getPlayerDB();
+		
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				ambientSoundClass.playSound();
+			}
+		}.runTaskTimer(this, 0, 300);
+		
+		new BukkitRunnable() {
+			@SuppressWarnings({ "deprecation" })
+			@Override
+			public void run() {
+				for(Player p : getServer().getOnlinePlayers()) {
+					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
+						
+						float thirst = (float) playerDBConfig.getDouble("thirst."+p.getName());
+						
+						if (thirst <= 0f) {
+							p.setExp(0);
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 80, 0, false, false), true);
+							if(p.getHealth() > 1) {
+								p.damage(1);
+							}
+						}
+					}
+					
+					if(p.getInventory().getHelmet() != null) {
+						if(p.getInventory().getHelmet().getType() == Material.RED_DYE) {
+							p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 80, 2, false, false), true);
+						}
+					}
+				}
+				Server server = getServer();
+				World world = server.getWorld("world");
+				long time = 0;
+				if (world != null) {
+					time = world.getTime();
+				}
+				long days = 0;
+				if (world != null) {
+					days = world.getFullTime()/24000;
+				}
+				long phase= days%8;
+			    
+			    if(time > 12500 && time < 23000 && !day) {
+			    	if(phase == 0 && moonPhase) {
+				    	moonPhase = false;
+				    	if(!getServer().getOnlinePlayers().isEmpty()) {
+				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
+				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a title {\"text\":\" \"}");
+				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"La lune de sang arrive !\",\"bold\":true,\"color\":\"dark_red\"}");
+				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.bloodmoon ambient @a ~ ~ ~ 99999999");
+				    	}
+				    		
+				    }else if (phase != 0) {
+				    	moonPhase = true;
+				    	if(!getServer().getOnlinePlayers().isEmpty()) {
+				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
+				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a title {\"text\":\" \"}");
+				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"La nuit arrive !\",\"bold\":true,\"color\":\"red\"}");
+				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.inception ambient @a ~ ~ ~ 99999999");
+				    	}
+				    	night = false;
+				    	day = true;
+				    }
+			    }
+			    
+			    if ((time > 23000 && day) || (time > 0 && time < 12500 && day)) {
+			    	night = true;
+			    	day = false;
+			    	if(!getServer().getOnlinePlayers().isEmpty()) {
+			    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
+			    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a title {\"text\":\" \"}");
+				    	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"Le soleil se lève !\",\"bold\":true,\"color\":\"gold\"}");
+				    	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.night_passed ambient @a ~ ~ ~ 99999999");
+			    	}
+			    }
+			}
+		}.runTaskTimer(this, 0, 40);
+		
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				for(Player p : getServer().getOnlinePlayers()) {
+					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
+						
+						float thirst = (float) playerDBConfig.getDouble("thirst."+p.getName());
+						
+						if (thirst <= 0f) {
+							p.sendMessage("§8Vous avez soif !");
+						}
+					}
+					
+				}
+				
+			}
+		}.runTaskTimer(this, 0, 400);
+		
+		new BukkitRunnable() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void run() {
+				for(Player p : getServer().getOnlinePlayers()) {
+					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
+						
+						boolean infected = playerDBConfig.getBoolean("infected."+p.getName()+".state");
+						if (infected) {
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 240, 0, false, false), true);
+							int timer = playerDBConfig.getInt("infected."+p.getName()+".time");
+							
+							if(playerDBConfig.getString("infected."+p.getName()+".time") == null) {
+								playerDBConfig.set("infected."+p.getName()+".time", 1);
+							}else {
+								playerDBConfig.set("infected."+p.getName()+".time", playerDBConfig.getInt("infected."+p.getName()+".time")+1);
+							}
+							cfgm.savePlayerDB();
+							if(timer >= 120){
+								p.sendMessage("§8Votre infection a causé votre perte....");
+								p.setHealth(0.0D);
+								
+							}else if(timer == 20 || timer == 40 || timer == 60 || timer == 80) {
+								p.sendMessage("§8Votre infection s'aggrave !");
+								p.damage(3);
+							}else if(timer == 100) {
+								p.sendMessage("§8Votre infection est très grave ! Cherchez vite une seringue !");
+								p.damage(3);
+							}else if(p.getHealth() > 2) {
+								p.damage(2);
+							}
+						}
+					}
+				}
+				
+			}
+		}.runTaskTimer(this, 0, 100);
+		
+		
+		new BukkitRunnable() {
+
+			@SuppressWarnings("deprecation")
+			@Override
+			public void run() {
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					if(playerDBConfig.getBoolean("parachute."+p.getName())) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 5, 2, false, false), true);
+						if(p.getItemInHand().getType() == Material.POPPY) {
+							p.getItemInHand().setType(Material.DANDELION);
+						}
+					}else {
+						if(p.getItemInHand().getType() == Material.DANDELION) {
+							p.getItemInHand().setType(Material.POPPY);
+						}
+					}
+				}
+				
+			}
+			
+		}.runTaskTimer(this, 0, 1);
+		
+		new BukkitRunnable() 
+		{
+
+			@SuppressWarnings("deprecation")
+			@Override
+			public void run() {
+				for(Player p : getServer().getOnlinePlayers()) {
+					cobwebDamageClass.damagePlayerInCobweb(p);
+					playTimePlayerAdd(p);
+					checkDiscretionPoint(p);
+					scoreboardPlayerClass.update(p);
+					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
+						boolean infected = playerDBConfig.getBoolean("infected."+p.getName()+".state");
+						if (infected || p.getHealth() < 6) {
+							//playBorderPackets(p, true);
+							p.playSound(p.getLocation(), "minecraft:entity.player.heartbeat", 1, 1);
+						}
+						else
+						{
+							//playBorderPackets(p, false);
+						}
+						
+						int safezone = cfgm.getPlayerDB().getInt("safezone."+p.getName()+".time");
+						
+						if (safezone > 0)
+						{
+							cfgm.getPlayerDB().set("safezone."+p.getName()+".time", (safezone-1));
+							cfgm.savePlayerDB();
+							
+							if(safezone == 5 || safezone == 10)
+							{
+								p.sendTitle("", "§cIl vous reste "+safezone+" secondes d'invincibilité");
+							}
+						}
+						else
+						{
+							if(safezone == 0)
+							{
+								cfgm.getPlayerDB().set("safezone."+p.getName()+".time", -1);
+								cfgm.savePlayerDB();
+								p.setInvulnerable(false);
+							}
+						}
+						
+					}
+					else
+					{
+						//playBorderPackets(p, false);
+					}
+				}
+				
+			}
+			
+		}.runTaskTimer(this, 0, 20);
+
+		new BukkitRunnable(){
+			@Override
+			public void run() {
+				for(Player p : getServer().getOnlinePlayers())
+				{
+					Location from = p.getLocation();
+					//thirst.updateThirst(from, p);
+				}
+			}
+		}.runTaskTimer(this, 0, 10);
+		System.out.println(" ");
+		System.out.println("================================");
+	}
+
+	public void onDisable() {
+		System.out.println("================================");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("   Fireland is now disabled !");
+		this.databaseManager.close();
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("================================");		
+	}
+	
+	/*void moveNextTick(Entity ent, Location loc)
+	{
+	    ent.setVelocity(loc.subtract(ent.getLocation()).toVector());
+	}*/
+	
+	
+	@SuppressWarnings("unused")
+	private void changeItemsStackSize()
+	{
+		modifyStackSize(Material.PUMPKIN_SEEDS, 4);
+		modifyStackSize(Material.MELON_SEEDS, 4);
+		modifyStackSize(Material.GOLD_NUGGET, 4);
+		modifyStackSize(Material.PURPLE_DYE, 4);
+		modifyStackSize(Material.GRAY_DYE, 4);
+		modifyStackSize(Material.PINK_DYE, 4);
+		modifyStackSize(Material.LIGHT_BLUE_DYE, 4);
+		modifyStackSize(Material.INK_SAC, 4);
+		modifyStackSize(Material.LAPIS_LAZULI, 4);
+		modifyStackSize(Material.BLUE_DYE, 4);
+		modifyStackSize(Material.ORANGE_DYE, 4);
+		modifyStackSize(Material.LIME_DYE, 4);
+		modifyStackSize(Material.GREEN_DYE, 4);
+		modifyStackSize(Material.MAGENTA_DYE, 4);
+		modifyStackSize(Material.STICK, 4);
+		modifyStackSize(Material.YELLOW_DYE, 4);
+		modifyStackSize(Material.BRICK, 4);
+		modifyStackSize(Material.BROWN_DYE, 4);
+		modifyStackSize(Material.CHARCOAL, 12);
+		modifyStackSize(Material.BEETROOT_SEEDS, 32);
+		modifyStackSize(Material.LIGHT_GRAY_DYE, 4);
+		modifyStackSize(Material.MELON_SEEDS, 4);
+		modifyStackSize(Material.IRON_NUGGET, 4);
+		modifyStackSize(Material.CYAN_DYE, 32);
+		modifyStackSize(Material.SLIME_BALL, 4);
+	}
+	
+	private void dateListener()
+	{
+		Date now = new Date();
+		@SuppressWarnings("deprecation")
+		int today = now.getDate();
+		int old = cfgm.getEnderchest().getInt("date");
+		
+		
+		if(today != old)
+		{
+			cfgm.getEnderchest().set("date", today);
+			cfgm.saveEnderchest();
+			for(String s : cfgm.getEnderchest().getConfigurationSection("bank").getKeys(true))
+			{
+				if(cfgm.getEnderchest().getInt("bank."+s+".money") > 0)
+				{
+					if(cfgm.getEnderchest().getInt("bank."+s+".money") <= 50)
+					{
+						cfgm.getEnderchest().set("bank."+s+".money", 0);
+					}
+					else
+					{
+						cfgm.getEnderchest().set("bank."+s+".money", cfgm.getEnderchest().getInt("bank."+s+".money")-50);
+					}
+				}
+				else
+				{
+					cfgm.getEnderchest().set(s, null);
+				}
+				cfgm.saveEnderchest();
+			}
+		}
+	}
+	
+	public DatabaseManager getDatabaseManager()
+	{
+		return databaseManager;
+	}
+	
+	public HashMap<String, UUID> getFaction()
+	{
+		return faction;
+	}
+	
+	private boolean setupEconomy() {
+		RegisteredServiceProvider<Economy> economy = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+		if(economy != null) {
+			eco = economy.getProvider();
+		}
+		return(eco != null);
+		
+	}
+	
+	public void loadConfigManager()
+	{
+		cfgm = new ConfigManager();
+		cfgm.setup();
+	}
+	
+	public void commandExecutor(Player p, String cmd, String perm) 
+	{
+		HashMap<UUID, PermissionAttachment> perms = new HashMap<UUID, PermissionAttachment>();
+		
+		PermissionAttachment attachment = p.addAttachment(this);
+		perms.put(p.getUniqueId(), attachment);
+		
+		PermissionAttachment permissions = perms.get(p.getUniqueId());
+		
+		try
+		{
+			permissions.setPermission(perm, true);
+		    Bukkit.dispatchCommand(p, cmd);
+		}
+		catch(Exception e1)
+		{
+		    e1.printStackTrace();
+		}
+		finally
+		{
+			perms.get(p.getUniqueId()).unsetPermission(perm);
+		}
+	}
+	
+	public void modifyStackSize(Material mat, int size)
+	{
+		try {
+            Field f = Itr.class.getDeclaredField("OverStackSize");
+            f.setAccessible(true);
+            f.setInt(mat, size);
+        } catch (Exception e) {
+            e.printStackTrace();
+		}
+	}
+	
+	/*public boolean modifyStackSize(Material material, int size, boolean log) {
+        // Verify that the material is an item (that can be stored in an inventory).
+        if (!material.isItem()) {
+            this.getLogger().warning(String.format("%s is not an item.", material.name()));
+            return false;
+        }
+        // Do nothing if the stack size is already correct.
+        if (material.getMaxStackSize() == size) {
+            if (log) {
+                this.getLogger().info(String.format("%s already has maximum stack size %d.", material.name(), size));
+            }
+            return true;
+        }
+        
+        try {
+            // Get the server package version.
+            // In 1.14, the package that the server class CraftServer is in, is called "org.bukkit.craftbukkit.v1_14_R1".
+            String packageVersion = this.getServer().getClass().getPackage().getName().split("\\.")[3];
+            // Convert a Material into its corresponding Item by using the getItem method on the Material.
+            Class<?> magicClass = Class.forName("org.bukkit.craftbukkit." + packageVersion + ".util.CraftMagicNumbers");
+            Method method = magicClass.getDeclaredMethod("getItem", Material.class);
+            Object item = method.invoke(null, material);
+            // Get the maxItemStack field in Item and change it.
+            Class<?> itemClass = Class.forName("net.minecraft.server." + packageVersion + ".Item");
+            Field field = itemClass.getDeclaredField("maxStackSize");
+            field.setAccessible(true);
+            field.setInt(item, size);
+            // Change the maxStack field in the Material.
+            Field mf = Material.class.getDeclaredField("maxStack");
+            mf.setAccessible(true);
+            mf.setInt(material, size);
+            if (log) {
+                this.getLogger().info(String.format("Applied a maximum stack size of %d to %s.", size, material.name()));
+            }
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            this.getLogger().severe(String.format("Reflection error while modifying maximum stack size of %s.", material.name()));
+            return false;
+        }
+    }*/
+	
+	/*public WorldGuardPlugin getWorldGuard()
+	{
+		Plugin plugin = this.getServer().getPluginManager().getPlugin("WorldGuard");
+		if(!(plugin instanceof WorldGuardPlugin))
+		{
+			return null;
+		}
+		return (WorldGuardPlugin) plugin;
+	}*/
+	
+	private void checkDiscretionPoint(Player player)
+	{
+		double discretion = 100;
+		String sDiscretion = "discretion."+player.getName()+".";
+		
+		//check player movement
+		if(cfgm.getPlayerDB().getBoolean(sDiscretion+"move"))
+		{
+			discretion -= 40;
+			if(player.isSneaking())
+			{
+				discretion += 30;
+			}
+			else 
+			{
+				//check player jump
+				if(cfgm.getPlayerDB().getBoolean(sDiscretion+"jump"))
+				{
+					discretion -= 10;
+				}
+				//check player sprint
+				if(player.isSprinting())
+				{
+					discretion -= 50;
+				}
+			}
+		}
+		//check player noise
+		if(cfgm.getPlayerDB().getBoolean(sDiscretion+"eat"))
+		{
+			discretion -= 15;
+		}
+		
+		if(discretion > 100)
+		{
+			discretion = 100;
+		}
+		
+		cfgm.getPlayerDB().set(sDiscretion+"score", discretion);
+		cfgm.savePlayerDB();
+	}
+	
+	private void playTimePlayerAdd(Player p)
+	{
+		cfgm.getPlayerDB().set("playtime."+p.getName(), cfgm.getPlayerDB().getInt("playtime."+p.getName())+ 1);
+		cfgm.savePlayerDB();
+	}
+	
+	/*private void playBorderPackets(Player player, boolean warn)
+	{
+
+		@SuppressWarnings("deprecation")
+		PacketContainer container = new PacketContainer(PacketType.Play.Server.WORLD_BORDER);
+		
+		if(warn)
+		{
+			container.getWorldBorderActions().write(0, WorldBorderAction.SET_WARNING_BLOCKS);
+	        container.getWorldBorderActions().writeDefaults();
+	        container.getIntegers().write(0, 29999984);
+			try {
+			    protocolManager.sendServerPacket(player, container);
+			} catch (InvocationTargetException e) {
+			}
+		}
+		else
+		{
+			player.getWorld().getWorldBorder().setWarningDistance(player.getWorld().getWorldBorder().getWarningDistance());
+            player.getWorld().getWorldBorder().setSize(player.getWorld().getWorldBorder().getSize());
+            player.getWorld().getWorldBorder().setCenter(player.getWorld().getWorldBorder().getCenter().getX(), player.getWorld().getWorldBorder().getCenter().getZ());
+		}
+
+	}*/
+}

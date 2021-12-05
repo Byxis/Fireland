@@ -1,0 +1,169 @@
+package fr.byxis.event;
+
+import fr.byxis.main.Main;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.inventory.ItemStack;
+
+public class thirst implements Listener,CommandExecutor {
+	
+	private Main main;
+	
+	public thirst(Main main) {
+		this.main = main;
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
+		
+		if(sender instanceof Player) {
+			if(cmd.getName().equalsIgnoreCase("thirst")) {
+				Player p = (Player) sender;
+				FileConfiguration config = main.cfgm.getPlayerDB();
+				Float thirst = (float) config.getDouble("thirst."+p.getName());
+				
+				if(args.length == 0) {
+					if(config.getString("thirst."+p.getName()) == null) {
+						config.set("thirst."+p.getName(), 100);
+						main.cfgm.savePlayerDB();
+						return true;
+					} else {
+						thirst = 100f;
+						config.set("thirst."+p.getName(), thirst);
+						main.cfgm.savePlayerDB();
+						p.setExp(thirst*0.01f);
+						return true;
+					}
+				}else if(args.length == 1){
+					if(Float.parseFloat(args[0]) < 0 || Float.parseFloat(args[0]) > 100) {
+						p.sendMessage("§cLa valeur entrée doit être comprise entre 0 et 100 !");
+						return true;
+					}else {
+						if(config.getString("thirst."+p.getName()) == null) {
+							config.set("thirst."+p.getName(), args[0]);
+							main.cfgm.savePlayerDB();
+							return true;
+						} else {
+							thirst = Float.parseFloat(args[0]);
+							config.set("thirst."+p.getName(), thirst);
+							main.cfgm.savePlayerDB();
+							p.setExp(thirst*0.01f);
+							return true;
+						}
+					}
+				} else if(args.length == 2) {
+					String playerData = "thirst."+args[0];
+					config.set(playerData, Integer.valueOf(args[1]));
+					main.cfgm.savePlayerDB();
+					p.setExp(Integer.valueOf(args[1]) *0.01f);
+					return true;
+					
+				}else {
+					p.sendMessage("§cMauvaise formulation de la commande ! (/thirst [player] [nombre]");
+				}
+			}
+		}
+		return false;
+	}
+	
+	@EventHandler
+	public void onPlayerfirstJoin(PlayerLoginEvent  e) 
+	{
+		Player p = e.getPlayer();
+		if(!p.hasPlayedBefore())
+		{
+			 main.cfgm.getPlayerDB().set("thirst."+p.getName(), 100);
+			 main.cfgm.savePlayerDB();
+		}
+	}
+	
+    @EventHandler
+    public void onPlayerRegainHealth(EntityRegainHealthEvent event) {
+        if(event.getRegainReason() == RegainReason.SATIATED ) {
+        	Entity entity = event.getEntity();
+    		FileConfiguration config = main.cfgm.getPlayerDB();
+    		
+    		Float thirst = (float) config.getDouble("thirst."+entity.getName());
+    		
+    		if(config.getString("thirst."+entity.getName()) == null) {
+    			return;
+    		} else {
+    			if (thirst <= 10) {
+    				event.setCancelled(true);
+    				return;
+    			} 
+    		}
+        }
+    }
+	
+	@SuppressWarnings({ "deprecation" })
+	@EventHandler
+	public void playerDrink(PlayerItemConsumeEvent e) {
+		Player p = e.getPlayer();
+		FileConfiguration config = main.cfgm.getPlayerDB();
+		ItemStack i = e.getItem();
+		
+		Float thirst = (float) config.getDouble("thirst."+p.getName());
+		
+		if((i.getType() == Material.POTION && e.getItem().getDurability() == 0)) {
+			if(config.getString("thirst."+p.getName()) != null && config.getInt("thirst."+p.getName()) <= 75) {
+				config.set("thirst."+p.getName(), config.getDouble("thirst."+p.getName())+25);
+				main.cfgm.savePlayerDB();
+			} else {
+				thirst = 100f;
+				config.set("thirst."+p.getName(), thirst);
+				main.cfgm.savePlayerDB();
+				p.setExp(thirst*0.01f);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void playerDeath(PlayerDeathEvent e) {
+		Player p = e.getEntity().getPlayer();
+		FileConfiguration config = main.cfgm.getPlayerDB();
+		
+		config.set("thirst."+p.getName(), 100);
+		main.cfgm.savePlayerDB();
+		p.setExp(100*0.01f);
+	}
+
+	public void updateThirst(Location from, Player p)
+	{
+		FileConfiguration config = main.cfgm.getPlayerDB();
+		Float thirst = (float) config.getDouble("thirst." + p.getName());
+		if (config.getString("thirst." + p.getName()) == null) {
+			config.set("thirst." + p.getName(), 100);
+			main.cfgm.savePlayerDB();
+			thirst = 100f;
+			p.setExp(thirst * 0.01f);
+
+		} else if (thirst <= 0f) {
+			p.setExp(0);
+		} else {
+			thirst = thirst - 0.005f;
+			config.set("thirst." + p.getName(), thirst);
+			main.cfgm.savePlayerDB();
+			if (thirst * 0.01f > 1) {
+				p.setExp(1);
+			} else if (thirst * 0.01f < 0) {
+				p.setExp(0);
+			} else {
+				p.setExp(thirst * 0.01f);
+			}
+		}
+	}
+}

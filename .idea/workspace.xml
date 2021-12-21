@@ -10,8 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="V2.1">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dependencies.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dependencies.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_17_1_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_17_1_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fireland Le Nouveau.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Fireland Le Nouveau.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/RemoveInteractionBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/RemoveInteractionBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +44,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedIndex" value="1" />
   </component>
@@ -52,8 +60,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
-    <property name="last_opened_file_path" value="F:/Travail/!Te9/Nsi/DM 2/complement_structures_lineaires.py" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/Documents/spigot-1.17.1" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15429688" />
     <property name="project.structure.side.proportion" value="0.40114942" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />

@@ -17,10 +17,12 @@ public class RemoveInteractionBlock implements Listener {
 		}
 		if ((e.getClickedBlock().getType() == Material.GRINDSTONE ||
 				e.getClickedBlock().getType() == Material.JUKEBOX ||
-				e.getClickedBlock().getType() == Material.ENCHANTING_TABLE
+				e.getClickedBlock().getType() == Material.ENCHANTING_TABLE ||
+				e.getClickedBlock().getType() == Material.ANVIL
 		) && e.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{
 			e.setCancelled(true);
 		}
 	}
+
 }

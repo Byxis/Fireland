@@ -2,12 +2,16 @@
   <library name="Dependencies">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../Dependencies" />
+      <root url="file://$USER_HOME$/OneDrive/Documents/spigot-1.17.1" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="file://$PROJECT_DIR$/../Dependencies" />
+      <root url="file://$USER_HOME$/OneDrive/Documents/spigot-1.17.1" />
     </SOURCES>
     <jarDirectory url="file://$PROJECT_DIR$/../Dependencies" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/OneDrive/Documents/spigot-1.17.1" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/../Dependencies" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$USER_HOME$/OneDrive/Documents/spigot-1.17.1" recursive="false" type="SOURCES" />
   </library>
 </component>

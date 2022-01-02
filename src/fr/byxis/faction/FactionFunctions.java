@@ -24,6 +24,14 @@ public class FactionFunctions {
 
 	public void factionInformationSender(Player p, FactionInformation infos, ArrayList<FactionPlayerInformation> players)
 	{
+		/*
+		 * Donne les informations d'une faction au joueur ayant rentré une commande:
+		 * Parameters:
+		 *     - Player p : le joueur qui envoie la requête
+		 *     - Faction Information infos : les informations à propos de la faction
+		 * 	   - ArrayList<FactionPlayerInformation> players : les informations des joueurs qui sont dans la faction.
+		 */
+
 		String leader = null;
 		StringBuilder mod = new StringBuilder();
 		StringBuilder members = new StringBuilder();
@@ -95,6 +103,15 @@ public class FactionFunctions {
 	}
 	
 	public void InitInviteFaction(Player p, Player invited, String factionName) {
+		/*
+		 * Initialise l'invitation à une faction avec quelques vérifications :
+		 * 	- le joueur invité n'a pas deja été invité précédemment.
+		 * On précise que l'on vérifie si le joueur qui invite appartient bien à une faction et à le droit d'inviter et que le joueuer invité n'a pas de faction dans factionManager
+		 * Parameters:
+		 * 	- Player p : le joueur qui invite
+		 *  - Player invited : le joueur que l'on invite
+		 * 	- String factionName : le nom de la faction
+		 */
 		final UUID uuid = invited.getUniqueId();
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 		

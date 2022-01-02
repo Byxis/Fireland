@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 public class DiscordCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+
         if (commandSender instanceof Player)
         {
             Player p = (Player) commandSender;

@@ -9,6 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import java.util.Objects;
+
 public class factionManager implements Listener, CommandExecutor  {
 	
 	final private Main main;
@@ -48,14 +50,14 @@ public class factionManager implements Listener, CommandExecutor  {
 				{
 					if(!factionFunctions.factionHasMaxPlayer(factionFunctions.playerFactionName(p)))
 					{
-						Player vctm = Bukkit.getPlayer(args[1]);
-						if(vctm == null)
+						Player victim = Bukkit.getPlayer(args[1]);
+						if(victim == null)
 						{
 							p.sendMessage("§cPersonne non trouvée");
 						}
 						else
 						{
-							factionFunctions.InitInviteFaction(p, vctm, info.getFactionName());
+							factionFunctions.InitInviteFaction(p, victim, info.getFactionName());
 						}
 					}
 					else
@@ -211,7 +213,8 @@ public class factionManager implements Listener, CommandExecutor  {
 				p.sendMessage("§aPour l'améliorer, faites §c/faction upgrade yes§a.");
 			}
 		}
-		else if(args[0].equalsIgnoreCase("demote")) {
+		else if(args[0].equalsIgnoreCase("demote"))
+		{
 			if (args.length >= 2)
 			{
 				FactionInformation factionInfo = factionFunctions.getFactionInfo(factionFunctions.playerFactionName(p));
@@ -248,7 +251,7 @@ public class factionManager implements Listener, CommandExecutor  {
 									p.sendMessage("§aLe joueur §d"+victim.getName()+"§a a été rétrograder.");
 									if(victim.isOnline())
 									{
-										victim.getPlayer().sendMessage("§aVous venez être rétrograder de votre faction.");
+										Objects.requireNonNull(victim.getPlayer()).sendMessage("§aVous venez être rétrograder de votre faction.");
 									}
 								}
 								else
@@ -306,7 +309,6 @@ public class factionManager implements Listener, CommandExecutor  {
 									if(args.length >= 3 && args[2].equalsIgnoreCase("yes"))
 									{
 
-
 									}
 									else
 									{
@@ -326,9 +328,7 @@ public class factionManager implements Listener, CommandExecutor  {
 							}
 						}
 					}
-
 				}
-
 			}
 			else
 			{

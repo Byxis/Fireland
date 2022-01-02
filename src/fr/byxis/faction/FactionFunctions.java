@@ -280,38 +280,53 @@ public class FactionFunctions {
 	
 	public void creatingFaction(Player p, String name)
 	{
-		
+		/*
+		* Initialise la création d'une faction avec quelques vérifications :
+		* 	- Le nom de faction est unique
+		* 	- Le joueur qui crée la faction n'est pas dans une faction
+		*
+		* Parameters:
+		* 	- Player p : le joueur qui crée la faction
+		* 	- String name : le nom de la faction
+		*/
+		//Enregistrements des données 
 		final UUID uuid = p.getUniqueId();
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-		
+        
 		try {
+			//Initialisation de la connexion a la bd et de la première requete SQL
 			final Connection connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM faction WHERE name = ?");//AND leader_uuid = ?
-			preparedStatement1.setString(1, name);
-			//preparedStatement.setString(2, uuid.toString());
-			
-			final ResultSet resultSet1 = preparedStatement1.executeQuery();
+			final PreparedStatement verificationFactionWithName = connection.prepareStatement("SELECT name FROM faction WHERE name = ?");//AND leader_uuid = ?
+			verificationFactionWithName.setString(1, name);
+
+			//Réalisation de la requête SQL
+			final ResultSet resultSet1 = verificationFactionWithName.executeQuery();
 			
 			if (resultSet1.next())
 			{
+				//La requête a trouvé une faction qui a ce nom
 				p.sendMessage("§cLe nom de cette faction est déjà pris !");
 			}
 			else
 			{
-				final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT leader_uuid FROM faction WHERE leader_uuid = ?");
-				preparedStatement2.setString(1, uuid.toString());
-				final ResultSet resultSet2 = preparedStatement2.executeQuery();
+				//La requête n'a pas trouvé de faction qui a ce nom, on vérifie donc si le joueur a une faction
+				final PreparedStatement verificationPlayerInFaction = connection.prepareStatement("SELECT player_uuid FROM player_faction WHERE player_uuid = ?");
+				verificationPlayerInFaction.setString(1, uuid.toString());
+				final ResultSet resultSet2 = verificationPlayerInFaction.executeQuery();
 				if(resultSet2.next())
 				{
+					//La requête a trouvé que le joueur a une faction
 					p.sendMessage("§cVous êtes déjà dans une faction !");
 				}
 				else
 				{
+					//La requête a trouvé que le joueur n'a pas de faction, on crée donc la faction
 					createFaction(connection, uuid, name, p);
 				}
 				
 			}
 		} catch (SQLException e) {
+			//Une erreur est survenue (Problème de connexion à la BD)
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F009");
 		}
@@ -320,23 +335,27 @@ public class FactionFunctions {
 	public void createFaction(Connection connection, UUID uuid, String name, Player p)
 	{
 		try {
-			final PreparedStatement preparatedStatement = connection.prepareStatement("INSERT INTO faction (name, leader_uuid, created_at) VALUES (?, ?, ?)");
-			final PreparedStatement preparatedStatementBis = connection.prepareStatement("UPDATE players SET faction_name=?, faction_role=?, faction_joined_at=? WHERE uuid = ?");
+			//On prépare les requêtes SQL
+			final PreparedStatement insertionFaction = connection.prepareStatement("INSERT INTO faction (name, leader_uuid, created_at) VALUES (?, ?, ?)");
+			final PreparedStatement insertionPlayerFaction = connection.prepareStatement("INSERT INTO player_faction VALUES (?,?,?,?)");
 			final long time = System.currentTimeMillis();
-			
-			preparatedStatement.setString(1, name);
-			preparatedStatement.setString(2, uuid.toString());
-			preparatedStatement.setTimestamp(3, new Timestamp(time));
-			preparatedStatementBis.setString(1, name);
-			preparatedStatementBis.setInt(2, 2);
-			preparatedStatementBis.setTimestamp(3, new Timestamp(time));
-			preparatedStatementBis.setString(4, uuid.toString());
-			
-			preparatedStatement.executeUpdate();
-			preparatedStatementBis.executeUpdate();
-			main.getFaction().put(name, uuid);
+
+			//On complète la premiere requête
+			insertionFaction.setString(1, name);
+			insertionFaction.setString(2, uuid.toString());
+			insertionFaction.setTimestamp(3, new Timestamp(time));
+			//On complète la deuxieme requête
+			insertionPlayerFaction.setString(1, p.getUniqueId().toString());
+			insertionPlayerFaction.setString(2, name);
+			insertionPlayerFaction.setTimestamp(3, new Timestamp(time));
+			insertionPlayerFaction.setInt(4, 2);
+
+			//On executes les requetes
+			insertionFaction.executeUpdate();
+			insertionPlayerFaction.executeUpdate();
 			p.sendMessage("§aVous avez créé la faction "+name+" !");
 		} catch (SQLException e) {
+			//Une erreur est survenue (Problème de connexion à la BD)
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F010");
 		}
@@ -409,29 +428,32 @@ public class FactionFunctions {
 
 	public FactionInformation getFactionInfo(String factionName)
 	{
+		//Connection a la base de données
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
 		try {
 			final Connection connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader_uuid FROM faction WHERE name = ?");
-			preparedStatement1.setString(1, factionName);
+			//Préparation de la commande
+			final PreparedStatement requestInfo = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader_uuid FROM faction WHERE name = ?");
+			requestInfo.setString(1, factionName);
 
-			final ResultSet resultSet = preparedStatement1.executeQuery();
+			final ResultSet result = requestInfo.executeQuery();
 
-			if (resultSet.next())
+			//il y a un résultat, donc
+			if (result.next())
 			{
-				int currentUpgrade = resultSet.getInt(1);
-				int currentNbrOfPlayers = resultSet.getInt(2);
-				int currentMoney = resultSet.getInt(3);
+				int currentUpgrade = result.getInt(1);
+				int currentNbrOfPlayers = result.getInt(2);
+				int currentMoney = result.getInt(3);
 				int maxNbrOfPlayers = 4;
-				Timestamp createdAt = resultSet.getTimestamp(4);
+				Timestamp createdAt = result.getTimestamp(4);
 				int maxMoney = 10000;
 				int chestSize = 0;
 
 				if(currentUpgrade == 2){maxNbrOfPlayers = 6;maxMoney=20000;}
 				if(currentUpgrade == 3){maxNbrOfPlayers = 8;maxMoney=40000;chestSize=9;}
 
-				UUID leader = UUID.fromString(resultSet.getString("5"));
+				UUID leader = UUID.fromString(result.getString("5"));
 
 				return new FactionInformation(factionName, currentNbrOfPlayers, maxNbrOfPlayers, currentUpgrade, currentMoney, maxMoney, chestSize, createdAt, leader);
 			}

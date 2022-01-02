@@ -35,16 +35,19 @@ public class FactionFunctions {
 		String leader = null;
 		StringBuilder mod = new StringBuilder();
 		StringBuilder members = new StringBuilder();
+		//Récupération du nom des leaders de la faction
 		for (FactionPlayerInformation player : players) {
+			//Récupération du nom des leaders de la faction
 			if (player.getRole() == 2) {
 				leader = player.getName();
+			//Récupération du nom des modérateurs de la faction
 			} else if (player.getRole() == 1) {
 				if (mod.toString().equals("")) {
 					mod.append("§r").append(player.getName());
 				} else {
 					mod.append("§a, §r").append(player.getName());
 				}
-
+			//Récupération du nom des autres membres de la faction
 			} else if (player.getRole() == 0) {
 				if (members.toString().equals("")) {
 					members.append("§r").append(player.getName());
@@ -53,6 +56,7 @@ public class FactionFunctions {
 				}
 			}
 		}
+		//Envoi du message contenant les informations au joueur
 		p.sendMessage("§a==");
 		p.sendMessage("§aNom: §r"+infos.getName());
 		p.sendMessage("§aDate de création: §r"+infos.getCreatedAt());
@@ -71,26 +75,34 @@ public class FactionFunctions {
 	}
 	
 	public ArrayList<FactionPlayerInformation> getPlayersFromFaction(String factionName)
+		/*
+		 * Crée une liste avec les pseudos et rangs de tout les joueurs appartenant à la faction
+		 * Parameters:
+		 *     - String factionName : le nom de la faction
+		 */
 	{
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-		
+		//On prépare une requete sql
 		try {
 			final Connection connection = firelandConnection.getConnection();
 			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name,faction_role FROM players WHERE faction_name = ?");
 			preparedStatement1.setString(1, factionName);
 			
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-			
+			//On vérifie si il y a un résultat à la requête
 			if (resultSet.next())
 			{
+				//On initialise les variables
 				ArrayList<FactionPlayerInformation> ar = new ArrayList<>();
 				FactionPlayerInformation player = new FactionPlayerInformation(resultSet.getString(1), factionName, (resultSet.getInt(2)));
+				//On ajoutes les joueurs de la faction dans la liste
 				ar.add(player);
 				while(resultSet.next())
 				{
 					player = new FactionPlayerInformation(resultSet.getString(1), factionName, (resultSet.getInt(2)));
 					ar.add(player);
 				}
+				//On renvoie la liste
 				return ar;
 			}
 		} catch (SQLException e) {
@@ -115,12 +127,13 @@ public class FactionFunctions {
 		
 		try {
 			final Connection connection = firelandConnection.getConnection();
-
+			//On prépare la requête sql
 			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT available_time,faction_name FROM invite WHERE player_uuid = ? AND faction_name=?");
 			preparedStatement1.setString(1, uuid.toString());
 			preparedStatement1.setString(2, factionName);
 
 			final ResultSet resultSet = preparedStatement1.executeQuery();
+			//On vérifie si il y a des résultats à la requete
 			if (resultSet.next())
 			{
 				final long time = System.currentTimeMillis();

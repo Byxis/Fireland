@@ -43,9 +43,7 @@ public class FactionFunctions {
 				} else {
 					members.append("§a, §r").append(player.getName());
 				}
-
 			}
-
 		}
 		p.sendMessage("§a==");
 		p.sendMessage("§aNom: §r"+infos.getName());

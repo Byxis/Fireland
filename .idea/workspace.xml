@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Commentaires faction">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Commentaires faction et fix de la supression de faction">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" afterDir="false" />
     </list>
@@ -129,7 +129,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641136038848</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Commentaires faction et fix de la supression de faction">
+      <created>1641139308392</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1641139308392</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -161,7 +168,8 @@
     <MESSAGE value="test" />
     <MESSAGE value="modif de qlq trucs dans les factions" />
     <MESSAGE value="Commentaires faction" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commentaires faction" />
+    <MESSAGE value="Commentaires faction et fix de la supression de faction" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commentaires faction et fix de la supression de faction" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

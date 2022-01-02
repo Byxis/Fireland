@@ -16,7 +16,9 @@ public class FactionFunctions {
 
 	public FactionFunctions(Main main, Player sender)
 	{
+		//Récupération du main, pour pouvoir avoir envoyer des requêtes à la base de données
 		this.main = main;
+		//Récupération de la personne qui envoie la commande, pour lui envoyer les messages d'erreurs
 		this.sender = sender;
 	}
 
@@ -334,6 +336,17 @@ public class FactionFunctions {
 	
 	public void createFaction(Connection connection, UUID uuid, String name, Player p)
 	{
+		/*
+		 * Créer une faction
+		 *
+		 * Parameters:
+		 *  - Connection connection : la connection a la DB (on ne la renouvelle pas car cette méthode est précédée
+		 * 		de initCreateFaction qui a déjà une ocnnection à la DB)
+		 * 	- UUID uuid : l'uuid du leader
+		 * 	- String name : le nom de la faction
+		 * 	- Player p : le joueur qui crée la faction
+		 *
+		 */
 		try {
 			//On prépare les requêtes SQL
 			final PreparedStatement insertionFaction = connection.prepareStatement("INSERT INTO faction (name, leader_uuid, created_at) VALUES (?, ?, ?)");
@@ -360,40 +373,50 @@ public class FactionFunctions {
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F010");
 		}
 	}
-	
-	@SuppressWarnings("unlikely-arg-type")
+
 	public void deleteFaction(Player p)
 	{
+		/*
+		 * Supprime une faction, le joueur p doit etre le chef de la faction
+		 *
+		 * Parameters:
+		 *  - Player p : la personne qui envoie la commande
+		 *
+		 */
 		final UUID uuid = p.getUniqueId();
-		
+
+		//Connection a la bd
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-		Connection connection;
 		try {
-			connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM faction WHERE leader_uuid = ?");
-			preparedStatement1.setString(1, uuid.toString());
-			
-			final PreparedStatement preparedStatement2 = connection.prepareStatement("DELETE FROM faction WHERE leader_uuid = ?");
-			preparedStatement2.setString(1, uuid.toString());
-			
-			final ResultSet resultSet = preparedStatement1.executeQuery();
-			if(resultSet.next())
+			Connection connection = firelandConnection.getConnection();
+			//Préparation de la premiere requete
+			final PreparedStatement getFactionName = connection.prepareStatement("SELECT name FROM faction WHERE leader_uuid = ?");
+			getFactionName.setString(1, uuid.toString());
+
+			final ResultSet resultFactionName = getFactionName.executeQuery();
+			//Check si le joueur est chef d'une faction
+			if(resultFactionName.next())
 			{
-				final PreparedStatement preparatedStatement3 = connection.prepareStatement("UPDATE players SET faction_name=NULL, faction_role=NULL, faction_joined_at=NULL WHERE faction_name = ?");
-				preparatedStatement3.setString(1, resultSet.getString(1));
-				
-				preparedStatement2.executeUpdate();
-				preparatedStatement3.executeUpdate();
+				//Preparations des requetes pour supprimer
+				final PreparedStatement removeFaction = connection.prepareStatement("DELETE FROM faction WHERE leader_uuid = ?");
+				removeFaction.setString(1, uuid.toString());
+				final PreparedStatement removePlayerInFaction = connection.prepareStatement("DELETE FROM player_faction WHERE player_faction = ?");
+				removePlayerInFaction.setString(1, resultFactionName.getString(1));
+
+				//Executions des requetes pour supprimer
+				removeFaction.executeUpdate();
+				removePlayerInFaction.executeUpdate();
 				main.getFaction().remove(main.getFaction().get(uuid));
-				p.sendMessage("§cVous avez supprimé la faction "+resultSet.getString(1)+".");
+				p.sendMessage("§cVous avez supprimé la faction "+resultFactionName.getString(1)+".");
 			}
 			else
 			{
+				//Le joueur n'est soit pas dans une faction, soit pas leader d'une faction
 				p.sendMessage("§cVous ne pouvez pas effectuer cela !");
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			//Une erreur est survenue (Problème de connexion à la BD)
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F011");
 		}
@@ -520,7 +543,13 @@ public class FactionFunctions {
 
 	public boolean factionHasMaxPlayer(String factionName)
 	{
+		//on récupère les informations de la faction
 		FactionInformation infos = getFactionInfo(factionName);
+		//On vérifie que la faction existe, que les données ont été trouvées
+		if (infos == null)
+		{
+			return false;
+		}
 		return !(infos.getCurrentNbrOfPlayers() < infos.getMaxNbrOfPlayers());
 	}
 

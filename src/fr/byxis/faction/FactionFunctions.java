@@ -428,6 +428,12 @@ public class FactionFunctions {
 
 	public FactionInformation getFactionInfo(String factionName)
 	{
+		/*
+		 * Renvoie un objet de type FactionInformation avec les données de la faciton nommée factionName
+		 *
+		 * Parameters:
+		 * 	- String name : le nom de la faction
+		 */
 		//Connection a la base de données
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
@@ -439,7 +445,7 @@ public class FactionFunctions {
 
 			final ResultSet result = requestInfo.executeQuery();
 
-			//il y a un résultat, donc
+			//il y a un résultat, donc on récupère les infos et on return un objet de type faction avec les données de la faction
 			if (result.next())
 			{
 				int currentUpgrade = result.getInt(1);
@@ -451,32 +457,43 @@ public class FactionFunctions {
 				int chestSize = 0;
 
 				if(currentUpgrade == 2){maxNbrOfPlayers = 6;maxMoney=20000;}
-				if(currentUpgrade == 3){maxNbrOfPlayers = 8;maxMoney=40000;chestSize=9;}
+				if(currentUpgrade >= 3){maxNbrOfPlayers = 8;maxMoney=40000;chestSize=9;}
 
 				UUID leader = UUID.fromString(result.getString("5"));
 
 				return new FactionInformation(factionName, currentNbrOfPlayers, maxNbrOfPlayers, currentUpgrade, currentMoney, maxMoney, chestSize, createdAt, leader);
 			}
 		} catch (SQLException e) {
+			//Une erreur est survenue (Problème de connexion à la BD)
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème. Erreur : #F013");
 		}
+		//Il n'y avait pas de résultat donc on return Null
 		return null;
 	}
 
 	public FactionInformation getFactionInfoWithAmeliorations(String factionName)
 	{
+		/*
+		 * Renvoie un objet de type FactionInformation avec les données de la faction nommée factionName a la prochaine amélioration
+		 *
+		 * Parameters:
+		 * 	- String name : le nom de la faction
+		 */
+		//Connection a la base de données
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
 		try {
 			final Connection connection = firelandConnection.getConnection();
+			//Préparation de la commande
 			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader FROM faction WHERE name = ?");
 			preparedStatement1.setString(1, factionName);
 
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-
+			//il y a un résultat, donc on récupère les infos et on return un objet de type faction avec les données de la faction
 			if (resultSet.next())
 			{
+				//On rajoute 1 a l'upgrade actuelle pour avoir les informations de la faction au rang suivant
 				int currentUpgrade = resultSet.getInt(1)+1;
 				int currentNbrOfPlayers = resultSet.getInt(2);
 				int currentMoney = resultSet.getInt(3);
@@ -493,9 +510,11 @@ public class FactionFunctions {
 				return new FactionInformation(factionName, currentNbrOfPlayers, maxNbrOfPlayers, currentUpgrade, currentMoney, maxMoney, chestSize, createdAt, leader);
 			}
 		} catch (SQLException e) {
+			//Une erreur est survenue (Problème de connexion à la BD)
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème. Erreur : #F014");
 		}
+		//Il n'y avait pas de résultat donc on return Null
 		return null;
 	}
 

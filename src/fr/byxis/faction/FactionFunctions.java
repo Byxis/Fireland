@@ -597,25 +597,33 @@ public class FactionFunctions {
 
 	public FactionPlayerInformation GetInformationOfPlayerInAFaction(UUID playerUuid, String playerName)
 	{
+		/*
+		 * Renvoie l'objet de type FactionPlayerInformation, qui permet d'obtenir facilement le nom, le nom de faction et le role dans la faction
+		 * du joueur
+		 *
+		 * Parameters:
+		 * 	- UUID playerUuid : uuid du joueur
+		 *  - String playerName : nom du joueur
+		 */
+		//Création de l'objet
+		//Il est par défaut vide puis sera actualisé
 		FactionPlayerInformation info = new FactionPlayerInformation("", "", -1);
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
 		try {
 			final Connection connection = firelandConnection.getConnection();
+			//Préparation de la requête sql
+			final PreparedStatement getInfos = connection.prepareStatement("SELECT faction_name,faction_role FROM players WHERE uuid=?");
+			getInfos.setString(1, playerUuid.toString());
 
-			final PreparedStatement preparedStatement = connection.prepareStatement("SELECT faction_name,faction_role FROM players WHERE uuid=?");
-			preparedStatement.setString(1, playerUuid.toString());
-
-			final ResultSet rS = preparedStatement.executeQuery();
-			if (!rS.next())
-			{
-				return info;
-			}
-			else
-			{
+			//Execution de la requête
+			final ResultSet rS = getInfos.executeQuery();
+			if (rS.next()) {
+				//Il y a un résultat, on actualise l'objet avec les bonnes valeurs
 				info = new FactionPlayerInformation(playerName, rS.getString(1), rS.getInt(2));
-				return info;
 			}
+			//Sinon, on return les infos vides
+			return info;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F015");

@@ -115,7 +115,7 @@ public class FactionFunctions {
 	public void InitInviteFaction(Player p, Player invited, String factionName) {
 		/*
 		 * Initialise l'invitation à une faction avec quelques vérifications :
-		 * 	- le joueur invité n'a pas deja été invité précédemment.
+		 * 	- le joueur invité n'a pas deja été invité précédemment
 		 * On précise que l'on vérifie si le joueur qui invite appartient bien à une faction et à le droit d'inviter et que le joueuer invité n'a pas de faction dans factionManager
 		 * Parameters:
 		 * 	- Player p : le joueur qui invite
@@ -133,17 +133,20 @@ public class FactionFunctions {
 			preparedStatement1.setString(2, factionName);
 
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-			//On vérifie si il y a des résultats à la requete
+			//On vérifie si il y a des résultats à la requête
 			if (resultSet.next())
 			{
+				//On regarde si la date obtenue dans la base de donnée est après la date actuelle
 				final long time = System.currentTimeMillis();
 				Timestamp currentTime = new Timestamp(time);
 				if(resultSet.getTimestamp(1).after(currentTime))
 				{
+					//si oui, alors le joueur ne peut pas etre inviter à nouveau
 					p.sendMessage("§cCe joueur a déjà été récemment invité dans cette faction !");
 				}
 				else
 				{
+					//Sinon, on invite le joueur
 					final PreparedStatement preparedStatement2 = connection.prepareStatement("DELETE FROM invite WHERE player_uuid = ? AND faction_name=?");
 					preparedStatement2.setString(1, uuid.toString());
 					preparedStatement2.setString(2, factionName);
@@ -154,6 +157,7 @@ public class FactionFunctions {
 				}
 
 			}
+			//si il n'y a pas de résultat à la requete, alors le joueur n'a jamais été invité, donc cela ne pose pas de problème, on l'invite
 			else
 			{
 				inviteFaction(connection, factionName, uuid);
@@ -167,16 +171,25 @@ public class FactionFunctions {
 	}
 	
 	public void inviteFaction(Connection connection, String factionName, UUID uuid)
+		/*
+		 * Permet à un joueur d'en inviter un autre dans sa faction
+		 * Parameters:
+		 * 	- Connection connection : la connection a la DB.
+		 * 	- UUID uuid : l'uuid de la personne invitée
+		 * 	- String factionName : le nom de la faction
+		 */
 	{
 		try {
+			//On prépare la requête SQL
 			final PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO invite (faction_name, player_uuid, available_time) VALUES (?, ?, ?)");
 			preparedStatement.setString(1, factionName);
 			preparedStatement.setString(2, uuid.toString());
 			final long time = System.currentTimeMillis()  + TimeUnit.MINUTES.toMillis(20);
 			preparedStatement.setTimestamp(3, new Timestamp(time));
-			
+			//On execute la requête
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
+			//Une erreur est survenue (Problème de connexion à la BD)
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F004");
 			e.printStackTrace();
 		}
@@ -185,6 +198,7 @@ public class FactionFunctions {
 	
 	public boolean isInvitedToFaction(Player p, String name)
 	{
+
 		final UUID uuid = p.getUniqueId();
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 		

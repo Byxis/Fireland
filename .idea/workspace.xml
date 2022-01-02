@@ -9,14 +9,88 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="V2.1">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dependencies.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dependencies.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_17_1_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_17_1_R0_1_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="test">
+      <change afterPath="$PROJECT_DIR$/res/sql_commands" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fireland Le Nouveau.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Fireland Le Nouveau.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/RemoveInteractionBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/RemoveInteractionBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/New_Canvas.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/command/nightVision.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/command/rally$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/command/rally$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/command/rally$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/command/rally$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/command/rally.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/command/rename.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/command/speedFly.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/command/stack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/db/DatabaseManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/db/DbConnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/db/DbCredentials.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/ZombieDetection$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/ZombieDetection$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/ZombieDetection$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/ZombieDetection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/ambientSound.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/bank.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/chatListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/cobwebDamage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/craft.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/doorPass$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/doorPass$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/doorPass$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/doorPass$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/doorPass$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/doorPass$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/doorPass.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/fallDamage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/heliport$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/heliport$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/heliport.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/infectedPlayer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/join.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/menu$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/menu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/modifiedInteractionItemstackSize.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/noGrindstone.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/packetListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/parachute$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/parachute.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/playerDeath$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/playerDeath.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/quadListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/removeBedInteraction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/scoreboardPlayer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/shop.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/silverfishSilent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/spawn$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/spawn.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/stairs$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/stairs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/thirst.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/timeAlive.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/villagerInteraction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/worldGeneration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/event/worldGuardEvent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/faction/FactionFunctions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/faction/PlayersInFaction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/faction/factionManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/faction/factionManagerTabCompleter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/main/ConfigManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/main/Main$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/main/Main$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/main/Main$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/main/Main$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/main/Main$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/main/Main$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/main/Main$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/byxis/main/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/preview.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionFunctions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionFunctions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManager.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +109,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -44,11 +119,22 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/command/nightVision.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/res/sql_commands" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/event/infectedPlayer.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/command/DiscordCommand.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/db/DatabaseManager.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/factionManagerTabCompleter.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/FactionInformation.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/FactionPlayerInformation.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="1" />
+  <component name="InvalidFacetManager">
+    <ignored-facets>
+      <facet id="Fireland Le Nouveau/invalid/Minecraft" />
+    </ignored-facets>
   </component>
   <component name="ProjectId" id="1rXEQqVIJ6KnlPLf6u09gPVpR9i" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -60,11 +146,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/Documents/spigot-1.17.1" />
+    <property name="last_opened_file_path" value="F:/Travail/!Te9/Nsi/DM 2/complement_structures_lineaires.py" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15429688" />
     <property name="project.structure.side.proportion" value="0.40114942" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -76,13 +163,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="JAR App" type="JarApplication">
-      <option name="JAR_PATH" value="$USER_HOME$/Desktop/o/dev/Server/Fireland V2 Official pour la vérité local host sa mere/plugins/Fireland.jar" />
-      <option name="WORKING_DIRECTORY" value="C:\Users\Byxis\IdeaProjects\Fireland Le Nouveau" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="ALTERNATIVE_JRE_PATH" value="17" />
-      <method v="2" />
-    </configuration>
     <configuration default="true" type="JarApplication">
       <option name="JAR_PATH" value="$USER_HOME$/Desktop/o/dev/Server/Fireland V2 Official pour la vérité local host sa mere/spigot-1.14.4.jar" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -108,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638715436168</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="test">
+      <created>1638716032930</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1638716032930</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,10 +220,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="V2.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

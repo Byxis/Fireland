@@ -1,0 +1,6 @@
+INSERT INTO player_faction VALUES (
+
+preparatedStatementBis.setString(1, p.getUniqueId().toString());
+			preparatedStatementBis.setString(2, name);
+			preparatedStatementBis.setTimestamp(3, new Timestamp(time));
+			preparatedStatementBis.setInt(4, 2);?,?,?,?)

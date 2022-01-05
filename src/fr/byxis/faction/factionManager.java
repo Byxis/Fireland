@@ -28,10 +28,10 @@ public class factionManager implements Listener, CommandExecutor  {
 		FactionFunctions factionFunctions = new FactionFunctions(main, p);
 		if (args.length == 0) 
 		{
-			p.sendMessage("§CErreur");
 			String factionName = factionFunctions.playerFactionName(p);
 			if(factionName.equals(""))
 			{
+				p.sendMessage("§CErreur");
 				//Renvoyer le classement des plus grandes facs
 				return true;
 			}

@@ -85,11 +85,14 @@ public class FactionFunctions {
 		//On prépare une requete sql
 		try {
 			final Connection connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name,faction_role FROM players WHERE faction_name = ?");
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT players.name,player_faction.role" +
+					"FROM players INNER JOIN player_faction " +
+					"ON player_faction.player_uuid = players.uuid " +
+					"WHERE player_faction.player_faction = ?");
 			preparedStatement1.setString(1, factionName);
 			
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-			//On vérifie si il y a un résultat à la requête
+			//On vérifie s'il y a un résultat à la requête
 			if (resultSet.next())
 			{
 				//On initialise les variables
@@ -472,7 +475,7 @@ public class FactionFunctions {
 		try {
 			final Connection connection = firelandConnection.getConnection();
 
-			final PreparedStatement preparedStatement = connection.prepareStatement("SELECT faction_name FROM players WHERE uuid=?");
+			final PreparedStatement preparedStatement = connection.prepareStatement("SELECT player_faction FROM player_faction WHERE player_uuid=?");
 			preparedStatement.setString(1, p.getUniqueId().toString());
 
 			final ResultSet rS = preparedStatement.executeQuery();
@@ -524,7 +527,7 @@ public class FactionFunctions {
 				if(currentUpgrade == 2){maxNbrOfPlayers = 6;maxMoney=20000;}
 				if(currentUpgrade >= 3){maxNbrOfPlayers = 8;maxMoney=40000;chestSize=9;}
 
-				UUID leader = UUID.fromString(result.getString("5"));
+				UUID leader = UUID.fromString(result.getString(5));
 
 				return new FactionInformation(factionName, currentNbrOfPlayers, maxNbrOfPlayers, currentUpgrade, currentMoney, maxMoney, chestSize, createdAt, leader);
 			}

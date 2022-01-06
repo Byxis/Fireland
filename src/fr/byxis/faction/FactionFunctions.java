@@ -273,7 +273,7 @@ public class FactionFunctions {
 				preparedStatement2.executeUpdate();
 				p.sendMessage("§aVous avez rejoint la faction " + factionName + ".");
 				
-				final PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT nbr_members FROM faction WHERE factionName = ?");
+				final PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT nbr_members FROM faction WHERE name = ?");
 				preparedStatement3.setString(1, factionName);
 				final ResultSet resultSet2 = preparedStatement3.executeQuery();
 				if(resultSet2.next())

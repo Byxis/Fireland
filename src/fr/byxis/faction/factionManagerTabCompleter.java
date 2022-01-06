@@ -17,7 +17,8 @@ public class factionManagerTabCompleter implements TabCompleter {
 		 List<String> l = new ArrayList<>();
 	     if (args.length == 1)
 	     {
-	    	 l.add("info");
+			 l.add("info");
+			 l.add("create");
 	    	 l.add("join");
 	    	 l.add("invite");
 	    	 l.add("leave");

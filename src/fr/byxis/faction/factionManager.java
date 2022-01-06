@@ -140,18 +140,15 @@ public class factionManager implements Listener, CommandExecutor  {
 			}
 
 		}
-		else if (args.length == 2 && args[0].equalsIgnoreCase("info"))
+		else if (args[0].equalsIgnoreCase("info"))
 		{
 			if(args.length == 1)
 			{
 				String factionName = factionFunctions.playerFactionName(p);
-				if(factionName.equals(""))
-				{
+				if (factionName.equals("")) {
 					p.sendMessage("§CErreur");
 					return true;
-				}
-				else
-				{
+				} else {
 					factionFunctions.factionInformationSender(p, factionFunctions.getFactionInfo(factionName), factionFunctions.getPlayersFromFaction(factionName));
 				}
 			}

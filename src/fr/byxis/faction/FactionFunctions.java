@@ -198,18 +198,25 @@ public class FactionFunctions {
 	
 	public boolean isInvitedToFaction(Player p, String name)
 	{
+		/*
+		 * Cherche si un joueur a reçu une invitation.
+		 * Parameters:
+		 * 	- Player p : le joueur dont on gère les invitations
+		 * 	- String name : le nom de la faction
+		 */
 
 		final UUID uuid = p.getUniqueId();
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 		
 		try {
+			//On prépare la requête SQL
 			final Connection connection = firelandConnection.getConnection();
 			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT available_time FROM invite WHERE player_uuid  = ? AND faction_name = ?");
 			preparedStatement1.setString(1, uuid.toString());
 			preparedStatement1.setString(2, name);
-			
+			//Réalisation de la requête SQL
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-			
+
 			if (resultSet.next())
 			{
 				final long time = System.currentTimeMillis();
@@ -220,6 +227,7 @@ public class FactionFunctions {
 				return false;
 			}
 		} catch (SQLException e) {
+			//Une erreur est survenue (Problème de connexion à la BD)
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F005");
 		}
@@ -228,6 +236,12 @@ public class FactionFunctions {
 	
 	public String getExactFactionNameFromInvite(Player p, String name)
 	{
+		/*
+		 * Donne le nom de la faction dans laquelle est invité un joueur.
+		 * Parameters:
+		 * 	- Player p : le joueur envoyant l'invitation
+		 * 	- String name : le nom de la faction
+		 */
 		final UUID uuid = p.getUniqueId();
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 		

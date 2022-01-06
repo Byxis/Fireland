@@ -85,10 +85,7 @@ public class FactionFunctions {
 		//On prépare une requete sql
 		try {
 			final Connection connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT players.name,player_faction.role" +
-					"FROM players INNER JOIN player_faction " +
-					"ON player_faction.player_uuid = players.uuid " +
-					"WHERE player_faction.player_faction = ?");
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT players.name,player_faction.role FROM players INNER JOIN player_faction ON player_faction.player_uuid = players.uuid WHERE player_faction.player_faction = ?");
 			preparedStatement1.setString(1, factionName);
 			
 			final ResultSet resultSet = preparedStatement1.executeQuery();
@@ -253,36 +250,37 @@ public class FactionFunctions {
 		return "";
 	}
 	
-	public void joinFaction(Player p, String name) {
+	public void joinFaction(Player p, String factionName) {
 		final UUID uuid = p.getUniqueId();
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 		
 		try {
 			final Connection connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT faction_name FROM players WHERE uuid = ?");
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_uuid FROM player_faction WHERE player_uuid = ?");
 			preparedStatement1.setString(1, uuid.toString());
 			
 			final ResultSet resultSet = preparedStatement1.executeQuery();
 			
-			if (resultSet.next())
+			if (!resultSet.next())
 			{
-				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE players SET faction_name=?, faction_role=0, faction_joined_at=? WHERE uuid = ?");
+				final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO player_faction VALUES (?,?,?,?)");
 				final long time = System.currentTimeMillis();
-				preparedStatement2.setString(1, name);
-				preparedStatement2.setTimestamp(2, new Timestamp(time));
-				preparedStatement2.setString(3, uuid.toString());
+				preparedStatement2.setString(1, uuid.toString());
+				preparedStatement2.setString(2, factionName);
+				preparedStatement2.setTimestamp(3, new Timestamp(time));
+				preparedStatement2.setInt(4, 0);
 				
 				preparedStatement2.executeUpdate();
-				p.sendMessage("§aVous avez rejoint la faction "+name+".");
+				p.sendMessage("§aVous avez rejoint la faction " + factionName + ".");
 				
-				final PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT nbr_members FROM faction WHERE name = ?");
-				preparedStatement3.setString(1, name);
+				final PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT nbr_members FROM faction WHERE factionName = ?");
+				preparedStatement3.setString(1, factionName);
 				final ResultSet resultSet2 = preparedStatement3.executeQuery();
 				if(resultSet2.next())
 				{
-					final PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE faction SET nbr_members=? WHERE name = ?");
+					final PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE faction SET nbr_members=? WHERE factionName = ?");
 					preparedStatement4.setInt(1, resultSet2.getInt(1)+1);
-					preparedStatement4.setString(2, name);
+					preparedStatement4.setString(2, factionName);
 					preparedStatement4.executeQuery();
 				}
 				
@@ -616,7 +614,7 @@ public class FactionFunctions {
 		try {
 			final Connection connection = firelandConnection.getConnection();
 			//Préparation de la requête sql
-			final PreparedStatement getInfos = connection.prepareStatement("SELECT faction_name,faction_role FROM players WHERE uuid=?");
+			final PreparedStatement getInfos = connection.prepareStatement("SELECT player_faction,role FROM player_faction WHERE player_uuid=?");
 			getInfos.setString(1, playerUuid.toString());
 
 			//Execution de la requête

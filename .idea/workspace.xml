@@ -12,11 +12,8 @@
     <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Spécifications (début)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/DiscordCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/command/DiscordCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/RemoveInteractionBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/RemoveInteractionBlock.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionFunctions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionFunctions.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManager.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +138,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641139308392</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Spécifications (début)">
+      <created>1641406360328</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1641406360328</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -174,7 +178,8 @@
     <MESSAGE value="modif de qlq trucs dans les factions" />
     <MESSAGE value="Commentaires faction" />
     <MESSAGE value="Commentaires faction et fix de la supression de faction" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commentaires faction et fix de la supression de faction" />
+    <MESSAGE value="Spécifications (début)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Spécifications (début)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

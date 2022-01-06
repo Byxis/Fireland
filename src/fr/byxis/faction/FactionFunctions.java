@@ -517,13 +517,13 @@ public class FactionFunctions {
 				int currentUpgrade = result.getInt(1);
 				int currentNbrOfPlayers = result.getInt(2);
 				int currentMoney = result.getInt(3);
-				int maxNbrOfPlayers = 4;
+				int maxNbrOfPlayers = 2;
 				Timestamp createdAt = result.getTimestamp(4);
 				int maxMoney = 10000;
 				int chestSize = 0;
 
-				if(currentUpgrade == 2){maxNbrOfPlayers = 6;maxMoney=20000;}
-				if(currentUpgrade >= 3){maxNbrOfPlayers = 8;maxMoney=40000;chestSize=9;}
+				if(currentUpgrade == 2){maxNbrOfPlayers = 4;maxMoney=20000;}
+				if(currentUpgrade >= 3){maxNbrOfPlayers = 6;maxMoney=40000;chestSize=9;}
 
 				UUID leader = UUID.fromString(result.getString(5));
 
@@ -563,13 +563,13 @@ public class FactionFunctions {
 				int currentUpgrade = resultSet.getInt(1)+1;
 				int currentNbrOfPlayers = resultSet.getInt(2);
 				int currentMoney = resultSet.getInt(3);
-				int maxNbrOfPlayers = 4;
+				int maxNbrOfPlayers = 2;
 				Timestamp createdAt = resultSet.getTimestamp(4);
 				int maxMoney = 10000;
 				int chestSize = 0;
 
-				if(currentUpgrade == 2){maxNbrOfPlayers = 6;maxMoney=20000;}
-				if(currentUpgrade >= 3){maxNbrOfPlayers = 8;maxMoney=40000;chestSize=9;}
+				if(currentUpgrade == 2){maxNbrOfPlayers = 4;maxMoney=20000;}
+				if(currentUpgrade >= 3){maxNbrOfPlayers = 6;maxMoney=40000;chestSize=9;}
 
 				UUID leader = UUID.fromString(resultSet.getString(5));
 

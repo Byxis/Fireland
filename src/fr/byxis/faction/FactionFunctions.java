@@ -265,16 +265,23 @@ public class FactionFunctions {
 	}
 	
 	public void joinFaction(Player p, String factionName) {
+		/*
+		 * Intègre un joueur à une faction.
+		 * Parameters:
+		 * 	- Player p : le joueur rejoignant la faction
+		 * 	- String factionName : le nom de la faction que le joueur rejoint
+		 */
 		final UUID uuid = p.getUniqueId();
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 		
 		try {
+			//On prépare la requête SQL
 			final Connection connection = firelandConnection.getConnection();
 			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_uuid FROM player_faction WHERE player_uuid = ?");
 			preparedStatement1.setString(1, uuid.toString());
-			
+			//Réalisation de la requête SQL
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-			
+			//S'il n'y a aucun résultat, le joueur n'est pas dans une fonction, dans ce cas là, on l'ajoute à la table player_faction
 			if (!resultSet.next())
 			{
 				final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO player_faction VALUES (?,?,?,?)");
@@ -283,7 +290,6 @@ public class FactionFunctions {
 				preparedStatement2.setString(2, factionName);
 				preparedStatement2.setTimestamp(3, new Timestamp(time));
 				preparedStatement2.setInt(4, 0);
-				
 				preparedStatement2.executeUpdate();
 				p.sendMessage("§aVous avez rejoint la faction " + factionName + ".");
 				
@@ -299,6 +305,7 @@ public class FactionFunctions {
 				}
 				
 			}
+			//S'il y a un résultat dans la table, le joueur appartient donc déjà à une faction.
 			else
 			{
 				p.sendMessage("§cVous êtes déjà dans une faction !");
@@ -310,20 +317,28 @@ public class FactionFunctions {
 	}
 	
 	public void leaveFaction(Player p, UUID leader) {
+		/*
+		 * Retire un joueur d'une faction.
+		 * Parameters:
+		 * 	- Player p : le joueur rejoignant la faction
+		 * 	- UUID leader : l'identifiant du chef de la faction du joueur
+		 */
 		final UUID uuid = p.getUniqueId();
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 		
 		try {
+			//On prépare la requete SQL
 			final Connection connection = firelandConnection.getConnection();
 			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM faction WHERE leader_uuid = ?");
 			preparedStatement1.setString(1, leader.toString());
-			
+			//Réalisation de la requête SQL
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-			
+			//Si le joueur souhaitant quitter sa faction est le leader, il ne peut pas, on le lui signale
 			if (resultSet.next())
 			{
 				p.sendMessage("§cVous êtes leader donc vous ne pouvez pas quitter votre faction ! Vous pouvez cependant la dissoudre ou donner le rôle a quelqu'un d'autre");
 			}
+			//Si ce n'est pas le leader, il peut quitter
 			else
 			{
 				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE players SET faction_name=NULL, faction_role=NULL, faction_joined_at=NULL WHERE uuid = ?");

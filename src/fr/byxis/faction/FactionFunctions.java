@@ -338,12 +338,13 @@ public class FactionFunctions {
 			{
 				p.sendMessage("§cVous êtes leader donc vous ne pouvez pas quitter votre faction ! Vous pouvez cependant la dissoudre ou donner le rôle a quelqu'un d'autre");
 			}
-			//Si ce n'est pas le leader, il peut quitter
+			//Si ce n'est pas le leader, il peut quitter, dans ce cas on change la table faction_name et on le prévient
 			else
 			{
+				//On prépare la requete SQL
 				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE players SET faction_name=NULL, faction_role=NULL, faction_joined_at=NULL WHERE uuid = ?");
 				preparedStatement2.setString(1, uuid.toString());
-				
+				//Réalisation de la requête SQL
 				preparedStatement2.executeUpdate();
 				p.sendMessage("§cVous avez quitté la faction "+resultSet.getString(1)+".");
 			}
@@ -497,19 +498,27 @@ public class FactionFunctions {
 
 	public String playerFactionName(Player p)
 	{
+		/*
+		 * Renvoie un objet de type String, qui est le nom de la faction à laquelle appartient le joueur Player p
+		 *
+		 * Parameters:
+		 * 	- Player p : le joueur dont on veut le nom de la faction
+		 */
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
 		try {
 			final Connection connection = firelandConnection.getConnection();
-
+			//On prépare la requete SQL
 			final PreparedStatement preparedStatement = connection.prepareStatement("SELECT player_faction FROM player_faction WHERE player_uuid=?");
 			preparedStatement.setString(1, p.getUniqueId().toString());
-
+			//Réalisation de la requete SQL
 			final ResultSet rS = preparedStatement.executeQuery();
+			//Si la requete n'a pas de résultats, cela signifie que le joueur n'a pas de faction, dans ce cas, on ne renvoie rien
 			if (!rS.next())
 			{
 				return "";
 			}
+			//S'il y a un résultat, on renvoie le nom de la faction que l'on trouve dans la table player_faction
 			else
 			{
 				return rS.getString(1);

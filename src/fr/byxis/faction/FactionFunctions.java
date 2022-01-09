@@ -663,6 +663,8 @@ public class FactionFunctions {
 			}
 			//Sinon, on return les infos vides
 			return info;
+			//Une erreur est survenue (Problème de connexion à la BD)
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F015");
@@ -672,22 +674,31 @@ public class FactionFunctions {
 
 	public void upgradeFaction(String factionName)
 	{
+		/*
+		 * Améliore le rang d'une faction.
+		 *
+		 * Parameters:
+		 * 	- String factionName : le nom de la faction que l'on améliore.
+		 */
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
 		try {
+			//On prépare la requête SQL
 			final Connection connection = firelandConnection.getConnection();
 			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT upgrade FROM faction WHERE name = ?");
 			preparedStatement1.setString(1, factionName);
-
+			//Réalisation de la requête SQL
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-
+			//Si la faction est trouvée dans la table upgrade, on améliore son rang
 			if (resultSet.next())
 			{
+				//On prépare la requete de modification :
 				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET upgrade=? WHERE name = ?");
+				//On modifie l'attribut upgrade qui correspond au rang de la faction, on ajoute 1
 				int upgrade = resultSet.getInt(1)+1;
 				preparedStatement2.setString(1, factionName);
 				preparedStatement2.setInt(2, upgrade);
-
+				//On exécute la requete SQL
 				preparedStatement2.executeUpdate();
 				sender.sendMessage("§cVotre faction a été amélioré au rang §d"+upgrade);
 			}
@@ -702,23 +713,33 @@ public class FactionFunctions {
 	}
 
 	public void unrankPlayer(String playerName, String factionName)
+		/*
+		 * Baisse le rang d'un joueur dans une faction
+		 *
+		 * Parameters:
+		 *  - String playerName : le pseudo du joueur dont on veux modifier le rang
+		 * 	- String factionName : le nom de la faction que l'on améliore.
+		 */
 	{
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
 		try {
+			//On prépare la requête SQL
 			final Connection connection = firelandConnection.getConnection();
 			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT faction_role FROM players WHERE name = ?");
 			preparedStatement1.setString(1, playerName);
-
+			//Réalisation de la requête SQL
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-
+			//S'il y a un résultat à la requete, on change le rang du joueur comme prévu:
 			if (resultSet.next())
 			{
+				//On prépare la requete de modification :
 				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction_role SET upgrade=? WHERE name = ?");
+				//On crée la variable demote que l'on va insérer dans l'attribut upgrade. La variable correspond à l'identifiant du rang du joueur, ici - 1 car on baisse son rang
 				int demote = resultSet.getInt(1)-1;
 				preparedStatement2.setInt(2, demote);
 				preparedStatement2.setString(1, playerName);
-
+				//Réalisation de la requête SQL
 				preparedStatement2.executeUpdate();
 			}
 			else

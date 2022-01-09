@@ -237,7 +237,7 @@ public class FactionFunctions {
 	public String getExactFactionNameFromInvite(Player p, String name)
 	{
 		/*
-		 * Donne le nom de la faction dans laquelle est invité un joueur.
+		 * Donne le nom exact d'une fonction, avec les bonnes majuscules, c'est plus esthétique quand il faut envoyer des messages.
 		 * Parameters:
 		 * 	- Player p : le joueur envoyant l'invitation
 		 * 	- String name : le nom de la faction
@@ -246,13 +246,14 @@ public class FactionFunctions {
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 		
 		try {
+			//On prépare la requête SQL
 			final Connection connection = firelandConnection.getConnection();
 			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT faction_name FROM invite WHERE player_uuid  = ? AND faction_name = ?");
 			preparedStatement1.setString(1, uuid.toString());
 			preparedStatement1.setString(2, name);
-			
+			//Réalisation de la requête SQL
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-			
+			//S'il y a un résultat à la requête, on renvoie le nom de la faction, qui est le premier attribut de la table.
 			if (resultSet.next())
 			{
 				return resultSet.getString(1);

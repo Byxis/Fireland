@@ -221,19 +221,19 @@ public class shop implements Listener, CommandExecutor {
 		boolean food = false;
 		
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Pomme")) {food = true;price = 20;command = "minecraft:give "+p.getName()+" apple";name = "une pomme";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Veste de commando")) {price = 1000;command = "minecraft:give "+p.getName()+" diamond_chestplate";name = "une veste de commando";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Gilet pare-balle de commando")) {price = 1000;command = "minecraft:give "+p.getName()+" diamond_leggings";name = "un gilet pare-balle de commando";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Casque de commando")) {price = 800;command = "minecraft:give "+p.getName()+" diamond_helmet";name = "un casque de commando";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Bottes de commando")) {price = 800;command = "minecraft:give "+p.getName()+" diamond_boots";name = "des bottes de commando";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Veste de CRS")) {price = 700;command = "minecraft:give "+p.getName()+" iron_chestplate";name = "une veste de CRS";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Gilet pare-balle de CRS")) {price = 700;command = "minecraft:give "+p.getName()+" iron_leggings";name = "un gilet pare-balle CRS";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Casque de CRS")) {price = 500;command = "minecraft:give "+p.getName()+" iron_helmet";name = "un casque de CRS";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Bottes de CRS")) {price = 500;command = "minecraft:give "+p.getName()+" iron_boots";name = "des bottes de CRS";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Veste de commando")) {price = 2400;command = "minecraft:give "+p.getName()+" diamond_chestplate";name = "une veste de commando";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Gilet pare-balle de commando")) {price = 2600;command = "minecraft:give "+p.getName()+" diamond_leggings";name = "un gilet pare-balle de commando";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Casque de commando")) {price = 1900;command = "minecraft:give "+p.getName()+" diamond_helmet";name = "un casque de commando";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Bottes de commando")) {price = 1900;command = "minecraft:give "+p.getName()+" diamond_boots";name = "des bottes de commando";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Veste de CRS")) {price = 1400;command = "minecraft:give "+p.getName()+" iron_chestplate";name = "une veste de CRS";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Gilet pare-balle de CRS")) {price = 1700;command = "minecraft:give "+p.getName()+" iron_leggings";name = "un gilet pare-balle CRS";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Casque de CRS")) {price = 1000;command = "minecraft:give "+p.getName()+" iron_helmet";name = "un casque de CRS";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Bottes de CRS")) {price = 1000;command = "minecraft:give "+p.getName()+" iron_boots";name = "des bottes de CRS";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Grenade ")) {price = 350;command = "shot give "+p.getName()+" grenade";name = "une grenade";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Parachute")) {price = 2000;command = "shot give "+p.getName()+" para";name = "un parachute";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Hache")) {price = 700;command = "shot give "+p.getName()+" hache";name = "une hache";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Machette")) {price = 900;command = "shot give "+p.getName()+" machet";name = "une machette";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7TAC Crossbow")) {price = 2500;command = "shot give "+p.getName()+" tac";name = "un TAC Crossbow";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Parachute")) {price = 4000;command = "shot give "+p.getName()+" para";name = "un parachute";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Hache")) {price = 2000;command = "shot give "+p.getName()+" hache";name = "une hache";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Machette")) {price = 1400;command = "shot give "+p.getName()+" machet";name = "une machette";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7TAC Crossbow")) {price = 2000;command = "shot give "+p.getName()+" tac";name = "un TAC Crossbow";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Carreau")) {price = 20;command = "shot give "+p.getName()+" carrea";name = "un carreau";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Cookie")) {food = true;price = 10;command = "minecraft:give "+p.getName()+" cookie";name = "un cookie";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Tarte")) {food = true;price = 25;command = "minecraft:give "+p.getName()+" pumpkin_pie";name = "une tarte";}
@@ -241,21 +241,21 @@ public class shop implements Listener, CommandExecutor {
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Carotte")) {food = true;price = 17;command = "minecraft:give "+p.getName()+" carrot";name = "une carotte";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Seringue Antidote")) {price = 150;command = "shot give "+p.getName()+" serin";name = "une seringue antidote";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Kit de soin")) {food = true;price = 150;command = "shot give "+p.getName()+" kit";name = "un kit de soin";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Lunettes de vision nocturne")) {price = 2000;command = "shot give "+p.getName()+" nvgo";name = "des lunettes de vision nocturne";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Lunettes de vision nocturne")) {price = 4000;command = "shot give "+p.getName()+" nvgo";name = "des lunettes de vision nocturne";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Bouteille d'eau")) {food = true;price = 80;command = "minecraft:give "+p.getName()+" potion{Potion:\"minecraft:water\"}";name = "une bouteille d'eau";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Walther PPK")) {price = 200;command = "shot give "+p.getName()+" walth";name = "un WaltherPPK";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Colt 1911")) {price = 230;command = "shot give "+p.getName()+" colt";name = "un colt 1911";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Makarov")) {price = 200;command = "shot give "+p.getName()+" maka";name = "un Makarov";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Beretta M9")) {price = 350;command = "shot give "+p.getName()+" berettam9";name = "un BerettaM9";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Glock 17")) {price = 370;command = "shot give "+p.getName()+" glock";name = "un Glock 17";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Hk USP")) {price = 430;command = "shot give "+p.getName()+" hkusp";name = "un Hk USP";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Five-seveN")) {price = 500;command = "shot give "+p.getName()+" fnfive";name = "un Five SeveN";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7r8")) {price = 300;command = "shot give "+p.getName()+" r8";name = "un r8";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Magnum 44")) {price = 350;command = "shot give "+p.getName()+" Magn";name = "un Magnum 44";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Taurus Raging Bull")) {price = 550;command = "shot give "+p.getName()+" taurus";name = "un Taurus Raging Bull";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7IMI Desert-Eagle")) {price = 1000;command = "shot give "+p.getName()+" imide";name = "un IMI Desert Eagle";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Beretta 92r")) {price = 700;command = "shot give "+p.getName()+" beret";name = "un Beretta 92r";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7CZ75a")) {price = 600;command = "shot give "+p.getName()+" CZ75";name = "un CZ75a";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Walther PPK")) {price = 300;command = "shot give "+p.getName()+" walth";name = "un WaltherPPK";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Colt 1911")) {price = 430;command = "shot give "+p.getName()+" colt";name = "un colt 1911";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Makarov")) {price = 300;command = "shot give "+p.getName()+" maka";name = "un Makarov";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Beretta M9")) {price = 650;command = "shot give "+p.getName()+" berettam9";name = "un BerettaM9";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Glock 17")) {price = 670;command = "shot give "+p.getName()+" glock";name = "un Glock 17";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Hk USP")) {price = 700;command = "shot give "+p.getName()+" hkusp";name = "un Hk USP";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Five-seveN")) {price = 750;command = "shot give "+p.getName()+" fnfive";name = "un Five SeveN";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7r8")) {price = 400;command = "shot give "+p.getName()+" r8";name = "un r8";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Magnum 44")) {price = 500;command = "shot give "+p.getName()+" Magn";name = "un Magnum 44";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Taurus Raging Bull")) {price = 800;command = "shot give "+p.getName()+" taurus";name = "un Taurus Raging Bull";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7IMI Desert-Eagle")) {price = 1300;command = "shot give "+p.getName()+" imide";name = "un IMI Desert Eagle";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Beretta 92r")) {price = 800;command = "shot give "+p.getName()+" beret";name = "un Beretta 92r";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7CZ75a")) {price = 900;command = "shot give "+p.getName()+" CZ75";name = "un CZ75a";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de Revolver")) {price = 20;command = "shot give "+p.getName()+" chargeur_rev";name = "un Chargeur de Revolver";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de Haute Capacité")) {price = 25;command = "shot give "+p.getName()+" chargeur_revolver_haute";name = "un Chargeur de Haute Capacité";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de Desert Eagle")) {price = 35;command = "shot give "+p.getName()+" chargeur_des";name = "un Chargeur de Desert Eagle";}
@@ -284,7 +284,7 @@ public class shop implements Listener, CommandExecutor {
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de MAC10")) {price = 40;command = "shot give "+p.getName()+" chargeur_mac";name = "un Chargeur de MAC10";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de FNP90")) {price = 45;command = "shot give "+p.getName()+" chargeur_fnp";name = "un Chargeur de FNP90";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de Thompson")) {price = 50;command = "shot give "+p.getName()+" chargeur_thompson";name = "un Chargeur de Thompson";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Barrett M107")) {price = 3000;command = "shot give "+p.getName()+" barret";name = "un Barett M107";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Barrett M107")) {price = 6000;command = "shot give "+p.getName()+" barret";name = "un Barett M107";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7L96A1")) {price = 2300;command = "shot give "+p.getName()+" l96";name = "un L96A1";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7SVD Dragunov")) {price = 2600;command = "shot give "+p.getName()+" svdd";name = "un SVD Dragunov";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7VSS Vintorez")) {price = 3500;command = "shot give "+p.getName()+" vssvin";name = "un VSS Vintorez";}
@@ -292,12 +292,12 @@ public class shop implements Listener, CommandExecutor {
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Mosin Nagant")) {price = 2100;command = "shot give "+p.getName()+" mosin";name = "un Mosin Nagant";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Karabiner 98k")) {price = 2150;command = "shot give "+p.getName()+" karabiner";name = "un Karabiner 98k";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7SVT 40")) {price = 2100;command = "shot give "+p.getName()+" SVT";name = "un SVT40";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7CheyTacM200")) {price = 2700;command = "shot give "+p.getName()+" cheyt";name = "un Cheytac M200";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7SPAS 12")) {price = 2600;command = "shot give "+p.getName()+" spas";name = "un SPAS 12";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7XM 1014")) {price = 2300;command = "shot give "+p.getName()+" xm";name = "un XM 1014";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Benelli Nova")) {price = 2200;command = "shot give "+p.getName()+" benell";name = "un Benelli Nova";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Remington 870")) {price = 2100;command = "shot give "+p.getName()+" remin";name = "un Remington 870";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7AA12")) {price = 3000;command = "shot give "+p.getName()+" aa";name = "un AA12";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7CheyTacM200")) {price = 4500;command = "shot give "+p.getName()+" cheyt";name = "un Cheytac M200";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7SPAS 12")) {price = 4600;command = "shot give "+p.getName()+" spas";name = "un SPAS 12";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7XM 1014")) {price = 4300;command = "shot give "+p.getName()+" xm";name = "un XM 1014";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Benelli Nova")) {price = 3900;command = "shot give "+p.getName()+" benell";name = "un Benelli Nova";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Remington 870")) {price = 3600;command = "shot give "+p.getName()+" remin";name = "un Remington 870";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7AA12")) {price = 8000;command = "shot give "+p.getName()+" aa";name = "un AA12";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Cartouche de Calibre 12")) {price = 10;command = "shot give "+p.getName()+" cartouche_cal";name = "une Cartouche de Calibre 12";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de Barrett")) {price = 50;command = "shot give "+p.getName()+" chargeur_barr";name = "un Chargeur de Barrett";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de L96")) {price = 35;command = "shot give "+p.getName()+" chargeur_l96";name = "un Chargeur de L96";}
@@ -310,7 +310,7 @@ public class shop implements Listener, CommandExecutor {
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7RPK")) {price = 1400;command = "shot give "+p.getName()+" rpk";name = "un RPK";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7AK12")) {price = 1450;command = "shot give "+p.getName()+" AK12";name = "un AK12";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7AK74")) {price = 1400;command = "shot give "+p.getName()+" ak74";name = "un AK74";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7FN Scar-H")) {price = 2100;command = "shot give "+p.getName()+" fnscar-h";name = "une FN Scar-H";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7FN Scar-H")) {price = 3400;command = "shot give "+p.getName()+" fnscar-h";name = "une FN Scar-H";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7ACR")) {price = 1650;command = "shot give "+p.getName()+" acr";name = "une ACR";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M16 A4")) {price = 1600;command = "shot give "+p.getName()+" m16a4";name = "une M16 A4";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M14")) {price = 1500;command = "shot give "+p.getName()+" M14";name = "une M14";}
@@ -318,9 +318,9 @@ public class shop implements Listener, CommandExecutor {
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Steyr AUG")) {price = 1900;command = "shot give "+p.getName()+" steyraug";name = "une Steyr AUG";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7HK 416")) {price = 1650;command = "shot give "+p.getName()+" HK416";name = "une HK 416";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7TAR 21")) {price = 1600;command = "shot give "+p.getName()+" tar";name = "une TAR 21";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Famas")) {price = 1850;command = "shot give "+p.getName()+" famas";name = "un Famas";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7FN FAL")) {price = 1800;command = "shot give "+p.getName()+" FNfal";name = "un FN FAL";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7AS VAL")) {price = 3200;command = "shot give "+p.getName()+" asval";name = "un AS VAL";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Famas")) {price = 2350;command = "shot give "+p.getName()+" famas";name = "un Famas";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7FN FAL")) {price = 2100;command = "shot give "+p.getName()+" FNfal";name = "un FN FAL";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7AS VAL")) {price = 4200;command = "shot give "+p.getName()+" asval";name = "un AS VAL";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de M14")) {price = 40;command = "shot give "+p.getName()+" chargeur_m14";name = "un Chargeur de M14";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de ASVAL")) {price = 50;command = "shot give "+p.getName()+" chargeur_asval";name = "un Chargeur de ASVAL";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de SteyrAUG")) {price = 45;command = "shot give "+p.getName()+" chargeur_steyrau";name = "un Chargeur de SteyrAUG";}
@@ -332,32 +332,32 @@ public class shop implements Listener, CommandExecutor {
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de Scar")) {price = 45;command = "shot give "+p.getName()+" chargeur_scar";name = "un Chargeur de Scar";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de TAR21")) {price = 40;command = "shot give "+p.getName()+" chargeur_tar21";name = "un Chargeur de TAR21";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de IWI ACE53")) {price = 45;command = "shot give "+p.getName()+" chargeur_iwiace";name = "un Chargeur de IWI ACE53";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de M2 Browning")) {price = 55;command = "shot give "+p.getName()+" chargeur_m2_br";name = "un Chargeur de M2 Browning";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de MK48")) {price = 50;command = "shot give "+p.getName()+" chargeur_mk48";name = "un Chargeur de MK48";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de M60")) {price = 55;command = "shot give "+p.getName()+" chargeur_m60";name = "un Chargeur de M60";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de M249")) {price = 45;command = "shot give "+p.getName()+" chargeur_m249";name = "un Chargeur de M249";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de Minigun")) {price = 55;command = "shot give "+p.getName()+" chargeur_minigun";name = "un Chargeur de Minigun";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Grenade 40mm")) {price = 60;command = "shot give "+p.getName()+" grenade40";name = "une grenade 40mm";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Roquette")) {price = 65;command = "shot give "+p.getName()+" roquette";name = "une Roquette";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M2 Browning")) {price = 3000;command = "shot give "+p.getName()+" M2_browning";name = "une M2 Browning";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7MK48")) {price = 2600;command = "shot give "+p.getName()+" MK48";name = "une MK48";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M60")) {price = 3400;command = "shot give "+p.getName()+" M60";name = "une M60";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M249")) {price = 2500;command = "shot give "+p.getName()+" M249";name = "une M249";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Minigun")) {price = 3200;command = "shot give "+p.getName()+" Minigun";name = "une Minigun";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M32 MGL")) {price = 4000;command = "shot give "+p.getName()+" M32MGL";name = "une M32 MGL";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de M2 Browning")) {price = 150;command = "shot give "+p.getName()+" chargeur_m2_br";name = "un Chargeur de M2 Browning";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de MK48")) {price = 120;command = "shot give "+p.getName()+" chargeur_mk48";name = "un Chargeur de MK48";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de M60")) {price = 110;command = "shot give "+p.getName()+" chargeur_m60";name = "un Chargeur de M60";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de M249")) {price = 120;command = "shot give "+p.getName()+" chargeur_m249";name = "un Chargeur de M249";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de Minigun")) {price = 200;command = "shot give "+p.getName()+" chargeur_minigun";name = "un Chargeur de Minigun";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Grenade 40mm")) {price = 170;command = "shot give "+p.getName()+" grenade40";name = "une grenade 40mm";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Roquette")) {price = 200;command = "shot give "+p.getName()+" roquette";name = "une Roquette";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M2 Browning")) {price = 5000;command = "shot give "+p.getName()+" M2_browning";name = "une M2 Browning";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7MK48")) {price = 4600;command = "shot give "+p.getName()+" MK48";name = "une MK48";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M60")) {price = 4400;command = "shot give "+p.getName()+" M60";name = "une M60";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M249")) {price = 4500;command = "shot give "+p.getName()+" M249";name = "une M249";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Minigun")) {price = 5200;command = "shot give "+p.getName()+" Minigun";name = "une Minigun";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M32 MGL")) {price = 7000;command = "shot give "+p.getName()+" M32MGL";name = "une M32 MGL";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M79")) {price = 3000;command = "shot give "+p.getName()+" M79";name = "une M79";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7RPG-7")) {price = 3500;command = "shot give "+p.getName()+" RPG";name = "un RPG-7";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7RPG-7")) {price = 6500;command = "shot give "+p.getName()+" RPG";name = "un RPG-7";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Lampe de Poche")) {price = 80;command = "shot give "+p.getName()+" lampe";name = "une lampe de poche";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7G36C")) {price = 1700;command = "shot give "+p.getName()+" g36c";name = "un G36C";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7M4A1")) {price = 1600;command = "shot give "+p.getName()+" m4A1";name = "une M4A4";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de G36C")) {price = 40;command = "shot give "+p.getName()+" chargeur_g36";name = "un chargeur de G36C";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7AKM")) {price = 1450;command = "shot give "+p.getName()+" akm";name = "une AKM";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7L86")) {price = 1850;command = "shot give "+p.getName()+" l86";name = "une L86";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7L86")) {price = 3150;command = "shot give "+p.getName()+" l86";name = "une L86";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de L86")) {price = 40;command = "shot give "+p.getName()+" chargeur_L86";name = "un chargeur de L86";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7r8")) {price = 300;command = "shot give "+p.getName()+" r8";name = "un r8";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7r8")) {price = 400;command = "shot give "+p.getName()+" r8";name = "un r8";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Chargeur de KP31 Suomi")) {price = 40;command = "shot give "+p.getName()+" chargeur_kp31";name = "un chargeur de KP31 Suomi";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7KP31 Suomi")) {price = 1500;command = "shot give "+p.getName()+" kp31";name = "une KP31 Suomi";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7CZ52")) {price = 210;command = "shot give "+p.getName()+" cz52";name = "un CZ52";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7CZ52")) {price = 360;command = "shot give "+p.getName()+" cz52";name = "un CZ52";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§8Pass - §aVert")) {price = 1200;command = "minecraft:give "+p.getName()+" minecraft:music_disc_cat";name = "un pass vert";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§8Pass - §9Bleu")) {price = 3000;command = "minecraft:give "+p.getName()+" minecraft:music_disc_wait";name = "un pass bleu";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§8Pass - §eJaune")) {price = 7000;command = "minecraft:give "+p.getName()+" minecraft:music_disc_13";name = "un pass jaune";}

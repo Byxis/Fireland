@@ -229,7 +229,7 @@ public class shop implements Listener, CommandExecutor {
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Gilet pare-balle de CRS")) {price = 700;command = "minecraft:give "+p.getName()+" iron_leggings";name = "un gilet pare-balle CRS";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Casque de CRS")) {price = 500;command = "minecraft:give "+p.getName()+" iron_helmet";name = "un casque de CRS";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Bottes de CRS")) {price = 500;command = "minecraft:give "+p.getName()+" iron_boots";name = "des bottes de CRS";}
-		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Grenade")) {price = 350;command = "shot give "+p.getName()+" grenade";name = "une grenade";}
+		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Grenade ")) {price = 350;command = "shot give "+p.getName()+" grenade";name = "une grenade";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Parachute")) {price = 2000;command = "shot give "+p.getName()+" para";name = "un parachute";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Hache")) {price = 700;command = "shot give "+p.getName()+" hache";name = "une hache";}
 		else if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§7Machette")) {price = 900;command = "shot give "+p.getName()+" machet";name = "une machette";}

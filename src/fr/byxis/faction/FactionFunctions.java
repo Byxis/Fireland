@@ -293,18 +293,19 @@ public class FactionFunctions {
 				preparedStatement2.setInt(4, 0);
 				preparedStatement2.executeUpdate();
 				p.sendMessage("§aVous avez rejoint la faction " + factionName + ".");
-				
+
+				//Puis on ajoute 1 au nombre de membres actuels
 				final PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT nbr_members FROM faction WHERE name = ?");
 				preparedStatement3.setString(1, factionName);
 				final ResultSet resultSet2 = preparedStatement3.executeQuery();
 				if(resultSet2.next())
 				{
-					final PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE faction SET nbr_members=? WHERE factionName = ?");
+					final PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE faction SET nbr_members=? WHERE name = ?");
 					preparedStatement4.setInt(1, resultSet2.getInt(1)+1);
 					preparedStatement4.setString(2, factionName);
-					preparedStatement4.executeQuery();
+					preparedStatement4.executeUpdate();
 				}
-				
+
 			}
 			//S'il y a un résultat dans la table, le joueur appartient donc déjà à une faction.
 			else
@@ -713,12 +714,12 @@ public class FactionFunctions {
 		}
 	}
 
-	public void unrankPlayer(String playerName, String factionName)
+	public void unrankPlayer(UUID playerUuid, String factionName)
 		/*
 		 * Baisse le rang d'un joueur dans une faction
 		 *
 		 * Parameters:
-		 *  - String playerName : le pseudo du joueur dont on veux modifier le rang
+		 *  - UUID playerUuid : l'uuid du joueur dont on veut modifier le rang
 		 * 	- String factionName : le nom de la faction que l'on améliore.
 		 */
 	{
@@ -727,19 +728,19 @@ public class FactionFunctions {
 		try {
 			//On prépare la requête SQL
 			final Connection connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT faction_role FROM players WHERE name = ?");
-			preparedStatement1.setString(1, playerName);
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT role FROM player_faction WHERE player_uuid = ?");
+			preparedStatement1.setString(1, playerUuid.toString());
 			//Réalisation de la requête SQL
 			final ResultSet resultSet = preparedStatement1.executeQuery();
 			//S'il y a un résultat à la requete, on change le rang du joueur comme prévu:
 			if (resultSet.next())
 			{
 				//On prépare la requete de modification :
-				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction_role SET upgrade=? WHERE name = ?");
+				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE player_faction SET role=? player_uuid = ?");
 				//On crée la variable demote que l'on va insérer dans l'attribut upgrade. La variable correspond à l'identifiant du rang du joueur, ici - 1 car on baisse son rang
 				int demote = resultSet.getInt(1)-1;
 				preparedStatement2.setInt(2, demote);
-				preparedStatement2.setString(1, playerName);
+				preparedStatement2.setString(1, playerUuid.toString());
 				//Réalisation de la requête SQL
 				preparedStatement2.executeUpdate();
 			}
@@ -750,6 +751,46 @@ public class FactionFunctions {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F016");
+		}
+	}
+
+	public void promotePlayer(UUID playerUuid, String factionName)
+		/*
+		 * Augmente le rang d'un joueur dans une faction
+		 *
+		 * Parameters:
+		 *  - UUID playerUuid : l'uuid du joueur dont on veut modifier le rang
+		 * 	- String factionName : le nom de la faction que l'on améliore.
+		 */
+	{
+		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+		try {
+			//On prépare la requête SQL
+			final Connection connection = firelandConnection.getConnection();
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT role FROM player_faction WHERE player_uuid = ?");
+			preparedStatement1.setString(1, playerUuid.toString());
+			//Réalisation de la requête SQL
+			final ResultSet resultSet = preparedStatement1.executeQuery();
+			//S'il y a un résultat à la requête, on change le rang du joueur comme prévu :
+			if (resultSet.next())
+			{
+				//On prépare la requete de modification :
+				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE player_faction SET role=? WHERE player_uuid = ?");
+				//On crée la variable promote que l'on va insérer dans l'attribut upgrade. La variable correspond à l'identifiant du rang du joueur, ici + 1 car on augmente son rang
+				int promote = resultSet.getInt(1)-1;
+				preparedStatement2.setInt(2, promote);
+				preparedStatement2.setString(1, playerUuid.toString());
+				//Réalisation de la requête SQL
+				preparedStatement2.executeUpdate();
+			}
+			else
+			{
+				sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F017");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F017");
 		}
 	}
 }

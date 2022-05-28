@@ -9,9 +9,111 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Spécifications (mieux)">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Première daptation à la version 1.18.2">
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_oshi_oshi_core_5_8_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_7_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_failureaccess_1_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_j2objc_j2objc_annotations_1_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_11_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_json_simple_json_simple_1_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_authlib_3_2_38.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_brigadier_1_0_18.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_datafixerupper_4_0_26.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_javabridge_1_2_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_11_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_all_4_1_68_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_papermc_paper_paper_api_1_18_2_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__it_unimi_dsi_fastutil_8_5_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_inject_javax_inject_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jline_jline_2_12_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_27.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_5_9_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_platform_5_9_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_api_4_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_key_4_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_minimessage_4_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_gson_4_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_legacy_4_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_plain_4_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_examination_api_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_examination_string_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_raidstone_WorldGuardEvents_1_18_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_jopt_simple_jopt_simple_5_0_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_12_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_17_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_core_2_14_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_iostreams_2_14_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_slf4j18_impl_2_14_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_artifact_3_8_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_builder_support_3_8_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_model_3_8_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_model_builder_3_8_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_repository_metadata_3_8_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_resolver_provider_3_8_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_api_1_6_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_connector_basic_1_7_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_impl_1_6_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_spi_1_6_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_transport_http_1_7_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_util_1_6_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_checkerframework_checker_qual_3_21_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_plexus_plexus_interpolation_1_26.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_plexus_plexus_utils_3_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_sisu_org_eclipse_sisu_inject_0_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_20_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_analysis_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_commons_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_tree_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_30.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_8_0_beta4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_1_18_1_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_xerial_sqlite_jdbc_3_36_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_30.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/spigot_1_18_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionPvp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dependencies.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dependencies.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_9.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_21_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_31_0_1_jre.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_17_1_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_18_2_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_28.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_01_2022_17_01_[Default_Changelist]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_01_2022_17_01__Default_Changelist_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fireland Le Nouveau.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Fireland Le Nouveau.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/db/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/db/DatabaseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/join.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/join.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/stairs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/stairs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/worldGuardEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/worldGuardEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/db/DatabaseManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/db/DatabaseManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/join.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/join.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/shop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/shop.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/stairs$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/stairs$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/stairs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/stairs.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/worldGuardEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/worldGuardEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionFunctions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionFunctions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManagerTabCompleter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManagerTabCompleter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +132,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -41,24 +142,28 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/fr/byxis/db/DatabaseManager.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/fr/byxis/command/nightVision.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/res/sql_commands" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/fr/byxis/event/infectedPlayer.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/fr/byxis/command/DiscordCommand.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/db/DatabaseManager.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/factionManagerTabCompleter.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/FactionPlayerInformation.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/FactionInformation.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/res/sql_commands" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/FactionPlayerInformation.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
       <facet id="Fireland Le Nouveau/invalid/Minecraft" />
     </ignored-facets>
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="alwaysUpdateSnapshots" value="true" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="ProjectId" id="1rXEQqVIJ6KnlPLf6u09gPVpR9i" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -67,15 +172,21 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path" value="C:\Users\Byxis\IdeaProjects\Dependencies" />
+    <property name="Downloaded.Files.Path.Enabled" value="true" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
-    <property name="last_opened_file_path" value="F:/Travail/!Te9/Nsi/DM 2/complement_structures_lineaires.py" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/o/dev/Server/Fireland V2 Official pour la vérité local host sa mere/API/spigot-1.18.2.jar" />
+    <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15429688" />
     <property name="project.structure.side.proportion" value="0.40114942" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -154,28 +265,7 @@
       <option name="project" value="LOCAL" />
       <updated>1641502181528</updated>
     </task>
-    <task id="LOCAL-00008" summary="Spécifications (mieux)">
-      <created>1641658984717</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1641658984717</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Spécifications (mieux)">
-      <created>1641662884455</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1641662884455</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Spécifications (mieux)">
-      <created>1641663429987</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1641663429987</updated>
-    </task>
-    <option name="localTasksCounter" value="11" />
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -200,6 +290,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="V2.1" />
@@ -209,8 +300,9 @@
     <MESSAGE value="Commentaires faction et fix de la supression de faction" />
     <MESSAGE value="Spécifications (début)" />
     <MESSAGE value="Faire que ça marche lol" />
-    <MESSAGE value="Spécifications (mieux)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Spécifications (mieux)" />
+    <MESSAGE value="Fix de problèmes du projet" />
+    <MESSAGE value="Première daptation à la version 1.18.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Première daptation à la version 1.18.2" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

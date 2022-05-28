@@ -1,9 +1,7 @@
 package fr.byxis.event;
 
-import com.mojang.authlib.GameProfile;
 import fr.byxis.db.DbConnection;
 import fr.byxis.main.Main;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +25,6 @@ public class join implements Listener {
 		main.getConfig().set("door."+player.getName(), false);
 		addOnDb(player);
 		updateName(player);
-		GameProfile playerProfile = ((CraftPlayer) player).getHandle().getProfile();
 	}
 	
 	private void addOnDb(Player p) 

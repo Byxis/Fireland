@@ -1,7 +1,6 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
-import net.minecraft.util.MathHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -22,8 +21,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class stairs implements Listener {
@@ -62,11 +59,7 @@ public class stairs implements Listener {
 			
 			int face = 0;
 			
-			if(stairs.getFacing() == BlockFace.SOUTH)
-			{
-				face = 0;
-			}
-			else if(stairs.getFacing() == BlockFace.NORTH)
+			if(stairs.getFacing() == BlockFace.NORTH)
 			{
 				face = 2;
 			}
@@ -130,16 +123,18 @@ public class stairs implements Listener {
 					
 				}
 				
-			}.runTaskTimer(main, 1 , 20 * 1);
+			}.runTaskTimer(main, 1 , 20);
 			
 		}
 	}
 	
 	public static List<Entity> getEntitiesAroundPoint(Location location, double radius) {
-	    List<Entity> entities = new ArrayList<Entity>();
+	    List<Entity> entities = new ArrayList<>();
 	    World world = location.getWorld();
 
-	    // To find chunks we use chunk coordinates (not block coordinates!)
+	    // To find chunks we use chunk coordinates (not block coordinates!
+		// )
+		/*
 	    int smallX = MathHelper.floor((location.getX() - radius) / 16.0D);
 	    int bigX = MathHelper.floor((location.getX() + radius) / 16.0D);
 	    int smallZ = MathHelper.floor((location.getZ() - radius) / 16.0D);
@@ -147,20 +142,19 @@ public class stairs implements Listener {
 
 	    for (int x = smallX; x <= bigX; x++) {
 	        for (int z = smallZ; z <= bigZ; z++) {
-	            if (world.isChunkLoaded(x, z)) {
+				assert world != null;
+				if (world.isChunkLoaded(x, z)) {
 	                entities.addAll(Arrays.asList(world.getChunkAt(x, z).getEntities())); // Add all entities from this chunk to the list
 	            }
 	        }
 	    }
-
+		*/
 	    // Remove the entities that are within the box above but not actually in the sphere we defined with the radius and location
 	    // This code below could probably be replaced in Java 8 with a stream -> filter
-	    Iterator<Entity> entityIterator = entities.iterator(); // Create an iterator so we can loop through the list while removing entries
-	    while (entityIterator.hasNext()) {
-	        if (entityIterator.next().getLocation().distanceSquared(location) > radius * radius) { // If the entity is outside of the sphere...
-	            entityIterator.remove(); // Remove it
-	        }
-	    }
+		// Create an iterator so we can loop through the list while removing entries
+		// If the entity is outside of the sphere...
+		// Remove it
+		entities.removeIf(entity -> entity.getLocation().distanceSquared(location) > radius * radius);
 	    return entities;
 	}
 	

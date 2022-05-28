@@ -8,7 +8,7 @@ public class DatabaseManager {
 	
 	public DatabaseManager()
 	{
-		this.firelandConnection = new DbConnection(new DbCredentials("178.32.113.35", "minesr_118326", "DRt1os4P", "minesr_118326", 3306));
+		this.firelandConnection = new DbConnection(new DbCredentials("sql11.freemysqlhosting.net", "sql11495901", "auvYnkMm73", "sql11495901", 3306));
 	}
 	
 	public DbConnection getFirelandConnection()

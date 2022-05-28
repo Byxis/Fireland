@@ -5,12 +5,12 @@ package fr.byxis.main;
 import fr.byxis.command.*;
 import fr.byxis.db.DatabaseManager;
 import fr.byxis.event.*;
+import fr.byxis.faction.FactionPvp;
 import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.craftbukkit.v1_17_R1.util.UnsafeList.Itr;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -19,7 +19,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
@@ -87,6 +86,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new cobwebDamage(), this);
 		getServer().getPluginManager().registerEvents(new join(this), this);
 		getServer().getPluginManager().registerEvents(new NVGoogles(), this);
+		getServer().getPluginManager().registerEvents(new FactionPvp(this), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -237,7 +237,11 @@ public class Main extends JavaPlugin {
 			    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
 			    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a title {\"text\":\" \"}");
 				    	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"Le soleil se lève !\",\"bold\":true,\"color\":\"gold\"}");
-				    	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.night_passed ambient @a ~ ~ ~ 99999999");
+						for(Player p : getServer().getOnlinePlayers())
+						{
+							p.playSound(p.getLocation(), "minecraft:gun.hud.night_passed ambient", 1, 1);
+						}
+
 			    	}
 			    }
 			}
@@ -409,7 +413,7 @@ public class Main extends JavaPlugin {
 	    ent.setVelocity(loc.subtract(ent.getLocation()).toVector());
 	}*/
 	
-	
+	/*
 	@SuppressWarnings("unused")
 	private void changeItemsStackSize()
 	{
@@ -438,7 +442,7 @@ public class Main extends JavaPlugin {
 		modifyStackSize(Material.IRON_NUGGET, 4);
 		modifyStackSize(Material.CYAN_DYE, 32);
 		modifyStackSize(Material.SLIME_BALL, 4);
-	}
+	}*/
 	
 	private void dateListener()
 	{
@@ -522,7 +526,8 @@ public class Main extends JavaPlugin {
 			perms.get(p.getUniqueId()).unsetPermission(perm);
 		}
 	}
-	
+
+	/*
 	public void modifyStackSize(Material mat, int size)
 	{
 		try {
@@ -534,7 +539,7 @@ public class Main extends JavaPlugin {
 		}
 	}
 	
-	/*public boolean modifyStackSize(Material material, int size, boolean log) {
+	public boolean modifyStackSize(Material material, int size, boolean log) {
         // Verify that the material is an item (that can be stored in an inventory).
         if (!material.isItem()) {
             this.getLogger().warning(String.format("%s is not an item.", material.name()));

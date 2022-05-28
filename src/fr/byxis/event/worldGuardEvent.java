@@ -26,7 +26,7 @@ public class worldGuardEvent implements Listener {
 		try {
 			Player p = e.getPlayer();
 			
-			if(e.getRegionName().equalsIgnoreCase("sf1") || e.getRegionName().equalsIgnoreCase("sf2") || e.getRegionName().equalsIgnoreCase("sf3") || e.getRegionName().equalsIgnoreCase("sf4") || e.getRegionName().equalsIgnoreCase("airportsf") || e.getRegionName().equalsIgnoreCase("spawnsf"))
+			if(e.getRegionName().contains("sf"))
 			{
 				if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
 				{

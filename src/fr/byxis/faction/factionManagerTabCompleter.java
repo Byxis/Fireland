@@ -26,6 +26,9 @@ public class factionManagerTabCompleter implements TabCompleter {
 			 l.add("demote");
 			 l.add("promote");
 			 l.add("money");
+			 l.add("withdraw");
+			 l.add("deposit");
+			 l.add("upgrade");
 	    	 return l;
 	     }
 	     else if(args.length == 2)
@@ -40,6 +43,16 @@ public class factionManagerTabCompleter implements TabCompleter {
 	    		 }
 	    		  return l;
 	    	 }
+			 else if (args[0].equalsIgnoreCase("withdraw") || args[0].equalsIgnoreCase("deposit"))
+			 {
+				 l.add("10");
+				 l.add("20");
+				 l.add("50");
+				 l.add("100");
+				 l.add("200");
+				 l.add("500");
+				 l.add("1000");
+			 }
 	     }
 	     return l;
 	}

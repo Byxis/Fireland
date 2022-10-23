@@ -698,8 +698,8 @@ public class FactionFunctions {
 				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET upgrade=? WHERE name = ?");
 				//On modifie l'attribut upgrade qui correspond au rang de la faction, on ajoute 1
 				int upgrade = resultSet.getInt(1)+1;
-				preparedStatement2.setString(1, factionName);
-				preparedStatement2.setInt(2, upgrade);
+				preparedStatement2.setString(2, factionName);
+				preparedStatement2.setInt(1, upgrade);
 				//On exécute la requete SQL
 				preparedStatement2.executeUpdate();
 				sender.sendMessage("§cVotre faction a été amélioré au rang §d"+upgrade);
@@ -791,6 +791,92 @@ public class FactionFunctions {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F017");
+		}
+	}
+
+	public boolean deposit(String factionName, int amount)
+	{
+		/*
+		 * Améliore le rang d'une faction.
+		 *
+		 * Parameters:
+		 * 	- String factionName : le nom de la faction que l'on améliore.
+		 */
+		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+		try {
+			//On prépare la requête SQL
+			final Connection connection = firelandConnection.getConnection();
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT money FROM faction WHERE name = ?");
+			preparedStatement1.setString(1, factionName);
+			//Réalisation de la requête SQL
+			final ResultSet resultSet = preparedStatement1.executeQuery();
+			//Si la faction est trouvée dans la table upgrade, on améliore son rang
+			if (resultSet.next())
+			{
+				//On prépare la requete de modification :
+				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET money=? WHERE name = ?");
+				//On modifie l'attribut money qui correspond au rang de la faction, on ajoute 1
+				int money = resultSet.getInt(1)+amount;
+				preparedStatement2.setString(2, factionName);
+				preparedStatement2.setInt(1, money);
+				//On exécute la requete SQL
+				preparedStatement2.executeUpdate();
+				sender.sendMessage("§aVous avez déposé " + amount + "$ !");
+				return true;
+			}
+			else
+			{
+				sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F018");
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F018");
+			return false;
+		}
+	}
+
+	public boolean take(String factionName, int amount)
+	{
+		/*
+		 * Améliore le rang d'une faction.
+		 *
+		 * Parameters:
+		 * 	- String factionName : le nom de la faction que l'on améliore.
+		 */
+		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+		try {
+			//On prépare la requête SQL
+			final Connection connection = firelandConnection.getConnection();
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT money FROM faction WHERE name = ?");
+			preparedStatement1.setString(1, factionName);
+			//Réalisation de la requête SQL
+			final ResultSet resultSet = preparedStatement1.executeQuery();
+			//Si la faction est trouvée dans la table upgrade, on améliore son rang
+			if (resultSet.next())
+			{
+				//On prépare la requete de modification :
+				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET money=? WHERE name = ?");
+				//On modifie l'attribut money qui correspond au rang de la faction, on ajoute 1
+				int money = resultSet.getInt(1)-amount;
+				preparedStatement2.setString(2, factionName);
+				preparedStatement2.setInt(1, money);
+				//On exécute la requete SQL
+				preparedStatement2.executeUpdate();
+				sender.sendMessage("§aVous avez retiré " + amount + "$ !");
+				return true;
+			}
+			else
+			{
+				sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F019");
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F019");
+			return false;
 		}
 	}
 }

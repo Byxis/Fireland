@@ -244,7 +244,6 @@ public class factionManager implements Listener, CommandExecutor  {
 			}
 			if (args.length >= 2)
 			{
-
 					OfflinePlayer victim = Bukkit.getOfflinePlayer(args[1]);
 					if (!(victim.hasPlayedBefore()) || p.getName().equalsIgnoreCase(victim.getName()))
 					{
@@ -360,6 +359,95 @@ public class factionManager implements Listener, CommandExecutor  {
 			else
 			{
 				p.sendMessage("§cUtilisation : /faction promote <joueur>");
+			}
+		}
+		else if(args[0].equalsIgnoreCase("deposit") && p.hasPermission("fireland.faction.deposit"))
+		{
+			if (factionInfo == null) {
+
+				p.sendMessage("§cVous n'avez pas de faction !");
+				return true;
+			}
+			if (args.length == 2)
+			{
+				int money = Integer.parseInt(args[1]);
+				if (main.eco.getBalance(p) >= money)
+				{
+					if (money + factionInfo.getCurrentMoney() <= factionInfo.getMaxMoney() && money >= 0)
+					{
+						if (factionFunctions.deposit(factionInfo.getName(), money))
+						{
+							main.eco.withdrawPlayer(p, money);
+						}
+					} else
+					{
+						p.sendMessage("§cLa faction ne peut pas contenir autant d'argent !");
+					}
+				} else
+				{
+					p.sendMessage("§cVous n'avez pas assez d'argent !");
+				}
+			} else
+			{
+				p.sendMessage("§cUtilisation : /faction deposit <nombre>");
+			}
+		}
+		else if(args[0].equalsIgnoreCase("withdraw") && p.hasPermission("fireland.faction.withdraw")) {
+			if (factionInfo == null) {
+				p.sendMessage("§cVous n'avez pas de faction !");
+				return true;
+			}
+			if (args.length == 2) {
+				if (playerInfo.getRole() == 2 )
+				{
+					int money = Integer.parseInt(args[1]);
+					if (factionInfo.getCurrentMoney()-money >=0 && money >= 0)
+					{
+						if (factionFunctions.take(factionInfo.getName(), money))
+						{
+							main.eco.withdrawPlayer(p, money);
+						}
+					}
+					else
+					{
+						p.sendMessage("§cLa faction n'a pas assez d'argent !");
+					}
+				}
+				else
+				{
+					p.sendMessage("§cSeul le leader peut effectuer cette action !");
+				}
+			} else {
+				p.sendMessage("§cUtilisation : /faction withdraw <nombre>");
+			}
+		}
+		else if(args[0].equalsIgnoreCase("upgrade")) {
+			if (factionInfo == null) {
+				p.sendMessage("§cVous n'avez pas de faction !");
+				return true;
+			}
+			if (args.length == 1) {
+				if (playerInfo.getRole() == 2 )
+				{
+
+					if (factionInfo.getCurrentMoney() == factionInfo.getMaxMoney())
+					{
+						if (factionFunctions.deposit(factionInfo.getName(), factionInfo.getMaxMoney()))
+						{
+							factionFunctions.upgradeFaction(factionInfo.getName());
+						}
+					}
+					else
+					{
+						p.sendMessage("§cLa faction n'a pas assez d'argent !");
+					}
+				}
+				else
+				{
+					p.sendMessage("§cSeul le leader peut effectuer cette action !");
+				}
+			} else {
+				p.sendMessage("§cUtilisation : /faction upgrade");
 			}
 		}
 		else

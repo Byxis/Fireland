@@ -1,0 +1,120 @@
+Index: .idea/libraries/Maven__org_yaml_snakeyaml_1_28.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/Maven__org_yaml_snakeyaml_1_28.xml b/.idea/libraries/Maven__org_yaml_snakeyaml_1_28.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_yaml_snakeyaml_1_28.xml	(revision 27e41413c0a3dd5bea74fb889cd3590edffe7709)
++++ /dev/null	(revision 27e41413c0a3dd5bea74fb889cd3590edffe7709)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.yaml:snakeyaml:1.28">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.28/snakeyaml-1.28.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.28/snakeyaml-1.28-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.28/snakeyaml-1.28-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__com_google_code_gson_gson_2_8_0.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/Maven__com_google_code_gson_gson_2_8_0.xml b/.idea/libraries/Maven__com_google_code_gson_gson_2_8_0.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__com_google_code_gson_gson_2_8_0.xml	(revision 27e41413c0a3dd5bea74fb889cd3590edffe7709)
++++ /dev/null	(revision 27e41413c0a3dd5bea74fb889cd3590edffe7709)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: com.google.code.gson:gson:2.8.0">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__com_google_guava_guava_21_0.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/Maven__com_google_guava_guava_21_0.xml b/.idea/libraries/Maven__com_google_guava_guava_21_0.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__com_google_guava_guava_21_0.xml	(revision 27e41413c0a3dd5bea74fb889cd3590edffe7709)
++++ /dev/null	(revision 27e41413c0a3dd5bea74fb889cd3590edffe7709)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: com.google.guava:guava:21.0">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/21.0/guava-21.0.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/21.0/guava-21.0-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/21.0/guava-21.0-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__net_md_5_bungeecord_chat_1_16_R0_4.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_16_R0_4.xml b/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_16_R0_4.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_16_R0_4.xml	(revision 27e41413c0a3dd5bea74fb889cd3590edffe7709)
++++ /dev/null	(revision 27e41413c0a3dd5bea74fb889cd3590edffe7709)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: net.md-5:bungeecord-chat:1.16-R0.4">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/net/md-5/bungeecord-chat/1.16-R0.4/bungeecord-chat-1.16-R0.4.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/net/md-5/bungeecord-chat/1.16-R0.4/bungeecord-chat-1.16-R0.4-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/net/md-5/bungeecord-chat/1.16-R0.4/bungeecord-chat-1.16-R0.4-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__org_spigotmc_spigot_api_1_17_1_R0_1_SNAPSHOT.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/Maven__org_spigotmc_spigot_api_1_17_1_R0_1_SNAPSHOT.xml b/.idea/libraries/Maven__org_spigotmc_spigot_api_1_17_1_R0_1_SNAPSHOT.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__org_spigotmc_spigot_api_1_17_1_R0_1_SNAPSHOT.xml	(revision 27e41413c0a3dd5bea74fb889cd3590edffe7709)
++++ /dev/null	(revision 27e41413c0a3dd5bea74fb889cd3590edffe7709)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/spigotmc/spigot-api/1.17.1-R0.1-SNAPSHOT/spigot-api-1.17.1-R0.1-20211121.234319-104.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/spigotmc/spigot-api/1.17.1-R0.1-SNAPSHOT/spigot-api-1.17.1-R0.1-20211121.234319-104-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/org/spigotmc/spigot-api/1.17.1-R0.1-SNAPSHOT/spigot-api-1.17.1-R0.1-20211121.234319-104-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file

@@ -16,7 +16,6 @@ public class stack implements CommandExecutor {
 			Player p = (Player) sender;
 			
 			boolean ignoreMax = p.hasPermission("worldguard.stack.illegitimate");
-			ignoreMax = false;
 	        boolean ignoreDamaged = p.hasPermission("worldguard.stack.damaged");
 	       
 			ItemStack[] items = p.getInventory().getContents();

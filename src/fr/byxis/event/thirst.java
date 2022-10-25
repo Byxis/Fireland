@@ -7,7 +7,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,16 +32,16 @@ public class thirst implements Listener,CommandExecutor {
 			if(cmd.getName().equalsIgnoreCase("thirst")) {
 				Player p = (Player) sender;
 				FileConfiguration config = main.cfgm.getPlayerDB();
-				Float thirst = (float) config.getDouble("thirst."+p.getName());
+				Float thirst = (float) config.getDouble("thirst."+p.getUniqueId());
 				
 				if(args.length == 0) {
-					if(config.getString("thirst."+p.getName()) == null) {
-						config.set("thirst."+p.getName(), 100);
+					if(config.getString("thirst."+p.getUniqueId()) == null) {
+						config.set("thirst."+p.getUniqueId(), 100);
 						main.cfgm.savePlayerDB();
 						return true;
 					} else {
 						thirst = 100f;
-						config.set("thirst."+p.getName(), thirst);
+						config.set("thirst."+p.getUniqueId(), thirst);
 						main.cfgm.savePlayerDB();
 						p.setExp(thirst*0.01f);
 						return true;
@@ -52,13 +51,13 @@ public class thirst implements Listener,CommandExecutor {
 						p.sendMessage("§cLa valeur entrée doit être comprise entre 0 et 100 !");
 						return true;
 					}else {
-						if(config.getString("thirst."+p.getName()) == null) {
-							config.set("thirst."+p.getName(), args[0]);
+						if(config.getString("thirst."+p.getUniqueId()) == null) {
+							config.set("thirst."+p.getUniqueId(), args[0]);
 							main.cfgm.savePlayerDB();
 							return true;
 						} else {
 							thirst = Float.parseFloat(args[0]);
-							config.set("thirst."+p.getName(), thirst);
+							config.set("thirst."+p.getUniqueId(), thirst);
 							main.cfgm.savePlayerDB();
 							p.setExp(thirst*0.01f);
 							return true;
@@ -85,26 +84,22 @@ public class thirst implements Listener,CommandExecutor {
 		Player p = e.getPlayer();
 		if(!p.hasPlayedBefore())
 		{
-			 main.cfgm.getPlayerDB().set("thirst."+p.getName(), 100);
+			 main.cfgm.getPlayerDB().set("thirst."+p.getUniqueId(), 100);
 			 main.cfgm.savePlayerDB();
 		}
 	}
 	
     @EventHandler
     public void onPlayerRegainHealth(EntityRegainHealthEvent event) {
-        if(event.getRegainReason() == RegainReason.SATIATED ) {
-        	Entity entity = event.getEntity();
+        if(event.getRegainReason() == RegainReason.SATIATED && event.getEntity() instanceof Player p) {
     		FileConfiguration config = main.cfgm.getPlayerDB();
     		
-    		Float thirst = (float) config.getDouble("thirst."+entity.getName());
+    		Float thirst = (float) config.getDouble("thirst."+p.getUniqueId());
     		
-    		if(config.getString("thirst."+entity.getName()) == null) {
-    			return;
-    		} else {
+    		if(config.getString("thirst."+p.getUniqueId()) != null) {
     			if (thirst <= 10) {
     				event.setCancelled(true);
-    				return;
-    			} 
+				}
     		}
         }
     }
@@ -116,15 +111,15 @@ public class thirst implements Listener,CommandExecutor {
 		FileConfiguration config = main.cfgm.getPlayerDB();
 		ItemStack i = e.getItem();
 		
-		Float thirst = (float) config.getDouble("thirst."+p.getName());
+		Float thirst = (float) config.getDouble("thirst."+p.getUniqueId());
 		
 		if((i.getType() == Material.POTION && e.getItem().getDurability() == 0)) {
-			if(config.getString("thirst."+p.getName()) != null && config.getInt("thirst."+p.getName()) <= 75) {
-				config.set("thirst."+p.getName(), config.getDouble("thirst."+p.getName())+25);
+			if(config.getString("thirst."+p.getUniqueId()) != null && config.getInt("thirst."+p.getUniqueId()) <= 75) {
+				config.set("thirst."+p.getUniqueId(), config.getDouble("thirst."+p.getUniqueId())+25);
 				main.cfgm.savePlayerDB();
 			} else {
 				thirst = 100f;
-				config.set("thirst."+p.getName(), thirst);
+				config.set("thirst."+p.getUniqueId(), thirst);
 				main.cfgm.savePlayerDB();
 				p.setExp(thirst*0.01f);
 			}
@@ -136,7 +131,7 @@ public class thirst implements Listener,CommandExecutor {
 		Player p = e.getEntity().getPlayer();
 		FileConfiguration config = main.cfgm.getPlayerDB();
 		
-		config.set("thirst."+p.getName(), 100);
+		config.set("thirst."+p.getUniqueId(), 100);
 		main.cfgm.savePlayerDB();
 		p.setExp(100*0.01f);
 	}
@@ -144,9 +139,9 @@ public class thirst implements Listener,CommandExecutor {
 	public void updateThirst(Location from, Player p)
 	{
 		FileConfiguration config = main.cfgm.getPlayerDB();
-		Float thirst = (float) config.getDouble("thirst." + p.getName());
-		if (config.getString("thirst." + p.getName()) == null) {
-			config.set("thirst." + p.getName(), 100);
+		Float thirst = (float) config.getDouble("thirst." + p.getUniqueId());
+		if (config.getString("thirst." + p.getUniqueId()) == null) {
+			config.set("thirst." + p.getUniqueId(), 100);
 			main.cfgm.savePlayerDB();
 			thirst = 100f;
 			p.setExp(thirst * 0.01f);
@@ -155,7 +150,7 @@ public class thirst implements Listener,CommandExecutor {
 			p.setExp(0);
 		} else {
 			thirst = thirst - 0.005f;
-			config.set("thirst." + p.getName(), thirst);
+			config.set("thirst." + p.getUniqueId(), thirst);
 			main.cfgm.savePlayerDB();
 			if (thirst * 0.01f > 1) {
 				p.setExp(1);

@@ -71,10 +71,6 @@ public class stairs implements Listener {
 			{
 				face = -1;
 			}
-			else
-			{
-				p.sendMessage("err");
-			}
 			
 			loc.setYaw((face*90)-180);
 			Location locUp = block.getLocation();
@@ -161,11 +157,9 @@ public class stairs implements Listener {
 	public void playerLeaveArrow(EntityDismountEvent  e)
 	{
 		//Entity passenger = ((Entity) e).getPassenger();
-		System.out.println("Wow");
 		Entity vehicle = e.getDismounted();
 		if(vehicle instanceof ArmorStand)
 		{
-			System.out.println("Zou");
 			vehicle.remove();
 		}
 	}

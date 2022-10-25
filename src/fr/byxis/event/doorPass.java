@@ -197,12 +197,12 @@ public class doorPass implements Listener {
 					Location door = getDoorLocation(e.getClickedBlock().getLocation());
 	                if(door != null)
 	                {
-	                	if(main.cfgm.getPlayerDB().getBoolean("discretion."+p.getName()+".hasKilled"))
+	                	if(main.cfgm.getPlayerDB().getBoolean("discretion."+p.getUniqueId()+".hasKilled"))
 	                	{
 	                		e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
 	                		e.getPlayer().sendMessage("§cL'accès vous a été refusé ! Vous avez tué un joueur il y a moins de 5 minutes !");
 	                	}
-	                	else if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getName()+".state"))
+	                	else if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getUniqueId()+".state"))
 	                	{
 	                		e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
 	                		e.getPlayer().sendMessage("§cL'accès vous a été refusé ! Vous êtes infecté !");
@@ -223,10 +223,10 @@ public class doorPass implements Listener {
 
 	private void InitOpenDoor(PlayerInteractEvent e, Player p, int passTime)
 	{
-		boolean waiting = main.getConfig().getBoolean("door."+p.getName());
+		boolean waiting = main.getConfig().getBoolean("door."+p.getUniqueId());
 		if(!waiting)
 		{
-			main.getConfig().set("door."+p.getName(), true);
+			main.getConfig().set("door."+p.getUniqueId(), true);
 			Location door = getDoorLocation(e.getClickedBlock().getLocation());
 			if(door != null)
 			{
@@ -236,7 +236,7 @@ public class doorPass implements Listener {
 				{
 					@Override
 					public void run() {
-						main.getConfig().set("door."+p.getName(), false);
+						main.getConfig().set("door."+p.getUniqueId(), false);
 						openDoor(door.getBlock().getState(), (Openable) door.getBlock().getState().getBlockData(), passTime);
 						if(doubleDoor != null)
 						{

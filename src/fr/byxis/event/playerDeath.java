@@ -1,15 +1,14 @@
 package fr.byxis.event;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
+import fr.byxis.main.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.byxis.main.Main;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class playerDeath implements Listener {
 	
@@ -35,8 +34,9 @@ public class playerDeath implements Listener {
 		if(e.getEntity().getKiller() == null)
 			return;
 		Player killer = e.getEntity().getKiller();
-		
-		main.cfgm.getPlayerDB().set("discretion."+killer.getName()+".hasKilled", true);
+		//TODO: Système de Karma
+		main.cfgm.getPlayerDB().set("discretion."+killer.getUniqueId()+".hasKilled", true);
+		main.cfgm.getPlayerDB().set("discretion."+killed.getUniqueId()+".hasKilled", false);
 		main.cfgm.savePlayerDB();
 		
 		int time;
@@ -54,13 +54,10 @@ public class playerDeath implements Listener {
 		pay = round(pay, 1);
 		killed.sendMessage("§cVous avez perdu "+pay+"$ !");
 		main.eco.withdrawPlayer(killed, pay);
-		
-		if(killer instanceof Player)
-		{
-			killer.sendMessage("§7Vous avez gagné §c"+pay+"$§7 en tuant "+killed.getName()+" !");
-			main.eco.depositPlayer(killer, pay);
-		}
-		
+
+		killer.sendMessage("§7Vous avez gagné §c"+pay+"$§7 en tuant §c"+killed.getName()+"§7 !");
+		main.eco.depositPlayer(killer, pay);
+
 		new BukkitRunnable()
 		{
 			@Override
@@ -69,7 +66,7 @@ public class playerDeath implements Listener {
 				main.cfgm.savePlayerDB();
 			}
 			
-		}.runTaskLater(main, 20 * time);
+		}.runTaskLater(main, 20L * time);
 	}
 	
 }

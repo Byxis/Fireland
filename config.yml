@@ -1,17 +1,21 @@
 heliport:
   centreville:
+    price: 500
     x: -444.5
     y: 81.0
     z: -434.
   zonene:
+    price: 600
     x: 349.5
     y: 84.0
     z: -393.5
   zones:
+    price: 600
     x: -179.5
     y: 97.0
     z: 605.5
   zonemilli:
+    price: 1000
     x: 553.5
     y: 76.0
     z: 704.5

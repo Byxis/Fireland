@@ -26,7 +26,7 @@ public class parachute implements Listener {
     	if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
     		if(e.getItem() != null) {
     			if(e.getItem().getType() == Material.POPPY || e.getItem().getType() == Material.DANDELION) {
-    				config.set("parachute."+e.getPlayer().getName(), true);
+    				config.set("parachute."+e.getPlayer().getUniqueId(), true);
     				e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), "minecraft:entity.bat.takeoff",  0.1f, 1);
     				main.cfgm.savePlayerDB();
         		
@@ -37,10 +37,10 @@ public class parachute implements Listener {
     						if(e.getItem() != null) {
     							if(e.getItem().getType() == Material.DANDELION) {
     								if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-    									config.set("parachute."+e.getPlayer().getName(), false);
+    									config.set("parachute."+e.getPlayer().getUniqueId(), false);
     									main.cfgm.savePlayerDB();
     								}else {
-    									config.set("parachute."+e.getPlayer().getName(), true);
+    									config.set("parachute."+e.getPlayer().getUniqueId(), true);
     									main.cfgm.savePlayerDB();
     								}
     							}

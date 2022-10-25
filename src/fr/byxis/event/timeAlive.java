@@ -21,7 +21,7 @@ public class timeAlive implements Listener {
 	{
 		Player p = e.getPlayer();
 		
-		main.cfgm.getPlayerDB().set("playtime."+p.getName(), 0);
+		main.cfgm.getPlayerDB().set("playtime."+p.getUniqueId(), 0);
 		main.cfgm.savePlayerDB();
 	}
 

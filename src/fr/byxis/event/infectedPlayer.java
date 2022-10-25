@@ -29,12 +29,12 @@ public class infectedPlayer implements Listener,CommandExecutor {
 		Player p = e.getEntity().getPlayer();
 		assert p != null;
 		FileConfiguration config = main.cfgm.getPlayerDB();
-		if(config.getBoolean("infected."+p.getName()+".state"))
+		if(config.getBoolean("infected."+p.getUniqueId()+".state"))
 		{
 			e.setDeathMessage(p.getName() + " est mort due à son infection !");
 		}
-		config.set("infected."+p.getName()+".state", false);
-		config.set("infected."+p.getName()+".time", 0);
+		config.set("infected."+p.getUniqueId()+".state", false);
+		config.set("infected."+p.getUniqueId()+".time", 0);
 		main.cfgm.savePlayerDB();
 		String cmd = "mm m spawn Infecte 1 world,"+p.getLocation().getX()+","+p.getLocation().getY()+","+p.getLocation().getZ();
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
@@ -55,8 +55,8 @@ public class infectedPlayer implements Listener,CommandExecutor {
 				if(random && !p.isInvulnerable() /*&& config.getInt("safezone."+p.getName()+".time") > 0*/){
 
 			        
-			        if(!config.getBoolean("infected." + p.getName() + ".state")) {
-			        	config.set("infected."+p.getName()+".state", true);
+			        if(!config.getBoolean("infected." + p.getUniqueId() + ".state")) {
+			        	config.set("infected."+p.getUniqueId()+".state", true);
 			        	main.cfgm.savePlayerDB();
 						p.sendMessage("§8Vous avez été infecté ! Trouvez vite une seringue avant l'infection ne vous tue");
 						p.sendTitle("§8Vous avez été infecté !", "");
@@ -75,8 +75,8 @@ public class infectedPlayer implements Listener,CommandExecutor {
 			
 			FileConfiguration config = main.cfgm.getPlayerDB();
 			
-			if(config.getBoolean("infected." + p.getName() + ".state")) {
-				config.set("infected."+p.getName()+".state", false);
+			if(config.getBoolean("infected." + p.getUniqueId() + ".state")) {
+				config.set("infected."+p.getUniqueId()+".state", false);
 				main.cfgm.savePlayerDB();
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.seringue ambient "+p.getName()+" "+p.getLocation().getX()+" "+p.getLocation().getY()+" "+p.getLocation().getZ()+" 1");
 				
@@ -96,13 +96,13 @@ public class infectedPlayer implements Listener,CommandExecutor {
 		if(p.getItemInHand().getType() == Material.GHAST_TEAR) {
 			FileConfiguration config = main.cfgm.getPlayerDB();
 			
-			if(!(e.getRightClicked() instanceof Player friend) || config.getBoolean("infected."+p.getName()+".state"))
+			if(!(e.getRightClicked() instanceof Player friend) || config.getBoolean("infected."+p.getUniqueId()+".state"))
 			{
 				return;
 			}
 
-			if(config.getBoolean("infected." + friend.getName() + ".state")) {
-				config.set("infected."+friend.getName()+".state", false);
+			if(config.getBoolean("infected." + friend.getUniqueId() + ".state")) {
+				config.set("infected."+friend.getUniqueId()+".state", false);
 				main.cfgm.savePlayerDB();
 				
 				friend.getWorld().playSound(friend.getLocation(), "minecraft:gun.hud.seringue", 1, 1);

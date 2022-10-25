@@ -1,8 +1,8 @@
 name: Fireland
-version: 2.1
+version: 3.0B.1
 author: Byxis
 main: fr.byxis.main.Main
-api-version: 1.17
+api-version: 1.19
 depend: 
   - ProtocolLib
   - Vault

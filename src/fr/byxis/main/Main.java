@@ -31,7 +31,6 @@ public class Main extends JavaPlugin {
 	boolean moonPhase = true;
 	
 	public Economy eco;
-	//public WorldGuardPlugin worldGuardPlugin;
 	public ConfigManager cfgm;
 	
 	private DatabaseManager databaseManager;
@@ -87,6 +86,8 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new join(this), this);
 		getServer().getPluginManager().registerEvents(new NVGoogles(), this);
 		getServer().getPluginManager().registerEvents(new FactionPvp(this), this);
+		getServer().getPluginManager().registerEvents(new playerManager(), this);
+		getServer().getPluginManager().registerEvents(new zombieManager(this), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -239,7 +240,7 @@ public class Main extends JavaPlugin {
 				    	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"Le soleil se lève !\",\"bold\":true,\"color\":\"gold\"}");
 						for(Player p : getServer().getOnlinePlayers())
 						{
-							p.playSound(p.getLocation(), "minecraft:gun.hud.night_passed ambient", 1, 1);
+							p.playSound(p.getLocation(), "minecraft:gun.hud.night_passed", 1, 1);
 						}
 
 			    	}

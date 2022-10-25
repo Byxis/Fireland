@@ -1,7 +1,7 @@
 package fr.byxis.event;
 
-import java.util.ArrayList;
-
+import fr.byxis.main.ConfigManager;
+import fr.byxis.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -18,8 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.byxis.main.ConfigManager;
-import fr.byxis.main.Main;
+import java.util.ArrayList;
 
 public class menu implements Listener,CommandExecutor {
 
@@ -50,7 +49,7 @@ public class menu implements Listener,CommandExecutor {
         ItemMeta modifiedCentreVille = centreVille.getItemMeta();
         modifiedCentreVille.setDisplayName("§lCentre-Ville");
         ArrayList<String> lore = new ArrayList<String>();
-        lore.add("§eCoût de la téléportation : 250$");
+        lore.add("§eCoût de la téléportation : "+main.getConfig().getInt("heliport.centreville.price")+"$");
         modifiedCentreVille.setLore(lore);
         centreVille.setItemMeta(modifiedCentreVille);
         
@@ -58,7 +57,7 @@ public class menu implements Listener,CommandExecutor {
 		ItemMeta modifiedzoneNordEst = zoneNordEst.getItemMeta();
 		modifiedzoneNordEst.setDisplayName("§lZone Nord-Est");
 		lore = new ArrayList<String>();
-		lore.add("§eCoût de la téléportation : 500$");
+		lore.add("§eCoût de la téléportation : "+main.getConfig().getInt("heliport.zonene.price")+"$");
 		modifiedzoneNordEst.setLore(lore);
 		zoneNordEst.setItemMeta(modifiedzoneNordEst);
 		
@@ -66,7 +65,7 @@ public class menu implements Listener,CommandExecutor {
 		ItemMeta modifiedzoneSud = zoneNordEst.getItemMeta();
 		modifiedzoneSud.setDisplayName("§lZone Sud");
 		lore = new ArrayList<String>();
-		lore.add("§eCoût de la téléportation : 500$");
+		lore.add("§eCoût de la téléportation : "+main.getConfig().getInt("heliport.zones.price")+"$");
 		modifiedzoneSud.setLore(lore);
 		zoneSud.setItemMeta(modifiedzoneSud);
 		
@@ -74,7 +73,7 @@ public class menu implements Listener,CommandExecutor {
 		ItemMeta modifiedzoneMili = zoneNordEst.getItemMeta();
 		modifiedzoneMili.setDisplayName("§lBase Militaire");
 		lore = new ArrayList<String>();
-		lore.add("§eCoût de la téléportation : 750$");
+		lore.add("§eCoût de la téléportation : "+main.getConfig().getInt("heliport.zonemilli.price")+"$");
 		modifiedzoneMili.setLore(lore);
 		zoneMili.setItemMeta(modifiedzoneMili);
         
@@ -167,16 +166,16 @@ public class menu implements Listener,CommandExecutor {
         		switch(current.getItemMeta().getDisplayName())
         		{
         			case "§lCentre-Ville":
-        				TeleportPlayer(player,current,centreville, 250);
+        				TeleportPlayer(player,current,centreville, main.getConfig().getInt("heliport.centreville.price"));
         				break;
         			case "§lZone Nord-Est":
-        				TeleportPlayer(player,current,zoneNE, 500);
+        				TeleportPlayer(player,current,zoneNE, main.getConfig().getInt("heliport.zonene.price"));
         				break;
         			case "§lZone Sud":
-        				TeleportPlayer(player,current,zoneS, 500);
+        				TeleportPlayer(player,current,zoneS, main.getConfig().getInt("heliport.zones.price"));
         				break;
         			case "§lBase Militaire":
-        				TeleportPlayer(player,current,zoneMilli, 750);
+        				TeleportPlayer(player,current,zoneMilli, main.getConfig().getInt("heliport.zonemilli.price"));
         				break;
         				
         		}
@@ -197,27 +196,27 @@ public class menu implements Listener,CommandExecutor {
         		ConfigManager config = main.cfgm;
         		player.closeInventory();
         		player.sendMessage("§8La téléportation commence, veuillez ne pas bougez.");
-        		config.getPlayerDB().set("mouvement."+player.getName()+".time", 10);
+        		config.getPlayerDB().set("mouvement."+player.getUniqueId()+".time", 10);
         		config.savePlayerDB();
         		player.playSound(player.getLocation(), "minecraft:gun.hud.helico", (float) 0.1, (float) 1);
                 new BukkitRunnable() {
 
                 	public void run() {
                 			
-                		if (config.getPlayerDB().getBoolean("mouvement."+player.getName())) {
+                		if (config.getPlayerDB().getBoolean("mouvement."+player.getUniqueId())) {
                 			player.sendMessage("§cTéléportation annulée !");
-                			config.getPlayerDB().set("mouvement."+player.getName()+".time", 50);;
-                			config.getPlayerDB().set("mouvement."+player.getName()+".boulean", false);
+                			config.getPlayerDB().set("mouvement."+player.getUniqueId()+".time", 50);;
+                			config.getPlayerDB().set("mouvement."+player.getUniqueId()+".boulean", false);
                 			config.savePlayerDB();
-                			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound "+player.getName()+" * minecraft:gun.hud.helico");
+                			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound "+player.getUniqueId()+" * minecraft:gun.hud.helico");
                 			cancel();
                 		}
 
-                		if (config.getPlayerDB().getInt("mouvement."+player.getName()+".time") == 10 || config.getPlayerDB().getInt("mouvement."+player.getName()+".time") == 5) {
-                			player.sendMessage("§8Téléportation dans " + config.getPlayerDB().getInt("mouvement."+player.getName()+".time") + " secondes !");
+                		if (config.getPlayerDB().getInt("mouvement."+player.getUniqueId()+".time") == 10 || config.getPlayerDB().getInt("mouvement."+player.getUniqueId()+".time") == 5) {
+                			player.sendMessage("§8Téléportation dans " + config.getPlayerDB().getInt("mouvement."+player.getUniqueId()+".time") + " secondes !");
                 		}
 
-                		if (config.getPlayerDB().getInt("mouvement."+player.getName()+".time") == 0) {
+                		if (config.getPlayerDB().getInt("mouvement."+player.getUniqueId()+".time") == 0) {
                 			player.sendMessage("§8Téléportation...");
                 			player.teleport(loc);
                 			player.sendMessage("§7Vous avez payé "+price+"$");
@@ -227,7 +226,7 @@ public class menu implements Listener,CommandExecutor {
                 			cancel();
                 		}
 
-                		config.getPlayerDB().set("mouvement."+player.getName()+".time",config.getPlayerDB().getInt("mouvement."+player.getName()+".time") -1);
+                		config.getPlayerDB().set("mouvement."+player.getUniqueId()+".time",config.getPlayerDB().getInt("mouvement."+player.getUniqueId()+".time") -1);
                 		config.savePlayerDB();
                 	}
                 }.runTaskTimer(main, 0L, 20L);

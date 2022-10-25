@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="Fireland.jar">
-    <output-path>$USER_HOME$/Desktop/o/dev/Server/Fireland V2 Official pour la vérité local host sa mere/plugins/</output-path>
+    <output-path>$USER_HOME$/Documents/Dev/Fireland</output-path>
     <root id="archive" name="Fireland.jar">
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />

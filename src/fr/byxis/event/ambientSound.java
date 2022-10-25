@@ -11,7 +11,7 @@ import fr.byxis.main.Main;
 
 public class ambientSound implements Listener, CommandExecutor {
 
-	private Main main;
+	private final Main main;
 	
 	public ambientSound(Main main) {
 		this.main = main;
@@ -23,14 +23,14 @@ public class ambientSound implements Listener, CommandExecutor {
 		{
 			Player p = (Player) sender;
 			ConfigManager config = main.cfgm;
-			if(config.getPlayerDB().getBoolean("ambientsound."+p.getName()))
+			if(config.getPlayerDB().getBoolean("ambientsound."+p.getUniqueId()))
 			{
-				config.getPlayerDB().set("ambientsound."+p.getName(), false);
+				config.getPlayerDB().set("ambientsound."+p.getUniqueId(), false);
 				p.sendMessage("§8Les sons d'ambiance ont été désactivés !");
 			}
 			else
 			{
-				config.getPlayerDB().set("ambientsound."+p.getName(), true);
+				config.getPlayerDB().set("ambientsound."+p.getUniqueId(), true);
 				p.sendMessage("§8Les sons d'ambiance ont été activés !");
 			}
 			config.savePlayerDB();
@@ -48,7 +48,7 @@ public class ambientSound implements Listener, CommandExecutor {
 		{
 			for (Player p : main.getServer().getOnlinePlayers())
 			{
-				if(main.cfgm.getPlayerDB().getBoolean("ambientsound."+p.getName()))
+				if(main.cfgm.getPlayerDB().getBoolean("ambientsound."+p.getUniqueId()))
 				{
 					p.playSound(p.getLocation(), "minecraft:ambient.cave", 1, 1);
 				}

@@ -41,7 +41,7 @@ public class scoreboardPlayer implements Listener {
 		objective.setDisplayName("§f§lStatistiques");
 		
 		String state;
-		if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getName()+".state"))
+		if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getUniqueId()+".state"))
 		{
 			state = "§2infecté";
 		}
@@ -50,14 +50,14 @@ public class scoreboardPlayer implements Listener {
 			state = "§7sain";
 		}
 		
-		double numDiscretion = main.cfgm.getPlayerDB().getDouble("discretion."+p.getName()+".score");
+		double numDiscretion = main.cfgm.getPlayerDB().getDouble("discretion."+p.getUniqueId()+".score");
 		
 		if(numDiscretion < 0)
 		{
 			numDiscretion = 0;
 		}
 		String shotColor = "§7";
-		if(main.cfgm.getPlayerDB().getBoolean("discretion." + p.getName() + ".shot"))
+		if(main.cfgm.getPlayerDB().getBoolean("discretion." + p.getUniqueId() + ".shot"))
 		{
 			shotColor = "§4";
 		}
@@ -68,8 +68,8 @@ public class scoreboardPlayer implements Listener {
 		Score line2 = objective.getScore("§7- ");
 		Score none1 = objective.getScore("");
 		Score none2 = objective.getScore(" ");
-		Score money = objective.getScore("§8Money : §6"+Math.round(main.eco.getBalance(p))+"$");
-		Score bank = objective.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getName()+".money"))+"$");
+		Score money = objective.getScore("§8Monnaie : §6"+Math.round(main.eco.getBalance(p))+"$");
+		Score bank = objective.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"$");
 		Score infect = objective.getScore("§8État : "+state);
 		Score discretion = objective.getScore("§8Discretion : "+shotColor+numDiscretion+"%");
 		Score temps = objective.getScore("§8Temps survécu : §7"+time);
@@ -102,14 +102,14 @@ public class scoreboardPlayer implements Listener {
 		Objective obj = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
 		
 		String state = "§7sain";
-		if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getName()))
+		if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getUniqueId()))
 		{
 			state = "§2infecté";
 		}
 		
-		double numDiscretion = main.cfgm.getPlayerDB().getDouble("discretion."+p.getName()+".score");
+		double numDiscretion = main.cfgm.getPlayerDB().getDouble("discretion."+p.getUniqueId()+".score");
 		
-		if(numDiscretion < 0 || main.cfgm.getPlayerDB().getBoolean("discretion."+p.getName()+"shot"))
+		if(numDiscretion < 0 || main.cfgm.getPlayerDB().getBoolean("discretion."+p.getUniqueId()+"shot"))
 		{
 			numDiscretion = 0;
 		}
@@ -118,10 +118,10 @@ public class scoreboardPlayer implements Listener {
 
 		Score money = null;
 		if (obj != null) {
-			money = obj.getScore("§8Money : §6"+Math.round(main.eco.getBalance(p))+"$");
+			money = obj.getScore("§8Monnaie : §6"+Math.round(main.eco.getBalance(p))+"$");
 		}
 		Score bank;
-		bank = obj.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getName()+".money"))+"$");
+		bank = obj.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"$");
 		Score discretion = obj.getScore("§8Discretion : §7"+numDiscretion+"%");
 		Score infecte = obj.getScore("§8État : "+state);
 		Score temps = obj.getScore("§8Temps survécu : §7"+time);
@@ -135,7 +135,7 @@ public class scoreboardPlayer implements Listener {
 	
 	private String getTimeString(Player p)
 	{
-		double time = main.cfgm.getPlayerDB().getDouble("playtime."+p.getName());
+		double time = main.cfgm.getPlayerDB().getDouble("playtime."+p.getUniqueId());
 		int iTime = (int) time;
 		String sTime = "s";
 		

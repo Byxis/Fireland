@@ -179,7 +179,7 @@ public class Main extends JavaPlugin {
 				for(Player p : getServer().getOnlinePlayers()) {
 					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
 						
-						float thirst = (float) playerDBConfig.getDouble("thirst."+p.getName());
+						float thirst = (float) playerDBConfig.getDouble("thirst."+p.getUniqueId());
 						
 						if (thirst <= 0f) {
 							p.setExp(0);
@@ -254,7 +254,7 @@ public class Main extends JavaPlugin {
 				for(Player p : getServer().getOnlinePlayers()) {
 					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
 						
-						float thirst = (float) playerDBConfig.getDouble("thirst."+p.getName());
+						float thirst = (float) playerDBConfig.getDouble("thirst."+p.getUniqueId());
 						
 						if (thirst <= 0f) {
 							p.sendMessage("§8Vous avez soif !");
@@ -273,15 +273,15 @@ public class Main extends JavaPlugin {
 				for(Player p : getServer().getOnlinePlayers()) {
 					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
 						
-						boolean infected = playerDBConfig.getBoolean("infected."+p.getName()+".state");
+						boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
 						if (infected) {
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 240, 0, false, false), true);
-							int timer = playerDBConfig.getInt("infected."+p.getName()+".time");
+							int timer = playerDBConfig.getInt("infected."+p.getUniqueId()+".time");
 							
-							if(playerDBConfig.getString("infected."+p.getName()+".time") == null) {
-								playerDBConfig.set("infected."+p.getName()+".time", 1);
+							if(playerDBConfig.getString("infected."+p.getUniqueId()+".time") == null) {
+								playerDBConfig.set("infected."+p.getUniqueId()+".time", 1);
 							}else {
-								playerDBConfig.set("infected."+p.getName()+".time", playerDBConfig.getInt("infected."+p.getName()+".time")+1);
+								playerDBConfig.set("infected."+p.getUniqueId()+".time", playerDBConfig.getInt("infected."+p.getUniqueId()+".time")+1);
 							}
 							cfgm.savePlayerDB();
 							if(timer >= 120){
@@ -311,7 +311,7 @@ public class Main extends JavaPlugin {
 			@Override
 			public void run() {
 				for (Player p : Bukkit.getOnlinePlayers()) {
-					if(playerDBConfig.getBoolean("parachute."+p.getName())) {
+					if(playerDBConfig.getBoolean("parachute."+p.getUniqueId())) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 5, 2, false, false), true);
 						if(p.getItemInHand().getType() == Material.POPPY) {
 							p.getItemInHand().setType(Material.DANDELION);
@@ -339,7 +339,7 @@ public class Main extends JavaPlugin {
 					checkDiscretionPoint(p);
 					scoreboardPlayerClass.update(p);
 					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
-						boolean infected = playerDBConfig.getBoolean("infected."+p.getName()+".state");
+						boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
 						if (infected || p.getHealth() < 6) {
 							//playBorderPackets(p, true);
 							p.playSound(p.getLocation(), "minecraft:entity.player.heartbeat", 1, 1);
@@ -349,11 +349,11 @@ public class Main extends JavaPlugin {
 							//playBorderPackets(p, false);
 						}
 						
-						int safezone = cfgm.getPlayerDB().getInt("safezone."+p.getName()+".time");
+						int safezone = cfgm.getPlayerDB().getInt("safezone."+p.getUniqueId()+".time");
 						
 						if (safezone > 0)
 						{
-							cfgm.getPlayerDB().set("safezone."+p.getName()+".time", (safezone-1));
+							cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", (safezone-1));
 							cfgm.savePlayerDB();
 							
 							if(safezone == 5 || safezone == 10)
@@ -365,7 +365,7 @@ public class Main extends JavaPlugin {
 						{
 							if(safezone == 0)
 							{
-								cfgm.getPlayerDB().set("safezone."+p.getName()+".time", -1);
+								cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", -1);
 								cfgm.savePlayerDB();
 								p.setInvulnerable(false);
 							}
@@ -595,7 +595,7 @@ public class Main extends JavaPlugin {
 	private void checkDiscretionPoint(Player player)
 	{
 		double discretion = 100;
-		String sDiscretion = "discretion."+player.getName()+".";
+		String sDiscretion = "discretion."+player.getUniqueId()+".";
 		
 		//check player movement
 		if(cfgm.getPlayerDB().getBoolean(sDiscretion+"move"))
@@ -636,7 +636,7 @@ public class Main extends JavaPlugin {
 	
 	private void playTimePlayerAdd(Player p)
 	{
-		cfgm.getPlayerDB().set("playtime."+p.getName(), cfgm.getPlayerDB().getInt("playtime."+p.getName())+ 1);
+		cfgm.getPlayerDB().set("playtime."+p.getUniqueId(), cfgm.getPlayerDB().getInt("playtime."+p.getUniqueId())+ 1);
 		cfgm.savePlayerDB();
 	}
 	

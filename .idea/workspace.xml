@@ -9,11 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #1 de la version 3B.0.1.2">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #2 de la version 3B.0.1.2&#10;- Simplification du système de detection (en attendant un fix)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/rally$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/command/rally$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/rally.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/command/rally.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/stack.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/command/stack.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666693221546</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Patch #2 de la version 3B.0.1.2&#10;- Simplification du système de detection (en attendant un fix)">
+      <created>1666693382481</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1666693382481</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -234,7 +242,8 @@
     <MESSAGE value="Modification des configs utilisées comme BDD, utilisant&#10;maintenant l'UUID plutôt que le pseudo.&#10;&#10;Les fonctionnalités suivantes sont a vérifier :&#10;- Bank&#10;- Ambiant sound&#10;- doorPass (en cas d'infection)&#10;- Infection&#10;- menu&#10;- Heliport&#10;- Parachute&#10;- Mort du joueur (infection)&#10;- kill du joueur (marqué comme tueur, mais va etre remplacé par le système de karma)&#10;- Scorfeboard du joueur&#10;- Soif&#10;- Temps de vie&#10;- Détection des zombies&#10;&#10;ET&#10;Ajout de /rally uwu distance" />
     <MESSAGE value="modification de version" />
     <MESSAGE value="Patch #1 de la version 3B.0.1.2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #1 de la version 3B.0.1.2" />
+    <MESSAGE value="Patch #2 de la version 3B.0.1.2&#10;- Simplification du système de detection (en attendant un fix)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #2 de la version 3B.0.1.2&#10;- Simplification du système de detection (en attendant un fix)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

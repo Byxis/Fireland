@@ -361,6 +361,22 @@ public class factionManager implements Listener, CommandExecutor  {
 				p.sendMessage("§cUtilisation : /faction promote <joueur>");
 			}
 		}
+		else if(args[0].equalsIgnoreCase("rename") && playerInfo.getRole() == 2)
+		{
+			if(args.length >= 2)
+			{
+				double money = main.eco.getBalance(p);
+				if(money >= 5000)
+				{
+					main.eco.withdrawPlayer(p, 5000);
+					factionFunctions.renameFaction(playerInfo.getFactionName(), args[1]);
+				}
+				else
+				{
+					p.sendMessage("§cVous n'avez pas assez d'argent !");
+				}
+			}
+		}
 		else if(args[0].equalsIgnoreCase("deposit") && p.hasPermission("fireland.faction.deposit"))
 		{
 			if (factionInfo == null) {

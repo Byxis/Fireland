@@ -345,6 +345,7 @@ public class bank implements Listener, CommandExecutor {
 	
 	private void setItemsMenuBank(Inventory inv, Player player)
 	{
+		try{
 		FactionFunctions factionFunctions = new FactionFunctions(main, player);
 
 		FactionInformation factionInfo = factionFunctions.getFactionInfo(factionFunctions.playerFactionName(player));
@@ -381,6 +382,8 @@ public class bank implements Listener, CommandExecutor {
 			int slots = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
 			inv.setItem(16, setItemMetaLore(Material.ENDER_CHEST, "§aStockage - ", (short) 0, listMaker("§8Faites un §dclic gauche§8 pour ouvrir votre stockage","§8Vous disposez actuellement de §6"+slots+"§8 slots de stockage !","§8L'amélioration suivant vous permettra de passer §6","§8à §6"+(slots+9)+"§8 slots !")));
 
+		}} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 
 	}

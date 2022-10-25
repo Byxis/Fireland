@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class zombieManager implements Listener {
-    private Main main;
+    private final Main main;
 
     public zombieManager(Main main) {
         this.main = main;
@@ -24,7 +24,7 @@ public class zombieManager implements Listener {
     {
         if (e.getEntityType() == EntityType.ZOMBIE_VILLAGER)
         {
-            ((LivingEntity)e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,2147483647, 4, false));
+            ((LivingEntity)e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,2147483647, 4, true));
         }
     }
 
@@ -37,7 +37,7 @@ public class zombieManager implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    ((LivingEntity)e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,2147483647, 4, false));
+                    ((LivingEntity)e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,2147483647, 4, true));
                 }
             }.runTaskLater(main, 20*5);
         }

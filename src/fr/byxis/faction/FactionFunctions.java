@@ -879,4 +879,42 @@ public class FactionFunctions {
 			return false;
 		}
 	}
+
+	public void renameFaction(String _factionName, String _newName)
+	{
+		/*
+		 * Renomme une faction.
+		 *
+		 * Parameters:
+		 * 	- String _factionName : le nom de la faction que l'on améliore.
+		 */
+		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+		try {
+			//On prépare la requête SQL
+			final Connection connection = firelandConnection.getConnection();
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT upgrade FROM faction WHERE name = ?");
+			preparedStatement1.setString(1, _factionName);
+			//Réalisation de la requête SQL
+			final ResultSet resultSet = preparedStatement1.executeQuery();
+			//Si la faction est trouvée dans la table upgrade, on améliore son rang
+			if (resultSet.next())
+			{
+				//On prépare la requete de modification :
+				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET name=? WHERE name = ?");
+				preparedStatement2.setString(2, _factionName);
+				preparedStatement2.setString(1, _newName);
+				//On exécute la requete SQL
+				preparedStatement2.executeUpdate();
+				sender.sendMessage("§cVotre faction a été renommée. Elle s'appelle désormais §d"+_newName+" §c!");
+			}
+			else
+			{
+				sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F015");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F015");
+		}
+	}
 }

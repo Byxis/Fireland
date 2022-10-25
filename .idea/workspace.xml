@@ -9,12 +9,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #2 de la version 3B.0.1.2&#10;- Simplification du système de detection (en attendant un fix)">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #3 de la version 3B.0.1.2&#10;- Fix temps de vie, discretion, infection, soif (pas intégralement), doorpass&#10;- Possible fix de la bank/parachute">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/zombieManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/zombieManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +207,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666693382481</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Patch #3 de la version 3B.0.1.2&#10;- Fix temps de vie, discretion, infection, soif (pas intégralement), doorpass&#10;- Possible fix de la bank/parachute">
+      <created>1666723613897</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1666723613897</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -243,7 +256,8 @@
     <MESSAGE value="modification de version" />
     <MESSAGE value="Patch #1 de la version 3B.0.1.2" />
     <MESSAGE value="Patch #2 de la version 3B.0.1.2&#10;- Simplification du système de detection (en attendant un fix)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #2 de la version 3B.0.1.2&#10;- Simplification du système de detection (en attendant un fix)" />
+    <MESSAGE value="Patch #3 de la version 3B.0.1.2&#10;- Fix temps de vie, discretion, infection, soif (pas intégralement), doorpass&#10;- Possible fix de la bank/parachute" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #3 de la version 3B.0.1.2&#10;- Fix temps de vie, discretion, infection, soif (pas intégralement), doorpass&#10;- Possible fix de la bank/parachute" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

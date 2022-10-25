@@ -1,14 +1,11 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
-import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ZombieDetection implements Listener {
@@ -57,7 +54,7 @@ public class ZombieDetection implements Listener {
 			
 		}.runTaskLater(main, 30);
 	}
-
+	/*
 	@EventHandler
     public void playerMouvement(PlayerMoveEvent e) {
         Location from = new Location(e.getFrom().getWorld(), e.getFrom().getX(), e.getFrom().getY(), e.getFrom().getZ());
@@ -126,6 +123,6 @@ public class ZombieDetection implements Listener {
                 }
             }).runTaskLater(main, 20L);
         }
-    }
+    }*/
 
 }

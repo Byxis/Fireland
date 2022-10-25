@@ -9,107 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Modif">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_MilkBowl_VaultAPI_1_7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bukkit_bukkit_1_13_1_R0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/event/playerManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/event/zombieManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Fireland_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Fireland_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_oshi_oshi_core_5_8_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_11_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_authlib_3_2_38.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_brigadier_1_0_18.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_datafixerupper_4_0_26.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_javabridge_1_2_24.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_all_4_1_68_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_papermc_paper_paper_api_1_18_2_R0_1_SNAPSHOT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_inject_javax_inject_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jline_jline_2_12_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_27.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_5_9_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_platform_5_9_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_api_4_10_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_api_4_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_key_4_10_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_key_4_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_logger_slf4j_4_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_minimessage_4_10_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_minimessage_4_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_gson_4_10_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_gson_4_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_legacy_4_10_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_legacy_4_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_plain_4_10_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_plain_4_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_16_R0_4_deprecated_build_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_jopt_simple_jopt_simple_5_0_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_12_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_14.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_core_2_14_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_iostreams_2_14_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_slf4j18_impl_2_14_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_artifact_3_8_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_builder_support_3_8_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_model_3_8_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_model_builder_3_8_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_repository_metadata_3_8_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_resolver_provider_3_8_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_api_1_6_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_connector_basic_1_7_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_impl_1_6_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_spi_1_6_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_transport_http_1_7_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_util_1_6_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_plexus_plexus_interpolation_1_26.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_plexus_plexus_utils_3_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_sisu_org_eclipse_sisu_inject_0_3_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_30.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_1_18_1_R0_1_SNAPSHOT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_18_2_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_19_2_R0_1_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xerial_sqlite_jdbc_3_36_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_30.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_01_2022_15_49__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_01_2022_15_49__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_10_2022_17_56__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_10_2022_17_56__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_10_2022_17_57__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_10_2022_17_57__Default_Changelist_.xml" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Modification des configs utilisées comme BDD, utilisant&#10;maintenant l'UUID plutôt que le pseudo.&#10;&#10;Les fonctionnalités suivantes sont a vérifier :&#10;- Bank&#10;- Ambiant sound&#10;- doorPass (en cas d'infection)&#10;- Infection&#10;- menu&#10;- Heliport&#10;- Parachute&#10;- Mort du joueur (infection)&#10;- kill du joueur (marqué comme tueur, mais va etre remplacé par le système de karma)&#10;- Scorfeboard du joueur&#10;- Soif&#10;- Temps de vie&#10;- Détection des zombies&#10;&#10;ET&#10;Ajout de /rally uwu distance">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fireland Le Nouveau.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Fireland Le Nouveau.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/command/rally.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/command/rally.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/ambientSound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/ambientSound.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/bank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/doorPass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/doorPass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/fallDamage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/fallDamage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/infectedPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/infectedPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/parachute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/parachute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/playerDeath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/playerDeath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/stairs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/stairs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/thirst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/thirst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/timeAlive.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/timeAlive.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/rally$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/command/rally$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/rally.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/command/rally.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/bank.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/bank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/menu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/menu$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/menu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/stairs$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/stairs$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/stairs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/stairs.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -268,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666627133860</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Modification des configs utilisées comme BDD, utilisant&#10;maintenant l'UUID plutôt que le pseudo.&#10;&#10;Les fonctionnalités suivantes sont a vérifier :&#10;- Bank&#10;- Ambiant sound&#10;- doorPass (en cas d'infection)&#10;- Infection&#10;- menu&#10;- Heliport&#10;- Parachute&#10;- Mort du joueur (infection)&#10;- kill du joueur (marqué comme tueur, mais va etre remplacé par le système de karma)&#10;- Scorfeboard du joueur&#10;- Soif&#10;- Temps de vie&#10;- Détection des zombies&#10;&#10;ET&#10;Ajout de /rally uwu distance">
+      <created>1666692730189</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1666692730189</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -306,7 +215,8 @@
     <MESSAGE value="Première daptation à la version 1.18.2" />
     <MESSAGE value="Adaptation à la version 1.18.2" />
     <MESSAGE value="Modif" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modif" />
+    <MESSAGE value="Modification des configs utilisées comme BDD, utilisant&#10;maintenant l'UUID plutôt que le pseudo.&#10;&#10;Les fonctionnalités suivantes sont a vérifier :&#10;- Bank&#10;- Ambiant sound&#10;- doorPass (en cas d'infection)&#10;- Infection&#10;- menu&#10;- Heliport&#10;- Parachute&#10;- Mort du joueur (infection)&#10;- kill du joueur (marqué comme tueur, mais va etre remplacé par le système de karma)&#10;- Scorfeboard du joueur&#10;- Soif&#10;- Temps de vie&#10;- Détection des zombies&#10;&#10;ET&#10;Ajout de /rally uwu distance" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modification des configs utilisées comme BDD, utilisant&#10;maintenant l'UUID plutôt que le pseudo.&#10;&#10;Les fonctionnalités suivantes sont a vérifier :&#10;- Bank&#10;- Ambiant sound&#10;- doorPass (en cas d'infection)&#10;- Infection&#10;- menu&#10;- Heliport&#10;- Parachute&#10;- Mort du joueur (infection)&#10;- kill du joueur (marqué comme tueur, mais va etre remplacé par le système de karma)&#10;- Scorfeboard du joueur&#10;- Soif&#10;- Temps de vie&#10;- Détection des zombies&#10;&#10;ET&#10;Ajout de /rally uwu distance" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

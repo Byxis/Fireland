@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,9 +13,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-public class jetonsManager implements Listener, CommandExecutor {
+public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
 
     private final Main main;
 
@@ -147,5 +150,37 @@ public class jetonsManager implements Listener, CommandExecutor {
         }
 
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args)
+    {
+        List<String> l = new ArrayList<>();
+        if(!(sender instanceof Player p && p.hasPermission("fireland.command.jeton.admin")))
+        {
+            return l;
+        }
+        if (args.length == 1)
+        {
+            l.add("set");
+            l.add("add");
+            l.add("remove");
+        }
+        else if (args.length == 2)
+        {
+            l.add("50");
+            l.add("100");
+            l.add("1000");
+            return l;
+        }
+        else if (args.length == 3)
+        {
+            for(Player player : Bukkit.getServer().getOnlinePlayers())
+            {
+                l.add(player.getName());
+            }
+            return l;
+        }
+        return l;
     }
 }

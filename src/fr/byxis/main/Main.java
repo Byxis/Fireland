@@ -55,6 +55,7 @@ public class Main extends JavaPlugin {
 		getCommand("faction").setTabCompleter(new factionManagerTabCompleter());
 		getCommand("discord").setExecutor(new DiscordCommand());
 		getCommand("jeton").setExecutor(new jetonsManager(this));
+		getCommand("jeton").setTabCompleter(new jetonsManager(this));
 	}
 	
 	private void enableEvent() {

@@ -9,10 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Passage à la version 3B.0.1.3&#10;- Ajouts des credits">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #1 de la version 3B.0.1.3&#10;- Fix de la commande /jeton ajouts /jt et /jetons">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666786189673</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Patch #1 de la version 3B.0.1.3&#10;- Fix de la commande /jeton ajouts /jt et /jetons">
+      <created>1666786367589</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1666786367589</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -268,7 +275,8 @@
     <MESSAGE value="Patch #3 de la version 3B.0.1.2&#10;- Fix temps de vie, discretion, infection, soif (pas intégralement), doorpass&#10;- Possible fix de la bank/parachute" />
     <MESSAGE value="Patch #4 de la version 3B.0.1.2&#10;- Patch de la bank&#10;- Ajout de la fonctionnalité de faction : rename" />
     <MESSAGE value="Passage à la version 3B.0.1.3&#10;- Ajouts des credits" />
-    <option name="LAST_COMMIT_MESSAGE" value="Passage à la version 3B.0.1.3&#10;- Ajouts des credits" />
+    <MESSAGE value="Patch #1 de la version 3B.0.1.3&#10;- Fix de la commande /jeton ajouts /jt et /jetons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #1 de la version 3B.0.1.3&#10;- Fix de la commande /jeton ajouts /jt et /jetons" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

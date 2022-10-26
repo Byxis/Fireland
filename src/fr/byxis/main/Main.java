@@ -54,6 +54,7 @@ public class Main extends JavaPlugin {
 		getCommand("faction").setExecutor(new factionManager(this));
 		getCommand("faction").setTabCompleter(new factionManagerTabCompleter());
 		getCommand("discord").setExecutor(new DiscordCommand());
+		getCommand("jeton").setExecutor(new jetonsManager(this));
 	}
 	
 	private void enableEvent() {
@@ -88,6 +89,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new FactionPvp(this), this);
 		getServer().getPluginManager().registerEvents(new playerManager(), this);
 		getServer().getPluginManager().registerEvents(new zombieManager(this), this);
+		getServer().getPluginManager().registerEvents(new jetonsManager(this), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -145,11 +147,13 @@ public class Main extends JavaPlugin {
 		final scoreboardPlayer scoreboardPlayerClass;
 		final ambientSound ambientSoundClass;
 		final cobwebDamage cobwebDamageClass;
+
 		final thirst thirst = null;
 		scoreboardPlayerClass = new scoreboardPlayer(this);
 		ambientSoundClass = new ambientSound(this);
 		cobwebDamageClass = new cobwebDamage();
-		
+
+
 		enableCommand();
 		enableEvent();
 		

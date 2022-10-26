@@ -1,10 +1,10 @@
 package fr.byxis.main;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
+import java.io.IOException;
 
 public class ConfigManager {
 	
@@ -15,9 +15,12 @@ public class ConfigManager {
 	
 	public FileConfiguration playerDBcfg;
 	public File playerDBFile;
-	
+
 	public FileConfiguration factionDBcfg;
 	public File factionDBFile;
+
+	public FileConfiguration jetonsDBcfg;
+	public File jetonsDBFile;
 	
 	public void setup() 
 	{
@@ -82,6 +85,25 @@ public class ConfigManager {
 		factionDBcfg = YamlConfiguration.loadConfiguration(factionDBFile);
 		System.out.println("factiondb.yml has been loaded !");
 		//----------------------------- faction DB ----------------------------------
+
+		//----------------------------- jetons DB ----------------------------------
+		jetonsDBFile = new File(plugin.getDataFolder(), "jetonsdb.yml");
+		if(!jetonsDBFile.exists())
+		{
+			try
+			{
+				jetonsDBFile.createNewFile();
+				System.out.println("jetonsdb.yml has been created !");
+			}
+			catch(IOException e)
+			{
+				System.err.println("/!\\ Could not create jetonsdb.yml");
+			}
+		}
+
+		jetonsDBcfg = YamlConfiguration.loadConfiguration(jetonsDBFile);
+		System.out.println("jetonsdb.yml has been loaded !");
+		//----------------------------- jetons DB ----------------------------------
 	}
 	
 	public FileConfiguration getEnderchest()
@@ -151,5 +173,28 @@ public class ConfigManager {
 	{
 		factionDBcfg = YamlConfiguration.loadConfiguration(factionDBFile);
 		System.out.println("factiondb.yml has been reloaded !");
+	}
+
+	public FileConfiguration getJetonsDB()
+	{
+		return jetonsDBcfg;
+	}
+
+	public void saveJetonsDB()
+	{
+		try
+		{
+			jetonsDBcfg.save(jetonsDBFile);
+		}
+		catch(IOException e)
+		{
+			System.err.println("/!\\ Could not save jetonsdb.yml");
+		}
+	}
+
+	public void reloadJetonsDB()
+	{
+		jetonsDBcfg = YamlConfiguration.loadConfiguration(jetonsDBFile);
+		System.out.println("jetonsdb.yml has been reloaded !");
 	}
 }

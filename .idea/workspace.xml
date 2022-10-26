@@ -9,9 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #5 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #6 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml?">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,7 +257,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666808729821</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Patch #6 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml?">
+      <created>1666810323882</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1666810323882</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -307,7 +314,8 @@
     <MESSAGE value="Patch #3 de la version 3B.0.1.3&#10;- Ajout du @a pour l'ajout de jetons" />
     <MESSAGE value="Patch #4 de la version 3B.0.1.3&#10;- Fix des messages associés à la commande /jeton + ajout @a pour le set et le remove" />
     <MESSAGE value="Patch #5 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #5 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml" />
+    <MESSAGE value="Patch #6 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml?" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #6 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml?" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

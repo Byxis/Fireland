@@ -70,9 +70,9 @@ public class scoreboardPlayer implements Listener {
 		Score line2 = objective.getScore("§7- ");
 		Score none1 = objective.getScore("");
 		Score none2 = objective.getScore(" ");
-		Score money = objective.getScore("§8Monnaie : §6"+Math.round(main.eco.getBalance(p))+"$");
-		Score bank = objective.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"$"+
-				" §8| §b "+jetons.getJetonsPlayer(p.getUniqueId()) + " \u26c1");
+		Score money = objective.getScore("§8Monnaie : §6"+Math.round(main.eco.getBalance(p))+"$"+
+				"  §8| §b "+jetons.getJetonsPlayer(p.getUniqueId()) + " \u26c1");
+		Score bank = objective.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"$");
 		Score infect = objective.getScore("§8État : "+state);
 		Score discretion = objective.getScore("§8Discretion : "+shotColor+numDiscretion+"%");
 		Score temps = objective.getScore("§8Temps survécu : §7"+time);
@@ -118,16 +118,16 @@ public class scoreboardPlayer implements Listener {
 		}
 		
 		String time = getTimeString(p);
-
+		jetonsManager jetons = new jetonsManager(main);
 		Score money = null;
 		if (obj != null) {
-			money = obj.getScore("§8Monnaie : §6"+Math.round(main.eco.getBalance(p))+"$");
+			money = obj.getScore("§8Monnaie : §6"+Math.round(main.eco.getBalance(p))+"$"+
+					" §8 | §b "+jetons.getJetonsPlayer(p.getUniqueId()) + " \u26c1");
 		}
 
-		jetonsManager jetons = new jetonsManager(main);
 
-		Score bank = obj.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"$" +
-				" §8| §b "+jetons.getJetonsPlayer(p.getUniqueId()) + " \u26c1");
+
+		Score bank = obj.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"$" );
 		Score discretion = obj.getScore("§8Discretion : §7"+numDiscretion+"%");
 		Score infecte = obj.getScore("§8État : "+state);
 		Score temps = obj.getScore("§8Temps survécu : §7"+time);

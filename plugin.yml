@@ -52,3 +52,7 @@ commands:
     aliases: [f,fac]
   discord:
     description: renvoie le discord officiel de Fireland
+  jeton:
+    description: commandes pour les jetons
+    permission: fireland.command.jeton
+    aliases: [jt, jetons]

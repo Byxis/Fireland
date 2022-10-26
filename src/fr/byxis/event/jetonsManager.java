@@ -66,7 +66,7 @@ public class jetonsManager implements Listener, CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args) {
-        if(sender instanceof Player && sender.hasPermission("fireland.jeton.admin"))
+        if(sender instanceof Player && sender.hasPermission("fireland.command.jeton.admin"))
         {
             sender.sendMessage("§aVous avez §d"+getJetonsPlayer(((Player)sender).getUniqueId())+"§a jetons !");
         }

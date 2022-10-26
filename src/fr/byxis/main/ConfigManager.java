@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class ConfigManager {
 	
-	private Main plugin = Main.getPlugin(Main.class);
+	private final Main plugin = Main.getPlugin(Main.class);
 	
 	public FileConfiguration enderchestcfg;
 	public File playerEnderchestFile;
@@ -190,6 +190,8 @@ public class ConfigManager {
 		{
 			System.err.println("/!\\ Could not save jetonsdb.yml");
 		}
+
+		System.out.println("jetonsdb.yml saved !");
 	}
 
 	public void reloadJetonsDB()

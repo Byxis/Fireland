@@ -111,10 +111,10 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
                     {
                         if(args[2].equalsIgnoreCase("@a"))
                         {
-                            for(Player player : Bukkit.getServer().getOnlinePlayers())
+                            for(Player p : Bukkit.getServer().getOnlinePlayers())
                             {
-                                setJetonsPlayer(player.getUniqueId(), Integer.parseInt(args[1]));
-                                player.sendMessage("§aVous avez désormais §d"+args[1]+"§a jetons !");
+                                setJetonsPlayer(p.getUniqueId(), Integer.parseInt(args[1]));
+                                p.sendMessage("§aVous avez désormais §d"+args[1]+"§a jetons !");
                             }
                             sender.sendMessage("§aTous les joueurs connectés ont maintenant §d"+args[1]+"§a jetons !");
                         }

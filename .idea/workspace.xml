@@ -9,10 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #1 de la version 3B.0.1.3&#10;- Fix de la commande /jeton ajouts /jt et /jetons">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #2 de la version 3B.0.1.3&#10;- Ajout de l'autocomletion de la commande /jeton">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_16_R0_4.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/ConfigManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/ConfigManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666786367589</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Patch #2 de la version 3B.0.1.3&#10;- Ajout de l'autocomletion de la commande /jeton">
+      <created>1666786670963</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1666786670963</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -276,7 +292,8 @@
     <MESSAGE value="Patch #4 de la version 3B.0.1.2&#10;- Patch de la bank&#10;- Ajout de la fonctionnalité de faction : rename" />
     <MESSAGE value="Passage à la version 3B.0.1.3&#10;- Ajouts des credits" />
     <MESSAGE value="Patch #1 de la version 3B.0.1.3&#10;- Fix de la commande /jeton ajouts /jt et /jetons" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #1 de la version 3B.0.1.3&#10;- Fix de la commande /jeton ajouts /jt et /jetons" />
+    <MESSAGE value="Patch #2 de la version 3B.0.1.3&#10;- Ajout de l'autocomletion de la commande /jeton" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #2 de la version 3B.0.1.3&#10;- Ajout de l'autocomletion de la commande /jeton" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

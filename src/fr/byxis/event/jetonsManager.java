@@ -120,10 +120,22 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
                 {
                     if(args.length >= 3)
                     {
-                        final Player victim = (Player) Bukkit.getOfflinePlayer(args[2]);
-                        addJetonsPlayer(victim.getUniqueId(), Integer.parseInt(args[1]));
-                        sender.sendMessage("§aLe joueur "+victim.getName()+" a désormais §d"+args[1]+"§a jetons !");
-                        victim.sendMessage("§aVous avez désormais §d"+args[1]+"§a jetons !");
+                        if(args[2].equalsIgnoreCase("@a"))
+                        {
+                            for(Player player : Bukkit.getServer().getOnlinePlayers())
+                            {
+                                addJetonsPlayer(player.getUniqueId(), Integer.parseInt(args[1]));
+                                player.sendMessage("§aVous avez désormais §d"+args[1]+"§a jetons !");
+                            }
+                            sender.sendMessage("§aTous les joueurs connectés ont gagnés §d"+args[1]+"§a jetons !");
+                        }
+                        else
+                        {
+                            final Player victim = (Player) Bukkit.getOfflinePlayer(args[2]);
+                            addJetonsPlayer(victim.getUniqueId(), Integer.parseInt(args[1]));
+                            sender.sendMessage("§aLe joueur "+victim.getName()+" a désormais §d"+args[1]+"§a jetons !");
+                            victim.sendMessage("§aVous avez désormais §d"+args[1]+"§a jetons !");
+                        }
                     }
                     else if(sender instanceof Player p)
                     {
@@ -179,6 +191,7 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
             {
                 l.add(player.getName());
             }
+            l.add("@a");
             return l;
         }
         return l;

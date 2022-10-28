@@ -21,6 +21,9 @@ public class ConfigManager {
 
 	public FileConfiguration jetonsDBcfg;
 	public File jetonsDBFile;
+
+	public FileConfiguration karmaDBcfg;
+	public File karmaDBFile;
 	
 	public void setup() 
 	{
@@ -103,6 +106,25 @@ public class ConfigManager {
 
 		jetonsDBcfg = YamlConfiguration.loadConfiguration(jetonsDBFile);
 		System.out.println("jetonsdb.yml has been loaded !");
+		//----------------------------- jetons DB ----------------------------------
+
+		//----------------------------- karma DB ----------------------------------
+		karmaDBFile = new File(plugin.getDataFolder(), "karmadb.yml");
+		if(!karmaDBFile.exists())
+		{
+			try
+			{
+				karmaDBFile.createNewFile();
+				System.out.println("karmadb.yml has been created !");
+			}
+			catch(IOException e)
+			{
+				System.err.println("/!\\ Could not create karmadb.yml");
+			}
+		}
+
+		karmaDBcfg = YamlConfiguration.loadConfiguration(karmaDBFile);
+		System.out.println("karmadb.yml has been loaded !");
 		//----------------------------- jetons DB ----------------------------------
 	}
 	
@@ -190,13 +212,34 @@ public class ConfigManager {
 		{
 			System.err.println("/!\\ Could not save jetonsdb.yml");
 		}
-
-		System.out.println("jetonsdb.yml saved !");
 	}
 
 	public void reloadJetonsDB()
 	{
 		jetonsDBcfg = YamlConfiguration.loadConfiguration(jetonsDBFile);
 		System.out.println("jetonsdb.yml has been reloaded !");
+	}
+
+	public FileConfiguration getKarmaDB()
+	{
+		return karmaDBcfg;
+	}
+
+	public void saveKarmaDB()
+	{
+		try
+		{
+			karmaDBcfg.save(karmaDBFile);
+		}
+		catch(IOException e)
+		{
+			System.err.println("/!\\ Could not save karmadb.yml");
+		}
+	}
+
+	public void reloadKarmaDB()
+	{
+		karmaDBcfg = YamlConfiguration.loadConfiguration(karmaDBFile);
+		System.out.println("karmadb.yml has been reloaded !");
 	}
 }

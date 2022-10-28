@@ -1,17 +1,14 @@
 package fr.byxis.event;
 
+import fr.byxis.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.*;
 
-import fr.byxis.main.Main;
+import java.util.UUID;
 
 public class scoreboardPlayer implements Listener {
 
@@ -19,6 +16,37 @@ public class scoreboardPlayer implements Listener {
 	
 	public scoreboardPlayer(Main main) {
 		this.main = main;
+	}
+
+	private String getRang(UUID _uuid)
+	{
+		double rangDouble = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
+		String rangStr = "";
+		if(rangDouble == 100)
+		{
+			rangStr = "§dHéros";
+		}
+		else if(rangDouble>=75)
+		{
+			rangStr = "§7Héros";
+		}
+		else if(rangDouble>=50)
+		{
+			rangStr = "§7Civil";
+		}
+		else if(rangDouble>=25)
+		{
+			rangStr = "§7Hors la loi";
+		}
+		else if(rangDouble>0)
+		{
+			rangStr = "§7Criminel";
+		}
+		else if(rangDouble == 0)
+		{
+			rangStr = "§4Criminel";
+		}
+		return rangStr;
 	}
 
 	@EventHandler
@@ -76,9 +104,11 @@ public class scoreboardPlayer implements Listener {
 		Score infect = objective.getScore("§8État : "+state);
 		Score discretion = objective.getScore("§8Discretion : "+shotColor+numDiscretion+"%");
 		Score temps = objective.getScore("§8Temps survécu : §7"+time);
+		Score rang = objective.getScore("§8Rang : "+getRang(p.getUniqueId()));
 		
-		line2.setScore(8);
-		none2.setScore(7);
+		line2.setScore(9);
+		none2.setScore(8);
+		rang.setScore(7);
 		money.setScore(6);
 		bank.setScore(5);
 		infect.setScore(4);
@@ -131,7 +161,9 @@ public class scoreboardPlayer implements Listener {
 		Score discretion = obj.getScore("§8Discretion : §7"+numDiscretion+"%");
 		Score infecte = obj.getScore("§8État : "+state);
 		Score temps = obj.getScore("§8Temps survécu : §7"+time);
+		Score rang = obj.getScore("§8Rang : "+getRang(p.getUniqueId()));
 
+		rang.setScore(7);
 		money.setScore(6);
 		bank.setScore(5);
 		infecte.setScore(4);

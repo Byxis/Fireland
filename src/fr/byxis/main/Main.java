@@ -91,6 +91,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new playerManager(), this);
 		getServer().getPluginManager().registerEvents(new zombieManager(this), this);
 		getServer().getPluginManager().registerEvents(new jetonsManager(this), this);
+		getServer().getPluginManager().registerEvents(new karmaManager(this), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{

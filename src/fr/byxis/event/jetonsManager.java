@@ -67,13 +67,14 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
     public void removeJetonsPlayer(UUID _uuid, int amount)
     {
         FileConfiguration jetonDB = main.cfgm.getJetonsDB();
-        jetonDB.set(_uuid.toString(), jetonDB.getInt(_uuid.toString())-amount);
+        amount -= jetonDB.getInt(_uuid.toString());
+        jetonDB.set(_uuid.toString(), amount);
         main.cfgm.saveJetonsDB();
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args) {
-        if(sender instanceof Player && sender.hasPermission("fireland.command.jeton.admin"))
+        if(sender instanceof Player && !sender.hasPermission("fireland.command.jeton.admin"))
         {
             sender.sendMessage("§aVous avez §d"+getJetonsPlayer(((Player)sender).getUniqueId())+"§a jetons !");
         }
@@ -141,7 +142,7 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
                             for(Player player : Bukkit.getServer().getOnlinePlayers())
                             {
                                 addJetonsPlayer(player.getUniqueId(), Integer.parseInt(args[1]));
-                                player.sendMessage("§aVous avez gagnés §d"+args[1]+"§a jetons !");
+                                player.sendMessage("§aVous avez gagné §d"+args[1]+"§a jetons !");
                             }
                             sender.sendMessage("§aTous les joueurs connectés ont gagnés §d"+args[1]+"§a jetons !");
                         }
@@ -150,7 +151,7 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
                             final Player victim = (Player) Bukkit.getOfflinePlayer(args[2]);
                             addJetonsPlayer(victim.getUniqueId(), Integer.parseInt(args[1]));
                             sender.sendMessage("§aLe joueur "+victim.getName()+" a désormais §d"+args[1]+"§a jetons !");
-                            victim.sendMessage("§aVous avez gagnés §d"+args[1]+"§a jetons !");
+                            victim.sendMessage("§aVous avez gagné §d"+args[1]+"§a jetons !");
                         }
                     }
                     else if(sender instanceof Player p)
@@ -167,8 +168,8 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
                         {
                             for(Player player : Bukkit.getServer().getOnlinePlayers())
                             {
-                                addJetonsPlayer(player.getUniqueId(), Integer.parseInt(args[1]));
-                                player.sendMessage("§cVous avez perdus §d"+args[1]+"§c jetons !");
+                                removeJetonsPlayer(player.getUniqueId(), Integer.parseInt(args[1]));
+                                player.sendMessage("§cVous avez perdu §d"+args[1]+"§c jetons !");
                             }
                             sender.sendMessage("§cTous les joueurs connectés ont perdus §d"+args[1]+"§c jetons !");
                         }

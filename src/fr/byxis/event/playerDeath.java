@@ -50,7 +50,7 @@ public class playerDeath implements Listener {
 		}
 		
 		double money = main.eco.getBalance(killed);
-		double pay = money/4;
+		double pay = money/2;
 		pay = round(pay, 1);
 		killed.sendMessage("§cVous avez perdu "+pay+"$ !");
 		main.eco.withdrawPlayer(killed, pay);

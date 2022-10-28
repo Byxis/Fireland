@@ -197,7 +197,11 @@ public class doorPass implements Listener {
 					Location door = getDoorLocation(e.getClickedBlock().getLocation());
 	                if(door != null)
 	                {
-	                	if(main.cfgm.getPlayerDB().getBoolean("discretion."+p.getUniqueId()+".hasKilled"))
+						if(main.cfgm.getKarmaDB().getDouble(e.getPlayer().getUniqueId().toString()) <= 25)
+						{
+							e.getPlayer().sendMessage("§4L'accès à cette zone vous a été refusé en raison de vos actes criminels.");
+						}
+	                	else if(main.cfgm.getPlayerDB().getBoolean("discretion."+p.getUniqueId()+".hasKilled"))
 	                	{
 	                		e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
 	                		e.getPlayer().sendMessage("§cL'accès vous a été refusé ! Vous avez tué un joueur il y a moins de 5 minutes !");

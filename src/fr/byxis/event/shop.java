@@ -1,6 +1,7 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
+import fr.byxis.main.karmaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -21,6 +22,7 @@ import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class shop implements Listener, CommandExecutor {
 	
@@ -47,13 +49,75 @@ public class shop implements Listener, CommandExecutor {
 		this.main = main;
 	}
 
+	private void sellItemKarma(UUID _uuid)
+	{
+		karmaManager karma = new karmaManager(main);
+		karma.goodAction(_uuid, 0.1);
+	}
+
+	private double getKarma(UUID _uuid)
+	{
+		karmaManager karma = new karmaManager(main);
+		return karma.getKarma(_uuid);
+	}
+
+	private double priceKarmaAdapter(UUID _uuid, double amount)
+	{
+		double karma = getKarma(_uuid);
+		if(karma >= 75)
+		{
+			double reduction = karma -75;
+			return amount + getReduction(_uuid);
+		}
+		if(karma >= 25 && karma < 50)
+		{
+			double reduction = karma -50;
+			return amount + getReduction(_uuid);
+		}
+		return amount;
+	}
+
+	private double getReduction(UUID _uuid)
+	{
+		double karma = getKarma(_uuid);
+
+		if(karma >= 75)
+		{
+			double reduction = karma -75;
+			return -(reduction)*1/100;
+		}
+		if(karma >= 25 && karma < 50)
+		{
+			double reduction = karma -50;
+			return -(reduction)*2/100;
+		}
+		return 0;
+	}
+
+	private String reductionShow(UUID _uuid)
+	{
+		double reduction = getReduction(_uuid);
+		if(reduction != 0)
+		{
+			return "§d§n"+(reduction*100)+"%";
+		}
+		return "";
+	}
+
+	private UUID _uuid;
+
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
-		if(sender instanceof Player) {
-			Player player = (Player) sender;
+		if(sender instanceof Player player) {
 			if(cmd.getName().equalsIgnoreCase("shop")) {
+				this._uuid = player.getUniqueId();
 				if(args.length == 1) {
-					if(args[0].equalsIgnoreCase("revolver")) {
+					if(getKarma(player.getUniqueId()) <= 25)
+					{
+						player.sendMessage("§cJe ne vends pas ma marchandise à des criminels comme vous !");
+					}
+					else if(args[0].equalsIgnoreCase("revolver")) {
 						setItems(revolver1, "Marchand de Revolver (1/2)");
 						player.openInventory(revolver1);
 					}else if(args[0].equalsIgnoreCase("smg")) {
@@ -71,18 +135,26 @@ public class shop implements Listener, CommandExecutor {
 					}else if(args[0].equalsIgnoreCase("utilitaire")) {
 						setItems(utilitaire, "Marchand Utilitaire");
 						player.openInventory(utilitaire);
-					}else if(args[0].equalsIgnoreCase("passv")) {
-						setItemsFromSmallInv(passv, "Marchand de Pass Vert");
-						player.openInventory(passv);
-					}else if(args[0].equalsIgnoreCase("passb")) {
-						setItemsFromSmallInv(passb, "Marchand de Pass Bleu");
-						player.openInventory(passb);
-					}else if(args[0].equalsIgnoreCase("passj")) {
-						setItemsFromSmallInv(passj, "Marchand de Pass Jaune");
-						player.openInventory(passj);
-					}else if(args[0].equalsIgnoreCase("passr")) {
-						setItemsFromSmallInv(passr, "Marchand de Pass Rouge");
-						player.openInventory(passr);
+					}
+					else if(main.cfgm.getKarmaDB().getDouble(player.getUniqueId().toString()) <= 75 && args[0].contains("pass"))
+					{
+						player.sendMessage("§cJe ne vous fais pas encore assez confiance pour vous vendre des pass !");
+					}
+					else if(args[0].contains("pass"))
+					{
+						if(args[0].equalsIgnoreCase("passv")) {
+							setItemsFromSmallInv(passv, "Marchand de Pass Vert");
+							player.openInventory(passv);
+						}else if(args[0].equalsIgnoreCase("passb")) {
+							setItemsFromSmallInv(passb, "Marchand de Pass Bleu");
+							player.openInventory(passb);
+						}else if(args[0].equalsIgnoreCase("passj")) {
+							setItemsFromSmallInv(passj, "Marchand de Pass Jaune");
+							player.openInventory(passj);
+						}else if(args[0].equalsIgnoreCase("passr")) {
+							setItemsFromSmallInv(passr, "Marchand de Pass Rouge");
+							player.openInventory(passr);
+						}
 					}
 					
 				}else {
@@ -98,7 +170,6 @@ public class shop implements Listener, CommandExecutor {
 	public void onClick(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
 		ItemStack current = e.getCurrentItem();
-		
 		if(current == null) return;
 		if(e.getView().getTitle().equalsIgnoreCase("Marchand de Revolver (1/2)")) {
 			BuyItem(player, current, e.getClick());
@@ -406,8 +477,11 @@ public class shop implements Listener, CommandExecutor {
 							command += "{display:{Name:\"{\\\"text\\\":\\\""+item.getItemMeta().getDisplayName()+"\\\"}\"}} 1";
 						}
 					}
+
+					price = Math.round(priceKarmaAdapter(p.getUniqueId(), price));
 					p.playSound(p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
 					p.sendMessage("§7Vous avez acheté "+name+" pour "+price+"$ !");
+					sellItemKarma(p.getUniqueId());
 					main.eco.withdrawPlayer(p, price);
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
 				}
@@ -468,6 +542,9 @@ public class shop implements Listener, CommandExecutor {
 					main.eco.depositPlayer(p, num);
 					p.sendMessage("§7Vous avez vendu "+name+"§ax"+num+"§7 pour "+totalSell+"$ !");
 					p.playSound(p.getLocation(), "minecraft:gun.hud.money_pickup", (float) 0.1, 1);
+
+					sellItemKarma(p.getUniqueId());
+
 				}
 			}
 			else
@@ -483,6 +560,9 @@ public class shop implements Listener, CommandExecutor {
 							main.eco.depositPlayer(p, sell);
 							p.sendMessage("§7Vous avez vendu "+name+" pour "+sell+"$ !");
 							p.playSound(p.getLocation(), "minecraft:gun.hud.money_pickup", (float) 0.1, 1);
+
+							sellItemKarma(p.getUniqueId());
+
 							break;
 						}
 						else if(s.getType().equals(item.getType()) && food) 
@@ -492,6 +572,9 @@ public class shop implements Listener, CommandExecutor {
 							main.eco.depositPlayer(p, sell);
 							p.sendMessage("§7Vous avez vendu "+name+" pour "+sell+"$ !");
 							p.playSound(p.getLocation(), "minecraft:gun.hud.money_pickup", (float) 0.1, 1);
+
+							sellItemKarma(p.getUniqueId());
+
 							break;
 						}
 					}
@@ -570,6 +653,7 @@ public class shop implements Listener, CommandExecutor {
 		inv.setItem(51, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
 		
 		if(name.equalsIgnoreCase("Marchand de Revolver (1/2)")) {
+
 			inv.setItem(19, setItemMetaLore(Material.STONE_AXE, "§7Walther PPK", (short) 18, listMaker3("§8Munitions: §7Revolver","§8Coût: §6200$","§8Vente: §650$")));
 			inv.setItem(20, setItemMetaLore(Material.IRON_SHOVEL, "§7Makarov", (short) 4, listMaker3("§8Munitions: §7Revolver","§8Coût: §6200$","§8Vente: §650$")));
 			inv.setItem(21, setItemMetaLore(Material.STONE_AXE, "§7Colt 1911", (short) 6, listMaker3("§8Munitions: §7Revolver","§8Coût: §6230$","§8Vente: §657.5$")));
@@ -823,13 +907,13 @@ public class shop implements Listener, CommandExecutor {
 	private List<String> listMaker3(String str1, String str2,String str3){
 		List<String> lore = new ArrayList<String>();
 		lore.add(str1);
-		lore.add(str2);
+		lore.add(str2+reductionShow(this._uuid));
 		lore.add(str3);
 		return lore;
 	}
 	private List<String> listMaker2(String str1, String str2){
 		List<String> lore = new ArrayList<String>();
-		lore.add(str1);
+		lore.add(str1+reductionShow(this._uuid));
 		lore.add(str2);
 		return lore;
 	}

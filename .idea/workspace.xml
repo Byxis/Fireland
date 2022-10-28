@@ -9,19 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #9 de la version 3B.0.1.3&#10;- envie de crever tellement je suis con">
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Passage à la version 3B.0.1.4&#10;- Ajout du système de karma et implémentation dans le shop">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/doorPass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/doorPass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/playerDeath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/playerDeath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/zombieManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/zombieManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/ConfigManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/doorPass$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/doorPass$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/doorPass.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/doorPass.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/jetonsManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/jetonsManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/playerDeath.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/playerDeath.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/shop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/shop.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/zombieManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/zombieManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/ConfigManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/ConfigManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -289,7 +295,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666812484725</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Passage à la version 3B.0.1.4&#10;- Ajout du système de karma et implémentation dans le shop">
+      <created>1666940338219</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1666940338219</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -316,7 +329,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modif de qlq trucs dans les factions" />
     <MESSAGE value="Commentaires faction" />
     <MESSAGE value="Commentaires faction et fix de la supression de faction" />
     <MESSAGE value="Spécifications (début)" />
@@ -341,7 +353,8 @@
     <MESSAGE value="Patch #7 de la version 3B.0.1.3&#10;- Déplacements des crédits dans le scoreboard" />
     <MESSAGE value="Patch #8 de la version 3B.0.1.3&#10;- ajout debug" />
     <MESSAGE value="Patch #9 de la version 3B.0.1.3&#10;- envie de crever tellement je suis con" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #9 de la version 3B.0.1.3&#10;- envie de crever tellement je suis con" />
+    <MESSAGE value="Passage à la version 3B.0.1.4&#10;- Ajout du système de karma et implémentation dans le shop" />
+    <option name="LAST_COMMIT_MESSAGE" value="Passage à la version 3B.0.1.4&#10;- Ajout du système de karma et implémentation dans le shop" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

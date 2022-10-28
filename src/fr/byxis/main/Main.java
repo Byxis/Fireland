@@ -463,6 +463,10 @@ public class Main extends JavaPlugin {
 		{
 			cfgm.getEnderchest().set("date", today);
 			cfgm.saveEnderchest();
+			if(cfgm.getEnderchest().get("bank") == null)
+			{
+				return;
+			}
 			for(String s : cfgm.getEnderchest().getConfigurationSection("bank").getKeys(true))
 			{
 				if(cfgm.getEnderchest().getInt("bank."+s+".money") > 0)

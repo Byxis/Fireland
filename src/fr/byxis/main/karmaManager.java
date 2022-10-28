@@ -1,6 +1,7 @@
 package fr.byxis.main;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -78,15 +79,12 @@ public class karmaManager implements Listener {
     @EventHandler
     public void PlayerFirstJoin(PlayerJoinEvent e)
     {
-        if(!e.getPlayer().hasPlayedBefore())
-        {
-            updatePlayer(e.getPlayer().getUniqueId());
-        }
+        updatePlayer(e.getPlayer().getUniqueId());
     }
 
     public void playerKillZombie(EntityDeathEvent e)
     {
-        if(e.getEntity().getKiller() != null)
+        if(e.getEntity() instanceof Zombie && e.getEntity().getKiller() != null)
         {
             goodAction(e.getEntity().getKiller().getUniqueId(), 1/20);
         }

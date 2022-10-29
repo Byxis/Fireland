@@ -282,9 +282,10 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         }
         else if (args.length == 2)
         {
+            l.add("10");
+            l.add("25");
             l.add("50");
             l.add("100");
-            l.add("1000");
             return l;
         }
         else if (args.length == 3)

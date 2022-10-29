@@ -9,11 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #7 3B.0.1.4&#10;- Fix commande&#10;- Fix couleur de rang">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #7 3B.0.1.4&#10;- Fix DB&#10;- Fix auto complétion de la commande /rang">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/db/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/db/DatabaseManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/db/DatabaseManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/db/DatabaseManager.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -337,7 +337,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667067006118</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Patch #7 3B.0.1.4&#10;- Fix DB&#10;- Fix auto complétion de la commande /rang">
+      <created>1667067351920</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1667067351920</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -364,7 +371,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modif" />
     <MESSAGE value="Modification des configs utilisées comme BDD, utilisant&#10;maintenant l'UUID plutôt que le pseudo.&#10;&#10;Les fonctionnalités suivantes sont a vérifier :&#10;- Bank&#10;- Ambiant sound&#10;- doorPass (en cas d'infection)&#10;- Infection&#10;- menu&#10;- Heliport&#10;- Parachute&#10;- Mort du joueur (infection)&#10;- kill du joueur (marqué comme tueur, mais va etre remplacé par le système de karma)&#10;- Scorfeboard du joueur&#10;- Soif&#10;- Temps de vie&#10;- Détection des zombies&#10;&#10;ET&#10;Ajout de /rally uwu distance" />
     <MESSAGE value="modification de version" />
     <MESSAGE value="Patch #1 de la version 3B.0.1.2" />
@@ -389,7 +395,8 @@
     <MESSAGE value="Patch #5 3B.0.1.4&#10;- Fix d'un appel récursif infini qui bouffait toute la mémoire" />
     <MESSAGE value="Patch #6 3B.0.1.4&#10;- Ajout de la commande /rang + l'autocompletion&#10;- Ajout de la nouvelle database" />
     <MESSAGE value="Patch #7 3B.0.1.4&#10;- Fix commande&#10;- Fix couleur de rang" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #7 3B.0.1.4&#10;- Fix commande&#10;- Fix couleur de rang" />
+    <MESSAGE value="Patch #7 3B.0.1.4&#10;- Fix DB&#10;- Fix auto complétion de la commande /rang" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #7 3B.0.1.4&#10;- Fix DB&#10;- Fix auto complétion de la commande /rang" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

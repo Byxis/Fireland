@@ -41,7 +41,7 @@ public class bank implements Listener, CommandExecutor {
 			if(cmd.getName().equalsIgnoreCase("bank")) 
 			{
 				int length = args.length;
-				if(!player.hasPermission("fireland.command.bank.sed") || length == 0) 
+				if(!player.hasPermission("fireland.command.bank.set") || length == 0)
 				{
 					openBankMenu(player);
 					return true;
@@ -240,7 +240,7 @@ public class bank implements Listener, CommandExecutor {
 				openFaction(player);
 			}
 		}
-		else if(e.getView().getTitle().equalsIgnoreCase("§8Stockage de "+player.getUniqueId()))
+		else if(e.getView().getTitle().equalsIgnoreCase("§8Stockage de "+player.getName()))
 		{
 			saveEnderchest(e.getInventory().getContents(),player);
 		}

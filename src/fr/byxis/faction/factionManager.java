@@ -93,9 +93,9 @@ public class factionManager implements Listener, CommandExecutor  {
 		}
 		else if (args.length == 2 && args[0].equalsIgnoreCase("join"))
 		{
-			if(factionInfo == null)
+			if(factionInfo != null)
 			{
-				p.sendMessage("§cVous n'avez pas de faction !");
+				p.sendMessage("§cVous avez déjà une faction !");
 				return true;
 			}
 			if(factionFunctions.isInvitedToFaction(p, args[1]))

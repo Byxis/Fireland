@@ -95,7 +95,8 @@ public class karmaManager implements Listener {
         FileConfiguration karma = main.cfgm.getKarmaDB();
         if(!karma.contains(_uuid.toString()))
         {
-            setKarma(_uuid, 62D);
+            main.cfgm.getKarmaDB().set(_uuid.toString(), 62D);
+            main.cfgm.saveKarmaDB();
         }
     }
 }

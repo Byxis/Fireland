@@ -9,13 +9,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #5 3B.0.1.4&#10;- Fix d'un appel récursif infini qui bouffait toute la mémoire">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #6 3B.0.1.4&#10;- Ajout de la commande /rang + l'autocompletion&#10;- Ajout de la nouvelle database">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/db/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/db/DatabaseManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/db/DatabaseManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/db/DatabaseManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/jetonsManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/jetonsManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -325,7 +332,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667063720151</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Patch #6 3B.0.1.4&#10;- Ajout de la commande /rang + l'autocompletion&#10;- Ajout de la nouvelle database">
+      <created>1667066719468</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1667066719468</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -352,7 +366,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Première daptation à la version 1.18.2" />
     <MESSAGE value="Adaptation à la version 1.18.2" />
     <MESSAGE value="Modif" />
     <MESSAGE value="Modification des configs utilisées comme BDD, utilisant&#10;maintenant l'UUID plutôt que le pseudo.&#10;&#10;Les fonctionnalités suivantes sont a vérifier :&#10;- Bank&#10;- Ambiant sound&#10;- doorPass (en cas d'infection)&#10;- Infection&#10;- menu&#10;- Heliport&#10;- Parachute&#10;- Mort du joueur (infection)&#10;- kill du joueur (marqué comme tueur, mais va etre remplacé par le système de karma)&#10;- Scorfeboard du joueur&#10;- Soif&#10;- Temps de vie&#10;- Détection des zombies&#10;&#10;ET&#10;Ajout de /rally uwu distance" />
@@ -377,7 +390,8 @@
     <MESSAGE value="Patch #3 3B.0.1.4&#10;- Fix pvp + init karma" />
     <MESSAGE value="Patch #4 3B.0.1.4&#10;- karma fix? &#10;- déplacement de l'affichage du karma dans le scoreboard" />
     <MESSAGE value="Patch #5 3B.0.1.4&#10;- Fix d'un appel récursif infini qui bouffait toute la mémoire" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #5 3B.0.1.4&#10;- Fix d'un appel récursif infini qui bouffait toute la mémoire" />
+    <MESSAGE value="Patch #6 3B.0.1.4&#10;- Ajout de la commande /rang + l'autocompletion&#10;- Ajout de la nouvelle database" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #6 3B.0.1.4&#10;- Ajout de la commande /rang + l'autocompletion&#10;- Ajout de la nouvelle database" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

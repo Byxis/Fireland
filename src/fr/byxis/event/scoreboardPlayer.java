@@ -40,7 +40,7 @@ public class scoreboardPlayer implements Listener {
 		}
 		else if(rangDouble>0)
 		{
-			rangStr = "§7Criminel";
+			rangStr = "§cCriminel";
 		}
 		else if(rangDouble == 0)
 		{

@@ -48,7 +48,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         }
         else if(rangDouble>0)
         {
-            rangStr = "§7Criminel";
+            rangStr = "§cCriminel";
         }
         else if(rangDouble == 0)
         {
@@ -59,7 +59,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
 
     private String rangText(Player p)
     {
-        return getRang(p.getUniqueId())+ "§7("+getKarma(p.getUniqueId()) +"§7)";
+        return getRang(p.getUniqueId())+ " §7("+getKarma(p.getUniqueId()) +"§7)";
     }
 
     public void badAction(UUID _uuid, double _amount)
@@ -86,7 +86,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         }
         else
         {
-            main.cfgm.getKarmaDB().set(_uuid.toString(), main.cfgm.getKarmaDB().getDouble(_uuid.toString())-_amount);
+            main.cfgm.getKarmaDB().set(_uuid.toString(), main.cfgm.getKarmaDB().getDouble(_uuid.toString())+_amount);
         }
         main.cfgm.saveKarmaDB();
     }

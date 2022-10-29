@@ -9,10 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #2 3B.0.1.4&#10;- Fix de problème d'initialisation du système de karma">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #3 3B.0.1.4&#10;- Fix pvp + init karma">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionPvp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionPvp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionPvp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionPvp.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -301,7 +301,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666986466775</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Patch #3 3B.0.1.4&#10;- Fix pvp + init karma">
+      <created>1666987518452</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1666987518452</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -328,7 +335,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Spécifications (début)" />
     <MESSAGE value="Faire que ça marche lol" />
     <MESSAGE value="Fix de problèmes du projet" />
     <MESSAGE value="Première daptation à la version 1.18.2" />
@@ -353,7 +359,8 @@
     <MESSAGE value="Passage à la version 3B.0.1.4&#10;- Ajout du système de karma et implémentation dans le shop" />
     <MESSAGE value="Patch 3B.0.1.4&#10;- Fix de l'ender chest" />
     <MESSAGE value="Patch #2 3B.0.1.4&#10;- Fix de problème d'initialisation du système de karma" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #2 3B.0.1.4&#10;- Fix de problème d'initialisation du système de karma" />
+    <MESSAGE value="Patch #3 3B.0.1.4&#10;- Fix pvp + init karma" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #3 3B.0.1.4&#10;- Fix pvp + init karma" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -108,12 +108,12 @@ public class scoreboardPlayer implements Listener {
 		
 		line2.setScore(9);
 		none2.setScore(8);
-		rang.setScore(7);
-		money.setScore(6);
-		bank.setScore(5);
-		infect.setScore(4);
-		discretion.setScore(3);
-		temps.setScore(2);
+		money.setScore(7);
+		bank.setScore(6);
+		infect.setScore(5);
+		discretion.setScore(4);
+		temps.setScore(3);
+		rang.setScore(2);
 		none1.setScore(1);
 		line1.setScore(0);
 		
@@ -163,12 +163,13 @@ public class scoreboardPlayer implements Listener {
 		Score temps = obj.getScore("§8Temps survécu : §7"+time);
 		Score rang = obj.getScore("§8Rang : "+getRang(p.getUniqueId()));
 
-		rang.setScore(7);
-		money.setScore(6);
-		bank.setScore(5);
-		infecte.setScore(4);
-		discretion.setScore(3);
-		temps.setScore(2);
+
+		money.setScore(7);
+		bank.setScore(6);
+		infecte.setScore(5);
+		discretion.setScore(4);
+		temps.setScore(3);
+		rang.setScore(2);
 	}
 	
 	private String getTimeString(Player p)

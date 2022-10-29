@@ -56,6 +56,8 @@ public class Main extends JavaPlugin {
 		getCommand("discord").setExecutor(new DiscordCommand());
 		getCommand("jeton").setExecutor(new jetonsManager(this));
 		getCommand("jeton").setTabCompleter(new jetonsManager(this));
+		getCommand("rang").setExecutor(new karmaManager(this));
+		getCommand("rang").setTabCompleter(new karmaManager(this));
 	}
 	
 	private void enableEvent() {

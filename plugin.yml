@@ -55,4 +55,8 @@ commands:
   jeton:
     description: commandes pour les jetons
     permission: fireland.command.jeton
-    aliases: [jt, jetons]
+    aliases: [ jt, jetons ]
+  rang:
+    description: commandes pour les rangs
+    permission: fireland.command.rang
+    aliases: [ rangs, rg ]

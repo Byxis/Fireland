@@ -216,11 +216,11 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
         }
         else if (args.length == 3)
         {
+            l.add("@a");
             for(Player player : Bukkit.getServer().getOnlinePlayers())
             {
                 l.add(player.getName());
             }
-            l.add("@a");
             return l;
         }
         return l;

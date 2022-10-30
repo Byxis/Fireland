@@ -125,20 +125,21 @@ public class infectedPlayer implements Listener,CommandExecutor {
 				FileConfiguration config = main.cfgm.getPlayerDB();
 				if(args.length == 0) {
 					p.sendMessage("§8Vous avez été infécté !");
-					config.set("infected."+p.getName()+".state", true);
+					config.set("infected."+p.getUniqueId().toString()+".state", true);
 					p.playSound(p.getLocation(), "minecraft:entity.infected.bite", 1, 1);
 					main.cfgm.savePlayerDB();
 					return true;
-				}else if(args.length == 1 && Bukkit.getPlayer(args[0]) != null){
-					p.sendMessage("§8"+args[0]+" été infécté !");
-					Bukkit.getPlayer(args[0]).sendMessage("§8Vous avez été infecté !");
-					Bukkit.getPlayer(args[0]).sendTitle("§8Vous avez été infecté !", "");
-					Bukkit.getPlayer(args[0]).playSound(Bukkit.getPlayer(args[0]).getLocation(), "minecraft:entity.infected.bite", 1, 1);
-					config.set("infected."+args[0]+".state", true);
+				}else if(args.length == 1){
+					Player victim = (Player) Bukkit.getOfflinePlayer(args[0]);
+					p.sendMessage("§8"+victim.getName()+" été infécté !");
+					victim.sendMessage("§8Vous avez été infecté !");
+					victim.sendTitle("§8Vous avez été infecté !", "");
+					victim.playSound(victim.getLocation(), "minecraft:entity.infected.bite", 1, 1);
+					config.set("infected."+victim.getUniqueId().toString()+".state", true);
 					main.cfgm.savePlayerDB();
 					
 				}else {
-					p.sendMessage("§cMauvaise formulation de la commande ! (/infect [online player]");
+					p.sendMessage("§cMauvaise formulation de la commande ! (/infect [player]");
 				}
 			} else if(cmd.getName().equalsIgnoreCase("cure")) {
 				Player p = (Player) sender;
@@ -150,9 +151,11 @@ public class infectedPlayer implements Listener,CommandExecutor {
 					main.cfgm.savePlayerDB();
 					return true;
 				}else if(args.length == 1){
-					p.sendMessage("§8"+args[0]+" été soigné !");
-					config.set("infected."+args[0]+".state", false);
-					config.set("infected."+p.getName()+".time", 0);
+					Player victim = (Player) Bukkit.getOfflinePlayer(args[0]);
+					p.sendMessage("§8"+victim.getName()+" été soigné !");
+					victim.sendMessage("§8Vous avez été soigné !");
+					config.set("infected."+victim.getUniqueId().toString()+".state", false);
+					config.set("infected."+victim.getUniqueId().toString()+".time", 0);
 					main.cfgm.savePlayerDB();
 				}else {
 					p.sendMessage("§cMauvaise formulation de la commande ! (/cure [player]");

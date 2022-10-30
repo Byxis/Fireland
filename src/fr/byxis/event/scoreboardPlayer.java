@@ -87,7 +87,7 @@ public class scoreboardPlayer implements Listener {
 			{
 				state += "§7, ";
 			}
-			state += "§7affamé";
+			state += "§caffamé";
 		}
 		if(state.equals(""))
 		{

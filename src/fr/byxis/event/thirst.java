@@ -1,6 +1,7 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -64,10 +65,11 @@ public class thirst implements Listener,CommandExecutor {
 						}
 					}
 				} else if(args.length == 2) {
-					String playerData = "thirst."+args[0];
+					Player victim = (Player) Bukkit.getOfflinePlayer(args[1]);
+					String playerData = "thirst."+victim.getUniqueId().toString();
 					config.set(playerData, Integer.valueOf(args[1]));
 					main.cfgm.savePlayerDB();
-					p.setExp(Integer.valueOf(args[1]) *0.01f);
+					p.setExp(Integer.parseInt(args[1]) *0.01f);
 					return true;
 					
 				}else {

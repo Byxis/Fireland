@@ -118,7 +118,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
 
     public double getKarma(UUID _uuid)
     {
-        return main.cfgm.getKarmaDB().getDouble(_uuid.toString());
+        return Math.round(main.cfgm.getKarmaDB().getDouble(_uuid.toString()));
     }
 
     @EventHandler
@@ -152,8 +152,6 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         {
             if(e.getEntity().getKiller() != null)
             {
-                System.out.println("3");
-                e.getEntity().getKiller().sendMessage("+0.05");
                 goodAction(e.getEntity().getKiller().getUniqueId(), 0.05);
             }
 

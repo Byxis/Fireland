@@ -95,7 +95,7 @@ public class FactionFunctions {
 				//On initialise les variables
 				ArrayList<FactionPlayerInformation> ar = new ArrayList<>();
 				FactionPlayerInformation player = new FactionPlayerInformation(resultSet.getString(1), factionName, (resultSet.getInt(2)));
-				//On ajoutes les joueurs de la faction dans la liste
+				//On ajoute les joueurs de la faction dans la liste
 				ar.add(player);
 				while(resultSet.next())
 				{

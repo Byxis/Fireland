@@ -1,11 +1,14 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
+import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ZombieDetection implements Listener {
@@ -54,10 +57,14 @@ public class ZombieDetection implements Listener {
 			
 		}.runTaskLater(main, 30);
 	}
-	/*
+
 	@EventHandler
-    public void playerMouvement(onPlayerMoveEvent e) {
-        Location from = new Location(e.getFrom().getWorld(), e.getFrom().getX(), e.getFrom().getY(), e.getFrom().getZ());
+    public void playerMouvement(PlayerMoveEvent e) {
+		if(!(e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockZ() != e.getTo().getBlockZ() || e.getFrom().getBlockY() != e.getTo().getBlockY()))
+		{
+			return;
+		}
+			Location from = new Location(e.getFrom().getWorld(), e.getFrom().getX(), e.getFrom().getY(), e.getFrom().getZ());
         final Location to = new Location(e.getTo().getWorld(), e.getTo().getX(), e.getTo().getY(), e.getTo().getZ());
         
         final Player p = e.getPlayer();
@@ -123,7 +130,7 @@ public class ZombieDetection implements Listener {
                 }
             }).runTaskLater(main, 20L);
         }
-    }*/
+    }
 
 	/*
 	public void checkMovement(Player p)

@@ -82,7 +82,7 @@ public class thirst implements Listener,CommandExecutor {
 	public void onPlayerfirstJoin(PlayerLoginEvent  e) 
 	{
 		Player p = e.getPlayer();
-		if(!p.hasPlayedBefore())
+		if(main.cfgm.getPlayerDB().contains("thirst."+p.getUniqueId().toString()))
 		{
 			 main.cfgm.getPlayerDB().set("thirst."+p.getUniqueId(), 100);
 			 main.cfgm.savePlayerDB();

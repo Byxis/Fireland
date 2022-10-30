@@ -1,14 +1,11 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
-import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ZombieDetection implements Listener {
@@ -59,7 +56,7 @@ public class ZombieDetection implements Listener {
 	}
 
 	//@EventHandler
-    public void playerMouvement(PlayerMoveEvent e) {
+    /*public void playerMouvement(PlayerMoveEvent e) {
 		if(!(e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockZ() != e.getTo().getBlockZ() || e.getFrom().getBlockY() != e.getTo().getBlockY()))
 		{
 			return;
@@ -90,7 +87,7 @@ public class ZombieDetection implements Listener {
 					
 				}
         		
-        	}.runTaskLater(main, 10);*/
+        	}.runTaskLater(main, 10);
         }
         
         //deplacement
@@ -111,10 +108,7 @@ public class ZombieDetection implements Listener {
 				}
         		
         	}.runTaskLater(main, 10);
-        	/
-        	 */
         }
-/*
         if (!to.equals(from)) {
         	config.set("mouvement."+e.getPlayer().getUniqueId(), true);
             (new BukkitRunnable() {
@@ -128,7 +122,7 @@ public class ZombieDetection implements Listener {
                 }
             }).runTaskLater(main, 20L);
         }
-     */
+     *//*
 
         config.set("mouvement."+e.getPlayer().getUniqueId(), true);
             (new BukkitRunnable() {
@@ -154,7 +148,7 @@ public class ZombieDetection implements Listener {
 
 
 		main.cfgm.savePlayerDB();
-    }
+    }*/
 
 	/*
 	public void checkMovement(Player p)

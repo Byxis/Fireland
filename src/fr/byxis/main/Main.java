@@ -337,7 +337,6 @@ public class Main extends JavaPlugin {
 		
 		new BukkitRunnable() 
 		{
-
 			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
@@ -383,8 +382,8 @@ public class Main extends JavaPlugin {
 						//playBorderPackets(p, false);
 					}
 
+					cfgm.savePlayerDB();
 				}
-				cfgm.savePlayerDB();
 			}
 			
 		}.runTaskTimer(this, 0, 20);
@@ -609,7 +608,7 @@ public class Main extends JavaPlugin {
 		String sDiscretion = "discretion."+player.getUniqueId()+".";
 		
 		//check player movement
-		if(cfgm.getPlayerDB().getBoolean(sDiscretion+"move"))
+		/*if(cfgm.getPlayerDB().getBoolean(sDiscretion+"move"))
 		{
 			discretion -= 40;
 			if(player.isSneaking())
@@ -634,11 +633,32 @@ public class Main extends JavaPlugin {
 		if(cfgm.getPlayerDB().getBoolean(sDiscretion+"eat"))
 		{
 			discretion -= 15;
+		}*/
+		if(!player.isSleeping())
+		{
+			discretion -= 40;
+			if(player.isSneaking())
+			{
+				discretion += 30;
+			}
+			if(player.isSprinting() ||player.isSwimming())
+			{
+				discretion -= 50;
+
+			}
+			if(!player.isFlying() && !player.isOnGround())
+			{
+				discretion -= 30;
+			}
 		}
 		
 		if(discretion > 100)
 		{
 			discretion = 100;
+		}
+		else if(discretion < 0)
+		{
+			discretion =0;
 		}
 		
 		cfgm.getPlayerDB().set(sDiscretion+"score", discretion);

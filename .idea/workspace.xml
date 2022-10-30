@@ -9,10 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #14 3B.0.1.4&#10;- Suppression temporaire de la discretion">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #16 3B.0.1.4&#10;- Fix de lag inutile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -404,7 +407,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667122297777</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Patch #16 3B.0.1.4&#10;- Fix de lag inutile">
+      <created>1667122633770</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1667122633770</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -431,7 +441,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #2 de la version 3B.0.1.3&#10;- Ajout de l'autocomletion de la commande /jeton" />
     <MESSAGE value="Patch #3 de la version 3B.0.1.3&#10;- Ajout du @a pour l'ajout de jetons" />
     <MESSAGE value="Patch #4 de la version 3B.0.1.3&#10;- Fix des messages associés à la commande /jeton + ajout @a pour le set et le remove" />
     <MESSAGE value="Patch #5 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml" />
@@ -456,7 +465,8 @@
     <MESSAGE value="Patch #13 3B.0.1.4&#10;- Tentative fix lag discretion" />
     <MESSAGE value="Patch #14 3B.0.1.4&#10;- Tentative fix lag discretion" />
     <MESSAGE value="Patch #14 3B.0.1.4&#10;- Suppression temporaire de la discretion" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #14 3B.0.1.4&#10;- Suppression temporaire de la discretion" />
+    <MESSAGE value="Patch #16 3B.0.1.4&#10;- Fix de lag inutile" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #16 3B.0.1.4&#10;- Fix de lag inutile" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

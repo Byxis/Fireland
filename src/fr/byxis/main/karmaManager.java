@@ -145,12 +145,11 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         updatePlayer(e.getPlayer().getUniqueId());
     }
 
+    @EventHandler
     public void playerKillZombie(EntityDeathEvent e)
     {
-        System.out.println("1");
         if(e.getEntity() instanceof Zombie)
         {
-            System.out.println("2");
             if(e.getEntity().getKiller() != null)
             {
                 System.out.println("3");

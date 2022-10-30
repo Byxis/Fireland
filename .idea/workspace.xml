@@ -9,14 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #18 3B.0.1.4&#10;- Fix de la discretion">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #19 3B.0.1.4&#10;- Ajout debug zombie kill&#10;- Modification de l'état dans le scoreboard">
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -436,7 +431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667124507205</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Patch #19 3B.0.1.4&#10;- Ajout debug zombie kill&#10;- Modification de l'état dans le scoreboard">
+      <created>1667126537617</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1667126537617</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -463,7 +465,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #6 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml?" />
     <MESSAGE value="Patch #7 de la version 3B.0.1.3&#10;- Déplacements des crédits dans le scoreboard" />
     <MESSAGE value="Patch #8 de la version 3B.0.1.3&#10;- ajout debug" />
     <MESSAGE value="Patch #9 de la version 3B.0.1.3&#10;- envie de crever tellement je suis con" />
@@ -488,7 +489,8 @@
     <MESSAGE value="Patch #16 3B.0.1.4&#10;- Fix de la discretion" />
     <MESSAGE value="Patch #17 3B.0.1.4&#10;- Fix de la discretion" />
     <MESSAGE value="Patch #18 3B.0.1.4&#10;- Fix de la discretion" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #18 3B.0.1.4&#10;- Fix de la discretion" />
+    <MESSAGE value="Patch #19 3B.0.1.4&#10;- Ajout debug zombie kill&#10;- Modification de l'état dans le scoreboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #19 3B.0.1.4&#10;- Ajout debug zombie kill&#10;- Modification de l'état dans le scoreboard" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

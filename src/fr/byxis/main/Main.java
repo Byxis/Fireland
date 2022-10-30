@@ -634,19 +634,21 @@ public class Main extends JavaPlugin {
 		{
 			discretion -= 15;
 		}*/
-		if(!player.isSleeping())
+		Location loc = player.getLocation();
+
+		if(loc.distance(player.getLocation()) != 0)
 		{
 			discretion -= 40;
 			if(player.isSneaking())
 			{
 				discretion += 30;
 			}
-			if(player.isSprinting() ||player.isSwimming())
+			if(player.isSprinting() ||player.isSwimming() ||player.isClimbing())
 			{
 				discretion -= 50;
 
 			}
-			if(!player.isFlying() && !player.isOnGround())
+			if(!player.isFlying() && !player.isOnGround() && !player.isClimbing())
 			{
 				discretion -= 30;
 			}
@@ -660,7 +662,7 @@ public class Main extends JavaPlugin {
 		{
 			discretion =0;
 		}
-		
+
 		cfgm.getPlayerDB().set(sDiscretion+"score", discretion);
 		cfgm.savePlayerDB();
 	}

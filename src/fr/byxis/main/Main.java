@@ -637,7 +637,7 @@ public class Main extends JavaPlugin {
 		{
 			discretion -= 15;
 		}*/
-		Location loc = player.getLocation();
+		final Location loc = player.getLocation();
 
 		Thread.sleep(10);
 

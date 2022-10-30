@@ -68,12 +68,28 @@ public class scoreboardPlayer implements Listener {
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		objective.setDisplayName("§f§lStatistiques");
 		
-		String state;
+		String state = "";
 		if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getUniqueId()+".state"))
 		{
-			state = "§2infecté";
+			state += "§2infecté";
 		}
-		else
+		if(main.cfgm.getPlayerDB().getDouble("thirst."+p.getUniqueId()) <= 10)
+		{
+			if(state != "")
+			{
+				state += "§7, ";
+			}
+			state += "§3assoiffé";
+		}
+		if(p.getFoodLevel() <= 6)
+		{
+			if(state != "")
+			{
+				state += "§7, ";
+			}
+			state += "§7affamé";
+		}
+		if(state.equals(""))
 		{
 			state = "§7sain";
 		}

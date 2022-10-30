@@ -58,7 +58,7 @@ public class ZombieDetection implements Listener {
 		}.runTaskLater(main, 30);
 	}
 
-	@EventHandler
+	//@EventHandler
     public void playerMouvement(PlayerMoveEvent e) {
 		if(!(e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockZ() != e.getTo().getBlockZ() || e.getFrom().getBlockY() != e.getTo().getBlockY()))
 		{

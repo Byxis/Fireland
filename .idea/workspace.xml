@@ -9,11 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #8 3B.0.1.4&#10;- Fix de l 'affichage de la banque&#10;- Fix de l'invitation sur une faction">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #10 3B.0.1.4&#10;- Fix du shop">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/bank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/bank.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/bank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/shop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/shop.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +82,7 @@
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "MavenSettings"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -351,7 +352,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667071732731</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Patch #10 3B.0.1.4&#10;- Fix du shop">
+      <created>1667074077576</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1667074077576</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -378,7 +386,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modification de version" />
     <MESSAGE value="Patch #1 de la version 3B.0.1.2" />
     <MESSAGE value="Patch #2 de la version 3B.0.1.2&#10;- Simplification du système de detection (en attendant un fix)" />
     <MESSAGE value="Patch #3 de la version 3B.0.1.2&#10;- Fix temps de vie, discretion, infection, soif (pas intégralement), doorpass&#10;- Possible fix de la bank/parachute" />
@@ -403,7 +410,8 @@
     <MESSAGE value="Patch #7 3B.0.1.4&#10;- Fix commande&#10;- Fix couleur de rang" />
     <MESSAGE value="Patch #7 3B.0.1.4&#10;- Fix DB&#10;- Fix auto complétion de la commande /rang" />
     <MESSAGE value="Patch #8 3B.0.1.4&#10;- Fix de l 'affichage de la banque&#10;- Fix de l'invitation sur une faction" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #8 3B.0.1.4&#10;- Fix de l 'affichage de la banque&#10;- Fix de l'invitation sur une faction" />
+    <MESSAGE value="Patch #10 3B.0.1.4&#10;- Fix du shop" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #10 3B.0.1.4&#10;- Fix du shop" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

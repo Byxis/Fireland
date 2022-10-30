@@ -84,12 +84,12 @@ public class shop implements Listener, CommandExecutor {
 		if(karma >= 75)
 		{
 			double reduction = karma -75;
-			return -(reduction)*1/100;
+			return Math.round(-(reduction)*1/100);
 		}
 		if(karma >= 25 && karma < 50)
 		{
 			double reduction = karma -50;
-			return -(reduction)*2/100;
+			return Math.round(-(reduction)*2/100);
 		}
 		return 0;
 	}
@@ -99,7 +99,7 @@ public class shop implements Listener, CommandExecutor {
 		double reduction = getReduction(_uuid);
 		if(reduction != 0)
 		{
-			return "§d§n"+(reduction*100)+"%";
+			return "  §d(§n"+(reduction*100)+"%§r§d)";
 		}
 		return "";
 	}
@@ -446,9 +446,11 @@ public class shop implements Listener, CommandExecutor {
 			{
 				money = main.eco.getBalance(p);
 			}
+
 			if(!command.equals("")) 
 			{
-				if(money >= price) 
+				long newprice = Math.round(priceKarmaAdapter(p.getUniqueId(), price));
+				if(money >= newprice)
 				{
 					if(command.contains("minecraft:give ") && food == false) 
 					{
@@ -474,11 +476,11 @@ public class shop implements Listener, CommandExecutor {
 						}
 					}
 
-					price = Math.round(priceKarmaAdapter(p.getUniqueId(), price));
+
 					p.playSound(p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
-					p.sendMessage("§7Vous avez acheté "+name+" pour "+price+"$ !");
+					p.sendMessage("§7Vous avez acheté "+name+" pour "+newprice+"$ !");
 					sellItemKarma(p.getUniqueId());
-					main.eco.withdrawPlayer(p, price);
+					main.eco.withdrawPlayer(p, newprice);
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
 				}
 				else 

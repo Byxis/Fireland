@@ -69,15 +69,17 @@ public class bank implements Listener, CommandExecutor {
 					{
 						if(args[1].equalsIgnoreCase("money"))
 						{
+							Player victim = (Player) Bukkit.getOfflinePlayer(args[3]);
 							player.sendMessage("§aLe joueur "+args[3]+" à maintenant "+args[2]+" dans sa banque !");
-							main.cfgm.getEnderchest().set("bank."+args[3]+".money", Integer.parseInt(args[2]));
+							main.cfgm.getEnderchest().set("bank."+victim.getUniqueId()+".money", Integer.parseInt(args[2]));
 							main.cfgm.saveEnderchest();
 							return true;
 						}
 						else if(args[1].equalsIgnoreCase("upgrade"))
 						{
+							Player victim = (Player) Bukkit.getOfflinePlayer(args[3]);
 							player.sendMessage("§aLe joueur "+args[3]+" à maintenant l'amélioration "+args[2]+" !");
-							main.cfgm.getEnderchest().set("bank."+args[3]+".upgrade", Integer.parseInt(args[2]));
+							main.cfgm.getEnderchest().set("bank."+victim.getUniqueId()+".upgrade", Integer.parseInt(args[2]));
 							main.cfgm.saveEnderchest();
 							return true;
 						}

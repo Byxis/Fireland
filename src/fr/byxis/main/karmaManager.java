@@ -69,6 +69,10 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         {
             main.cfgm.getKarmaDB().set(_uuid.toString(), 0);
         }
+        if(main.cfgm.getKarmaDB().getDouble(_uuid.toString())+_amount > 100)
+        {
+            main.cfgm.getKarmaDB().set(_uuid.toString(), 100);
+        }
         else
         {
             main.cfgm.getKarmaDB().set(_uuid.toString(), main.cfgm.getKarmaDB().getDouble(_uuid.toString())-_amount);
@@ -80,9 +84,13 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
     public void goodAction(UUID _uuid, double _amount)
     {
         updatePlayer(_uuid);
-        if(main.cfgm.getKarmaDB().getDouble(_uuid.toString())-_amount > 100)
+        if(main.cfgm.getKarmaDB().getDouble(_uuid.toString())+_amount > 100)
         {
             main.cfgm.getKarmaDB().set(_uuid.toString(), 100);
+        }
+        else if(main.cfgm.getKarmaDB().getDouble(_uuid.toString())+_amount < 0)
+        {
+            main.cfgm.getKarmaDB().set(_uuid.toString(), 0);
         }
         else
         {
@@ -141,7 +149,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
     {
         if(e.getEntity() instanceof Zombie && e.getEntity().getKiller() != null)
         {
-            goodAction(e.getEntity().getKiller().getUniqueId(), 1/20);
+            goodAction(e.getEntity().getKiller().getUniqueId(), 0.05);
         }
     }
 

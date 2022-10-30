@@ -76,9 +76,8 @@ public class ZombieDetection implements Listener {
         if(from.getY() != to.getY())
         {
         	config.set("discretion."+e.getPlayer().getUniqueId()+".jump", true);
-        	main.cfgm.savePlayerDB();
         	
-        	new BukkitRunnable()
+        	/*new BukkitRunnable()
         	{
 
 				@Override
@@ -91,16 +90,14 @@ public class ZombieDetection implements Listener {
 					
 				}
         		
-        	}.runTaskLater(main, 10);
+        	}.runTaskLater(main, 10);*/
         }
         
         //deplacement
         if(from.getX() != to.getX() || from.getY() != to.getY())
         {
         	config.set("discretion."+e.getPlayer().getUniqueId()+".move", true);
-        	main.cfgm.savePlayerDB();
-        	
-        	new BukkitRunnable()
+        	/*new BukkitRunnable()
         	{
 
 				@Override
@@ -114,11 +111,12 @@ public class ZombieDetection implements Listener {
 				}
         		
         	}.runTaskLater(main, 10);
+        	/
+        	 */
         }
-
+/*
         if (!to.equals(from)) {
         	config.set("mouvement."+e.getPlayer().getUniqueId(), true);
-        	main.cfgm.savePlayerDB();
             (new BukkitRunnable() {
                 public void run() {
                 	if(e.getPlayer().getLocation().equals(to))
@@ -130,6 +128,32 @@ public class ZombieDetection implements Listener {
                 }
             }).runTaskLater(main, 20L);
         }
+     */
+
+        config.set("mouvement."+e.getPlayer().getUniqueId(), true);
+            (new BukkitRunnable() {
+                public void run() {
+                	if(e.getPlayer().getLocation().equals(to))
+                	{
+                		config.set("mouvement."+e.getPlayer().getUniqueId(), false);
+                    	main.cfgm.savePlayerDB();
+                	}
+					if(p.getLocation().getX() == to.getX() || p.getLocation().getY() == to.getY())
+					{
+						config.set("discretion."+e.getPlayer().getUniqueId()+".move", false);
+						main.cfgm.savePlayerDB();
+					}
+					if(p.getLocation().getY() == to.getY())
+					{
+						config.set("discretion."+e.getPlayer().getUniqueId()+".jump", false);
+						main.cfgm.savePlayerDB();
+					}
+                    cancel();
+                }
+            }).runTaskLater(main, 10L);
+
+
+		main.cfgm.savePlayerDB();
     }
 
 	/*

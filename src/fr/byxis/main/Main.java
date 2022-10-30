@@ -343,7 +343,11 @@ public class Main extends JavaPlugin {
 				for(Player p : getServer().getOnlinePlayers()) {
 					cobwebDamageClass.damagePlayerInCobweb(p);
 					playTimePlayerAdd(p);
-					checkDiscretionPoint(p);
+					try {
+						checkDiscretionPoint(p);
+					} catch (InterruptedException e) {
+						throw new RuntimeException(e);
+					}
 					scoreboardPlayerClass.update(p);
 					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
 						boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
@@ -602,8 +606,7 @@ public class Main extends JavaPlugin {
 		return (WorldGuardPlugin) plugin;
 	}*/
 	
-	private void checkDiscretionPoint(Player player)
-	{
+	private void checkDiscretionPoint(Player player) throws InterruptedException {
 		double discretion = 100;
 		String sDiscretion = "discretion."+player.getUniqueId()+".";
 		
@@ -635,6 +638,8 @@ public class Main extends JavaPlugin {
 			discretion -= 15;
 		}*/
 		Location loc = player.getLocation();
+
+		Thread.sleep(10);
 
 		if(loc.distance(player.getLocation()) != 0)
 		{

@@ -209,7 +209,7 @@ public class bank implements Listener, CommandExecutor {
 			else if(current.getType().equals(Material.ENDER_CHEST))
 			{
 				int slot = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
-				Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+player.getUniqueId());
+				Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+player.getName());
 				int i = 0;
 				for (ItemStack item : loadEnderchest(player))
 				{

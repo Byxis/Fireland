@@ -149,6 +149,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
     {
         if(e.getEntity() instanceof Zombie && e.getEntity().getKiller() != null)
         {
+            e.getEntity().getKiller().sendMessage("+0.05");
             goodAction(e.getEntity().getKiller().getUniqueId(), 0.05);
         }
     }

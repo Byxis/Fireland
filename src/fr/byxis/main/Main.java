@@ -362,7 +362,6 @@ public class Main extends JavaPlugin {
 						if (safezone > 0)
 						{
 							cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", (safezone-1));
-							cfgm.savePlayerDB();
 							
 							if(safezone == 5 || safezone == 10)
 							{
@@ -374,7 +373,6 @@ public class Main extends JavaPlugin {
 							if(safezone == 0)
 							{
 								cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", -1);
-								cfgm.savePlayerDB();
 								p.setInvulnerable(false);
 							}
 						}
@@ -384,8 +382,9 @@ public class Main extends JavaPlugin {
 					{
 						//playBorderPackets(p, false);
 					}
+
 				}
-				
+				cfgm.savePlayerDB();
 			}
 			
 		}.runTaskTimer(this, 0, 20);
@@ -649,7 +648,6 @@ public class Main extends JavaPlugin {
 	private void playTimePlayerAdd(Player p)
 	{
 		cfgm.getPlayerDB().set("playtime."+p.getUniqueId(), cfgm.getPlayerDB().getInt("playtime."+p.getUniqueId())+ 1);
-		cfgm.savePlayerDB();
 	}
 	
 	/*private void playBorderPackets(Player player, boolean warn)

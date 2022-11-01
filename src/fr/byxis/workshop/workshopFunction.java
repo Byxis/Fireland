@@ -287,16 +287,16 @@ public class workshopFunction {
             {
                 if(_currentPage == _pageMax)
                 {
-                    _inv.setItem(i+45, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+44, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+44, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else
             {
-                _inv.setItem(i+45, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                _inv.setItem(i+44, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
         }

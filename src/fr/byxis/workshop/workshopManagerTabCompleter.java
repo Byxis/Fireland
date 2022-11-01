@@ -28,6 +28,7 @@ public class workshopManagerTabCompleter implements TabCompleter {
             {
                 l.add("newrecipe");
                 l.add("learnrecipe");
+                l.add("gui");
             }
             if(args.length >= 2)
             {

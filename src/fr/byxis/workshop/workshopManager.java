@@ -40,10 +40,12 @@ public class workshopManager implements CommandExecutor {
                 {
                     Player victim = (Player) Bukkit.getOfflinePlayer(args[3]);
                     wf.craftItemNbr(args[1], victim.getUniqueId().toString(), Integer.parseInt(args[2]));
+                    sender.sendMessage("§aLe joueur "+victim.getName()+" à appris "+args[2]+" fois le plan "+args[1]);
                 }
                 else
                 {
                     wf.craftItemNbr(args[1], ((Player)sender).getUniqueId().toString(), Integer.parseInt(args[2]));
+                    sender.sendMessage("§aVous avez appris "+args[2]+" fois le plan "+args[1]);
                 }
             }
             else {

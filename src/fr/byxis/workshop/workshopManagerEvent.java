@@ -9,6 +9,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.Objects;
+
 public class workshopManagerEvent implements Listener {
 
     private final Main main;
@@ -21,8 +23,8 @@ public class workshopManagerEvent implements Listener {
     {
         if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) ||e.getAction().equals(Action.RIGHT_CLICK_AIR) && e.getItem() != null)
         {
-            if(e.getItem().getType() == Material.PAPER && (
-                    e.getItem().getItemMeta().getCustomModelData() == 1 ||
+            if(Objects.requireNonNull(e.getItem()).getType() == Material.PAPER && (
+                    Objects.requireNonNull(e.getItem().getItemMeta()).getCustomModelData() == 1 ||
                     e.getItem().getItemMeta().getCustomModelData() == 2 ||
                     e.getItem().getItemMeta().getCustomModelData() == 3 ||
                     e.getItem().getItemMeta().getCustomModelData() == 4 ))

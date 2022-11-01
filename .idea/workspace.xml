@@ -9,9 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #6 de la version 3B.0.1.5&#10;- Fix d'une erreur de synthaxe&#10;- Fix de la position du verre">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #7 de la version 3B.0.1.5&#10;- Fix des boutons de déplacements des menus">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,13 +118,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Adaptation à la version 1.18.2">
-      <created>1653735781766</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1653735781766</updated>
     </task>
     <task id="LOCAL-00009" summary="Modif">
       <created>1666627133860</created>
@@ -460,7 +455,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667340999200</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Patch #7 de la version 3B.0.1.5&#10;- Fix des boutons de déplacements des menus">
+      <created>1667341125163</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1667341125163</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -487,7 +489,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #6 3B.0.1.4&#10;- Ajout de la commande /rang + l'autocompletion&#10;- Ajout de la nouvelle database" />
     <MESSAGE value="Patch #7 3B.0.1.4&#10;- Fix commande&#10;- Fix couleur de rang" />
     <MESSAGE value="Patch #7 3B.0.1.4&#10;- Fix DB&#10;- Fix auto complétion de la commande /rang" />
     <MESSAGE value="Patch #8 3B.0.1.4&#10;- Fix de l 'affichage de la banque&#10;- Fix de l'invitation sur une faction" />
@@ -512,7 +513,8 @@
     <MESSAGE value="Patch #4 de la version 3B.0.1.5&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54" />
     <MESSAGE value="Patch #5 de la version 3B.0.1.5&#10;- Ajout de l'autocompletion &quot;gui&quot; pour /ws&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54" />
     <MESSAGE value="Patch #6 de la version 3B.0.1.5&#10;- Fix d'une erreur de synthaxe&#10;- Fix de la position du verre" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #6 de la version 3B.0.1.5&#10;- Fix d'une erreur de synthaxe&#10;- Fix de la position du verre" />
+    <MESSAGE value="Patch #7 de la version 3B.0.1.5&#10;- Fix des boutons de déplacements des menus" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #7 de la version 3B.0.1.5&#10;- Fix des boutons de déplacements des menus" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

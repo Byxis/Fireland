@@ -83,13 +83,29 @@ public class workshopFunction {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
-            final PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE player_workshop SET crafted_time =? WHERE player_uuid = ? AND recipe_name = ?");
-            preparedStatement4.setInt(1, getTimeCrafted(_recipeName, _uuid)+_amount);
-            preparedStatement4.setString(2, _uuid);
-            preparedStatement4.setString(3, _recipeName);
 
-            //On execute la requête
-            preparedStatement4.executeUpdate();
+            if(getCraftedTimeToLearn(_recipeName) != 0)
+            {
+                final PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE player_workshop SET crafted_time =? WHERE player_uuid = ? AND recipe_name = ?");
+                preparedStatement4.setInt(1, getTimeCrafted(_recipeName, _uuid)+_amount);
+                preparedStatement4.setString(2, _uuid);
+                preparedStatement4.setString(3, _recipeName);
+
+                //On execute la requête
+                preparedStatement4.executeUpdate();
+            }
+            else
+            {
+                final PreparedStatement preparedStatement4 = connection.prepareStatement("INSERT INTO player_workshop (player_uuid, recipe_name, crafted_time, know) VALUES (?,?,?,?)");
+                preparedStatement4.setInt(1, _amount);
+                preparedStatement4.setString(2, _uuid);
+                preparedStatement4.setString(3, _recipeName);
+                preparedStatement4.setBoolean(3, false);
+
+                //On execute la requête
+                preparedStatement4.executeUpdate();
+            }
+
         } catch (SQLException e) {
             //Une erreur est survenue (Problème de connexion à la BD)
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W002");
@@ -238,6 +254,7 @@ public class workshopFunction {
     private ItemStack setItemMeta(Material mat, String name, short dura) {
         ItemStack item = new ItemStack(mat);
         ItemMeta itemMeta = item.getItemMeta();
+        assert itemMeta != null;
         itemMeta.setDisplayName(name);
         item.setItemMeta(itemMeta);
         item.setDurability(dura);
@@ -312,12 +329,13 @@ public class workshopFunction {
                 List<String> lore = new ArrayList<String>();
                 if(item.know)
                 {
+                    lore.add("§8Type : §d"+item.type);
                     lore.add("§8Nécessite : §6"+item.scrap+"§8/§6"+_craftableItems[0]);
                     lore.add("§8férailles, §6"+item.gunPowder+"§8/§6"+_craftableItems[1]+"§8.");
                 }
                 else
                 {
-                    lore.add("§8Nécessite : §a"+item.recipeName);
+                    lore.add("§8Type : §d"+item.type+"§8, Nécessite : §a"+item.recipeName);
                     lore.add("§6"+item.scrap+"§8/§6"+_craftableItems[0]+"§8férailles, §6");
                     lore.add("§6"+item.gunPowder+"§8/§6"+_craftableItems[1]+"§8.");
                 }

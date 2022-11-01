@@ -209,7 +209,7 @@ public class workshopFunction {
             return items;
         } catch (SQLException e) {
             //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W007");
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W008");
             e.printStackTrace();
         }
         return items;
@@ -276,11 +276,11 @@ public class workshopFunction {
             {
                 if(_currentPage == 1)
                 {
-                    _inv.setItem(i+45, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+44, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+44, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else if(i == 53)

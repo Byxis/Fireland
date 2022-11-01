@@ -8,6 +8,7 @@ import fr.byxis.event.*;
 import fr.byxis.faction.FactionPvp;
 import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
+import fr.byxis.workshop.workshopManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -58,6 +59,8 @@ public class Main extends JavaPlugin {
 		getCommand("jeton").setTabCompleter(new jetonsManager(this));
 		getCommand("rang").setExecutor(new karmaManager(this));
 		getCommand("rang").setTabCompleter(new karmaManager(this));
+		getCommand("workshop").setExecutor(new workshopManager(this));
+		getCommand("workshop").setTabCompleter(new workshopManager(this));
 	}
 	
 	private void enableEvent() {

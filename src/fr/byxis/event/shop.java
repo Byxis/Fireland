@@ -725,14 +725,13 @@ public class shop implements Listener, CommandExecutor {
 			inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§r[1/2]", (short) 1));
 			inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§r[2/2]", (short) 1));
 		}else if(name.equalsIgnoreCase("Marchand de Fusil (2/2)")) {
-			inv.setItem(19, setItemMetaLore(Material.BROWN_DYE, "§7Chargeur de Barrett", (short) 0, listMaker2("§8Coût: §650$","§8Vente: §612.5$", _uuid)));
-			inv.setItem(20, setItemMetaLore(Material.PINK_DYE, "§7Chargeur de L96", (short) 0, listMaker2("§8Coût: §635$","§8Vente: §68.75$", _uuid)));
-			inv.setItem(21, setItemMetaLore(Material.PINK_DYE, "§7Chargeur de SVD Dragunov", (short) 0, listMaker2("§8Coût: §635$","§8Vente: §68.75$", _uuid)));
-			inv.setItem(22, setItemMetaLore(Material.CYAN_DYE, "§7Cartouche de 7.62 NATO", (short) 0, listMaker2("§8Coût: §610$","§8Vente: §62.5$", _uuid)));
-			inv.setItem(23, setItemMetaLore(Material.LAPIS_LAZULI, "§7Chargeur de ASVAL", (short) 0, listMaker2("§8Coût: §650$","§8Vente: §612.5$", _uuid)));
-			inv.setItem(24, setItemMetaLore(Material.PINK_DYE, "§7Chargeur de SVT-40", (short) 0, listMaker2("§8Coût: §630$","§8Vente: §67.5$", _uuid)));
-			inv.setItem(25, setItemMetaLore(Material.BROWN_DYE, "§7Chargeur de CheytacM200", (short) 0, listMaker2("§8Coût: §630$","§8Vente: §67.5$", _uuid)));
-			inv.setItem(26, setItemMetaLore(Material.BEETROOT_SEEDS, "§7Cartouche de Calibre 12", (short) 0, listMaker2("§8Coût: §610$","§8Vente: §62.5$", _uuid)));
+			inv.setItem(19, setItemMetaLore(Material.PINK_DYE, "§7Chargeur de L96", (short) 0, listMaker2("§8Coût: §635$","§8Vente: §68.75$", _uuid)));
+			inv.setItem(20, setItemMetaLore(Material.PINK_DYE, "§7Chargeur de SVD Dragunov", (short) 0, listMaker2("§8Coût: §635$","§8Vente: §68.75$", _uuid)));
+			inv.setItem(21, setItemMetaLore(Material.CYAN_DYE, "§7Cartouche de 7.62 NATO", (short) 0, listMaker2("§8Coût: §610$","§8Vente: §62.5$", _uuid)));
+			inv.setItem(22, setItemMetaLore(Material.LAPIS_LAZULI, "§7Chargeur de ASVAL", (short) 0, listMaker2("§8Coût: §650$","§8Vente: §612.5$", _uuid)));
+			inv.setItem(23, setItemMetaLore(Material.PINK_DYE, "§7Chargeur de SVT-40", (short) 0, listMaker2("§8Coût: §630$","§8Vente: §67.5$", _uuid)));
+			inv.setItem(24, setItemMetaLore(Material.BROWN_DYE, "§7Chargeur de CheytacM200", (short) 0, listMaker2("§8Coût: §630$","§8Vente: §67.5$", _uuid)));
+			inv.setItem(25, setItemMetaLore(Material.BEETROOT_SEEDS, "§7Cartouche de Calibre 12", (short) 0, listMaker2("§8Coût: §610$","§8Vente: §62.5$", _uuid)));
 			inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§r[1/2]", (short) 1));
 			inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§r[2/2]", (short) 1));
 		}else if(name.equalsIgnoreCase("Marchand de Fusil d'Assaut (1/3)")) {
@@ -798,6 +797,7 @@ public class shop implements Listener, CommandExecutor {
 			inv.setItem(28, setItemMetaLore(Material.IRON_NUGGET, "§7Roquette", (short) 0, listMaker2("§8Coût: §665$","§8Vente: §616.25$", _uuid)));
 			inv.setItem(29, setItemMetaLore(Material.BEETROOT_SEEDS, "§7Cartouche de Calibre 12", (short) 0, listMaker2("§8Coût: §610$","§8Vente: §62.5$", _uuid)));
 			inv.setItem(30, setItemMetaLore(Material.GREEN_DYE, "§7Chargeur de AA12", (short) 0, listMaker2("§8Coût: §650$","§8Vente: §612.5$", _uuid)));
+			inv.setItem(31, setItemMetaLore(Material.BROWN_DYE, "§7Chargeur de Barrett", (short) 0, listMaker2("§8Coût: §650$","§8Vente: §612.5$", _uuid)));
 			inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§r[1/2]", (short) 1));
 			inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§r[2/2]", (short) 1));
 		}else if(name.equalsIgnoreCase("Marchand Utilitaire")) {

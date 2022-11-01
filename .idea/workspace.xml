@@ -9,11 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #7 de la version 3B.0.1.5&#10;- Fix des boutons de déplacements des menus">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #8 de la version 3B.0.1.5&#10;- Ajout de message lors de la réussite de la commande&#10;- Fix d'apprentissage d'un plan&#10;- Fix du lore des items">
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,13 +115,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Modif">
-      <created>1666627133860</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1666627133860</updated>
     </task>
     <task id="LOCAL-00010" summary="Modification des configs utilisées comme BDD, utilisant&#10;maintenant l'UUID plutôt que le pseudo.&#10;&#10;Les fonctionnalités suivantes sont a vérifier :&#10;- Bank&#10;- Ambiant sound&#10;- doorPass (en cas d'infection)&#10;- Infection&#10;- menu&#10;- Heliport&#10;- Parachute&#10;- Mort du joueur (infection)&#10;- kill du joueur (marqué comme tueur, mais va etre remplacé par le système de karma)&#10;- Scorfeboard du joueur&#10;- Soif&#10;- Temps de vie&#10;- Détection des zombies&#10;&#10;ET&#10;Ajout de /rally uwu distance">
       <created>1666692730189</created>
@@ -462,7 +452,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667341125163</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Patch #8 de la version 3B.0.1.5&#10;- Ajout de message lors de la réussite de la commande&#10;- Fix d'apprentissage d'un plan&#10;- Fix du lore des items">
+      <created>1667342274718</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1667342274718</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -489,7 +486,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #7 3B.0.1.4&#10;- Fix commande&#10;- Fix couleur de rang" />
     <MESSAGE value="Patch #7 3B.0.1.4&#10;- Fix DB&#10;- Fix auto complétion de la commande /rang" />
     <MESSAGE value="Patch #8 3B.0.1.4&#10;- Fix de l 'affichage de la banque&#10;- Fix de l'invitation sur une faction" />
     <MESSAGE value="Patch #10 3B.0.1.4&#10;- Fix du shop" />
@@ -514,7 +510,8 @@
     <MESSAGE value="Patch #5 de la version 3B.0.1.5&#10;- Ajout de l'autocompletion &quot;gui&quot; pour /ws&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54" />
     <MESSAGE value="Patch #6 de la version 3B.0.1.5&#10;- Fix d'une erreur de synthaxe&#10;- Fix de la position du verre" />
     <MESSAGE value="Patch #7 de la version 3B.0.1.5&#10;- Fix des boutons de déplacements des menus" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #7 de la version 3B.0.1.5&#10;- Fix des boutons de déplacements des menus" />
+    <MESSAGE value="Patch #8 de la version 3B.0.1.5&#10;- Ajout de message lors de la réussite de la commande&#10;- Fix d'apprentissage d'un plan&#10;- Fix du lore des items" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #8 de la version 3B.0.1.5&#10;- Ajout de message lors de la réussite de la commande&#10;- Fix d'apprentissage d'un plan&#10;- Fix du lore des items" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

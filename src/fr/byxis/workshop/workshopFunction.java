@@ -141,6 +141,10 @@ public class workshopFunction {
             int craftedTimeToLearn = 0;
             //On vérifie s'il y a un résultat à la requête
             if (resultSet.next()) {
+                if(resultSet.wasNull())
+                {
+                    return 0;
+                }
                 craftedTimeToLearn = resultSet.getInt(0);
             }
             return craftedTimeToLearn;

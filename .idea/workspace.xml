@@ -9,9 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #5 de la version 3B.0.1.5&#10;- Ajout de l'autocompletion &quot;gui&quot; pour /ws&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54">
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
-    </list>
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #5 de la version 3B.0.1.5&#10;- Ajout de l'autocompletion &quot;gui&quot; pour /ws&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -115,13 +113,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Spécifications (début)">
-      <created>1641406360328</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1641406360328</updated>
     </task>
     <task id="LOCAL-00007" summary="Faire que ça marche lol">
       <created>1641502181528</created>
@@ -459,7 +450,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667340752942</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Patch #5 de la version 3B.0.1.5&#10;- Ajout de l'autocompletion &quot;gui&quot; pour /ws&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54">
+      <created>1667340839555</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1667340839555</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

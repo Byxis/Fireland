@@ -195,7 +195,7 @@ public class workshopFunction {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, workshop_recipes.commande, workshop_craft.item_name, workshop_craft.item, workshop_craft.durability FROM workshop_recipes INNER JOIN player_workshop, workshop_craft WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = workshop_craft.recipe_name");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, workshop_recipes.command, workshop_craft.item_name, workshop_craft.item, workshop_craft.durability FROM workshop_recipes INNER JOIN player_workshop, workshop_craft WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = workshop_craft.recipe_name");
 
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
@@ -276,27 +276,27 @@ public class workshopFunction {
             {
                 if(_currentPage == 1)
                 {
-                    _inv.setItem(i+44, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+44, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else if(i == 53)
             {
                 if(_currentPage == _pageMax)
                 {
-                    _inv.setItem(i+44, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+44, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else
             {
-                _inv.setItem(i+44, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                _inv.setItem(i+45, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
         }

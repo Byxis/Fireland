@@ -272,7 +272,7 @@ public class workshopFunction {
         for(int i=0;i<9;i++)
         {
             _inv.setItem(i, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
-            if(i == 52)
+            if(i+45 == 52)
             {
                 if(_currentPage == 1)
                 {
@@ -283,7 +283,7 @@ public class workshopFunction {
                     _inv.setItem(i+45, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
-            else if(i == 53)
+            else if(i+45 == 53)
             {
                 if(_currentPage == _pageMax)
                 {

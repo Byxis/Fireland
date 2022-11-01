@@ -221,13 +221,16 @@ public class workshopFunction {
         int gunpowder = 0;
         for (ItemStack s : p.getInventory().getContents())
         {
-            if(s.getType() == Material.NETHERITE_SCRAP)
+            if(s != null)
             {
-                scrap++;
-            }
-            if(s.getType() == Material.GUNPOWDER)
-            {
-                gunpowder++;
+                if(s.getType() == Material.NETHERITE_SCRAP)
+                {
+                    scrap++;
+                }
+                if(s.getType() == Material.GUNPOWDER)
+                {
+                    gunpowder++;
+                }
             }
         }
         return new int[]{scrap, gunpowder};

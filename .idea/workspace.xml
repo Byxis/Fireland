@@ -9,15 +9,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #1 de la version 3B.0.1.5&#10;- Fix plugin.yml">
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopItemClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerTabCompleter.java" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #2 de la version 3B.0.1.5&#10;- Ajout de fireland.chat.color&#10;- Fix de /ws learnrecipe&#10;- Ajout du son cryofunheard pendant la lune de sang&#10;&#10;WORKSHOP&#10;- ajout de l'utilisation d'un plan&#10;- fix du nom du plan&#10;- ajout message lors de la création d'un plan&#10;- Ajout du gui avec ajout des items (liés directement a la base de donnée selon les possibilités de craft) (il manque le coté réactif du gui que je ferai dans le prochain patch si tout marche comme prévu (impossible))">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/chatListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/chatListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/chatListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/event/chatListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,13 +125,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00002" summary="test">
-      <created>1638716032930</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1638716032930</updated>
     </task>
     <task id="LOCAL-00003" summary="modif de qlq trucs dans les factions">
       <created>1641134877534</created>
@@ -466,7 +462,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667307165085</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Patch #2 de la version 3B.0.1.5&#10;- Ajout de fireland.chat.color&#10;- Fix de /ws learnrecipe&#10;- Ajout du son cryofunheard pendant la lune de sang&#10;&#10;WORKSHOP&#10;- ajout de l'utilisation d'un plan&#10;- fix du nom du plan&#10;- ajout message lors de la création d'un plan&#10;- Ajout du gui avec ajout des items (liés directement a la base de donnée selon les possibilités de craft) (il manque le coté réactif du gui que je ferai dans le prochain patch si tout marche comme prévu (impossible))">
+      <created>1667339987100</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1667339987100</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -493,7 +496,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch 3B.0.1.4&#10;- Fix de l'ender chest" />
     <MESSAGE value="Patch #2 3B.0.1.4&#10;- Fix de problème d'initialisation du système de karma" />
     <MESSAGE value="Patch #3 3B.0.1.4&#10;- Fix pvp + init karma" />
     <MESSAGE value="Patch #4 3B.0.1.4&#10;- karma fix? &#10;- déplacement de l'affichage du karma dans le scoreboard" />
@@ -518,7 +520,8 @@
     <MESSAGE value="Patch #21 3B.0.1.4&#10;- Suppression d'un message de débuggage&#10;- Arrondissement du /rang&#10;- Changement de couleur pour l'état affamé&#10;- fix commande /thirst&#10;- fix commande /cure&#10;- fix commande /infect" />
     <MESSAGE value="Passage à la version 3B.0.1.5&#10;- Suppression d'un message de débuggage&#10;- Arrondissement du /rang&#10;- Changement de couleur pour l'état affamé&#10;- fix commande /thirst&#10;- fix commande /cure&#10;- fix commande /infect&#10;- déplacement chargeur barett&#10;&#10;WORKSHOP -&#10;- Ajout de la commande /workshop newrecipe&#10;- Ajout de la commande /workshop learnrecipe&#10;- Ajout de l'autocompletion de /workshop newrecipe et /workshop learnrecipe" />
     <MESSAGE value="Patch #1 de la version 3B.0.1.5&#10;- Fix plugin.yml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #1 de la version 3B.0.1.5&#10;- Fix plugin.yml" />
+    <MESSAGE value="Patch #2 de la version 3B.0.1.5&#10;- Ajout de fireland.chat.color&#10;- Fix de /ws learnrecipe&#10;- Ajout du son cryofunheard pendant la lune de sang&#10;&#10;WORKSHOP&#10;- ajout de l'utilisation d'un plan&#10;- fix du nom du plan&#10;- ajout message lors de la création d'un plan&#10;- Ajout du gui avec ajout des items (liés directement a la base de donnée selon les possibilités de craft) (il manque le coté réactif du gui que je ferai dans le prochain patch si tout marche comme prévu (impossible))" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #2 de la version 3B.0.1.5&#10;- Ajout de fireland.chat.color&#10;- Fix de /ws learnrecipe&#10;- Ajout du son cryofunheard pendant la lune de sang&#10;&#10;WORKSHOP&#10;- ajout de l'utilisation d'un plan&#10;- fix du nom du plan&#10;- ajout message lors de la création d'un plan&#10;- Ajout du gui avec ajout des items (liés directement a la base de donnée selon les possibilités de craft) (il manque le coté réactif du gui que je ferai dans le prochain patch si tout marche comme prévu (impossible))" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

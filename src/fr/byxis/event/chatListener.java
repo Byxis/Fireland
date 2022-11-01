@@ -32,6 +32,10 @@ public class chatListener implements Listener {
             	}
             }
         }
+        if(e.getPlayer().hasPermission("fireland.chat.color"))
+        {
+            e.setMessage(e.getMessage().replaceAll("&", "§"));
+        }
         
         if(e.getPlayer().hasPermission("fireland.chat.admin"))
         {

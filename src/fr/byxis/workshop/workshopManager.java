@@ -5,14 +5,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class workshopManager implements CommandExecutor, TabCompleter {
+public class workshopManager implements CommandExecutor {
 
     private final Main main;
     public workshopManager(Main main) {
@@ -30,9 +26,12 @@ public class workshopManager implements CommandExecutor, TabCompleter {
                 for (int i = 5; i < args.length; i++){
                     sb.append(args[i]).append(" ");
                 }
+                String name = args[1];
+                name = name.replaceAll("_", " ");
 
                 String command = sb.toString().trim();
-                wf.createRecipe(args[1], command, args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+                wf.createRecipe(name, command, args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+                sender.sendMessage("§aNouveau plan créé : "+name);
                 return true;
             }
             else if(args[0].equalsIgnoreCase("learnrecipe") && args.length >= 3)
@@ -40,11 +39,17 @@ public class workshopManager implements CommandExecutor, TabCompleter {
                 if(args.length >= 4)
                 {
                     Player victim = (Player) Bukkit.getOfflinePlayer(args[3]);
-                    wf.learnRecipe(args[1], victim.getUniqueId().toString(), Integer.parseInt(args[2]));
+                    wf.craftItemNbr(args[1], victim.getUniqueId().toString(), Integer.parseInt(args[2]));
                 }
                 else
                 {
-                    wf.learnRecipe(args[1], ((Player)sender).getUniqueId().toString(), Integer.parseInt(args[2]));
+                    wf.craftItemNbr(args[1], ((Player)sender).getUniqueId().toString(), Integer.parseInt(args[2]));
+                }
+            }
+            else {
+                if(args[0].equalsIgnoreCase("gui")) {
+                    Player p = (Player) sender;
+                    wf.openCraftMenu(p);
                 }
             }
         }
@@ -62,75 +67,4 @@ public class workshopManager implements CommandExecutor, TabCompleter {
         return false;
     }
 
-
-    @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args) {
-        List<String> l = new ArrayList<>();
-        if(cmd.getName().equalsIgnoreCase("workshop") && ((Player)sender).hasPermission("fireland.command.workshop.admin"))
-        {
-            if(args.length == 1)
-            {
-                l.add("newrecipe");
-                l.add("learnrecipe");
-            }
-            if(args.length >= 2)
-            {
-                if(args[0].equalsIgnoreCase("newrecipe"))
-                {
-                    if(args.length == 2)
-                    {
-                        l.add("--nom");
-                    }
-                    else if (args.length == 3)
-                    {
-                        l.add("D");
-                        l.add("C");
-                        l.add("B");
-                        l.add("A");
-                        l.add("--Type");
-                    }
-                    else if(args.length == 4)
-                    {
-                        l.add("10");
-                        l.add("20");
-                        l.add("--Nombre de scrap nécessaire");
-                    }
-                    else if(args.length == 5)
-                    {
-                        l.add("10");
-                        l.add("20");
-                        l.add("--Nombre de poudre à canon nécessaire");
-                    }
-                    else
-                    {
-                        l.add("--Commande");
-                    }
-                }
-                else if(args[0].equalsIgnoreCase("learnrecipe"))
-                {
-                    if(args.length == 2)
-                    {
-                        l.add("--nom recette");
-                    }
-                    else if(args.length == 3)
-                    {
-                        l.add("1");
-                        l.add("3");
-                        l.add("10");
-                        l.add("20");
-                        l.add("--nombre de fois");
-                    }
-                    else if(args.length == 4)
-                    {
-                        for(Player player : Bukkit.getServer().getOnlinePlayers())
-                        {
-                            l.add(player.getName());
-                        }
-                        l.add("--Joueur");
-                    }
-                }
-            }
-        }
-        return l;
-    }
 }

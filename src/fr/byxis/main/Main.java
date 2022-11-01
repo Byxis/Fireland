@@ -9,6 +9,8 @@ import fr.byxis.faction.FactionPvp;
 import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
 import fr.byxis.workshop.workshopManager;
+import fr.byxis.workshop.workshopManagerEvent;
+import fr.byxis.workshop.workshopManagerTabCompleter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -60,7 +62,7 @@ public class Main extends JavaPlugin {
 		getCommand("rang").setExecutor(new karmaManager(this));
 		getCommand("rang").setTabCompleter(new karmaManager(this));
 		getCommand("workshop").setExecutor(new workshopManager(this));
-		getCommand("workshop").setTabCompleter(new workshopManager(this));
+		getCommand("workshop").setTabCompleter(new workshopManagerTabCompleter(this));
 	}
 	
 	private void enableEvent() {
@@ -97,6 +99,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new zombieManager(this), this);
 		getServer().getPluginManager().registerEvents(new jetonsManager(this), this);
 		getServer().getPluginManager().registerEvents(new karmaManager(this), this);
+		getServer().getPluginManager().registerEvents(new workshopManagerEvent(this), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -227,6 +230,15 @@ public class Main extends JavaPlugin {
 				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a title {\"text\":\" \"}");
 				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"La lune de sang arrive !\",\"bold\":true,\"color\":\"dark_red\"}");
 				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.bloodmoon ambient @a ~ ~ ~ 99999999");
+							new BukkitRunnable() {
+								public void runTaskLater(BukkitRunnable bukkitRunnable, int delay) {
+								}
+
+								@Override
+								public void run() {
+									Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hub.cryofunheard ambient @a");
+								}
+							}.runTaskLater(this, 20*60);
 				    	}
 				    		
 				    }else if (phase != 0) {

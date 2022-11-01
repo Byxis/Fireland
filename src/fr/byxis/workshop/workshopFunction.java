@@ -269,7 +269,7 @@ public class workshopFunction {
 
     public void setItemsInv(Inventory _inv, int[] _craftableItems, ArrayList<workshopItemClass> _items, int _currentPage, int _pageMax)
     {
-        for(int i=0;i<=9;i++)
+        for(int i=0;i<9;i++)
         {
             _inv.setItem(i, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             if(i == 52)

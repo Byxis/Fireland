@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #3 de la version 3B.0.1.5&#10;- Fix d'une erreur lié au fait que certains items de notre inventaire sont null">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #5 de la version 3B.0.1.5&#10;- Ajout de l'autocompletion &quot;gui&quot; pour /ws&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54">
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,20 +115,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Commentaires faction">
-      <created>1641136038848</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1641136038848</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Commentaires faction et fix de la supression de faction">
-      <created>1641139308392</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1641139308392</updated>
     </task>
     <task id="LOCAL-00006" summary="Spécifications (début)">
       <created>1641406360328</created>
@@ -459,7 +445,21 @@
       <option name="project" value="LOCAL" />
       <updated>1667340329595</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Patch #4 de la version 3B.0.1.5&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54">
+      <created>1667340523150</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1667340523150</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Patch #5 de la version 3B.0.1.5&#10;- Ajout de l'autocompletion &quot;gui&quot; pour /ws&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54">
+      <created>1667340752942</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1667340752942</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -486,8 +486,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #3 3B.0.1.4&#10;- Fix pvp + init karma" />
-    <MESSAGE value="Patch #4 3B.0.1.4&#10;- karma fix? &#10;- déplacement de l'affichage du karma dans le scoreboard" />
     <MESSAGE value="Patch #5 3B.0.1.4&#10;- Fix d'un appel récursif infini qui bouffait toute la mémoire" />
     <MESSAGE value="Patch #6 3B.0.1.4&#10;- Ajout de la commande /rang + l'autocompletion&#10;- Ajout de la nouvelle database" />
     <MESSAGE value="Patch #7 3B.0.1.4&#10;- Fix commande&#10;- Fix couleur de rang" />
@@ -511,7 +509,9 @@
     <MESSAGE value="Patch #1 de la version 3B.0.1.5&#10;- Fix plugin.yml" />
     <MESSAGE value="Patch #2 de la version 3B.0.1.5&#10;- Ajout de fireland.chat.color&#10;- Fix de /ws learnrecipe&#10;- Ajout du son cryofunheard pendant la lune de sang&#10;&#10;WORKSHOP&#10;- ajout de l'utilisation d'un plan&#10;- fix du nom du plan&#10;- ajout message lors de la création d'un plan&#10;- Ajout du gui avec ajout des items (liés directement a la base de donnée selon les possibilités de craft) (il manque le coté réactif du gui que je ferai dans le prochain patch si tout marche comme prévu (impossible))" />
     <MESSAGE value="Patch #3 de la version 3B.0.1.5&#10;- Fix d'une erreur lié au fait que certains items de notre inventaire sont null" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #3 de la version 3B.0.1.5&#10;- Fix d'une erreur lié au fait que certains items de notre inventaire sont null" />
+    <MESSAGE value="Patch #4 de la version 3B.0.1.5&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54" />
+    <MESSAGE value="Patch #5 de la version 3B.0.1.5&#10;- Ajout de l'autocompletion &quot;gui&quot; pour /ws&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #5 de la version 3B.0.1.5&#10;- Ajout de l'autocompletion &quot;gui&quot; pour /ws&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

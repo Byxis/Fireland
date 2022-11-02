@@ -452,7 +452,7 @@ public class workshopFunction {
         int[] craftItems = getCraftItems(p);
         if(craftItems[0] >= item.scrap && craftItems[1] >= item.gunPowder)
         {
-            if(hasPlan(p, item.recipeName))
+            if(hasPlan(p, item.recipeName) || item.know)
             {
                 removeItemsOnInventoryOfPlayer(p, Material.NETHERITE_SCRAP, item.scrap);
                 removeItemsOnInventoryOfPlayer(p, Material.GUNPOWDER, item.gunPowder);

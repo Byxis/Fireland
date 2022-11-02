@@ -209,7 +209,7 @@ public class workshopFunction {
         return 0;
     }
 
-    private ArrayList<workshopItemClass> getAllCraftableItems(String _uuid, int _scrapAmount, int _gunpowderAmount)
+    public ArrayList<workshopItemClass> getAllCraftableItems(String _uuid, int _scrapAmount, int _gunpowderAmount)
     {
         ArrayList<workshopItemClass> items = new ArrayList<>();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
@@ -220,7 +220,7 @@ public class workshopFunction {
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
             while (resultSet.next()) {
-                if((resultSet.getInt(3) <= _scrapAmount && resultSet.getInt(4) <= _gunpowderAmount) || resultSet.getBoolean(1))
+                if((resultSet.getInt(3) <= _scrapAmount && resultSet.getInt(4) <= _gunpowderAmount))
                 {
                     workshopItemClass item = new workshopItemClass(resultSet.getString(2), resultSet.getString(7), resultSet.getString(5), resultSet.getInt(3), resultSet.getInt(4), Material.getMaterial(resultSet.getString(8)), (short) resultSet.getInt(9), resultSet.getString(6), resultSet.getBoolean(1));
                     items.add(item);
@@ -235,6 +235,32 @@ public class workshopFunction {
         return items;
     }
 
+    public workshopItemClass getACraftableItem(String _uuid, int _scrapAmount, int _gunpowderAmount)
+    {
+        workshopItemClass item = null;
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+        try {
+            final Connection connection = firelandConnection.getConnection();
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, workshop_recipes.command, workshop_craft.item_name, workshop_craft.item, workshop_craft.durability FROM workshop_recipes INNER JOIN player_workshop, workshop_craft WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = workshop_craft.recipe_name");
+
+            final ResultSet resultSet = preparedStatement1.executeQuery();
+            //On vérifie s'il y a un résultat à la requête
+
+            while (resultSet.next()) {
+                if((resultSet.getInt(3) <= _scrapAmount && resultSet.getInt(4) <= _gunpowderAmount) || resultSet.getBoolean(1))
+                {
+                    item = new workshopItemClass(resultSet.getString(2), resultSet.getString(7), resultSet.getString(5), resultSet.getInt(3), resultSet.getInt(4), Material.getMaterial(resultSet.getString(8)), (short) resultSet.getInt(9), resultSet.getString(6), resultSet.getBoolean(1));
+                }
+            }
+            return item;
+        } catch (SQLException e) {
+            //Une erreur est survenue (Problème de connexion à la BD)
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W008");
+            e.printStackTrace();
+        }
+        return item;
+    }
+
     public int[] getCraftItems(Player p)
     {
         int scrap = 0;
@@ -245,17 +271,34 @@ public class workshopFunction {
             {
                 if(s.getType() == Material.NETHERITE_SCRAP)
                 {
-                    scrap++;
+                    scrap+=s.getAmount();
                 }
                 if(s.getType() == Material.GUNPOWDER)
                 {
-                    gunpowder++;
+                    gunpowder+=s.getAmount();
                 }
             }
         }
         return new int[]{scrap, gunpowder};
     }
-    private ItemStack setItemMeta(Material mat, String name, short dura) {
+
+    public ArrayList<ItemStack> getPlans(Player p)
+    {
+        ArrayList<ItemStack> items = new ArrayList<>();
+        for (ItemStack s : p.getInventory().getContents())
+        {
+            if(s != null)
+            {
+                if(s.getType() == Material.PAPER && s.getItemMeta().getDisplayName().contains("Plan de"))
+                {
+                    items.add(s);
+                }
+            }
+        }
+        return items;
+    }
+
+    public ItemStack setItemMeta(Material mat, String name, short dura) {
         ItemStack item = new ItemStack(mat);
         ItemMeta itemMeta = item.getItemMeta();
         assert itemMeta != null;
@@ -264,7 +307,7 @@ public class workshopFunction {
         item.setDurability(dura);
         return item;
     }
-    private ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
+    public ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
         ItemStack item = new ItemStack(mat);
 
         if(mat.equals(Material.GLASS_BOTTLE))
@@ -334,14 +377,14 @@ public class workshopFunction {
                 if(item.know)
                 {
                     lore.add("§8Type : §d"+item.type);
-                    lore.add("§8Nécessite : §6"+item.scrap+"§8/§6"+_craftableItems[0]);
-                    lore.add("§8férailles, §6"+item.gunPowder+"§8/§6"+_craftableItems[1]+"§8.");
+                    lore.add("§8Nécessite : §6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles,");
+                    lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
                 }
                 else
                 {
                     lore.add("§8Type : §d"+item.type+"§8, Nécessite : §a"+item.recipeName);
                     lore.add("§6"+item.scrap+"§8/§6"+_craftableItems[0]+"§8férailles, §6");
-                    lore.add("§6"+item.gunPowder+"§8/§6"+_craftableItems[1]+"§8.");
+                    lore.add("§6"+item.gunPowder+"§8/§6"+_craftableItems[1]+"§8 poudre à canon.");
                 }
                 _inv.setItem(i+19, setItemMetaLore(item.mat, item.itemName, item.dura, lore));
             }
@@ -364,5 +407,28 @@ public class workshopFunction {
         Inventory craftMenu = Bukkit.createInventory(null, 54, "Atelier (1/"+page+")");
         setItemsInv(craftMenu, craftItems, getAllCraftableItems(p.getUniqueId().toString(), craftItems[0], craftItems[1]), 1, page);
         p.openInventory(craftMenu);
+    }
+
+    public void craftItem(Player p, workshopItemClass item)
+    {
+        int[] craftItems = getCraftItems(p);
+        if(craftItems[0] >= item.scrap && craftItems[1] >= item.gunPowder)
+        {
+            ArrayList<ItemStack> items = getPlans(p);
+            for(ItemStack i : items)
+            {
+                if(i.getItemMeta().getDisplayName() == item.recipeName || item.know)
+                {
+                    p.sendMessage("§aVous avez craft §6"+item.itemName+"§a !");
+                    main.commandExecutor(p, item.command, "crackshot.give.all");
+                    return;
+                }
+            }
+            p.sendMessage("§cVous n'avez pas le plan.");
+        }
+        else
+        {
+            p.sendMessage("§cVous n'avez pas le bon nombre de ferraille/poudre à canon !");
+        }
     }
 }

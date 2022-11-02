@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #10 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #11 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,13 +117,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Patch #1 de la version 3B.0.1.2">
-      <created>1666693221546</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1666693221546</updated>
     </task>
     <task id="LOCAL-00013" summary="Patch #2 de la version 3B.0.1.2&#10;- Simplification du système de detection (en attendant un fix)">
       <created>1666693382481</created>
@@ -460,7 +454,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667408951641</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Patch #11 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données">
+      <created>1667409588933</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1667409588933</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -487,7 +488,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #10 3B.0.1.4&#10;- Fix du shop" />
     <MESSAGE value="Patch #11 3B.0.1.4&#10;- Fix shop karma&#10;- Fix zombie karma&#10;- Fix bank" />
     <MESSAGE value="Patch #12 3B.0.1.4&#10;- Fix zombie karma&#10;- Fix nom bank" />
     <MESSAGE value="Patch #12 3B.0.1.4&#10;- Ptet un fix ?" />
@@ -512,7 +512,8 @@
     <MESSAGE value="Patch #8 de la version 3B.0.1.5&#10;- Ajout de message lors de la réussite de la commande&#10;- Fix d'apprentissage d'un plan&#10;- Fix du lore des items" />
     <MESSAGE value="Patch #9 de la version 3B.0.1.5&#10;- Fix d'un retour nul" />
     <MESSAGE value="Patch #10 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #10 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données" />
+    <MESSAGE value="Patch #11 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #11 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

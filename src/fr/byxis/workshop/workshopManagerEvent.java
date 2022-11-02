@@ -2,12 +2,15 @@ package fr.byxis.workshop;
 
 import fr.byxis.main.Main;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
 
@@ -50,6 +53,36 @@ public class workshopManagerEvent implements Listener {
         if(e.getRightClicked() instanceof Villager && e.getRightClicked().getName().contains("craft"))
         {
             //TODO
+        }
+    }
+
+    public void playerInteractionOnInv(InventoryClickEvent e)
+    {
+        if(e.getView().getTitle().contains("Atelier"))
+        {
+            e.setCancelled(true);
+            ItemStack itemclicked = e.getCurrentItem();
+            Player p = (Player) e.getView().getPlayer();
+            workshopFunction wf = new workshopFunction(main, p);
+            int[] craftItems = wf.getCraftItems(p);
+            if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE || itemclicked.getType() == Material.LIME_STAINED_GLASS_PANE)
+            {
+                int next = itemclicked.getItemMeta().getDisplayName().charAt(4);
+                int max = itemclicked.getItemMeta().getDisplayName().charAt(6);
+                if(next != max)
+                {
+
+                    wf.setItemsInv(e.getInventory(), craftItems, wf.getAllCraftableItems(p.getUniqueId().toString(), craftItems[0], craftItems[1]), next, max);
+                }
+            }
+            if(itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE)
+            {
+                workshopItemClass craftable = wf.getACraftableItem(p.getUniqueId().toString(), craftItems[0], craftItems[1]);
+                if(craftable != null)
+                {
+                    wf.craftItem(p, craftable);
+                }
+            }
         }
     }
 }

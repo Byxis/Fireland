@@ -71,15 +71,16 @@ public class workshopManagerEvent implements Listener {
                 int next = itemclicked.getItemMeta().getDisplayName().charAt(4);
                 int max = itemclicked.getItemMeta().getDisplayName().charAt(6);
                 if(next != max)
-                {
+                {p.sendMessage(""+next);
                     wf.openCraftMenu(p, next);
                 }
             }
-            if(itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE)
+            else if(itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE)
             {
-                workshopItemClass craftable = wf.getACraftableItem(p.getUniqueId().toString(), craftItems[0], craftItems[1]);
+                workshopItemClass craftable = wf.getACraftableItem(p, p.getUniqueId().toString(), craftItems[0], craftItems[1], itemclicked.getItemMeta().getDisplayName());
                 if(craftable != null)
                 {
+                    p.sendMessage(""+e.getView().getTitle().charAt(9));
                     wf.craftItem(p, craftable);
                     wf.openCraftMenu(p, e.getView().getTitle().charAt(9));
                 }

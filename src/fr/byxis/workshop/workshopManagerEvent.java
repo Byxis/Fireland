@@ -69,8 +69,8 @@ public class workshopManagerEvent implements Listener {
             int[] craftItems = wf.getCraftItems(p);
             if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE || itemclicked.getType() == Material.LIME_STAINED_GLASS_PANE)
             {
-                int next = itemclicked.getItemMeta().getDisplayName().charAt(1);
-                int max = itemclicked.getItemMeta().getDisplayName().charAt(3);
+                int next = Integer.parseInt(String.valueOf(itemclicked.getItemMeta().getDisplayName().charAt(1)));
+                int max = Integer.parseInt(String.valueOf(itemclicked.getItemMeta().getDisplayName().charAt(3)));
                 if(next != max)
                 {p.sendMessage(""+next);
                     wf.openCraftMenu(p, next);

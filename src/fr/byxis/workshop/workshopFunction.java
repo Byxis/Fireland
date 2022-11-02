@@ -145,7 +145,23 @@ public class workshopFunction {
                 {
                     return 0;
                 }
-                craftedTimeToLearn = resultSet.getInt(1);
+                String i = resultSet.getString(1);
+                if(i.equalsIgnoreCase("A"))
+                {
+                    craftedTimeToLearn = 1;
+                }
+                else if(i.equalsIgnoreCase("B"))
+                {
+                    craftedTimeToLearn = 2;
+                }
+                else if(i.equalsIgnoreCase("C"))
+                {
+                    craftedTimeToLearn = 3;
+                }
+                else if(i.equalsIgnoreCase("D"))
+                {
+                    craftedTimeToLearn = 4;
+                }
             }
             return craftedTimeToLearn;
         } catch (SQLException e) {
@@ -400,7 +416,7 @@ public class workshopFunction {
                     lore.add("§6"+item.scrap+"§8/§6"+_craftableItems[0]+"§8férailles, §6");
                     lore.add("§6"+item.gunPowder+"§8/§6"+_craftableItems[1]+"§8 poudre à canon.");
                 }
-                _inv.setItem(i+19, setItemMetaLore(item.mat, item.itemName, item.dura, lore));
+                _inv.setItem(i+19, setItemMetaLore(item.mat, "§r"+item.itemName, item.dura, lore));
             }
         }
 
@@ -416,9 +432,9 @@ public class workshopFunction {
             {
                 if(item.getType() == mat)
                 {
-                    if(item.getAmount() >= toRemove)
+                    if(item.getAmount() > toRemove)
                     {
-                        item.setAmount(item.getAmount()-amount);
+                        item.setAmount(item.getAmount()-toRemove);
                         return;
                     }
                     else

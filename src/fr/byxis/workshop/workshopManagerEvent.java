@@ -50,9 +50,10 @@ public class workshopManagerEvent implements Listener {
     @EventHandler
     public void playerOpenCraftMenu(PlayerInteractEntityEvent e)
     {
-        if(e.getRightClicked() instanceof Villager && e.getRightClicked().getName().contains("craft"))
+        if(e.getRightClicked() instanceof Villager && e.getRightClicked().getName().contains("Atelier"))
         {
-            //TODO
+            workshopFunction wf = new workshopFunction(main, e.getPlayer());
+            wf.openCraftMenu(e.getPlayer(), 1);
         }
     }
 
@@ -68,8 +69,8 @@ public class workshopManagerEvent implements Listener {
             int[] craftItems = wf.getCraftItems(p);
             if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE || itemclicked.getType() == Material.LIME_STAINED_GLASS_PANE)
             {
-                int next = itemclicked.getItemMeta().getDisplayName().charAt(4);
-                int max = itemclicked.getItemMeta().getDisplayName().charAt(6);
+                int next = itemclicked.getItemMeta().getDisplayName().charAt(1);
+                int max = itemclicked.getItemMeta().getDisplayName().charAt(3);
                 if(next != max)
                 {p.sendMessage(""+next);
                     wf.openCraftMenu(p, next);
@@ -80,7 +81,6 @@ public class workshopManagerEvent implements Listener {
                 workshopItemClass craftable = wf.getACraftableItem(p, p.getUniqueId().toString(), craftItems[0], craftItems[1], itemclicked.getItemMeta().getDisplayName());
                 if(craftable != null)
                 {
-                    p.sendMessage(""+e.getView().getTitle().charAt(9));
                     wf.craftItem(p, craftable);
                     wf.openCraftMenu(p, e.getView().getTitle().charAt(9));
                 }

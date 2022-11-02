@@ -390,7 +390,7 @@ public class workshopFunction {
                 List<String> lore = new ArrayList<String>();
                 if(item.know)
                 {
-                    lore.add("§8Type : §d"+item.type);
+                    lore.add("§8Type : §d"+item.type +" §c(plan connu)");
                     lore.add("§8Nécessite : §6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles,");
                     lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
                 }

@@ -67,7 +67,7 @@ public class workshopFunction {
             int crafted_time = 0;
             //On vérifie s'il y a un résultat à la requête
             if (resultSet.next()) {
-                crafted_time = resultSet.getInt(0);
+                crafted_time = resultSet.getInt(1);
             }
             return crafted_time;
         } catch (SQLException e) {
@@ -145,7 +145,7 @@ public class workshopFunction {
                 {
                     return 0;
                 }
-                craftedTimeToLearn = resultSet.getInt(0);
+                craftedTimeToLearn = resultSet.getInt(1);
             }
             return craftedTimeToLearn;
         } catch (SQLException e) {
@@ -195,7 +195,7 @@ public class workshopFunction {
             int nbr = 0;
             //On vérifie s'il y a un résultat à la requête
             while (resultSet.next()) {
-                if((resultSet.getInt(0) <= _scrapAmount && resultSet.getInt(1) <= _gunpowderAmount) || resultSet.getBoolean(2))
+                if((resultSet.getInt(1) <= _scrapAmount && resultSet.getInt(2) <= _gunpowderAmount) || resultSet.getBoolean(3))
                 {
                     nbr++;
                 }
@@ -220,9 +220,9 @@ public class workshopFunction {
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
             while (resultSet.next()) {
-                if((resultSet.getInt(2) <= _scrapAmount && resultSet.getInt(3) <= _gunpowderAmount) || resultSet.getBoolean(0))
+                if((resultSet.getInt(3) <= _scrapAmount && resultSet.getInt(4) <= _gunpowderAmount) || resultSet.getBoolean(1))
                 {
-                    workshopItemClass item = new workshopItemClass(resultSet.getString(1), resultSet.getString(6), resultSet.getString(4), resultSet.getInt(3), resultSet.getInt(4), Material.getMaterial(resultSet.getString(7)), (short) resultSet.getInt(8), resultSet.getString(5), resultSet.getBoolean(0));
+                    workshopItemClass item = new workshopItemClass(resultSet.getString(2), resultSet.getString(7), resultSet.getString(5), resultSet.getInt(4), resultSet.getInt(5), Material.getMaterial(resultSet.getString(8)), (short) resultSet.getInt(9), resultSet.getString(6), resultSet.getBoolean(1));
                     items.add(item);
                 }
             }

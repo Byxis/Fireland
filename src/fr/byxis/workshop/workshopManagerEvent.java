@@ -72,8 +72,7 @@ public class workshopManagerEvent implements Listener {
                 int max = itemclicked.getItemMeta().getDisplayName().charAt(6);
                 if(next != max)
                 {
-
-                    wf.setItemsInv(e.getInventory(), craftItems, wf.getAllCraftableItems(p.getUniqueId().toString(), craftItems[0], craftItems[1]), next, max);
+                    wf.openCraftMenu(p, next);
                 }
             }
             if(itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE)
@@ -82,6 +81,7 @@ public class workshopManagerEvent implements Listener {
                 if(craftable != null)
                 {
                     wf.craftItem(p, craftable);
+                    wf.openCraftMenu(p, e.getView().getTitle().charAt(9));
                 }
             }
         }

@@ -393,10 +393,33 @@ public class workshopFunction {
 
     }
 
-    public void openCraftMenu(Player p)
+    public void removeItemsOnInventoryOfPlayer(Player p, Material mat, int amount)
+    {
+        int toRemove = amount;
+        for(ItemStack item : p.getInventory().getContents())
+        {
+            if(item != null)
+            {
+                if(item.getType() == mat)
+                {
+                    if(item.getAmount() >= toRemove)
+                    {
+                        item.setAmount(item.getAmount()-amount);
+                        return;
+                    }
+                    else
+                    {
+                        toRemove -= item.getAmount();
+                        item.setAmount(0);
+                    }
+                }
+            }
+        }
+    }
+
+    public void openCraftMenu(Player p, int page)
     {
         int[] craftItems = getCraftItems(p);
-        int page = 1;
         int nbrItems = getNbrOfShowingItems(p.getUniqueId().toString(), craftItems[0], craftItems[1]);
         ArrayList<workshopItemClass> items = getAllCraftableItems(p.getUniqueId().toString(), craftItems[0], craftItems[1]);
         while(nbrItems > 20)
@@ -419,6 +442,8 @@ public class workshopFunction {
             {
                 if(i.getItemMeta().getDisplayName() == item.recipeName || item.know)
                 {
+                    removeItemsOnInventoryOfPlayer(p, Material.NETHERITE_SCRAP, item.scrap);
+                    removeItemsOnInventoryOfPlayer(p, Material.GUNPOWDER, item.gunPowder);
                     p.sendMessage("§aVous avez craft §6"+item.itemName+"§a !");
                     main.commandExecutor(p, item.command, "crackshot.give.all");
                     return;

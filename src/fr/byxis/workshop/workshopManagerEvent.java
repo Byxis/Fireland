@@ -56,6 +56,7 @@ public class workshopManagerEvent implements Listener {
         }
     }
 
+    @EventHandler
     public void playerInteractionOnInv(InventoryClickEvent e)
     {
         if(e.getView().getTitle().contains("Atelier"))

@@ -9,10 +9,78 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #11 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #12 de la version 3B.0.1.5&#10;- ajout du  craft">
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/DiscordCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/nightVision.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/rally$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/rally.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/rename.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/speedFly.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/command/stack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/db/DatabaseManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/db/DbConnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/db/DbCredentials.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/NVGoogles.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/RemoveInteractionBlock.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/ZombieDetection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/ambientSound.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/bank.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/chatListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/cobwebDamage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/craft.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/doorPass$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/doorPass$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/doorPass.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/fallDamage$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/fallDamage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/heliport$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/heliport$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/heliport.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/infectedPlayer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/jetonsManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/join.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/menu$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/menu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/modifiedInteractionItemstackSize.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/packetListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/parachute$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/parachute.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/playerDeath$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/playerDeath.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/playerManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/quadListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/removeBedInteraction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/scoreboardPlayer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/shop.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/silverfishSilent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/spawn$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/spawn.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/stairs$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/stairs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/thirst.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/timeAlive.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/villagerInteraction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/worldGeneration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/worldGuardEvent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/zombieManager$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/event/zombieManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionFunctions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionInformation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionPlayerInformation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/FactionPvp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/faction/factionManagerTabCompleter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/ConfigManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/byxis/main/Main.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,13 +185,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Patch #2 de la version 3B.0.1.2&#10;- Simplification du système de detection (en attendant un fix)">
-      <created>1666693382481</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1666693382481</updated>
     </task>
     <task id="LOCAL-00014" summary="Patch #3 de la version 3B.0.1.2&#10;- Fix temps de vie, discretion, infection, soif (pas intégralement), doorpass&#10;- Possible fix de la bank/parachute">
       <created>1666723613897</created>
@@ -461,7 +522,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667409588933</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Patch #12 de la version 3B.0.1.5&#10;- ajout du  craft">
+      <created>1667415122126</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1667415122126</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -488,7 +556,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #11 3B.0.1.4&#10;- Fix shop karma&#10;- Fix zombie karma&#10;- Fix bank" />
     <MESSAGE value="Patch #12 3B.0.1.4&#10;- Fix zombie karma&#10;- Fix nom bank" />
     <MESSAGE value="Patch #12 3B.0.1.4&#10;- Ptet un fix ?" />
     <MESSAGE value="Patch #13 3B.0.1.4&#10;- Tentative fix lag discretion" />
@@ -513,7 +580,8 @@
     <MESSAGE value="Patch #9 de la version 3B.0.1.5&#10;- Fix d'un retour nul" />
     <MESSAGE value="Patch #10 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données" />
     <MESSAGE value="Patch #11 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #11 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données" />
+    <MESSAGE value="Patch #12 de la version 3B.0.1.5&#10;- ajout du  craft" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #12 de la version 3B.0.1.5&#10;- ajout du  craft" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

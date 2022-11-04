@@ -37,12 +37,25 @@ public class workshopManagerEvent implements Listener {
                 String name = e.getItem().getItemMeta().getDisplayName();
                 int crafted = wf.getTimeCrafted(name, e.getPlayer().getUniqueId().toString());
                 int max = wf.getCraftedTimeToLearn(name);
-                if(!wf.isLearned(name, e.getPlayer().getUniqueId().toString()) && crafted>= max)
+                if(!wf.isLearned(name, e.getPlayer().getUniqueId().toString()))
                 {
-                    e.getPlayer().playSound(e.getPlayer().getLocation(), "minecraft:entity.player.levelup", 1, 1);
-                    wf.learnRecipe(name, e.getPlayer().getUniqueId().toString());
+                    if( crafted>= max)
+                    {
+                        e.getPlayer().playSound(e.getPlayer().getLocation(), "minecraft:entity.player.levelup", 1, 1);
+                        wf.learnRecipe(name, e.getPlayer().getUniqueId().toString());
+                        e.getItem().setAmount( e.getItem().getAmount()-1);
+                        e.getPlayer().sendMessage("Vous avez appris le plan : "+name);
+                    }
+                    else
+                    {
+                        e.getPlayer().sendMessage("§cVous devez construire plusieurs fois ce plan avant de pouvoir l'apprendre !");
+                    }
                 }
-                e.getItem().setAmount( e.getItem().getAmount()-1);
+                else
+                {
+                    e.getPlayer().sendMessage("§CVous connaissez déjà ce plan !");
+                }
+
             }
         }
     }
@@ -54,6 +67,20 @@ public class workshopManagerEvent implements Listener {
         {
             workshopFunction wf = new workshopFunction(main, e.getPlayer());
             wf.openCraftMenu(e.getPlayer(), 1);
+        }
+    }
+
+    @EventHandler
+    public void playerOpenCraftMenuFromAtelier(PlayerInteractEvent e)
+    {
+        if(e.getClickedBlock() != null)
+        {
+            if(e.getClickedBlock().getType() == Material.BEEHIVE)
+            {
+                Player p = e.getPlayer();
+                workshopFunction wf = new workshopFunction(main, p);
+                wf.openCraftMenu(p, 1);
+            }
         }
     }
 
@@ -72,7 +99,7 @@ public class workshopManagerEvent implements Listener {
                 int next = Integer.parseInt(String.valueOf(itemclicked.getItemMeta().getDisplayName().charAt(1)));
                 int max = Integer.parseInt(String.valueOf(itemclicked.getItemMeta().getDisplayName().charAt(3)));
                 if(next != max)
-                {p.sendMessage(""+next);
+                {
                     wf.openCraftMenu(p, next);
                 }
             }
@@ -82,7 +109,7 @@ public class workshopManagerEvent implements Listener {
                 if(craftable != null)
                 {
                     wf.craftItem(p, craftable);
-                    wf.openCraftMenu(p, e.getView().getTitle().charAt(9));
+                    wf.openCraftMenu(p, e.getView().getTitle().charAt(10));
                 }
             }
         }

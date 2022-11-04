@@ -148,11 +148,11 @@ public class workshopFunction {
                 String i = resultSet.getString(1);
                 if(i.equalsIgnoreCase("A"))
                 {
-                    craftedTimeToLearn = 1;
+                    craftedTimeToLearn = 20;
                 }
                 else if(i.equalsIgnoreCase("B"))
                 {
-                    craftedTimeToLearn = 2;
+                    craftedTimeToLearn = 10;
                 }
                 else if(i.equalsIgnoreCase("C"))
                 {
@@ -160,7 +160,7 @@ public class workshopFunction {
                 }
                 else if(i.equalsIgnoreCase("D"))
                 {
-                    craftedTimeToLearn = 4;
+                    craftedTimeToLearn = 1;
                 }
             }
             return craftedTimeToLearn;
@@ -184,7 +184,7 @@ public class workshopFunction {
             boolean craftedTimeToLearn = false;
             //On vérifie s'il y a un résultat à la requête
             if (resultSet.next()) {
-                int i = resultSet.getInt(0);
+                int i = resultSet.getInt(1);
                 if (i == 0) {
                     return false;
                 } else {
@@ -236,7 +236,7 @@ public class workshopFunction {
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
             while (resultSet.next()) {
-                if((resultSet.getInt(3) <= _scrapAmount && resultSet.getInt(4) <= _gunpowderAmount && hasPlan(p, resultSet.getString(2))) || resultSet.getBoolean(1))
+                if(hasPlan(p, resultSet.getString(2)) || resultSet.getBoolean(1))
                 {
                     workshopItemClass item = new workshopItemClass(resultSet.getString(2), resultSet.getString(7), resultSet.getString(5), resultSet.getInt(3), resultSet.getInt(4), Material.getMaterial(resultSet.getString(8)), (short) resultSet.getInt(9), resultSet.getString(6), resultSet.getBoolean(1));
                     items.add(item);
@@ -308,6 +308,7 @@ public class workshopFunction {
             {
                 if(s.getType() == Material.PAPER && s.getItemMeta().getDisplayName().contains("Plan de"))
                 {
+                    p.sendMessage(s.getItemMeta().getDisplayName());
                     items.add(s);
                 }
             }
@@ -403,7 +404,7 @@ public class workshopFunction {
                     i+=2;
                 }
                 workshopItemClass item = _items.get(i);
-                List<String> lore = new ArrayList<String>();
+                List<String> lore = new ArrayList<>();
                 if(item.know)
                 {
                     lore.add("§8Type : §d"+item.type +" §c(plan connu)");
@@ -470,6 +471,7 @@ public class workshopFunction {
         {
             if(hasPlan(p, item.recipeName) || item.know)
             {
+                p.playSound(p.getLocation(), "minecraft:block.anvil.use", 1, 1);
                 removeItemsOnInventoryOfPlayer(p, Material.NETHERITE_SCRAP, item.scrap);
                 removeItemsOnInventoryOfPlayer(p, Material.GUNPOWDER, item.gunPowder);
                 p.sendMessage("§aVous avez craft §6"+item.itemName+"§a !");

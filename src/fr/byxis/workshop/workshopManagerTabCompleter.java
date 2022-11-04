@@ -2,6 +2,7 @@ package fr.byxis.workshop;
 
 import fr.byxis.main.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -36,7 +37,7 @@ public class workshopManagerTabCompleter implements TabCompleter {
                 {
                     if(args.length == 2)
                     {
-                        l.add("--nom");
+                        l.add("--Nom de la recette");
                     }
                     else if (args.length == 3)
                     {
@@ -57,6 +58,24 @@ public class workshopManagerTabCompleter implements TabCompleter {
                         l.add("10");
                         l.add("20");
                         l.add("--Nombre de poudre à canon nécessaire");
+                    }//String _itemName, String _mat, int _durability
+                    else if(args.length == 6)
+                    {
+                        l.add("--Nom de l'item");
+                    }
+                    else if(args.length == 7)
+                    {
+                        for(Material mat : Material.values())
+                        {
+                            l.add(mat.name());
+                        }
+                        l.add("--Nom du matériaux");
+                    }
+                    else if(args.length == 8)
+                    {
+                        l.add("1");
+                        l.add("2");
+                        l.add("--Durability de l'item");
                     }
                     else
                     {

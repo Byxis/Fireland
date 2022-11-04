@@ -33,23 +33,42 @@ public class workshopFunction {
         this.sender = sender;
     }
 
-    public void createRecipe(String _name, String _command, String _type, Integer _scrap, Integer _gunpowder)
+    public void createRecipe(String _name, String _command, String _type, Integer _scrap, Integer _gunpowder, String _itemName, String _mat, int _durability)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
             //On prépare la requête SQL
-            final PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO workshop_recipes (name, command, type, scrap, gunpowder) VALUES (?, ?, ?, ?, ?)");
+            final PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO workshop_recipes (name, type, scrap, gunpowder) VALUES (?, ?, ?, ?, ?)");
             preparedStatement.setString(1, _name);
-            preparedStatement.setString(2, _command);
-            preparedStatement.setString(3, _type);
-            preparedStatement.setInt(4, _scrap);
-            preparedStatement.setInt(5, _gunpowder);
+            preparedStatement.setString(2, _type);
+            preparedStatement.setInt(3, _scrap);
+            preparedStatement.setInt(4, _gunpowder);
+
+
             //On execute la requête
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             //Une erreur est survenue (Problème de connexion à la BD)
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W001");
+            e.printStackTrace();
+        }
+
+        try
+        {
+
+            final Connection connection = firelandConnection.getConnection();
+            final PreparedStatement preparedStatementBis = connection.prepareStatement("INSERT INTO items (item_name, recipe_name, item, durability, command) VALUES (?, ?, ?, ?, ?, ?)");
+            preparedStatementBis.setString(1, _itemName);
+            preparedStatementBis.setString(2, _name);
+            preparedStatementBis.setString(3, _mat);
+            preparedStatementBis.setInt(4, _durability);
+            preparedStatementBis.setString(5, _command);
+
+            preparedStatementBis.executeUpdate();
+        } catch(SQLException e)
+        {
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème. Il peut s'agir du fait qu'un item à déjà été créé.  Erreur : #W009");
             e.printStackTrace();
         }
     }
@@ -231,7 +250,7 @@ public class workshopFunction {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, workshop_recipes.command, workshop_craft.item_name, workshop_craft.item, workshop_craft.durability FROM workshop_recipes INNER JOIN player_workshop, workshop_craft WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = workshop_craft.recipe_name");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name");
 
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
@@ -257,7 +276,7 @@ public class workshopFunction {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, workshop_recipes.command, workshop_craft.item_name, workshop_craft.item, workshop_craft.durability FROM workshop_recipes INNER JOIN player_workshop, workshop_craft WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = workshop_craft.recipe_name AND workshop_craft.item_name = ?");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND items.item_name = ?");
             preparedStatement1.setString(1, _recipeName);
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
@@ -414,8 +433,8 @@ public class workshopFunction {
                 else
                 {
                     lore.add("§8Type : §d"+item.type+"§8, Nécessite : §a"+item.recipeName);
-                    lore.add("§6"+item.scrap+"§8/§6"+_craftableItems[0]+"§8férailles, §6");
-                    lore.add("§6"+item.gunPowder+"§8/§6"+_craftableItems[1]+"§8 poudre à canon.");
+                    lore.add("§6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles, §6");
+                    lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
                 }
                 _inv.setItem(i+19, setItemMetaLore(item.mat, "§r"+item.itemName, item.dura, lore));
             }

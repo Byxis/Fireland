@@ -23,14 +23,15 @@ public class workshopManager implements CommandExecutor {
             if(args[0].equalsIgnoreCase("newrecipe") && args.length >= 6 && ((Player) sender).hasPermission("fireland.command.workshop.admin"))
             {
                 StringBuilder sb = new StringBuilder();
-                for (int i = 5; i < args.length; i++){
+                for (int i = 8; i < args.length; i++){
                     sb.append(args[i]).append(" ");
                 }
                 String name = args[1];
                 name = name.replaceAll("_", " ");
 
                 String command = sb.toString().trim();
-                wf.createRecipe(name, command, args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+                //String _itemName, String _mat, int _durability
+                wf.createRecipe(name, command, args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]), args[5], args[6], Integer.parseInt(args[7]));
                 sender.sendMessage("§aNouveau plan créé : "+name);
                 return true;
             }

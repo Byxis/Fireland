@@ -9,10 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #17 de la version 3B.0.1.5&#10;- Fix du craft">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #18 de la version 3B.0.1.5&#10;- Finissions de l'atelier">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerTabCompleter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerTabCompleter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,13 +119,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Patch #4 de la version 3B.0.1.3&#10;- Fix des messages associés à la commande /jeton + ajout @a pour le set et le remove">
-      <created>1666787433595</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1666787433595</updated>
     </task>
     <task id="LOCAL-00021" summary="Patch #5 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml">
       <created>1666808729821</created>
@@ -461,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667428346455</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Patch #18 de la version 3B.0.1.5&#10;- Finissions de l'atelier">
+      <created>1667568310056</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1667568310056</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -488,7 +490,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #14 3B.0.1.4&#10;- Suppression temporaire de la discretion" />
     <MESSAGE value="Patch #16 3B.0.1.4&#10;- Fix de lag inutile" />
     <MESSAGE value="Patch #16 3B.0.1.4&#10;- Fix de la discretion" />
     <MESSAGE value="Patch #17 3B.0.1.4&#10;- Fix de la discretion" />
@@ -513,7 +514,8 @@
     <MESSAGE value="Patch #14 de la version 3B.0.1.5&#10;- Fix du craft" />
     <MESSAGE value="Patch #15 de la version 3B.0.1.5&#10;- Fix du craft" />
     <MESSAGE value="Patch #17 de la version 3B.0.1.5&#10;- Fix du craft" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #17 de la version 3B.0.1.5&#10;- Fix du craft" />
+    <MESSAGE value="Patch #18 de la version 3B.0.1.5&#10;- Finissions de l'atelier" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #18 de la version 3B.0.1.5&#10;- Finissions de l'atelier" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

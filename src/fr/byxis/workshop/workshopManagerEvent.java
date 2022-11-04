@@ -108,8 +108,9 @@ public class workshopManagerEvent implements Listener {
                 workshopItemClass craftable = wf.getACraftableItem(p, p.getUniqueId().toString(), craftItems[0], craftItems[1], itemclicked.getItemMeta().getDisplayName());
                 if(craftable != null)
                 {
+                    int page = Integer.parseInt(String.valueOf(e.getView().getTitle().charAt(10)));
                     wf.craftItem(p, craftable);
-                    wf.openCraftMenu(p, e.getView().getTitle().charAt(10));
+                    wf.openCraftMenu(p, page);
                 }
             }
         }

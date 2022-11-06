@@ -9,12 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #25 de la version 3B.0.1.5&#10;- Fix message d'erreur lors de l'interaction avec une main vide&#10;- Fix message lors de l'apprentissage d'un plan">
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopCraftingItemClass.java" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #25 de la version 3B.0.1.5&#10;- Fix message d'erreur lors de l'interaction avec une main vide&#10;- Fix message lors de l'apprentissage d'un plan&#10;- Ajout du craft avec du temps">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopItemClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopItemClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerTabCompleter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerTabCompleter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,13 +118,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Patch 3B.0.1.4&#10;- Fix de l'ender chest">
-      <created>1666969307443</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1666969307443</updated>
     </task>
     <task id="LOCAL-00027" summary="Patch #2 3B.0.1.4&#10;- Fix de problème d'initialisation du système de karma">
       <created>1666986466775</created>
@@ -463,7 +455,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667746987697</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Patch #25 de la version 3B.0.1.5&#10;- Fix message d'erreur lors de l'interaction avec une main vide&#10;- Fix message lors de l'apprentissage d'un plan&#10;- Ajout du craft avec du temps">
+      <created>1667756617041</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1667756617041</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -490,7 +489,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #21 3B.0.1.4&#10;- Suppression d'un message de débuggage&#10;- Arrondissement du /rang&#10;- Changement de couleur pour l'état affamé&#10;- fix commande /thirst&#10;- fix commande /cure&#10;- fix commande /infect" />
     <MESSAGE value="Passage à la version 3B.0.1.5&#10;- Suppression d'un message de débuggage&#10;- Arrondissement du /rang&#10;- Changement de couleur pour l'état affamé&#10;- fix commande /thirst&#10;- fix commande /cure&#10;- fix commande /infect&#10;- déplacement chargeur barett&#10;&#10;WORKSHOP -&#10;- Ajout de la commande /workshop newrecipe&#10;- Ajout de la commande /workshop learnrecipe&#10;- Ajout de l'autocompletion de /workshop newrecipe et /workshop learnrecipe" />
     <MESSAGE value="Patch #1 de la version 3B.0.1.5&#10;- Fix plugin.yml" />
     <MESSAGE value="Patch #2 de la version 3B.0.1.5&#10;- Ajout de fireland.chat.color&#10;- Fix de /ws learnrecipe&#10;- Ajout du son cryofunheard pendant la lune de sang&#10;&#10;WORKSHOP&#10;- ajout de l'utilisation d'un plan&#10;- fix du nom du plan&#10;- ajout message lors de la création d'un plan&#10;- Ajout du gui avec ajout des items (liés directement a la base de donnée selon les possibilités de craft) (il manque le coté réactif du gui que je ferai dans le prochain patch si tout marche comme prévu (impossible))" />
@@ -515,7 +513,8 @@
     <MESSAGE value="Patch #23 de la version 3B.0.1.5&#10;- Fix du /ws gui intégralement + ajout d'ordre de tri des items (d'abord le type, puis le cout en scrap et enfin le cout en gunpowder&#10;- Changement message du manque d'items de craft" />
     <MESSAGE value="Patch #24 de la version 3B.0.1.5&#10;- Fix du nombre de craft de l'item&#10;- Ajout de l'auto espace pour le /ws a:newrecipe" />
     <MESSAGE value="Patch #25 de la version 3B.0.1.5&#10;- Fix message d'erreur lors de l'interaction avec une main vide&#10;- Fix message lors de l'apprentissage d'un plan" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #25 de la version 3B.0.1.5&#10;- Fix message d'erreur lors de l'interaction avec une main vide&#10;- Fix message lors de l'apprentissage d'un plan" />
+    <MESSAGE value="Patch #25 de la version 3B.0.1.5&#10;- Fix message d'erreur lors de l'interaction avec une main vide&#10;- Fix message lors de l'apprentissage d'un plan&#10;- Ajout du craft avec du temps" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #25 de la version 3B.0.1.5&#10;- Fix message d'erreur lors de l'interaction avec une main vide&#10;- Fix message lors de l'apprentissage d'un plan&#10;- Ajout du craft avec du temps" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

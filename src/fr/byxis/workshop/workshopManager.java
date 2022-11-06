@@ -66,7 +66,7 @@ public class workshopManager implements CommandExecutor {
                 Player p = (Player) sender;
                 wf.openCraftMenu(p, 1);
             }
-            else if(args[0].equalsIgnoreCase("craftingui"))
+            else if(args[0].equalsIgnoreCase("craftinggui"))
             {
                 Player p = (Player) sender;
                 wf.openCraftingMenu(p, 1);

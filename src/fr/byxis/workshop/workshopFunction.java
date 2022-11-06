@@ -699,7 +699,7 @@ public class workshopFunction {
             }
         } catch (SQLException e) {
             //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W011");
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W012");
             e.printStackTrace();
         }
         return nbr;
@@ -713,7 +713,11 @@ public class workshopFunction {
 
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_crafting.item, workshop_recipes.type, items.item, items.durability, items.command, player_crafting.creation_date, player_crafting.finish_date FROM player_crafting INNER JOIN items, workshop_recipes ON player_crafting.item = items.item_name AND items.recipe_name = workshop_recipes.name WHERE player_uuid = ? ORDER BY player_crafting.creation_date;");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_crafting.item, workshop_recipes.type, items.item, items.durability, items.command, player_crafting.creation_date, player_crafting.finish_date \n" +
+                    "FROM player_crafting INNER JOIN items, workshop_recipes \n" +
+                    "WHERE items.recipe_name = workshop_recipes.name \n" +
+                    "AND player_crafting.item = items.item_name\n" +
+                    "AND player_crafting.player_uuid = ? ORDER BY player_crafting.creation_date;");
             preparedStatement1.setString(1, _uuid);
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
@@ -724,7 +728,7 @@ public class workshopFunction {
             return items;
         } catch (SQLException e) {
             //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W008");
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W013");
             e.printStackTrace();
         }
         return items;

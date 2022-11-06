@@ -61,11 +61,15 @@ public class workshopManager implements CommandExecutor {
                     sender.sendMessage("§aVous avez appris "+args[2]+" fois le plan "+args[1]);
                 }
             }
-            else {
-                if(args[0].equalsIgnoreCase("gui")) {
-                    Player p = (Player) sender;
-                    wf.openCraftMenu(p, 1);
-                }
+            else if(args[0].equalsIgnoreCase("gui"))
+            {
+                Player p = (Player) sender;
+                wf.openCraftMenu(p, 1);
+            }
+            else if(args[0].equalsIgnoreCase("craftingui"))
+            {
+                Player p = (Player) sender;
+                wf.openCraftingMenu(p, 1);
             }
         }
         else if(cmd.getName().equalsIgnoreCase("workshop"))

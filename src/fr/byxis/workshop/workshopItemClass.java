@@ -15,6 +15,7 @@ public class workshopItemClass
     public boolean know;
 
 
+
     public workshopItemClass(String _recipeName, String _itemName, String _type, int _scrap, int _gunpowder, Material _mat, short _dura, String _command, boolean _know)
     {
         this.recipeName = _recipeName;

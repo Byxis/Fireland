@@ -13,10 +13,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,9 +168,13 @@ public class workshopFunction {
                 }
                 else if(i.equalsIgnoreCase("C"))
                 {
-                    craftedTimeToLearn = 3;
+                    craftedTimeToLearn = 5;
                 }
                 else if(i.equalsIgnoreCase("D"))
+                {
+                    craftedTimeToLearn = 3;
+                }
+                else if(i.equalsIgnoreCase("E"))
                 {
                     craftedTimeToLearn = 1;
                 }
@@ -380,7 +381,7 @@ public class workshopFunction {
         return item;
     }
 
-    public void setItemsInv(Inventory _inv, int[] _craftableItems, ArrayList<workshopItemClass> _items, int _currentPage, int _pageMax)
+    public void setItemsGuiInv(Inventory _inv, int[] _craftableItems, ArrayList<workshopItemClass> _items, int _currentPage, int _pageMax)
     {
         for(int i=0;i<9;i++)
         {
@@ -434,10 +435,8 @@ public class workshopFunction {
                 lore.add("§6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles, §6");
                 lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
             }
-            _inv.setItem(spot+i, setItemMetaLore(item.mat, "§r"+item.itemName, item.dura, lore));
+            _inv.setItem(spot+i, setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore));
         }
-
-
     }
 
     public void removeItemsOnInventoryOfPlayer(Player p, Material mat, int amount)
@@ -476,7 +475,7 @@ public class workshopFunction {
             maxPage++;
         }
         Inventory craftMenu = Bukkit.createInventory(null, 54, "Atelier ("+page+"/"+maxPage+")");
-        setItemsInv(craftMenu, craftItems, getAllCraftableItems(p, p.getUniqueId().toString()), page, maxPage);
+        setItemsGuiInv(craftMenu, craftItems, getAllCraftableItems(p, p.getUniqueId().toString()), page, maxPage);
         p.openInventory(craftMenu);
     }
 
@@ -487,12 +486,15 @@ public class workshopFunction {
         {
             if(hasPlan(p, item.recipeName) || item.know)
             {
+
                 p.playSound(p.getLocation(), "minecraft:block.anvil.use", 1, 1);
                 removeItemsOnInventoryOfPlayer(p, Material.NETHERITE_SCRAP, item.scrap);
                 removeItemsOnInventoryOfPlayer(p, Material.GUNPOWDER, item.gunPowder);
                 p.sendMessage("§aVous avez craft §6"+item.itemName+"§a !");
+                /*
                 main.commandExecutor(p, item.command, "crackshot.give.all");
-                craftItemNbr(item.recipeName, p.getUniqueId().toString(), 1);
+                craftItemNbr(item.recipeName, p.getUniqueId().toString(), 1);*/
+                addItemToCraft(p.getUniqueId().toString(), item);
                 return;
             }
             p.sendMessage("§cVous n'avez pas le plan.");
@@ -567,5 +569,164 @@ public class workshopFunction {
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W010");
             e.printStackTrace();
         }
+    }
+
+    public void addItemToCraft(String _uuid, workshopItemClass item)
+    {
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+        try {
+            final Connection connection = firelandConnection.getConnection();
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO player_crafting(player_uuid, item, creation_date, finish_date, is_breakable) VALUES(?,?,?,?,?)");
+            final long time = System.currentTimeMillis();
+            Date currentTime = new Date(time);
+            Date finishTime = new Date(time+addTimeFromType(item.type));
+            preparedStatement1.setString(1, _uuid);
+            preparedStatement1.setString(2, item.itemName);
+            preparedStatement1.setDate(3, currentTime);
+            preparedStatement1.setDate(4, finishTime);
+            preparedStatement1.setBoolean(5, true);
+            preparedStatement1.executeUpdate();
+        } catch (SQLException e) {
+            //Une erreur est survenue (Problème de connexion à la BD)
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W011");
+            e.printStackTrace();
+        }
+    }
+
+    public int addTimeFromType(String _type)
+    {
+        int time = 0;
+        if(_type.equals("A"))
+        {
+            time = 24*60*60*100;
+        }
+        else if(_type.equals("B"))
+        {
+            time = 3*60*60*100;
+        }
+        else if(_type.equals("C"))
+        {
+            time = 60*60*100;
+        }
+        else if(_type.equals("D"))
+        {
+            time = 30*60*100;
+        }
+        if(_type.equals("E"))
+        {
+            time = 10*60*100;
+        }
+        return time;
+    }
+
+    public void setItemsCraftingInv(Inventory _inv, ArrayList<workshopCraftingItemClass> _items, int _currentPage, int _pageMax)
+    {
+        for(int i=0;i<9;i++)
+        {
+            _inv.setItem(i, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            if(i+45 == 52)
+            {
+                if(_currentPage == 1)
+                {
+                    _inv.setItem(i+45, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                }
+                else
+                {
+                    _inv.setItem(i+45, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
+                }
+            }
+            else if(i+45 == 53)
+            {
+                if(_currentPage == _pageMax)
+                {
+                    _inv.setItem(i+45, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                }
+                else
+                {
+                    _inv.setItem(i+45, setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
+                }
+            }
+            else
+            {
+                _inv.setItem(i+45, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            }
+
+        }
+        int spot = 19-(_currentPage * 14)+14;
+        for (int i = (_currentPage * 14)-14; i < _items.size() && i < _currentPage * 14; i++)
+        {
+            if(spot+i == 26)
+            {
+                spot+=2;
+            }
+            workshopCraftingItemClass item = _items.get(i);
+            List<String> lore = new ArrayList<>();
+            lore.add("§8Type : §d"+item.type +"&8, reste §a"+(item.finishDate.getTime()-item.creationDate.getTime()));
+            lore.add("§8Date de création : §7"+item.creationDate);
+            lore.add("§8Date de fin de création : §7"+item.finishDate);
+            _inv.setItem(spot+i, setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore));
+        }
+    }
+
+    public void openCraftingMenu(Player p, int page)
+    {
+        int maxPage = 1;
+        int nbrItems = getNbrOfCraftingItem(p.getUniqueId().toString());
+        ArrayList<workshopItemClass> items = getAllCraftableItems(p, p.getUniqueId().toString());
+        while(nbrItems > 14)
+        {
+            nbrItems -= 14;
+            maxPage++;
+        }
+        Inventory craftMenu = Bukkit.createInventory(null, 54, "Atelier ("+page+"/"+maxPage+")");
+        setItemsCraftingInv(craftMenu, getAllCraftingItems(p, p.getUniqueId().toString()), page, maxPage);
+        p.openInventory(craftMenu);
+    }
+
+    public int getNbrOfCraftingItem(String _uuid)
+    {
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+        int nbr = 0;
+        try {
+            final Connection connection = firelandConnection.getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM player_crafting WHERE player_uuid = ?");
+            preparedStatement.setString(1, _uuid);
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next())
+            {
+                nbr = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            //Une erreur est survenue (Problème de connexion à la BD)
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W011");
+            e.printStackTrace();
+        }
+        return nbr;
+    }
+
+    public ArrayList<workshopCraftingItemClass> getAllCraftingItems(Player p, String _uuid)
+    {
+        ArrayList<workshopCraftingItemClass> items = new ArrayList<>();
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+        try {
+
+            final Connection connection = firelandConnection.getConnection();
+
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_crafting.item, workshop_recipes.type, items.item, items.durability, items.command, player_crafting.creation_date, player_crafting.finish_date FROM player_crafting INNER JOIN items, workshop_recipes ON player_crafting.item = items.item_name AND items.recipe_name = workshop_recipes.name WHERE player_uuid = ? ORDER BY player_crafting.creation_date;");
+            preparedStatement1.setString(1, _uuid);
+            final ResultSet resultSet = preparedStatement1.executeQuery();
+            //On vérifie s'il y a un résultat à la requête
+            while (resultSet.next()) {
+                workshopCraftingItemClass item = new workshopCraftingItemClass(resultSet.getString(1), resultSet.getString(2), Material.getMaterial(resultSet.getString(3)), (short) resultSet.getInt(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDate(7));
+                items.add(item);
+            }
+            return items;
+        } catch (SQLException e) {
+            //Une erreur est survenue (Problème de connexion à la BD)
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W008");
+            e.printStackTrace();
+        }
+        return items;
     }
 }

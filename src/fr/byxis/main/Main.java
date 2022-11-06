@@ -49,6 +49,7 @@ public class Main extends JavaPlugin {
 		getCommand("infect").setExecutor(new infectedPlayer(this));
 		getCommand("rally").setExecutor(new rally(this));
 		getCommand("shop").setExecutor(new shop(this));
+		getCommand("shop").setTabCompleter(new shop(this));
 		getCommand("rename").setExecutor(new rename());
 		getCommand("stack").setExecutor(new stack());
 		getCommand("bank").setExecutor(new bank(this));

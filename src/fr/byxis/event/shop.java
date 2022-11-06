@@ -3,10 +3,12 @@ package fr.byxis.event;
 import fr.byxis.main.Main;
 import fr.byxis.main.karmaManager;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,12 +21,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class shop implements Listener, CommandExecutor {
+public class shop implements Listener, CommandExecutor, TabCompleter {
 	
 	Inventory revolver1 = Bukkit.createInventory(null, 54, "Marchand de Revolver (1/2)");
 	Inventory revolver2 = Bukkit.createInventory(null, 54, "Marchand de Revolver (2/2)");
@@ -450,7 +454,7 @@ public class shop implements Listener, CommandExecutor {
 			if(!command.equals("")) 
 			{
 				long newprice = Math.round(priceKarmaAdapter(p.getUniqueId(), price));
-				if(money >= newprice)
+				if(money >= newprice || p.getGameMode() == GameMode.CREATIVE)
 				{
 					if(command.contains("minecraft:give ") && food == false) 
 					{
@@ -476,12 +480,20 @@ public class shop implements Listener, CommandExecutor {
 						}
 					}
 
-
-					p.playSound(p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
-					p.sendMessage("§7Vous avez acheté "+name+" pour "+newprice+"$ !");
-					sellItemKarma(p.getUniqueId());
-					main.eco.withdrawPlayer(p, newprice);
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+					if(p.getGameMode() == GameMode.CREATIVE)
+					{
+						p.playSound(p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+						p.sendMessage("§7Vous avez acheté "+name+" pour "+newprice+"$ !");
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+					}
+					else
+					{
+						p.playSound(p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+						p.sendMessage("§7Vous avez acheté "+name+" pour "+newprice+"$ !");
+						sellItemKarma(p.getUniqueId());
+						main.eco.withdrawPlayer(p, newprice);
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+					}
 				}
 				else 
 				{
@@ -914,5 +926,25 @@ public class shop implements Listener, CommandExecutor {
 		lore.add(str1+reductionShow(_uuid));
 		lore.add(str2);
 		return lore;
+	}
+
+	@Nullable
+	@Override
+	public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+		ArrayList<String> l = new ArrayList<>();
+		if(strings.length == 1 && commandSender.hasPermission("fireland.shop.admin"))
+		{
+			l.add("revolver");
+			l.add("smg");
+			l.add("fusil");
+			l.add("assaut");
+			l.add("lourd");
+			l.add("utilitaire");
+			l.add("passv");
+			l.add("passb");
+			l.add("passj");
+			l.add("passr");
+		}
+		return l;
 	}
 }

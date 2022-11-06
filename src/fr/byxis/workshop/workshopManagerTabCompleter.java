@@ -28,6 +28,7 @@ public class workshopManagerTabCompleter implements TabCompleter {
             if(args.length == 1)
             {
                 l.add("newrecipe");
+                l.add("a:newrecipe");
                 l.add("learnrecipe");
                 l.add("gui");
             }
@@ -76,6 +77,33 @@ public class workshopManagerTabCompleter implements TabCompleter {
                         l.add("1");
                         l.add("2");
                         l.add("--Durability de l'item");
+                    }
+                    else
+                    {
+                        l.add("--Commande");
+                    }
+                }
+                if(args[0].equalsIgnoreCase("a:newrecipe"))
+                {
+                    if(args.length == 2)
+                    {
+                        l.add("D");
+                        l.add("C");
+                        l.add("B");
+                        l.add("A");
+                        l.add("--Type");
+                    }
+                    else if(args.length == 3)
+                    {
+                        l.add("10");
+                        l.add("20");
+                        l.add("--Nombre de scrap nécessaire");
+                    }
+                    else if(args.length == 4)
+                    {
+                        l.add("10");
+                        l.add("20");
+                        l.add("--Nombre de poudre à canon nécessaire");
                     }
                     else
                     {

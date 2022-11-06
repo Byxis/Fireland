@@ -21,7 +21,7 @@ public class workshopManager implements CommandExecutor {
         if(cmd.getName().equalsIgnoreCase("workshop") && args.length >= 1)
         {
             if(args[0].equalsIgnoreCase("newrecipe") && args.length >= 6 && ((Player) sender).hasPermission("fireland.command.workshop.admin"))
-            {
+            {//ws newrecipe a:NomRecette Type scrap canon a:Itemname a:materiel a:durability commande
                 StringBuilder sb = new StringBuilder();
                 for (int i = 8; i < args.length; i++){
                     sb.append(args[i]).append(" ");
@@ -33,6 +33,18 @@ public class workshopManager implements CommandExecutor {
                 //String _itemName, String _mat, int _durability
                 wf.createRecipe(name, command, args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]), args[5], args[6], Integer.parseInt(args[7]));
                 sender.sendMessage("§aNouveau plan créé : "+name);
+                return true;
+            }
+            if(args[0].equalsIgnoreCase("a:newrecipe") && args.length >= 5 && ((Player) sender).hasPermission("fireland.command.workshop.admin"))
+            {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 4; i < args.length; i++){
+                    sb.append(args[i]).append(" ");
+                }
+
+                String command = sb.toString().trim();
+                //String _itemName, String _mat, int _durability
+                wf.saveNewItem(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), command);
                 return true;
             }
             else if(args[0].equalsIgnoreCase("learnrecipe") && args.length >= 3)

@@ -254,7 +254,7 @@ public class workshopFunction {
 
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND player_workshop.player_uuid = ?");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND player_workshop.player_uuid = ? ORDER BY type, scrap DESC, gunpowder ASC");
             preparedStatement1.setString(1, _uuid);
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
@@ -418,30 +418,28 @@ public class workshopFunction {
             }
 
         }
-        for (int i = (_currentPage * 20)-20; i < _items.size(); i++)
+        int spot = 19-(_currentPage * 14)+14;
+        for (int i = (_currentPage * 14)-14; i < _items.size() && i < _currentPage * 14; i++)
         {
-            if(i <= _currentPage * 20)
+            if(spot+i == 26)
             {
-                if(i >= 26)
-                {
-                    i+=2;
-                }
-                workshopItemClass item = _items.get(i);
-                List<String> lore = new ArrayList<>();
-                if(item.know)
-                {
-                    lore.add("§8Type : §d"+item.type +" §a(Plan connu)");
-                    lore.add("§8Nécessite : §6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles,");
-                    lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
-                }
-                else
-                {
-                    lore.add("§8Type : §d"+item.type+"§8, Nécessite : §c"+item.recipeName);
-                    lore.add("§6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles, §6");
-                    lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
-                }
-                _inv.setItem(i+19, setItemMetaLore(item.mat, "§r"+item.itemName, item.dura, lore));
+                spot+=2;
             }
+            workshopItemClass item = _items.get(i);
+            List<String> lore = new ArrayList<>();
+            if(item.know)
+            {
+                lore.add("§8Type : §d"+item.type +" §a(Plan connu)");
+                lore.add("§8Nécessite : §6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles,");
+                lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
+            }
+            else
+            {
+                lore.add("§8Type : §d"+item.type+"§8, Nécessite : §c"+item.recipeName);
+                lore.add("§6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles, §6");
+                lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
+            }
+            _inv.setItem(spot+i, setItemMetaLore(item.mat, "§r"+item.itemName, item.dura, lore));
         }
 
 
@@ -477,12 +475,12 @@ public class workshopFunction {
         int maxPage = 1;
         int nbrItems = getNbrOfShowingItems(p.getUniqueId().toString(), craftItems[0], craftItems[1]);
         ArrayList<workshopItemClass> items = getAllCraftableItems(p, p.getUniqueId().toString());
-        while(nbrItems > 20)
+        while(nbrItems > 14)
         {
-            nbrItems -= 20;
+            nbrItems -= 14;
             maxPage++;
         }
-        Inventory craftMenu = Bukkit.createInventory(null, 54, "Atelier (1/"+maxPage+")");
+        Inventory craftMenu = Bukkit.createInventory(null, 54, "Atelier ("+page+"/"+maxPage+")");
         setItemsInv(craftMenu, craftItems, getAllCraftableItems(p, p.getUniqueId().toString()), page, maxPage);
         p.openInventory(craftMenu);
     }
@@ -506,7 +504,7 @@ public class workshopFunction {
         }
         else
         {
-            p.sendMessage("§cVous n'avez pas le bon nombre de ferraille/poudre à canon !");
+            p.sendMessage("§cVous n'avez pas assez de ferraille/poudre à canon !");
         }
     }
 

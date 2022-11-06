@@ -9,14 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #20 de la version 3B.0.1.5&#10;- Ajout du fait que l'achat est gratuit en créatif&#10;- Ajout de l'autocomplete du /shop &#10;- Ajout de /ws a:newrecipe, une commande plus rapide que le /ws newrecipe mais qui demande d'avoir l'item en main">
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #22 de la version 3B.0.1.5&#10;- Fix message d'erreur inventaire&#10;- Fix d'affichage des armes dans le /ws gui&#10;- Fix de problèmes de bdd&#10;- Fix de la commmande /ws a:newrecipe + modification du nom pour qu'il soit + complet">
+      <change afterPath="$PROJECT_DIR$/tips.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerTabCompleter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerTabCompleter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,13 +118,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Patch #6 de la version 3B.0.1.3&#10;- Fix de la sauvegarde du fichier jetonsDB.yml?">
-      <created>1666810323882</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1666810323882</updated>
     </task>
     <task id="LOCAL-00023" summary="Patch #7 de la version 3B.0.1.3&#10;- Déplacements des crédits dans le scoreboard">
       <created>1666811604410</created>
@@ -465,7 +455,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667586237919</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Patch #22 de la version 3B.0.1.5&#10;- Fix message d'erreur inventaire&#10;- Fix d'affichage des armes dans le /ws gui&#10;- Fix de problèmes de bdd&#10;- Fix de la commmande /ws a:newrecipe + modification du nom pour qu'il soit + complet">
+      <created>1667734815875</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1667734815875</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -492,7 +489,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #17 3B.0.1.4&#10;- Fix de la discretion" />
     <MESSAGE value="Patch #18 3B.0.1.4&#10;- Fix de la discretion" />
     <MESSAGE value="Patch #19 3B.0.1.4&#10;- Ajout debug zombie kill&#10;- Modification de l'état dans le scoreboard" />
     <MESSAGE value="Patch #20 3B.0.1.4&#10;- Fix du zombie kill" />
@@ -517,7 +513,8 @@
     <MESSAGE value="Patch #18 de la version 3B.0.1.5&#10;- Finissions de l'atelier" />
     <MESSAGE value="Patch #19 de la version 3B.0.1.5&#10;- Modif d'emplacement du scap&#10;- Fix du menu après craft&#10;- Changement de la base de donnée pour créer une nouvelle table : items (qu'on utilisera pour faire le shop)&#10;- Fix du fait qu'un item peut déjà avoir été créé." />
     <MESSAGE value="Patch #20 de la version 3B.0.1.5&#10;- Ajout du fait que l'achat est gratuit en créatif&#10;- Ajout de l'autocomplete du /shop &#10;- Ajout de /ws a:newrecipe, une commande plus rapide que le /ws newrecipe mais qui demande d'avoir l'item en main" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #20 de la version 3B.0.1.5&#10;- Ajout du fait que l'achat est gratuit en créatif&#10;- Ajout de l'autocomplete du /shop &#10;- Ajout de /ws a:newrecipe, une commande plus rapide que le /ws newrecipe mais qui demande d'avoir l'item en main" />
+    <MESSAGE value="Patch #22 de la version 3B.0.1.5&#10;- Fix message d'erreur inventaire&#10;- Fix d'affichage des armes dans le /ws gui&#10;- Fix de problèmes de bdd&#10;- Fix de la commmande /ws a:newrecipe + modification du nom pour qu'il soit + complet" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #22 de la version 3B.0.1.5&#10;- Fix message d'erreur inventaire&#10;- Fix d'affichage des armes dans le /ws gui&#10;- Fix de problèmes de bdd&#10;- Fix de la commmande /ws a:newrecipe + modification du nom pour qu'il soit + complet" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -91,14 +91,19 @@ public class workshopManagerEvent implements Listener {
         {
             e.setCancelled(true);
             ItemStack itemclicked = e.getCurrentItem();
+            if(itemclicked == null)
+            {
+                return;
+            }
             Player p = (Player) e.getView().getPlayer();
             workshopFunction wf = new workshopFunction(main, p);
             int[] craftItems = wf.getCraftItems(p);
             if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE || itemclicked.getType() == Material.LIME_STAINED_GLASS_PANE)
             {
-                int next = Integer.parseInt(String.valueOf(itemclicked.getItemMeta().getDisplayName().charAt(1)));
-                int max = Integer.parseInt(String.valueOf(itemclicked.getItemMeta().getDisplayName().charAt(3)));
-                if(next != max)
+                int page = Integer.parseInt(String.valueOf(e.getView().getTitle().charAt(9)));
+                int next = Integer.parseInt(String.valueOf(itemclicked.getItemMeta().getDisplayName().charAt(3)));
+                int max = Integer.parseInt(String.valueOf(itemclicked.getItemMeta().getDisplayName().charAt(5)));
+                if(next != max || max == page+1)
                 {
                     wf.openCraftMenu(p, next);
                 }
@@ -108,7 +113,7 @@ public class workshopManagerEvent implements Listener {
                 workshopItemClass craftable = wf.getACraftableItem(p, p.getUniqueId().toString(), craftItems[0], craftItems[1], itemclicked.getItemMeta().getDisplayName());
                 if(craftable != null)
                 {
-                    int page = Integer.parseInt(String.valueOf(e.getView().getTitle().charAt(10)));
+                    int page = Integer.parseInt(String.valueOf(e.getView().getTitle().charAt(9)));
                     wf.craftItem(p, craftable);
                     wf.openCraftMenu(p, page);
                 }

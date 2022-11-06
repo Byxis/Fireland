@@ -103,24 +103,19 @@ public class workshopFunction {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT player_workshop.crafted_time FROM player_workshop WHERE player_uuid = ? AND recipe_name = ?");
+            preparedStatement.setString(1, _uuid);
+            preparedStatement.setString(2, _recipeName);
 
-            if(getCraftedTimeToLearn(_recipeName) != 0)
+            //On execute la requête
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if(rs.next())
             {
                 final PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE player_workshop SET crafted_time =? WHERE player_uuid = ? AND recipe_name = ?");
-                preparedStatement4.setInt(1, getTimeCrafted(_recipeName, _uuid)+_amount);
+                preparedStatement4.setInt(1, rs.getInt(1)+_amount);
                 preparedStatement4.setString(2, _uuid);
                 preparedStatement4.setString(3, _recipeName);
-
-                //On execute la requête
-                preparedStatement4.executeUpdate();
-            }
-            else
-            {
-                final PreparedStatement preparedStatement4 = connection.prepareStatement("INSERT INTO player_workshop (player_uuid, recipe_name, crafted_time, know) VALUES (?,?,?,?)");
-                preparedStatement4.setInt(1, _amount);
-                preparedStatement4.setString(2, _uuid);
-                preparedStatement4.setString(3, _recipeName);
-                preparedStatement4.setBoolean(3, false);
 
                 //On execute la requête
                 preparedStatement4.executeUpdate();
@@ -524,8 +519,16 @@ public class workshopFunction {
                 {
                     break;
                 }
-                sb.append(words[i]);
-
+                String temp2 = words[i+1];
+                temp2 = temp2.replaceAll("[^a-zA-Z0-9]", " ");
+                if(temp2.equals(words[i+1]))
+                {
+                    sb.append(words[i]).append("_");
+                }
+                else
+                {
+                    sb.append(words[i]);
+                }
             }
             name = sb.toString().trim();
 //ws newrecipe nom type scrap gp nomitem mat dura    cmd

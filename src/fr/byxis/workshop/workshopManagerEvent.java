@@ -12,8 +12,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Objects;
-
 public class workshopManagerEvent implements Listener {
 
     private final Main main;
@@ -24,13 +22,9 @@ public class workshopManagerEvent implements Listener {
     @EventHandler
     public void playerUseRecipe(PlayerInteractEvent e)
     {
-        if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) ||e.getAction().equals(Action.RIGHT_CLICK_AIR) && e.getItem() != null)
+        if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) ||e.getAction().equals(Action.RIGHT_CLICK_AIR) && (e.getItem() != null || e.getItem().getType() == Material.AIR))
         {
-            if(Objects.requireNonNull(e.getItem()).getType() == Material.PAPER && (
-                    Objects.requireNonNull(e.getItem().getItemMeta()).getCustomModelData() == 1 ||
-                    e.getItem().getItemMeta().getCustomModelData() == 2 ||
-                    e.getItem().getItemMeta().getCustomModelData() == 3 ||
-                    e.getItem().getItemMeta().getCustomModelData() == 4 ))
+            if(e.getItem().getType() == Material.PAPER)
             {
                 e.setCancelled(true);
                 workshopFunction wf = new workshopFunction(main, e.getPlayer());
@@ -48,7 +42,7 @@ public class workshopManagerEvent implements Listener {
                     }
                     else
                     {
-                        e.getPlayer().sendMessage("§cVous devez construire plusieurs fois ce plan avant de pouvoir l'apprendre !");
+                        e.getPlayer().sendMessage("§cVous devez construire encore "+(max-crafted)+" fois ce plan avant de pouvoir l'apprendre !");
                     }
                 }
                 else

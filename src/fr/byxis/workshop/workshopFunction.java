@@ -519,16 +519,24 @@ public class workshopFunction {
                 {
                     break;
                 }
-                String temp2 = words[i+1];
-                temp2 = temp2.replaceAll("[^a-zA-Z0-9]", " ");
-                if(temp2.equals(words[i+1]))
+                if(i+1 < words.length)
                 {
-                    sb.append(words[i]).append("_");
+                    String temp2 = words[i+1];
+                    temp2 = temp2.replaceAll("[^a-zA-Z0-9]", " ");
+                    if(temp2.equals(words[i+1]))
+                    {
+                        sb.append(words[i]).append("_");
+                    }
+                    else
+                    {
+                        sb.append(words[i]);
+                    }
                 }
                 else
                 {
                     sb.append(words[i]);
                 }
+
             }
             name = sb.toString().trim();
 //ws newrecipe nom type scrap gp nomitem mat dura    cmd

@@ -62,5 +62,5 @@ commands:
     aliases: [ rangs, rg ]
   workshop:
     description: commandes pour le workshop
-    permission: fireland.command.workshop
+    permission: fireland.command.workshop.admin
     aliases: [ws]

@@ -61,12 +61,12 @@ public class workshopManager implements CommandExecutor {
                     sender.sendMessage("§aVous avez appris "+args[2]+" fois le plan "+args[1]);
                 }
             }
-            else if(args[0].equalsIgnoreCase("gui"))
+            else if(args[0].equalsIgnoreCase("gui") && sender.hasPermission("fireland.command.workshop.gui"))
             {
                 Player p = (Player) sender;
                 wf.openCraftMenu(p, 1);
             }
-            else if(args[0].equalsIgnoreCase("craftinggui"))
+            else if(args[0].equalsIgnoreCase("craftinggui") && sender.hasPermission("fireland.command.workshop.craftinggui"))
             {
                 Player p = (Player) sender;
                 wf.openCraftingMenu(p, 1);

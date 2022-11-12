@@ -8,6 +8,7 @@ import fr.byxis.event.*;
 import fr.byxis.faction.FactionPvp;
 import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
+import fr.byxis.workshop.workshopFunction;
 import fr.byxis.workshop.workshopManager;
 import fr.byxis.workshop.workshopManagerEvent;
 import fr.byxis.workshop.workshopManagerTabCompleter;
@@ -195,6 +196,12 @@ public class Main extends JavaPlugin {
 					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
 						
 						float thirst = (float) playerDBConfig.getDouble("thirst."+p.getUniqueId());
+
+						if(p.isClimbing() || p.isSprinting() ||p.isSwimming())
+						{
+							playerDBConfig.set("thirst."+p.getUniqueId(), thirst-0.2);
+							cfgm.savePlayerDB();
+						}
 						
 						if (thirst <= 0f) {
 							p.setExp(0);
@@ -231,16 +238,9 @@ public class Main extends JavaPlugin {
 				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a title {\"text\":\" \"}");
 				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"La lune de sang arrive !\",\"bold\":true,\"color\":\"dark_red\"}");
 				    		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.bloodmoon ambient @a ~ ~ ~ 99999999");
-							new BukkitRunnable() {
-								public void runTaskLater(BukkitRunnable bukkitRunnable, int delay) {
-								}
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.cryofunheard ambient @a");
 
-								@Override
-								public void run() {
-									Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hub.cryofunheard ambient @a");
-								}
-							}.runTaskLater(this, 20*60);
-				    	}
+						}
 				    		
 				    }else if (phase != 0) {
 				    	moonPhase = true;
@@ -350,7 +350,7 @@ public class Main extends JavaPlugin {
 			}
 			
 		}.runTaskTimer(this, 0, 1);
-		
+		workshopFunction wf = new workshopFunction(this, null);
 		new BukkitRunnable() 
 		{
 			@SuppressWarnings("deprecation")
@@ -359,11 +359,7 @@ public class Main extends JavaPlugin {
 				for(Player p : getServer().getOnlinePlayers()) {
 					cobwebDamageClass.damagePlayerInCobweb(p);
 					playTimePlayerAdd(p);
-					try {
-						checkDiscretionPoint(p);
-					} catch (InterruptedException e) {
-						throw new RuntimeException(e);
-					}
+					checkDiscretionPoint(p);
 					scoreboardPlayerClass.update(p);
 					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
 						boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
@@ -400,14 +396,20 @@ public class Main extends JavaPlugin {
 					else
 					{
 						//playBorderPackets(p, false);
+						//ATELIER
 					}
-
-					cfgm.savePlayerDB();
+					/*if(p.getOpenInventory().getTitle().contains("Attente"))
+					{
+						wf.sender = p;
+						int max = wf.getInvPageMax(p.getOpenInventory());
+						int current = wf.getInvPageCurrent(p.getOpenInventory());
+						wf.setItemsCraftingInv((Inventory) p.getOpenInventory(), wf.getAllCraftingItems(p, p.getUniqueId().toString()), current, max);
+					}*/
 				}
 			}
 			
 		}.runTaskTimer(this, 0, 20);
-
+		cfgm.savePlayerDB();
 		new BukkitRunnable(){
 			@Override
 			public void run() {
@@ -622,8 +624,8 @@ public class Main extends JavaPlugin {
 		return (WorldGuardPlugin) plugin;
 	}*/
 	
-	private void checkDiscretionPoint(Player player) throws InterruptedException {
-		double discretion = 100;
+		private void checkDiscretionPoint(Player player){
+		double discretion = 80;
 		String sDiscretion = "discretion."+player.getUniqueId()+".";
 		
 		//check player movement
@@ -653,28 +655,21 @@ public class Main extends JavaPlugin {
 		{
 			discretion -= 15;
 		}*/
-		final Location loc = player.getLocation();
 
-		Thread.sleep(10);
-
-		if(loc.distance(player.getLocation()) != 0)
+		if(player.isSneaking())
 		{
-			discretion -= 40;
-			if(player.isSneaking())
-			{
-				discretion += 30;
-			}
-			if(player.isSprinting() ||player.isSwimming() ||player.isClimbing())
-			{
-				discretion -= 50;
-
-			}
-			if(!player.isFlying() && !player.isOnGround() && !player.isClimbing())
-			{
-				discretion -= 30;
-			}
+			discretion += 30;
 		}
-		
+		if(player.isSprinting() ||player.isSwimming() ||player.isClimbing())
+		{
+			discretion -= 50;
+
+		}
+		if(!player.isFlying() && !player.isOnGround() && !player.isClimbing())
+		{
+			discretion -= 30;
+		}
+
 		if(discretion > 100)
 		{
 			discretion = 100;
@@ -717,4 +712,9 @@ public class Main extends JavaPlugin {
 		}
 
 	}*/
+
+	public void playSound(Player p, String sound)
+	{
+		p.playSound(p.getLocation(), sound, 1, 1);
+	}
 }

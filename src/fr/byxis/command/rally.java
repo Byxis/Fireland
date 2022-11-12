@@ -136,7 +136,7 @@ public record rally(Main main) implements CommandExecutor {
 	private void rallyEntities(Player victim, long distance) {
 		List<Entity> entities = nearbyEntities(victim.getLocation(), distance);
 		for (Entity entity : entities) {
-			if (entity instanceof Zombie || entity instanceof Stray || entity instanceof IronGolem || entity instanceof WitherSkeleton) {
+			if (entity instanceof Zombie || entity instanceof Stray ||  entity instanceof WitherSkeleton) {
 				Monster mob = (Monster) entity;
 
 				if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish) {
@@ -144,6 +144,13 @@ public record rally(Main main) implements CommandExecutor {
 					if (victim.getLocation().distance(mob.getLocation()) > 60D && Math.random() <= 0.1) {
 						victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
 					}
+				}
+			}
+			else if (entity instanceof IronGolem )
+			{
+				((IronGolem) entity).setTarget(victim);
+				if (victim.getLocation().distance(entity.getLocation()) > 60D && Math.random() <= 0.1) {
+					victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
 				}
 			}
 		}

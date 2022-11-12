@@ -2,7 +2,7 @@ package fr.byxis.workshop;
 
 import org.bukkit.Material;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class workshopCraftingItemClass
 {
@@ -11,11 +11,11 @@ public class workshopCraftingItemClass
     public Material mat;
     public short dura;
     public String command;
-    public Date creationDate;
-    public Date finishDate;
+    public Timestamp creationDate;
+    public Timestamp finishDate;
 
 
-    public workshopCraftingItemClass(String _itemName, String _type, Material _mat, short _dura, String _command, Date _creationDate, Date _finishDate)
+    public workshopCraftingItemClass(String _itemName, String _type, Material _mat, short _dura, String _command, Timestamp _creationDate, Timestamp _finishDate)
     {
         this.itemName = _itemName;
         this.type = _type;

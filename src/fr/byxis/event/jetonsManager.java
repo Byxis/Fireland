@@ -67,8 +67,9 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
     public void removeJetonsPlayer(UUID _uuid, int amount)
     {
         FileConfiguration jetonDB = main.cfgm.getJetonsDB();
-        amount -= jetonDB.getInt(_uuid.toString());
-        jetonDB.set(_uuid.toString(), amount);
+        int jt = jetonDB.getInt(_uuid.toString());
+        jt -= amount;
+        jetonDB.set(_uuid.toString(), jt);
         main.cfgm.saveJetonsDB();
     }
 

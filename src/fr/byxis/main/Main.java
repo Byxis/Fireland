@@ -12,6 +12,10 @@ import fr.byxis.workshop.workshopFunction;
 import fr.byxis.workshop.workshopManager;
 import fr.byxis.workshop.workshopManagerEvent;
 import fr.byxis.workshop.workshopManagerTabCompleter;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.node.Node;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -102,6 +106,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new jetonsManager(this), this);
 		getServer().getPluginManager().registerEvents(new karmaManager(this), this);
 		getServer().getPluginManager().registerEvents(new workshopManagerEvent(this), this);
+		getServer().getPluginManager().registerEvents(new entitySpawn(), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -186,7 +191,7 @@ public class Main extends JavaPlugin {
 			public void run() {
 				ambientSoundClass.playSound();
 			}
-		}.runTaskTimer(this, 0, 300);
+		}.runTaskTimer(this, 0, 2000);
 		
 		new BukkitRunnable() {
 			@SuppressWarnings({ "deprecation" })
@@ -195,16 +200,35 @@ public class Main extends JavaPlugin {
 				for(Player p : getServer().getOnlinePlayers()) {
 					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
 						
-						float thirst = (float) playerDBConfig.getDouble("thirst."+p.getUniqueId());
+						double thirst = playerDBConfig.getDouble("thirst."+p.getUniqueId());
+						if(thirst*0.01f >= 1)
+						{
+							p.setExp(1);
+						}
+						else if(thirst*0.01f <= 0)
+						{
+							p.setExp(0);
+						}
+						else
+						{
+							p.setExp((float) thirst*0.01f);
+						}
 
 						if(p.isClimbing() || p.isSprinting() ||p.isSwimming())
 						{
-							playerDBConfig.set("thirst."+p.getUniqueId(), thirst-0.2);
-							cfgm.savePlayerDB();
+							if(!p.isOnGround())
+							{
+								playerDBConfig.set("thirst."+p.getUniqueId(), thirst-0.4);
+								cfgm.savePlayerDB();
+							}
+							else
+							{
+								playerDBConfig.set("thirst."+p.getUniqueId(), thirst-0.2);
+								cfgm.savePlayerDB();
+							}
 						}
-						
+
 						if (thirst <= 0f) {
-							p.setExp(0);
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 80, 0, false, false), true);
 							if(p.getHealth() > 1) {
 								p.damage(1);
@@ -377,7 +401,7 @@ public class Main extends JavaPlugin {
 						if (safezone > 0)
 						{
 							cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", (safezone-1));
-							
+							cfgm.savePlayerDB();
 							if(safezone == 5 || safezone == 10)
 							{
 								p.sendTitle("", "§cIl vous reste "+safezone+" secondes d'invincibilité");
@@ -389,6 +413,7 @@ public class Main extends JavaPlugin {
 							{
 								cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", -1);
 								p.setInvulnerable(false);
+								cfgm.savePlayerDB();
 							}
 						}
 						
@@ -716,5 +741,27 @@ public class Main extends JavaPlugin {
 	public void playSound(Player p, String sound)
 	{
 		p.playSound(p.getLocation(), sound, 1, 1);
+	}
+
+	public void addPermission(Player p, String permission) {
+		LuckPerms api = LuckPermsProvider.get();
+
+		User user = api.getPlayerAdapter(Player.class).getUser(p);
+		// Add the permission
+		user.data().add(Node.builder(permission).build());
+
+		// Now we need to save changes.
+		api.getUserManager().saveUser(user);
+	}
+
+	public void removePermission(Player p, String permission) {
+		LuckPerms api = LuckPermsProvider.get();
+
+		User user = api.getPlayerAdapter(Player.class).getUser(p);
+		// Add the permission
+		user.data().remove(Node.builder(permission).build());
+
+		// Now we need to save changes.
+		api.getUserManager().saveUser(user);
 	}
 }

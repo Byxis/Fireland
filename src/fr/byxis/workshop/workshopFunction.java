@@ -405,7 +405,7 @@ public class workshopFunction {
         ArrayList<ItemStack> plans = getPlans(p);
         for (ItemStack item : plans)
         {
-            if(item.getItemMeta().getDisplayName().equalsIgnoreCase(recipe_name))
+            if(item.getItemMeta().getDisplayName().contains(recipe_name))
             {
                 return true;
             }
@@ -971,4 +971,88 @@ public class workshopFunction {
         p.openInventory(craftMenu);
     }
 
+    public void getPlan(Player p, String itemName)
+    {
+        if(p.getInventory().firstEmpty() == -1)
+        {
+            p.sendMessage("§cVous n'avez pas assez de place.");
+            return;
+        }
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+        try {
+            final Connection connection = firelandConnection.getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT recipe_name, workshop_recipes.type " +
+                    "FROM items INNER JOIN workshop_recipes" +
+                    " ON items.recipe_name = workshop_recipes.name WHERE items.item_name LIKE ?");
+            preparedStatement.setString(1, itemName+"%");
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next())
+            {
+                ItemStack i;
+                if(rs.getString(2).equals("E"))
+                {
+                    i = setItemMeta(Material.PAPER, "§r§a"+rs.getString(1), (short) 1);
+                    i.getItemMeta().setCustomModelData(1);
+                }
+                else if(rs.getString(2).equals("D"))
+                {
+                    i = setItemMeta(Material.PAPER, "§r§9"+rs.getString(1), (short) 1);
+                    i.getItemMeta().setCustomModelData(2);
+                }
+                else if(rs.getString(2).equals("C"))
+                {
+                    i = setItemMeta(Material.PAPER, "§r§c"+rs.getString(1), (short) 1);
+                    i.getItemMeta().setCustomModelData(3);
+                }
+                else if(rs.getString(2).equals("B"))
+                {
+                    i = setItemMeta(Material.PAPER, "§r§e"+rs.getString(1), (short) 1);
+                    i.getItemMeta().setCustomModelData(4);
+                }
+                else
+                {
+                    i = setItemMeta(Material.PAPER, "§r§6§l"+rs.getString(1), (short) 1);
+                    i.getItemMeta().setCustomModelData(5);
+                }
+
+                ItemMeta im = i.getItemMeta();
+                List<String> lore = new ArrayList<>();
+                lore.add("§8Ce plan vous permet d'apprendre à craft un §6item§8.");
+                lore.add("§8Gardez le pour §6craft§8, Faites clic droit avec le plan ");
+                lore.add("§8pour l'§6apprendre§8 !");
+
+                im.setLore(lore);
+                i.setItemMeta(im);
+                p.sendMessage("§aVous avez obtenu le plan de fabrication : "+rs.getString(1));
+                p.getInventory().addItem(i);
+                return;
+            }
+            else
+            {
+                p.sendMessage("§cAucun plan n'a été trouvé avec comme nom d'item "+itemName);
+            }
+        } catch (SQLException e) {
+            //Une erreur est survenue (Problème de connexion à la BD)
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W012");
+            e.printStackTrace();
+        }
+    }
+    public void forgetAllPlans(String _uuid)
+    {
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+        try {
+
+            final Connection connection = firelandConnection.getConnection();
+
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("" +
+                    "DELETE FROM player_workshop" +
+                    " WHERE player_uuid = ?");
+            preparedStatement1.setString(1, _uuid);
+            preparedStatement1.executeUpdate();
+        } catch (SQLException e) {
+            //Une erreur est survenue (Problème de connexion à la BD)
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W019");
+            e.printStackTrace();
+        }
+    }
 }

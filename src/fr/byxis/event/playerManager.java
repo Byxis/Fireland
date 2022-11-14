@@ -16,7 +16,7 @@ public class playerManager implements Listener {
     @EventHandler
     private void onRightClick(PlayerInteractAtEntityEvent e)
     {
-        if(e.getRightClicked() instanceof Player interacted)
+        if(e.getRightClicked() instanceof Player interacted && !e.getRightClicked().getName().contains("CIT-"))
         {
             Player player = e.getPlayer();
 

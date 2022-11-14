@@ -1,15 +1,11 @@
 	package fr.byxis.event;
 
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-
-import fr.byxis.main.Main;
-import net.raidstone.wgevents.events.RegionLeftEvent;
-import net.raidstone.wgevents.events.RegionEnteredEvent;
+	import fr.byxis.main.Main;
+	import org.bukkit.entity.Player;
+	import org.bukkit.event.EventHandler;
+	import org.bukkit.event.Listener;
+	import org.bukkit.event.entity.EntityDamageByEntityEvent;
+	import org.bukkit.event.player.PlayerJoinEvent;
 
 public class worldGuardEvent implements Listener {
 	
@@ -18,7 +14,7 @@ public class worldGuardEvent implements Listener {
 	public worldGuardEvent(Main main) {
 		this.main = main;
 	}
-	
+	/*
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void leftedRegion(RegionLeftEvent e)
@@ -26,7 +22,7 @@ public class worldGuardEvent implements Listener {
 		try {
 			Player p = e.getPlayer();
 			
-			if(e.getRegionName().contains("sf"))
+			if(e.getRegionName().contentEquals("sf"))
 			{
 				if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
 				{
@@ -53,7 +49,7 @@ public class worldGuardEvent implements Listener {
 		try {
 			Player p = e.getPlayer();
 			
-			if(e.getRegionName().equalsIgnoreCase("sf1") || e.getRegionName().equalsIgnoreCase("sf2") || e.getRegionName().equalsIgnoreCase("sf3") || e.getRegionName().equalsIgnoreCase("sf4") || e.getRegionName().equalsIgnoreCase("airportsf") || e.getRegionName().equalsIgnoreCase("spawnsf"))
+			if(e.getRegionName().contentEquals("sf"))
 			{
 				if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
 				{
@@ -70,7 +66,7 @@ public class worldGuardEvent implements Listener {
 			// TODO: handle exception
 		}
 		
-	}
+	}*/
 	
 	@EventHandler
 	public void playerPVP(EntityDamageByEntityEvent e)

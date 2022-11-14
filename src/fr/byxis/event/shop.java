@@ -68,17 +68,19 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 	private double priceKarmaAdapter(UUID _uuid, double amount)
 	{
 		double karma = getKarma(_uuid);
+		System.out.println("Rang :"+karma);
 		if(karma >= 75)
 		{
-			double reduction = karma -75;
-			return amount + getReduction(_uuid);
+			return amount + Math.round(amount * getReduction(_uuid));
 		}
-		if(karma >= 25 && karma < 50)
+		else if(karma >= 25 && karma < 50)
 		{
-			double reduction = karma -50;
-			return amount + getReduction(_uuid);
+			return amount + Math.round(amount * getReduction(_uuid));
 		}
-		return amount;
+		else
+		{
+			return amount;
+		}
 	}
 
 	private double getReduction(UUID _uuid)
@@ -88,12 +90,12 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 		if(karma >= 75)
 		{
 			double reduction = karma -75;
-			return Math.round(-(reduction)*1/100);
+			return -(reduction)*0.01;
 		}
 		if(karma >= 25 && karma < 50)
 		{
 			double reduction = karma -50;
-			return Math.round(-(reduction)*2/100);
+			return -(reduction)*0.02;
 		}
 		return 0;
 	}
@@ -103,7 +105,17 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 		double reduction = getReduction(_uuid);
 		if(reduction != 0)
 		{
-			return "  §d(§n"+(reduction*100)+"%§r§d)";
+			double karma = getKarma(_uuid);
+
+			if(karma >= 75)
+			{
+				return "  §d(§l§d§n"+(reduction*100)+"§r§d%)";
+			}
+			else if(karma < 50)
+			{
+				return "  §4(§l+§r§4§n"+(reduction*100)+"§r§4%)";
+			}
+
 		}
 		return "";
 	}
@@ -113,7 +125,7 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 		if(sender instanceof Player player) {
 			if(cmd.getName().equalsIgnoreCase("shop")) {
 				if(args.length == 1) {
-					if(getKarma(player.getUniqueId()) <= 25)
+					if(getKarma(player.getUniqueId()) < 25)
 					{
 						player.sendMessage("§cJe ne vends pas ma marchandise à des criminels comme vous !");
 					}

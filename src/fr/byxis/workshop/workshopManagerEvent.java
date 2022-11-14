@@ -44,6 +44,12 @@ public class workshopManagerEvent implements Listener {
                 e.setCancelled(true);
                 workshopFunction wf = new workshopFunction(main, e.getPlayer());
                 String name = e.getItem().getItemMeta().getDisplayName();
+                name = name.replaceAll("§6", "");
+                name = name.replaceAll("§e", "");
+                name = name.replaceAll("§c", "");
+                name = name.replaceAll("§9", "");
+                name = name.replaceAll("§a", "");
+                name = name.replaceAll("§l", "");
                 int crafted = wf.getTimeCrafted(name, e.getPlayer().getUniqueId().toString());
                 int max = wf.getCraftedTimeToLearn(name);
                 if(!wf.isLearned(name, e.getPlayer().getUniqueId().toString()))
@@ -53,7 +59,7 @@ public class workshopManagerEvent implements Listener {
                         e.getPlayer().playSound(e.getPlayer().getLocation(), "minecraft:entity.player.levelup", 1, 1);
                         wf.learnRecipe(name, e.getPlayer().getUniqueId().toString());
                         e.getItem().setAmount( e.getItem().getAmount()-1);
-                        e.getPlayer().sendMessage("Vous avez appris le plan : "+name);
+                        e.getPlayer().sendMessage("§aVous avez appris le plan : "+name);
                     }
                     else
                     {
@@ -187,6 +193,7 @@ public class workshopManagerEvent implements Listener {
                                 wf.removeFromQueue(item, p.getUniqueId().toString());
                                 main.commandExecutor(p, item.command, "crackshot.get.all");
                                 wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
+                                wf.craftItemNbr("Plan de fabrication de "+item.itemName, p.getUniqueId().toString(), 1);
                             }
                             else
                             {

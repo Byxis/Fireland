@@ -29,7 +29,7 @@ public class infectedPlayer implements Listener,CommandExecutor {
 		Player p = e.getEntity().getPlayer();
 		assert p != null;
 		FileConfiguration config = main.cfgm.getPlayerDB();
-		if(config.getBoolean("infected."+p.getUniqueId()+".state"))
+		if(config.getBoolean("infected."+p.getUniqueId()+".state") && e.getEntity().getKiller() == null)
 		{
 			e.setDeathMessage(p.getName() + " est mort due à son infection !");
 		}

@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class thirst implements Listener,CommandExecutor {
@@ -81,13 +81,13 @@ public class thirst implements Listener,CommandExecutor {
 	}
 	
 	@EventHandler
-	public void onPlayerfirstJoin(PlayerLoginEvent  e) 
+	public void onPlayerfirstJoin(PlayerJoinEvent e)
 	{
 		Player p = e.getPlayer();
-		if(main.cfgm.getPlayerDB().contains("thirst."+p.getUniqueId().toString()))
+		if(!main.cfgm.getPlayerDB().contains("thirst."+p.getUniqueId().toString()))
 		{
-			 main.cfgm.getPlayerDB().set("thirst."+p.getUniqueId(), 100);
-			 main.cfgm.savePlayerDB();
+			main.cfgm.getPlayerDB().set("thirst."+p.getUniqueId().toString(), 100);
+			main.cfgm.savePlayerDB();
 		}
 	}
 	

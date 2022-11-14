@@ -32,6 +32,8 @@ public class workshopManagerTabCompleter implements TabCompleter {
                 l.add("learnrecipe");
                 l.add("gui");
                 l.add("craftinggui");
+                l.add("plan");
+                l.add("forgetall");
             }
             if(args.length >= 2)
             {
@@ -133,6 +135,10 @@ public class workshopManagerTabCompleter implements TabCompleter {
                         }
                         l.add("--Joueur");
                     }
+                }
+                else if(args[0].equalsIgnoreCase("plan"))
+                {
+                    l.add("--Nom");
                 }
             }
         }

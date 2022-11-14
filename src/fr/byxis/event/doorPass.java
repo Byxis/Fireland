@@ -201,11 +201,13 @@ public class doorPass implements Listener {
 						{
 							e.getPlayer().sendMessage("§4L'accès à cette zone vous a été refusé en raison de vos actes criminels.");
 						}
-	                	else if(main.cfgm.getPlayerDB().getBoolean("discretion."+p.getUniqueId()+".hasKilled"))
+	                	/*else if(main.cfgm.getPlayerDB().getBoolean("discretion."+p.getUniqueId()+".hasKilled"))
 	                	{
 	                		e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
 	                		e.getPlayer().sendMessage("§cL'accès vous a été refusé ! Vous avez tué un joueur il y a moins de 5 minutes !");
 	                	}
+
+	                	 */
 	                	else if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getUniqueId()+".state"))
 	                	{
 	                		e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);

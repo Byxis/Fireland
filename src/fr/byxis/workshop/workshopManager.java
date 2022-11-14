@@ -47,7 +47,7 @@ public class workshopManager implements CommandExecutor {
                 wf.saveNewItem(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), command);
                 return true;
             }
-            else if(args[0].equalsIgnoreCase("learnrecipe") && args.length >= 3)
+            else if(args[0].equalsIgnoreCase("learnrecipe") && args.length >= 3 && ((Player) sender).hasPermission("fireland.command.workshop.admin"))
             {
                 if(args.length >= 4)
                 {
@@ -70,6 +70,23 @@ public class workshopManager implements CommandExecutor {
             {
                 Player p = (Player) sender;
                 wf.openCraftingMenu(p, 1);
+            }
+            else if(args[0].equalsIgnoreCase("plan") && sender.hasPermission("fireland.command.workshop.admin") && args.length >= 2)
+            {
+                Player p = (Player) sender;
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 1; i < args.length; i++){
+                    sb.append(args[i]).append(" ");
+                }
+
+                String nom = sb.toString().trim();
+                wf.getPlan(p, nom);
+            }
+            else if(args[0].equalsIgnoreCase("forgetall") && sender.hasPermission("fireland.command.workshop.admin"))
+            {
+                sender.sendMessage("§cVous avez oublié tous vos plans.");
+                wf.forgetAllPlans(((Player)sender).getUniqueId().toString());
             }
         }
         else if(cmd.getName().equalsIgnoreCase("workshop"))

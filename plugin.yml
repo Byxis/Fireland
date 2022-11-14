@@ -1,5 +1,5 @@
 name: Fireland
-version: 3B.0.1.1
+version: 3.0
 author: Byxis
 main: fr.byxis.main.Main
 api-version: 1.19
@@ -58,9 +58,7 @@ commands:
     aliases: [ jt, jetons ]
   rang:
     description: commandes pour les rangs
-    permission: fireland.command.rang
     aliases: [ rangs, rg ]
   workshop:
     description: commandes pour le workshop
-    permission: fireland.command.workshop.admin
     aliases: [ws]

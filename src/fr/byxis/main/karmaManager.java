@@ -65,11 +65,12 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
     public void badAction(UUID _uuid, double _amount)
     {
         updatePlayer(_uuid);
-        if(main.cfgm.getKarmaDB().getDouble(_uuid.toString())-_amount < 0)
+        double rang = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
+        if((rang-_amount) < 0)
         {
             main.cfgm.getKarmaDB().set(_uuid.toString(), 0);
         }
-        if(main.cfgm.getKarmaDB().getDouble(_uuid.toString())+_amount > 100)
+        else if(rang+_amount > 100)
         {
             main.cfgm.getKarmaDB().set(_uuid.toString(), 100);
         }
@@ -77,26 +78,28 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         {
             main.cfgm.getKarmaDB().set(_uuid.toString(), main.cfgm.getKarmaDB().getDouble(_uuid.toString())-_amount);
         }
-
         main.cfgm.saveKarmaDB();
+        passageNouveauRang(Bukkit.getPlayer(_uuid), rang, rang-_amount);
     }
 
     public void goodAction(UUID _uuid, double _amount)
     {
         updatePlayer(_uuid);
-        if(main.cfgm.getKarmaDB().getDouble(_uuid.toString())+_amount > 100)
+        double rang = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
+        if(rang+_amount > 100)
         {
             main.cfgm.getKarmaDB().set(_uuid.toString(), 100);
         }
-        else if(main.cfgm.getKarmaDB().getDouble(_uuid.toString())+_amount < 0)
+        else if(rang+_amount < 0)
         {
             main.cfgm.getKarmaDB().set(_uuid.toString(), 0);
         }
         else
         {
-            main.cfgm.getKarmaDB().set(_uuid.toString(), main.cfgm.getKarmaDB().getDouble(_uuid.toString())+_amount);
+            main.cfgm.getKarmaDB().set(_uuid.toString(), rang+_amount);
         }
         main.cfgm.saveKarmaDB();
+        passageNouveauRang(Bukkit.getPlayer(_uuid), rang, rang+_amount);
     }
 
     public void setKarma(UUID _uuid, double _amount)
@@ -113,6 +116,71 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         {
             karma.set(_uuid.toString(), 62D);
             main.cfgm.saveKarmaDB();
+        }
+    }
+
+    private void passageNouveauRang(Player p, double bef, double now)
+    {
+        String sound = "minecraft:gun.hud.rangchange";
+        String crim = "minecraft:gun.hud.rangbanni";
+        String heros = "minecraft:gun.hud.rangheros";
+        if( bef < 75 && now >= 75)
+        {
+            for(Player player : Bukkit.getOnlinePlayers())
+            {
+                if(player != p)
+                {
+                    player.sendMessage("§d§l"+p.getName()+"§r§d est devenu un Héros !");
+                }
+            }
+            p.sendTitle("", "§dPassage au rang Héros !");
+            main.playSound(p, heros);
+        }
+        else if( bef >= 75 && now < 75)
+        {
+            p.sendTitle("", "§7Rétrogradage au rang Civil.");
+            main.playSound(p, sound);
+        }
+        else if( bef >= 50 && now < 50)
+        {
+            p.sendTitle("", "§7Rétrogradage au rang Hors la Loi.");
+            main.playSound(p, sound);
+        }
+        else if( bef < 50 && now >= 50)
+        {
+            p.sendTitle("", "§7Passage au rang Civil !");
+            main.playSound(p, sound);
+        }
+        else if( bef <25  && now >= 25)
+        {
+            p.sendTitle("", "§7Passage au rang Hors la Loi.");
+            main.playSound(p, sound);
+        }
+        else if( bef >= 25 && now < 25)
+        {
+            for(Player player : Bukkit.getOnlinePlayers())
+            {
+                if(player != p)
+                {
+                    player.sendMessage("§4§l"+p.getName()+"§r§4 est devenu un Criminel.");
+                }
+            }
+            p.sendTitle("", "§cRétrogradage au rang Criminel.");
+            main.playSound(p, crim);
+        }
+        else if( bef <= 25 && now == 0)
+        {
+            p.sendTitle("", "§4Rétrogradage au rang Criminel.");
+            main.playSound(p, crim);
+        }
+
+        if(bef >= 25 && now <25)
+        {
+            main.addPermission(p, "group.bannis");
+        }
+        else if(bef < 25 && now >= 25)
+        {
+            main.removePermission(p, "group.bannis");
         }
     }
 
@@ -152,7 +220,10 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         {
             if(e.getEntity().getKiller() != null)
             {
-                goodAction(e.getEntity().getKiller().getUniqueId(), 0.05);
+                if(getKarma(e.getEntity().getKiller().getUniqueId()) != 0)
+                {
+                    goodAction(e.getEntity().getKiller().getUniqueId(), 0.05);
+                }
             }
 
         }
@@ -283,7 +354,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args)
     {
         List<String> l = new ArrayList<>();
-        if(!(sender instanceof Player p && p.hasPermission("fireland.command.rang.admin")))
+        if(sender instanceof Player p && !p.hasPermission("fireland.command.rang.admin"))
         {
             return l;
         }
@@ -292,6 +363,10 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
             l.add("set");
             l.add("add");
             l.add("remove");
+            for (Player p : Bukkit.getOnlinePlayers())
+            {
+                l.add(p.getName());
+            }
         }
         else if (args.length == 2)
         {

@@ -8,6 +8,8 @@ import fr.byxis.event.*;
 import fr.byxis.faction.FactionPvp;
 import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
+import fr.byxis.shop.ShopCommandManager;
+import fr.byxis.shop.ShopEventManager;
 import fr.byxis.workshop.workshopFunction;
 import fr.byxis.workshop.workshopManager;
 import fr.byxis.workshop.workshopManagerEvent;
@@ -20,15 +22,22 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -53,8 +62,8 @@ public class Main extends JavaPlugin {
 		getCommand("cure").setExecutor(new infectedPlayer(this));
 		getCommand("infect").setExecutor(new infectedPlayer(this));
 		getCommand("rally").setExecutor(new rally(this));
-		getCommand("shop").setExecutor(new shop(this));
-		getCommand("shop").setTabCompleter(new shop(this));
+		getCommand("shop").setExecutor(new ShopCommandManager(this));
+		getCommand("shop").setTabCompleter(new ShopCommandManager(this));
 		getCommand("rename").setExecutor(new rename());
 		getCommand("stack").setExecutor(new stack());
 		getCommand("bank").setExecutor(new bank(this));
@@ -107,6 +116,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new karmaManager(this), this);
 		getServer().getPluginManager().registerEvents(new workshopManagerEvent(this), this);
 		getServer().getPluginManager().registerEvents(new entitySpawn(), this);
+		getServer().getPluginManager().registerEvents(new ShopEventManager(this), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -763,5 +773,38 @@ public class Main extends JavaPlugin {
 
 		// Now we need to save changes.
 		api.getUserManager().saveUser(user);
+	}
+
+	public ItemStack setItemMeta(Material mat, String name, short dura) {
+		ItemStack item = new ItemStack(mat);
+		ItemMeta itemMeta = item.getItemMeta();
+		assert itemMeta != null;
+		itemMeta.setDisplayName(name);
+		item.setItemMeta(itemMeta);
+		item.setDurability(dura);
+		return item;
+	}
+	public ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
+		ItemStack item = new ItemStack(mat);
+
+		if(mat.equals(Material.GLASS_BOTTLE))
+		{
+			item = new ItemStack(Material.POTION, 1);
+			ItemMeta meta = item.getItemMeta();
+			PotionMeta pmeta = (PotionMeta) meta;
+			PotionData pdata = new PotionData(PotionType.WATER);
+			pmeta.setBasePotionData(pdata);
+			item.setItemMeta(meta);
+		}
+
+		ItemMeta itemMeta = item.getItemMeta();
+		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		itemMeta.setDisplayName(name);
+		itemMeta.setLore(lore);
+		itemMeta.setUnbreakable(true);
+		item.setItemMeta(itemMeta);
+		item.setDurability(dura);
+		return item;
 	}
 }

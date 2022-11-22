@@ -1,7 +1,6 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
-import fr.byxis.main.karmaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -10,7 +9,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -178,7 +176,7 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 		return false;
 	}
 	
-	@EventHandler
+	//@EventHandler
 	public void onClick(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
 		ItemStack current = e.getCurrentItem();
@@ -468,7 +466,7 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 				long newprice = Math.round(priceKarmaAdapter(p.getUniqueId(), price));
 				if(money >= newprice || p.getGameMode() == GameMode.CREATIVE)
 				{
-					if(command.contains("minecraft:give ") && food == false) 
+					if(command.contains("minecraft:give ") && !food)
 					{
 						if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§8Pass - §aVert"))
 						{

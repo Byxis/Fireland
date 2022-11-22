@@ -1,5 +1,6 @@
-package fr.byxis.main;
+package fr.byxis.event;
 
+import fr.byxis.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,7 +27,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         this.main = main;
     }
 
-    private String getRang(UUID _uuid)
+    String getRang(UUID _uuid)
     {
         double rangDouble = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
         String rangStr = "";
@@ -52,7 +53,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         }
         else if(rangDouble == 0)
         {
-            rangStr = "§4Criminel";
+            rangStr = "§4Banni";
         }
         return rangStr;
     }

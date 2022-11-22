@@ -52,7 +52,7 @@ public class playerDeath implements Listener {
 		pay = round(pay, 1);
 		killed.sendMessage("§cVous avez perdu "+pay+"$ !");
 		main.eco.withdrawPlayer(killed, pay);
-		if(e.getEntity().getKiller() == null)
+		if(e.getEntity().getKiller() != null)
 		{
 			killer.sendMessage("§7Vous avez gagné §c"+pay+"$§7 en tuant §c"+killed.getName()+"§7 !");
 			main.eco.depositPlayer(killer, pay);

@@ -9,29 +9,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #27 de la version 3B.0.1.5&#10;- Finition du craft&#10;- Ajout de la discretion&#10;- Ajout de la soif">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_luckperms_api_5_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/event/entitySpawn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_papermc_paper_paper_api_1_19_2_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_papermc_paper_paper_api_1_19_2_R0_1_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_19_2_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_19_2_R0_1_SNAPSHOT.xml" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #1 la version 3.0-&#10;- Refonte du système de shop&#10;- Ajout du /shop newrecipe">
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopCommandManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopEventManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopItemClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fireland Le Nouveau.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Fireland Le Nouveau.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/RemoveInteractionBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/RemoveInteractionBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/chatListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/chatListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/doorPass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/doorPass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/infectedPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/infectedPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/playerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/playerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/playerDeath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/playerDeath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/thirst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/thirst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/worldGuardEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/worldGuardEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/karmaManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerTabCompleter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerTabCompleter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,11 +97,12 @@
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;Console&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="fr.byxis.shop" />
       <recent name="fr.byxis.event" />
       <recent name="fr.byxis.workshop" />
       <recent name="fr.byxis.main" />
@@ -136,13 +130,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Patch #4 3B.0.1.4&#10;- karma fix? &#10;- déplacement de l'affichage du karma dans le scoreboard">
-      <created>1667063204994</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1667063204994</updated>
     </task>
     <task id="LOCAL-00030" summary="Patch #5 3B.0.1.4&#10;- Fix d'un appel récursif infini qui bouffait toute la mémoire">
       <created>1667063720151</created>
@@ -480,7 +467,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668276777559</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="Passage la version 3.0-&#10;- Suppression de l'intéraction avec les fours/smoker/blast&#10;- Annulation du spawn des pillagers et des ravagers&#10;- Supression de la vie lors du clic droit sur un citizen&#10;- Fix des permissions du /rang&#10;- Fix du message de mort lors de l'infection&#10;- Fix du fait que la mort par autre qu'un joueur n'enlevait aucun argent">
+      <created>1668446894158</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1668446894159</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -507,8 +501,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #2 de la version 3B.0.1.5&#10;- Ajout de fireland.chat.color&#10;- Fix de /ws learnrecipe&#10;- Ajout du son cryofunheard pendant la lune de sang&#10;&#10;WORKSHOP&#10;- ajout de l'utilisation d'un plan&#10;- fix du nom du plan&#10;- ajout message lors de la création d'un plan&#10;- Ajout du gui avec ajout des items (liés directement a la base de donnée selon les possibilités de craft) (il manque le coté réactif du gui que je ferai dans le prochain patch si tout marche comme prévu (impossible))" />
-    <MESSAGE value="Patch #3 de la version 3B.0.1.5&#10;- Fix d'une erreur lié au fait que certains items de notre inventaire sont null" />
     <MESSAGE value="Patch #4 de la version 3B.0.1.5&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54" />
     <MESSAGE value="Patch #5 de la version 3B.0.1.5&#10;- Ajout de l'autocompletion &quot;gui&quot; pour /ws&#10;- Fix d'une erreur lié au fait qu'un item ne peut pas être à la position 54" />
     <MESSAGE value="Patch #6 de la version 3B.0.1.5&#10;- Fix d'une erreur de synthaxe&#10;- Fix de la position du verre" />
@@ -532,7 +524,9 @@
     <MESSAGE value="Patch #25 de la version 3B.0.1.5&#10;- Fix message d'erreur lors de l'interaction avec une main vide&#10;- Fix message lors de l'apprentissage d'un plan&#10;- Ajout du craft avec du temps" />
     <MESSAGE value="Patch #26 de la version 3B.0.1.5&#10;- Patch erreur de requete SQL" />
     <MESSAGE value="Patch #27 de la version 3B.0.1.5&#10;- Finition du craft&#10;- Ajout de la discretion&#10;- Ajout de la soif" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #27 de la version 3B.0.1.5&#10;- Finition du craft&#10;- Ajout de la discretion&#10;- Ajout de la soif" />
+    <MESSAGE value="Passage la version 3.0-&#10;- Suppression de l'intéraction avec les fours/smoker/blast&#10;- Annulation du spawn des pillagers et des ravagers&#10;- Supression de la vie lors du clic droit sur un citizen&#10;- Fix des permissions du /rang&#10;- Fix du message de mort lors de l'infection&#10;- Fix du fait que la mort par autre qu'un joueur n'enlevait aucun argent" />
+    <MESSAGE value="Patch #1 la version 3.0-&#10;- Refonte du système de shop&#10;- Ajout du /shop newrecipe" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #1 la version 3.0-&#10;- Refonte du système de shop&#10;- Ajout du /shop newrecipe" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

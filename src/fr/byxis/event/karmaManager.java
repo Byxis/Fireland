@@ -71,7 +71,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         {
             main.cfgm.getKarmaDB().set(_uuid.toString(), 0);
         }
-        else if(rang+_amount > 100)
+        else if(rang-_amount > 100)
         {
             main.cfgm.getKarmaDB().set(_uuid.toString(), 100);
         }

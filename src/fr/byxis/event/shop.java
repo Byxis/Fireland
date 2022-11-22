@@ -66,7 +66,6 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 	private double priceKarmaAdapter(UUID _uuid, double amount)
 	{
 		double karma = getKarma(_uuid);
-		System.out.println("Rang :"+karma);
 		if(karma >= 75)
 		{
 			return amount + Math.round(amount * getReduction(_uuid));

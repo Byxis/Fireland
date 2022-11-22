@@ -9,22 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #1 la version 3.0-&#10;- Refonte du système de shop&#10;- Ajout du /shop newrecipe">
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopCommandManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopEventManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopItemClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #2 la version 3.0-&#10;- Fix de la perte de karma">
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/db/jetonSql.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/chatListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/chatListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/doorPass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/doorPass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/playerDeath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/playerDeath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/karmaManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/shop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionPvp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionPvp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/ConfigManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/karmaManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +89,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Console&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
   }
 }</component>
   <component name="RecentsManager">

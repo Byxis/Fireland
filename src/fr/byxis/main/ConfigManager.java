@@ -39,7 +39,7 @@ public class ConfigManager {
 			try 
 			{
 				playerEnderchestFile.createNewFile();
-				System.out.println("playerEnderchest.yml has been created !");
+				plugin.getLogger().info("playerEnderchest.yml has been created !");
 			}
 			catch(IOException e)
 			{
@@ -48,7 +48,7 @@ public class ConfigManager {
 		}
 		
 		enderchestcfg = YamlConfiguration.loadConfiguration(playerEnderchestFile);
-		System.out.println("playerEnderchest.yml has been loaded !");
+		plugin.getLogger().info("playerEnderchest.yml has been loaded !");
 		//----------------------------- player enderchest ----------------------------------
 		
 		//----------------------------- player DB ----------------------------------
@@ -58,7 +58,7 @@ public class ConfigManager {
 			try 
 			{
 				playerDBFile.createNewFile();
-				System.out.println("playerdb.yml has been created !");
+				plugin.getLogger().info("playerdb.yml has been created !");
 			}
 			catch(IOException e)
 			{
@@ -67,7 +67,7 @@ public class ConfigManager {
 		}
 		
 		playerDBcfg = YamlConfiguration.loadConfiguration(playerDBFile);
-		System.out.println("playerdb.yml has been loaded !");
+		plugin.getLogger().info("playerdb.yml has been loaded !");
 		//----------------------------- player DB ----------------------------------
 		
 		//----------------------------- Faction DB ----------------------------------
@@ -77,7 +77,7 @@ public class ConfigManager {
 			try 
 			{
 				factionDBFile.createNewFile();
-				System.out.println("factiondb.yml has been created !");
+				plugin.getLogger().info("factiondb.yml has been created !");
 			}
 			catch(IOException e)
 			{
@@ -86,7 +86,7 @@ public class ConfigManager {
 		}
 		
 		factionDBcfg = YamlConfiguration.loadConfiguration(factionDBFile);
-		System.out.println("factiondb.yml has been loaded !");
+		plugin.getLogger().info("factiondb.yml has been loaded !");
 		//----------------------------- faction DB ----------------------------------
 
 		//----------------------------- jetons DB ----------------------------------
@@ -96,7 +96,7 @@ public class ConfigManager {
 			try
 			{
 				jetonsDBFile.createNewFile();
-				System.out.println("jetonsdb.yml has been created !");
+				plugin.getLogger().info("jetonsdb.yml has been created !");
 			}
 			catch(IOException e)
 			{
@@ -105,7 +105,7 @@ public class ConfigManager {
 		}
 
 		jetonsDBcfg = YamlConfiguration.loadConfiguration(jetonsDBFile);
-		System.out.println("jetonsdb.yml has been loaded !");
+		plugin.getLogger().info("jetonsdb.yml has been loaded !");
 		//----------------------------- jetons DB ----------------------------------
 
 		//----------------------------- karma DB ----------------------------------
@@ -115,7 +115,7 @@ public class ConfigManager {
 			try
 			{
 				karmaDBFile.createNewFile();
-				System.out.println("karmadb.yml has been created !");
+				plugin.getLogger().info("karmadb.yml has been created !");
 			}
 			catch(IOException e)
 			{
@@ -124,7 +124,7 @@ public class ConfigManager {
 		}
 
 		karmaDBcfg = YamlConfiguration.loadConfiguration(karmaDBFile);
-		System.out.println("karmadb.yml has been loaded !");
+		plugin.getLogger().info("karmadb.yml has been loaded !");
 		//----------------------------- jetons DB ----------------------------------
 	}
 	
@@ -148,7 +148,7 @@ public class ConfigManager {
 	public void reloadEnderchest() 
 	{
 		enderchestcfg = YamlConfiguration.loadConfiguration(playerEnderchestFile);
-		System.out.println("playerEnderchest.yml has been reloaded !");
+		plugin.getLogger().info("playerEnderchest.yml has been reloaded !");
 	}
 	
 	public FileConfiguration getPlayerDB()
@@ -171,7 +171,7 @@ public class ConfigManager {
 	public void reloadPlayerDB() 
 	{
 		playerDBcfg = YamlConfiguration.loadConfiguration(playerDBFile);
-		System.out.println("playerdb.yml has been reloaded !");
+		plugin.getLogger().info("playerdb.yml has been reloaded !");
 	}
 	
 	public FileConfiguration getFactionDB()
@@ -194,7 +194,7 @@ public class ConfigManager {
 	public void reloadFactionDB() 
 	{
 		factionDBcfg = YamlConfiguration.loadConfiguration(factionDBFile);
-		System.out.println("factiondb.yml has been reloaded !");
+		plugin.getLogger().info("factiondb.yml has been reloaded !");
 	}
 
 	public FileConfiguration getJetonsDB()
@@ -217,7 +217,7 @@ public class ConfigManager {
 	public void reloadJetonsDB()
 	{
 		jetonsDBcfg = YamlConfiguration.loadConfiguration(jetonsDBFile);
-		System.out.println("jetonsdb.yml has been reloaded !");
+		plugin.getLogger().info("jetonsdb.yml has been reloaded !");
 	}
 
 	public FileConfiguration getKarmaDB()
@@ -240,6 +240,6 @@ public class ConfigManager {
 	public void reloadKarmaDB()
 	{
 		karmaDBcfg = YamlConfiguration.loadConfiguration(karmaDBFile);
-		System.out.println("karmadb.yml has been reloaded !");
+		plugin.getLogger().info("karmadb.yml has been reloaded !");
 	}
 }

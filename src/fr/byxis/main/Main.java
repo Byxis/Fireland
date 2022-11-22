@@ -154,14 +154,14 @@ public class Main extends JavaPlugin {
 	}
 	
 	public void onEnable() {
-		System.out.println("================================");
-		System.out.println(" ");
-		System.out.println(" ");
-		System.out.println("   Fireland is now enabled !");
-		System.out.println(" ");
-		System.out.println(" ");
-		System.out.println("-");
-		System.out.println(" ");
+		getLogger().info("================================");
+		getLogger().info(" ");
+		getLogger().info(" ");
+		getLogger().info("   Fireland is now enabled !");
+		getLogger().info(" ");
+		getLogger().info(" ");
+		getLogger().info("-");
+		getLogger().info(" ");
 		
 		databaseManager = new DatabaseManager();
 		faction = new HashMap<String, UUID>();
@@ -188,7 +188,7 @@ public class Main extends JavaPlugin {
 		dateListener();
 		
 		if(!setupEconomy()) {
-			System.out.println(ChatColor.RED+"You must have vault !");
+			getLogger().info(ChatColor.RED+"You must have vault !");
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
@@ -455,21 +455,21 @@ public class Main extends JavaPlugin {
 				}
 			}
 		}.runTaskTimer(this, 0, 10);
-		System.out.println(" ");
-		System.out.println("================================");
+		getLogger().info(" ");
+		getLogger().info("================================");
 
 
 	}
 
 	public void onDisable() {
-		System.out.println("================================");
-		System.out.println(" ");
-		System.out.println(" ");
-		System.out.println("   Fireland is now disabled !");
+		getLogger().info("================================");
+		getLogger().info(" ");
+		getLogger().info(" ");
+		getLogger().info("   Fireland is now disabled !");
 		this.databaseManager.close();
-		System.out.println(" ");
-		System.out.println(" ");
-		System.out.println("================================");		
+		getLogger().info(" ");
+		getLogger().info(" ");
+		getLogger().info("================================");		
 	}
 	
 	/*void moveNextTick(Entity ent, Location loc)

@@ -34,6 +34,7 @@ public class FactionPvp implements Listener {
                     if(!factionDamagerName.getName().equalsIgnoreCase(factionVictimName.getName()))
                     {
                         event.setCancelled(true);
+                        ////
                     }
                 }
 

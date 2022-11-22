@@ -27,15 +27,16 @@ public class chatListener implements Listener {
             {
             	if(e.getPlayer().getWorld() == on.getWorld()) 
             	{
-            		e.setMessage(e.getMessage().replaceAll(on.getName(), "§6@§e"+on.getName()+ChatColor.RESET));
+            		e.setMessage(e.getMessage().replaceAll(on.getName(), ChatColor.GOLD + "@"+ ChatColor.RESET+""+ChatColor.BOLD+""+ ChatColor.YELLOW +on.getName()+ChatColor.RESET));
                 	on.playNote(on.getLocation(), Instrument.PIANO, Note.natural(1, Tone.A));
             	}
             }
         }
+        /*
         if(e.getPlayer().hasPermission("fireland.chat.color"))
         {
             e.setMessage(e.getMessage().replaceAll("&", "§"));
-        }
+        }*/
         
         if(e.getPlayer().hasPermission("fireland.chat.admin"))
         {
@@ -45,14 +46,14 @@ public class chatListener implements Listener {
         	}
         	if(e.getMessage().contains("everyone"))
             {
-        		e.setMessage(e.getMessage().replaceAll("everyone", "§6@§e"+"everyone"+ChatColor.RESET));
+        		e.setMessage(e.getMessage().replaceAll("everyone", ChatColor.GOLD + "@"+ ChatColor.RESET+""+ChatColor.BOLD+""+ ChatColor.YELLOW +"everyone"+ChatColor.RESET));
         		for(Player on : Bukkit.getServer().getOnlinePlayers())
                 {
         			
                 	on.playNote(on.getLocation(), Instrument.PIANO, Note.natural(1, Tone.A));
                 }
             }
-        	e.setMessage(e.getMessage().replaceAll("&", "§"));
+        	//e.setMessage(e.getMessage().replaceAll("&", "§"));
         }
     }
 

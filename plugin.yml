@@ -3,10 +3,8 @@ version: 3.0
 author: Byxis
 main: fr.byxis.main.Main
 api-version: 1.19
-depend: 
-  - ProtocolLib
+depend:
   - Vault
-  - WorldGuard
 commands:
   speedfly:
     description: Permet de changer la vitesse de vol

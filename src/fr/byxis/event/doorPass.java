@@ -36,7 +36,7 @@ public class doorPass implements Listener {
 				blockState.update();
 				
 			}
-		}.runTaskLater(main, 20 * time);
+		}.runTaskLater(main, 20L * time);
 	}
 	
 	@SuppressWarnings("deprecation")

@@ -242,10 +242,7 @@ public class ShopFunction {
         String name = _itemClicked.getItemMeta().getDisplayName();
         //name = name.replaceAll("[§.{1}]", "");
         name = name.replaceAll("§7", "");
-        _p.sendMessage("|"+name+"§r|"+_shop.replaceAll(" ", "_")+"|");
         ShopItemClass item = getAnItemOnShop(_shop.replaceAll(" ", "_"), name);
-
-        _p.sendMessage("item:"+item.itemName);
 
         if(item != null)
         {
@@ -265,7 +262,7 @@ public class ShopFunction {
                 String command = item.command.replaceAll("Player", _p.getName());
                 if(command.contains("mcgive"))
                 {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"minecraft:give "+_p.getName()+" minecraft:"+item.mat.name().toLowerCase()+"{display:{Name:'[{\"text\":\""+"§r"+item.itemName+"\"}]'}} 1");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give "+_p.getName()+" minecraft:"+item.mat.name().toLowerCase()+"{display:{Name:'[{\"text\":\"§r"+"§r"+item.itemName+"\"}]'}} 1");
                     main.eco.withdrawPlayer(_p, prix);
                     _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"§a!");
                     buyItemKarma(_p.getUniqueId());
@@ -302,16 +299,20 @@ public class ShopFunction {
                 Inventory inv = _p.getInventory();
                 for(ItemStack itemInv : inv)
                 {
-                    if(itemInv.getItemMeta().getDisplayName().contains(item.itemName))
+                    if(itemInv != null)
                     {
-                        if(nbr+itemInv.getAmount() >=64)
+                        if(itemInv.getItemMeta().getDisplayName().contains(item.itemName))
                         {
-                            itemInv.setAmount(itemInv.getAmount()-nbr);
-                            break;
+                            if(nbr+itemInv.getAmount() >=64)
+                            {
+                                itemInv.setAmount(itemInv.getAmount()-nbr);
+                                break;
+                            }
+                            itemInv.setAmount(0);
+                            nbr += itemInv.getAmount();
                         }
-                        itemInv.setAmount(0);
-                        nbr += itemInv.getAmount();
                     }
+
                 }
                 main.eco.depositPlayer(_p, nbr*sell);
                 _p.sendMessage("§aVous avez vendu "+nbr+" §7"+item.itemName+" pour un total de §6"+nbr*sell+"$§a !");
@@ -319,17 +320,29 @@ public class ShopFunction {
             else
             {
                 Inventory inv = _p.getInventory();
+                boolean founded = false;
                 for(ItemStack itemInv : inv)
                 {
-                    if(itemInv.getItemMeta().getDisplayName().contains(item.itemName))
+                    if(itemInv != null)
                     {
-                        itemInv.setAmount(itemInv.getAmount()-1);
-                        break;
+                        if(itemInv.getItemMeta().getDisplayName().contains(item.itemName))
+                        {
+                            itemInv.setAmount(itemInv.getAmount()-1);
+                            founded = true;
+                            break;
+                        }
                     }
                 }
-                main.eco.depositPlayer(_p, sell);
-                _p.sendMessage("§aVous avez vendu un §7"+item.itemName+"§a pour "+sell+"$ !");
-                _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+                if(founded)
+                {
+                    main.eco.depositPlayer(_p, sell);
+                    _p.sendMessage("§aVous avez vendu un §7"+item.itemName+"§a pour "+sell+"$ !");
+                    _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+                }
+                else
+                {
+                    _p.sendMessage("§cVous devez avoir l'item sur vous.");
+                }
             }
 
         }

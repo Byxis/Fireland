@@ -2,9 +2,14 @@ package fr.byxis.main;
 
 //import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.PacketContainer;
 import fr.byxis.command.*;
 import fr.byxis.db.DatabaseManager;
 import fr.byxis.event.*;
+import fr.byxis.faction.FactionEvent;
 import fr.byxis.faction.FactionPvp;
 import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
@@ -52,7 +57,9 @@ public class Main extends JavaPlugin {
 	
 	private DatabaseManager databaseManager;
 	
-	private HashMap<String, UUID> faction;
+	public HashMap<String, UUID> faction;
+
+	private ProtocolManager protocolManager;
 	
 	@SuppressWarnings("ConstantConditions")
 	public void enableCommand() {
@@ -117,6 +124,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new workshopManagerEvent(this), this);
 		getServer().getPluginManager().registerEvents(new entitySpawn(), this);
 		getServer().getPluginManager().registerEvents(new ShopEventManager(this), this);
+		getServer().getPluginManager().registerEvents(new FactionEvent(this), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -148,10 +156,7 @@ public class Main extends JavaPlugin {
 			}
 		});*/
 	}
-	
-	public void onLoad() {
-		//ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
-	}
+
 	
 	public void onEnable() {
 		getLogger().info("================================");
@@ -165,7 +170,8 @@ public class Main extends JavaPlugin {
 		
 		databaseManager = new DatabaseManager();
 		faction = new HashMap<String, UUID>();
-		
+
+		protocolManager = ProtocolLibrary.getProtocolManager();
 		saveDefaultConfig();
 		loadConfigManager();
 		
@@ -398,12 +404,12 @@ public class Main extends JavaPlugin {
 					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
 						boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
 						if (infected || p.getHealth() < 6) {
-							//playBorderPackets(p, true);
+							playBorderPackets(p, true);
 							p.playSound(p.getLocation(), "minecraft:entity.player.heartbeat", 1, 1);
 						}
 						else
 						{
-							//playBorderPackets(p, false);
+							playBorderPackets(p, false);
 						}
 						
 						int safezone = cfgm.getPlayerDB().getInt("safezone."+p.getUniqueId()+".time");
@@ -430,7 +436,7 @@ public class Main extends JavaPlugin {
 					}
 					else
 					{
-						//playBorderPackets(p, false);
+						playBorderPackets(p, false);
 						//ATELIER
 					}
 					/*if(p.getOpenInventory().getTitle().contains("Attente"))
@@ -723,30 +729,32 @@ public class Main extends JavaPlugin {
 		cfgm.getPlayerDB().set("playtime."+p.getUniqueId(), cfgm.getPlayerDB().getInt("playtime."+p.getUniqueId())+ 1);
 	}
 	
-	/*private void playBorderPackets(Player player, boolean warn)
+	private void playBorderPackets(Player player, boolean warn)
 	{
 
 		@SuppressWarnings("deprecation")
-		PacketContainer container = new PacketContainer(PacketType.Play.Server.WORLD_BORDER);
+		PacketContainer container = protocolManager.createPacket(PacketType.Play.Server.SET_BORDER_WARNING_DISTANCE);
 		
 		if(warn)
 		{
-			container.getWorldBorderActions().write(0, WorldBorderAction.SET_WARNING_BLOCKS);
-	        container.getWorldBorderActions().writeDefaults();
-	        container.getIntegers().write(0, 29999984);
-			try {
-			    protocolManager.sendServerPacket(player, container);
-			} catch (InvocationTargetException e) {
-			}
+			container.getIntegers().write(0, 2999997);
+			protocolManager.broadcastServerPacket(container, player, false);
 		}
 		else
 		{
-			player.getWorld().getWorldBorder().setWarningDistance(player.getWorld().getWorldBorder().getWarningDistance());
-            player.getWorld().getWorldBorder().setSize(player.getWorld().getWorldBorder().getSize());
-            player.getWorld().getWorldBorder().setCenter(player.getWorld().getWorldBorder().getCenter().getX(), player.getWorld().getWorldBorder().getCenter().getZ());
+			container.getIntegers().write(0, 0);
+			protocolManager.broadcastServerPacket(container, player, false);
 		}
 
+	}
+	/*private void playBorderPackets(Player p, boolean warn)
+	{
+		PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.WORLD_BORDER);
+		packet.getWorldBorderActions().writeDefaults();
+		packet.getDoubles().write(0, 29999984D);
+		protocolManager.broadcastServerPacket(packet, p, false);
 	}*/
+
 
 	public void playSound(Player p, String sound)
 	{

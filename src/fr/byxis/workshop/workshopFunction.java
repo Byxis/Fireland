@@ -931,6 +931,7 @@ public class workshopFunction {
     {
         Inventory craftMenu = Bukkit.createInventory(null, 9*3, "Plan de travail");
         craftMenu.setItem(11, main.setItemMeta(Material.ANVIL, "§6Atelier", (short) 1));
+        craftMenu.setItem(13, main.setItemMeta(Material.NETHERITE_SCRAP, "§aRecyclage", (short) 1));
         craftMenu.setItem(15, main.setItemMeta(Material.CHEST, "§6Création", (short) 1));
         p.openInventory(craftMenu);
     }

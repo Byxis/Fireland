@@ -5,6 +5,7 @@ main: fr.byxis.main.Main
 api-version: 1.19
 depend:
   - Vault
+  - ProtocolLib
 commands:
   speedfly:
     description: Permet de changer la vitesse de vol

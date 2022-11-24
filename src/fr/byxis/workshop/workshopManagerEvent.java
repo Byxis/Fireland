@@ -3,6 +3,7 @@ package fr.byxis.workshop;
 import fr.byxis.db.jetonSql;
 import fr.byxis.event.jetonsManager;
 import fr.byxis.main.Main;
+import fr.byxis.workshop.recycler.RecyclerFunction;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -10,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -115,8 +117,7 @@ public class workshopManagerEvent implements Listener {
     }
 
     @EventHandler
-    public void playerInteractionOnInv(InventoryClickEvent e)
-    {
+    public void playerInteractionOnInv(InventoryClickEvent e) {
         if(e.getView().getTitle().contains("Atelier"))
         {
             e.setCancelled(true);
@@ -191,7 +192,7 @@ public class workshopManagerEvent implements Listener {
                             {
                                 main.playSound(p, "minecraft:block.anvil.use");
                                 wf.removeFromQueue(item, p.getUniqueId().toString());
-                                main.commandExecutor(p, item.command, "crackshot.get.all");
+                                main.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.give.all");
                                 wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
                                 wf.craftItemNbr("Plan de fabrication de "+item.itemName, p.getUniqueId().toString(), 1);
                             }
@@ -207,7 +208,7 @@ public class workshopManagerEvent implements Listener {
                                 {
                                     main.playSound(p, "minecraft:block.anvil.use");
                                     wf.removeFromQueue(item, p.getUniqueId().toString());
-                                    main.commandExecutor(p, item.command, "crackshot.get.all");
+                                    main.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.give.all");
                                     wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
                                 }
                             }
@@ -248,7 +249,38 @@ public class workshopManagerEvent implements Listener {
                 main.commandExecutor((Player) e.getView().getPlayer(), "ws craftinggui", "fireland.command.workshop.craftinggui");
             } else if (e.getCurrentItem().getType() == Material.ANVIL) {
                 main.commandExecutor((Player) e.getView().getPlayer(), "ws gui", "fireland.command.workshop.gui");
+            } else if (e.getCurrentItem().getType() == Material.NETHERITE_SCRAP) {
+                main.commandExecutor((Player) e.getView().getPlayer(), "ws recycler", "fireland.command.workshop.gui");
             }
+        }
+        else if(e.getView().getTitle().contains("Recycleur"))
+        {
+            if(e.getCurrentItem() != null)
+            {
+                ItemStack i = e.getCurrentItem();
+                if(i.getType() == Material.BOOK || i.getType() == Material.WHITE_STAINED_GLASS_PANE)
+                {
+                    e.setCancelled(true);
+                }
+                else if( i.getType() == Material.RED_STAINED_GLASS_PANE)
+                {
+                    Player p = (Player)e.getView().getPlayer();
+                    e.setCancelled(true);
+                    RecyclerFunction rf = new RecyclerFunction(main);
+                    rf.Recycle(e.getView(), p);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void closeInventory(InventoryCloseEvent e)
+    {
+        if(e.getView().getTitle().contains("Recycleur"))
+        {
+            Player p = (Player)e.getPlayer();
+            RecyclerFunction rf = new RecyclerFunction(main);
+            rf.GiveBackItem(e.getView(), p);
         }
     }
 }

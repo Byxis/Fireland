@@ -1,6 +1,7 @@
 package fr.byxis.workshop;
 
 import fr.byxis.main.Main;
+import fr.byxis.workshop.recycler.RecyclerFunction;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -87,6 +88,12 @@ public class workshopManager implements CommandExecutor {
             {
                 sender.sendMessage("§cVous avez oublié tous vos plans.");
                 wf.forgetAllPlans(((Player)sender).getUniqueId().toString());
+            }
+            else if(args[0].equalsIgnoreCase("recycler") && sender.hasPermission("fireland.command.workshop.recycler"))
+            {
+                Player p = (Player) sender;
+                RecyclerFunction rf = new RecyclerFunction(main);
+                rf.OpenRecyclingGui(p);
             }
         }
         else if(cmd.getName().equalsIgnoreCase("workshop"))

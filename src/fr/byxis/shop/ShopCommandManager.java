@@ -27,10 +27,6 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
         if (sender instanceof Player player) {
             if (cmd.getName().equalsIgnoreCase("shop") && args.length == 1) {
                 ShopFunction sf = new ShopFunction(main, player);
-                if (sf.getKarma(player.getUniqueId()) < 25 && player.getGameMode() != GameMode.CREATIVE) {
-                    player.sendMessage("§cJe ne vends pas ma marchandise à des criminels comme vous !");
-                    return true;
-                }
                 String name = "";
                 ArrayList<String> l = sf.getAllShop();
                 for (String str : l) {
@@ -43,7 +39,20 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     player.sendMessage("§cCe shop n'existe pas.");
                     return true;
                 }
-
+                if(name.contains("lourds"))
+                {
+                    if(player.hasPermission("group.bannis") && player.getGameMode() != GameMode.CREATIVE)
+                    {
+                        sf.openInv(player, name.replaceAll("_", " "), 1);
+                        return true;
+                    }
+                    player.sendMessage("§cJe ne vends pas des armes de ce calibre à des gens comme vous !");
+                    return false;
+                }
+                if (sf.getKarma(player.getUniqueId()) < 25 && player.getGameMode() != GameMode.CREATIVE) {
+                    player.sendMessage("§cJe ne vends pas ma marchandise à des criminels comme vous !");
+                    return true;
+                }
                 if (main.cfgm.getKarmaDB().getDouble(player.getUniqueId().toString()) <= 75 && name.contains("pass")) {
                     player.sendMessage("§cJe ne vous fais pas encore assez confiance pour vous vendre des pass !");
                 } else
@@ -63,11 +72,9 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     for (int i = 0; i < words.length; i++) {
                         if(i+1 != words.length)
                         {
-                            player.sendMessage(words[i + 1]);
 
                             if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
                                 sbb.append(words[i]);
-                                player.sendMessage(words[i + 1] + "---");
                                 break;
                             }//«
                             else {

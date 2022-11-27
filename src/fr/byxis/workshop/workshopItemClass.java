@@ -9,6 +9,7 @@ public class workshopItemClass
     public String type;
     public int scrap;
     public int gunPowder;
+    public int customModelData;
     public Material mat;
     public short dura;
     public String command;
@@ -16,7 +17,7 @@ public class workshopItemClass
 
 
 
-    public workshopItemClass(String _recipeName, String _itemName, String _type, int _scrap, int _gunpowder, Material _mat, short _dura, String _command, boolean _know)
+    public workshopItemClass(String _recipeName, String _itemName, String _type, int _scrap, int _gunpowder, Material _mat, short _dura, String _command, boolean _know, int customModelData)
     {
         this.recipeName = _recipeName;
         this.itemName = _itemName;
@@ -27,6 +28,7 @@ public class workshopItemClass
         this.dura = _dura;
         this.command = _command;
         this.know = _know;
+        this.customModelData = customModelData;
     }
 
 

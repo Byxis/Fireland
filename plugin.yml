@@ -5,6 +5,7 @@ main: fr.byxis.main.Main
 api-version: 1.19
 depend:
   - Vault
+  - ProtocolLib
 commands:
   speedfly:
     description: Permet de changer la vitesse de vol
@@ -56,7 +57,7 @@ commands:
     aliases: [ jt, jetons ]
   rang:
     description: commandes pour les rangs
-    aliases: [ rangs, rg ]
+    aliases: [ rangs]
   workshop:
     description: commandes pour le workshop
     aliases: [ws]

@@ -10,8 +10,9 @@ public class ShopItemClass {
     public String command;
     public int price;
     public int sell;
+    public int customModelData;
 
-    public ShopItemClass(String _itemName, Material _mat, short _dura, String _command, int _price, int _sell)
+    public ShopItemClass(String _itemName, Material _mat, short _dura, String _command, int _price, int _sell, int customModelData)
     {
         this.itemName = _itemName;
         this.mat = _mat;
@@ -19,6 +20,7 @@ public class ShopItemClass {
         this.command = _command;
         this.price = _price;
         this.sell = _sell;
+        this.customModelData = customModelData;
     }
 
 }

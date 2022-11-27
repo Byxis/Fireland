@@ -2,9 +2,14 @@ package fr.byxis.main;
 
 //import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.PacketContainer;
 import fr.byxis.command.*;
 import fr.byxis.db.DatabaseManager;
 import fr.byxis.event.*;
+import fr.byxis.faction.FactionEvent;
 import fr.byxis.faction.FactionPvp;
 import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
@@ -22,6 +27,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -51,8 +57,11 @@ public class Main extends JavaPlugin {
 	public ConfigManager cfgm;
 	
 	private DatabaseManager databaseManager;
-	
-	private HashMap<String, UUID> faction;
+
+	public HashMap<String, UUID> factionMap;
+	public HashMap<UUID,Inventory> storageMap;
+
+	private ProtocolManager protocolManager;
 	
 	@SuppressWarnings("ConstantConditions")
 	public void enableCommand() {
@@ -61,10 +70,10 @@ public class Main extends JavaPlugin {
 		getCommand("thirst").setExecutor(new thirst(this));
 		getCommand("cure").setExecutor(new infectedPlayer(this));
 		getCommand("infect").setExecutor(new infectedPlayer(this));
-		getCommand("rally").setExecutor(new rally(this));
 		getCommand("shop").setExecutor(new ShopCommandManager(this));
 		getCommand("shop").setTabCompleter(new ShopCommandManager(this));
 		getCommand("rename").setExecutor(new rename());
+		getCommand("rally").setExecutor(new rally(this));
 		getCommand("stack").setExecutor(new stack());
 		getCommand("bank").setExecutor(new bank(this));
 		getCommand("ambientsound").setExecutor(new ambientSound(this));
@@ -117,6 +126,8 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new workshopManagerEvent(this), this);
 		getServer().getPluginManager().registerEvents(new entitySpawn(), this);
 		getServer().getPluginManager().registerEvents(new ShopEventManager(this), this);
+		getServer().getPluginManager().registerEvents(new FactionEvent(this), this);
+		getServer().getPluginManager().registerEvents(new SaveEvent(this), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -148,10 +159,7 @@ public class Main extends JavaPlugin {
 			}
 		});*/
 	}
-	
-	public void onLoad() {
-		//ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
-	}
+
 	
 	public void onEnable() {
 		getLogger().info("================================");
@@ -164,8 +172,10 @@ public class Main extends JavaPlugin {
 		getLogger().info(" ");
 		
 		databaseManager = new DatabaseManager();
-		faction = new HashMap<String, UUID>();
-		
+		factionMap = new HashMap<String, UUID>();
+		storageMap = new HashMap<UUID,Inventory>();
+
+		protocolManager = ProtocolLibrary.getProtocolManager();
 		saveDefaultConfig();
 		loadConfigManager();
 		
@@ -185,7 +195,14 @@ public class Main extends JavaPlugin {
 		enableEvent();
 		
 		//changeItemsStackSize();
-		dateListener();
+		new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				dateListener();
+			}
+		}.runTaskTimer(this, 0, 20*60*60);
+
 		
 		if(!setupEconomy()) {
 			getLogger().info(ChatColor.RED+"You must have vault !");
@@ -391,19 +408,23 @@ public class Main extends JavaPlugin {
 			@Override
 			public void run() {
 				for(Player p : getServer().getOnlinePlayers()) {
-					cobwebDamageClass.damagePlayerInCobweb(p);
-					playTimePlayerAdd(p);
+
+					if(p.getGameMode() != GameMode.CREATIVE ||p.getGameMode() != GameMode.SPECTATOR)
+					{
+						playTimePlayerAdd(p);
+					}
 					checkDiscretionPoint(p);
 					scoreboardPlayerClass.update(p);
-					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
+					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE))
+					{
 						boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
 						if (infected || p.getHealth() < 6) {
-							//playBorderPackets(p, true);
+							playBorderPackets(p, true);
 							p.playSound(p.getLocation(), "minecraft:entity.player.heartbeat", 1, 1);
 						}
 						else
 						{
-							//playBorderPackets(p, false);
+							playBorderPackets(p, false);
 						}
 						
 						int safezone = cfgm.getPlayerDB().getInt("safezone."+p.getUniqueId()+".time");
@@ -421,6 +442,7 @@ public class Main extends JavaPlugin {
 						{
 							if(safezone == 0)
 							{
+								p.sendMessage("§cVous n'êtes plus invincible !");
 								cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", -1);
 								p.setInvulnerable(false);
 								cfgm.savePlayerDB();
@@ -430,7 +452,7 @@ public class Main extends JavaPlugin {
 					}
 					else
 					{
-						//playBorderPackets(p, false);
+						playBorderPackets(p, false);
 						//ATELIER
 					}
 					/*if(p.getOpenInventory().getTitle().contains("Attente"))
@@ -467,6 +489,8 @@ public class Main extends JavaPlugin {
 		getLogger().info(" ");
 		getLogger().info("   Fireland is now disabled !");
 		this.databaseManager.close();
+		SaveEvent se = new SaveEvent(this);
+		se.onDisable();
 		getLogger().info(" ");
 		getLogger().info(" ");
 		getLogger().info("================================");		
@@ -543,6 +567,11 @@ public class Main extends JavaPlugin {
 				}
 				cfgm.saveEnderchest();
 			}
+			for(String s : cfgm.getKarmaDB().getConfigurationSection("").getKeys(true))
+			{
+				cfgm.getKarmaDB().set("max."+s, 0);
+				cfgm.saveKarmaDB();
+			}
 		}
 	}
 	
@@ -551,9 +580,9 @@ public class Main extends JavaPlugin {
 		return databaseManager;
 	}
 	
-	public HashMap<String, UUID> getFaction()
+	public HashMap<String, UUID> getFactionMap()
 	{
-		return faction;
+		return factionMap;
 	}
 	
 	private boolean setupEconomy() {
@@ -723,30 +752,32 @@ public class Main extends JavaPlugin {
 		cfgm.getPlayerDB().set("playtime."+p.getUniqueId(), cfgm.getPlayerDB().getInt("playtime."+p.getUniqueId())+ 1);
 	}
 	
-	/*private void playBorderPackets(Player player, boolean warn)
+	private void playBorderPackets(Player player, boolean warn)
 	{
 
 		@SuppressWarnings("deprecation")
-		PacketContainer container = new PacketContainer(PacketType.Play.Server.WORLD_BORDER);
+		PacketContainer container = protocolManager.createPacket(PacketType.Play.Server.SET_BORDER_WARNING_DISTANCE);
 		
 		if(warn)
 		{
-			container.getWorldBorderActions().write(0, WorldBorderAction.SET_WARNING_BLOCKS);
-	        container.getWorldBorderActions().writeDefaults();
-	        container.getIntegers().write(0, 29999984);
-			try {
-			    protocolManager.sendServerPacket(player, container);
-			} catch (InvocationTargetException e) {
-			}
+			container.getIntegers().write(0, 2999997);
+			protocolManager.broadcastServerPacket(container, player, false);
 		}
 		else
 		{
-			player.getWorld().getWorldBorder().setWarningDistance(player.getWorld().getWorldBorder().getWarningDistance());
-            player.getWorld().getWorldBorder().setSize(player.getWorld().getWorldBorder().getSize());
-            player.getWorld().getWorldBorder().setCenter(player.getWorld().getWorldBorder().getCenter().getX(), player.getWorld().getWorldBorder().getCenter().getZ());
+			container.getIntegers().write(0, 0);
+			protocolManager.broadcastServerPacket(container, player, false);
 		}
 
+	}
+	/*private void playBorderPackets(Player p, boolean warn)
+	{
+		PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.WORLD_BORDER);
+		packet.getWorldBorderActions().writeDefaults();
+		packet.getDoubles().write(0, 29999984D);
+		protocolManager.broadcastServerPacket(packet, p, false);
 	}*/
+
 
 	public void playSound(Player p, String sound)
 	{
@@ -787,13 +818,15 @@ public class Main extends JavaPlugin {
 	public ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
 		ItemStack item = new ItemStack(mat);
 
-		if(mat.equals(Material.GLASS_BOTTLE))
+		if(mat.equals(Material.POTION))
 		{
 			item = new ItemStack(Material.POTION, 1);
 			ItemMeta meta = item.getItemMeta();
 			PotionMeta pmeta = (PotionMeta) meta;
 			PotionData pdata = new PotionData(PotionType.WATER);
 			pmeta.setBasePotionData(pdata);
+			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+			meta.setLore(null);
 			item.setItemMeta(meta);
 		}
 
@@ -806,5 +839,13 @@ public class Main extends JavaPlugin {
 		item.setItemMeta(itemMeta);
 		item.setDurability(dura);
 		return item;
+	}
+
+	public ItemStack setItemCustomModelData(ItemStack i, int cmd)
+	{
+		ItemMeta im = i.getItemMeta();
+		im.setCustomModelData(cmd);
+		i.setItemMeta(im);
+		return i;
 	}
 }

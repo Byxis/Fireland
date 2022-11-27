@@ -43,8 +43,6 @@ public record rally(Main main) implements CommandExecutor {
 					return false;
 				}
 
-				distance = ChangeDistanceIfHasSilencer(distance, victim);
-
 				if (victim.hasPermission("fireland.command.rally.admin")) {
 					rallyEntities(victim, distance);
 					setHasShotted(victim);
@@ -53,19 +51,17 @@ public record rally(Main main) implements CommandExecutor {
 			else if(args[0].equals("UWUMichiriNek0LUV3R#FreeTheCat"))
 			{
 				Player p = (Player) sender;
-				rallyEntities(p, 100);
+				rallyEntities(p, ChangeDistanceIfHasSilencer(100, p));
 				setHasShotted(p);
 			}
 			else {
 				final Player Sender = (Player) sender;
 
-				int distance = Integer.parseInt(args[1]);
+				int distance = ChangeDistanceIfHasSilencer(Integer.parseInt(args[1]),Sender);
 
 				if (main.cfgm.getPlayerDB().getBoolean("safezone." + Sender.getUniqueId() + ".state")) {
 					return false;
 				}
-
-				distance = ChangeDistanceIfHasSilencer(distance, victim);
 				if (victim.hasPermission("fireland.command.rally.admin")) {
 					rallyEntities(victim, distance);
 					setHasShotted(victim);
@@ -87,10 +83,8 @@ public record rally(Main main) implements CommandExecutor {
 					return false;
 				}
 
-				distance = ChangeDistanceIfHasSilencer(distance, victim);
-
 				if (victim.hasPermission("fireland.command.rally.admin")) {
-					rallyEntities(victim, distance);
+					rallyEntities(victim, ChangeDistanceIfHasSilencer(distance, victim));
 					setHasShotted(victim);
 				}
 			}

@@ -209,22 +209,29 @@ public class bank implements Listener, CommandExecutor {
 			else if(current.getType().equals(Material.ENDER_CHEST))
 			{
 				int slot = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
-				Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+player.getName());
-				int i = 0;
-				for (ItemStack item : loadEnderchest(player))
+				if(!main.storageMap.containsKey(e.getView().getPlayer().getUniqueId()))
 				{
-					if(i < slot)
+					Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+player.getName());
+					int i = 0;
+					for (ItemStack item : loadEnderchest(player))
 					{
-						ec.setItem(i, item);
+						if(i < slot)
+						{
+							ec.setItem(i, item);
+						}
+						i++;
 					}
-					i++;
+					player.openInventory(ec);
 				}
-				player.openInventory(ec);
+				else
+				{
+					player.openInventory(main.storageMap.get(e.getView().getPlayer().getUniqueId()));
+				}
 			}
 			
 			if(current.getType().equals(Material.ANVIL))
 			{
-				int price = getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
+				int price = getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1);
 				if(playerMoney >= price)
 				{
 					main.eco.withdrawPlayer(player, price);
@@ -233,8 +240,11 @@ public class bank implements Listener, CommandExecutor {
 					player.playSound(player.getLocation(), "minecraft:block.anvil.use", 1, 1);
 					main.cfgm.saveEnderchest();
 					player.playSound(player.getLocation(), "minecraft:entity.player.levelup", 1, 1);
-					//Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:entity.player.levelup ambient "+player.getUniqueId()+" ~ ~ ~ 1");
 					openBankMenu(player);
+				}
+				else
+				{
+					player.sendMessage("§cVous n'avez pas assez d'argent.");
 				}
 			}
 			else if (current.getType().equals(Material.NETHERITE_CHESTPLATE))
@@ -244,7 +254,8 @@ public class bank implements Listener, CommandExecutor {
 		}
 		else if(e.getView().getTitle().equalsIgnoreCase("§8Stockage de "+player.getName()))
 		{
-			saveEnderchest(e.getInventory().getContents(),player);
+			main.storageMap.replace(player.getUniqueId(), e.getInventory());
+			//saveEnderchest(e.getInventory().getContents(),player);
 		}
 		else if(e.getView().getTitle().contains("Votre faction"))
 		{
@@ -289,7 +300,7 @@ public class bank implements Listener, CommandExecutor {
 		{
 			player.playSound(player.getLocation(), "minecraft:entity.villager.yes", 1, 1);
 			//Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:entity.villager.yes ambient "+player.getName()+" ~ ~ ~ 1");
-			saveEnderchest(e.getInventory().getContents(),player);
+			//saveEnderchest(e.getInventory().getContents(),player);
 		}
 	}
 	
@@ -450,19 +461,6 @@ public class bank implements Listener, CommandExecutor {
 		if(str3 != "")lore.add(str3);
 		if(str4 != "")lore.add(str4);
 		return lore;
-	}
-	
-	private void saveEnderchest(ItemStack[] items, Player player)
-	{
-		if(items != null)
-		{
-			FileConfiguration config = main.cfgm.getEnderchest();
-			for (int i = 0; i < items.length; i++) {
-				config.set("stockage."+player.getUniqueId()+"."+i, items[i]);
-			}
-			main.cfgm.saveEnderchest();
-		}
-		
 	}
 	
 	public ItemStack[] loadEnderchest(Player player) {

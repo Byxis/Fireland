@@ -17,31 +17,17 @@ public class FactionPvp implements Listener {
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event)
     {
-        try
+        if(event.getEntity() instanceof Player && event.getDamager() instanceof Player)
         {
-            if(event.getEntity() instanceof Player && event.getDamager() instanceof Player)
+            Player p = ((Player) event.getEntity()).getPlayer();
+            Player d = ((Player) event.getDamager()).getPlayer();
+            if(main.factionMap.containsKey(p.getUniqueId()) && main.factionMap.containsKey(d.getUniqueId()))
             {
-                Player damager = (Player) event.getDamager();
-                Player victim = (Player) event.getEntity();
-
-                FactionFunctions factionFunctions = new FactionFunctions(main, victim);
-
-                FactionInformation factionDamagerName = factionFunctions.getFactionInfo(victim.getName());
-                FactionInformation factionVictimName = factionFunctions.getFactionInfo(damager.getName());
-
-                if(factionDamagerName != null && factionVictimName != null)
+                if(main.factionMap.get(p.getUniqueId()).equals(main.factionMap.get(d.getUniqueId())))
                 {
-                    if(!factionDamagerName.getName().equalsIgnoreCase(factionVictimName.getName()))
-                    {
-                        event.setCancelled(true);
-                        ////
-                    }
+                    event.setCancelled(true);
                 }
-
             }
-        } catch (Exception e) {
-            event.setCancelled(false);
         }
-
     }
 }

@@ -27,7 +27,7 @@ public class ZombieDetection implements Listener {
 			
 			float score = main.cfgm.getPlayerDB().getInt("discretion."+player.getUniqueId()+".score");
 			
-			float calcul = (float) (Math.pow(2.7, score*0.025)*4);
+			double calcul = 0.008*Math.pow((120-score), 2);
 			if(player.getLocation().distance(entity.getLocation()) >= calcul || main.cfgm.getPlayerDB().getBoolean("safezone."+player.getUniqueId()+".state"))
 			{
 				e.setCancelled(true);

@@ -232,10 +232,10 @@ public class doorPass implements Listener {
 		boolean waiting = main.getConfig().getBoolean("door."+p.getUniqueId());
 		if(!waiting)
 		{
-			main.getConfig().set("door."+p.getUniqueId(), true);
 			Location door = getDoorLocation(e.getClickedBlock().getLocation());
 			if(door != null)
 			{
+				main.getConfig().set("door."+p.getUniqueId(), true);
 				Location doubleDoor = (getDoubleDoorLocation(door));
 				e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.passcard", 0.1f, 1);
 				new BukkitRunnable()

@@ -27,6 +27,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -56,8 +57,9 @@ public class Main extends JavaPlugin {
 	public ConfigManager cfgm;
 	
 	private DatabaseManager databaseManager;
-	
-	public HashMap<String, UUID> faction;
+
+	public HashMap<String, UUID> factionMap;
+	public HashMap<UUID,Inventory> storageMap;
 
 	private ProtocolManager protocolManager;
 	
@@ -68,10 +70,10 @@ public class Main extends JavaPlugin {
 		getCommand("thirst").setExecutor(new thirst(this));
 		getCommand("cure").setExecutor(new infectedPlayer(this));
 		getCommand("infect").setExecutor(new infectedPlayer(this));
-		getCommand("rally").setExecutor(new rally(this));
 		getCommand("shop").setExecutor(new ShopCommandManager(this));
 		getCommand("shop").setTabCompleter(new ShopCommandManager(this));
 		getCommand("rename").setExecutor(new rename());
+		getCommand("rally").setExecutor(new rally(this));
 		getCommand("stack").setExecutor(new stack());
 		getCommand("bank").setExecutor(new bank(this));
 		getCommand("ambientsound").setExecutor(new ambientSound(this));
@@ -125,6 +127,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new entitySpawn(), this);
 		getServer().getPluginManager().registerEvents(new ShopEventManager(this), this);
 		getServer().getPluginManager().registerEvents(new FactionEvent(this), this);
+		getServer().getPluginManager().registerEvents(new SaveEvent(this), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -169,7 +172,8 @@ public class Main extends JavaPlugin {
 		getLogger().info(" ");
 		
 		databaseManager = new DatabaseManager();
-		faction = new HashMap<String, UUID>();
+		factionMap = new HashMap<String, UUID>();
+		storageMap = new HashMap<UUID,Inventory>();
 
 		protocolManager = ProtocolLibrary.getProtocolManager();
 		saveDefaultConfig();
@@ -191,7 +195,14 @@ public class Main extends JavaPlugin {
 		enableEvent();
 		
 		//changeItemsStackSize();
-		dateListener();
+		new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				dateListener();
+			}
+		}.runTaskTimer(this, 0, 20*60*60);
+
 		
 		if(!setupEconomy()) {
 			getLogger().info(ChatColor.RED+"You must have vault !");
@@ -397,11 +408,15 @@ public class Main extends JavaPlugin {
 			@Override
 			public void run() {
 				for(Player p : getServer().getOnlinePlayers()) {
-					cobwebDamageClass.damagePlayerInCobweb(p);
-					playTimePlayerAdd(p);
+
+					if(p.getGameMode() != GameMode.CREATIVE ||p.getGameMode() != GameMode.SPECTATOR)
+					{
+						playTimePlayerAdd(p);
+					}
 					checkDiscretionPoint(p);
 					scoreboardPlayerClass.update(p);
-					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
+					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE))
+					{
 						boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
 						if (infected || p.getHealth() < 6) {
 							playBorderPackets(p, true);
@@ -427,6 +442,7 @@ public class Main extends JavaPlugin {
 						{
 							if(safezone == 0)
 							{
+								p.sendMessage("§cVous n'êtes plus invincible !");
 								cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", -1);
 								p.setInvulnerable(false);
 								cfgm.savePlayerDB();
@@ -473,6 +489,8 @@ public class Main extends JavaPlugin {
 		getLogger().info(" ");
 		getLogger().info("   Fireland is now disabled !");
 		this.databaseManager.close();
+		SaveEvent se = new SaveEvent(this);
+		se.onDisable();
 		getLogger().info(" ");
 		getLogger().info(" ");
 		getLogger().info("================================");		
@@ -549,6 +567,11 @@ public class Main extends JavaPlugin {
 				}
 				cfgm.saveEnderchest();
 			}
+			for(String s : cfgm.getKarmaDB().getConfigurationSection("").getKeys(true))
+			{
+				cfgm.getKarmaDB().set("max."+s, 0);
+				cfgm.saveKarmaDB();
+			}
 		}
 	}
 	
@@ -557,9 +580,9 @@ public class Main extends JavaPlugin {
 		return databaseManager;
 	}
 	
-	public HashMap<String, UUID> getFaction()
+	public HashMap<String, UUID> getFactionMap()
 	{
-		return faction;
+		return factionMap;
 	}
 	
 	private boolean setupEconomy() {
@@ -795,13 +818,15 @@ public class Main extends JavaPlugin {
 	public ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
 		ItemStack item = new ItemStack(mat);
 
-		if(mat.equals(Material.GLASS_BOTTLE))
+		if(mat.equals(Material.POTION))
 		{
 			item = new ItemStack(Material.POTION, 1);
 			ItemMeta meta = item.getItemMeta();
 			PotionMeta pmeta = (PotionMeta) meta;
 			PotionData pdata = new PotionData(PotionType.WATER);
 			pmeta.setBasePotionData(pdata);
+			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+			meta.setLore(null);
 			item.setItemMeta(meta);
 		}
 
@@ -814,5 +839,13 @@ public class Main extends JavaPlugin {
 		item.setItemMeta(itemMeta);
 		item.setDurability(dura);
 		return item;
+	}
+
+	public ItemStack setItemCustomModelData(ItemStack i, int cmd)
+	{
+		ItemMeta im = i.getItemMeta();
+		im.setCustomModelData(cmd);
+		i.setItemMeta(im);
+		return i;
 	}
 }

@@ -21,9 +21,9 @@ public class FactionPvp implements Listener {
         {
             Player p = ((Player) event.getEntity()).getPlayer();
             Player d = ((Player) event.getDamager()).getPlayer();
-            if(main.faction.containsKey(p.getUniqueId()) && main.faction.containsKey(d.getUniqueId()))
+            if(main.factionMap.containsKey(p.getUniqueId()) && main.factionMap.containsKey(d.getUniqueId()))
             {
-                if(main.faction.get(p.getUniqueId()).equals(main.faction.get(d.getUniqueId())))
+                if(main.factionMap.get(p.getUniqueId()).equals(main.factionMap.get(d.getUniqueId())))
                 {
                     event.setCancelled(true);
                 }

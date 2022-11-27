@@ -20,7 +20,7 @@ public class playerManager implements Listener {
         {
             Player player = e.getPlayer();
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§a"+interacted.getName()+": §c"+interacted.getHealth()+"\u2764"));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§a"+interacted.getName()+": §c"+Math.round(interacted.getHealth())+"\u2764"));
         }
     }
 

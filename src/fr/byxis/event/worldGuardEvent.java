@@ -1,6 +1,9 @@
 	package fr.byxis.event;
 
+	import de.netzkronehd.wgregionevents.events.RegionEnterEvent;
+	import de.netzkronehd.wgregionevents.events.RegionLeftEvent;
 	import fr.byxis.main.Main;
+	import org.bukkit.GameMode;
 	import org.bukkit.entity.Player;
 	import org.bukkit.event.EventHandler;
 	import org.bukkit.event.Listener;
@@ -14,59 +17,48 @@ public class worldGuardEvent implements Listener {
 	public worldGuardEvent(Main main) {
 		this.main = main;
 	}
-	/*
-	@SuppressWarnings("deprecation")
+
 	@EventHandler
 	public void leftedRegion(RegionLeftEvent e)
 	{
-		try {
-			Player p = e.getPlayer();
-			
-			if(e.getRegionName().contentEquals("sf"))
-			{
-				if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
-				{
-					p.sendTitle("", "§cVous êtes invincible pendant 15 secondes");
-					p.playSound(p.getLocation(), "minecraft:gun.hud.leaving_safezone", 1, 1);
-					p.setInvulnerable(true);
+		Player p = e.getPlayer();
 
-					main.cfgm.getPlayerDB().set("safezone."+p.getName()+".time", 15);
-					main.cfgm.getPlayerDB().set("safezone."+p.getName()+".state", false);
-					main.cfgm.savePlayerDB();
-				}
+		if(e.getRegion().getId().contains("sf"))
+		{
+			if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
+			{
+				p.sendTitle("", "§cVous êtes invincible pendant 15 secondes");
+				p.playSound(p.getLocation(), "minecraft:gun.hud.leaving_safezone", 1, 1);
+				p.setInvulnerable(true);
+
+				main.cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", 15);
+				main.cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".state", false);
+				main.cfgm.savePlayerDB();
 			}
-		} catch (Exception e2) {
-			// TODO: handle exception
 		}
 		
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	@EventHandler
-	public void joinedRegion(RegionEnteredEvent e)
+	public void joinedRegion(RegionEnterEvent e)
 	{
-		
-		try {
-			Player p = e.getPlayer();
-			
-			if(e.getRegionName().contentEquals("sf"))
+		Player p = e.getPlayer();
+
+		if(e.getRegion().getId().contains("sf"))
+		{
+			if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
 			{
-				if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
-				{
-					p.sendTitle("", "");
-					p.setInvulnerable(false);
-					p.playSound(p.getLocation(), "minecraft:gun.hud.enter_safezone", 1, 1);
-					main.cfgm.getPlayerDB().set("safezone."+p.getName()+".time", -1);
-					main.cfgm.getPlayerDB().set("safezone."+p.getName()+".state", true);
-					main.cfgm.savePlayerDB();
-				}
-				
+				p.sendTitle("", "");
+				p.setInvulnerable(false);
+				p.playSound(p.getLocation(), "minecraft:gun.hud.enter_safezone", 1, 1);
+				main.cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", -1);
+				main.cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".state", true);
+				main.cfgm.savePlayerDB();
 			}
-		} catch (Exception e2) {
-			// TODO: handle exception
+
 		}
 		
-	}*/
+	}
 	
 	@EventHandler
 	public void playerPVP(EntityDamageByEntityEvent e)
@@ -83,7 +75,7 @@ public class worldGuardEvent implements Listener {
 	@EventHandler
 	public void playerJoin(PlayerJoinEvent e)
 	{
-		main.cfgm.getPlayerDB().set("safezone."+e.getPlayer().getName()+".time", 0);
+		main.cfgm.getPlayerDB().set("safezone."+e.getPlayer().getUniqueId()+".time", 0);
 		main.cfgm.savePlayerDB();
 		e.getPlayer().setInvulnerable(false);
 	}

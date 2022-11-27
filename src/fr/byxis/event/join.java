@@ -22,7 +22,7 @@ public class join implements Listener {
 	public void PlayerJoin(PlayerJoinEvent e)
 	{
 		Player player = e.getPlayer();
-		main.getConfig().set("door."+player.getName(), false);
+		main.getConfig().set("door."+player.getUniqueId(), false);
 		addOnDb(player);
 		updateName(player);
 	}

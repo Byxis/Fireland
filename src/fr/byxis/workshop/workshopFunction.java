@@ -311,14 +311,14 @@ public class workshopFunction {
 
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND player_workshop.player_uuid = ? ORDER BY type, scrap DESC, gunpowder ASC");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability, items.custom_model_data FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND player_workshop.player_uuid = ? ORDER BY type, scrap DESC, gunpowder ASC");
             preparedStatement1.setString(1, _uuid);
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
             while (resultSet.next()) {
                 if(hasPlan(p, resultSet.getString(2)) || resultSet.getBoolean(1))
                 {
-                    workshopItemClass item = new workshopItemClass(resultSet.getString(2), resultSet.getString(7), resultSet.getString(5), resultSet.getInt(3), resultSet.getInt(4), Material.getMaterial(resultSet.getString(8)), (short) resultSet.getInt(9), resultSet.getString(6), resultSet.getBoolean(1));
+                    workshopItemClass item = new workshopItemClass(resultSet.getString(2), resultSet.getString(7), resultSet.getString(5), resultSet.getInt(3), resultSet.getInt(4), Material.getMaterial(resultSet.getString(8)), (short) resultSet.getInt(9), resultSet.getString(6), resultSet.getBoolean(1), resultSet.getInt(10));
                     items.add(item);
                 }
             }
@@ -337,7 +337,7 @@ public class workshopFunction {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND items.item_name = ? AND player_workshop.player_uuid = ?");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability, items.custom_model_data FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND items.item_name = ? AND player_workshop.player_uuid = ?");
             preparedStatement1.setString(1, _recipeName);
             preparedStatement1.setString(2, _uuid);
             final ResultSet resultSet = preparedStatement1.executeQuery();
@@ -346,7 +346,7 @@ public class workshopFunction {
             while(resultSet.next()) {
                 if((resultSet.getInt(3) <= _scrapAmount && resultSet.getInt(4) <= _gunpowderAmount && hasPlan(p, resultSet.getString(2))) || resultSet.getBoolean(1))
                 {
-                    item = new workshopItemClass(resultSet.getString(2), resultSet.getString(7), resultSet.getString(5), resultSet.getInt(3), resultSet.getInt(4), Material.getMaterial(resultSet.getString(8)), (short) resultSet.getInt(9), resultSet.getString(6), resultSet.getBoolean(1));
+                    item = new workshopItemClass(resultSet.getString(2), resultSet.getString(7), resultSet.getString(5), resultSet.getInt(3), resultSet.getInt(4), Material.getMaterial(resultSet.getString(8)), (short) resultSet.getInt(9), resultSet.getString(6), resultSet.getBoolean(1), resultSet.getInt(10));
                     return item;
                 }
             }
@@ -464,7 +464,7 @@ public class workshopFunction {
                 lore.add("§6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles, §6");
                 lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
             }
-            _inv.setItem(spot+i, main.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore));
+            _inv.setItem(spot+i, main.setItemCustomModelData(main.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore),item.customModelData));
         }
     }
 
@@ -611,7 +611,7 @@ public class workshopFunction {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO player_crafting(player_uuid, item, creation_date, finish_date, is_breakable) VALUES(?,?,?,?,?)");
             final long time = System.currentTimeMillis();
             Timestamp currentTime = new Timestamp(time);
-            Timestamp finishTime = new Timestamp(time+addTimeFromType(item.type));
+            Timestamp finishTime = new Timestamp(time+ GetTimeFromType(item.type));
             preparedStatement1.setString(1, _uuid);
             preparedStatement1.setString(2, item.itemName);
             preparedStatement1.setTimestamp(3, currentTime);
@@ -627,7 +627,7 @@ public class workshopFunction {
         return false;
     }
 
-    public int addTimeFromType(String _type)
+    public int GetTimeFromType(String _type)
     {
         int time = 0;
         if(_type.equals("A"))
@@ -648,7 +648,7 @@ public class workshopFunction {
         }
         if(_type.equals("E"))
         {
-            time = 10*60*1000;
+            time = 5*60*1000;
         }
         return time;
     }
@@ -706,7 +706,7 @@ public class workshopFunction {
 
             lore.add("§8Date de fin de création : "+item.finishDate);
             lore.add("§8Date de création : "+item.creationDate);
-            _inv.setItem(spot+i, main.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore));
+            _inv.setItem(spot+i, main.setItemCustomModelData(main.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore), item.customModelData));
         }
     }
 
@@ -765,7 +765,7 @@ public class workshopFunction {
 
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_crafting.item, workshop_recipes.type, items.item, items.durability, items.command, player_crafting.creation_date, player_crafting.finish_date \n" +
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_crafting.item, workshop_recipes.type, items.item, items.durability, items.command, player_crafting.creation_date, player_crafting.finish_date, items.custom_model_data, items.recipe_name \n" +
                     "FROM player_crafting INNER JOIN items, workshop_recipes \n" +
                     "WHERE items.recipe_name = workshop_recipes.name \n" +
                     "AND player_crafting.item = items.item_name\n" +
@@ -774,7 +774,7 @@ public class workshopFunction {
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
             while (resultSet.next()) {
-                workshopCraftingItemClass item = new workshopCraftingItemClass(resultSet.getString(1), resultSet.getString(2), Material.getMaterial(resultSet.getString(3)), (short) resultSet.getInt(4), resultSet.getString(5), resultSet.getTimestamp(6), resultSet.getTimestamp(7));
+                workshopCraftingItemClass item = new workshopCraftingItemClass(resultSet.getString(1), resultSet.getString(2), Material.getMaterial(resultSet.getString(3)), (short) resultSet.getInt(4), resultSet.getString(5), resultSet.getTimestamp(6), resultSet.getTimestamp(7), resultSet.getInt(8), resultSet.getString(9));
                 items.add(item);
             }
             return items;
@@ -957,27 +957,37 @@ public class workshopFunction {
                 if(rs.getString(2).equals("E"))
                 {
                     i = main.setItemMeta(Material.PAPER, "§r§a"+rs.getString(1), (short) 1);
-                    i.getItemMeta().setCustomModelData(1);
+                    ItemMeta itemMeta=i.getItemMeta();
+                    itemMeta.setCustomModelData(1);
+                    i.setItemMeta(itemMeta);
                 }
                 else if(rs.getString(2).equals("D"))
                 {
                     i = main.setItemMeta(Material.PAPER, "§r§9"+rs.getString(1), (short) 1);
-                    i.getItemMeta().setCustomModelData(2);
+                    ItemMeta itemMeta=i.getItemMeta();
+                    itemMeta.setCustomModelData(2);
+                    i.setItemMeta(itemMeta);
                 }
                 else if(rs.getString(2).equals("C"))
                 {
                     i = main.setItemMeta(Material.PAPER, "§r§c"+rs.getString(1), (short) 1);
-                    i.getItemMeta().setCustomModelData(3);
+                    ItemMeta itemMeta=i.getItemMeta();
+                    itemMeta.setCustomModelData(3);
+                    i.setItemMeta(itemMeta);
                 }
                 else if(rs.getString(2).equals("B"))
                 {
                     i = main.setItemMeta(Material.PAPER, "§r§e"+rs.getString(1), (short) 1);
-                    i.getItemMeta().setCustomModelData(4);
+                    ItemMeta itemMeta=i.getItemMeta();
+                    itemMeta.setCustomModelData(4);
+                    i.setItemMeta(itemMeta);
                 }
                 else
                 {
                     i = main.setItemMeta(Material.PAPER, "§r§6§l"+rs.getString(1), (short) 1);
-                    i.getItemMeta().setCustomModelData(5);
+                    ItemMeta itemMeta=i.getItemMeta();
+                    itemMeta.setCustomModelData(5);
+                    i.setItemMeta(itemMeta);
                 }
 
                 ItemMeta im = i.getItemMeta();

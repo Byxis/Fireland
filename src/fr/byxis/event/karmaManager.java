@@ -83,24 +83,32 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         passageNouveauRang(Bukkit.getPlayer(_uuid), rang, rang-_amount);
     }
 
-    public void goodAction(UUID _uuid, double _amount)
+    public void goodAction(UUID _uuid, double _amount, boolean... b)
     {
-        updatePlayer(_uuid);
-        double rang = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
-        if(rang+_amount > 100)
+        double gain = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
+        if(b!=null || gain <=15)
         {
-            main.cfgm.getKarmaDB().set(_uuid.toString(), 100);
+            if(_amount > gain)
+            {
+                _amount = gain;
+            }
+            updatePlayer(_uuid);
+            double rang = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
+            if(rang+_amount > 100)
+            {
+                main.cfgm.getKarmaDB().set(_uuid.toString(), 100);
+            }
+            else if(rang+_amount < 0)
+            {
+                main.cfgm.getKarmaDB().set(_uuid.toString(), 0);
+            }
+            else
+            {
+                main.cfgm.getKarmaDB().set(_uuid.toString(), rang+_amount);
+            }
+            main.cfgm.saveKarmaDB();
+            passageNouveauRang(Bukkit.getPlayer(_uuid), rang, rang+_amount);
         }
-        else if(rang+_amount < 0)
-        {
-            main.cfgm.getKarmaDB().set(_uuid.toString(), 0);
-        }
-        else
-        {
-            main.cfgm.getKarmaDB().set(_uuid.toString(), rang+_amount);
-        }
-        main.cfgm.saveKarmaDB();
-        passageNouveauRang(Bukkit.getPlayer(_uuid), rang, rang+_amount);
     }
 
     public void setKarma(UUID _uuid, double _amount)
@@ -198,13 +206,13 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
             badAction(e.getEntity().getKiller().getUniqueId(), 10);
         }
 
-        if(getKarma(e.getEntity().getUniqueId())+10 < 50)
+        if(getKarma(e.getEntity().getUniqueId())+10 <= 50)
         {
             goodAction(e.getEntity().getUniqueId(), 10);
         }
-        else
+        else if(getKarma(e.getEntity().getUniqueId()) > 62)
         {
-            setKarma(e.getEntity().getUniqueId(), 50);
+            badAction(e.getEntity().getUniqueId(), 5);
         }
     }
 
@@ -232,13 +240,9 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args) {
-        if(sender instanceof Player && !sender.hasPermission("fireland.command.rang.admin"))
+        if(sender instanceof Player)
         {
-            sender.sendMessage("§aVotre rang : "+rangText((Player) sender));
-        }
-        else
-        {
-            if(args.length == 0 && sender instanceof Player)
+            if(args.length == 0)
             {
                 sender.sendMessage("§aVotre rang : "+rangText((Player) sender));
             }
@@ -251,10 +255,10 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
                 }
                 else
                 {
-                    sender.sendMessage("§cErreur ! Utilisation : /rang (set/add/remove) (int) [player]");
+                    sender.sendMessage("§cErreur ! Utilisation : /rang [player]");
                 }
             }
-            else if(args.length >= 2)
+            else if(args.length >= 2 && ((Player)sender).hasPermission("fireland.command.rang.admin"))
             {
                 try
                 {
@@ -347,7 +351,6 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
                 }
             }
         }
-
         return false;
     }
 

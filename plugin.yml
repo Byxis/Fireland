@@ -57,7 +57,7 @@ commands:
     aliases: [ jt, jetons ]
   rang:
     description: commandes pour les rangs
-    aliases: [ rangs, rg ]
+    aliases: [ rangs]
   workshop:
     description: commandes pour le workshop
     aliases: [ws]

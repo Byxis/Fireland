@@ -21,7 +21,7 @@ public class FactionEvent implements Listener {
         String fname = ff.playerFactionName(e.getPlayer());
         if(!fname.equals(""))
         {
-            main.faction.put(fname, e.getPlayer().getUniqueId());
+            main.factionMap.put(fname, e.getPlayer().getUniqueId());
         }
     }
 
@@ -29,9 +29,9 @@ public class FactionEvent implements Listener {
     public void playerLeaveEvent(PlayerQuitEvent e)
     {
         Player p = e.getPlayer();
-        if(main.faction.containsKey(p.getUniqueId()))
+        if(main.factionMap.containsKey(p.getUniqueId()))
         {
-            main.faction.remove(p.getUniqueId());
+            main.factionMap.remove(p.getUniqueId());
         }
     }
 }

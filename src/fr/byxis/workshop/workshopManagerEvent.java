@@ -4,6 +4,7 @@ import fr.byxis.db.jetonSql;
 import fr.byxis.event.jetonsManager;
 import fr.byxis.main.Main;
 import fr.byxis.workshop.recycler.RecyclerFunction;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -192,9 +193,16 @@ public class workshopManagerEvent implements Listener {
                             {
                                 main.playSound(p, "minecraft:block.anvil.use");
                                 wf.removeFromQueue(item, p.getUniqueId().toString());
-                                main.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.give.all");
+                                if(item.command.contains("shot give"))
+                                {
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()));
+                                }
+                                else
+                                {
+                                    main.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.get.all");
+                                }
                                 wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
-                                wf.craftItemNbr("Plan de fabrication de "+item.itemName, p.getUniqueId().toString(), 1);
+                                wf.craftItemNbr(item.planName, p.getUniqueId().toString(), 1);
                             }
                             else
                             {
@@ -208,8 +216,16 @@ public class workshopManagerEvent implements Listener {
                                 {
                                     main.playSound(p, "minecraft:block.anvil.use");
                                     wf.removeFromQueue(item, p.getUniqueId().toString());
-                                    main.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.give.all");
+                                    if(item.command.contains("shot give"))
+                                    {
+                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()));
+                                    }
+                                    else
+                                    {
+                                        main.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.get.all");
+                                    }
                                     wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
+                                    wf.craftItemNbr(item.planName, p.getUniqueId().toString(),1);
                                 }
                             }
                         }
@@ -241,7 +257,7 @@ public class workshopManagerEvent implements Listener {
                 }
             }
         }
-        else if(e.getView().getTitle().contains("Plan de travail"))
+        else if(e.getView().getTitle().contains("Plan de travail") && e.getCurrentItem() != null)
         {
             e.setCancelled(true);
             if(e.getCurrentItem().getType() == Material.CHEST)

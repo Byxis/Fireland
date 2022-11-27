@@ -102,7 +102,7 @@ public class factionManager implements Listener, CommandExecutor  {
 			{
 				if(!factionFunctions.factionHasMaxPlayer(args[1]))
 				{
-					main.faction.put(args[1], p.getUniqueId());
+					main.factionMap.put(args[1], p.getUniqueId());
 					factionFunctions.joinFaction(p, factionFunctions.getExactFactionNameFromInvite(p, args[1]));
 				}
 				else
@@ -123,9 +123,9 @@ public class factionManager implements Listener, CommandExecutor  {
 			}
 			else
 			{
-				if(main.faction.containsKey(p.getUniqueId()))
+				if(main.factionMap.containsKey(p.getUniqueId()))
 				{
-					main.faction.remove(p.getUniqueId());
+					main.factionMap.remove(p.getUniqueId());
 				}
 				factionFunctions.leaveFaction(p, factionInfo.getLeader());
 			}
@@ -144,9 +144,9 @@ public class factionManager implements Listener, CommandExecutor  {
 			else if(args.length > 1 && args[1].equalsIgnoreCase("yes"))
 			{
 				factionFunctions.deleteFaction(p);
-				if(main.faction.containsKey(p.getUniqueId()))
+				if(main.factionMap.containsKey(p.getUniqueId()))
 				{
-					main.faction.remove(p.getUniqueId());
+					main.factionMap.remove(p.getUniqueId());
 				}
 			}
 			else

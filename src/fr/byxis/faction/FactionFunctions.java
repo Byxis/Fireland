@@ -481,7 +481,7 @@ public class FactionFunctions {
 				//Executions des requetes pour supprimer
 				removeFaction.executeUpdate();
 				removePlayerInFaction.executeUpdate();
-				main.getFaction().remove(main.getFaction().get(uuid));
+				main.getFactionMap().remove(main.getFactionMap().get(uuid));
 				p.sendMessage("§cVous avez supprimé la faction "+resultFactionName.getString(1)+".");
 			}
 			else

@@ -266,7 +266,7 @@ public class workshopManagerEvent implements Listener {
             } else if (e.getCurrentItem().getType() == Material.ANVIL) {
                 main.commandExecutor((Player) e.getView().getPlayer(), "ws gui", "fireland.command.workshop.gui");
             } else if (e.getCurrentItem().getType() == Material.NETHERITE_SCRAP) {
-                main.commandExecutor((Player) e.getView().getPlayer(), "ws recycler", "fireland.command.workshop.gui");
+                main.commandExecutor((Player) e.getView().getPlayer(), "ws recycler", "fireland.command.workshop.recycler");
             }
         }
         else if(e.getView().getTitle().contains("Recycleur"))

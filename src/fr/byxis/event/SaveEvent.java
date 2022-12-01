@@ -19,20 +19,14 @@ public class SaveEvent implements Listener {
     @EventHandler
     public void ServeurSave(WorldSaveEvent e)
     {
-        main.getLogger().info("Saved banks");
-        for(UUID uuid : main.storageMap.keySet())
-        {
-            saveEnderchest(main.storageMap.get(uuid), uuid);
-        }
+        SaveAllEnderchest();
+        SaveAllKarma();
     }
 
     public void onDisable()
     {
-        main.getLogger().info("Saved banks");
-        for(UUID uuid : main.storageMap.keySet())
-        {
-            saveEnderchest(main.storageMap.get(uuid), uuid);
-        }
+        SaveAllEnderchest();
+        SaveAllKarma();
     }
 
     private void saveEnderchest(Inventory inv , UUID uuid)
@@ -43,8 +37,32 @@ public class SaveEvent implements Listener {
             for (int i = 0; i < inv.getSize(); i++) {
                 config.set("stockage."+uuid+"."+i, inv.getItem(i));
             }
-            main.cfgm.saveEnderchest();
         }
+    }
 
+    private void SaveAllEnderchest()
+    {
+        for(UUID uuid :main.hashMapManager.getStorageMap().keySet())
+        {
+            saveEnderchest(main.hashMapManager.getStorageMap().get(uuid), uuid);
+        }
+        main.cfgm.saveEnderchest();
+    }
+
+    private void SaveKarma(UUID uuid)
+    {
+        FileConfiguration config = main.cfgm.getKarmaDB();
+        config.set(uuid.toString(), main.hashMapManager.getRangMap().get(uuid).getRang());
+        config.set("max."+ uuid, main.hashMapManager.getRangMap().get(uuid).getMax());
+    }
+
+    private void SaveAllKarma()
+    {
+        main.getLogger().info("Saved Karmas");
+        for(UUID uuid :main.hashMapManager.getRangMap().keySet())
+        {
+            SaveKarma(uuid);
+        }
+        main.cfgm.saveKarmaDB();
     }
 }

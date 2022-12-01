@@ -8,11 +8,15 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import fr.byxis.command.*;
 import fr.byxis.db.DatabaseManager;
+import fr.byxis.discretion.ZombieDetection;
+import fr.byxis.discretion.rally;
 import fr.byxis.event.*;
 import fr.byxis.faction.FactionEvent;
 import fr.byxis.faction.FactionPvp;
 import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
+import fr.byxis.intendant.MenuIndendant;
+import fr.byxis.karma.karmaManager;
 import fr.byxis.shop.ShopCommandManager;
 import fr.byxis.shop.ShopEventManager;
 import fr.byxis.workshop.workshopFunction;
@@ -27,7 +31,6 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -58,10 +61,9 @@ public class Main extends JavaPlugin {
 	
 	private DatabaseManager databaseManager;
 
-	public HashMap<String, UUID> factionMap;
-	public HashMap<UUID,Inventory> storageMap;
 
 	private ProtocolManager protocolManager;
+	public HashMapManager hashMapManager;
 	
 	@SuppressWarnings("ConstantConditions")
 	public void enableCommand() {
@@ -128,6 +130,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new ShopEventManager(this), this);
 		getServer().getPluginManager().registerEvents(new FactionEvent(this), this);
 		getServer().getPluginManager().registerEvents(new SaveEvent(this), this);
+		getServer().getPluginManager().registerEvents(new MenuIndendant(this), this);
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -172,8 +175,8 @@ public class Main extends JavaPlugin {
 		getLogger().info(" ");
 		
 		databaseManager = new DatabaseManager();
-		factionMap = new HashMap<String, UUID>();
-		storageMap = new HashMap<UUID,Inventory>();
+		hashMapManager = new HashMapManager();
+		hashMapManager.Init();
 
 		protocolManager = ProtocolLibrary.getProtocolManager();
 		saveDefaultConfig();
@@ -419,12 +422,12 @@ public class Main extends JavaPlugin {
 					{
 						boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
 						if (infected || p.getHealth() < 6) {
-							playBorderPackets(p, true);
+							//playBorderPackets(p, true);
 							p.playSound(p.getLocation(), "minecraft:entity.player.heartbeat", 1, 1);
 						}
 						else
 						{
-							playBorderPackets(p, false);
+							//playBorderPackets(p, false);
 						}
 						
 						int safezone = cfgm.getPlayerDB().getInt("safezone."+p.getUniqueId()+".time");
@@ -452,7 +455,7 @@ public class Main extends JavaPlugin {
 					}
 					else
 					{
-						playBorderPackets(p, false);
+						//	playBorderPackets(p, false);
 						//ATELIER
 					}
 					/*if(p.getOpenInventory().getTitle().contains("Attente"))
@@ -478,7 +481,7 @@ public class Main extends JavaPlugin {
 			}
 		}.runTaskTimer(this, 0, 10);
 		getLogger().info(" ");
-		getLogger().info("================================");
+		getLogger().info(ChatColor.GREEN+"================================");
 
 
 	}
@@ -493,7 +496,7 @@ public class Main extends JavaPlugin {
 		se.onDisable();
 		getLogger().info(" ");
 		getLogger().info(" ");
-		getLogger().info("================================");		
+		getLogger().info("================================");
 	}
 	
 	/*void moveNextTick(Entity ent, Location loc)
@@ -539,38 +542,45 @@ public class Main extends JavaPlugin {
 		int today = now.getDate();
 		int old = cfgm.getEnderchest().getInt("date");
 		
-		
-		if(today != old)
+		//TODO: Change parce que la c tt le temps fdp
+		if(today == old)
 		{
 			cfgm.getEnderchest().set("date", today);
 			cfgm.saveEnderchest();
-			if(cfgm.getEnderchest().get("bank") == null)
+			getLogger().info("eeee");
+			if(cfgm.getEnderchest().get("stockage") != null)
 			{
-				return;
-			}
-			for(String s : cfgm.getEnderchest().getConfigurationSection("bank").getKeys(true))
-			{
-				if(cfgm.getEnderchest().getInt("bank."+s+".money") > 0)
+				for(String s : cfgm.getEnderchest().getConfigurationSection("stockage").getKeys(true))
 				{
-					if(cfgm.getEnderchest().getInt("bank."+s+".money") <= 50)
+					if(cfgm.getEnderchest().getInt("stockage."+s+".money") > 0)
 					{
-						cfgm.getEnderchest().set("bank."+s+".money", 0);
+						if(cfgm.getEnderchest().getInt("stockage."+s+".money") <= 50)
+						{
+							cfgm.getEnderchest().set("stockage."+s+".money", 0);
+							cfgm.saveEnderchest();
+						}
+						else
+						{
+							cfgm.getEnderchest().set("stockage."+s+".money", cfgm.getEnderchest().getInt("bank."+s+".money")-50);
+							cfgm.saveEnderchest();
+						}
 					}
 					else
 					{
-						cfgm.getEnderchest().set("bank."+s+".money", cfgm.getEnderchest().getInt("bank."+s+".money")-50);
+						cfgm.getEnderchest().set(s, null);
+						cfgm.saveEnderchest();
 					}
 				}
-				else
-				{
-					cfgm.getEnderchest().set(s, null);
-				}
-				cfgm.saveEnderchest();
 			}
-			for(String s : cfgm.getKarmaDB().getConfigurationSection("").getKeys(true))
-			{
-				cfgm.getKarmaDB().set("max."+s, 0);
-				cfgm.saveKarmaDB();
+			if(cfgm.getKarmaDB().get("") != null) {
+				for (String s : cfgm.getKarmaDB().getConfigurationSection("").getKeys(false)) {
+					if (!s.equals("max")) {
+						getLogger().info(""+s);
+						cfgm.getKarmaDB().set("max." + s, 0);
+						cfgm.saveKarmaDB();
+					}
+
+				}
 			}
 		}
 	}
@@ -579,11 +589,8 @@ public class Main extends JavaPlugin {
 	{
 		return databaseManager;
 	}
-	
-	public HashMap<String, UUID> getFactionMap()
-	{
-		return factionMap;
-	}
+
+
 	
 	private boolean setupEconomy() {
 		RegisteredServiceProvider<Economy> economy = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
@@ -688,9 +695,8 @@ public class Main extends JavaPlugin {
 		return (WorldGuardPlugin) plugin;
 	}*/
 	
-		private void checkDiscretionPoint(Player player){
-		double discretion = 80;
-		String sDiscretion = "discretion."+player.getUniqueId()+".";
+	private void checkDiscretionPoint(Player player){
+		double discretion = 100;
 		
 		//check player movement
 		/*if(cfgm.getPlayerDB().getBoolean(sDiscretion+"move"))
@@ -719,11 +725,20 @@ public class Main extends JavaPlugin {
 		{
 			discretion -= 15;
 		}*/
-
-		if(player.isSneaking())
+		if(!hashMapManager.getDiscretionMap().containsKey(player.getUniqueId()))
 		{
-			discretion += 30;
+			hashMapManager.addDiscretionMap(player.getUniqueId());
 		}
+
+		if(hashMapManager.getDiscretionMap().get(player.getUniqueId()).isMoving())
+		{
+			discretion -= 30;
+			if(player.isSneaking())
+			{
+				discretion += 20;
+			}
+		}
+
 		if(player.isSprinting() ||player.isSwimming() ||player.isClimbing())
 		{
 			discretion -= 50;
@@ -742,9 +757,9 @@ public class Main extends JavaPlugin {
 		{
 			discretion =0;
 		}
-
-		cfgm.getPlayerDB().set(sDiscretion+"score", discretion);
-		cfgm.savePlayerDB();
+		hashMapManager.getDiscretionMap().get(player.getUniqueId()).setScore(discretion);
+		//cfgm.getPlayerDB().set(sDiscretion+"score", discretion);
+		//cfgm.savePlayerDB();
 	}
 	
 	private void playTimePlayerAdd(Player p)

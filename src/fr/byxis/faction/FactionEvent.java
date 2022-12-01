@@ -21,7 +21,11 @@ public class FactionEvent implements Listener {
         String fname = ff.playerFactionName(e.getPlayer());
         if(!fname.equals(""))
         {
-            main.factionMap.put(fname, e.getPlayer().getUniqueId());
+            if(ff.HasPerk(fname, "friendly_fire"))
+            {
+                main.hashMapManager.addFactionMap(e.getPlayer().getUniqueId(), fname);
+            }
+
         }
     }
 
@@ -29,9 +33,9 @@ public class FactionEvent implements Listener {
     public void playerLeaveEvent(PlayerQuitEvent e)
     {
         Player p = e.getPlayer();
-        if(main.factionMap.containsKey(p.getUniqueId()))
+        if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
         {
-            main.factionMap.remove(p.getUniqueId());
+            main.hashMapManager.removeFactionMap(p.getUniqueId());
         }
     }
 }

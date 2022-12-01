@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -329,26 +330,32 @@ public class FactionFunctions {
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 		
 		try {
-			//On prépare la requete SQL
-			final Connection connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM faction WHERE leader_uuid = ?");
-			preparedStatement1.setString(1, leader.toString());
-			//Réalisation de la requête SQL
-			final ResultSet resultSet = preparedStatement1.executeQuery();
-			//Si le joueur souhaitant quitter sa faction est le leader, il ne peut pas, on le lui signale
-			if (resultSet.next())
+			if (p.getUniqueId() == leader)
 			{
 				p.sendMessage("§cVous êtes leader donc vous ne pouvez pas quitter votre faction ! Vous pouvez cependant la dissoudre ou donner le rôle a quelqu'un d'autre");
 			}
 			//Si ce n'est pas le leader, il peut quitter, dans ce cas on change la table faction_name et on le prévient
 			else
 			{
-				//On prépare la requete SQL
-				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE players SET faction_name=NULL, faction_role=NULL, faction_joined_at=NULL WHERE uuid = ?");
-				preparedStatement2.setString(1, uuid.toString());
-				//Réalisation de la requête SQL
+
+				final Connection connection = firelandConnection.getConnection();
+				FactionInformation infos = getFactionInfo(GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName()).getFactionName());
+				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET nbr_members=? WHERE name = ?");
+				preparedStatement2.setInt(1, infos.getCurrentNbrOfPlayers()-1);
+				preparedStatement2.setString(2, infos.getName());
+				//On exécute la requete SQL
 				preparedStatement2.executeUpdate();
-				p.sendMessage("§cVous avez quitté la faction "+resultSet.getString(1)+".");
+
+				final PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM player_faction WHERE player_faction=? AND player_uuid = ?");
+				preparedStatement1.setString(1, infos.getName());
+				preparedStatement1.setString(2, p.getUniqueId().toString());
+				//On exécute la requete SQL
+				preparedStatement1.executeUpdate();
+				p.sendMessage("§cVous avez quitté la faction "+infos.getName()+".");
+				if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
+				{
+					main.hashMapManager.removeFactionMap(p.getUniqueId());
+				}
 			}
 		} catch (SQLException e) {
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F008");
@@ -481,7 +488,11 @@ public class FactionFunctions {
 				//Executions des requetes pour supprimer
 				removeFaction.executeUpdate();
 				removePlayerInFaction.executeUpdate();
-				main.getFactionMap().remove(main.getFactionMap().get(uuid));
+				HashMap<UUID, String> fmap = main.hashMapManager.getFactionMap();
+				if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
+				{
+					main.hashMapManager.removeFactionMap(p.getUniqueId());
+				}
 				p.sendMessage("§cVous avez supprimé la faction "+resultFactionName.getString(1)+".");
 			}
 			else
@@ -714,47 +725,7 @@ public class FactionFunctions {
 		}
 	}
 
-	public void unrankPlayer(UUID playerUuid, String factionName)
-		/*
-		 * Baisse le rang d'un joueur dans une faction
-		 *
-		 * Parameters:
-		 *  - UUID playerUuid : l'uuid du joueur dont on veut modifier le rang
-		 * 	- String factionName : le nom de la faction que l'on améliore.
-		 */
-	{
-		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-
-		try {
-			//On prépare la requête SQL
-			final Connection connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT role FROM player_faction WHERE player_uuid = ?");
-			preparedStatement1.setString(1, playerUuid.toString());
-			//Réalisation de la requête SQL
-			final ResultSet resultSet = preparedStatement1.executeQuery();
-			//S'il y a un résultat à la requete, on change le rang du joueur comme prévu:
-			if (resultSet.next())
-			{
-				//On prépare la requete de modification :
-				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE player_faction SET role=? player_uuid = ?");
-				//On crée la variable demote que l'on va insérer dans l'attribut upgrade. La variable correspond à l'identifiant du rang du joueur, ici - 1 car on baisse son rang
-				int demote = resultSet.getInt(1)-1;
-				preparedStatement2.setInt(2, demote);
-				preparedStatement2.setString(1, playerUuid.toString());
-				//Réalisation de la requête SQL
-				preparedStatement2.executeUpdate();
-			}
-			else
-			{
-				sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F016");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F016");
-		}
-	}
-
-	public void promotePlayer(UUID playerUuid, String factionName)
+	public void ChangePlayerRank(UUID playerUuid, String factionName, int amount)
 		/*
 		 * Augmente le rang d'un joueur dans une faction
 		 *
@@ -776,11 +747,11 @@ public class FactionFunctions {
 			if (resultSet.next())
 			{
 				//On prépare la requete de modification :
-				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE player_faction SET role=? WHERE player_uuid = ?");
+				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE player_faction SET role = ? WHERE player_uuid = ?");
 				//On crée la variable promote que l'on va insérer dans l'attribut upgrade. La variable correspond à l'identifiant du rang du joueur, ici + 1 car on augmente son rang
-				int promote = resultSet.getInt(1)-1;
-				preparedStatement2.setInt(2, promote);
-				preparedStatement2.setString(1, playerUuid.toString());
+				double promote = resultSet.getDouble(1)+amount;
+				preparedStatement2.setDouble(1, promote);
+				preparedStatement2.setString(2, playerUuid.toString());
 				//Réalisation de la requête SQL
 				preparedStatement2.executeUpdate();
 			}
@@ -837,7 +808,7 @@ public class FactionFunctions {
 		}
 	}
 
-	public boolean take(String factionName, int amount)
+	public boolean take(String factionName, double amount)
 	{
 		/*
 		 * Améliore le rang d'une faction.
@@ -850,34 +821,24 @@ public class FactionFunctions {
 		try {
 			//On prépare la requête SQL
 			final Connection connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT money FROM faction WHERE name = ?");
-			preparedStatement1.setString(1, factionName);
-			//Réalisation de la requête SQL
-			final ResultSet resultSet = preparedStatement1.executeQuery();
-			//Si la faction est trouvée dans la table upgrade, on améliore son rang
-			if (resultSet.next())
+			//On prépare la requete de modification :
+			final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET money=? WHERE name = ?");
+			//On modifie l'attribut money qui correspond au rang de la faction, on ajoute 1
+			double money = GetFactionMoney(factionName);
+			if(money != -1)
 			{
-				//On prépare la requete de modification :
-				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET money=? WHERE name = ?");
-				//On modifie l'attribut money qui correspond au rang de la faction, on ajoute 1
-				int money = resultSet.getInt(1)-amount;
 				preparedStatement2.setString(2, factionName);
-				preparedStatement2.setInt(1, money);
+				preparedStatement2.setDouble(1, money-amount);
 				//On exécute la requete SQL
 				preparedStatement2.executeUpdate();
-				sender.sendMessage("§aVous avez retiré " + amount + "$ !");
 				return true;
 			}
-			else
-			{
-				sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F019");
-				return false;
-			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F019");
-			return false;
 		}
+		return false;
 	}
 
 	public void renameFaction(String _factionName, String _newName)
@@ -885,7 +846,7 @@ public class FactionFunctions {
 		/*
 		 * Renomme une faction.
 		 *
-		 * Parameters:
+		 * Parameters :
 		 * 	- String _factionName : le nom de la faction que l'on améliore.
 		 */
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
@@ -893,28 +854,157 @@ public class FactionFunctions {
 		try {
 			//On prépare la requête SQL
 			final Connection connection = firelandConnection.getConnection();
-			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT upgrade FROM faction WHERE name = ?");
-			preparedStatement1.setString(1, _factionName);
-			//Réalisation de la requête SQL
-			final ResultSet resultSet = preparedStatement1.executeQuery();
 			//Si la faction est trouvée dans la table upgrade, on améliore son rang
-			if (resultSet.next())
-			{
-				//On prépare la requete de modification :
-				final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET name=? WHERE name = ?");
-				preparedStatement2.setString(2, _factionName);
-				preparedStatement2.setString(1, _newName);
-				//On exécute la requete SQL
-				preparedStatement2.executeUpdate();
-				sender.sendMessage("§cVotre faction a été renommée. Elle s'appelle désormais §d"+_newName+" §c!");
-			}
-			else
-			{
-				sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F015");
-			}
+
+			//On prépare la requete de modification :
+			final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET name=? WHERE name = ?");
+			preparedStatement2.setString(2, _factionName);
+			preparedStatement2.setString(1, _newName);
+			//On exécute la requete SQL
+			preparedStatement2.executeUpdate();
+
+			final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE invite SET faction_name=? WHERE faction_name = ?");
+			preparedStatement.setString(2, _factionName);
+			preparedStatement.setString(1, _newName);
+			//On exécute la requete SQL
+			preparedStatement.executeUpdate();
+
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE player_faction SET player_faction=? WHERE player_faction = ?");
+			preparedStatement1.setString(2, _factionName);
+			preparedStatement1.setString(1, _newName);
+			//On exécute la requete SQL
+			preparedStatement1.executeUpdate();
+			sender.sendMessage("§cVotre faction a été renommée. Elle s'appelle désormais §d"+_newName+" §c!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F015");
 		}
+	}
+
+	public double GetFactionMoney(String factionName) {
+		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+		try {
+			//On prépare la requête SQL
+			final Connection connection = firelandConnection.getConnection();
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT money FROM faction WHERE name = ?");
+			preparedStatement1.setString(1, factionName);
+			//Réalisation de la requête SQL
+			final ResultSet resultSet = preparedStatement1.executeQuery();
+			if(resultSet.next())
+			{
+				return resultSet.getDouble(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F021");
+		}
+		return -1;
+	}
+
+	public void kickPlayer(FactionInformation infos, Player victim)
+	{//TODO
+		/*
+		 * Renomme une faction.
+		 *
+		 * Parameters :
+		 * 	- String _factionName : le nom de la faction que l'on améliore.
+		 */
+		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+		try {
+			//On prépare la requête SQL
+			final Connection connection = firelandConnection.getConnection();
+			//Si la faction est trouvée dans la table upgrade, on améliore son rang
+
+			//On prépare la requete de modification :
+			final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET nbr_members=? WHERE name = ?");
+			preparedStatement2.setInt(1, infos.getCurrentNbrOfPlayers()-1);
+			preparedStatement2.setString(2, infos.getName());
+			//On exécute la requete SQL
+			preparedStatement2.executeUpdate();
+
+			final PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM player_faction WHERE player_faction=? AND player_uuid = ?");
+			preparedStatement1.setString(1, infos.getName());
+			preparedStatement1.setString(2, victim.getUniqueId().toString());
+			//On exécute la requete SQL
+			preparedStatement1.executeUpdate();
+			if(main.hashMapManager.getFactionMap().containsKey(victim.getUniqueId()))
+			{
+				main.hashMapManager.removeFactionMap(victim.getUniqueId());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F022");
+		}
+	}
+
+	public void AddPerk(String _factionName, String _perk)
+	{
+		/*
+		 * Renomme une faction.
+		 *
+		 * Parameters :
+		 * 	- String _factionName : le nom de la faction que l'on améliore.
+		 */
+		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+		try {
+			//On prépare la requête SQL
+			final Connection connection = firelandConnection.getConnection();
+
+			final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT ? FROM faction WHERE ");
+			preparedStatement2.setString(1, _perk);
+			preparedStatement2.setString(2, _factionName);
+			//On exécute la requete SQL
+			ResultSet rs = preparedStatement2.executeQuery();
+			if(rs.next())
+			{
+				if(!rs.getBoolean(1))
+				{
+					final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction SET ?=1 WHERE name = ?");
+					preparedStatement.setString(1, _perk);
+					preparedStatement.setString(2, _factionName);
+					//On exécute la requete SQL
+					preparedStatement.executeUpdate();
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F023");
+		}
+	}
+
+	public boolean HasPerk(String _factionName, String _perk)
+	{
+		/*
+		 * Renomme une faction.
+		 *
+		 * Parameters :
+		 * 	- String _factionName : le nom de la faction que l'on améliore.
+		 */
+		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+		try {
+			//On prépare la requête SQL
+			final Connection connection = firelandConnection.getConnection();
+
+			final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT ? FROM faction WHERE name = ? ");
+			preparedStatement2.setString(1, _perk);
+			preparedStatement2.setString(2, _factionName);
+			//On exécute la requete SQL
+			ResultSet rs = preparedStatement2.executeQuery();
+			if(rs.next())
+			{
+				if(rs.getBoolean(1))
+				{
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F023");
+		}
+		return false;
 	}
 }

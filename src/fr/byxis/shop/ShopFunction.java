@@ -1,9 +1,10 @@
 package fr.byxis.shop;
 
 import fr.byxis.db.DbConnection;
-import fr.byxis.event.karmaManager;
+import fr.byxis.karma.karmaManager;
 import fr.byxis.main.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -259,9 +260,16 @@ public class ShopFunction {
             if(balance >= prix)
             {
                 String command = item.command.replaceAll("Player", _p.getName());
-                if(command.contains("mcgive"))
+                if(command.contains("mcgive") )
                 {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give "+_p.getName()+" minecraft:"+item.mat.name().toLowerCase()+"{display:{Name:'[{\"text\":\"§r"+"§r"+item.itemName+"\"}]'}} 1");
+                    main.eco.withdrawPlayer(_p, prix);
+                    _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
+                    buyItemKarma(_p.getUniqueId());
+                }
+                else if (command.contains("minecraft:give"))
+                {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command);
                     main.eco.withdrawPlayer(_p, prix);
                     _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
                     buyItemKarma(_p.getUniqueId());
@@ -288,14 +296,13 @@ public class ShopFunction {
                 if(command.contains("mcgive"))
                 {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give "+_p.getName()+" minecraft:"+item.mat.name().toLowerCase()+"{display:{Name:'[{\"text\":\"§r"+"§r"+item.itemName+"\"}]'}} 1");
-                    _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
                 }
                 else
                 {
                     main.commandExecutor(_p, command, "crackshot.give.all");
-                    _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §6"+prix+"$ §a!");
-                    _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
                 }
+                _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
+                _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
             }
             else
             {
@@ -322,7 +329,7 @@ public class ShopFunction {
                 {
                     if(itemInv != null)
                     {
-                        if(itemInv.getItemMeta().getDisplayName().contains(item.itemName))
+                        if(ChatColor.stripColor(itemInv.getItemMeta().getDisplayName()).equalsIgnoreCase(item.itemName))
                         {
                             if(nbr+itemInv.getAmount() >=64)
                             {
@@ -346,7 +353,7 @@ public class ShopFunction {
                 {
                     if(itemInv != null)
                     {
-                        if(itemInv.getItemMeta().getDisplayName().contains(item.itemName))
+                        if(ChatColor.stripColor(itemInv.getItemMeta().getDisplayName()).equalsIgnoreCase(item.itemName))
                         {
                             itemInv.setAmount(itemInv.getAmount()-1);
                             founded = true;

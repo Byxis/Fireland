@@ -1,4 +1,4 @@
-package fr.byxis.command;
+package fr.byxis.discretion;
 
 import fr.byxis.main.Main;
 import org.bukkit.Bukkit;

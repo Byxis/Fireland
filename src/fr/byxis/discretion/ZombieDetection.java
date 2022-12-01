@@ -1,11 +1,15 @@
-package fr.byxis.event;
+package fr.byxis.discretion;
 
 import fr.byxis.main.Main;
+import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ZombieDetection implements Listener {
@@ -17,6 +21,17 @@ public class ZombieDetection implements Listener {
 	}
 
 	@EventHandler
+	public void PlayerJoin(PlayerJoinEvent e)
+	{
+		main.hashMapManager.addDiscretionMap(e.getPlayer().getUniqueId());
+	}
+	@EventHandler
+	public void PlayerQuit(PlayerQuitEvent e)
+	{
+		main.hashMapManager.removeDiscretionMap(e.getPlayer().getUniqueId());
+	}
+
+	@EventHandler
 	public void EntityTarget(EntityTargetEvent e)
 	{
 		Entity entity = e.getEntity();
@@ -24,9 +39,13 @@ public class ZombieDetection implements Listener {
 		if((entity instanceof Zombie || entity instanceof Stray ||entity instanceof Husk) && target instanceof Player)
 		{
 			Player player = (Player) target;
-			
-			float score = main.cfgm.getPlayerDB().getInt("discretion."+player.getUniqueId()+".score");
-			
+			if(!main.hashMapManager.getDiscretionMap().containsKey(player.getUniqueId()))
+			{
+				main.hashMapManager.addDiscretionMap(player.getUniqueId());
+			}
+			//float score = main.cfgm.getPlayerDB().getInt("discretion."+player.getUniqueId()+".score");
+			double score = main.hashMapManager.getDiscretionMap().get(player.getUniqueId()).getScore();
+
 			double calcul = 0.008*Math.pow((120-score), 2);
 			if(player.getLocation().distance(entity.getLocation()) >= calcul || main.cfgm.getPlayerDB().getBoolean("safezone."+player.getUniqueId()+".state"))
 			{
@@ -38,19 +57,51 @@ public class ZombieDetection implements Listener {
 	@EventHandler
 	public void playerEat(final PlayerItemConsumeEvent e)
 	{
-		main.cfgm.getPlayerDB().set("discretion."+e.getPlayer().getUniqueId()+".eat", true);
-		main.cfgm.savePlayerDB();
+		//main.cfgm.getPlayerDB().set("discretion."+e.getPlayer().getUniqueId()+".eat", true);
+		//main.cfgm.savePlayerDB();
+		main.hashMapManager.getDiscretionMap().get(e.getPlayer().getUniqueId()).setEating(true);
 		new BukkitRunnable() 
 		{
 
 			@Override
 			public void run() {
-				main.cfgm.getPlayerDB().set("discretion."+e.getPlayer().getUniqueId()+".eat", false);
-				main.cfgm.savePlayerDB();
+				//main.cfgm.getPlayerDB().set("discretion."+e.getPlayer().getUniqueId()+".eat", false);
+				//main.cfgm.savePlayerDB();
+				if(main.hashMapManager.getDiscretionMap().containsKey(e.getPlayer().getUniqueId()))
+				{
+					main.hashMapManager.getDiscretionMap().get(e.getPlayer().getUniqueId()).setEating(false);
+				}
 				
 			}
 			
 		}.runTaskLater(main, 30);
+	}
+
+	@EventHandler
+    public void playerMouvement(PlayerMoveEvent e) {
+		if(!(e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockZ() != e.getTo().getBlockZ() || e.getFrom().getBlockY() != e.getTo().getBlockY()) ||main.hashMapManager.getDiscretionMap().get(e.getPlayer().getUniqueId()).isListeningMovements())
+		{
+			return;
+		}
+		Location from = new Location(e.getFrom().getWorld(), e.getFrom().getX(), e.getFrom().getY(), e.getFrom().getZ());
+		final Location to = new Location(e.getTo().getWorld(), e.getTo().getX(), e.getTo().getY(), e.getTo().getZ());
+
+		final Player p = e.getPlayer();
+		if(from.getX() != to.getX() || from.getZ() != to.getZ())
+		{
+			main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).setMoving(true);
+			main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).setListeningMovements(true);
+        	new BukkitRunnable()
+        	{
+
+				@Override
+				public void run() {
+					main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).setListeningMovements(false);
+					main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).setMoving(false);
+				}
+
+        	}.runTaskLater(main, 10);
+        }
 	}
 
 	//@EventHandler

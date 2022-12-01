@@ -29,6 +29,8 @@ public class factionManagerTabCompleter implements TabCompleter {
 			 l.add("withdraw");
 			 l.add("deposit");
 			 l.add("upgrade");
+			 l.add("perk");
+			 l.add("kick");
 	    	 return l;
 	     }
 	     else if(args.length == 2)

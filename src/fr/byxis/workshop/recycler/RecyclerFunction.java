@@ -69,25 +69,32 @@ public class RecyclerFunction {
                     amount += 1;
                     break;
                 case NETHERITE_HOE:
-                    amount += genererInt(5, 15);
+                    amount += genererInt(2, 10);
                     break;
                 case NETHERITE_CHESTPLATE, CHAINMAIL_CHESTPLATE, DIAMOND_CHESTPLATE, GOLDEN_CHESTPLATE, IRON_CHESTPLATE, LEATHER_CHESTPLATE:
-                    amount += genererInt(2, 8);
+                    amount += genererInt(1, 8);
                     break;
                 case NETHERITE_HELMET, CHAINMAIL_HELMET, DIAMOND_HELMET, GOLDEN_HELMET, IRON_HELMET, LEATHER_HELMET:
                     amount += genererInt(1, 5);
                     break;
                 case NETHERITE_BOOTS, CHAINMAIL_BOOTS, DIAMOND_BOOTS, GOLDEN_BOOTS, IRON_BOOTS, LEATHER_BOOTS:
-                    amount += genererInt(0, 4);
+                    amount += genererInt(1, 4);
                     break;
                 case NETHERITE_LEGGINGS, CHAINMAIL_LEGGINGS, DIAMOND_LEGGINGS, GOLDEN_LEGGINGS, IRON_LEGGINGS, LEATHER_LEGGINGS:
-                    amount += genererInt(2, 7);
+                    amount += genererInt(1, 7);
                     break;
                 case PUMPKIN_SEEDS, GRAY_DYE, INK_SAC, MELON_SEEDS, GREEN_DYE, CYAN_DYE, BEETROOT_SEEDS, GOLD_NUGGET, BLUE_DYE, LAPIS_LAZULI, LIME_DYE, LIGHT_BLUE_DYE, YELLOW_DYE, PINK_DYE, BROWN_DYE, IRON_NUGGET, CHARCOAL, ARROW, STICK, PURPLE_DYE, ORANGE_DYE, MAGENTA_DYE, BRICK, LIGHT_GRAY_DYE, NETHER_BRICK:
-                    amount += genererInt(2, 6);
+                    if(item.getItemMeta().getDisplayName().contains("Cartouche"))
+                    {
+                        amount += genererInt(0, 2);
+                    }
+                    else
+                    {
+                        amount += genererInt(0, 3);
+                    }
                     break;
                 case WOODEN_SWORD, STONE_SWORD, GOLDEN_SWORD, IRON_SWORD, IRON_HOE, STONE_SHOVEL, IRON_PICKAXE, STONE_AXE, STONE_PICKAXE, DIAMOND_SWORD, STONE_HOE:
-                    amount += genererInt(3, 7);
+                    amount += genererInt(1, 6);
                     break;
             }
         }
@@ -100,7 +107,18 @@ public class RecyclerFunction {
         {
             switch (item.getType()) {
                 case PUMPKIN_SEEDS, GRAY_DYE, INK_SAC, MELON_SEEDS, GREEN_DYE, CYAN_DYE, BEETROOT_SEEDS, GOLD_NUGGET, BLUE_DYE, LAPIS_LAZULI, LIME_DYE, LIGHT_BLUE_DYE, YELLOW_DYE, PINK_DYE, BROWN_DYE, IRON_NUGGET, CHARCOAL, ARROW, STICK, PURPLE_DYE, ORANGE_DYE, MAGENTA_DYE, BRICK, LIGHT_GRAY_DYE, NETHER_BRICK:
-                    amount += genererInt(0, 2);
+                    if(item.getItemMeta().getDisplayName().contains("Cartouche"))
+                    {
+                        int j = genererInt(-2, 2);
+                        if(j>0)
+                        {
+                            amount+=j;
+                        }
+                    }
+                    else
+                    {
+                        amount += genererInt(0, 3);
+                    }
                     break;
                 case GUNPOWDER:
                     amount +=1;

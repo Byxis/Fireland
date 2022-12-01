@@ -1,4 +1,4 @@
-package fr.byxis.event;
+package fr.byxis.karma;
 
 import fr.byxis.main.Main;
 import org.bukkit.Bukkit;
@@ -27,9 +27,9 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         this.main = main;
     }
 
-    String getRang(UUID _uuid)
+    public String getRang(UUID _uuid)
     {
-        double rangDouble = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
+        double rangDouble = main.hashMapManager.getRangMap().get(_uuid).getRang();
         String rangStr = "";
         if(rangDouble == 100)
         {
@@ -66,47 +66,47 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
     public void badAction(UUID _uuid, double _amount)
     {
         updatePlayer(_uuid);
-        double rang = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
+        double rang = main.hashMapManager.getRangMap().get(_uuid).getRang();
         if((rang-_amount) < 0)
         {
-            main.cfgm.getKarmaDB().set(_uuid.toString(), 0);
+            main.hashMapManager.getRangMap().get(_uuid).setRang(0);
         }
         else if(rang-_amount > 100)
         {
-            main.cfgm.getKarmaDB().set(_uuid.toString(), 100);
+            main.hashMapManager.getRangMap().get(_uuid).setRang(100);
         }
         else
         {
-            main.cfgm.getKarmaDB().set(_uuid.toString(), main.cfgm.getKarmaDB().getDouble(_uuid.toString())-_amount);
+            main.hashMapManager.getRangMap().get(_uuid).setRang(rang-_amount);
         }
-        main.cfgm.saveKarmaDB();
         passageNouveauRang(Bukkit.getPlayer(_uuid), rang, rang-_amount);
     }
 
     public void goodAction(UUID _uuid, double _amount, boolean... b)
     {
-        double gain = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
-        if(b!=null || gain <=15)
+        updatePlayer(_uuid);
+        double gain = main.cfgm.getKarmaDB().getDouble("max."+_uuid.toString());
+        main.getLogger().info(""+gain+" "+b);
+        if(b!=null || 15-gain <=15)
         {
-            if(_amount > gain)
+            if(_amount > 15-gain)
             {
-                _amount = gain;
+                _amount = 15-gain;
             }
-            updatePlayer(_uuid);
-            double rang = main.cfgm.getKarmaDB().getDouble(_uuid.toString());
+            double rang = main.hashMapManager.getRangMap().get(_uuid).getRang();
             if(rang+_amount > 100)
             {
-                main.cfgm.getKarmaDB().set(_uuid.toString(), 100);
+                main.hashMapManager.getRangMap().get(_uuid).setRang(0);
             }
             else if(rang+_amount < 0)
             {
-                main.cfgm.getKarmaDB().set(_uuid.toString(), 0);
+                main.hashMapManager.getRangMap().get(_uuid).setRang(0);
             }
             else
             {
-                main.cfgm.getKarmaDB().set(_uuid.toString(), rang+_amount);
+                main.hashMapManager.getRangMap().get(_uuid).setRang(rang+_amount);
+                main.hashMapManager.getRangMap().get(_uuid).setMax(gain+_amount);
             }
-            main.cfgm.saveKarmaDB();
             passageNouveauRang(Bukkit.getPlayer(_uuid), rang, rang+_amount);
         }
     }
@@ -114,8 +114,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
     public void setKarma(UUID _uuid, double _amount)
     {
         updatePlayer(_uuid);
-        main.cfgm.getKarmaDB().set(_uuid.toString(), _amount);
-        main.cfgm.saveKarmaDB();
+        main.hashMapManager.getRangMap().get(_uuid).setRang(_amount);
     }
 
     public void updatePlayer(UUID _uuid)
@@ -124,7 +123,12 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         if(!karma.contains(_uuid.toString()))
         {
             karma.set(_uuid.toString(), 62D);
+            karma.set("max."+_uuid.toString(), 0D);
             main.cfgm.saveKarmaDB();
+        }
+        if(!main.hashMapManager.getRangMap().containsKey(_uuid))
+        {
+            main.hashMapManager.getRangMap().put(_uuid, new PlayerKarmaClass(main.cfgm.getKarmaDB().getDouble(_uuid.toString()), main.cfgm.getKarmaDB().getDouble("max."+_uuid.toString())));
         }
     }
 
@@ -195,7 +199,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
 
     public double getKarma(UUID _uuid)
     {
-        return Math.round(main.cfgm.getKarmaDB().getDouble(_uuid.toString()));
+        return Math.round(main.hashMapManager.getRangMap().get(_uuid).getRang()*100)/100D;
     }
 
     @EventHandler

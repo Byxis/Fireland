@@ -46,7 +46,7 @@ public class factionManager implements Listener, CommandExecutor  {
 			}
 
 		}
-		else if (args.length == 2 && args[0].equalsIgnoreCase("invite"))
+		else if (args.length == 2 && args[0].equalsIgnoreCase("invite") && p.hasPermission("fireland.command.faction.invite"))
 		{
 
 			if(factionInfo != null)
@@ -80,18 +80,26 @@ public class factionManager implements Listener, CommandExecutor  {
 				p.sendMessage("§cVous n'avez pas de faction !");
 			}
 		}
-		else if (args.length == 2 && args[0].equalsIgnoreCase("create"))
+		else if (args.length == 2 && args[0].equalsIgnoreCase("create") && p.hasPermission("fireland.command.faction.create"))
 		{
 			if (args[1].length() <= 10)
 			{
-				factionFunctions.creatingFaction(p, args[1]);
+				double money = main.eco.getBalance(p);
+				if(money >= 10000) {
+					main.eco.depositPlayer(p, 10000);
+					factionFunctions.creatingFaction(p, args[1]);
+				}
+				else
+				{
+					p.sendMessage("§cVous n'avez pas assez d'argent !");
+				}
 			}
 			else
 			{
 				p.sendMessage("§cLe nom de la faction est trop long !");
 			}
 		}
-		else if (args.length == 2 && args[0].equalsIgnoreCase("join"))
+		else if (args.length == 2 && args[0].equalsIgnoreCase("join") && p.hasPermission("fireland.command.faction.join"))
 		{
 			if(factionInfo != null)
 			{
@@ -102,7 +110,7 @@ public class factionManager implements Listener, CommandExecutor  {
 			{
 				if(!factionFunctions.factionHasMaxPlayer(args[1]))
 				{
-					main.factionMap.put(args[1], p.getUniqueId());
+					main.hashMapManager.addFactionMap(p.getUniqueId(), args[1]);
 					factionFunctions.joinFaction(p, factionFunctions.getExactFactionNameFromInvite(p, args[1]));
 				}
 				else
@@ -115,7 +123,7 @@ public class factionManager implements Listener, CommandExecutor  {
 				p.sendMessage("§cVous n'êtes pas invité dans cette faction.");
 			}
 		}
-		else if (args[0].equalsIgnoreCase("leave"))
+		else if (args[0].equalsIgnoreCase("leave") && p.hasPermission("fireland.command.faction.leave"))
 		{
 			if(factionInfo == null)
 			{
@@ -123,15 +131,15 @@ public class factionManager implements Listener, CommandExecutor  {
 			}
 			else
 			{
-				if(main.factionMap.containsKey(p.getUniqueId()))
+				if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
 				{
-					main.factionMap.remove(p.getUniqueId());
+					main.hashMapManager.removeFactionMap(p.getUniqueId());
 				}
 				factionFunctions.leaveFaction(p, factionInfo.getLeader());
 			}
 
 		}
-		else if (args[0].equalsIgnoreCase("disband"))
+		else if (args[0].equalsIgnoreCase("disband") && p.hasPermission("fireland.command.faction.disband"))
 		{
 			if(factionInfo == null)
 			{
@@ -144,9 +152,9 @@ public class factionManager implements Listener, CommandExecutor  {
 			else if(args.length > 1 && args[1].equalsIgnoreCase("yes"))
 			{
 				factionFunctions.deleteFaction(p);
-				if(main.factionMap.containsKey(p.getUniqueId()))
+				if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
 				{
-					main.factionMap.remove(p.getUniqueId());
+					main.hashMapManager.getFactionMap().remove(p.getUniqueId());
 				}
 			}
 			else
@@ -156,7 +164,7 @@ public class factionManager implements Listener, CommandExecutor  {
 			}
 
 		}
-		else if (args[0].equalsIgnoreCase("info"))
+		else if (args[0].equalsIgnoreCase("info") && p.hasPermission("fireland.command.faction.info"))
 		{
 			if(args.length == 1)
 			{
@@ -183,7 +191,7 @@ public class factionManager implements Listener, CommandExecutor  {
 				}
 			}
 		}
-		else if(args[0].equalsIgnoreCase("money"))
+		else if(args[0].equalsIgnoreCase("money") && p.hasPermission("fireland.command.faction.money"))
 		{
 			if(args.length == 1)
 			{
@@ -194,7 +202,7 @@ public class factionManager implements Listener, CommandExecutor  {
 				}
 				if(playerInfo != null)
 				{
-					p.sendMessage("§aVotre faction à §r"+factionInfo.getCurrentMoney()+"§a/§r"+factionInfo.getMaxMoney());
+					p.sendMessage("§aVotre faction a §6"+factionInfo.getCurrentMoney()+"$§a/§6"+factionInfo.getMaxMoney()+"$§a.");
 				}
 				else
 				{
@@ -209,7 +217,7 @@ public class factionManager implements Listener, CommandExecutor  {
 				}
 			}
 		}
-		else if(args[0].equalsIgnoreCase("upgrade"))
+		else if(args[0].equalsIgnoreCase("upgrade") && p.hasPermission("fireland.command.faction.upgrade"))
 		{
 			if(factionInfo == null)
 			{
@@ -244,7 +252,7 @@ public class factionManager implements Listener, CommandExecutor  {
 				p.sendMessage("§aPour l'améliorer, faites §c/faction upgrade yes§a.");
 			}
 		}
-		else if(args[0].equalsIgnoreCase("demote"))
+		else if(args[0].equalsIgnoreCase("demote") && p.hasPermission("fireland.command.faction.demote"))
 		{
 			if(factionInfo == null)
 			{
@@ -264,40 +272,41 @@ public class factionManager implements Listener, CommandExecutor  {
 						if(!victimInfo.getFactionName().equalsIgnoreCase(playerInfo.getFactionName()))
 						{
 							p.sendMessage("§d"+victimInfo.getName()+" §cne fait pas partie de votre faction !");
-					}
-					else
-					{
-						if(playerInfo.getRole() == 2)
+						}
+						else
 						{
-							if(victimInfo.getRole() == 0 )
+							if(playerInfo.getRole() == 2)
 							{
-								p.sendMessage("§cCette personne a déjà le rang minimal !");
-							}
-							else if(victimInfo.getRole() == 1)
-							{
-								factionFunctions.unrankPlayer(victim.getUniqueId(), playerInfo.getFactionName());
-								p.sendMessage("§aLe joueur §d"+victim.getName()+"§a a été rétrograder.");
-								if(victim.isOnline())
+								if(victimInfo.getRole() == 0 )
 								{
-									Objects.requireNonNull(victim.getPlayer()).sendMessage("§aVous venez être rétrograder de votre faction.");
+									p.sendMessage("§cCette personne a déjà le rang minimal !");
+								}
+								else if(victimInfo.getRole() == 1)
+								{
+									factionFunctions.ChangePlayerRank(victim.getUniqueId(), playerInfo.getFactionName(), -1);
+									p.sendMessage("§aLe joueur §d"+victim.getName()+"§a a été rétrograder.");
+									if(victim.isOnline())
+									{
+										Objects.requireNonNull(victim.getPlayer()).sendMessage("§aVous venez être rétrograder de votre faction.");
+									}
+								}
+								else
+								{
+									p.sendMessage("§cUne erreur s'est produite, merci de contacter le staff");
 								}
 							}
 							else
 							{
-								p.sendMessage("§cUne erreur s'est produite, merci de contacter le staff");
+								p.sendMessage("§CSeul le chef peut rétrograder une personne !");
 							}
 						}
-						else
-						{
-							p.sendMessage("§CSeul le chef peut rétrograder une personne !");
-						}
-					}
+
 				}
 
 			}
 
 		}
-		else if(args[0].equalsIgnoreCase("promote"))
+		else if(args[0].equalsIgnoreCase("promote") && p.hasPermission("fireland.command.faction.promote"))
 		{
 			if (args.length >= 2)
 			{
@@ -325,7 +334,7 @@ public class factionManager implements Listener, CommandExecutor  {
 							{
 								if(victimInfo.getRole() == 0 )
 								{
-									factionFunctions.promotePlayer(victim.getUniqueId(), playerInfo.getFactionName());
+									factionFunctions.ChangePlayerRank(victim.getUniqueId(), playerInfo.getFactionName(), 1);
 									p.sendMessage("§aLe joueur §d"+victim.getName()+"§a a été promu.");
 									if(victim.isOnline())
 									{
@@ -336,15 +345,14 @@ public class factionManager implements Listener, CommandExecutor  {
 								{
 									if(args.length >= 3 && args[2].equalsIgnoreCase("yes"))
 									{
-										factionFunctions.promotePlayer(victim.getUniqueId(), playerInfo.getFactionName());
+										factionFunctions.ChangePlayerRank(victim.getUniqueId(), playerInfo.getFactionName(), 1);
 										p.sendMessage("§aLe joueur §d"+victim.getName()+"§a est devenu chef.");
 										if(victim.isOnline())
 										{
 											Objects.requireNonNull(victim.getPlayer()).sendMessage("§aVous venez de devenir chef de votre faction.");
 										}
-
-										factionFunctions.unrankPlayer(p.getUniqueId(), playerInfo.getFactionName());
-										p.sendMessage("§cVous venez d'être rétrograder.");
+										factionFunctions.ChangePlayerRank(p.getUniqueId(), playerInfo.getFactionName(), -1);
+										p.sendMessage("§cVous venez d'être rétrogradé.");
 									}
 									else
 									{
@@ -370,23 +378,24 @@ public class factionManager implements Listener, CommandExecutor  {
 				p.sendMessage("§cUtilisation : /faction promote <joueur>");
 			}
 		}
-		else if(args[0].equalsIgnoreCase("rename") && playerInfo.getRole() == 2)
+		else if(args[0].equalsIgnoreCase("rename") && playerInfo.getRole() == 2  && p.hasPermission("fireland.command.faction.rename"))
 		{
 			if(args.length >= 2)
 			{
-				double money = main.eco.getBalance(p);
-				if(money >= 5000)
+				double money = factionFunctions.GetFactionMoney(playerInfo.getFactionName());
+				if(money >= 2000)
 				{
-					main.eco.withdrawPlayer(p, 5000);
-					factionFunctions.renameFaction(playerInfo.getFactionName(), args[1]);
+					if (factionFunctions.take(factionInfo.getName(), 2000)) {
+						factionFunctions.renameFaction(playerInfo.getFactionName(), args[1]);
+					}
 				}
 				else
 				{
-					p.sendMessage("§cVous n'avez pas assez d'argent !");
+					p.sendMessage("§cLa faction n'a pas assez d'argent ! Renommer sa faction coûte 2000$ !");
 				}
 			}
 		}
-		else if(args[0].equalsIgnoreCase("deposit") && p.hasPermission("fireland.faction.deposit"))
+		else if(args[0].equalsIgnoreCase("deposit") && p.hasPermission("fireland.command.faction.deposit"))
 		{
 			if (factionInfo == null) {
 
@@ -417,7 +426,7 @@ public class factionManager implements Listener, CommandExecutor  {
 				p.sendMessage("§cUtilisation : /faction deposit <nombre>");
 			}
 		}
-		else if(args[0].equalsIgnoreCase("withdraw") && p.hasPermission("fireland.faction.withdraw")) {
+		else if(args[0].equalsIgnoreCase("withdraw") && p.hasPermission("fireland.command.faction.withdraw")) {
 			if (factionInfo == null) {
 				p.sendMessage("§cVous n'avez pas de faction !");
 				return true;
@@ -425,12 +434,13 @@ public class factionManager implements Listener, CommandExecutor  {
 			if (args.length == 2) {
 				if (playerInfo.getRole() == 2 )
 				{
-					int money = Integer.parseInt(args[1]);
-					if (factionInfo.getCurrentMoney()-money >=0 && money >= 0)
+					int amount = Integer.parseInt(args[1]);
+					if (factionInfo.getCurrentMoney()-amount >=0 && amount >= 0)
 					{
-						if (factionFunctions.take(factionInfo.getName(), money))
+						if (factionFunctions.take(factionInfo.getName(), amount))
 						{
-							main.eco.withdrawPlayer(p, money);
+							sender.sendMessage("§aVous avez retiré " + amount + "$ !");
+							main.eco.depositPlayer(p, amount);
 						}
 					}
 					else
@@ -446,33 +456,75 @@ public class factionManager implements Listener, CommandExecutor  {
 				p.sendMessage("§cUtilisation : /faction withdraw <nombre>");
 			}
 		}
-		else if(args[0].equalsIgnoreCase("upgrade")) {
+		else if(args[0].equalsIgnoreCase("kick") && p.hasPermission("fireland.command.faction.kick"))
+		{
 			if (factionInfo == null) {
 				p.sendMessage("§cVous n'avez pas de faction !");
 				return true;
 			}
-			if (args.length == 1) {
-				if (playerInfo.getRole() == 2 )
+			if (args.length == 2) {
+				if (playerInfo.getRole() == 2)
 				{
-
-					if (factionInfo.getCurrentMoney() == factionInfo.getMaxMoney())
+					OfflinePlayer victim = Bukkit.getOfflinePlayer(args[1]);
+					if (!(victim.hasPlayedBefore()) || p.getName().equalsIgnoreCase(victim.getName()))
 					{
-						if (factionFunctions.deposit(factionInfo.getName(), factionInfo.getMaxMoney()))
-						{
-							factionFunctions.upgradeFaction(factionInfo.getName());
-						}
+						p.sendMessage("§cPersonne non trouvée.");
 					}
 					else
 					{
-						p.sendMessage("§cLa faction n'a pas assez d'argent !");
+						FactionPlayerInformation victimInfo = factionFunctions.GetInformationOfPlayerInAFaction(victim.getUniqueId(), victim.getName());
+						if(!victimInfo.getFactionName().equalsIgnoreCase(playerInfo.getFactionName()))
+						{
+							p.sendMessage("§d"+victimInfo.getName()+" §cne fait pas partie de votre faction !");
+						}
+						else
+						{
+							p.sendMessage("§cVous avez exclu §4"+playerInfo.getName()+" §c !");
+							factionFunctions.kickPlayer(factionInfo, (Player) victim);
+						}
 					}
 				}
 				else
 				{
 					p.sendMessage("§cSeul le leader peut effectuer cette action !");
 				}
-			} else {
-				p.sendMessage("§cUtilisation : /faction upgrade");
+			}
+			else
+			{
+				p.sendMessage("§cUtilisation : /faction kick joueur");
+			}
+		}
+		else if(args[0].equalsIgnoreCase("perk") && p.hasPermission("fireland.command.faction.perk"))
+		{
+			if (factionInfo == null) {
+				p.sendMessage("§cVous n'avez pas de faction !");
+				return true;
+			}
+			if (args.length == 2) {
+				if (playerInfo.getRole() == 2)
+				{
+					if(isPerk(args[1]))
+					{
+						double price = getCostPerk(args[1]);
+						if(factionInfo.getCurrentMoney() >= price)
+						{
+							factionFunctions.take(factionInfo.getName(), price);
+							factionFunctions.AddPerk(factionInfo.getName(), args[1]);
+						}
+						else
+						{
+							p.sendMessage("§cLa faction n'a pas assez d'argent !");
+						}
+					}
+				}
+				else
+				{
+					p.sendMessage("§cSeul le leader peut effectuer cette action !");
+				}
+			}
+			else
+			{
+				p.sendMessage("§cUtilisation : /faction perk <perk>");
 			}
 		}
 		else
@@ -480,5 +532,34 @@ public class factionManager implements Listener, CommandExecutor  {
 			p.sendMessage("§cMauvaise formulation de la commande !");
 		}
 		return false;
+	}
+
+
+	private boolean isPerk(String perk)
+	{
+		boolean result = false;
+		if(perk.equalsIgnoreCase("friendly_fire"))
+		{
+			result = true;
+		}
+		else if(perk.equalsIgnoreCase("show_nickname"))
+		{
+			result = true;
+		}
+		return result;
+	}
+
+	private double getCostPerk(String perk)
+	{
+		double amount = 0;
+		if(perk.equalsIgnoreCase("friendly_fire"))
+		{
+			amount = 8000;
+		}
+		else if(perk.equalsIgnoreCase("show_nickname"))
+		{
+			amount = 8000;
+		}
+		return amount;
 	}
 }

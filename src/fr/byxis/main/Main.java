@@ -481,7 +481,7 @@ public class Main extends JavaPlugin {
 			}
 		}.runTaskTimer(this, 0, 10);
 		getLogger().info(" ");
-		getLogger().info(ChatColor.GREEN+"================================");
+		getLogger().info("================================");
 
 
 	}
@@ -535,7 +535,7 @@ public class Main extends JavaPlugin {
 		modifyStackSize(Material.SLIME_BALL, 4);
 	}*/
 	
-	private void dateListener()
+	public void dateListener()
 	{
 		Date now = new Date();
 		@SuppressWarnings("deprecation")
@@ -543,11 +543,10 @@ public class Main extends JavaPlugin {
 		int old = cfgm.getEnderchest().getInt("date");
 		
 		//TODO: Change parce que la c tt le temps fdp
-		if(today == old)
+		if(today != old)
 		{
 			cfgm.getEnderchest().set("date", today);
 			cfgm.saveEnderchest();
-			getLogger().info("eeee");
 			if(cfgm.getEnderchest().get("stockage") != null)
 			{
 				for(String s : cfgm.getEnderchest().getConfigurationSection("stockage").getKeys(true))
@@ -557,30 +556,26 @@ public class Main extends JavaPlugin {
 						if(cfgm.getEnderchest().getInt("stockage."+s+".money") <= 50)
 						{
 							cfgm.getEnderchest().set("stockage."+s+".money", 0);
-							cfgm.saveEnderchest();
 						}
 						else
 						{
 							cfgm.getEnderchest().set("stockage."+s+".money", cfgm.getEnderchest().getInt("bank."+s+".money")-50);
-							cfgm.saveEnderchest();
 						}
 					}
 					else
 					{
 						cfgm.getEnderchest().set(s, null);
-						cfgm.saveEnderchest();
 					}
 				}
+				cfgm.saveEnderchest();
 			}
 			if(cfgm.getKarmaDB().get("") != null) {
 				for (String s : cfgm.getKarmaDB().getConfigurationSection("").getKeys(false)) {
 					if (!s.equals("max")) {
-						getLogger().info(""+s);
 						cfgm.getKarmaDB().set("max." + s, 0);
-						cfgm.saveKarmaDB();
 					}
-
 				}
+				cfgm.saveKarmaDB();
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,9 +34,8 @@ public class SaveEvent implements Listener {
     {
         if(inv != null)
         {
-            FileConfiguration config = main.cfgm.getEnderchest();
             for (int i = 0; i < inv.getSize(); i++) {
-                config.set("stockage."+uuid+"."+i, inv.getItem(i));
+                main.cfgm.getEnderchest()   .set("stockage."+uuid+"."+i, inv.getItem(i));
             }
         }
     }
@@ -45,6 +45,10 @@ public class SaveEvent implements Listener {
         for(UUID uuid :main.hashMapManager.getStorageMap().keySet())
         {
             saveEnderchest(main.hashMapManager.getStorageMap().get(uuid), uuid);
+            if(!Bukkit.getOfflinePlayer(uuid).isOnline())
+            {
+                main.hashMapManager.getStorageMap().remove(uuid);
+            }
         }
         main.cfgm.saveEnderchest();
     }
@@ -58,7 +62,6 @@ public class SaveEvent implements Listener {
 
     private void SaveAllKarma()
     {
-        main.getLogger().info("Saved Karmas");
         for(UUID uuid :main.hashMapManager.getRangMap().keySet())
         {
             SaveKarma(uuid);

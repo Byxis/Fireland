@@ -94,7 +94,8 @@ public class stairs implements Listener {
 			{
 				return;
 			}
-			
+
+
 			final ArmorStand chair = (ArmorStand) p.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
 			
 			chair.setPassenger(p);

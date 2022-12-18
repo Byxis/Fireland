@@ -83,9 +83,13 @@ public class scoreboardPlayer implements Listener {
 		//double numDiscretion = main.cfgm.getPlayerDB().getDouble("discretion."+p.getUniqueId()+".score");
 		double numDiscretion = main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).getScore();
 		String shotColor = "§7";
-		if(main.cfgm.getPlayerDB().getBoolean("discretion." + p.getUniqueId() + ".shot"))
+		if(main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).isShooting())
 		{
 			shotColor = "§4";
+		}
+		else if(main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingLights())
+		{
+			shotColor = "§e";
 		}
 
 		jetonsManager jetons = new jetonsManager(main);

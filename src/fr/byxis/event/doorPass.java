@@ -197,7 +197,7 @@ public class doorPass implements Listener {
 					Location door = getDoorLocation(e.getClickedBlock().getLocation());
 	                if(door != null)
 	                {
-						if(main.cfgm.getKarmaDB().getDouble(e.getPlayer().getUniqueId().toString()) <= 25)
+						if(main.hashMapManager.getRangMap().get(p.getUniqueId()).getRang() <= 25)
 						{
 							e.getPlayer().sendMessage("§4L'accès à cette zone vous a été refusé en raison de vos actes criminels.");
 						}

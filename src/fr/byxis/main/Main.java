@@ -2,10 +2,8 @@ package fr.byxis.main;
 
 //import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketContainer;
 import fr.byxis.command.*;
 import fr.byxis.db.DatabaseManager;
 import fr.byxis.discretion.ZombieDetection;
@@ -15,8 +13,10 @@ import fr.byxis.faction.FactionEvent;
 import fr.byxis.faction.FactionPvp;
 import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
+import fr.byxis.intendant.IntendantCommand;
 import fr.byxis.intendant.MenuIndendant;
 import fr.byxis.karma.karmaManager;
+import fr.byxis.packet.PacketPlayer;
 import fr.byxis.shop.ShopCommandManager;
 import fr.byxis.shop.ShopEventManager;
 import fr.byxis.workshop.workshopFunction;
@@ -62,7 +62,7 @@ public class Main extends JavaPlugin {
 	private DatabaseManager databaseManager;
 
 
-	private ProtocolManager protocolManager;
+	public ProtocolManager protocolManager;
 	public HashMapManager hashMapManager;
 	
 	@SuppressWarnings("ConstantConditions")
@@ -89,6 +89,8 @@ public class Main extends JavaPlugin {
 		getCommand("rang").setTabCompleter(new karmaManager(this));
 		getCommand("workshop").setExecutor(new workshopManager(this));
 		getCommand("workshop").setTabCompleter(new workshopManagerTabCompleter(this));
+		getCommand("intendant").setExecutor(new IntendantCommand(this));
+		getCommand("playpacket").setExecutor(new PacketPlayer(this));
 	}
 	
 	private void enableEvent() {
@@ -482,8 +484,6 @@ public class Main extends JavaPlugin {
 		}.runTaskTimer(this, 0, 10);
 		getLogger().info(" ");
 		getLogger().info("================================");
-
-
 	}
 
 	public void onDisable() {
@@ -743,6 +743,15 @@ public class Main extends JavaPlugin {
 		{
 			discretion -= 30;
 		}
+		if((player.getItemInHand() != null && player.getItemInHand().getType() == Material.END_ROD) || (player.getInventory().getItemInOffHand() != null && player.getInventory().getItemInOffHand().getType() == Material.END_ROD))
+		{
+			discretion -= 20;
+			hashMapManager.getDiscretionMap().get(player.getUniqueId()).setUsingLights(true);
+		}
+		else
+		{
+			hashMapManager.getDiscretionMap().get(player.getUniqueId()).setUsingLights(false);
+		}
 
 		if(discretion > 100)
 		{
@@ -752,6 +761,7 @@ public class Main extends JavaPlugin {
 		{
 			discretion =0;
 		}
+
 		hashMapManager.getDiscretionMap().get(player.getUniqueId()).setScore(discretion);
 		//cfgm.getPlayerDB().set(sDiscretion+"score", discretion);
 		//cfgm.savePlayerDB();
@@ -761,25 +771,7 @@ public class Main extends JavaPlugin {
 	{
 		cfgm.getPlayerDB().set("playtime."+p.getUniqueId(), cfgm.getPlayerDB().getInt("playtime."+p.getUniqueId())+ 1);
 	}
-	
-	private void playBorderPackets(Player player, boolean warn)
-	{
 
-		@SuppressWarnings("deprecation")
-		PacketContainer container = protocolManager.createPacket(PacketType.Play.Server.SET_BORDER_WARNING_DISTANCE);
-		
-		if(warn)
-		{
-			container.getIntegers().write(0, 2999997);
-			protocolManager.broadcastServerPacket(container, player, false);
-		}
-		else
-		{
-			container.getIntegers().write(0, 0);
-			protocolManager.broadcastServerPacket(container, player, false);
-		}
-
-	}
 	/*private void playBorderPackets(Player p, boolean warn)
 	{
 		PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.WORLD_BORDER);
@@ -828,6 +820,10 @@ public class Main extends JavaPlugin {
 	public ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
 		ItemStack item = new ItemStack(mat);
 
+		ItemMeta itemMeta = item.getItemMeta();
+		itemMeta.setLore(null);
+		item.setItemMeta(itemMeta);
+
 		if(mat.equals(Material.POTION))
 		{
 			item = new ItemStack(Material.POTION, 1);
@@ -840,7 +836,7 @@ public class Main extends JavaPlugin {
 			item.setItemMeta(meta);
 		}
 
-		ItemMeta itemMeta = item.getItemMeta();
+		itemMeta = item.getItemMeta();
 		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 		itemMeta.setDisplayName(name);
@@ -857,5 +853,23 @@ public class Main extends JavaPlugin {
 		im.setCustomModelData(cmd);
 		i.setItemMeta(im);
 		return i;
+	}
+
+	public void sendMessageToAdmin(String msg) {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			if(p.hasPermission("fireland.debug"))
+			{
+				p.sendMessage(msg);
+			}
+		}
+	}
+
+	public void sendPlayerInformation(Player p, String msg)
+	{
+		p.sendMessage("§6§lFireland§8§l >> §7"+msg);
+	}
+	public void sendPlayerError(Player p, String msg)
+	{
+		p.sendMessage("§6§lFireland§8§l >> §c"+msg);
 	}
 }

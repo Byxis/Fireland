@@ -25,7 +25,7 @@ public class worldGuardEvent implements Listener {
 
 		if(e.getRegion().getId().contains("sf"))
 		{
-			if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
+			if(p.getGameMode() != GameMode.SPECTATOR && p.getGameMode() != GameMode.CREATIVE)
 			{
 				p.sendTitle("", "§cVous êtes invincible pendant 15 secondes");
 				p.playSound(p.getLocation(), "minecraft:gun.hud.leaving_safezone", 1, 1);
@@ -35,6 +35,7 @@ public class worldGuardEvent implements Listener {
 				main.cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".state", false);
 				main.cfgm.savePlayerDB();
 			}
+			main.removePermission(p, "crazyauctions.sell.2");
 		}
 		
 	}
@@ -46,7 +47,7 @@ public class worldGuardEvent implements Listener {
 
 		if(e.getRegion().getId().contains("sf"))
 		{
-			if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
+			if(p.getGameMode() != GameMode.SPECTATOR && p.getGameMode() != GameMode.CREATIVE)
 			{
 				p.sendTitle("", "");
 				p.setInvulnerable(false);
@@ -55,6 +56,7 @@ public class worldGuardEvent implements Listener {
 				main.cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".state", true);
 				main.cfgm.savePlayerDB();
 			}
+			main.addPermission(p, "crazyauctions.sell");
 
 		}
 		

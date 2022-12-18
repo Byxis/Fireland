@@ -7,6 +7,7 @@ public class DiscretionClass {
     private boolean shooting;
     private boolean moving;
     private boolean isListeningMovements;
+    private boolean isUsingLights;
 
     public DiscretionClass()
     {
@@ -15,6 +16,7 @@ public class DiscretionClass {
         this.shooting = false;
         this.moving = false;
         this.isListeningMovements = false;
+        this.isUsingLights = false;
     }
 
     public double getScore() {
@@ -55,5 +57,13 @@ public class DiscretionClass {
 
     public void setListeningMovements(boolean listeningMovements) {
         isListeningMovements = listeningMovements;
+    }
+
+    public boolean isUsingLights() {
+        return isUsingLights;
+    }
+
+    public void setUsingLights(boolean usingLights) {
+        isUsingLights = usingLights;
     }
 }

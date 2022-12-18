@@ -90,17 +90,21 @@ public class workshopManagerEvent implements Listener {
 
     public int getNbrOfMaxCrafting(Player player)
     {
+        Integer amountOfHeals = 0;
         for (PermissionAttachmentInfo perm : player.getEffectivePermissions())
         {
             String permString = perm.getPermission();
             if (permString.startsWith("fireland.workshop.craftlimit."))
             {
                 String[] amount = permString.split("\\.");
-                Integer amountOfHeals = Integer.parseInt(amount[3]);
-                return amountOfHeals;
+                if(Integer.parseInt(amount[3]) > amountOfHeals)
+                {
+                    amountOfHeals = Integer.parseInt(amount[3]);
+                }
+
             }
         }
-        return 0;
+        return amountOfHeals;
     }
 
     @EventHandler
@@ -144,14 +148,16 @@ public class workshopManagerEvent implements Listener {
             {
 
                 int max = getNbrOfMaxCrafting(p);
-                if(wf.getNbrOfItemCrafting(p.getUniqueId().toString()) >= max)
+                if(wf.getNbrOfItemCrafting(p.getUniqueId().toString()) > max)
                 {
                     p.sendMessage("§cVous avez atteint votre limite de craft qui est de "+max+" !");
                     return;
                 }
+
                 workshopItemClass craftable = wf.getACraftableItem(p, p.getUniqueId().toString(), craftItems[0], craftItems[1], itemclicked.getItemMeta().getDisplayName().replaceAll("§7", ""));
                 if(craftable != null)
                 {
+                    main.sendMessageToAdmin(itemclicked.getItemMeta().getDisplayName().replaceAll("§7", "")+" "+craftable.itemName);
                     int page = wf.getInvPageCurrent(e.getView());
                     wf.craftItem(p, craftable);
                     wf.openCraftMenu(p, page);

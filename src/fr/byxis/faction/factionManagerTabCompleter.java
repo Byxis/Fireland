@@ -26,10 +26,7 @@ public class factionManagerTabCompleter implements TabCompleter {
 			 l.add("demote");
 			 l.add("promote");
 			 l.add("money");
-			 l.add("withdraw");
-			 l.add("deposit");
 			 l.add("upgrade");
-			 l.add("perk");
 			 l.add("kick");
 	    	 return l;
 	     }

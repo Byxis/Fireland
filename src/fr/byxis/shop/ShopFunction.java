@@ -142,15 +142,15 @@ public class ShopFunction {
     public String getPriceText(ShopItemClass item, Player p)
     {
         double karma = getKarma(p.getUniqueId());
-        if(karma >= 75)
+        if(karma >= 75 && !item.itemName.contains("Pass"))
         {
             double price = priceKarmaAdapter(p.getUniqueId(), item.price);
-            return "§6§m"+item.price+"$§r §d"+price+"$ §8("+getReduction(p.getUniqueId())*100+"%)";
+            return "§6§m"+item.price+"$§r §d"+price+"$ §8("+Math.round(getReduction(p.getUniqueId())*100)+"%)";
         }
-        else if(karma <=25)
+        else if(karma <=25 && !item.itemName.contains("Pass"))
         {
             double price = priceKarmaAdapter(p.getUniqueId(), item.price);
-            return "§6§m"+item.price+"$§r §c"+price+"$ §8(+"+getReduction(p.getUniqueId())*100+"%)";
+            return "§6§m"+item.price+"$§r §c"+price+"$ §8(+"+Math.round(getReduction(p.getUniqueId())*100)+"%)";
         }
         return item.price+"$";
     }
@@ -269,7 +269,7 @@ public class ShopFunction {
                 }
                 else if (command.contains("minecraft:give"))
                 {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command);
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command.replaceAll("Player", _p.getName()));
                     main.eco.withdrawPlayer(_p, prix);
                     _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
                     buyItemKarma(_p.getUniqueId());
@@ -277,6 +277,10 @@ public class ShopFunction {
                 else
                 {
                     if(command.contains("shot give"))
+                    {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                    }
+                    else if(command.contains("csp give"))
                     {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
                     }
@@ -314,7 +318,27 @@ public class ShopFunction {
     public void sellItem(ItemStack _itemClicked, Player _p, String _shop, boolean _isShiftClicked)
     {
         String name = _itemClicked.getItemMeta().getDisplayName();
-        name = name.replaceAll("§7", "");
+        name = name.replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7","");
+
+        String[] words = name.split(" ");
+        StringBuilder sbb = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            if(i+1 != words.length)
+            {
+
+                if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                    sbb.append(words[i]);
+                    break;
+                }//«
+                else {
+                    sbb.append(words[i]).append(" ");
+                }
+            }
+            else {
+                sbb.append(words[i]);
+            }
+        }
+        name = sbb.toString().trim();
         ShopItemClass item = getAnItemOnShop(_shop, name);
 
         if(item != null)
@@ -329,7 +353,26 @@ public class ShopFunction {
                 {
                     if(itemInv != null)
                     {
-                        if(ChatColor.stripColor(itemInv.getItemMeta().getDisplayName()).equalsIgnoreCase(item.itemName))
+                        words = itemInv.getItemMeta().getDisplayName().replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7","").split(" ");
+                        sbb = new StringBuilder();
+                        for (int i = 0; i < words.length; i++) {
+                            if(i+1 != words.length)
+                            {
+
+                                if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                                    sbb.append(words[i]);
+                                    break;
+                                }//«
+                                else {
+                                    sbb.append(words[i]).append(" ");
+                                }
+                            }
+                            else {
+                                sbb.append(words[i]);
+                            }
+                        }
+                        String itemName = sbb.toString().trim();
+                        if(ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.itemName)) ||ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.itemName)+" B"))
                         {
                             if(nbr+itemInv.getAmount() >=64)
                             {
@@ -353,7 +396,26 @@ public class ShopFunction {
                 {
                     if(itemInv != null)
                     {
-                        if(ChatColor.stripColor(itemInv.getItemMeta().getDisplayName()).equalsIgnoreCase(item.itemName))
+                        words = itemInv.getItemMeta().getDisplayName().replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7","").split(" ");
+                        sbb = new StringBuilder();
+                        for (int i = 0; i < words.length; i++) {
+                            if(i+1 != words.length)
+                            {
+
+                                if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                                    sbb.append(words[i]);
+                                    break;
+                                }//«
+                                else {
+                                    sbb.append(words[i]).append(" ");
+                                }
+                            }
+                            else {
+                                sbb.append(words[i]);
+                            }
+                        }
+                        String itemName = sbb.toString().trim();
+                        if(ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.itemName)) ||ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.itemName)+" B"))
                         {
                             itemInv.setAmount(itemInv.getAmount()-1);
                             founded = true;
@@ -361,6 +423,7 @@ public class ShopFunction {
                         }
                     }
                 }
+
                 if(founded)
                 {
                     main.eco.depositPlayer(_p, sell);

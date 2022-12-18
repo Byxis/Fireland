@@ -53,7 +53,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     player.sendMessage("§cJe ne vends pas ma marchandise à des criminels comme vous !");
                     return true;
                 }
-                if (main.cfgm.getKarmaDB().getDouble(player.getUniqueId().toString()) <= 75 && name.contains("pass")) {
+                if (main.cfgm.getKarmaDB().getDouble(player.getUniqueId().toString()) <= 75 && name.contains("pass") && player.getGameMode() != GameMode.CREATIVE) {
                     player.sendMessage("§cJe ne vous fais pas encore assez confiance pour vous vendre des pass !");
                 } else
                     sf.openInv(player, name.replaceAll("_", " "), 1);
@@ -63,7 +63,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     String name = player.getItemInHand().getItemMeta().getDisplayName();
                         /*name = name.replaceAll("[?.{1}]", "");
                         name = name.replaceAll("[^a-zA-Z0-9]", " ");*/
-                    name = name.replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "");
+                    name = name.replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7","");
 
                     name = name.replaceAll("_", " ");
 

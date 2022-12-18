@@ -86,7 +86,6 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
     {
         updatePlayer(_uuid);
         double gain = main.cfgm.getKarmaDB().getDouble("max."+_uuid.toString());
-        main.getLogger().info(""+gain+" "+b);
         if(b!=null || 15-gain <=15)
         {
             if(_amount > 15-gain)
@@ -96,7 +95,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
             double rang = main.hashMapManager.getRangMap().get(_uuid).getRang();
             if(rang+_amount > 100)
             {
-                main.hashMapManager.getRangMap().get(_uuid).setRang(0);
+                main.hashMapManager.getRangMap().get(_uuid).setRang(100);
             }
             else if(rang+_amount < 0)
             {

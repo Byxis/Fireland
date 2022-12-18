@@ -268,12 +268,12 @@ public class bank implements Listener, CommandExecutor {
 					player.sendMessage("§cVous n'avez pas assez d'argent.");
 				}
 			}
-		}
+		}/*
 		else if(e.getView().getTitle().contains("§8Stockage de "))
 		{
 			main.hashMapManager.replaceStorageMap(player.getUniqueId(), e.getInventory());
 			//saveEnderchest(e.getInventory().getContents(),player);
-		}
+		}*/
 	}
 	
 	@EventHandler
@@ -341,7 +341,7 @@ public class bank implements Listener, CommandExecutor {
 			inv.setItem(13, setItemMetaLore(Material.BOOK, "§aAmélioration -", (short) 0, listMaker("§8Vous avez atteint le maximum d'amélioration !","","","")));
 		}
 		int slots = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
-		inv.setItem(15, setItemMetaLore(Material.ENDER_CHEST, "§aStockage - ", (short) 0, listMaker("§8Faites un §dclic gauche§8 pour ouvrir votre stockage","§8Vous disposez actuellement de §6"+slots+"§8 slots de stockage !","§8L'amélioration suivant vous permettra de passer §6","§8à §6"+(slots+9)+"§8 slots !")));
+		inv.setItem(15, setItemMetaLore(Material.ENDER_CHEST, "§aStockage personnel - ", (short) 0, listMaker("§8Faites un §dclic gauche§8 pour ouvrir votre stockage","§8Vous disposez actuellement de §6"+slots+"§8 slots de stockage !","§8L'amélioration suivant vous permettra de passer §6","§8à §6"+(slots+9)+"§8 slots !")));
 	}
 	
 	@SuppressWarnings({ "deprecation" })

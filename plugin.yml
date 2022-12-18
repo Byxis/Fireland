@@ -47,7 +47,6 @@ commands:
     aliases: [nv,nightv,nightvision,vision,vis]
   faction:
     description: commandes destinees aux actions des factions
-    permission: fireland.command.faction
     aliases: [f,fac]
   discord:
     description: renvoie le discord officiel de Fireland
@@ -60,4 +59,10 @@ commands:
     aliases: [rangs]
   workshop:
     description: commandes pour le workshop
-    aliases: [ws]
+    aliases: [ ws ]
+  intendant:
+    description: commande pour l intendant
+    permission: fireland.command.intendant
+  playpacket:
+    description: commandes de test pour les packets
+    permission: fireland.command.playpacket

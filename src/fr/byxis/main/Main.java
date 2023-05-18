@@ -2,8 +2,11 @@ package fr.byxis.main;
 
 //import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
+
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import fr.byxis.booster.BoosterCommandCompleter;
+import fr.byxis.booster.BoosterManager;
 import fr.byxis.command.*;
 import fr.byxis.db.DatabaseManager;
 import fr.byxis.discretion.ZombieDetection;
@@ -15,6 +18,7 @@ import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
 import fr.byxis.intendant.IntendantCommand;
 import fr.byxis.intendant.MenuIndendant;
+import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.karma.karmaManager;
 import fr.byxis.packet.PacketPlayer;
 import fr.byxis.shop.ShopCommandManager;
@@ -23,30 +27,23 @@ import fr.byxis.workshop.workshopFunction;
 import fr.byxis.workshop.workshopManager;
 import fr.byxis.workshop.workshopManagerEvent;
 import fr.byxis.workshop.workshopManagerTabCompleter;
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
-import net.luckperms.api.node.Node;
+import fr.byxis.zone.ZoneManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.fusesource.jansi.Ansi;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 
@@ -64,6 +61,7 @@ public class Main extends JavaPlugin {
 
 	public ProtocolManager protocolManager;
 	public HashMapManager hashMapManager;
+	public ZoneManager zoneManager;
 	
 	@SuppressWarnings("ConstantConditions")
 	public void enableCommand() {
@@ -83,14 +81,16 @@ public class Main extends JavaPlugin {
 		getCommand("faction").setExecutor(new factionManager(this));
 		getCommand("faction").setTabCompleter(new factionManagerTabCompleter());
 		getCommand("discord").setExecutor(new DiscordCommand());
-		getCommand("jeton").setExecutor(new jetonsManager(this));
-		getCommand("jeton").setTabCompleter(new jetonsManager(this));
+		getCommand("jeton").setExecutor(new jetonsCommandManager(this));
+		getCommand("jeton").setTabCompleter(new jetonsCommandManager(this));
 		getCommand("rang").setExecutor(new karmaManager(this));
 		getCommand("rang").setTabCompleter(new karmaManager(this));
 		getCommand("workshop").setExecutor(new workshopManager(this));
 		getCommand("workshop").setTabCompleter(new workshopManagerTabCompleter(this));
 		getCommand("intendant").setExecutor(new IntendantCommand(this));
 		getCommand("playpacket").setExecutor(new PacketPlayer(this));
+		getCommand("booster").setExecutor(new BoosterManager(this));
+		getCommand("booster").setTabCompleter(new BoosterCommandCompleter(this));
 	}
 	
 	private void enableEvent() {
@@ -123,9 +123,9 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new join(this), this);
 		getServer().getPluginManager().registerEvents(new NVGoogles(), this);
 		getServer().getPluginManager().registerEvents(new FactionPvp(this), this);
-		getServer().getPluginManager().registerEvents(new playerManager(), this);
+		getServer().getPluginManager().registerEvents(new playerManager(this), this);
 		getServer().getPluginManager().registerEvents(new zombieManager(this), this);
-		getServer().getPluginManager().registerEvents(new jetonsManager(this), this);
+		getServer().getPluginManager().registerEvents(new jetonsCommandManager(this), this);
 		getServer().getPluginManager().registerEvents(new karmaManager(this), this);
 		getServer().getPluginManager().registerEvents(new workshopManagerEvent(this), this);
 		getServer().getPluginManager().registerEvents(new entitySpawn(), this);
@@ -133,6 +133,9 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new FactionEvent(this), this);
 		getServer().getPluginManager().registerEvents(new SaveEvent(this), this);
 		getServer().getPluginManager().registerEvents(new MenuIndendant(this), this);
+		getServer().getPluginManager().registerEvents(new RankCustomMessage(this), this);
+		getServer().getPluginManager().registerEvents(new BoosterManager(this), this);
+		zoneManager.RegisterEvents();
 		//getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
 		{
@@ -183,8 +186,8 @@ public class Main extends JavaPlugin {
 		protocolManager = ProtocolLibrary.getProtocolManager();
 		saveDefaultConfig();
 		loadConfigManager();
-		
-		//worldGuardPlugin = getWorldGuard();
+
+		zoneManager = new ZoneManager(this);
 		
 		final scoreboardPlayer scoreboardPlayerClass;
 		final ambientSound ambientSoundClass;
@@ -195,9 +198,12 @@ public class Main extends JavaPlugin {
 		ambientSoundClass = new ambientSound(this);
 		cobwebDamageClass = new cobwebDamage();
 
+		changeItemsStackSize();
 
 		enableCommand();
 		enableEvent();
+
+
 		
 		//changeItemsStackSize();
 		new BukkitRunnable() {
@@ -229,6 +235,10 @@ public class Main extends JavaPlugin {
 			@SuppressWarnings({ "deprecation" })
 			@Override
 			public void run() {
+				if(hashMapManager.getBooster() != null && hashMapManager.getBooster().getFinished().before(new Date(System.currentTimeMillis())))
+				{
+					hashMapManager.setBooster(null);
+				}
 				for(Player p : getServer().getOnlinePlayers()) {
 					if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
 						
@@ -490,7 +500,7 @@ public class Main extends JavaPlugin {
 		getLogger().info("================================");
 		getLogger().info(" ");
 		getLogger().info(" ");
-		getLogger().info("   Fireland is now disabled !");
+		getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString()+"   Fireland is now disabled !");
 		this.databaseManager.close();
 		SaveEvent se = new SaveEvent(this);
 		se.onDisable();
@@ -503,37 +513,41 @@ public class Main extends JavaPlugin {
 	{
 	    ent.setVelocity(loc.subtract(ent.getLocation()).toVector());
 	}*/
-	
-	/*
-	@SuppressWarnings("unused")
+
 	private void changeItemsStackSize()
 	{
-		modifyStackSize(Material.PUMPKIN_SEEDS, 4);
-		modifyStackSize(Material.MELON_SEEDS, 4);
-		modifyStackSize(Material.GOLD_NUGGET, 4);
-		modifyStackSize(Material.PURPLE_DYE, 4);
-		modifyStackSize(Material.GRAY_DYE, 4);
-		modifyStackSize(Material.PINK_DYE, 4);
-		modifyStackSize(Material.LIGHT_BLUE_DYE, 4);
-		modifyStackSize(Material.INK_SAC, 4);
-		modifyStackSize(Material.LAPIS_LAZULI, 4);
-		modifyStackSize(Material.BLUE_DYE, 4);
-		modifyStackSize(Material.ORANGE_DYE, 4);
-		modifyStackSize(Material.LIME_DYE, 4);
-		modifyStackSize(Material.GREEN_DYE, 4);
-		modifyStackSize(Material.MAGENTA_DYE, 4);
-		modifyStackSize(Material.STICK, 4);
-		modifyStackSize(Material.YELLOW_DYE, 4);
-		modifyStackSize(Material.BRICK, 4);
-		modifyStackSize(Material.BROWN_DYE, 4);
-		modifyStackSize(Material.CHARCOAL, 12);
-		modifyStackSize(Material.BEETROOT_SEEDS, 32);
-		modifyStackSize(Material.LIGHT_GRAY_DYE, 4);
-		modifyStackSize(Material.MELON_SEEDS, 4);
-		modifyStackSize(Material.IRON_NUGGET, 4);
-		modifyStackSize(Material.CYAN_DYE, 32);
-		modifyStackSize(Material.SLIME_BALL, 4);
-	}*/
+		modifyStackSize(Material.PUMPKIN_SEEDS, 4, false);
+		modifyStackSize(Material.MELON_SEEDS, 4, false);
+		modifyStackSize(Material.GOLD_NUGGET, 4, false);
+		modifyStackSize(Material.PURPLE_DYE, 4, false);
+		modifyStackSize(Material.GRAY_DYE, 4, false);
+		modifyStackSize(Material.PINK_DYE, 4, false);
+		modifyStackSize(Material.LIGHT_BLUE_DYE, 4, false);
+		modifyStackSize(Material.INK_SAC, 4, false);
+		modifyStackSize(Material.LAPIS_LAZULI, 4, false);
+		modifyStackSize(Material.BLUE_DYE, 4, false);
+		modifyStackSize(Material.ORANGE_DYE, 4, false);
+		modifyStackSize(Material.LIME_DYE, 4, false);
+		modifyStackSize(Material.GREEN_DYE, 4, false);
+		modifyStackSize(Material.MAGENTA_DYE, 4, false);
+		modifyStackSize(Material.STICK, 4, false);
+		modifyStackSize(Material.YELLOW_DYE, 4, false);
+		modifyStackSize(Material.BRICK, 4, false);
+		modifyStackSize(Material.BROWN_DYE, 4, false);
+		modifyStackSize(Material.CHARCOAL, 12, false);
+		modifyStackSize(Material.BEETROOT_SEEDS, 32, false);
+		modifyStackSize(Material.LIGHT_GRAY_DYE, 4, false);
+		modifyStackSize(Material.MELON_SEEDS, 4, false);
+		modifyStackSize(Material.IRON_NUGGET, 4, false);
+		modifyStackSize(Material.CYAN_DYE, 32, false);
+		modifyStackSize(Material.SLIME_BALL, 4, false);
+		modifyStackSize(Material.PAPER, 1, false);
+		modifyStackSize(Material.END_ROD, 1, false);
+		modifyStackSize(Material.RED_DYE, 1, false);
+		modifyStackSize(Material.GHAST_TEAR, 4, false);
+		modifyStackSize(Material.NETHER_BRICK, 2, false);
+		modifyStackSize(Material.FIREWORK_ROCKET, 8, false);
+	}
 	
 	public void dateListener()
 	{
@@ -541,8 +555,7 @@ public class Main extends JavaPlugin {
 		@SuppressWarnings("deprecation")
 		int today = now.getDate();
 		int old = cfgm.getEnderchest().getInt("date");
-		
-		//TODO: Change parce que la c tt le temps fdp
+
 		if(today != old)
 		{
 			cfgm.getEnderchest().set("date", today);
@@ -637,7 +650,7 @@ public class Main extends JavaPlugin {
             e.printStackTrace();
 		}
 	}
-	
+	*/
 	public boolean modifyStackSize(Material material, int size, boolean log) {
         // Verify that the material is an item (that can be stored in an inventory).
         if (!material.isItem()) {
@@ -661,8 +674,8 @@ public class Main extends JavaPlugin {
             Method method = magicClass.getDeclaredMethod("getItem", Material.class);
             Object item = method.invoke(null, material);
             // Get the maxItemStack field in Item and change it.
-            Class<?> itemClass = Class.forName("net.minecraft.server." + packageVersion + ".Item");
-            Field field = itemClass.getDeclaredField("maxStackSize");
+            Class<?> itemClass = Class.forName("net.minecraft.world.item.Item");
+            Field field = itemClass.getDeclaredField("d");
             field.setAccessible(true);
             field.setInt(item, size);
             // Change the maxStack field in the Material.
@@ -678,7 +691,7 @@ public class Main extends JavaPlugin {
             this.getLogger().severe(String.format("Reflection error while modifying maximum stack size of %s.", material.name()));
             return false;
         }
-    }*/
+    }/**/
 	
 	/*public WorldGuardPlugin getWorldGuard()
 	{
@@ -780,96 +793,16 @@ public class Main extends JavaPlugin {
 		protocolManager.broadcastServerPacket(packet, p, false);
 	}*/
 
-
-	public void playSound(Player p, String sound)
+	public String getStringTime(long durationInMillis)
 	{
-		p.playSound(p.getLocation(), sound, 1, 1);
+		long second = (durationInMillis / 1000) % 60;
+		long minute = (durationInMillis / (1000 * 60)) % 60;
+		long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
+
+		String time = String.format("%02dh%02dmin%02ds", hour, minute, second);
+		return time;
 	}
 
-	public void addPermission(Player p, String permission) {
-		LuckPerms api = LuckPermsProvider.get();
 
-		User user = api.getPlayerAdapter(Player.class).getUser(p);
-		// Add the permission
-		user.data().add(Node.builder(permission).build());
 
-		// Now we need to save changes.
-		api.getUserManager().saveUser(user);
-	}
-
-	public void removePermission(Player p, String permission) {
-		LuckPerms api = LuckPermsProvider.get();
-
-		User user = api.getPlayerAdapter(Player.class).getUser(p);
-		// Add the permission
-		user.data().remove(Node.builder(permission).build());
-
-		// Now we need to save changes.
-		api.getUserManager().saveUser(user);
-	}
-
-	public ItemStack setItemMeta(Material mat, String name, short dura) {
-		ItemStack item = new ItemStack(mat);
-		ItemMeta itemMeta = item.getItemMeta();
-		assert itemMeta != null;
-		itemMeta.setDisplayName(name);
-		item.setItemMeta(itemMeta);
-		item.setDurability(dura);
-		return item;
-	}
-	public ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
-		ItemStack item = new ItemStack(mat);
-
-		ItemMeta itemMeta = item.getItemMeta();
-		itemMeta.setLore(null);
-		item.setItemMeta(itemMeta);
-
-		if(mat.equals(Material.POTION))
-		{
-			item = new ItemStack(Material.POTION, 1);
-			ItemMeta meta = item.getItemMeta();
-			PotionMeta pmeta = (PotionMeta) meta;
-			PotionData pdata = new PotionData(PotionType.WATER);
-			pmeta.setBasePotionData(pdata);
-			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-			meta.setLore(null);
-			item.setItemMeta(meta);
-		}
-
-		itemMeta = item.getItemMeta();
-		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-		itemMeta.setDisplayName(name);
-		itemMeta.setLore(lore);
-		itemMeta.setUnbreakable(true);
-		item.setItemMeta(itemMeta);
-		item.setDurability(dura);
-		return item;
-	}
-
-	public ItemStack setItemCustomModelData(ItemStack i, int cmd)
-	{
-		ItemMeta im = i.getItemMeta();
-		im.setCustomModelData(cmd);
-		i.setItemMeta(im);
-		return i;
-	}
-
-	public void sendMessageToAdmin(String msg) {
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			if(p.hasPermission("fireland.debug"))
-			{
-				p.sendMessage(msg);
-			}
-		}
-	}
-
-	public void sendPlayerInformation(Player p, String msg)
-	{
-		p.sendMessage("§6§lFireland§8§l >> §7"+msg);
-	}
-	public void sendPlayerError(Player p, String msg)
-	{
-		p.sendMessage("§6§lFireland§8§l >> §c"+msg);
-	}
 }

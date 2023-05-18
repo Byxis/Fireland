@@ -1,6 +1,5 @@
-package fr.byxis.main;
+package fr.byxis.main.utilities;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -18,7 +17,7 @@ import java.util.Map;
 /**
  * Serializes and deserializes ItemStacks
  *
- * @author xMrPoi
+ * @author xMrPoi - Modified for CustomModelData by Byxis
  */
 public class ItemSerializer {
     public static String serialize(ItemStack item){
@@ -37,7 +36,7 @@ public class ItemSerializer {
         String owner = getOwner(item);
         if(owner != null) builder.append(" owner:" + owner);
         int modeldata = getCustomData(item);
-        if(owner != null) builder.append(" custommodeldata:" + modeldata);
+        builder.append(" custommodeldata:" + modeldata);
         return builder.toString();
     }
     public static ItemStack deserialize(String serializedItem){
@@ -54,7 +53,6 @@ public class ItemSerializer {
             }
         }
         if (item.getType() == Material.AIR) {
-            Bukkit.getLogger().info("Could not find a valid material for the item in \"" + serializedItem + "\"");
             return null;
         }
         for(String str:strings){

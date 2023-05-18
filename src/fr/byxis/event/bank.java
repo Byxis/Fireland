@@ -1,6 +1,7 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -66,7 +67,7 @@ public class bank implements Listener, CommandExecutor {
 					{
 						if(args[1].equalsIgnoreCase("money"))
 						{
-							Player victim = (Player) Bukkit.getOfflinePlayer(args[3]);
+							Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[3]));
 							player.sendMessage("§aLe joueur "+args[3]+" à maintenant "+args[2]+" dans sa banque !");
 							main.cfgm.getEnderchest().set("bank."+victim.getUniqueId()+".money", Integer.parseInt(args[2]));
 							main.cfgm.saveEnderchest();
@@ -74,7 +75,7 @@ public class bank implements Listener, CommandExecutor {
 						}
 						else if(args[1].equalsIgnoreCase("upgrade"))
 						{
-							Player victim = (Player) Bukkit.getOfflinePlayer(args[3]);
+							Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[3]));
 							player.sendMessage("§aLe joueur "+args[3]+" à maintenant l'amélioration "+args[2]+" !");
 							main.cfgm.getEnderchest().set("bank."+victim.getUniqueId()+".upgrade", Integer.parseInt(args[2]));
 							main.cfgm.saveEnderchest();
@@ -330,7 +331,7 @@ public class bank implements Listener, CommandExecutor {
 	
 	private void setItemsMenuBank(Inventory inv, Player player)
 	{
-		inv.setItem(11, setItemMetaLore(Material.GOLD_INGOT, "§aArgent -", (short) 0, listMaker("§8Faites un §dclique droit §8pour ajouter §6100$","§8à votre compte en banque", "§8Faites un §dclique gauche §8pour retirer §6100$","§8de votre compte en banque")));
+		inv.setItem(11, setItemMetaLore(Material.GOLD_INGOT, "§aArgent -", (short) 0, listMaker("§8Faites un §dclic gauche §8pour ajouter §6100$","§8à votre compte en banque", "§8Faites un §dclic droit §8pour retirer §6100$","§8de votre compte en banque")));
 		if(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade") < 7)
 		{
 			inv.setItem(13, setItemMetaLore(Material.ANVIL, "§aAmélioration - Prix : §6"+getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"))+"$", (short) 0, listMaker("§8Vous avez actuellement l'amélioration n°§d"+main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+" ","§8Pour l'améliorer au niveau suivant :","§8- Maximum de la banque : §6"+getMaxMoney((main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1))+"$", "§8- Maximum du stockage : §6"+getMaxSlots((main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1))+" slots")));

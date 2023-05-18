@@ -2,6 +2,7 @@ package fr.byxis.workshop;
 
 import fr.byxis.db.DbConnection;
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.ItemUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -414,32 +415,32 @@ public class workshopFunction {
     {
         for(int i=0;i<9;i++)
         {
-            _inv.setItem(i, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            _inv.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             if(i+45 == 52)
             {
                 if(_currentPage == 1)
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else if(i+45 == 53)
             {
                 if(_currentPage == _pageMax)
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else
             {
-                _inv.setItem(i+45, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
         }
@@ -464,7 +465,7 @@ public class workshopFunction {
                 lore.add("§6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles, §6");
                 lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
             }
-            _inv.setItem(spot+i, main.setItemCustomModelData(main.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore),item.customModelData));
+            _inv.setItem(spot+i, ItemUtilities.setItemCustomModelData(ItemUtilities.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore),item.customModelData));
         }
     }
 
@@ -515,7 +516,20 @@ public class workshopFunction {
         {
             if(hasPlan(p, item.recipeName) || item.know)
             {
-                if(addItemToCraft(p.getUniqueId().toString(), item))
+                double reduction = 0;
+                if(p.hasPermission("fireland.workshop.reduction.15"))
+                {
+                    reduction = 0.15;
+                }
+                else if(p.hasPermission("fireland.workshop.reduction.10"))
+                {
+                    reduction = 0.10;
+                }
+                else if(p.hasPermission("fireland.workshop.reduction.5"))
+                {
+                    reduction = 0.05;
+                }
+                if(addItemToCraft(p.getUniqueId().toString(), item, reduction))
                 {
                     p.playSound(p.getLocation(), "minecraft:block.anvil.use", 1, 1);
                     removeItemsOnInventoryOfPlayer(p, Material.NETHERITE_SCRAP, item.scrap);
@@ -603,7 +617,8 @@ public class workshopFunction {
         }
     }
 
-    public boolean addItemToCraft(String _uuid, workshopItemClass item)
+
+    public boolean addItemToCraft(String _uuid, workshopItemClass item, double reduction)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
@@ -611,7 +626,11 @@ public class workshopFunction {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO player_crafting(player_uuid, item, creation_date, finish_date, is_breakable) VALUES(?,?,?,?,?)");
             final long time = System.currentTimeMillis();
             Timestamp currentTime = new Timestamp(time);
-            Timestamp finishTime = new Timestamp(time+ GetTimeFromType(item.type));
+            long timeAdded = GetTimeFromType(item.type);
+
+            timeAdded *= (1-reduction);
+
+            Timestamp finishTime = new Timestamp(time+timeAdded);
             preparedStatement1.setString(1, _uuid);
             preparedStatement1.setString(2, item.itemName);
             preparedStatement1.setTimestamp(3, currentTime);
@@ -657,32 +676,32 @@ public class workshopFunction {
     {
         for(int i=0;i<9;i++)
         {
-            _inv.setItem(i, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            _inv.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             if(i+45 == 52)
             {
                 if(_currentPage == 1)
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else if(i+45 == 53)
             {
                 if(_currentPage == _pageMax)
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else
             {
-                _inv.setItem(i+45, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
         }
@@ -701,24 +720,15 @@ public class workshopFunction {
             }
             else
             {
-                lore.add("§8Type : §d"+item.type +"§8, reste §c"+getStringTime(item.finishDate.getTime() - System.currentTimeMillis()));
+                lore.add("§8Type : §d"+item.type +"§8, reste §c"+main.getStringTime(item.finishDate.getTime() - System.currentTimeMillis()));
             }
 
             lore.add("§8Date de fin de création : "+item.finishDate);
             lore.add("§8Date de création : "+item.creationDate);
-            _inv.setItem(spot+i, main.setItemCustomModelData(main.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore), item.customModelData));
+            _inv.setItem(spot+i, ItemUtilities.setItemCustomModelData(ItemUtilities.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore), item.customModelData));
         }
     }
 
-    public String getStringTime(long durationInMillis)
-    {
-        long second = (durationInMillis / 1000) % 60;
-        long minute = (durationInMillis / (1000 * 60)) % 60;
-        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
-
-        String time = String.format("%02dh%02dmin%02ds", hour, minute, second);
-        return time;
-    }
 
     public void openCraftingMenu(Player p, int page)
     {
@@ -930,9 +940,9 @@ public class workshopFunction {
     public void openWorkshop(Player p)
     {
         Inventory craftMenu = Bukkit.createInventory(null, 9*3, "Plan de travail");
-        craftMenu.setItem(11, main.setItemMeta(Material.ANVIL, "§6Atelier", (short) 1));
-        craftMenu.setItem(13, main.setItemMeta(Material.NETHERITE_SCRAP, "§aRecyclage", (short) 1));
-        craftMenu.setItem(15, main.setItemMeta(Material.CHEST, "§6Création", (short) 1));
+        craftMenu.setItem(11, ItemUtilities.setItemMeta(Material.ANVIL, "§6Atelier", (short) 1));
+        craftMenu.setItem(13, ItemUtilities.setItemMeta(Material.NETHERITE_SCRAP, "§aRecyclage", (short) 1));
+        craftMenu.setItem(15, ItemUtilities.setItemMeta(Material.CHEST, "§6Création", (short) 1));
         p.openInventory(craftMenu);
     }
 
@@ -956,35 +966,35 @@ public class workshopFunction {
                 ItemStack i;
                 if(rs.getString(2).equals("E"))
                 {
-                    i = main.setItemMeta(Material.PAPER, "§r§a"+rs.getString(1), (short) 1);
+                    i = ItemUtilities.setItemMeta(Material.PAPER, "§r§a"+rs.getString(1), (short) 1);
                     ItemMeta itemMeta=i.getItemMeta();
                     itemMeta.setCustomModelData(1);
                     i.setItemMeta(itemMeta);
                 }
                 else if(rs.getString(2).equals("D"))
                 {
-                    i = main.setItemMeta(Material.PAPER, "§r§9"+rs.getString(1), (short) 1);
+                    i = ItemUtilities.setItemMeta(Material.PAPER, "§r§9"+rs.getString(1), (short) 1);
                     ItemMeta itemMeta=i.getItemMeta();
                     itemMeta.setCustomModelData(2);
                     i.setItemMeta(itemMeta);
                 }
                 else if(rs.getString(2).equals("C"))
                 {
-                    i = main.setItemMeta(Material.PAPER, "§r§c"+rs.getString(1), (short) 1);
+                    i = ItemUtilities.setItemMeta(Material.PAPER, "§r§c"+rs.getString(1), (short) 1);
                     ItemMeta itemMeta=i.getItemMeta();
                     itemMeta.setCustomModelData(3);
                     i.setItemMeta(itemMeta);
                 }
                 else if(rs.getString(2).equals("B"))
                 {
-                    i = main.setItemMeta(Material.PAPER, "§r§e"+rs.getString(1), (short) 1);
+                    i = ItemUtilities.setItemMeta(Material.PAPER, "§r§e"+rs.getString(1), (short) 1);
                     ItemMeta itemMeta=i.getItemMeta();
                     itemMeta.setCustomModelData(4);
                     i.setItemMeta(itemMeta);
                 }
                 else
                 {
-                    i = main.setItemMeta(Material.PAPER, "§r§6§l"+rs.getString(1), (short) 1);
+                    i = ItemUtilities.setItemMeta(Material.PAPER, "§r§6§l"+rs.getString(1), (short) 1);
                     ItemMeta itemMeta=i.getItemMeta();
                     itemMeta.setCustomModelData(5);
                     i.setItemMeta(itemMeta);

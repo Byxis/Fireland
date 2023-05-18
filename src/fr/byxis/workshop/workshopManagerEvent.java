@@ -1,8 +1,9 @@
 package fr.byxis.workshop;
 
-import fr.byxis.db.jetonSql;
-import fr.byxis.event.jetonsManager;
+import fr.byxis.jeton.jetonSql;
+import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
 import fr.byxis.workshop.recycler.RecyclerFunction;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -157,7 +158,6 @@ public class workshopManagerEvent implements Listener {
                 workshopItemClass craftable = wf.getACraftableItem(p, p.getUniqueId().toString(), craftItems[0], craftItems[1], itemclicked.getItemMeta().getDisplayName().replaceAll("§7", ""));
                 if(craftable != null)
                 {
-                    main.sendMessageToAdmin(itemclicked.getItemMeta().getDisplayName().replaceAll("§7", "")+" "+craftable.itemName);
                     int page = wf.getInvPageCurrent(e.getView());
                     wf.craftItem(p, craftable);
                     wf.openCraftMenu(p, page);
@@ -197,7 +197,7 @@ public class workshopManagerEvent implements Listener {
                         {
                             if(!wf.isBreakable(item, p.getUniqueId().toString()))
                             {
-                                main.playSound(p, "minecraft:block.anvil.use");
+                                BasicUtilities.playSound(p, "minecraft:block.anvil.use");
                                 wf.removeFromQueue(item, p.getUniqueId().toString());
                                 if(item.command.contains("shot give"))
                                 {
@@ -215,12 +215,13 @@ public class workshopManagerEvent implements Listener {
                                 int rd = genererInt(0, 101);
                                 if(rd <= 10)
                                 {
-                                    main.playSound(p, "minecraft:block.anvil.destroy");
+                                    BasicUtilities.playSound(p, "minecraft:block.anvil.destroy");
                                     p.sendMessage("§cPas de chance ! Votre item s'est cassé pendant la fabrication...");
+                                    wf.removeFromQueue(item, p.getUniqueId().toString());
                                 }
                                 else
                                 {
-                                    main.playSound(p, "minecraft:block.anvil.use");
+                                    BasicUtilities.playSound(p, "minecraft:block.anvil.use");
                                     wf.removeFromQueue(item, p.getUniqueId().toString());
                                     if(item.command.contains("shot give"))
                                     {
@@ -237,7 +238,7 @@ public class workshopManagerEvent implements Listener {
                         }
                         else
                         {
-                            jetonsManager jt = new jetonsManager(main);
+                            jetonsCommandManager jt = new jetonsCommandManager(main);
                             if(jt.getJetonsPlayer(p.getUniqueId()) > 0)
                             {
                                 jetonSql jtsql = new jetonSql(main, p);

@@ -1,5 +1,6 @@
-package fr.byxis.db;
+package fr.byxis.jeton;
 
+import fr.byxis.db.DbConnection;
 import fr.byxis.main.Main;
 import org.bukkit.entity.Player;
 

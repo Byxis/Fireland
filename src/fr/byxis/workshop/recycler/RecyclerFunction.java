@@ -1,6 +1,8 @@
 package fr.byxis.workshop.recycler;
 
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
+import fr.byxis.main.utilities.ItemUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,16 +12,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 public class RecyclerFunction {
-
-    int genererInt(int borneInf, int borneSup){
-        Random random = new Random();
-        int nb;
-        nb = borneInf+random.nextInt(borneSup-borneInf);
-        return nb;
-    }
 
     private Main main;
 
@@ -69,32 +63,32 @@ public class RecyclerFunction {
                     amount += 1;
                     break;
                 case NETHERITE_HOE:
-                    amount += genererInt(2, 10);
+                    amount += BasicUtilities.generateInt(2, 10);
                     break;
                 case NETHERITE_CHESTPLATE, CHAINMAIL_CHESTPLATE, DIAMOND_CHESTPLATE, GOLDEN_CHESTPLATE, IRON_CHESTPLATE, LEATHER_CHESTPLATE:
-                    amount += genererInt(1, 8);
+                    amount += BasicUtilities.generateInt(1, 8);
                     break;
                 case NETHERITE_HELMET, CHAINMAIL_HELMET, DIAMOND_HELMET, GOLDEN_HELMET, IRON_HELMET, LEATHER_HELMET:
-                    amount += genererInt(1, 5);
+                    amount += BasicUtilities.generateInt(1, 5);
                     break;
                 case NETHERITE_BOOTS, CHAINMAIL_BOOTS, DIAMOND_BOOTS, GOLDEN_BOOTS, IRON_BOOTS, LEATHER_BOOTS:
-                    amount += genererInt(1, 4);
+                    amount += BasicUtilities.generateInt(1, 4);
                     break;
                 case NETHERITE_LEGGINGS, CHAINMAIL_LEGGINGS, DIAMOND_LEGGINGS, GOLDEN_LEGGINGS, IRON_LEGGINGS, LEATHER_LEGGINGS:
-                    amount += genererInt(1, 7);
+                    amount += BasicUtilities.generateInt(1, 7);
                     break;
                 case PUMPKIN_SEEDS, GRAY_DYE, INK_SAC, MELON_SEEDS, GREEN_DYE, CYAN_DYE, BEETROOT_SEEDS, GOLD_NUGGET, BLUE_DYE, LAPIS_LAZULI, LIME_DYE, LIGHT_BLUE_DYE, YELLOW_DYE, PINK_DYE, BROWN_DYE, IRON_NUGGET, CHARCOAL, ARROW, STICK, PURPLE_DYE, ORANGE_DYE, MAGENTA_DYE, BRICK, LIGHT_GRAY_DYE, NETHER_BRICK:
                     if(item.getItemMeta().getDisplayName().contains("Cartouche"))
                     {
-                        amount += genererInt(0, 2);
+                        amount += BasicUtilities.generateInt(0, 2);
                     }
                     else
                     {
-                        amount += genererInt(0, 3);
+                        amount += BasicUtilities.generateInt(0, 3);
                     }
                     break;
                 case WOODEN_SWORD, STONE_SWORD, GOLDEN_SWORD, IRON_SWORD, IRON_HOE, STONE_SHOVEL, IRON_PICKAXE, STONE_AXE, STONE_PICKAXE, DIAMOND_SWORD, STONE_HOE:
-                    amount += genererInt(1, 6);
+                    amount += BasicUtilities.generateInt(1, 6);
                     break;
             }
         }
@@ -109,7 +103,7 @@ public class RecyclerFunction {
                 case PUMPKIN_SEEDS, GRAY_DYE, INK_SAC, MELON_SEEDS, GREEN_DYE, CYAN_DYE, BEETROOT_SEEDS, GOLD_NUGGET, BLUE_DYE, LAPIS_LAZULI, LIME_DYE, LIGHT_BLUE_DYE, YELLOW_DYE, PINK_DYE, BROWN_DYE, IRON_NUGGET, CHARCOAL, ARROW, STICK, PURPLE_DYE, ORANGE_DYE, MAGENTA_DYE, BRICK, LIGHT_GRAY_DYE, NETHER_BRICK:
                     if(item.getItemMeta().getDisplayName().contains("Cartouche"))
                     {
-                        int j = genererInt(-2, 2);
+                        int j = BasicUtilities.generateInt(-2, 2);
                         if(j>0)
                         {
                             amount+=j;
@@ -117,7 +111,7 @@ public class RecyclerFunction {
                     }
                     else
                     {
-                        amount += genererInt(0, 3);
+                        amount += BasicUtilities.generateInt(0, 3);
                     }
                     break;
                 case GUNPOWDER:
@@ -135,13 +129,13 @@ public class RecyclerFunction {
         {
             switch (item.getType()) {
                 case QUARTZ:
-                    amount += genererInt(1, 3);
+                    amount += BasicUtilities.generateInt(1, 3);
                     break;
                 case AMETHYST_SHARD:
                     amount +=1;
                     break;
                 case GHAST_TEAR:
-                    amount += genererInt(2, 5);
+                    amount += BasicUtilities.generateInt(2, 5);
                     break;
             }
         }
@@ -161,11 +155,11 @@ public class RecyclerFunction {
         {
             if(i == 49)
             {
-                _inv.setItem(i, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRecycler les items", (short) 1));
+                _inv.setItem(i, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRecycler les items", (short) 1));
             }
             else
             {
-                _inv.setItem(i, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                _inv.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
         }
@@ -173,13 +167,13 @@ public class RecyclerFunction {
         l.add("§8Pour recycler des items, faites un");
         l.add("§6clic gauche§8 sur le bouton");
         l.add("§8recyclage.§4§lLes items seront supprimés§r§8.");
-        _inv.setItem(45, main.setItemMetaLore(Material.BOOK, "§r- Informations -", (short) 1, l));
+        _inv.setItem(45, ItemUtilities.setItemMetaLore(Material.BOOK, "§r- Informations -", (short) 1, l));
     }
 
     public void Recycle(InventoryView inv, Player p) {
-        ItemStack scrap= main.setItemMeta(Material.NETHERITE_SCRAP, "§7Débris métallique", (short)0);
-        ItemStack gp= main.setItemMeta(Material.GUNPOWDER, "§7Poudre à canon", (short)0);
-        ItemStack meds=main.setItemMeta(Material.AMETHYST_SHARD, "§7Médicaments", (short)0);;
+        ItemStack scrap= ItemUtilities.setItemMeta(Material.NETHERITE_SCRAP, "§7Débris métallique", (short)0);
+        ItemStack gp= ItemUtilities.setItemMeta(Material.GUNPOWDER, "§7Poudre à canon", (short)0);
+        ItemStack meds=ItemUtilities.setItemMeta(Material.AMETHYST_SHARD, "§7Médicaments", (short)0);;
 
         int space = GetAmountOfSpaceScrap(p);
         for(int i=0;i<45;i++)

@@ -14,14 +14,16 @@ public class FactionInformation {
     private final int currentChestSize;
     private final Timestamp createdAt;
     private final UUID leader;
+
     private final boolean hasNicknameVisibilityPerk;
     private final boolean hasFriendlyFirePerk;
-
     private final boolean hasSkinPerk;
     private final boolean show_prefix;
+    private final boolean hasCapturePerk;
+
     private final String colorcode;
 
-    public FactionInformation(String name, int nbrOfPlayers, int maxNbrOfPlayers, int currentUpgrade, int currentMoney, int maxMoney, int currentChestSize, Timestamp createdAt, UUID leader, boolean hasFriendlyFirePerk, boolean hasNicknameVisibilityPerk, boolean hasSkinPerk, boolean show_prefix, String colorcode)
+    public FactionInformation(String name, int nbrOfPlayers, int maxNbrOfPlayers, int currentUpgrade, int currentMoney, int maxMoney, int currentChestSize, Timestamp createdAt, UUID leader, boolean hasFriendlyFirePerk, boolean hasNicknameVisibilityPerk, boolean hasSkinPerk, boolean show_prefix, boolean hasCapturePerk, String colorcode)
     {
         this.name = name;
         this.currentNbrOfPlayers = nbrOfPlayers;
@@ -36,6 +38,7 @@ public class FactionInformation {
         this.hasFriendlyFirePerk = hasFriendlyFirePerk;
         this.hasSkinPerk = hasSkinPerk;
         this.show_prefix = show_prefix;
+        this.hasCapturePerk = hasCapturePerk;
         this.colorcode = colorcode;
     }
 
@@ -94,5 +97,9 @@ public class FactionInformation {
 
     public boolean DoShowPrefix() {
         return show_prefix;
+    }
+
+    public boolean hasCapturePerk() {
+        return hasCapturePerk;
     }
 }

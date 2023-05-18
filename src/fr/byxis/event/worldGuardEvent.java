@@ -3,6 +3,7 @@
 	import de.netzkronehd.wgregionevents.events.RegionEnterEvent;
 	import de.netzkronehd.wgregionevents.events.RegionLeftEvent;
 	import fr.byxis.main.Main;
+	import fr.byxis.main.utilities.PermissionUtilities;
 	import org.bukkit.GameMode;
 	import org.bukkit.entity.Player;
 	import org.bukkit.event.EventHandler;
@@ -35,7 +36,7 @@ public class worldGuardEvent implements Listener {
 				main.cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".state", false);
 				main.cfgm.savePlayerDB();
 			}
-			main.removePermission(p, "crazyauctions.sell.2");
+			PermissionUtilities.removePermission(p, "crazyauctions.sell");
 		}
 		
 	}
@@ -56,7 +57,7 @@ public class worldGuardEvent implements Listener {
 				main.cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".state", true);
 				main.cfgm.savePlayerDB();
 			}
-			main.addPermission(p, "crazyauctions.sell");
+			PermissionUtilities.addPermission(p, "crazyauctions.sell");
 
 		}
 		

@@ -1,5 +1,6 @@
 package fr.byxis.event;
 
+import fr.byxis.main.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
@@ -11,8 +12,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.byxis.main.Main;
-
 public class doorPass implements Listener {
 	
 	private Main main;
@@ -21,12 +20,12 @@ public class doorPass implements Listener {
 		this.main = main;
 	}
 	
-	private void openDoor(BlockState blockState, Openable openable, int time)
+	private void openDoor(Player p, Location door, BlockState blockState, Openable openable, int time)
 	{
 		openable.setOpen(true);
+
 		blockState.setBlockData(openable);
 		blockState.update();
-		 
 		new BukkitRunnable() {
 			
 			@Override
@@ -34,7 +33,6 @@ public class doorPass implements Listener {
 				openable.setOpen(false);
 				blockState.setBlockData(openable);
 				blockState.update();
-				
 			}
 		}.runTaskLater(main, 20L * time);
 	}
@@ -243,10 +241,12 @@ public class doorPass implements Listener {
 					@Override
 					public void run() {
 						main.getConfig().set("door."+p.getUniqueId(), false);
-						openDoor(door.getBlock().getState(), (Openable) door.getBlock().getState().getBlockData(), passTime);
+						openDoor(p, door, door.getBlock().getState(), (Openable) door.getBlock().getState().getBlockData(), passTime);
+						openDoor(p, door.add(0, -1, 0), door.getBlock().getState(), (Openable) door.getBlock().getState().getBlockData(), passTime);
 						if(doubleDoor != null)
 						{
-							openDoor(doubleDoor.getBlock().getState(), (Openable) doubleDoor.getBlock().getState().getBlockData(), passTime);
+							openDoor(p, doubleDoor, doubleDoor.getBlock().getState(), (Openable) doubleDoor.getBlock().getState().getBlockData(), passTime);
+							openDoor(p, doubleDoor.add(0, -1, 0), doubleDoor.getBlock().getState(), (Openable) doubleDoor.getBlock().getState().getBlockData(), passTime);
 						}
 					}
 				}.runTaskLater(main, 50);

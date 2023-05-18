@@ -46,11 +46,22 @@ public class ShopEventManager implements Listener {
                 if (e.getClickedInventory() == e.getView().getTopInventory()) {
                     if(e.isLeftClick())
                     {
-                        sf.buyItem(itemclicked, p, sf.getShopName(e.getView()));
+                        if(e.getView().getTitle().contains("skin"))
+                        {
+                            sf.buyItem(itemclicked, p, sf.getShopName(e.getView()), true);
+                        }
+                        else
+                        {
+                            sf.buyItem(itemclicked, p, sf.getShopName(e.getView()), false);
+                        }
                     }
                     else if(e.isRightClick())
                     {
-                        sf.sellItem(itemclicked, p, sf.getShopName(e.getView()).replaceAll(" ", "_"), e.isShiftClick());
+                        if(!e.getView().getTitle().contains("skin"))
+                        {
+                            sf.sellItem(itemclicked, p, sf.getShopName(e.getView()).replaceAll(" ", "_"), e.isShiftClick());
+                        }
+
                     }
                     e.setResult(Event.Result.DENY);
                 }

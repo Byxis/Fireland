@@ -1,6 +1,7 @@
 package fr.byxis.faction;
 
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.PermissionUtilities;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,7 +31,7 @@ public class FactionEvent implements Listener {
 
             if(infos.hasSkinPerk())
             {
-                main.addPermission(e.getPlayer(), "csp.skin.Faction");
+                PermissionUtilities.addPermission(e.getPlayer(), "csp.skin.Faction");
             }
             if(infos.DoShowPrefix())
             {

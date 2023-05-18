@@ -6,6 +6,8 @@ api-version: 1.19
 depend:
   - Vault
   - ProtocolLib
+  - WGRegionEvents
+  - WorldGuard
 commands:
   speedfly:
     description: Permet de changer la vitesse de vol
@@ -66,3 +68,6 @@ commands:
   playpacket:
     description: commandes de test pour les packets
     permission: fireland.command.playpacket
+  booster:
+    description: commandes pour creer ou visualiser les boosters actifs
+    permission: fireland.command.booster

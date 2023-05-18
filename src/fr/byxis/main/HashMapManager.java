@@ -1,5 +1,6 @@
 package fr.byxis.main;
 
+import fr.byxis.booster.BoosterClass;
 import fr.byxis.discretion.DiscretionClass;
 import fr.byxis.karma.PlayerKarmaClass;
 import org.bukkit.inventory.Inventory;
@@ -14,6 +15,7 @@ public class HashMapManager {
     private HashMap<UUID, PlayerKarmaClass> rangMap;
     private HashMap<String, Inventory> storageFactionMap;
     private HashMap<UUID, String> factionPrefixMap;
+    private BoosterClass booster;
 
     public HashMapManager() {
     }
@@ -26,6 +28,7 @@ public class HashMapManager {
         this.rangMap = new HashMap<>();
         this.storageFactionMap = new HashMap<>();
         this.factionPrefixMap = new HashMap<>();
+        this.booster = null;
     }
 
     public HashMap<UUID,String> getFactionMap()
@@ -116,5 +119,13 @@ public class HashMapManager {
 
     public void removeFactionPrefixMap(UUID uuid) {
         this.factionPrefixMap.remove(uuid);
+    }
+
+    public BoosterClass getBooster() {
+        return booster;
+    }
+
+    public void setBooster(BoosterClass booster) {
+        this.booster = booster;
     }
 }

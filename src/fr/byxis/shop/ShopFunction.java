@@ -1,8 +1,12 @@
 package fr.byxis.shop;
 
 import fr.byxis.db.DbConnection;
+import fr.byxis.jeton.jetonSql;
+import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.karma.karmaManager;
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
+import fr.byxis.main.utilities.ItemUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -11,11 +15,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.Permission;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,7 +40,7 @@ public class ShopFunction {
 
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data" +
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show" +
                     " FROM item_shop INNER JOIN items" +
                     " ON item_shop.item_name = items.item_name" +
                     " WHERE item_shop.shop = ?;");
@@ -46,8 +48,11 @@ public class ShopFunction {
             final ResultSet rs = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
             while (rs.next()) {
-                ShopItemClass item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
-                items.add(item);
+                ShopItemClass item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8));
+                if(item.show)
+                {
+                    items.add(item);
+                }
             }
             return items;
         } catch (SQLException e) {
@@ -65,7 +70,7 @@ public class ShopFunction {
 
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data" +
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show" +
                     " FROM item_shop INNER JOIN items" +
                     " ON item_shop.item_name = items.item_name" +
                     " WHERE item_shop.shop = ?" +
@@ -75,7 +80,7 @@ public class ShopFunction {
             final ResultSet rs = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
             if (rs.next()) {
-                item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
+                item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8));
             }
             return item;
         } catch (SQLException e) {
@@ -86,36 +91,36 @@ public class ShopFunction {
         return null;
     }
 
-    public void setItemsOnShopInv(Inventory _inv, ArrayList<ShopItemClass> _items, int _currentPage, int _pageMax, Player p)
+    public void setItemsOnShopInv(Inventory _inv, ArrayList<ShopItemClass> _items, int _currentPage, int _pageMax, Player p, boolean isSkinShop)
     {
         for(int i=0;i<9;i++)
         {
-            _inv.setItem(i, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            _inv.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             if(i+45 == 52)
             {
                 if(_currentPage == 1)
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else if(i+45 == 53)
             {
                 if(_currentPage == _pageMax)
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else
             {
-                _inv.setItem(i+45, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
         }
@@ -123,7 +128,11 @@ public class ShopFunction {
         l.add("§8Pour acheter un item, faites un");
         l.add("§6clic gauche§8 dessus, pour le");
         l.add("§8vendre, faites un §6clic droit§8.");
-        _inv.setItem(45, main.setItemMetaLore(Material.BOOK, "§r- Informations -", (short) 1, l));
+        if(isSkinShop)
+        {
+            l.add("§c§lPlus d'infos sur discord §6(/discord)");
+        }
+        _inv.setItem(45, ItemUtilities.setItemMetaLore(Material.BOOK, "§r- Informations -", (short) 1, l));
         int spot = 19-(_currentPage * 14)+14;
         for (int i = (_currentPage * 14)-14; i < _items.size() && i < _currentPage * 14; i++)
         {
@@ -133,30 +142,58 @@ public class ShopFunction {
             }
             ShopItemClass item = _items.get(i);
             List<String> lore = new ArrayList<>();
-            lore.add("§8Achat: §6"+getPriceText(item, p));
-            lore.add("§8Vente: §6"+getSellText(item, p));
-            _inv.setItem(spot+i, main.setItemCustomModelData(main.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore),item.customModelData));
+            if(!isSkinShop)
+            {
+                lore.add("§8Achat: §6"+getPriceText(item, p, false));
+                lore.add("§8Vente: §6"+getSellText(item, p, false));
+            }
+            else
+            {
+                Permission perm = new Permission(item.command);
+                Permission all = new Permission("csp.skin.all");
+                if(p.hasPermission(perm) || p.hasPermission(all))
+                {
+                    lore.add("§aPossédé");
+                }
+                else
+                {
+                    lore.add("§8Achat: §6"+getPriceText(item, p, true));
+                }
+            }
+            _inv.setItem(spot+i, ItemUtilities.setItemCustomModelData(ItemUtilities.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore),item.customModelData));
         }
     }
 
-    public String getPriceText(ShopItemClass item, Player p)
+    public String getPriceText(ShopItemClass item, Player p, boolean isSkinShop)
     {
-        double karma = getKarma(p.getUniqueId());
-        if(karma >= 75 && !item.itemName.contains("Pass"))
+        if(isSkinShop)
         {
-            double price = priceKarmaAdapter(p.getUniqueId(), item.price);
-            return "§6§m"+item.price+"$§r §d"+price+"$ §8("+Math.round(getReduction(p.getUniqueId())*100)+"%)";
+            return "§b "+item.price+" \u26c1";
         }
-        else if(karma <=25 && !item.itemName.contains("Pass"))
+        else
         {
-            double price = priceKarmaAdapter(p.getUniqueId(), item.price);
-            return "§6§m"+item.price+"$§r §c"+price+"$ §8(+"+Math.round(getReduction(p.getUniqueId())*100)+"%)";
+            double karma = getKarma(p.getUniqueId());
+            if(karma >= 75 && !item.itemName.contains("Pass"))
+            {
+                double price = priceKarmaAdapter(p.getUniqueId(), item.price);
+                return "§6§m"+item.price+"$§r §d"+price+"$ §8("+Math.round(getReduction(p.getUniqueId())*100)+"%)";
+            }
+            else if(karma <=25 && !item.itemName.contains("Pass"))
+            {
+                double price = priceKarmaAdapter(p.getUniqueId(), item.price);
+                return "§6§m"+item.price+"$§r §c"+price+"$ §8(+"+Math.round(getReduction(p.getUniqueId())*100)+"%)";
+            }
+            return item.price+"$";
         }
-        return item.price+"$";
+
     }
 
-    public String getSellText(ShopItemClass item, Player p)
+    public String getSellText(ShopItemClass item, Player p, boolean isSkinShop)
     {
+        if(isSkinShop)
+        {
+            return "";
+        }
         return item.sell+"$";
     }
 
@@ -226,91 +263,122 @@ public class ShopFunction {
     {
         int maxPage = 1;
         ArrayList<ShopItemClass> items = getAllItemsOnShop(_shop);
+
         int nbrItems = items.size();
         while(nbrItems > 14)
         {
             nbrItems -= 14;
             maxPage++;
         }
+        boolean isASkinShop = false;
+        if(_shop.equalsIgnoreCase("skin"))
+        {
+            isASkinShop = true;
+        }
         Inventory craftMenu = Bukkit.createInventory(null, 54, "Marchand de "+_shop+" ("+page+"/"+maxPage+")");
-        setItemsOnShopInv(craftMenu, items, page, maxPage, _p);
+        setItemsOnShopInv(craftMenu, items, page, maxPage, _p, isASkinShop);
         _p.openInventory(craftMenu);
     }
 
-    public void buyItem(ItemStack _itemClicked, Player _p, String _shop)
+    public void buyItem(ItemStack _itemClicked, Player _p, String _shop, boolean isSkinShop)
     {
         String name = _itemClicked.getItemMeta().getDisplayName();
         //name = name.replaceAll("[§.{1}]", "");
         name = name.replaceAll("§7", "");
         ShopItemClass item = getAnItemOnShop(_shop.replaceAll(" ", "_"), name);
-
         if(item != null)
         {
-            double balance = main.eco.getBalance(_p);
-            double prix;
-            if(!item.itemName.contains("Pass"))
+            if(isSkinShop)
             {
-                prix = priceKarmaAdapter(_p.getUniqueId(), item.price);
-            }
-            else
-            {
-                prix = item.price;
-            }
-
-            if(balance >= prix)
-            {
-                String command = item.command.replaceAll("Player", _p.getName());
-                if(command.contains("mcgive") )
+                jetonsCommandManager jeton = new jetonsCommandManager(main);
+                if(_p.hasPermission(item.command) || _p.hasPermission("csp.skin.all"))
                 {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give "+_p.getName()+" minecraft:"+item.mat.name().toLowerCase()+"{display:{Name:'[{\"text\":\"§r"+"§r"+item.itemName+"\"}]'}} 1");
-                    main.eco.withdrawPlayer(_p, prix);
-                    _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
-                    buyItemKarma(_p.getUniqueId());
+                    BasicUtilities.sendPlayerError(_p, "Vous avez déjà ce skin !");
                 }
-                else if (command.contains("minecraft:give"))
+                else if(jeton.getJetonsPlayer(_p.getUniqueId()) >= item.price)
                 {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command.replaceAll("Player", _p.getName()));
-                    main.eco.withdrawPlayer(_p, prix);
-                    _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
-                    buyItemKarma(_p.getUniqueId());
+                    jetonSql facture = new jetonSql(main, _p);
+                    if(facture.createFacture(_p.getUniqueId().toString(), item.price, "Achat du skin "+item.itemName+" le "+(new Date(System.currentTimeMillis())).getTime()))
+                    {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user "+ _p.getName()+" permission set "+item.command+" true");
+                        main.getLogger().info("[ACHAT] Achat de "+item.itemName+" par "+_p.getName()+" pour "+item.price+" jetons.");
+                        jeton.removeJetonsPlayer(_p.getUniqueId(), item.price);
+                        BasicUtilities.sendPlayerInformation(_p, "Vous avez acheté le skin: "+item.itemName+" ! Merci pour votre achat !");
+                    }
                 }
                 else
                 {
-                    if(command.contains("shot give"))
+                    BasicUtilities.sendPlayerError(_p, "Vous n'avez pas assez de jetons !");
+                }
+            }
+            else
+            {
+                double balance = main.eco.getBalance(_p);
+                double prix;
+                if(!item.itemName.contains("Pass"))
+                {
+                    prix = priceKarmaAdapter(_p.getUniqueId(), item.price);
+                }
+                else
+                {
+                    prix = item.price;
+                }
+
+                if(balance >= prix)
+                {
+                    String command = item.command.replaceAll("Player", _p.getName());
+                    if(command.contains("mcgive") )
                     {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give "+_p.getName()+" minecraft:"+item.mat.name().toLowerCase()+"{display:{Name:'[{\"text\":\"§r"+"§r"+item.itemName+"\"}]'}} 1");
+                        main.eco.withdrawPlayer(_p, prix);
+                        _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
+                        buyItemKarma(_p.getUniqueId());
                     }
-                    else if(command.contains("csp give"))
+                    else if (command.contains("minecraft:give"))
                     {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command.replaceAll("Player", _p.getName()));
+                        main.eco.withdrawPlayer(_p, prix);
+                        _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
+                        buyItemKarma(_p.getUniqueId());
                     }
                     else
                     {
-                        main.commandExecutor(_p, command, "crackshot.get.all");
+                        if(command.contains("shot give"))
+                        {
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                        }
+                        else if(command.contains("csp give"))
+                        {
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                        }
+                        else
+                        {
+                            main.commandExecutor(_p, command, "crackshot.get.all");
+                        }
+                        main.eco.withdrawPlayer(_p, prix);
+                        _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §6"+prix+"$ §a!");
+                        _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+                        buyItemKarma(_p.getUniqueId());
                     }
-                    main.eco.withdrawPlayer(_p, prix);
-                    _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §6"+prix+"$ §a!");
-                    _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
-                    buyItemKarma(_p.getUniqueId());
                 }
-            }
-            else if(_p.getGameMode() == GameMode.CREATIVE)
-            {
-                String command = item.command.replaceAll("Player", _p.getName());
-                if(command.contains("mcgive"))
+                else if(_p.getGameMode() == GameMode.CREATIVE)
                 {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give "+_p.getName()+" minecraft:"+item.mat.name().toLowerCase()+"{display:{Name:'[{\"text\":\"§r"+"§r"+item.itemName+"\"}]'}} 1");
+                    String command = item.command.replaceAll("Player", _p.getName());
+                    if(command.contains("mcgive"))
+                    {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give "+_p.getName()+" minecraft:"+item.mat.name().toLowerCase()+"{display:{Name:'[{\"text\":\"§r"+"§r"+item.itemName+"\"}]'}} 1");
+                    }
+                    else
+                    {
+                        main.commandExecutor(_p, command, "crackshot.give.all");
+                    }
+                    _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
+                    _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
                 }
                 else
                 {
-                    main.commandExecutor(_p, command, "crackshot.give.all");
+                    _p.sendMessage("§cVous n'avez pas assez d'argent.");
                 }
-                _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
-                _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
-            }
-            else
-            {
-                _p.sendMessage("§cVous n'avez pas assez d'argent.");
             }
         }
     }
@@ -485,7 +553,7 @@ public class ShopFunction {
         return 0;
     }
 
-    public void addItemOnShop(String _name, Material _item, short _dura, int _price, int _sell, String _shop, String _command)
+    public void addItemOnShop(String _name, Material _item, short _dura, int _price, int _sell, String _shop, String _command, int _custommodeldata)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
@@ -501,12 +569,13 @@ public class ShopFunction {
             if (!rs.next())
             {
                 sender.sendMessage("§aNouvel item créé :"+_item.name());
-                final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO items(item_name, item, durability, command)" +
-                        " VALUES(?,?,?,?)");
+                final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO items(item_name, item, durability, command, custom_model_data)" +
+                        " VALUES(?,?,?,?,?)");
                 preparedStatement2.setString(1, _name);
                 preparedStatement2.setString(2, _item.toString());
                 preparedStatement2.setShort(3, _dura);
                 preparedStatement2.setString(4, _command);
+                preparedStatement2.setInt(5, _custommodeldata);
                 preparedStatement2.executeUpdate();
             }
             sender.sendMessage("§aItem "+_item.name()+" ajouté au shop "+_shop);

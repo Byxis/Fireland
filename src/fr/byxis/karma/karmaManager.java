@@ -1,6 +1,8 @@
 package fr.byxis.karma;
 
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
+import fr.byxis.main.utilities.PermissionUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,7 +24,7 @@ import java.util.UUID;
 
 public class karmaManager implements Listener, CommandExecutor, TabCompleter {
 
-    private Main main;
+    private final Main main;
     public karmaManager(Main main) {
         this.main = main;
     }
@@ -85,8 +87,8 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
     public void goodAction(UUID _uuid, double _amount, boolean... b)
     {
         updatePlayer(_uuid);
-        double gain = main.cfgm.getKarmaDB().getDouble("max."+_uuid.toString());
-        if(b!=null || 15-gain <=15)
+        double gain = main.cfgm.getKarmaDB().getDouble("max."+_uuid);
+        if(b!=null || 15-gain >0)
         {
             if(_amount > 15-gain)
             {
@@ -96,10 +98,12 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
             if(rang+_amount > 100)
             {
                 main.hashMapManager.getRangMap().get(_uuid).setRang(100);
+                main.hashMapManager.getRangMap().get(_uuid).setMax(gain+_amount);
             }
             else if(rang+_amount < 0)
             {
                 main.hashMapManager.getRangMap().get(_uuid).setRang(0);
+                main.hashMapManager.getRangMap().get(_uuid).setMax(gain+_amount);
             }
             else
             {
@@ -122,12 +126,12 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         if(!karma.contains(_uuid.toString()))
         {
             karma.set(_uuid.toString(), 62D);
-            karma.set("max."+_uuid.toString(), 0D);
+            karma.set("max."+_uuid, 0D);
             main.cfgm.saveKarmaDB();
         }
         if(!main.hashMapManager.getRangMap().containsKey(_uuid))
         {
-            main.hashMapManager.getRangMap().put(_uuid, new PlayerKarmaClass(main.cfgm.getKarmaDB().getDouble(_uuid.toString()), main.cfgm.getKarmaDB().getDouble("max."+_uuid.toString())));
+            main.hashMapManager.getRangMap().put(_uuid, new PlayerKarmaClass(main.cfgm.getKarmaDB().getDouble(_uuid.toString()), main.cfgm.getKarmaDB().getDouble("max."+_uuid)));
         }
     }
 
@@ -146,27 +150,27 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
                 }
             }
             p.sendTitle("", "§dPassage au rang Héros !");
-            main.playSound(p, heros);
+            BasicUtilities.playSound(p, heros);
         }
         else if( bef >= 75 && now < 75)
         {
             p.sendTitle("", "§7Rétrogradage au rang Civil.");
-            main.playSound(p, sound);
+            BasicUtilities.playSound(p, sound);
         }
         else if( bef >= 50 && now < 50)
         {
             p.sendTitle("", "§7Rétrogradage au rang Hors la Loi.");
-            main.playSound(p, sound);
+            BasicUtilities.playSound(p, sound);
         }
         else if( bef < 50 && now >= 50)
         {
             p.sendTitle("", "§7Passage au rang Civil !");
-            main.playSound(p, sound);
+            BasicUtilities.playSound(p, sound);
         }
         else if( bef <25  && now >= 25)
         {
             p.sendTitle("", "§7Passage au rang Hors la Loi.");
-            main.playSound(p, sound);
+            BasicUtilities.playSound(p, sound);
         }
         else if( bef >= 25 && now < 25)
         {
@@ -178,21 +182,21 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
                 }
             }
             p.sendTitle("", "§cRétrogradage au rang Criminel.");
-            main.playSound(p, crim);
+            BasicUtilities.playSound(p, crim);
         }
         else if( bef <= 25 && now == 0)
         {
             p.sendTitle("", "§4Rétrogradage au rang Criminel.");
-            main.playSound(p, crim);
+            BasicUtilities.playSound(p, crim);
         }
 
         if(bef >= 25 && now <25)
         {
-            main.addPermission(p, "group.bannis");
+            PermissionUtilities.addPermission(p, "group.bannis");
         }
         else if(bef < 25 && now >= 25)
         {
-            main.removePermission(p, "group.bannis");
+            PermissionUtilities.removePermission(p, "group.bannis");
         }
     }
 
@@ -261,7 +265,7 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
                     sender.sendMessage("§cErreur ! Utilisation : /rang [player]");
                 }
             }
-            else if(args.length >= 2 && ((Player)sender).hasPermission("fireland.command.rang.admin"))
+            else if(sender.hasPermission("fireland.command.rang.admin"))
             {
                 try
                 {
@@ -286,14 +290,14 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
                         }
                         else
                         {
-                            final Player victim = (Player) Bukkit.getOfflinePlayer(args[2]);
+                            final Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
                             setKarma(victim.getUniqueId(), Integer.parseInt(args[1]));
                             sender.sendMessage("§aLe nouveau rang de "+victim.getName()+" est : "+rangText(victim));
                             victim.sendMessage("§aVotre rang est maintenant : "+rangText(victim));
                         }
                     }
-                    else if(sender instanceof Player p)
-                    {
+                    else {
+                        Player p = (Player) sender;
                         setKarma(p.getUniqueId(), Integer.parseInt(args[1]));
                         p.sendMessage("§aVotre rang est maintenant : "+rangText((Player) sender));
                     }
@@ -313,14 +317,14 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
                         }
                         else
                         {
-                            final Player victim = (Player) Bukkit.getOfflinePlayer(args[2]);
+                            final Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
                             goodAction(victim.getUniqueId(), Integer.parseInt(args[1]));
                             sender.sendMessage("§aLe nouveau rang de "+victim.getName()+" est : "+rangText(victim));
                             victim.sendMessage("§aVotre rang est maintenant : "+rangText(victim));
                         }
                     }
-                    else if(sender instanceof Player p)
-                    {
+                    else {
+                        Player p = (Player) sender;
                         goodAction(p.getUniqueId(), Integer.parseInt(args[1]));
                         p.sendMessage("§aVotre rang est maintenant : "+rangText((Player) sender));
                     }
@@ -340,14 +344,14 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
                         }
                         else
                         {
-                            final Player victim = (Player) Bukkit.getOfflinePlayer(args[2]);
+                            final Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
                             badAction(victim.getUniqueId(), Integer.parseInt(args[1]));
                             sender.sendMessage("§aLe nouveau rang de "+victim.getName()+" est : "+rangText(victim));
                             victim.sendMessage("§aVotre rang est maintenant : "+rangText(victim));
                         }
                     }
-                    else if(sender instanceof Player p)
-                    {
+                    else {
+                        Player p = (Player) sender;
                         badAction(p.getUniqueId(), Integer.parseInt(args[1]));
                         p.sendMessage("§aVotre rang est maintenant : "+rangText((Player) sender));
                     }
@@ -363,6 +367,10 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
         List<String> l = new ArrayList<>();
         if(sender instanceof Player p && !p.hasPermission("fireland.command.rang.admin"))
         {
+            for(Player pl : Bukkit.getOnlinePlayers())
+            {
+                l.add(pl.getName());
+            }
             return l;
         }
         if (args.length == 1)

@@ -4,7 +4,6 @@ import fr.byxis.faction.FactionFunctions;
 import fr.byxis.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldSaveEvent;
@@ -97,19 +96,8 @@ public class SaveEvent implements Listener {
         for(String name : main.hashMapManager.getStorageFactionMap().keySet())
         {
             ff.SaveAllItemsFactionStorage(name, main.hashMapManager.getStorageFactionMap().get(name));
-            boolean found = false;
-            for(Player p : Bukkit.getOnlinePlayers())
-            {
-                String playerFactionName = ff.playerFactionName(p);
-                if(!playerFactionName.equals("") && playerFactionName.equalsIgnoreCase(name))
-                {
-                    found = true;
-                }
-            }
-            if(!found)
-            {
-                main.hashMapManager.removeStorageFactionMap(name);
-            }
+            main.hashMapManager.removeStorageFactionMap(name);
+            ff.loadAllItems(name, ff.getFactionInfo(name).getCurrentUpgrade());
         }
     }
 }

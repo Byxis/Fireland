@@ -98,6 +98,11 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     for (int i = 4; i < args.length; i++) {
                         sb.append(args[i]).append(" ");
                     }
+                    int custommodeldata = 0;
+                    if(player.getItemInHand().getItemMeta().hasCustomModelData())
+                    {
+                        custommodeldata = player.getItemInHand().getItemMeta().getCustomModelData();
+                    }
 
                     player.sendMessage("n:"+name);
                     player.sendMessage("i:"+item);
@@ -110,7 +115,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
 
                     player.sendMessage("c:"+command);
                     ShopFunction sf = new ShopFunction(main, player);
-                    sf.addItemOnShop(name, item, dura, price, sell, shop, command);
+                    sf.addItemOnShop(name, item, dura, price, sell, shop, command, custommodeldata);
                     player.sendMessage("§aItem " + name + "§r§a mis en vente dans le shop " + shop + " !");
                 }
                 else

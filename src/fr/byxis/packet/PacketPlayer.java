@@ -1,7 +1,9 @@
 package fr.byxis.packet;
 
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,7 +28,7 @@ public class PacketPlayer implements CommandExecutor {
             {
                 if(strings.length < 2)
                 {
-                    main.sendPlayerInformation(p, "Packet envoyé.");
+                    BasicUtilities.sendPlayerInformation(p, "Packet envoyé.");
                     PlayTestBorderPacket(p);
                     return true;
                 }
@@ -36,28 +38,46 @@ public class PacketPlayer implements CommandExecutor {
                     {
                         if(players.getName().equalsIgnoreCase(strings[1]))
                         {
-                            main.sendPlayerInformation(p, "Packet envoyé à "+players.getName()+".");
+                            BasicUtilities.sendPlayerInformation(p, "Packet envoyé à "+players.getName()+".");
                             PlayTestBorderPacket(players);
                             return true;
                         }
                     }
-                    main.sendPlayerError(p, "Personne non trouvée.");
+                    BasicUtilities.sendPlayerError(p, "Personne non trouvée.");
                     return false;
                 }
             }
+            else if(strings[0].equalsIgnoreCase("opendoor"))
+            {
+                BasicUtilities.sendPlayerInformation(p, "Packet envoyé. Porte ouverte");
+                PlayTestOpenDoorPacket(p, p.getTargetBlock(50).getLocation());
+            }
         }
-        main.sendPlayerError((Player) commandSender, "Erreur.");
+        BasicUtilities.sendPlayerError((Player) commandSender, "Erreur.");
         return false;
     }
 
     private void PlayTestBorderPacket(Player p)
     {
         pf.playBorderPackets(p, true);
-        new BukkitRunnable(){
+        new BukkitRunnable()
+        {
             @Override
             public void run() {
                 pf.playBorderPackets(p, false);
             }
-        }.runTaskLater(main, 20*5);
+        }.runTaskLater(main, 20);
+    }
+
+    private void PlayTestOpenDoorPacket(Player p, Location loc)
+    {
+        pf.openDoor(p, loc, true);
+        new BukkitRunnable()
+        {
+            @Override
+            public void run() {
+                pf.openDoor(p, loc, false);
+            }
+        }.runTaskLater(main, 20);
     }
 }

@@ -1,12 +1,12 @@
-package fr.byxis.event;
+package fr.byxis.jeton;
 
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
+public class jetonsCommandManager extends JetonManager implements Listener, CommandExecutor, TabCompleter {
 
     private final Main main;
 
-    public jetonsManager(Main main) {
+    public jetonsCommandManager(Main main) {
+        super(main);
         this.main = main;
     }
 
@@ -32,45 +33,6 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
         {
             updatePlayer(e.getPlayer().getUniqueId());
         }
-    }
-
-    public void updatePlayer(UUID _uuid)
-    {
-        FileConfiguration jetonDB = main.cfgm.getJetonsDB();
-        if(!jetonDB.contains(_uuid.toString()))
-        {
-            jetonDB.set(_uuid.toString(), 0);
-            main.cfgm.saveJetonsDB();
-        }
-    }
-
-    public int getJetonsPlayer(UUID _uuid)
-    {
-        FileConfiguration jetonDB = main.cfgm.getJetonsDB();
-        return jetonDB.getInt(_uuid.toString());
-    }
-
-    public void setJetonsPlayer(UUID _uuid, int amount)
-    {
-        FileConfiguration jetonDB = main.cfgm.getJetonsDB();
-        jetonDB.set(_uuid.toString(), amount);
-        main.cfgm.saveJetonsDB();
-    }
-
-    public void addJetonsPlayer(UUID _uuid, int amount)
-    {
-        FileConfiguration jetonDB = main.cfgm.getJetonsDB();
-        jetonDB.set(_uuid.toString(), jetonDB.getInt(_uuid.toString())+amount);
-        main.cfgm.saveJetonsDB();
-    }
-
-    public void removeJetonsPlayer(UUID _uuid, int amount)
-    {
-        FileConfiguration jetonDB = main.cfgm.getJetonsDB();
-        int jt = jetonDB.getInt(_uuid.toString());
-        jt -= amount;
-        jetonDB.set(_uuid.toString(), jt);
-        main.cfgm.saveJetonsDB();
     }
 
     @Override
@@ -87,10 +49,10 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
             }
             else if(args.length == 1)
             {
-                final Player victim = Bukkit.getPlayer(args[0]);
-                if(victim != null)
+                UUID uuid = BasicUtilities.getUuid(args[2]);
+                if(uuid != null)
                 {
-                    sender.sendMessage("§a"+victim.getName()+" possède §d"+getJetonsPlayer(victim.getUniqueId())+"§a jetons !");
+                    sender.sendMessage("§a"+args[2]+" possède §d"+getJetonsPlayer(uuid)+"§a jetons !");
                 }
                 else
                 {
@@ -122,10 +84,16 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
                         }
                         else
                         {
-                            final Player victim = (Player) Bukkit.getOfflinePlayer(args[2]);
-                            setJetonsPlayer(victim.getUniqueId(), Integer.parseInt(args[1]));
-                            sender.sendMessage("§aLe joueur " + victim.getName() + " a désormais §d" + args[1] + "§a jetons !");
-                            victim.sendMessage("§aVous avez désormais §d" + args[1] + "§a jetons !");
+                            UUID uuid = BasicUtilities.getUuid(args[2]);
+                            if(uuid != null)
+                            {
+                                setJetonsPlayer(uuid, Integer.parseInt(args[1]));
+                                sender.sendMessage("§aLe joueur " + args[2] + " a désormais §d" + args[1] + "§a jetons !");
+                                if(Bukkit.getOfflinePlayer(uuid).isOnline())
+                                {
+                                    Bukkit.getPlayer(uuid).sendMessage("§aVous avez désormais §d" + args[1] + "§a jetons !");
+                                }
+                            }
                         }
                     }
                     else if(sender instanceof Player p)
@@ -149,10 +117,16 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
                         }
                         else
                         {
-                            final Player victim = (Player) Bukkit.getOfflinePlayer(args[2]);
-                            addJetonsPlayer(victim.getUniqueId(), Integer.parseInt(args[1]));
-                            sender.sendMessage("§aLe joueur "+victim.getName()+" a désormais §d"+args[1]+"§a jetons !");
-                            victim.sendMessage("§aVous avez gagné §d"+args[1]+"§a jetons !");
+                            UUID uuid = BasicUtilities.getUuid(args[2]);
+                            if(uuid != null)
+                            {
+                                addJetonsPlayer(uuid, Integer.parseInt(args[1]));
+                                sender.sendMessage("§aLe joueur " + args[2] + " a gagné §d" + args[1] + "§a jetons ! Il en a désormais §d"+getJetonsPlayer(uuid)+"§r§a !");
+                                if(Bukkit.getOfflinePlayer(uuid).isOnline())
+                                {
+                                    Bukkit.getPlayer(uuid).sendMessage("§aVous avez gagné §d"+args[1]+"§a jetons !");
+                                }
+                            }
                         }
                     }
                     else if(sender instanceof Player p)
@@ -176,10 +150,18 @@ public class jetonsManager implements Listener, CommandExecutor, TabCompleter {
                         }
                         else
                         {
-                            final Player victim = (Player) Bukkit.getOfflinePlayer(args[2]);
-                            removeJetonsPlayer(victim.getUniqueId(), Integer.parseInt(args[1]));
-                            sender.sendMessage("§cLe joueur " + victim.getName() + " a perdu §d" + args[1] + "§c jetons !");
-                            victim.sendMessage("§cVous avez perdu §d" + args[1] + "§c jetons !");
+                            UUID uuid = BasicUtilities.getUuid(args[2]);
+                            if(uuid != null)
+                            {
+                                removeJetonsPlayer(uuid, Integer.parseInt(args[1]));
+                                sender.sendMessage("§cLe joueur " + args[2] + " a perdu §d" + args[1] + "§c jetons !");
+                                if(Bukkit.getOfflinePlayer(uuid).isOnline())
+                                {
+                                    Bukkit.getPlayer(uuid).sendMessage("§cVous avez perdu §d" + args[1] + "§c jetons !");
+                                }
+                            }
+
+
                         }
                     }
                     else if(sender instanceof Player p)

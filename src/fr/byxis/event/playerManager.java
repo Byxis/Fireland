@@ -1,22 +1,29 @@
 package fr.byxis.event;
 
+import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
+import org.bukkit.*;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 
 public class playerManager implements Listener {
+
+    private Main main;
+
+    public playerManager(Main main)
+    {
+        this.main =main;
+    }
 
     @EventHandler
     private void onRightClick(PlayerInteractAtEntityEvent e)
@@ -55,6 +62,22 @@ public class playerManager implements Listener {
             }
         }
 
+    }
+
+    @EventHandler
+    private void PlayerKillZombie(EntityDeathEvent e)
+    {
+        if(e.getEntity().getKiller() != null && main.hashMapManager.getBooster() != null)
+        {
+            Player killer = e.getEntity().getKiller();
+            int money = BasicUtilities.generateInt((int) main.hashMapManager.getBooster().getMoneyMin(), (int) main.hashMapManager.getBooster().getMoneyMax()+1);
+            if(money > 0)
+            {
+                main.eco.depositPlayer(killer, money);
+                killer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous avez gagné "+money+"$ grâce au boost de "+((Player) Bukkit.getOfflinePlayer(main.hashMapManager.getBooster().getUuid())).getName()+"."));
+
+            }
+         }
     }
 
 }

@@ -1,5 +1,6 @@
 package fr.byxis.event;
 
+import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.karma.PlayerKarmaClass;
 import fr.byxis.main.Main;
 import fr.byxis.karma.karmaManager;
@@ -92,7 +93,7 @@ public class scoreboardPlayer implements Listener {
 			shotColor = "§e";
 		}
 
-		jetonsManager jetons = new jetonsManager(main);
+		jetonsCommandManager jetons = new jetonsCommandManager(main);
 		karmaManager km = new karmaManager(main);
 		
 		String time = getTimeString(p);
@@ -147,7 +148,7 @@ public class scoreboardPlayer implements Listener {
 		double numDiscretion = main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).getScore();
 		
 		String time = getTimeString(p);
-		jetonsManager jetons = new jetonsManager(main);
+		jetonsCommandManager jetons = new jetonsCommandManager(main);
 		karmaManager km = new karmaManager(main);
 		Score money = null;
 		if (obj != null) {

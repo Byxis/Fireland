@@ -1,8 +1,9 @@
 package fr.byxis.faction;
 
 import fr.byxis.db.DbConnection;
-import fr.byxis.main.ItemSerializer;
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
+import fr.byxis.main.utilities.ItemSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -158,7 +159,7 @@ public class FactionFunctions {
 					preparedStatement2.executeUpdate();
 					inviteFaction(connection, factionName, uuid);
 					sendFactionPlayer(factionName, ""+invited.getName()+" vient d'être invité dans la faction !");
-					main.sendPlayerInformation(invited, "Vous avez été invité dans la faction "+GetColorCode(factionName)+factionName+" !");
+					BasicUtilities.sendPlayerInformation(invited, "Vous avez été invité dans la faction "+GetColorCode(factionName)+factionName+" !");
 				}
 
 			}
@@ -166,8 +167,8 @@ public class FactionFunctions {
 			else
 			{
 				inviteFaction(connection, factionName, uuid);
-				main.sendPlayerInformation(p, ""+invited.getName()+" vient d'être invité dans la faction !");
-				main.sendPlayerInformation(invited, "Vous avez été invité dans la faction "+GetColorCode(factionName)+factionName+" !");
+				BasicUtilities.sendPlayerInformation(p, ""+invited.getName()+" vient d'être invité dans la faction !");
+				BasicUtilities.sendPlayerInformation(invited, "Vous avez été invité dans la faction "+GetColorCode(factionName)+factionName+" !");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -297,7 +298,7 @@ public class FactionFunctions {
 				preparedStatement2.setTimestamp(3, new Timestamp(time));
 				preparedStatement2.setInt(4, 0);
 				preparedStatement2.executeUpdate();
-				main.sendPlayerInformation(p, "Vous avez rejoint la faction " +GetColorCode(factionName)+ factionName + "§7.");
+				BasicUtilities.sendPlayerInformation(p, "Vous avez rejoint la faction " +GetColorCode(factionName)+ factionName + "§7.");
 
 				//Puis on ajoute 1 au nombre de membres actuels
 				final PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT nbr_members FROM faction WHERE name = ?");
@@ -452,7 +453,7 @@ public class FactionFunctions {
 			//On executes les requetes
 			insertionFaction.executeUpdate();
 			insertionPlayerFaction.executeUpdate();
-			main.sendPlayerInformation(p, "Vous avez créé la faction "+GetColorCode(name)+name+" !");
+			BasicUtilities.sendPlayerInformation(p, "Vous avez créé la faction "+GetColorCode(name)+name+" !");
 		} catch (SQLException e) {
 			//Une erreur est survenue (Problème de connexion à la BD)
 			e.printStackTrace();
@@ -497,12 +498,12 @@ public class FactionFunctions {
 				{
 					main.hashMapManager.removeFactionMap(p.getUniqueId());
 				}
-				main.sendPlayerError(p, "Vous avez supprimé la faction "+resultFactionName.getString(1)+".");
+				BasicUtilities.sendPlayerError(p, "Vous avez supprimé la faction "+resultFactionName.getString(1)+".");
 			}
 			else
 			{
 				//Le joueur n'est soit pas dans une faction, soit pas leader d'une faction
-				main.sendPlayerError(p, "Vous ne pouvez pas effectuer cela !");
+				BasicUtilities.sendPlayerError(p, "Vous ne pouvez pas effectuer cela !");
 			}
 			
 		} catch (SQLException e) {
@@ -561,7 +562,7 @@ public class FactionFunctions {
 		try {
 			final Connection connection = firelandConnection.getConnection();
 			//Préparation de la commande
-			final PreparedStatement requestInfo = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader_uuid, friendly_fire, show_nickname, has_skin, show_prefix, color_code FROM faction WHERE name = ?");
+			final PreparedStatement requestInfo = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader_uuid, friendly_fire, show_nickname, has_skin, show_prefix, capture_perk, color_code FROM faction WHERE name = ?");
 			requestInfo.setString(1, factionName);
 
 			final ResultSet result = requestInfo.executeQuery();
@@ -577,7 +578,7 @@ public class FactionFunctions {
 
 				UUID leader = UUID.fromString(result.getString(5));
 
-				return new FactionInformation(factionName, currentNbrOfPlayers, amelioration[0], currentUpgrade, currentMoney, amelioration[1], amelioration[2], createdAt, leader, result.getBoolean(6),  result.getBoolean(7), result.getBoolean(8),  result.getBoolean(9), result.getString(10));
+				return new FactionInformation(factionName, currentNbrOfPlayers, amelioration[0], currentUpgrade, currentMoney, amelioration[1], amelioration[2], createdAt, leader, result.getBoolean(6),  result.getBoolean(7), result.getBoolean(8),  result.getBoolean(9), result.getBoolean(10), result.getString(11));
 			}
 		} catch (SQLException e) {
 			//Une erreur est survenue (Problème de connexion à la BD)
@@ -602,7 +603,7 @@ public class FactionFunctions {
 		try {
 			final Connection connection = firelandConnection.getConnection();
 			//Préparation de la commande
-			final PreparedStatement requestInfo = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader_uuid, friendly_fire, show_nickname, has_skin,show_prefix, color_code FROM faction WHERE name = ?");
+			final PreparedStatement requestInfo = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader_uuid, friendly_fire, show_nickname, has_skin,show_prefix, capture_perk, color_code FROM faction WHERE name = ?");
 			requestInfo.setString(1, factionName);
 
 			final ResultSet result = requestInfo.executeQuery();
@@ -618,7 +619,7 @@ public class FactionFunctions {
 
 				UUID leader = UUID.fromString(result.getString(5));
 
-				return new FactionInformation(factionName, currentNbrOfPlayers, amelioration[0], currentUpgrade, currentMoney, amelioration[1], amelioration[2], createdAt, leader, result.getBoolean(6),  result.getBoolean(7), result.getBoolean(8), result.getBoolean(9), result.getString(10));
+				return new FactionInformation(factionName, currentNbrOfPlayers, amelioration[0], currentUpgrade, currentMoney, amelioration[1], amelioration[2], createdAt, leader, result.getBoolean(6),  result.getBoolean(7), result.getBoolean(8), result.getBoolean(9),  result.getBoolean(10),result.getString(11));
 			}
 		} catch (SQLException e) {
 			//Une erreur est survenue (Problème de connexion à la BD)
@@ -707,7 +708,7 @@ public class FactionFunctions {
 				preparedStatement2.setInt(1, upgrade);
 				//On exécute la requete SQL
 				preparedStatement2.executeUpdate();
-				main.sendPlayerInformation(sender,"Votre faction a été amélioré au rang §d"+upgrade+"§7.");
+				BasicUtilities.sendPlayerInformation(sender,"Votre faction a été amélioré au rang §d"+upgrade+"§7.");
 			}
 			else
 			{
@@ -787,7 +788,7 @@ public class FactionFunctions {
 				preparedStatement2.setInt(1, money);
 				//On exécute la requete SQL
 				preparedStatement2.executeUpdate();
-				main.sendPlayerInformation(sender, "§7Vous avez déposé " + amount + "$ !");
+				BasicUtilities.sendPlayerInformation(sender, "§7Vous avez déposé " + amount + "$ !");
 				return true;
 			}
 			else
@@ -897,7 +898,7 @@ public class FactionFunctions {
 	}
 
 	public void kickPlayer(FactionInformation infos, Player victim)
-	{//TODO
+	{
 		/*
 		 * Renomme une faction.
 		 *
@@ -1056,8 +1057,28 @@ public class FactionFunctions {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F027");
 		}
 		return false;
+	}
+
+	public void RemoveItemStorage(String faction, int index)
+	{
+		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+		try {
+			//On prépare la requête SQL
+			final Connection connection = firelandConnection.getConnection();
+
+			final PreparedStatement preparedStatement2 = connection.prepareStatement("DELETE FROM faction_storage WHERE faction_storage.faction = ? AND faction_storage.index_item = ?;");
+			preparedStatement2.setString(1, faction);
+			preparedStatement2.setInt(2, index);
+			//On exécute la requete SQL
+			preparedStatement2.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F026");
+		}
 	}
 
 	public void SaveItemFactionStorage(String faction, int index, ItemStack item)
@@ -1072,6 +1093,10 @@ public class FactionFunctions {
 			{
 				SetItemStorage(faction, index, item);
 			}
+		}
+		else
+		{
+			RemoveItemStorage(faction, index);
 		}
 	}
 
@@ -1262,7 +1287,7 @@ public class FactionFunctions {
 			String name = playerFactionName(p);
 			if(name.equalsIgnoreCase(factionName))
 			{
-				main.sendPlayerInformation(p, msg);
+				BasicUtilities.sendPlayerInformation(p, msg);
 			}
 		}
 	}

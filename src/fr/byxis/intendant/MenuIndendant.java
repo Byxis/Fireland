@@ -1,9 +1,15 @@
 package fr.byxis.intendant;
 
+import fr.byxis.booster.BoosterClass;
 import fr.byxis.faction.FactionFunctions;
 import fr.byxis.faction.FactionInformation;
 import fr.byxis.faction.FactionPlayerInformation;
+import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
+import fr.byxis.main.utilities.BlockUtilities;
+import fr.byxis.main.utilities.ItemUtilities;
+import fr.byxis.zone.zoneclass.FactionZoneInformation;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,6 +19,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.time.LocalDate;
@@ -56,7 +63,8 @@ public class MenuIndendant implements Listener {
                 switch(itemclicked.getType())
                 {
                     case EMERALD -> main.commandExecutor(p, "ah", "crazyauctions.access");
-                    case DIAMOND_SWORD -> OpenFaction(p);
+                    case DIAMOND_SWORD -> OpenFaction(p, true);
+                    case FIREWORK_ROCKET -> OpenBoosters(p);
                 }
             }
             else if(inv.getTitle().contains("Votre faction"))
@@ -124,7 +132,7 @@ public class MenuIndendant implements Listener {
                                 main.commandExecutor(p, "faction deposit 100", "fireland.command.faction.deposit");
                             }
                         }
-                        OpenFaction(p);
+                        OpenFaction(p, true);
                         break;
                 }
             }
@@ -150,7 +158,7 @@ public class MenuIndendant implements Listener {
 
                 switch(itemclicked.getType())
                 {
-                    case RED_STAINED_GLASS_PANE -> OpenFaction(p);
+                    case RED_STAINED_GLASS_PANE -> OpenFaction(p, true);
                 }
             }
             else if(inv.getTitle().contains("Améliorations pour"))
@@ -174,18 +182,18 @@ public class MenuIndendant implements Listener {
                 FactionFunctions ff = new FactionFunctions(main, p);
                 FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
                 FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
-                final Material color = GetItemStackColor(finfos.getColorcode());
+                final Material color = BlockUtilities.getGlassPaneColor(finfos.getColorcode());
 
                 switch(itemclicked.getType())
                 {
-                    case RED_STAINED_GLASS_PANE -> OpenFaction(p);
+                    case RED_STAINED_GLASS_PANE -> OpenFaction(p, true);
                     case LIME_STAINED_GLASS_PANE -> main.commandExecutor(p, "faction upgrade", "fireland.command.faction.upgrade");
                     case SHIELD -> {
                         if(!finfos.hasFriendlyFirePerk())
                         {
                             if(finfos.getCurrentUpgrade() < 2)
                             {
-                                main.sendPlayerError(p, "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
+                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -201,7 +209,7 @@ public class MenuIndendant implements Listener {
                         {
                             if(finfos.getCurrentUpgrade() < 5)
                             {
-                                main.sendPlayerError(p, "Vous devez être niveau de faction 5 pour débloquer cette amélioration.");
+                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 5 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -217,7 +225,7 @@ public class MenuIndendant implements Listener {
                         {
                             if(finfos.getCurrentUpgrade() < 4)
                             {
-                                main.sendPlayerError(p, "Vous devez être niveau de faction 4 pour débloquer cette amélioration.");
+                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 4 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -233,7 +241,7 @@ public class MenuIndendant implements Listener {
                         {
                             if(finfos.getCurrentUpgrade() < 3)
                             {
-                                main.sendPlayerError(p, "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
+                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -244,8 +252,24 @@ public class MenuIndendant implements Listener {
                         }
                         return;
                     }
+                    case GRASS_BLOCK -> {
+                        if(!finfos.hasCapturePerk())
+                        {
+                            if(finfos.getCurrentUpgrade() < 2)
+                            {
+                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
+                            }
+                            else
+                            {
+                                main.commandExecutor(p, "faction perk capture_perk", "fireland.command.faction.perk");
+                                OpenPerks(p);
+                            }
+
+                        }
+                        return;
+                    }
                 }
-                if(itemclicked.getType() == color && p.hasPermission("fireland.command.faction.color") && !itemclicked.getItemMeta().getDisplayName().contains("Améliorer la faction au rang"))
+                if(itemclicked.getType() == color && p.hasPermission("fireland.command.faction.color") && !itemclicked.getItemMeta().getDisplayName().contains("Améliorer la faction au rang") && pInfos.getRole() == 2)
                 {
                     OpenColorMenu(p, finfos);
                 }
@@ -270,18 +294,67 @@ public class MenuIndendant implements Listener {
                 /**       Click check        **/
 
 
-               if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
-               {
-                   OpenPerks(p);
-               }
-               else if(itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE)
-               {
-                   FactionFunctions ff = new FactionFunctions(main, p);
-                   FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
-                   FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
-                   ff.SetColorCode(pInfos.getFactionName(), GetStringColor(itemclicked.getType()));
-                   OpenColorMenu(p, finfos);
-               }
+                if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
+                {
+                    OpenPerks(p);
+                }
+                else if(itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE)
+                {
+                    FactionFunctions ff = new FactionFunctions(main, p);
+                    FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
+                    FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
+                    ff.SetColorCode(pInfos.getFactionName(), GetStringColor(itemclicked.getType()));
+                    OpenColorMenu(p, finfos);
+                }
+            }
+            else if(inv.getTitle().contains("Boosters"))
+            {
+                /**       Click check        **/
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null) {
+                    return;
+                }
+                if (e.getClickedInventory() == e.getView().getTopInventory() || e.getClick().isKeyboardClick()) {
+                    e.setCancelled(true);
+                }
+                else
+                {
+                    if(e.isShiftClick())
+                    {
+                        e.setCancelled(true);
+                    }
+                }
+                /**       Click check        **/
+
+
+                if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
+                {
+                    OpenIntendant(p);
+                }
+                else if(itemclicked.getType() == Material.FIREWORK_ROCKET)
+                {
+                    ItemMeta meta = itemclicked.getItemMeta();
+                    int duration = 1;
+                    if(meta.getDisplayName().contains("3h"))
+                    {
+                        duration = 3;
+                    }
+                    else if(meta.getDisplayName().contains("5h"))
+                    {
+                        duration = 5;
+                    }
+                    int level = 1;
+                    if(meta.getDisplayName().contains("Lvl. 2"))
+                    {
+                        level = 2;
+                    }
+                    else if(meta.getDisplayName().contains("Lvl. 3"))
+                    {
+                        level = 3;
+                    }
+                    main.commandExecutor(p, "booster create "+level+" "+duration, "fireland.command.booster");
+                    OpenBoosters(p);
+                }
             }
         }
     }
@@ -299,26 +372,28 @@ public class MenuIndendant implements Listener {
         FactionPlayerInformation infos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
         if(infos == null)
         {
-            craftMenu.setItem(13, main.setItemMeta(Material.EMERALD, "§aHôtel des ventes", (short) 0));
+            craftMenu.setItem(12, ItemUtilities.setItemMeta(Material.FIREWORK_ROCKET, "§eBoosters", (short) 0));
+            craftMenu.setItem(14, ItemUtilities.setItemMeta(Material.EMERALD, "§aHôtel des ventes", (short) 0));
         }
         else
         {
-            craftMenu.setItem(12, main.setItemMeta(Material.EMERALD, "§aHôtel des ventes", (short) 0));
-            craftMenu.setItem(14, main.setItemMeta(Material.DIAMOND_SWORD, "§aFactions", (short) 0));
+            craftMenu.setItem(11, ItemUtilities.setItemMeta(Material.FIREWORK_ROCKET, "§eBoosters", (short) 0));
+            craftMenu.setItem(13, ItemUtilities.setItemMeta(Material.EMERALD, "§aHôtel des ventes", (short) 0));
+            craftMenu.setItem(15, ItemUtilities.setItemMeta(Material.DIAMOND_SWORD, "§aFactions", (short) 0));
         }
 
     }
 
-    private void OpenFaction(Player p)
+    public void OpenFaction(Player p, boolean canReturn)
     {
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation infos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
         Inventory faction = Bukkit.createInventory(null, 54, "§8Votre faction: "+ff.GetColorCode(infos.getFactionName())+infos.getFactionName());
-        SetFactionItems(faction, p);
+        SetFactionItems(faction, p, canReturn);
         p.openInventory(faction);
     }
 
-    private void SetFactionItems(Inventory inventory, Player p)
+    private void SetFactionItems(Inventory inventory, Player p, boolean canReturn)
     {
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
@@ -326,8 +401,8 @@ public class MenuIndendant implements Listener {
         if(pInfos != null && finfos != null)
         {
             for(int i=0;i<9;i++) {
-                inventory.setItem(i, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
-                inventory.setItem(i + 45, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                inventory.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                inventory.setItem(i + 45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
             String role = "§aMembre";
@@ -339,14 +414,17 @@ public class MenuIndendant implements Listener {
             {
                 role = "§cLeader";
             }
-            inventory.setItem(8, main.setItemMeta(Material.BARRIER, "§4§lQuitter la faction", (short) 0));
-            inventory.setItem(22, main.setItemMetaLore(Material.ENDER_CHEST, "§aStockage - "+finfos.getCurrentChestSize()+" slots", (short) 0, listMaker("§8- Faites un §dclic gauche§8 pour ouvrir votre stockage","","","")));
+            inventory.setItem(8, ItemUtilities.setItemMeta(Material.BARRIER, "§4§lQuitter la faction", (short) 0));
+            inventory.setItem(22, ItemUtilities.setItemMetaLore(Material.ENDER_CHEST, "§aStockage - "+finfos.getCurrentChestSize()+" slots", (short) 0, listMaker("§8- Faites un §dclic gauche§8 pour ouvrir votre stockage","","","")));
             inventory.setItem(26, GetHead(finfos.getLeader(), "§7Leader: "+Bukkit.getOfflinePlayer(finfos.getLeader()).getName()));
-            inventory.setItem(30, main.setItemMetaLore(Material.GOLD_INGOT, "§aArgent - §6"+finfos.getCurrentMoney()+"/"+finfos.getMaxMoney(), (short) 0, listMaker("§8- Faites un §dclique droit §8pour ajouter §6100$","§8à la faction (shift pour 1000$)", "§8- §c(Leader)§8 Faites un §dclique gauche §8pour retirer §6100$","§8de la faction (shift pour 1000$)")));
-            inventory.setItem(32, main.setItemMetaLore(Material.GRASS_BLOCK, "§aTerritoires claims -", (short) 0, listMaker("§cNon disponible pour le moment", "","","")));
-            inventory.setItem(35, main.setItemMetaLore(Material.ANVIL, "§aAméliorations -", (short) 0, listMaker("§8Accédez aux améliorations de la faction !","§cSeul le leader peut acheter des améliorations !","","")));
-            inventory.setItem(45, main.setItemMetaLore(Material.BOOK, "§7Vous êtes "+role+"§7.", (short) 0, listMaker("§8Date de création: "+finfos.getCreatedAt(),"","","")));
-            inventory.setItem(53, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+            inventory.setItem(30, ItemUtilities.setItemMetaLore(Material.GOLD_INGOT, "§aArgent - §6"+finfos.getCurrentMoney()+"/"+finfos.getMaxMoney(), (short) 0, listMaker("§8- Faites un §dclic gauche §8pour ajouter §6100$","§8à la faction (shift pour 1000$)", "§8- §c(Leader)§8 Faites un §dclic droit §8pour retirer §6100$","§8de la faction (shift pour 1000$)")));
+            inventory.setItem(32, ItemUtilities.setItemMetaLore(Material.GRASS_BLOCK, "§aTerritoires claims -", (short) 0, listMaker("§cNon disponible pour le moment", "","","")));
+            inventory.setItem(35, ItemUtilities.setItemMetaLore(Material.ANVIL, "§aAméliorations -", (short) 0, listMaker("§8Accédez aux améliorations de la faction !","§cSeul le leader peut acheter des améliorations !","","")));
+            inventory.setItem(45, ItemUtilities.setItemMetaLore(Material.BOOK, "§7Vous êtes "+role+"§7.", (short) 0, listMaker("§8Date de création: "+finfos.getCreatedAt(),"","","")));
+            if(canReturn)
+            {
+                inventory.setItem(53, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+            }
         }
 
     }
@@ -387,9 +465,9 @@ public class MenuIndendant implements Listener {
             ArrayList<FactionPlayerInformation> infos = ff.getPlayersFromFaction(pInfos.getFactionName());
 
             for(int i=0;i<9;i++) {
-                inventory.setItem(i + 45, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                inventory.setItem(i + 45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
-            inventory.setItem(53, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+            inventory.setItem(53, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
             int member = 9;
             String you = "";
             String nouveau = "";
@@ -454,49 +532,57 @@ public class MenuIndendant implements Listener {
             FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
             FactionInformation nextFinfos = ff.getFactionInfoWithAmeliorations(finfos.getName());
             for(int i=0;i<9;i++) {
-                inventory.setItem(i + 45, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                inventory.setItem(i + 45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
-            inventory.setItem(45, main.setItemMetaLore(Material.LIME_STAINED_GLASS_PANE, "§aAméliorer la faction au rang §d§l"+nextFinfos.getCurrentUpgrade(), (short) 0, listMaker("§8Coût: "+finfos.getCurrentMoney()+"/§6"+finfos.getMaxMoney()+"$", "§8Maximum d'argent: §6"+nextFinfos.getMaxMoney()+"$", "§8Maximum dans la banque: "+nextFinfos.getCurrentChestSize(), "§8Maximum de joueurs: "+nextFinfos.getMaxNbrOfPlayers())));
-            inventory.setItem(49, main.setItemMetaLore(GetItemStackColor(finfos.getColorcode()), finfos.getColorcode()+"Changer la couleur d'affichage de la faction", (short) 0, listMaker("§8Disponible seulement pour les personnes disposant ", "§8du grade Vétérant ou Stratège.", "§8Utilisable uniquement par le Leader.", "")));
-            inventory.setItem(53, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+            inventory.setItem(45, ItemUtilities.setItemMetaLore(Material.LIME_STAINED_GLASS_PANE, "§aAméliorer la faction au rang §d§l"+nextFinfos.getCurrentUpgrade(), (short) 0, listMaker("§8Coût: "+finfos.getCurrentMoney()+"/§6"+finfos.getMaxMoney()+"$", "§8Maximum d'argent: §6"+nextFinfos.getMaxMoney()+"$", "§8Maximum dans la banque: "+nextFinfos.getCurrentChestSize(), "§8Maximum de joueurs: "+nextFinfos.getMaxNbrOfPlayers())));
+            inventory.setItem(49, ItemUtilities.setItemMetaLore(BlockUtilities.getGlassPaneColor(finfos.getColorcode()), finfos.getColorcode()+"Changer la couleur d'affichage de la faction", (short) 0, listMaker("§8Disponible seulement pour les personnes disposant ", "§8du grade Vétérant ou Stratège.", "§8Utilisable uniquement par le Leader.", "")));
+            inventory.setItem(53, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour au menu Faction", (short) 0));
 
             if(finfos.hasFriendlyFirePerk())
             {
-                inventory.setItem(10, main.setItemMetaLore(Material.SHIELD, "§aSupprimer le Friendly Fire... §d- Lvl. 2", (short)0, listMaker("§8Empêche les joueurs de cette faction", "§8de se faire des dégâts", "§aDébloqué", "")));
+                inventory.setItem(10, ItemUtilities.setItemMetaLore(Material.SHIELD, "§aSupprimer le Friendly Fire... §d- Lvl. 2", (short)0, listMaker("§8Empêche les joueurs de cette faction", "§8de se faire des dégâts", "§aDébloqué", "")));
             }
             else
             {
-                inventory.setItem(10, main.setItemMetaLore(Material.SHIELD, "§cSupprimer le Friendly Fire... §d- Lvl. 2", (short)0, listMaker("§8Empêche les joueurs de cette faction", "§8de se faire des dégâts", "§8Coût: §68000$", "")));
+                inventory.setItem(10, ItemUtilities.setItemMetaLore(Material.SHIELD, "§cSupprimer le Friendly Fire... §d- Lvl. 2", (short)0, listMaker("§8Empêche les joueurs de cette faction", "§8de se faire des dégâts", "§8Coût: §68000$", "")));
+            }
+
+            if(finfos.hasCapturePerk())
+            {
+                inventory.setItem(13, ItemUtilities.setItemMetaLore(Material.GRASS_BLOCK, "§aDébloquer la capture de zone... §d- Lvl. 2", (short)0, listMaker("§8Permet de capturer des zones", "§8dans la map.", "§aDébloqué", "")));
+            }
+            else
+            {
+                inventory.setItem(13, ItemUtilities.setItemMetaLore(Material.GRASS_BLOCK, "§cDébloquer la capture de zone... §d- Lvl. 2", (short)0, listMaker("§8Permet de capturer des zones", "§8dans la map.", "§8Coût: §65000$", "")));
             }
 
             if(finfos.DoShowPrefix())
             {
-                inventory.setItem(13, main.setItemMetaLore(Material.FLOWER_BANNER_PATTERN, "§aDébloquer le préfixe de faction... §d- Lvl. 3", (short)0, listMaker("§8Affiche votre nom de faction", "§8dans le chat général.", "§aDébloqué", "")));
+                inventory.setItem(16, ItemUtilities.setItemMetaLore(Material.FLOWER_BANNER_PATTERN, "§aDébloquer le préfixe de faction... §d- Lvl. 3", (short)0, listMaker("§8Affiche votre nom de faction", "§8dans le chat général.", "§aDébloqué", "")));
             }
             else
             {
-                inventory.setItem(13, main.setItemMetaLore(Material.FLOWER_BANNER_PATTERN, "§cDébloquer le préfixe de faction... §d- Lvl. 3", (short)0, listMaker("§8Affiche votre nom de faction", "§8dans le chat général.", "§8Coût: §66000$", "")));
+                inventory.setItem(16, ItemUtilities.setItemMetaLore(Material.FLOWER_BANNER_PATTERN, "§cDébloquer le préfixe de faction... §d- Lvl. 3", (short)0, listMaker("§8Affiche votre nom de faction", "§8dans le chat général.", "§8Coût: §66000$", "")));
             }
 
             if(finfos.hasSkinPerk())
             {
-                inventory.setItem(16, main.setItemMetaLore(Material.LEATHER, "§aDébloquer les skins de faction... §d- Lvl. 4", (short)0, listMaker("§8Donne l'accès aux membres de la faction", "§8aux skins de faction.", "§aDébloqué", "")));
+                inventory.setItem(28, ItemUtilities.setItemMetaLore(Material.LEATHER, "§aDébloquer les skins de faction... §d- Lvl. 4", (short)0, listMaker("§8Donne l'accès aux membres de la faction", "§8aux skins de faction.", "§aDébloqué", "")));
             }
             else
             {
-                inventory.setItem(16, main.setItemMetaLore(Material.LEATHER, "§cDébloquer les skins de faction... §d- Lvl. 4", (short)0, listMaker("§8Donne l'accès aux membres de la faction", "§8aux skins de faction.", "§8Coût: §612000$", "")));
+                inventory.setItem(28, ItemUtilities.setItemMetaLore(Material.LEATHER, "§cDébloquer les skins de faction... §d- Lvl. 4", (short)0, listMaker("§8Donne l'accès aux membres de la faction", "§8aux skins de faction.", "§8Coût: §612000$", "")));
             }
 
             if(finfos.hasNicknameVisibilityPerk())
             {
-                inventory.setItem(28, main.setItemMetaLore(Material.NAME_TAG, "§aAfficher les pseudos... §d- Lvl. 5", (short)0, listMaker("§8Affiche les pseudos des joueurs", "§8qui sont dans cette faction.", "§aDébloqué", "")));
+                inventory.setItem(31, ItemUtilities.setItemMetaLore(Material.NAME_TAG, "§aAfficher les pseudos... §d- Lvl. 5", (short)0, listMaker("§8Affiche les pseudos des joueurs", "§8qui sont dans cette faction.", "§aDébloqué", "")));
             }
             else
             {
-                inventory.setItem(28, main.setItemMetaLore(Material.NAME_TAG, "§cAfficher les pseudos... §d- Lvl. 5", (short)0, listMaker("§8Affiche les pseudos des joueurs", "§8qui sont dans cette faction.", "§8Coût: §69000$", "§cEn développement...")));
+                inventory.setItem(31, ItemUtilities.setItemMetaLore(Material.NAME_TAG, "§cAfficher les pseudos... §d- Lvl. 5", (short)0, listMaker("§8Affiche les pseudos des joueurs", "§8qui sont dans cette faction.", "§8Coût: §69000$", "§cEn développement...")));
             }
-            inventory.setItem(31, main.setItemMetaLore(Material.PAPER, "§cFonctionalité à venir...", (short)0, listMaker("", "", "", "")));
-            inventory.setItem(34, main.setItemMetaLore(Material.PAPER, "§cFonctionalité à venir...", (short)0, listMaker("", "", "", "")));
+            inventory.setItem(34, ItemUtilities.setItemMetaLore(Material.PAPER, "§cFonctionalité à venir...", (short)0, listMaker("", "", "", "")));
 
         }
     }
@@ -512,81 +598,23 @@ public class MenuIndendant implements Listener {
     private void SetItemColorMenu(Inventory inv, Player p, FactionInformation infos)
     {
         for(int i=0;i<9;i++) {
-            inv.setItem(i, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
-            inv.setItem(i + 45, main.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            inv.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            inv.setItem(i + 45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        inv.setItem(19, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§4"+infos.getName(), (short) 0));
-        inv.setItem(20, main.setItemMeta(Material.ORANGE_STAINED_GLASS_PANE, "§6"+infos.getName(), (short) 0));
-        inv.setItem(21, main.setItemMeta(Material.YELLOW_STAINED_GLASS_PANE, "§e"+infos.getName(), (short) 0));
-        inv.setItem(22, main.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a"+infos.getName(), (short) 0));
-        inv.setItem(23, main.setItemMeta(Material.GREEN_STAINED_GLASS_PANE, "§2"+infos.getName(), (short) 0));
-        inv.setItem(24, main.setItemMeta(Material.CYAN_STAINED_GLASS_PANE, "§3"+infos.getName(), (short) 0));
-        inv.setItem(25, main.setItemMeta(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "§b"+infos.getName(), (short) 0));
-        inv.setItem(34, main.setItemMeta(Material.BLUE_STAINED_GLASS_PANE, "§1"+infos.getName(), (short) 0));
-        inv.setItem(33, main.setItemMeta(Material.PURPLE_STAINED_GLASS_PANE, "§5"+infos.getName(), (short) 0));
-        inv.setItem(32, main.setItemMeta(Material.MAGENTA_STAINED_GLASS_PANE, "§d"+infos.getName(), (short) 0));
-        inv.setItem(31, main.setItemMeta(Material.LIGHT_GRAY_STAINED_GLASS_PANE, "§7"+infos.getName(), (short) 0));
-        inv.setItem(30, main.setItemMeta(Material.GRAY_STAINED_GLASS_PANE, "§8"+infos.getName(), (short) 0));
-        inv.setItem(29, main.setItemMeta(Material.BLACK_STAINED_GLASS_PANE, "§0"+infos.getName(), (short) 0));
-        inv.setItem(53, main.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
-    }
-
-    private Material GetItemStackColor(String color)
-    {
-        if(color.equals("§0"))
-        {
-            return Material.BLACK_STAINED_GLASS_PANE;
-        }
-        else if(color.equals("§1"))
-        {
-            return Material.BLUE_STAINED_GLASS_PANE;//
-        }
-        else if(color.equals("§2"))
-        {
-            return Material.GREEN_STAINED_GLASS_PANE;//
-        }
-        else if(color.equals("§3"))
-        {
-            return Material.CYAN_STAINED_GLASS_PANE;//
-        }
-        else if(color.equals("§4"))
-        {
-            return Material.RED_STAINED_GLASS_PANE;//
-        }
-        else if(color.equals("§5"))
-        {
-            return Material.PURPLE_STAINED_GLASS_PANE;//
-        }
-        else if(color.equals("§6"))
-        {
-            return Material.ORANGE_STAINED_GLASS_PANE;//
-        }
-        else if(color.equals("§7"))
-        {
-            return Material.LIGHT_GRAY_STAINED_GLASS_PANE;
-        }
-        else if(color.equals("§8"))
-        {
-            return Material.GRAY_STAINED_GLASS_PANE;
-        }
-        else if(color.equals("§a"))
-        {
-            return Material.LIME_STAINED_GLASS_PANE;//
-        }
-        else if(color.equals("§b"))
-        {
-            return Material.LIGHT_BLUE_STAINED_GLASS_PANE;//
-        }
-        else if(color.equals("§d"))
-        {
-            return Material.MAGENTA_STAINED_GLASS_PANE;//
-        }
-        else if(color.equals("§e"))
-        {
-            return Material.YELLOW_STAINED_GLASS_PANE;//
-        }
-        return Material.LIGHT_GRAY_STAINED_GLASS_PANE;
-
+        inv.setItem(19, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§4"+infos.getName(), (short) 0));
+        inv.setItem(20, ItemUtilities.setItemMeta(Material.ORANGE_STAINED_GLASS_PANE, "§6"+infos.getName(), (short) 0));
+        inv.setItem(21, ItemUtilities.setItemMeta(Material.YELLOW_STAINED_GLASS_PANE, "§e"+infos.getName(), (short) 0));
+        inv.setItem(22, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a"+infos.getName(), (short) 0));
+        inv.setItem(23, ItemUtilities.setItemMeta(Material.GREEN_STAINED_GLASS_PANE, "§2"+infos.getName(), (short) 0));
+        inv.setItem(24, ItemUtilities.setItemMeta(Material.CYAN_STAINED_GLASS_PANE, "§3"+infos.getName(), (short) 0));
+        inv.setItem(25, ItemUtilities.setItemMeta(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "§b"+infos.getName(), (short) 0));
+        inv.setItem(34, ItemUtilities.setItemMeta(Material.BLUE_STAINED_GLASS_PANE, "§1"+infos.getName(), (short) 0));
+        inv.setItem(33, ItemUtilities.setItemMeta(Material.PURPLE_STAINED_GLASS_PANE, "§5"+infos.getName(), (short) 0));
+        inv.setItem(32, ItemUtilities.setItemMeta(Material.MAGENTA_STAINED_GLASS_PANE, "§d"+infos.getName(), (short) 0));
+        inv.setItem(31, ItemUtilities.setItemMeta(Material.LIGHT_GRAY_STAINED_GLASS_PANE, "§7"+infos.getName(), (short) 0));
+        inv.setItem(30, ItemUtilities.setItemMeta(Material.GRAY_STAINED_GLASS_PANE, "§8"+infos.getName(), (short) 0));
+        inv.setItem(29, ItemUtilities.setItemMeta(Material.BLACK_STAINED_GLASS_PANE, "§0"+infos.getName(), (short) 0));
+        inv.setItem(53, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
     }
 
     private String GetStringColor(Material mat)
@@ -635,6 +663,86 @@ public class MenuIndendant implements Listener {
         }
         return "§7";
 
+    }
+
+    private void OpenBoosters(Player p)
+    {
+        Inventory boosterInv = Bukkit.createInventory(null, 54, "§8Boosters");
+        SetBoostersItem(boosterInv, p);
+        p.openInventory(boosterInv);
+    }
+
+    private void SetBoostersItem(Inventory inv, Player p)
+    {
+        for(int i=0;i<9;i++) {
+            inv.setItem(i + 45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+        }
+        jetonsCommandManager jeton = new jetonsCommandManager(main);
+
+        if(main.hashMapManager.getBooster() != null)
+        {
+            BoosterClass booster = main.hashMapManager.getBooster();
+            inv.setItem(0, ItemUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, listMaker("§8Créé par "+((Player)Bukkit.getOfflinePlayer(booster.getUuid())).getName(), "§8Expiration dans "+main.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()), "", "")));
+        }
+        else
+        {
+            inv.setItem(0, ItemUtilities.setItemMetaLore(Material.RED_WOOL, "§cAucun Booster n'est actif.", (short) 0, listMaker("", "", "", "")));
+        }
+        ItemStack head = GetHead(p.getUniqueId(), "§d"+p.getName());
+        ItemMeta meta = head.getItemMeta();
+        meta.setLore(listMaker("§8Jetons : §b"+jeton.getJetonsPlayer(p.getUniqueId())+ " \u26c1" , "", "", ""));
+        head.setItemMeta(meta);
+        inv.setItem(8, head);
+
+        inv.setItem(11, ItemUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 1", (short) 0, listMaker("§8Permet de gagner 0 à 1$ sur les zombies", "§8Donne 5% plus d'argent lors du kill", "§8Donne 5% plus de loot dans les coffres.", "")));
+        inv.setItem(13, ItemUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 2", (short) 0, listMaker("§8Permet de gagner 0 à 2$ sur les zombies", "§8Donne 7.5% plus d'argent lors du kill", "§8Donne 7.5% plus de loot dans les coffres.", "")));
+        inv.setItem(15, ItemUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 3", (short) 0, listMaker("§8Permet de gagner 0 à 3$ sur les zombies", "§8Donne 10% plus d'argent lors du kill", "§8Donne 10% plus de loot dans les coffres.", "")));
+
+        inv.setItem(20, ItemUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 1h", (short) 0, listMaker("§8Avantages: voir ci-dessus","§8Coût : §b100 \u26c1","", "")));
+        inv.setItem(29, ItemUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 3h", (short) 0, listMaker("§8Avantages: voir ci-dessus","§8Coût : §b300 \u26c1","", "")));
+        inv.setItem(38, ItemUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 5h", (short) 0, listMaker("§8Avantages: voir ci-dessus","§8Coût : §b500 \u26c1","", "")));
+
+        inv.setItem(22, ItemUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 1h", (short) 0, listMaker("§8Avantages: voir ci-dessus","§8Coût : §b200 \u26c1","", "")));
+        inv.setItem(31, ItemUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 3h", (short) 0, listMaker("§8Avantages: voir ci-dessus","§8Coût : §b600 \u26c1","", "")));
+        inv.setItem(40, ItemUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 5h", (short) 0, listMaker("§8Avantages: voir ci-dessus","§8Coût : §b1000 \u26c1","", "")));
+
+        inv.setItem(24, ItemUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 1h", (short) 0, listMaker("§8Avantages: voir ci-dessus","§8Coût : §b300 \u26c1","", "")));
+        inv.setItem(33, ItemUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 3h", (short) 0, listMaker("§8Avantages: voir ci-dessus","§8Coût : §b900 \u26c1","", "")));
+        inv.setItem(42, ItemUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 5h", (short) 0, listMaker("§8Avantages: voir ci-dessus","§8Coût : §b1500 \u26c1","", "")));
+
+        inv.setItem(53, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+    }
+
+    private void OpenZone(Player p)
+    {
+        Inventory zoneInv = Bukkit.createInventory(null, 54, "§8Zones");
+        SetZoneItem(zoneInv, p);
+        p.openInventory(zoneInv);
+    }
+
+    private void SetZoneItem(Inventory inv, Player p)
+    {
+        for(int i=0;i<9;i++)
+        {
+            inv.setItem(i + 45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+        }
+        FactionFunctions ff = new FactionFunctions(main, p);
+        FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
+        List<FactionZoneInformation> list = main.zoneManager.GetFactionData(pInfos.getFactionName());
+        int i = 10;
+        for(FactionZoneInformation factionZoneInformation : list)
+        {
+            if(i == 17 ||i == 17+9 || i == 17+18)
+            {
+                List<String> lore = new ArrayList<>();
+                lore.add("§8Date de capture: §a"+factionZoneInformation.claimedAt.toString());
+                lore.add("§8Total cumulé: §a"+factionZoneInformation.totalDuration);
+                inv.setItem(53, ItemUtilities.setItemMetaLore(Material.WHITE_BANNER, "§a"+factionZoneInformation.zoneName, (short) 0, lore));
+            }
+            i++;
+        }
+
+        inv.setItem(53, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour au menu Faction", (short) 0));
     }
 
 }

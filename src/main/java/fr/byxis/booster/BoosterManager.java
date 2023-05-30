@@ -54,7 +54,7 @@ public class BoosterManager implements CommandExecutor, Listener {
                     BasicUtilities.sendPlayerInformation(p, "Vous avez acheté un Booster de niveau §d"+Integer.parseInt(strings[1])+"§r§7 pour "+Integer.parseInt(strings[2])+" heures !");
                     for(Player players : Bukkit.getOnlinePlayers())
                     {
-                        BasicUtilities.sendPlayerInformation(players, "§6§l"+p.getName()+"§r§7 a boosté le serveur ! Vous recevrez plus de loot grâce à lui !");
+                        BasicUtilities.sendPlayerInformation(players, "§6§l"+p.getName()+"§r§7 a déclencher un booster de niveau §d"+Integer.parseInt(strings[1])+"§r§7 pour "+Integer.parseInt(strings[2])+" heures ! Vous recevrez plus de loot grâce à lui !");
                         PermissionUtilities.addTempPermission(p, "phatloots.bonus."+main.hashMapManager.getBooster().getBoosterLootPercent(), main.hashMapManager.getBooster().getFinished());
                     }
                 }
@@ -68,7 +68,7 @@ public class BoosterManager implements CommandExecutor, Listener {
                 BasicUtilities.sendPlayerError((Player) commandSender, "Erreur : un boost est actuellement en cours");
             }
         }
-        else if(strings[0].equalsIgnoreCase("deleter") && ((Player)commandSender).hasPermission("fireland.command.booster"))
+        else if(strings[0].equalsIgnoreCase("delete") && ((Player)commandSender).hasPermission("fireland.command.booster"))
         {
             if(main.hashMapManager.getBooster() == null && commandSender instanceof Player p)
             {

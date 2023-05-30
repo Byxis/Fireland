@@ -116,7 +116,7 @@ public class DataZone {
                     ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
                     ps.setString(4, zone);
                     ps.executeUpdate();
-                }//
+                }
             }
             else
             {

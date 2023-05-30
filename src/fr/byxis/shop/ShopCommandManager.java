@@ -53,7 +53,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     player.sendMessage("§cJe ne vends pas ma marchandise à des criminels comme vous !");
                     return true;
                 }
-                if (main.cfgm.getKarmaDB().getDouble(player.getUniqueId().toString()) <= 75 && name.contains("pass")) {
+                if (main.cfgm.getKarmaDB().getDouble(player.getUniqueId().toString()) <= 75 && name.contains("pass") && player.getGameMode() != GameMode.CREATIVE) {
                     player.sendMessage("§cJe ne vous fais pas encore assez confiance pour vous vendre des pass !");
                 } else
                     sf.openInv(player, name.replaceAll("_", " "), 1);
@@ -63,7 +63,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     String name = player.getItemInHand().getItemMeta().getDisplayName();
                         /*name = name.replaceAll("[?.{1}]", "");
                         name = name.replaceAll("[^a-zA-Z0-9]", " ");*/
-                    name = name.replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "");
+                    name = name.replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7","");
 
                     name = name.replaceAll("_", " ");
 
@@ -98,6 +98,11 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     for (int i = 4; i < args.length; i++) {
                         sb.append(args[i]).append(" ");
                     }
+                    int custommodeldata = 0;
+                    if(player.getItemInHand().getItemMeta().hasCustomModelData())
+                    {
+                        custommodeldata = player.getItemInHand().getItemMeta().getCustomModelData();
+                    }
 
                     player.sendMessage("n:"+name);
                     player.sendMessage("i:"+item);
@@ -110,7 +115,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
 
                     player.sendMessage("c:"+command);
                     ShopFunction sf = new ShopFunction(main, player);
-                    sf.addItemOnShop(name, item, dura, price, sell, shop, command);
+                    sf.addItemOnShop(name, item, dura, price, sell, shop, command, custommodeldata);
                     player.sendMessage("§aItem " + name + "§r§a mis en vente dans le shop " + shop + " !");
                 }
                 else

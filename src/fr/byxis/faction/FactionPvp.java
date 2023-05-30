@@ -8,11 +8,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class FactionPvp implements Listener {
 
-    private Main main;
+    private final Main main;
 
     public FactionPvp(Main main) {
         this.main = main;
     }
+
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event)
@@ -21,9 +22,10 @@ public class FactionPvp implements Listener {
         {
             Player p = ((Player) event.getEntity()).getPlayer();
             Player d = ((Player) event.getDamager()).getPlayer();
-            if(main.factionMap.containsKey(p.getUniqueId()) && main.factionMap.containsKey(d.getUniqueId()))
+
+            if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()) && main.hashMapManager.getFactionMap().containsKey(d.getUniqueId()))
             {
-                if(main.factionMap.get(p.getUniqueId()).equals(main.factionMap.get(d.getUniqueId())))
+                if(main.hashMapManager.getFactionMap().get(p.getUniqueId()).equals(main.hashMapManager.getFactionMap().get(d.getUniqueId())))
                 {
                     event.setCancelled(true);
                 }

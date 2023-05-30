@@ -3,6 +3,7 @@ package fr.byxis.shop;
 import fr.byxis.main.Main;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -20,16 +21,19 @@ public class ShopEventManager implements Listener {
     {
         if(e.getView().getTitle().contains("Marchand"))
         {
-            e.setCancelled(true);
+            Player p = (Player) e.getView().getPlayer();
             ItemStack itemclicked = e.getCurrentItem();
             if (itemclicked == null) {
+                if(e.getClick().isKeyboardClick() || e.isShiftClick())
+                {
+                    e.setResult(Event.Result.DENY);
+                }
                 return;
             }
-            Player p = (Player) e.getView().getPlayer();
             ShopFunction sf = new ShopFunction(main, p);
-
             if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE || itemclicked.getType() == Material.LIME_STAINED_GLASS_PANE)
             {
+                e.setCancelled(true);
                 int next = sf.getItemPage(itemclicked);
                 int max = sf.getInvPageMax(e.getView());
                 if(next != (max+1))
@@ -39,16 +43,35 @@ public class ShopEventManager implements Listener {
             }
             else if(itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE ||itemclicked.getType() != Material.BOOK)
             {
-                if(e.isLeftClick())
-                {
-                    sf.buyItem(itemclicked, p, sf.getShopName(e.getView()));
+                if (e.getClickedInventory() == e.getView().getTopInventory()) {
+                    if(e.isLeftClick())
+                    {
+                        if(e.getView().getTitle().contains("skin"))
+                        {
+                            sf.buyItem(itemclicked, p, sf.getShopName(e.getView()), true);
+                        }
+                        else
+                        {
+                            sf.buyItem(itemclicked, p, sf.getShopName(e.getView()), false);
+                        }
+                    }
+                    else if(e.isRightClick())
+                    {
+                        if(!e.getView().getTitle().contains("skin"))
+                        {
+                            sf.sellItem(itemclicked, p, sf.getShopName(e.getView()).replaceAll(" ", "_"), e.isShiftClick());
+                        }
+
+                    }
+                    e.setResult(Event.Result.DENY);
                 }
-                else if(e.isRightClick())
+                if(e.isShiftClick() || e.getClick().isKeyboardClick())
                 {
-                    sf.sellItem(itemclicked, p, sf.getShopName(e.getView()).replaceAll(" ", "_"), e.isShiftClick());
+                    e.setResult(Event.Result.DENY);
+
                 }
             }
-
+            p.updateInventory();
         }
     }
 }

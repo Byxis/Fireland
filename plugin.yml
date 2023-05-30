@@ -6,6 +6,8 @@ api-version: 1.19
 depend:
   - Vault
   - ProtocolLib
+  - WGRegionEvents
+  - WorldGuard
 commands:
   speedfly:
     description: Permet de changer la vitesse de vol
@@ -47,7 +49,6 @@ commands:
     aliases: [nv,nightv,nightvision,vision,vis]
   faction:
     description: commandes destinees aux actions des factions
-    permission: fireland.command.faction
     aliases: [f,fac]
   discord:
     description: renvoie le discord officiel de Fireland
@@ -57,7 +58,16 @@ commands:
     aliases: [ jt, jetons ]
   rang:
     description: commandes pour les rangs
-    aliases: [ rangs]
+    aliases: [rangs]
   workshop:
     description: commandes pour le workshop
-    aliases: [ws]
+    aliases: [ ws ]
+  intendant:
+    description: commande pour l intendant
+    permission: fireland.command.intendant
+  playpacket:
+    description: commandes de test pour les packets
+    permission: fireland.command.playpacket
+  booster:
+    description: commandes pour creer ou visualiser les boosters actifs
+    permission: fireland.command.booster

@@ -125,7 +125,7 @@ public class ConfigManager {
 
 		karmaDBcfg = YamlConfiguration.loadConfiguration(karmaDBFile);
 		plugin.getLogger().info("karmadb.yml has been loaded !");
-		//----------------------------- jetons DB ----------------------------------
+		//----------------------------- karma DB ----------------------------------
 	}
 	
 	public FileConfiguration getEnderchest()

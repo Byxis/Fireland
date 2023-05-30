@@ -9,37 +9,135 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #4 la version 3.0-&#10;- Ajustement de la quantité de scrap&#10;- Ajout des chargeurs&#10;- Ajout du recyclage de médi-kits, seringue&#10;- ajout de la réduction du rally si l'item a silencieux&#10;- arrondissement des pv&#10;- le temps de survie n'augmente plus si on est en créatif/spectator&#10;- fix de la banque pour qu'elle soit sauvegardée qu'en même temps que l'inventaire des joueurs.&#10;- Fix du prix de l'augmentation banque&#10;- Fix de l'apprentissage des armes lorsqu'on n'utilise aucun crédit&#10;- Fix de la réputation lors du décès&#10;- Ajout du /rang player pour les non-admins&#10;- Ajout de la limite quotidienne&#10;- Fix du problème des pass&#10;- Fix de l'invincibilité en sortant de la safe zone&#10;- ajout des customs models data pour le shop, le craft et la file d'attente&#10;- Fix du bug du model data pour les plans&#10;- Fix de la distance de detection des zombies&#10;- Fix des commandes du craft">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_NetzkroneHD_WGRegionEvents_v1_7_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/byxis/event/SaveEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+    <list default="true" id="9941eaee-52ce-4312-bb17-9d016b7872ed" name="Default Changelist" comment="Patch #8 la version 3.0-&#10;- Fix du cassage d'item, on pouvait quand même récupérer l'item&#10;- Fix des jetons&#10;- Débuts des quêtes&#10;- Fix de la banque des factions">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_oshi_oshi_core_5_8_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_19_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_ibm_icu_icu4j_61_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_authlib_3_11_49.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_brigadier_1_0_18.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_datafixerupper_5_0_28.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_javabridge_1_2_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mojang_logging_1_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sk89q_worldedit_worldedit_bukkit_7_2_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sk89q_worldedit_worldedit_core_7_2_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sk89q_worldedit_worldedit_libs_core_7_2_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sk89q_worldguard_worldguard_bukkit_7_0_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sk89q_worldguard_worldguard_core_7_0_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sk89q_worldguard_worldguard_libs_core_7_0_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_11_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_4_1_77_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_classes_epoll_4_1_77_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_epoll_linux_aarch_64_4_1_77_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_epoll_linux_x86_64_4_1_77_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_inject_javax_inject_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jline_jline_2_12_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_29.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_5_10_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_platform_5_10_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_16_R0_4_deprecated_build_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_jopt_simple_jopt_simple_5_0_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_abego_treelayout_org_abego_treelayout_core_1_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_ST4_4_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_antlr4_4_9_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_antlr4_runtime_4_9_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_antlr_runtime_3_5_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_12_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_core_2_17_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_iostreams_2_17_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_slf4j18_impl_2_17_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_artifact_3_8_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_builder_support_3_8_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_model_3_8_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_model_builder_3_8_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_repository_metadata_3_8_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_resolver_provider_3_8_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_api_1_6_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_connector_basic_1_7_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_impl_1_6_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_spi_1_6_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_transport_http_1_7_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_util_1_6_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_plexus_plexus_interpolation_1_26.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_plexus_plexus_utils_3_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_sisu_org_eclipse_sisu_inject_0_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_flywaydb_flyway_core_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_javax_json_1_0_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mozilla_rhino_runtime_1_7_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_32.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_1_19_2_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_xerial_sqlite_jdbc_3_36_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/craftbukkit_1_19_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/libs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/booster/BoosterClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/booster/BoosterCommandCompleter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/booster/BoosterManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/event/RankCustomMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/jeton/JetonManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/main/utilities/BasicUtilities.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/main/utilities/BlockUtilities.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/main/utilities/ItemUtilities.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/main/utilities/PermissionUtilities.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/zone/CaptureZone.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/zone/DataZone.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/zone/WorldGuardEnterZoneEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/zone/ZoneConfigFileManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/zone/ZoneEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/zone/ZoneManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/zone/ZoneSaveEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/zone/zoneclass/FactionCapturingClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/zone/zoneclass/FactionZoneInformation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/byxis/zone/zoneclass/ZoneClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zone_capture.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dependencies.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dependencies.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_comphenix_protocol_ProtocolLib_5_0_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_comphenix_protocol_ProtocolLib_5_0_0_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_buffer_4_1_53_Final.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_buffer_4_1_77_Final.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_4_1_53_Final.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_4_1_77_Final.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_common_4_1_53_Final.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_common_4_1_77_Final.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_4_1_53_Final.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_4_1_77_Final.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_4_1_53_Final.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_4_1_77_Final.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_papermc_paper_paper_api_1_19_2_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_papermc_paper_paper_api_1_19_2_R0_1_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_raidstone_WorldGuardEvents_1_18_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_20_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_23_0_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_16_R0_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_19_2_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_17_1_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/spigot_1_18_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/spigot_1_18_2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Fireland Le Nouveau.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Fireland Le Nouveau.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/command/rally.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/command/rally.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/ZombieDetection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/db/jetonSql.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/jeton/jetonSql.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/SaveEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/SaveEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/bank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/doorPass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/doorPass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/join.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/join.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/karmaManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/infectedPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/infectedPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/jetonsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/jeton/jetonsCommandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/playerDeath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/playerDeath.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/playerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/playerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/scoreboardPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/thirst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/thirst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/worldGuardEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/worldGuardEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/event/zombieManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/event/zombieManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionFunctions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionPvp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionPvp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/FactionInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/FactionInformation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/faction/factionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/intendant/MenuIndendant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/intendant/MenuIndendant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/karma/karmaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/karma/karmaManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/HashMapManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/HashMapManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/ItemSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/utilities/ItemSerializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/packet/PacketFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/packet/PacketFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/packet/PacketPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/packet/PacketPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/quest/KillQuestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/quest/KillQuestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/quest/QuestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/quest/QuestClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/shop/ShopCommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopCommandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/shop/ShopEventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopEventManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/shop/ShopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopFunction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/shop/ShopItemClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/shop/ShopItemClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/recycler/RecyclerFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/recycler/RecyclerFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopCraftingItemClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopCraftingItemClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopItemClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopItemClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/byxis/workshop/workshopManagerEvent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,6 +176,11 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -92,6 +195,12 @@
         <option name="owner" value="Byxis" />
         <option name="repository" value="Fireland" />
       </RepoCoordinatesHolder>
+    </option>
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="e1496677-59cb-49f9-a283-d7e3c4778d78" />
+        <option name="url" value="https://github.com/Byxis/Fireland.git" />
+      </UrlAndAccount>
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -121,6 +230,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectId" id="1rXEQqVIJ6KnlPLf6u09gPVpR9i" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -132,20 +244,21 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Alexis/Documents/Dev/Fireland/libs/craftbukkit-1.19.2.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="fr.byxis.zone" />
+      <recent name="fr.byxis.booster" />
+      <recent name="fr.byxis.packet" />
+      <recent name="fr.byxis.intendant" />
       <recent name="fr.byxis.event" />
-      <recent name="fr.byxis.faction" />
-      <recent name="fr.byxis.shop" />
-      <recent name="fr.byxis.workshop" />
-      <recent name="fr.byxis.main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Byxis\eclipse-workspace\Fireland Le Nouveau" />
@@ -170,34 +283,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619114020085</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Patch #7 3B.0.1.4&#10;- Fix commande&#10;- Fix couleur de rang">
-      <created>1667067006118</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1667067006118</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Patch #7 3B.0.1.4&#10;- Fix DB&#10;- Fix auto complétion de la commande /rang">
-      <created>1667067351920</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1667067351920</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Patch #8 3B.0.1.4&#10;- Fix de l 'affichage de la banque&#10;- Fix de l'invitation sur une faction">
-      <created>1667071732731</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1667071732731</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Patch #10 3B.0.1.4&#10;- Fix du shop">
-      <created>1667074077576</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1667074077576</updated>
     </task>
     <task id="LOCAL-00036" summary="Patch #11 3B.0.1.4&#10;- Fix shop karma&#10;- Fix zombie karma&#10;- Fix bank">
       <created>1667118970869</created>
@@ -514,7 +599,35 @@
       <option name="project" value="LOCAL" />
       <updated>1669296814409</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Patch #4 la version 3.0-&#10;- Ajustement de la quantité de scrap&#10;- Ajout des chargeurs&#10;- Ajout du recyclage de médi-kits, seringue&#10;- ajout de la réduction du rally si l'item a silencieux&#10;- arrondissement des pv&#10;- le temps de survie n'augmente plus si on est en créatif/spectator&#10;- fix de la banque pour qu'elle soit sauvegardée qu'en même temps que l'inventaire des joueurs.&#10;- Fix du prix de l'augmentation banque&#10;- Fix de l'apprentissage des armes lorsqu'on n'utilise aucun crédit&#10;- Fix de la réputation lors du décès&#10;- Ajout du /rang player pour les non-admins&#10;- Ajout de la limite quotidienne&#10;- Fix du problème des pass&#10;- Fix de l'invincibilité en sortant de la safe zone&#10;- ajout des customs models data pour le shop, le craft et la file d'attente&#10;- Fix du bug du model data pour les plans&#10;- Fix de la distance de detection des zombies&#10;- Fix des commandes du craft&#10;- Ajout des armes de mêlée au recycleur">
+      <created>1669549931706</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1669549931706</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Patch #5 la version 3.0-&#10;- Fix de la sauvegarde de la banque&#10;- Fix du fait qu'après une amélioration la banque ne s'aggrandissait pas&#10;- Passage de la discretion à une HashMap pour que ce soit moins laggy (et ptet plus précis bientot)&#10;- Fix de possibilité d'obtention massive de scrap&#10;- Fix d'un bug de la discretion qui restait à 100.&#10;- Passage de la discretion en hashMap&#10;- Ajout de la limite quotidienne de rang&#10;- Optimisation de la sauvegarde&#10;- Fix de la vente des chargeurs à la place de l'item&#10;&#10;Faction --&#10;- Ajout du kick&#10;- Ajout du perk&#10;- Ajout de l'empêchement d'attaque si la faction du joueur a la perk pour&#10;- Fix du leave">
+      <created>1669928941329</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1669928941330</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Patch #6 la version 3.0-&#10;- Patch de crash et perte de performance considérable">
+      <created>1669969129213</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1669969129213</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Patch #7 la version 3.0-&#10;- Indendant&#10;- Fix du fait que le rang passait à 0 après être au dessu de 100&#10;- Fix de la safe zone qui ne t'acceptait pas directement si tu venais de passer civil&#10;- Fix de l'achat des bouteilles/pass/armures&#10;- Problème lors de la sauvegarde vide&#10;- suppression message lors de la vente&#10;- autorisation de la vente lorsqu'il possède des symboles parmi ▪▫˗&#10;- les factions">
+      <created>1671398421593</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1671398421594</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -541,10 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patch #6 de la version 3B.0.1.5&#10;- Fix d'une erreur de synthaxe&#10;- Fix de la position du verre" />
-    <MESSAGE value="Patch #7 de la version 3B.0.1.5&#10;- Fix des boutons de déplacements des menus" />
-    <MESSAGE value="Patch #8 de la version 3B.0.1.5&#10;- Ajout de message lors de la réussite de la commande&#10;- Fix d'apprentissage d'un plan&#10;- Fix du lore des items" />
-    <MESSAGE value="Patch #9 de la version 3B.0.1.5&#10;- Fix d'un retour nul" />
     <MESSAGE value="Patch #10 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données" />
     <MESSAGE value="Patch #11 de la version 3B.0.1.5&#10;- Fix des résultats de la base de données" />
     <MESSAGE value="Patch #12 de la version 3B.0.1.5&#10;- ajout du  craft" />
@@ -566,7 +675,11 @@
     <MESSAGE value="Patch #1 la version 3.0-&#10;- Refonte du système de shop&#10;- Ajout du /shop newrecipe" />
     <MESSAGE value="Patch #2 la version 3.0-&#10;- Fix de la perte de karma&#10;- Suprresion des System.ou.print pour des getLogger.info (pour éviter les messages d'erreurs dans la console)&#10;- Ajout du fichier jetonSql qui était pas venu pour je ne sais quelle raison" />
     <MESSAGE value="Patch #3 la version 3.0-&#10;- Ajout du recyclage" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch #3 la version 3.0-&#10;- Ajout du recyclage" />
+    <MESSAGE value="Patch #4 la version 3.0-&#10;- Ajustement de la quantité de scrap&#10;- Ajout des chargeurs&#10;- Ajout du recyclage de médi-kits, seringue&#10;- ajout de la réduction du rally si l'item a silencieux&#10;- arrondissement des pv&#10;- le temps de survie n'augmente plus si on est en créatif/spectator&#10;- fix de la banque pour qu'elle soit sauvegardée qu'en même temps que l'inventaire des joueurs.&#10;- Fix du prix de l'augmentation banque&#10;- Fix de l'apprentissage des armes lorsqu'on n'utilise aucun crédit&#10;- Fix de la réputation lors du décès&#10;- Ajout du /rang player pour les non-admins&#10;- Ajout de la limite quotidienne&#10;- Fix du problème des pass&#10;- Fix de l'invincibilité en sortant de la safe zone&#10;- ajout des customs models data pour le shop, le craft et la file d'attente&#10;- Fix du bug du model data pour les plans&#10;- Fix de la distance de detection des zombies&#10;- Fix des commandes du craft&#10;- Ajout des armes de mêlée au recycleur" />
+    <MESSAGE value="Patch #5 la version 3.0-&#10;- Fix de la sauvegarde de la banque&#10;- Fix du fait qu'après une amélioration la banque ne s'aggrandissait pas&#10;- Passage de la discretion à une HashMap pour que ce soit moins laggy (et ptet plus précis bientot)&#10;- Fix de possibilité d'obtention massive de scrap&#10;- Fix d'un bug de la discretion qui restait à 100.&#10;- Passage de la discretion en hashMap&#10;- Ajout de la limite quotidienne de rang&#10;- Optimisation de la sauvegarde&#10;- Fix de la vente des chargeurs à la place de l'item&#10;&#10;Faction --&#10;- Ajout du kick&#10;- Ajout du perk&#10;- Ajout de l'empêchement d'attaque si la faction du joueur a la perk pour&#10;- Fix du leave" />
+    <MESSAGE value="Patch #6 la version 3.0-&#10;- Patch de crash et perte de performance considérable" />
+    <MESSAGE value="Patch #7 la version 3.0-&#10;- Indendant&#10;- Fix du fait que le rang passait à 0 après être au dessu de 100&#10;- Fix de la safe zone qui ne t'acceptait pas directement si tu venais de passer civil&#10;- Fix de l'achat des bouteilles/pass/armures&#10;- Problème lors de la sauvegarde vide&#10;- suppression message lors de la vente&#10;- autorisation de la vente lorsqu'il possède des symboles parmi ▪▫˗&#10;- les factions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch #7 la version 3.0-&#10;- Indendant&#10;- Fix du fait que le rang passait à 0 après être au dessu de 100&#10;- Fix de la safe zone qui ne t'acceptait pas directement si tu venais de passer civil&#10;- Fix de l'achat des bouteilles/pass/armures&#10;- Problème lors de la sauvegarde vide&#10;- suppression message lors de la vente&#10;- autorisation de la vente lorsqu'il possède des symboles parmi ▪▫˗&#10;- les factions" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

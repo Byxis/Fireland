@@ -1,6 +1,7 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
+import fr.byxis.karma.karmaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;

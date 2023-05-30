@@ -22,6 +22,7 @@ public class RemoveInteractionBlock implements Listener {
 				e.getClickedBlock().getType() == Material.ANVIL ||
 				e.getClickedBlock().getType() == Material.FURNACE ||
 				e.getClickedBlock().getType() == Material.BLAST_FURNACE ||
+				e.getClickedBlock().getType() == Material.DAMAGED_ANVIL ||
 				e.getClickedBlock().getType() == Material.SMOKER
 		) && e.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{

@@ -1,9 +1,7 @@
 package fr.byxis.event;
 
-import fr.byxis.faction.FactionFunctions;
-import fr.byxis.faction.FactionInformation;
-import fr.byxis.faction.FactionPlayerInformation;
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -69,7 +67,7 @@ public class bank implements Listener, CommandExecutor {
 					{
 						if(args[1].equalsIgnoreCase("money"))
 						{
-							Player victim = (Player) Bukkit.getOfflinePlayer(args[3]);
+							Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[3]));
 							player.sendMessage("§aLe joueur "+args[3]+" à maintenant "+args[2]+" dans sa banque !");
 							main.cfgm.getEnderchest().set("bank."+victim.getUniqueId()+".money", Integer.parseInt(args[2]));
 							main.cfgm.saveEnderchest();
@@ -77,7 +75,7 @@ public class bank implements Listener, CommandExecutor {
 						}
 						else if(args[1].equalsIgnoreCase("upgrade"))
 						{
-							Player victim = (Player) Bukkit.getOfflinePlayer(args[3]);
+							Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[3]));
 							player.sendMessage("§aLe joueur "+args[3]+" à maintenant l'amélioration "+args[2]+" !");
 							main.cfgm.getEnderchest().set("bank."+victim.getUniqueId()+".upgrade", Integer.parseInt(args[2]));
 							main.cfgm.saveEnderchest();
@@ -158,7 +156,7 @@ public class bank implements Listener, CommandExecutor {
 					if(e.isShiftClick())
 					{
 						int max = getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
-						
+
 						if(playerBankMoney >= max)
 						{
 							return;
@@ -167,6 +165,7 @@ public class bank implements Listener, CommandExecutor {
 						if(playerMoney+playerBankMoney < max)
 						{
 							main.eco.withdrawPlayer(player, playerMoney);
+							player.playSound(player.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
 							main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".money", playerBankMoney+playerMoney);
 							main.cfgm.saveEnderchest();
 							openBankMenu(player);
@@ -174,6 +173,7 @@ public class bank implements Listener, CommandExecutor {
 						else
 						{
 							main.eco.withdrawPlayer(player, (max - playerBankMoney));
+							player.playSound(player.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
 							main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".money", max);
 							main.cfgm.saveEnderchest();
 							openBankMenu(player);
@@ -182,6 +182,7 @@ public class bank implements Listener, CommandExecutor {
 					else if (playerMoney >= 100 && playerBankMoney+100 <= getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")))
 					{
 						main.eco.withdrawPlayer(player, 100);
+						player.playSound(player.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
 						main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".money", playerBankMoney+100);
 						main.cfgm.saveEnderchest();
 						openBankMenu(player);
@@ -192,6 +193,7 @@ public class bank implements Listener, CommandExecutor {
 					if(e.isShiftClick())
 					{
 						main.eco.depositPlayer(player, playerBankMoney);
+						player.playSound(player.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
 						main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".money", 0);
 						main.cfgm.saveEnderchest();
 						openBankMenu(player);
@@ -199,6 +201,7 @@ public class bank implements Listener, CommandExecutor {
 					else if(playerBankMoney >= 100)
 					{
 						main.eco.depositPlayer(player, 100);
+						player.playSound(player.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
 						main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".money", playerBankMoney-100);
 						main.cfgm.saveEnderchest();
 						openBankMenu(player);
@@ -209,7 +212,7 @@ public class bank implements Listener, CommandExecutor {
 			else if(current.getType().equals(Material.ENDER_CHEST))
 			{
 				int slot = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
-				if(!main.storageMap.containsKey(e.getView().getPlayer().getUniqueId()))
+				if(!main.hashMapManager.getStorageMap().containsKey(e.getView().getPlayer().getUniqueId()))
 				{
 					Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+player.getName());
 					int i = 0;
@@ -222,16 +225,35 @@ public class bank implements Listener, CommandExecutor {
 						i++;
 					}
 					player.openInventory(ec);
+					main.hashMapManager.addStorageMap(player.getUniqueId(), ec);
 				}
 				else
 				{
-					player.openInventory(main.storageMap.get(e.getView().getPlayer().getUniqueId()));
+					if(slot != main.hashMapManager.getStorageMap().get(e.getView().getPlayer().getUniqueId()).getSize())
+					{
+						Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+player.getName());
+						int i = 0;
+						for (ItemStack item : main.hashMapManager.getStorageMap().get(e.getView().getPlayer().getUniqueId()))
+						{
+							if(i < slot)
+							{
+								ec.setItem(i, item);
+							}
+							i++;
+						}
+						player.openInventory(ec);
+						main.hashMapManager.addStorageMap(player.getUniqueId(), ec);
+					}
+					else
+					{
+						player.openInventory(main.hashMapManager.getStorageMap().get(e.getView().getPlayer().getUniqueId()));
+					}
 				}
 			}
 			
 			if(current.getType().equals(Material.ANVIL))
 			{
-				int price = getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1);
+				int price = getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
 				if(playerMoney >= price)
 				{
 					main.eco.withdrawPlayer(player, price);
@@ -247,49 +269,12 @@ public class bank implements Listener, CommandExecutor {
 					player.sendMessage("§cVous n'avez pas assez d'argent.");
 				}
 			}
-			else if (current.getType().equals(Material.NETHERITE_CHESTPLATE))
-			{
-				openFaction(player);
-			}
-		}
-		else if(e.getView().getTitle().equalsIgnoreCase("§8Stockage de "+player.getName()))
+		}/*
+		else if(e.getView().getTitle().contains("§8Stockage de "))
 		{
-			main.storageMap.replace(player.getUniqueId(), e.getInventory());
+			main.hashMapManager.replaceStorageMap(player.getUniqueId(), e.getInventory());
 			//saveEnderchest(e.getInventory().getContents(),player);
-		}
-		else if(e.getView().getTitle().contains("Votre faction"))
-		{
-			e.setCancelled(true);
-			if(current.getType().equals(Material.GOLD_INGOT))
-			{
-				if(e.getClick().isLeftClick())
-				{
-					if(e.isShiftClick())
-					{
-						main.commandExecutor(player, "faction deposit 1000", "fireland.faction.deposit");
-						openFaction(player);
-					}
-					else
-					{
-						main.commandExecutor(player, "faction deposit 100", "fireland.faction.deposit");
-						openFaction(player);
-					}
-				}
-				else
-				{
-					if(e.isShiftClick())
-					{
-						main.commandExecutor(player, "faction withdraw 1000", "fireland.faction.withdraw");
-						openFaction(player);
-					}
-					else
-					{
-						main.commandExecutor(player, "faction withdraw 100", "fireland.faction.withdraw");
-						openFaction(player);
-					}
-				}
-			}
-		}
+		}*/
 	}
 	
 	@EventHandler
@@ -314,18 +299,6 @@ public class bank implements Listener, CommandExecutor {
 		player.openInventory(bank);
 	}
 
-	public void openFaction(Player p)
-	{
-		FactionFunctions factionFunctions = new FactionFunctions(main, p);
-
-		FactionInformation factionInfo = factionFunctions.getFactionInfo(factionFunctions.playerFactionName(p));
-		FactionPlayerInformation playerInfo = factionFunctions.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
-
-		Inventory bank = Bukkit.createInventory(null, 27, "§8Votre faction - §a"+factionInfo.getName());
-		setItemsMenuFaction(bank, p);
-		p.openInventory(bank);
-	}
-	
 	private int getMaxMoney(int upgrade) 
 	{
 		int max = switch (upgrade) {
@@ -358,76 +331,19 @@ public class bank implements Listener, CommandExecutor {
 	
 	private void setItemsMenuBank(Inventory inv, Player player)
 	{
-		try{
-		FactionFunctions factionFunctions = new FactionFunctions(main, player);
-
-		FactionInformation factionInfo = factionFunctions.getFactionInfo(factionFunctions.playerFactionName(player));
-
-		if(factionInfo == null)
+		inv.setItem(11, setItemMetaLore(Material.GOLD_INGOT, "§aArgent -", (short) 0, listMaker("§8Faites un §dclic gauche §8pour ajouter §6100$","§8à votre compte en banque", "§8Faites un §dclic droit §8pour retirer §6100$","§8de votre compte en banque")));
+		if(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade") < 7)
 		{
-			inv.setItem(11, setItemMetaLore(Material.GOLD_INGOT, "§aArgent -", (short) 0, listMaker("§8Faites un §dclique droit §8pour ajouter §6100$","§8à votre compte en banque", "§8Faites un §dclique gauche §8pour retirer §6100$","§8de votre compte en banque")));
-			if(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade") < 7)
-			{
-				inv.setItem(13, setItemMetaLore(Material.ANVIL, "§aAmélioration - Prix : §6"+getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1)+"$", (short) 0, listMaker("§8Vous avez actuellement l'amélioration n°§d"+main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+" ","§8Pour l'améliorer au niveau suivant :","§8- Maximum de la banque : §6"+getMaxMoney((main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1))+"$", "§8- Maximum du stockage : §6"+getMaxSlots((main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1))+" slots")));
-			}
-			else
-			{
-
-				inv.setItem(13, setItemMetaLore(Material.BOOK, "§aAmélioration -", (short) 0, listMaker("§8Vous avez atteint le maximum d'amélioration !","","","")));
-			}
-			int slots = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
-			inv.setItem(15, setItemMetaLore(Material.ENDER_CHEST, "§aStockage - ", (short) 0, listMaker("§8Faites un §dclic gauche§8 pour ouvrir votre stockage","§8Vous disposez actuellement de §6"+slots+"§8 slots de stockage !","§8L'amélioration suivant vous permettra de passer §6","§8à §6"+(slots+9)+"§8 slots !")));
+			inv.setItem(13, setItemMetaLore(Material.ANVIL, "§aAmélioration - Prix : §6"+getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"))+"$", (short) 0, listMaker("§8Vous avez actuellement l'amélioration n°§d"+main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+" ","§8Pour l'améliorer au niveau suivant :","§8- Maximum de la banque : §6"+getMaxMoney((main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1))+"$", "§8- Maximum du stockage : §6"+getMaxSlots((main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1))+" slots")));
 		}
 		else
 		{
-			inv.setItem(10, setItemMetaLore(Material.NETHERITE_CHESTPLATE, "§a"+factionInfo.getName()+" -", (short) 0, listMaker("§8Cliquez ici pour accéder aux informations ","§8de votre faction", "", "")));
 
-			inv.setItem(12, setItemMetaLore(Material.GOLD_INGOT, "§aArgent -", (short) 0, listMaker("§8Faites un §dclique droit §8pour ajouter §6100$","§8à votre compte en banque", "§8Faites un §dclique gauche §8pour retirer §6100$","§8de votre compte en banque")));
-			if(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade") < 7)
-			{
-				inv.setItem(14, setItemMetaLore(Material.ANVIL, "§aAmélioration - Prix : §6"+getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1)+"$", (short) 0, listMaker("§8Vous avez actuellement l'amélioration n°§d"+main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+" ","§8Pour l'améliorer au niveau suivant :","§8- Maximum de la banque : §6"+getMaxMoney((main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1))+"$", "§8- Maximum du stockage : §6"+getMaxSlots((main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1))+" slots")));
-			}
-			else
-			{
-
-				inv.setItem(14, setItemMetaLore(Material.BOOK, "§aAmélioration -", (short) 0, listMaker("§8Vous avez atteint le maximum d'amélioration !","","","")));
-			}
-			int slots = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
-			inv.setItem(16, setItemMetaLore(Material.ENDER_CHEST, "§aStockage - ", (short) 0, listMaker("§8Faites un §dclic gauche§8 pour ouvrir votre stockage","§8Vous disposez actuellement de §6"+slots+"§8 slots de stockage !","§8L'amélioration suivant vous permettra de passer §6","§8à §6"+(slots+9)+"§8 slots !")));
-
-		}} catch (Exception e) {
-			throw new RuntimeException(e);
+			inv.setItem(13, setItemMetaLore(Material.BOOK, "§aAmélioration -", (short) 0, listMaker("§8Vous avez atteint le maximum d'amélioration !","","","")));
 		}
-
+		int slots = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
+		inv.setItem(15, setItemMetaLore(Material.ENDER_CHEST, "§aStockage personnel - ", (short) 0, listMaker("§8Faites un §dclic gauche§8 pour ouvrir votre stockage","§8Vous disposez actuellement de §6"+slots+"§8 slots de stockage !","§8L'amélioration suivant vous permettra de passer §6","§8à §6"+(slots+9)+"§8 slots !")));
 	}
-	private void setItemsMenuFaction(Inventory inv, Player player) {
-		FactionFunctions factionFunctions = new FactionFunctions(main, player);
-
-		FactionInformation factionInfo = factionFunctions.getFactionInfo(factionFunctions.playerFactionName(player));
-
-		inv.setItem(0, setItemMetaLore(Material.PAPER, "§8Date de création - §a"+factionInfo.getCreatedAt(), (short) 0, null));
-		inv.setItem(1, setItemMetaLore(Material.GRASS, "§8Nombre de membres - §a"+factionInfo.getCurrentNbrOfPlayers()+"/"+factionInfo.getMaxNbrOfPlayers(), (short) 0, null));
-
-		ArrayList<FactionPlayerInformation> members = factionFunctions.getPlayersFromFaction(factionInfo.getName());
-		for (FactionPlayerInformation p : members) {
-			//Récupération du nom des leaders de la faction
-			if (p.getRole() == 2)
-			{
-				inv.setItem(17, setItemMetaLore(Material.GOLDEN_HELMET, "§aLeader - "+p.getName(), (short) 0, null));
-				break;
-			}
-		}
-		if(factionInfo.getCurrentUpgrade() < 5)
-		{
-			inv.setItem(12, setItemMetaLore(Material.ANVIL, "§aAmélioration - Prix : §6"+factionInfo.getMaxMoney()+"$", (short) 0, listMaker("§8Vous avez actuellement l'amélioration n°§d"+factionInfo.getCurrentUpgrade()+" ","§8Pour l'améliorer au niveau suivant :","", "")));
-		}
-			else
-		{
-
-			inv.setItem(12, setItemMetaLore(Material.BOOK, "§aAmélioration -", (short) 0, listMaker("§8Vous avez atteint le maximum d'amélioration !","","","")));
-		}
-		inv.setItem(14, setItemMetaLore(Material.GOLD_INGOT, "§aArgent - §6"+factionInfo.getCurrentMoney()+"§a/§6"+factionInfo.getMaxMoney(), (short) 0, listMaker("§8Faites un §dclique droit §8pour ajouter §6100$","§8à votre faction (§6x1000§6 avec shift)", "§8Faites un §dclique gauche §8pour retirer §6100$","§8de votre faction (§6x1000§6 avec shift)")));	}
-
 	
 	@SuppressWarnings({ "deprecation" })
 	private ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {

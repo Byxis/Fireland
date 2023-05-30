@@ -1,6 +1,7 @@
 package fr.byxis.event;
 
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -96,11 +97,11 @@ public class infectedPlayer implements Listener,CommandExecutor {
 		if(p.getItemInHand().getType() == Material.GHAST_TEAR) {
 			FileConfiguration config = main.cfgm.getPlayerDB();
 			
-			if(!(e.getRightClicked() instanceof Player friend) || config.getBoolean("infected."+p.getUniqueId()+".state"))
+			if(!(e.getRightClicked() instanceof Player) && config.getBoolean("infected."+p.getUniqueId()+".state"))
 			{
 				return;
 			}
-
+			Player friend = (Player) e.getRightClicked();
 			if(config.getBoolean("infected." + friend.getUniqueId() + ".state")) {
 				config.set("infected."+friend.getUniqueId()+".state", false);
 				main.cfgm.savePlayerDB();
@@ -130,7 +131,7 @@ public class infectedPlayer implements Listener,CommandExecutor {
 					main.cfgm.savePlayerDB();
 					return true;
 				}else if(args.length == 1){
-					Player victim = (Player) Bukkit.getOfflinePlayer(args[0]);
+					Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[0]));
 					p.sendMessage("§8"+victim.getName()+" été infécté !");
 					victim.sendMessage("§8Vous avez été infecté !");
 					victim.sendTitle("§8Vous avez été infecté !", "");
@@ -146,12 +147,12 @@ public class infectedPlayer implements Listener,CommandExecutor {
 				FileConfiguration config = main.cfgm.getPlayerDB();
 				if(args.length == 0) {
 					p.sendMessage("§8Vous avez soigné votre infection !");
-					config.set("infected."+p.getName()+".state", false);
-					config.set("infected."+p.getName()+".time", 0);
+					config.set("infected."+p.getUniqueId()+".state", false);
+					config.set("infected."+p.getUniqueId()+".time", 0);
 					main.cfgm.savePlayerDB();
 					return true;
 				}else if(args.length == 1){
-					Player victim = (Player) Bukkit.getOfflinePlayer(args[0]);
+					Player victim = (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[0]));
 					p.sendMessage("§8"+victim.getName()+" été soigné !");
 					victim.sendMessage("§8Vous avez été soigné !");
 					config.set("infected."+victim.getUniqueId().toString()+".state", false);

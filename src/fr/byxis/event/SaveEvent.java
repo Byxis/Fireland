@@ -1,6 +1,8 @@
 package fr.byxis.event;
 
+import fr.byxis.faction.FactionFunctions;
 import fr.byxis.main.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,32 +21,83 @@ public class SaveEvent implements Listener {
     @EventHandler
     public void ServeurSave(WorldSaveEvent e)
     {
-        main.getLogger().info("Saved banks");
-        for(UUID uuid : main.storageMap.keySet())
-        {
-            saveEnderchest(main.storageMap.get(uuid), uuid);
-        }
+        SaveAll();
     }
 
     public void onDisable()
     {
-        main.getLogger().info("Saved banks");
-        for(UUID uuid : main.storageMap.keySet())
-        {
-            saveEnderchest(main.storageMap.get(uuid), uuid);
-        }
+        SaveAll();
+    }
+
+    private void SaveAll()
+    {
+        SaveAllEnderchest();
+        SaveAllKarma();
+        SaveAllFactionStorages();
     }
 
     private void saveEnderchest(Inventory inv , UUID uuid)
     {
-        if(inv != null)
+        if(inv != null && main.hashMapManager.getStorageMap().containsKey(uuid))
         {
-            FileConfiguration config = main.cfgm.getEnderchest();
             for (int i = 0; i < inv.getSize(); i++) {
-                config.set("stockage."+uuid+"."+i, inv.getItem(i));
+                main.cfgm.getEnderchest().set("stockage."+uuid+"."+i, inv.getItem(i));
             }
-            main.cfgm.saveEnderchest();
         }
+    }
 
+    private void SaveAllEnderchest()
+    {
+        if(main.hashMapManager.getStorageMap().isEmpty())
+        {
+            return;
+        }
+        for(UUID uuid :main.hashMapManager.getStorageMap().keySet())
+        {
+            if(main.hashMapManager.getStorageMap().containsKey(uuid))
+            {
+                saveEnderchest(main.hashMapManager.getStorageMap().get(uuid), uuid);
+                if(!Bukkit.getOfflinePlayer(uuid).isOnline())
+                {
+                    main.hashMapManager.getStorageMap().remove(uuid);
+                }
+            }
+
+        }
+        main.cfgm.saveEnderchest();
+    }
+
+    private void SaveKarma(UUID uuid)
+    {
+        if(main.hashMapManager.getRangMap().containsKey(uuid))
+        {
+            FileConfiguration config = main.cfgm.getKarmaDB();
+            config.set(uuid.toString(), main.hashMapManager.getRangMap().get(uuid).getRang());
+            config.set("max."+ uuid, main.hashMapManager.getRangMap().get(uuid).getMax());
+        }
+    }
+
+    private void SaveAllKarma()
+    {
+        if(main.hashMapManager.getRangMap().isEmpty())
+        {
+            return;
+        }
+        for(UUID uuid : main.hashMapManager.getRangMap().keySet())
+        {
+            SaveKarma(uuid);
+        }
+        main.cfgm.saveKarmaDB();
+    }
+
+    private void SaveAllFactionStorages()
+    {
+        FactionFunctions ff = new FactionFunctions(main, null);
+        for(String name : main.hashMapManager.getStorageFactionMap().keySet())
+        {
+            ff.SaveAllItemsFactionStorage(name, main.hashMapManager.getStorageFactionMap().get(name));
+            main.hashMapManager.removeStorageFactionMap(name);
+            ff.loadAllItems(name, ff.getFactionInfo(name).getCurrentUpgrade());
+        }
     }
 }

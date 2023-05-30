@@ -3,6 +3,7 @@
 	import de.netzkronehd.wgregionevents.events.RegionEnterEvent;
 	import de.netzkronehd.wgregionevents.events.RegionLeftEvent;
 	import fr.byxis.main.Main;
+	import fr.byxis.main.utilities.PermissionUtilities;
 	import org.bukkit.GameMode;
 	import org.bukkit.entity.Player;
 	import org.bukkit.event.EventHandler;
@@ -25,7 +26,7 @@ public class worldGuardEvent implements Listener {
 
 		if(e.getRegion().getId().contains("sf"))
 		{
-			if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
+			if(p.getGameMode() != GameMode.SPECTATOR && p.getGameMode() != GameMode.CREATIVE)
 			{
 				p.sendTitle("", "§cVous êtes invincible pendant 15 secondes");
 				p.playSound(p.getLocation(), "minecraft:gun.hud.leaving_safezone", 1, 1);
@@ -35,6 +36,7 @@ public class worldGuardEvent implements Listener {
 				main.cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".state", false);
 				main.cfgm.savePlayerDB();
 			}
+			PermissionUtilities.removePermission(p, "crazyauctions.sell");
 		}
 		
 	}
@@ -46,7 +48,7 @@ public class worldGuardEvent implements Listener {
 
 		if(e.getRegion().getId().contains("sf"))
 		{
-			if(p.getGameMode() != GameMode.SPECTATOR || p.getGameMode() != GameMode.CREATIVE)
+			if(p.getGameMode() != GameMode.SPECTATOR && p.getGameMode() != GameMode.CREATIVE)
 			{
 				p.sendTitle("", "");
 				p.setInvulnerable(false);
@@ -55,6 +57,7 @@ public class worldGuardEvent implements Listener {
 				main.cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".state", true);
 				main.cfgm.savePlayerDB();
 			}
+			PermissionUtilities.addPermission(p, "crazyauctions.sell");
 
 		}
 		

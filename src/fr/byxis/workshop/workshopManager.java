@@ -1,6 +1,7 @@
 package fr.byxis.workshop;
 
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
 import fr.byxis.workshop.recycler.RecyclerFunction;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -52,7 +53,7 @@ public class workshopManager implements CommandExecutor {
             {
                 if(args.length >= 4)
                 {
-                    Player victim = (Player) Bukkit.getOfflinePlayer(args[3]);
+                    Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[3]));
                     wf.craftItemNbr(args[1], victim.getUniqueId().toString(), Integer.parseInt(args[2]));
                     sender.sendMessage("§aLe joueur "+victim.getName()+" à appris "+args[2]+" fois le plan "+args[1]);
                 }

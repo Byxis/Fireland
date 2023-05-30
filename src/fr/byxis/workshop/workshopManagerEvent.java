@@ -1,8 +1,9 @@
 package fr.byxis.workshop;
 
-import fr.byxis.db.jetonSql;
-import fr.byxis.event.jetonsManager;
+import fr.byxis.jeton.jetonSql;
+import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.main.Main;
+import fr.byxis.main.utilities.BasicUtilities;
 import fr.byxis.workshop.recycler.RecyclerFunction;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -90,17 +91,21 @@ public class workshopManagerEvent implements Listener {
 
     public int getNbrOfMaxCrafting(Player player)
     {
+        Integer amountOfHeals = 0;
         for (PermissionAttachmentInfo perm : player.getEffectivePermissions())
         {
             String permString = perm.getPermission();
             if (permString.startsWith("fireland.workshop.craftlimit."))
             {
                 String[] amount = permString.split("\\.");
-                Integer amountOfHeals = Integer.parseInt(amount[3]);
-                return amountOfHeals;
+                if(Integer.parseInt(amount[3]) > amountOfHeals)
+                {
+                    amountOfHeals = Integer.parseInt(amount[3]);
+                }
+
             }
         }
-        return 0;
+        return amountOfHeals;
     }
 
     @EventHandler
@@ -144,11 +149,12 @@ public class workshopManagerEvent implements Listener {
             {
 
                 int max = getNbrOfMaxCrafting(p);
-                if(wf.getNbrOfItemCrafting(p.getUniqueId().toString()) >= max)
+                if(wf.getNbrOfItemCrafting(p.getUniqueId().toString()) > max)
                 {
                     p.sendMessage("§cVous avez atteint votre limite de craft qui est de "+max+" !");
                     return;
                 }
+
                 workshopItemClass craftable = wf.getACraftableItem(p, p.getUniqueId().toString(), craftItems[0], craftItems[1], itemclicked.getItemMeta().getDisplayName().replaceAll("§7", ""));
                 if(craftable != null)
                 {
@@ -191,7 +197,7 @@ public class workshopManagerEvent implements Listener {
                         {
                             if(!wf.isBreakable(item, p.getUniqueId().toString()))
                             {
-                                main.playSound(p, "minecraft:block.anvil.use");
+                                BasicUtilities.playSound(p, "minecraft:block.anvil.use");
                                 wf.removeFromQueue(item, p.getUniqueId().toString());
                                 if(item.command.contains("shot give"))
                                 {
@@ -209,12 +215,13 @@ public class workshopManagerEvent implements Listener {
                                 int rd = genererInt(0, 101);
                                 if(rd <= 10)
                                 {
-                                    main.playSound(p, "minecraft:block.anvil.destroy");
+                                    BasicUtilities.playSound(p, "minecraft:block.anvil.destroy");
                                     p.sendMessage("§cPas de chance ! Votre item s'est cassé pendant la fabrication...");
+                                    wf.removeFromQueue(item, p.getUniqueId().toString());
                                 }
                                 else
                                 {
-                                    main.playSound(p, "minecraft:block.anvil.use");
+                                    BasicUtilities.playSound(p, "minecraft:block.anvil.use");
                                     wf.removeFromQueue(item, p.getUniqueId().toString());
                                     if(item.command.contains("shot give"))
                                     {
@@ -231,7 +238,7 @@ public class workshopManagerEvent implements Listener {
                         }
                         else
                         {
-                            jetonsManager jt = new jetonsManager(main);
+                            jetonsCommandManager jt = new jetonsCommandManager(main);
                             if(jt.getJetonsPlayer(p.getUniqueId()) > 0)
                             {
                                 jetonSql jtsql = new jetonSql(main, p);
@@ -266,7 +273,7 @@ public class workshopManagerEvent implements Listener {
             } else if (e.getCurrentItem().getType() == Material.ANVIL) {
                 main.commandExecutor((Player) e.getView().getPlayer(), "ws gui", "fireland.command.workshop.gui");
             } else if (e.getCurrentItem().getType() == Material.NETHERITE_SCRAP) {
-                main.commandExecutor((Player) e.getView().getPlayer(), "ws recycler", "fireland.command.workshop.gui");
+                main.commandExecutor((Player) e.getView().getPlayer(), "ws recycler", "fireland.command.workshop.recycler");
             }
         }
         else if(e.getView().getTitle().contains("Recycleur"))

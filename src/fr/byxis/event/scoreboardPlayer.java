@@ -1,7 +1,11 @@
 package fr.byxis.event;
 
+import fr.byxis.jeton.jetonsCommandManager;
+import fr.byxis.karma.PlayerKarmaClass;
 import fr.byxis.main.Main;
+import fr.byxis.karma.karmaManager;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -60,20 +64,36 @@ public class scoreboardPlayer implements Listener {
 		{
 			state = "§7sain";
 		}
-		
-		double numDiscretion = main.cfgm.getPlayerDB().getDouble("discretion."+p.getUniqueId()+".score");
-		
-		if(numDiscretion < 0)
+		if(!main.hashMapManager.getDiscretionMap().containsKey(p.getUniqueId()))
 		{
-			numDiscretion = 0;
+			main.hashMapManager.addDiscretionMap(p.getUniqueId());
 		}
+
+		FileConfiguration karma = main.cfgm.getKarmaDB();
+		if(!karma.contains(p.getUniqueId().toString()))
+		{
+			karma.set(p.getUniqueId().toString(), 62D);
+			main.cfgm.saveKarmaDB();
+		}
+		if(!main.hashMapManager.getRangMap().containsKey(p.getUniqueId()))
+		{
+
+			main.hashMapManager.getRangMap().put(p.getUniqueId(), new PlayerKarmaClass(main.cfgm.getKarmaDB().getDouble(p.getUniqueId().toString()), main.cfgm.getKarmaDB().getDouble("max."+p.getUniqueId().toString())));
+		}
+
+		//double numDiscretion = main.cfgm.getPlayerDB().getDouble("discretion."+p.getUniqueId()+".score");
+		double numDiscretion = main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).getScore();
 		String shotColor = "§7";
-		if(main.cfgm.getPlayerDB().getBoolean("discretion." + p.getUniqueId() + ".shot"))
+		if(main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).isShooting())
 		{
 			shotColor = "§4";
 		}
+		else if(main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingLights())
+		{
+			shotColor = "§e";
+		}
 
-		jetonsManager jetons = new jetonsManager(main);
+		jetonsCommandManager jetons = new jetonsCommandManager(main);
 		karmaManager km = new karmaManager(main);
 		
 		String time = getTimeString(p);
@@ -124,15 +144,11 @@ public class scoreboardPlayer implements Listener {
 			state = "§2infecté";
 		}
 		
-		double numDiscretion = main.cfgm.getPlayerDB().getDouble("discretion."+p.getUniqueId()+".score");
-		
-		if(numDiscretion < 0 || main.cfgm.getPlayerDB().getBoolean("discretion."+p.getUniqueId()+"shot"))
-		{
-			numDiscretion = 0;
-		}
+		//double numDiscretion = main.cfgm.getPlayerDB().getDouble("discretion."+p.getUniqueId()+".score");
+		double numDiscretion = main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).getScore();
 		
 		String time = getTimeString(p);
-		jetonsManager jetons = new jetonsManager(main);
+		jetonsCommandManager jetons = new jetonsCommandManager(main);
 		karmaManager km = new karmaManager(main);
 		Score money = null;
 		if (obj != null) {

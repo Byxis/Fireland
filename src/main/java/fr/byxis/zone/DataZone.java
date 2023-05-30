@@ -102,7 +102,7 @@ public class DataZone {
 
         try {
             final Connection connection = firelandConnection.getConnection();
-            //Pr�paration de la commande
+            //Préparation de la commande
             final PreparedStatement isInDb = connection.prepareStatement("SELECT capture_zone.faction_name FROM capture_zone WHERE capture_zone.zone = ?");
             isInDb.setString(1, zone);
             ResultSet rs = isInDb.executeQuery();

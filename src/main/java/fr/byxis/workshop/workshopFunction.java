@@ -2,6 +2,7 @@ package fr.byxis.workshop;
 
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.ItemUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -720,7 +721,7 @@ public class workshopFunction {
             }
             else
             {
-                lore.add("§8Type : §d"+item.type +"§8, reste §c"+main.getStringTime(item.finishDate.getTime() - System.currentTimeMillis()));
+                lore.add("§8Type : §d"+item.type +"§8, reste §c"+ BasicUtilities.getStringTime(item.finishDate.getTime() - System.currentTimeMillis()));
             }
 
             lore.add("§8Date de fin de création : "+item.finishDate);

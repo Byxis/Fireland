@@ -89,6 +89,7 @@ public class ZoneClass {
         this.claimer = null;
         this.claimedAt = null;
         this.claimable = true;
+
     }
     public String getClaimer()
     {
@@ -120,5 +121,10 @@ public class ZoneClass {
     public void unsetClaimable()
     {
         this.claimable = false;
+    }
+
+    public String getFormattedName()
+    {
+        return (name.substring(0, 1).toUpperCase() + name.substring(1)).replaceAll("-", " ");
     }
 }

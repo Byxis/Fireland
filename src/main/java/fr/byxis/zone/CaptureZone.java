@@ -22,10 +22,10 @@ import java.util.List;
 
 public class CaptureZone {
 
-    private Fireland main;
+    private static Fireland main;
     private DataZone data;
     private final int captureRefreshRate = 2;
-    private final int boosterCapture = 10;
+    private final int boosterCapture = 8;
     int i = 0;
 
     public CaptureZone(Fireland main, DataZone data)
@@ -144,7 +144,7 @@ public class CaptureZone {
                                     {
                                         if(zone.getClaimer() != null)
                                         {
-                                            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§6Vous décapturez la zone "+zone.getName()+" contrôlée par "+zone.getClaimer()+" ("+((double)Math.round(factionToUncapture.getProgression()*100)/100D)+"%)"));
+                                            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§6Vous décapturez la zone "+zone.getFormattedName()+" contrôlée par "+zone.getClaimer()+" ("+((double)Math.round(factionToUncapture.getProgression()*100)/100D)+"%)"));
                                         }
                                     }
                                 }
@@ -155,7 +155,7 @@ public class CaptureZone {
                                 //Si t'es tout seul, tu captures
                                 for(Player p : factionCapturing.getPlayerList())
                                 {
-                                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§aVous capturez la zone "+zone.getName()+" ("+((double)Math.round(factionCapturing.getProgression()*100)/100D)+"%)"));
+                                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§aVous capturez la zone "+zone.getFormattedName()+" ("+((double)Math.round(factionCapturing.getProgression()*100)/100D)+"%)"));
                                 }
                             }
                         }
@@ -179,7 +179,7 @@ public class CaptureZone {
                                     addProgressionTime(zone, factionCapturing, -2*captureRefreshRate);
                                     for(Player p : factionMonority.getPlayerList())
                                     {
-                                        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§cVous êtes en train de perdre votre capture  "+zone.getName()));
+                                        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§cVous êtes en train de perdre votre capture  "+zone.getFormattedName()));
                                     }
                                 }
                             }
@@ -231,7 +231,7 @@ public class CaptureZone {
         {
             for(Player p: Bukkit.getOnlinePlayers())
             {
-                BasicUtilities.sendPlayerError(p, "La faction "+color+faction.getName()+"§R§c est en train de capturer la zone "+zone.getName()+" ! Allez-y vite pour contester la capture !");
+                BasicUtilities.sendPlayerError(p, "La faction "+color+faction.getName()+"§R§c est en train de capturer la zone "+zone.getFormattedName()+" ! Allez-y vite pour contester la capture !");
             }
         }
         if(prog >= 100)
@@ -240,6 +240,11 @@ public class CaptureZone {
             {
                 if(zoneClass.getName().equalsIgnoreCase(zone.getName()))
                 {
+                    if(zone.isClaimed())
+                    {
+                        data.SaveTiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
+                        zoneClass.unclaim();
+                    }
                     zoneClass.setClaimed(faction.getName(), new Timestamp(System.currentTimeMillis()));
                     break;
                 }
@@ -248,7 +253,7 @@ public class CaptureZone {
             data.SaveAll();
             for(Player p: Bukkit.getOnlinePlayers())
             {
-                BasicUtilities.sendPlayerInformation(p, "La faction "+color+faction.getName()+"§R§7 a capturé la zone "+zone.getName()+" !");
+                BasicUtilities.sendPlayerInformation(p, "La faction "+color+faction.getName()+"§R§7 a capturé la zone "+zone.getFormattedName()+" !");
             }
 
             data.zoneInCapture.get(zone.getName()).clear();
@@ -258,6 +263,7 @@ public class CaptureZone {
             if(faction.getName().equalsIgnoreCase(zone.getClaimer()))
             {
                 zone.unclaim();
+                data.SaveTiming(faction.getName(), zone.getClaimedAt(), zone.getName());
             }
             data.zoneInCapture.get(zone.getName()).remove(faction);
         }
@@ -310,7 +316,7 @@ public class CaptureZone {
             changeAnimationStep(9, zone, color);
             BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
-        if((from < 90 && to >= 90) || (from > 90  && to <=90))
+        if((from < 90 && to >= 90) || (from >= 90  && to <=90))
         {
             changeAnimationStep(10, zone, color);
             BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);

@@ -71,3 +71,6 @@ commands:
   booster:
     description: commandes pour creer ou visualiser les boosters actifs
     permission: fireland.command.booster
+  backpack:
+    description: donne un sac a dos
+    permission: fireland.command.backpack

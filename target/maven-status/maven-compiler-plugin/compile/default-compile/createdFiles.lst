@@ -40,6 +40,7 @@ fr\byxis\event\entitySpawn.class
 fr\byxis\event\heliport.class
 fr\byxis\event\worldGeneration.class
 fr\byxis\zone\ZoneEvent.class
+fr\byxis\backpack\BackPack.class
 fr\byxis\event\parachute.class
 fr\byxis\booster\BoosterManager.class
 fr\byxis\event\join.class

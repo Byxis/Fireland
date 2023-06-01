@@ -70,4 +70,9 @@ public class FactionCapturingClass {
         int TotalTime = totalProgressionNeeded*60;
         return this.progression + (seconds/TotalTime)*100;
     }
+
+    public String getFormattedName()
+    {
+        return (this.name.substring(0, 1).toUpperCase() + this.name.substring(1)).replaceAll("-", " ");
+    }
 }

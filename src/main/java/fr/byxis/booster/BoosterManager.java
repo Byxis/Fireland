@@ -37,7 +37,7 @@ public class BoosterManager implements CommandExecutor, Listener {
             {
                 BoosterClass booster = main.hashMapManager.getBooster();
                 Player creator = (Player) Bukkit.getOfflinePlayer(booster.getUuid());
-                BasicUtilities.sendPlayerInformation((Player) commandSender, "Un booster de niveau §d§l"+booster.getLevel()+"§r§7 est actif ! Il a été créé par §6"+creator.getName()+"§7 et se finit dans "+main.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()));
+                BasicUtilities.sendPlayerInformation((Player) commandSender, "Un booster de niveau §d§l"+booster.getLevel()+"§r§7 est actif ! Il a été créé par §6"+creator.getName()+"§7 et se finit dans "+BasicUtilities.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()));
             }
         }
         else if(strings[0].equalsIgnoreCase("create") && ((Player)commandSender).hasPermission("fireland.command.booster"))

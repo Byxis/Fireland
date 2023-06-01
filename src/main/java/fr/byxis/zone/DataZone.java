@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -68,10 +69,12 @@ public class DataZone {
                 Timestamp today = new Timestamp(System.currentTimeMillis());
                 if(today.after(releaseDate))
                 {
-                    CaptureZone.changeAnimationStep(-1, zone, "�r");
+                    CaptureZone.changeAnimationStep(-1, zone, "§r");
                     zoneInCapture.get(zone.getName()).clear();
                     rewardFaction(zone, zone.getClaimer(), true);
                     RemoveSavedClaiming(zone.getName(), zone.getClaimer());
+
+                    SaveTiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
                     zone.unclaim();
                     return;
                 }
@@ -90,7 +93,7 @@ public class DataZone {
             {
 
                 RemoveSavedClaiming(zone.getName(), null);
-                CaptureZone.changeAnimationStep(-1, zone, "�r");
+                CaptureZone.changeAnimationStep(-1, zone, "§r");
             }
         }
         ActualizeClaiming();
@@ -103,20 +106,17 @@ public class DataZone {
         try {
             final Connection connection = firelandConnection.getConnection();
             //Préparation de la commande
-            final PreparedStatement isInDb = connection.prepareStatement("SELECT capture_zone.faction_name FROM capture_zone WHERE capture_zone.zone = ?");
+            PreparedStatement isInDb = connection.prepareStatement("SELECT capture_zone.faction_name FROM capture_zone WHERE capture_zone.zone = ?");
             isInDb.setString(1, zone);
             ResultSet rs = isInDb.executeQuery();
             if(rs.next())
             {
-                if(!rs.getString(1).equalsIgnoreCase(factionName))
-                {
-                    final PreparedStatement ps = connection.prepareStatement("UPDATE capture_zone SET faction_name = ?, capture_time = ?, rewarded_at = ? WHERE zone = ?");
-                    ps.setString(1, factionName);
-                    ps.setTimestamp(2, claimedAt);
-                    ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-                    ps.setString(4, zone);
-                    ps.executeUpdate();
-                }
+                final PreparedStatement ps = connection.prepareStatement("UPDATE capture_zone SET faction_name = ?, capture_time = ?, rewarded_at = ? WHERE zone = ?");
+                ps.setString(1, factionName);
+                ps.setTimestamp(2, claimedAt);
+                ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+                ps.setString(4, zone);
+                ps.executeUpdate();
             }
             else
             {
@@ -132,13 +132,48 @@ public class DataZone {
         }
     }
 
+    public void SaveTiming(String factionName, Timestamp claimedAt, String zone)
+    {
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+
+        try {
+
+            final Connection connection = firelandConnection.getConnection();
+            PreparedStatement isInDb = connection.prepareStatement("SELECT faction_zone.duration FROM faction_zone WHERE faction_zone.zone = ? AND faction_zone.faction_name =?");
+            isInDb.setString(1, zone);
+            isInDb.setString(2, factionName);
+            ResultSet rs = isInDb.executeQuery();
+            long diff = (new Timestamp(System.currentTimeMillis())).getTime() - claimedAt.getTime();;
+            if(rs.next())
+            {
+                final PreparedStatement ps = connection.prepareStatement("UPDATE faction_zone SET faction_zone.duration = ? WHERE zone = ? AND faction_name =?");
+                ps.setLong(1, rs.getLong(1)+diff);
+                ps.setString(2, zone);
+                ps.setString(3, factionName);
+                main.getLogger().info("3");
+                ps.executeUpdate();
+            }
+            else
+            {
+                final PreparedStatement ps = connection.prepareStatement("INSERT INTO faction_zone(faction_name,zone,duration) VALUES (?,?,?)");
+                ps.setString(2, zone);
+                ps.setString(1, factionName);
+                ps.setInt(3, (int) diff);
+                main.getLogger().info("2");
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void RemoveSavedClaiming(String zone, String faction)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
         try {
             final Connection connection = firelandConnection.getConnection();
-            //Pr�paration de la commande
+            //Préparation de la commande
             final PreparedStatement isInDb = connection.prepareStatement("SELECT faction_name, capture_time FROM capture_zone WHERE zone = ?");
             isInDb.setString(1, zone);
 
@@ -253,7 +288,7 @@ public class DataZone {
             {
                 return progression >= 90;
             }
-            return progression >= 0;
+            return progression < 0;
         }
         return false;
     }
@@ -357,7 +392,7 @@ public class DataZone {
 
         try {
             final Connection connection = firelandConnection.getConnection();
-            //Pr�paration de la commande
+            //Préparation de la commande
             final PreparedStatement isInDb = connection.prepareStatement("SELECT rewarded_at FROM capture_zone WHERE zone = ?");
             isInDb.setString(1, zone.getName());
             ResultSet rs = isInDb.executeQuery();
@@ -376,7 +411,7 @@ public class DataZone {
 
         try {
             final Connection connection = firelandConnection.getConnection();
-            //Pr�paration de la commande
+            //Préparation de la commande
             final PreparedStatement insert = connection.prepareStatement("UPDATE capture_zone SET rewarded_at = ? WHERE zone = ? AND faction_name = ? ");
             insert.setTimestamp(1, time);
             insert.setString(2, zone.getName());
@@ -386,6 +421,5 @@ public class DataZone {
             throw new RuntimeException(e);
         }
     }
-
 }
 

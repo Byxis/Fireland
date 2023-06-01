@@ -134,6 +134,9 @@ public class MenuIndendant implements Listener {
                         }
                         OpenFaction(p, true);
                         break;
+                    case GRASS_BLOCK:
+                        OpenZone(p);
+                        break;
                 }
             }
             else if(inv.getTitle().contains("Membres de "))
@@ -305,6 +308,31 @@ public class MenuIndendant implements Listener {
                     FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
                     ff.SetColorCode(pInfos.getFactionName(), GetStringColor(itemclicked.getType()));
                     OpenColorMenu(p, finfos);
+                }
+            }
+            else if(inv.getTitle().contains("Zones"))
+            {
+                /**       Click check        **/
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null) {
+                    return;
+                }
+                if (e.getClickedInventory() == e.getView().getTopInventory() || e.getClick().isKeyboardClick()) {
+                    e.setCancelled(true);
+                }
+                else
+                {
+                    if(e.isShiftClick())
+                    {
+                        e.setCancelled(true);
+                    }
+                }
+                /**       Click check        **/
+
+
+                if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
+                {
+                    OpenFaction(p, true);
                 }
             }
             else if(inv.getTitle().contains("Boosters"))
@@ -682,7 +710,7 @@ public class MenuIndendant implements Listener {
         if(main.hashMapManager.getBooster() != null)
         {
             BoosterClass booster = main.hashMapManager.getBooster();
-            inv.setItem(0, ItemUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, listMaker("§8Créé par "+((Player)Bukkit.getOfflinePlayer(booster.getUuid())).getName(), "§8Expiration dans "+main.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()), "", "")));
+            inv.setItem(0, ItemUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, listMaker("§8Créé par "+((Player)Bukkit.getOfflinePlayer(booster.getUuid())).getName(), "§8Expiration dans "+BasicUtilities.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()), "", "")));
         }
         else
         {
@@ -732,12 +760,26 @@ public class MenuIndendant implements Listener {
         int i = 10;
         for(FactionZoneInformation factionZoneInformation : list)
         {
+            List<String> lore = new ArrayList<>();
+            String color = ff.getFactionInfo(factionZoneInformation.getFactionName()).getColorcode();
+            if(factionZoneInformation.getClaimedAt()!= null)
+            {
+                lore.add("§8Zone capturée depuis le §a"+factionZoneInformation.getClaimedAt().toString());
+                lore.add("§8Total cumulé: §a"+BasicUtilities.getStringTime(factionZoneInformation.getTotalDuration()));
+                inv.setItem(i, ItemUtilities.setItemMetaLore(BlockUtilities.getBannerColor(color), "§a"+ factionZoneInformation.getFormattedName(), (short) 0, lore));
+                main.getLogger().info("Zone "+factionZoneInformation.getFormattedName() + " " + BlockUtilities.getBannerColor(color));
+            }
+            else
+            {
+                lore.add("§8Zone non capturée");
+                lore.add("§8Total cumulé: §7"+BasicUtilities.getStringTime(factionZoneInformation.getTotalDuration()));
+                inv.setItem(i, ItemUtilities.setItemMetaLore(Material.LIGHT_GRAY_BANNER, "§7"+ factionZoneInformation.getFormattedName(), (short) 0, lore));
+                main.getLogger().info("Zone "+factionZoneInformation.getFormattedName());
+            }
+
             if(i == 17 ||i == 17+9 || i == 17+18)
             {
-                List<String> lore = new ArrayList<>();
-                lore.add("§8Date de capture: §a"+factionZoneInformation.claimedAt.toString());
-                lore.add("§8Total cumulé: §a"+factionZoneInformation.totalDuration);
-                inv.setItem(53, ItemUtilities.setItemMetaLore(Material.WHITE_BANNER, "§a"+factionZoneInformation.zoneName, (short) 0, lore));
+                i++;
             }
             i++;
         }

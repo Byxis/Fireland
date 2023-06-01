@@ -11,11 +11,22 @@ import org.json.simple.JSONValue;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class BasicUtilities {
+
+    public static String getStringTime(long durationInMillis)
+    {
+        long second = (durationInMillis / 1000) % 60;
+        long minute = (durationInMillis / (1000 * 60)) % 60;
+        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
+
+        return String.format("%02dh%02dmin%02ds", hour, minute, second);
+    }
 
     public static UUID getUuid(String name) {
         String url = "https://api.mojang.com/users/profiles/minecraft/"+name;

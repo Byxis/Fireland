@@ -5,6 +5,7 @@ package fr.byxis.fireland;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import fr.byxis.backpack.BackPack;
 import fr.byxis.booster.BoosterCommandCompleter;
 import fr.byxis.booster.BoosterManager;
 import fr.byxis.command.*;
@@ -91,6 +92,7 @@ public class Fireland extends JavaPlugin {
         getCommand("playpacket").setExecutor(new PacketPlayer(this));
         getCommand("booster").setExecutor(new BoosterManager(this));
         getCommand("booster").setTabCompleter(new BoosterCommandCompleter(this));
+        getCommand("backpack").setExecutor(new BackPack(this));
     }
 
     private void enableEvent() {
@@ -135,6 +137,7 @@ public class Fireland extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MenuIndendant(this), this);
         getServer().getPluginManager().registerEvents(new RankCustomMessage(this), this);
         getServer().getPluginManager().registerEvents(new BoosterManager(this), this);
+        getServer().getPluginManager().registerEvents(new BackPack(this), this);
         zoneManager.RegisterEvents();
         //getServer().getPluginManager().registerEvents(new packetListener(this), this);
 		/*protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE)
@@ -327,7 +330,7 @@ public class Fireland extends JavaPlugin {
                     if(!getServer().getOnlinePlayers().isEmpty()) {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a title {\"text\":\" \"}");
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"Le soleil se lÃ¨ve !\",\"bold\":true,\"color\":\"gold\"}");
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"Le soleil se lève\",\"bold\":true,\"color\":\"gold\"}");
                         for(Player p : getServer().getOnlinePlayers())
                         {
                             p.playSound(p.getLocation(), "minecraft:gun.hud.night_passed", 1, 1);
@@ -347,7 +350,7 @@ public class Fireland extends JavaPlugin {
                         float thirst = (float) playerDBConfig.getDouble("thirst."+p.getUniqueId());
 
                         if (thirst <= 0f) {
-                            p.sendMessage("ï¿½8Vous avez soif !");
+                            p.sendMessage("§8Vous avez soif !");
                         }
                     }
 
@@ -375,14 +378,14 @@ public class Fireland extends JavaPlugin {
                             }
                             cfgm.savePlayerDB();
                             if(timer >= 120){
-                                p.sendMessage("ï¿½8Votre infection a causï¿½ votre perte....");
+                                p.sendMessage("§8Votre infection a causé votre perte....");
                                 p.setHealth(0.0D);
 
                             }else if(timer == 20 || timer == 40 || timer == 60 || timer == 80) {
-                                p.sendMessage("ï¿½8Votre infection s'aggrave !");
+                                p.sendMessage("§8Votre infection s'aggrave !");
                                 p.damage(3);
                             }else if(timer == 100) {
-                                p.sendMessage("ï¿½8Votre infection est trï¿½s grave ! Cherchez vite une seringue !");
+                                p.sendMessage("§8Votre infection est très grave ! Cherchez vite une seringue !");
                                 p.damage(3);
                             }else if(p.getHealth() > 2) {
                                 p.damage(2);
@@ -450,14 +453,14 @@ public class Fireland extends JavaPlugin {
                             cfgm.savePlayerDB();
                             if(safezone == 5 || safezone == 10)
                             {
-                                p.sendTitle("", "ï¿½cIl vous reste "+safezone+" secondes d'invincibilitï¿½");
+                                p.sendTitle("", "§cIl vous reste "+safezone+" secondes d'invincibilité");
                             }
                         }
                         else
                         {
                             if(safezone == 0)
                             {
-                                p.sendMessage("ï¿½cVous n'ï¿½tes plus invincible !");
+                                p.sendMessage("§cVous n'êtes plus invincible !");
                                 cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", -1);
                                 p.setInvulnerable(false);
                                 cfgm.savePlayerDB();
@@ -793,15 +796,7 @@ public class Fireland extends JavaPlugin {
 		protocolManager.broadcastServerPacket(packet, p, false);
 	}*/
 
-    public String getStringTime(long durationInMillis)
-    {
-        long second = (durationInMillis / 1000) % 60;
-        long minute = (durationInMillis / (1000 * 60)) % 60;
-        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
 
-        String time = String.format("%02dh%02dmin%02ds", hour, minute, second);
-        return time;
-    }
 
 
 

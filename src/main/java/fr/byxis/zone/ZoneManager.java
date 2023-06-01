@@ -4,10 +4,7 @@ import fr.byxis.db.DbConnection;
 import fr.byxis.zone.zoneclass.FactionZoneInformation;
 import fr.byxis.fireland.Fireland;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,16 +36,60 @@ public class ZoneManager {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
         try {
+            /*
+            *
+            * Partie zones claims
+            *
+            */
+
             final Connection connection = firelandConnection.getConnection();
             //Préparation de la commande
-            final PreparedStatement isInDb = connection.prepareStatement("SELECT zone, capture_time, duration FROM capture_zone INNER JOIN faction_zone ON capture_zone.zone = faction_zone.zone WHERE capture_zone.faction_name = ?");
+            PreparedStatement isInDb = connection.prepareStatement("SELECT capture_zone.zone, capture_zone.capture_time FROM capture_zone " +
+                    "WHERE capture_zone.faction_name = ?;");
             isInDb.setString(1, name);
             ResultSet rs = isInDb.executeQuery();
+            int i = 0;
             while(rs.next())
             {
-                FactionZoneInformation factionZoneInformation = new FactionZoneInformation(name, rs.getString(1), rs.getTimestamp(2), rs.getInt(3));
+                i++;
+                FactionZoneInformation factionZoneInformation = new FactionZoneInformation(name, rs.getString(1), rs.getTimestamp(2), System.currentTimeMillis() - rs.getTimestamp(2).getTime());
                 list.add(factionZoneInformation);
             }
+            main.getLogger().info(""+list + " "+list.size());
+            /*
+             *
+             * Partie zones NON claims
+             *
+             */
+
+            isInDb = connection.prepareStatement("SELECT faction_zone.zone, faction_zone.duration FROM faction_zone " +
+                    "WHERE faction_zone.faction_name = ?;");
+
+            isInDb.setString(1, name);
+            rs = isInDb.executeQuery();
+            while(rs.next())
+            {
+                FactionZoneInformation factionZoneInformation = new FactionZoneInformation(name, rs.getString(1), null, rs.getLong(2));
+                boolean inside = false;
+                int j = 0;
+                for (FactionZoneInformation zone : list)
+                {
+                    if(j > i)
+                    {
+                        break;
+                    }
+                    if(zone.getZoneName().equals(factionZoneInformation.getZoneName()))
+                    {
+                        inside = true;
+                        zone.setTotalDuration(zone.getTotalDuration() + factionZoneInformation.getTotalDuration());
+                    }
+                }
+                if(!inside)
+                {
+                    list.add(factionZoneInformation);
+                }
+            }
+            main.getLogger().info(""+list + " "+list.size());
         } catch (SQLException e) {
             e.printStackTrace();
         }

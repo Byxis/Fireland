@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/fireland/Fireland.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/intendant/Manager.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/workshop/recycler/RecyclerFunction.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="windows-1252" />
     <file url="PROJECT" charset="windows-1252" />

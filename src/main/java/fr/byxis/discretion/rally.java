@@ -25,6 +25,8 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 		}
 	}
 
+	private static String secretCode = "UWUMichiriNek0LUV3R#FreeTheCat";
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 
@@ -48,7 +50,7 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 					setHasShotted(victim);
 				}
 			}
-			else if(args[0].equals("UWUMichiriNek0LUV3R#FreeTheCat"))
+			else if(args[0].equals(secretCode))
 			{
 				Player p = (Player) sender;
 				rallyEntities(p, ChangeDistanceIfHasSilencer(100, p));
@@ -68,7 +70,7 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 				}
 			}
 		} else if (args.length == 2) {
-			if(args[0].equals("UWUMichiriNek0LUV3R#FreeTheCat") && isParsable(args[1]))
+			if(args[0].equals(secretCode) && isParsable(args[1]))
 			{
 				Player p = (Player) sender;
 				rallyEntities(p, Integer.parseInt(args[1]));

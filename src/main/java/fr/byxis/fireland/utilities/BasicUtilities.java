@@ -1,17 +1,17 @@
 package fr.byxis.fireland.utilities;
 
 import org.apache.commons.io.IOUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.SoundCategory;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -113,5 +113,72 @@ public class BasicUtilities {
         int nb;
         nb = borneInf+random.nextInt(borneSup-borneInf);
         return nb;
+    }
+
+    public static ItemStack GetHead(UUID uuid, String name)
+    {
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta headMeta = (SkullMeta) head.getItemMeta();
+        headMeta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
+        headMeta.setDisplayName(name);
+        head.setItemMeta(headMeta);
+        return head;
+    }
+
+    public static List<String> listMaker(String str1, String str2, String str3, String str4){
+        List<String> lore = new ArrayList<String>();
+        if(str1 != "") lore.add(str1);
+        if(str2 != "") lore.add(str2);
+        if(str3 != "")lore.add(str3);
+        if(str4 != "")lore.add(str4);
+        return lore;
+    }
+
+    public static String GetStringColor(Material mat)
+    {
+        switch (mat)
+        {
+            case BLACK_STAINED_GLASS_PANE -> {
+                return "§0";
+            }
+            case BLUE_STAINED_GLASS_PANE -> {
+                return "§1";
+            }
+            case GREEN_STAINED_GLASS_PANE -> {
+                return "§2";
+            }
+            case CYAN_STAINED_GLASS_PANE -> {
+                return "§3";
+            }
+            case RED_STAINED_GLASS_PANE -> {
+                return "§4";
+            }
+            case PURPLE_STAINED_GLASS_PANE -> {
+                return "§5";
+            }
+            case ORANGE_STAINED_GLASS_PANE -> {
+                return "§6";
+            }
+            case LIGHT_GRAY_STAINED_GLASS_PANE -> {
+                return "§7";
+            }
+            case GRAY_STAINED_GLASS_PANE -> {
+                return "§8";
+            }
+            case LIME_STAINED_GLASS_PANE -> {
+                return "§a";
+            }
+            case LIGHT_BLUE_STAINED_GLASS_PANE -> {
+                return "§b";
+            }
+            case MAGENTA_STAINED_GLASS_PANE -> {
+                return "§d";
+            }
+            case YELLOW_STAINED_GLASS_PANE -> {
+                return "§e";
+            }
+        }
+        return "§7";
+
     }
 }

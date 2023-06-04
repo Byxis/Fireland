@@ -1,5 +1,5 @@
 name: Fireland
-version: '4.0-SNAPSHOT'
+version: '4.0-SNAPSHOT2'
 main: fr.byxis.fireland.Fireland
 api-version: 1.19
 author: Byxis

@@ -562,7 +562,7 @@ public class FactionFunctions {
 		try {
 			final Connection connection = firelandConnection.getConnection();
 			//Préparation de la commande
-			final PreparedStatement requestInfo = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader_uuid, friendly_fire, show_nickname, has_skin, show_prefix, capture_perk, color_code FROM faction WHERE name = ?");
+			final PreparedStatement requestInfo = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader_uuid, friendly_fire, show_nickname, has_skin, show_prefix, capture_perk, color_code, zone_tp FROM faction WHERE name = ?");
 			requestInfo.setString(1, factionName);
 
 			final ResultSet result = requestInfo.executeQuery();
@@ -578,7 +578,7 @@ public class FactionFunctions {
 
 				UUID leader = UUID.fromString(result.getString(5));
 
-				return new FactionInformation(factionName, currentNbrOfPlayers, amelioration[0], currentUpgrade, currentMoney, amelioration[1], amelioration[2], createdAt, leader, result.getBoolean(6),  result.getBoolean(7), result.getBoolean(8),  result.getBoolean(9), result.getBoolean(10), result.getString(11));
+				return new FactionInformation(factionName, currentNbrOfPlayers, amelioration[0], currentUpgrade, currentMoney, amelioration[1], amelioration[2], createdAt, leader, result.getBoolean(6),  result.getBoolean(7), result.getBoolean(8),  result.getBoolean(9), result.getBoolean(10), result.getString(11), result.getBoolean(12));
 			}
 		} catch (SQLException e) {
 			//Une erreur est survenue (Problème de connexion à la BD)
@@ -603,7 +603,7 @@ public class FactionFunctions {
 		try {
 			final Connection connection = firelandConnection.getConnection();
 			//Préparation de la commande
-			final PreparedStatement requestInfo = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader_uuid, friendly_fire, show_nickname, has_skin,show_prefix, capture_perk, color_code FROM faction WHERE name = ?");
+			final PreparedStatement requestInfo = connection.prepareStatement("SELECT upgrade,nbr_members,money,created_at,leader_uuid, friendly_fire, show_nickname, has_skin,show_prefix, capture_perk, color_code, zone_tp FROM faction WHERE name = ?");
 			requestInfo.setString(1, factionName);
 
 			final ResultSet result = requestInfo.executeQuery();
@@ -619,7 +619,7 @@ public class FactionFunctions {
 
 				UUID leader = UUID.fromString(result.getString(5));
 
-				return new FactionInformation(factionName, currentNbrOfPlayers, amelioration[0], currentUpgrade, currentMoney, amelioration[1], amelioration[2], createdAt, leader, result.getBoolean(6),  result.getBoolean(7), result.getBoolean(8), result.getBoolean(9),  result.getBoolean(10),result.getString(11));
+				return new FactionInformation(factionName, currentNbrOfPlayers, amelioration[0], currentUpgrade, currentMoney, amelioration[1], amelioration[2], createdAt, leader, result.getBoolean(6),  result.getBoolean(7), result.getBoolean(8), result.getBoolean(9),  result.getBoolean(10),result.getString(11), result.getBoolean(12));
 			}
 		} catch (SQLException e) {
 			//Une erreur est survenue (Problème de connexion à la BD)

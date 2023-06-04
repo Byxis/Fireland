@@ -79,6 +79,7 @@ public class worldGuardEvent implements Listener {
 	public void playerJoin(PlayerJoinEvent e)
 	{
 		main.cfgm.getPlayerDB().set("safezone."+e.getPlayer().getUniqueId()+".time", 0);
+		main.cfgm.getPlayerDB().set("safezone."+e.getPlayer().getUniqueId()+".state", false);
 		main.cfgm.savePlayerDB();
 		e.getPlayer().setInvulnerable(false);
 	}

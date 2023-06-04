@@ -1,5 +1,7 @@
 package fr.byxis.zone.zoneclass;
 
+import org.bukkit.Location;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 

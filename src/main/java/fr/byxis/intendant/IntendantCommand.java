@@ -1,7 +1,7 @@
 package fr.byxis.intendant;
 
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.Fireland;
+import fr.byxis.intendant.menu.MenuIntendant;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,8 +21,7 @@ public class IntendantCommand implements CommandExecutor {
         {
             if(p.hasPermission("fireland.command.intendant"))
             {
-                MenuIndendant function = new MenuIndendant(main);
-                function.OpenIntendant(p);
+                MenuIntendant.OpenIntendant(main, p);
             }
         }
         return false;

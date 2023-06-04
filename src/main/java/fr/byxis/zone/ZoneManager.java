@@ -55,7 +55,6 @@ public class ZoneManager {
                 FactionZoneInformation factionZoneInformation = new FactionZoneInformation(name, rs.getString(1), rs.getTimestamp(2), System.currentTimeMillis() - rs.getTimestamp(2).getTime());
                 list.add(factionZoneInformation);
             }
-            main.getLogger().info(""+list + " "+list.size());
             /*
              *
              * Partie zones NON claims
@@ -89,7 +88,6 @@ public class ZoneManager {
                     list.add(factionZoneInformation);
                 }
             }
-            main.getLogger().info(""+list + " "+list.size());
         } catch (SQLException e) {
             e.printStackTrace();
         }

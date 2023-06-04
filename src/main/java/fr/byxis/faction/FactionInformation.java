@@ -22,8 +22,13 @@ public class FactionInformation {
     private final boolean hasCapturePerk;
 
     private final String colorcode;
+    private final boolean hasZoneTpPerk;
 
-    public FactionInformation(String name, int nbrOfPlayers, int maxNbrOfPlayers, int currentUpgrade, int currentMoney, int maxMoney, int currentChestSize, Timestamp createdAt, UUID leader, boolean hasFriendlyFirePerk, boolean hasNicknameVisibilityPerk, boolean hasSkinPerk, boolean show_prefix, boolean hasCapturePerk, String colorcode)
+    public FactionInformation(String name, int nbrOfPlayers, int maxNbrOfPlayers, int currentUpgrade,
+                              int currentMoney, int maxMoney, int currentChestSize, Timestamp createdAt,
+                              UUID leader, boolean hasFriendlyFirePerk, boolean hasNicknameVisibilityPerk,
+                              boolean hasSkinPerk, boolean show_prefix, boolean hasCapturePerk, String colorcode,
+                              boolean hasZoneTpPerk)
     {
         this.name = name;
         this.currentNbrOfPlayers = nbrOfPlayers;
@@ -40,6 +45,7 @@ public class FactionInformation {
         this.show_prefix = show_prefix;
         this.hasCapturePerk = hasCapturePerk;
         this.colorcode = colorcode;
+        this.hasZoneTpPerk = hasZoneTpPerk;
     }
 
     public String getName()
@@ -101,5 +107,9 @@ public class FactionInformation {
 
     public boolean hasCapturePerk() {
         return hasCapturePerk;
+    }
+
+    public boolean hasZoneTpPerk() {
+        return hasZoneTpPerk;
     }
 }

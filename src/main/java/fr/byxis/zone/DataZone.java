@@ -76,6 +76,8 @@ public class DataZone {
 
                     SaveTiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
                     zone.unclaim();
+
+                    CaptureZone.changeAnimationStep(-1, zone, "§r");
                     return;
                 }
                 else

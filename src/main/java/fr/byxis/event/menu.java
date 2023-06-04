@@ -2,6 +2,7 @@ package fr.byxis.event;
 
 import fr.byxis.fireland.ConfigManager;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -186,10 +187,9 @@ public class menu implements Listener,CommandExecutor {
     
     private void TeleportPlayer(Player player, ItemStack current, Location loc, int price)
     {
-    	if(player.getGameMode() == GameMode.CREATIVE)
+    	if(player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)
     	{
-    		player.sendMessage("§8Téléportation...");
-			player.teleport(loc);
+            InGameUtilities.teleportPlayer(player, loc, 0, "", main);
     	}
     	else if(main.eco.hasAccount(player)) {
         	if(main.eco.getBalance(player) >= price) {
@@ -198,39 +198,11 @@ public class menu implements Listener,CommandExecutor {
         		player.sendMessage("§8La téléportation commence, veuillez ne pas bougez.");
         		config.getPlayerDB().set("mouvement."+player.getUniqueId()+".time", 10);
         		config.savePlayerDB();
-        		player.playSound(player.getLocation(), "minecraft:gun.hud.helico", (float) 0.1, (float) 1);
-                new BukkitRunnable() {
-
-                	public void run() {
-                			
-                		if (config.getPlayerDB().getBoolean("mouvement."+player.getUniqueId())) {
-                			player.sendMessage("§cTéléportation annulée !");
-                			config.getPlayerDB().set("mouvement."+player.getUniqueId()+".time", 50);;
-                			config.getPlayerDB().set("mouvement."+player.getUniqueId()+".boulean", false);
-                			config.savePlayerDB();
-                			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound "+player.getUniqueId()+" * minecraft:gun.hud.helico");
-                			cancel();
-                		}
-
-                		if (config.getPlayerDB().getInt("mouvement."+player.getUniqueId()+".time") == 10 || config.getPlayerDB().getInt("mouvement."+player.getUniqueId()+".time") == 5) {
-                			player.sendMessage("§8Téléportation dans " + config.getPlayerDB().getInt("mouvement."+player.getUniqueId()+".time") + " secondes !");
-                		}
-
-                		if (config.getPlayerDB().getInt("mouvement."+player.getUniqueId()+".time") == 0) {
-                			player.sendMessage("§8Téléportation...");
-                			player.teleport(loc);
-                			player.sendMessage("§7Vous avez payé "+price+"$");
-                			main.eco.withdrawPlayer(player, price);
-                			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
-                				
-                			cancel();
-                		}
-
-                		config.getPlayerDB().set("mouvement."+player.getUniqueId()+".time",config.getPlayerDB().getInt("mouvement."+player.getUniqueId()+".time") -1);
-                		config.savePlayerDB();
-                	}
-                }.runTaskTimer(main, 0L, 20L);
-                return;
+                if(InGameUtilities.teleportPlayer(player, loc, 15, "gun.hud.helico", main))
+                {
+                    player.sendMessage("§7Vous avez payé "+price+"$");
+                    main.eco.withdrawPlayer(player, price);
+                }
 
         	}else{
         		player.sendMessage("§8Vous n'avez pas assez d'argent !");

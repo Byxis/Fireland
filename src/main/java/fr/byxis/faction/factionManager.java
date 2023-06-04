@@ -590,6 +590,10 @@ public class factionManager implements Listener, CommandExecutor  {
 		{
 			result = true;
 		}
+		else if(perk.equalsIgnoreCase("zone_tp"))
+		{
+			result = true;
+		}
 		return result;
 	}
 

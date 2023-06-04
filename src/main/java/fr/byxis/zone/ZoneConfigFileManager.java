@@ -38,6 +38,11 @@ public class ZoneConfigFileManager {
     {
         return config;
     }
+    public void notSafeSetup()
+    {
+        this.file = new File(plugin.getDataFolder(), "zone-capture.yml");
+       this.config = YamlConfiguration.loadConfiguration(file);
+    }
 
     public void save()
     {

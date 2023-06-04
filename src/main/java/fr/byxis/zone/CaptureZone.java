@@ -244,6 +244,7 @@ public class CaptureZone {
                     {
                         data.SaveTiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
                         zoneClass.unclaim();
+                        changeAnimationStep(-1, zone, "§r");
                     }
                     zoneClass.setClaimed(faction.getName(), new Timestamp(System.currentTimeMillis()));
                     break;
@@ -262,6 +263,7 @@ public class CaptureZone {
         {
             if(faction.getName().equalsIgnoreCase(zone.getClaimer()))
             {
+                changeAnimationStep(-1, zone, "§r");
                 zone.unclaim();
                 data.SaveTiming(faction.getName(), zone.getClaimedAt(), zone.getName());
             }

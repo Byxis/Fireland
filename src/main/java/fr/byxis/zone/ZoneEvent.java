@@ -1,6 +1,8 @@
 package fr.byxis.zone;
 
-import fr.byxis.intendant.MenuIndendant;
+import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.intendant.Manager;
+import fr.byxis.intendant.menu.MenuFaction;
 import fr.byxis.zone.zoneclass.ZoneClass;
 import fr.byxis.faction.FactionFunctions;
 import fr.byxis.fireland.Fireland;
@@ -43,8 +45,7 @@ public class ZoneEvent implements Listener {
                         FactionFunctions ff = new FactionFunctions(main, e.getPlayer());
                         if(zone.getClaimer().equalsIgnoreCase(ff.playerFactionName(e.getPlayer())))
                         {
-                            MenuIndendant menu = new MenuIndendant(main);
-                            menu.OpenFaction(e.getPlayer(), false);
+                            MenuFaction.OpenFaction(main, e.getPlayer(), false);
                         }
                     }
                     break;

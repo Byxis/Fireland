@@ -25,7 +25,7 @@ public class DataZone {
     private final ZoneConfigFileManager configManager;
     public List<ZoneClass> zones;
     public HashMap<String, List<FactionCapturingClass>> zoneInCapture;
-    private Fireland main;
+    private final Fireland main;
 
     public DataZone(Fireland main)
     {

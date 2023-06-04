@@ -12,6 +12,10 @@ import fr.byxis.command.*;
 import fr.byxis.db.DatabaseManager;
 import fr.byxis.discretion.ZombieDetection;
 import fr.byxis.discretion.rally;
+import fr.byxis.essaim.EssaimCommandCompleter;
+import fr.byxis.essaim.EssaimCommandManager;
+import fr.byxis.essaim.EssaimFunctions;
+import fr.byxis.essaim.EssaimManager;
 import fr.byxis.event.*;
 import fr.byxis.faction.FactionEvent;
 import fr.byxis.faction.FactionPvp;
@@ -35,7 +39,6 @@ import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
@@ -65,6 +68,7 @@ public class Fireland extends JavaPlugin {
     public ProtocolManager protocolManager;
     public HashMapManager hashMapManager;
     public ZoneManager zoneManager;
+    public EssaimManager essaimManager;
 
     @SuppressWarnings("ConstantConditions")
     public void enableCommand() {
@@ -95,6 +99,8 @@ public class Fireland extends JavaPlugin {
         getCommand("booster").setExecutor(new BoosterManager(this));
         getCommand("booster").setTabCompleter(new BoosterCommandCompleter(this));
         getCommand("backpack").setExecutor(new BackPack(this));
+        getCommand("essaim").setExecutor(new EssaimCommandManager(this));
+        getCommand("essaim").setTabCompleter(new EssaimCommandCompleter(this));
     }
 
     private void enableEvent() {
@@ -194,6 +200,7 @@ public class Fireland extends JavaPlugin {
         loadConfigManager();
 
         zoneManager = new ZoneManager(this);
+        essaimManager = new EssaimManager(this);
 
         final scoreboardPlayer scoreboardPlayerClass;
         final ambientSound ambientSoundClass;

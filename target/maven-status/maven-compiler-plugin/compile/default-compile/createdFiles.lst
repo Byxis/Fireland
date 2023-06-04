@@ -1,3 +1,4 @@
+fr\byxis\essaim\EssaimFunctions.class
 fr\byxis\fireland\Fireland$3.class
 fr\byxis\discretion\ZombieDetection.class
 fr\byxis\event\RankCustomMessage.class
@@ -14,6 +15,7 @@ fr\byxis\fireland\Fireland.class
 fr\byxis\event\parachute$1.class
 fr\byxis\db\DbCredentials.class
 fr\byxis\discretion\rally$1.class
+fr\byxis\essaim\EssaimCommandManager.class
 fr\byxis\fireland\Fireland$6.class
 fr\byxis\command\stack.class
 fr\byxis\fireland\utilities\InGameUtilities$1.class
@@ -23,6 +25,7 @@ fr\byxis\workshop\workshopFunction.class
 fr\byxis\event\chatListener.class
 fr\byxis\faction\FactionPacket.class
 fr\byxis\event\RemoveInteractionBlock.class
+fr\byxis\essaim\EssaimCommandCompleter.class
 fr\byxis\faction\factionManager.class
 fr\byxis\event\modifiedInteractionItemstackSize.class
 fr\byxis\booster\BoosterClass.class
@@ -34,6 +37,7 @@ fr\byxis\faction\factionManagerTabCompleter.class
 fr\byxis\event\stairs.class
 fr\byxis\event\cobwebDamage.class
 fr\byxis\quest\KillQuestClass.class
+fr\byxis\essaim\EssaimEventHandler.class
 fr\byxis\fireland\utilities\BlockUtilities.class
 fr\byxis\packet\PacketPlayer$1.class
 fr\byxis\event\bank.class
@@ -69,6 +73,7 @@ fr\byxis\packet\PacketPlayer$2.class
 fr\byxis\event\doorPass.class
 fr\byxis\faction\FactionPlayerInformation.class
 fr\byxis\intendant\Manager.class
+fr\byxis\essaim\EssaimConfigManager.class
 fr\byxis\event\playerDeath.class
 fr\byxis\intendant\menu\MenuIntendant.class
 fr\byxis\intendant\menu\MenuBooster.class
@@ -115,6 +120,7 @@ fr\byxis\event\infectedPlayer.class
 fr\byxis\event\zombieManager.class
 fr\byxis\event\quadListener.class
 fr\byxis\fireland\utilities\ItemUtilities.class
+fr\byxis\essaim\EssaimManager.class
 fr\byxis\fireland\utilities\PermissionUtilities.class
 fr\byxis\packet\PacketPlayer.class
 fr\byxis\fireland\Fireland$1.class
@@ -130,4 +136,5 @@ fr\byxis\event\shop.class
 fr\byxis\fireland\Fireland$7.class
 fr\byxis\event\RankCustomMessage$1.class
 fr\byxis\faction\FactionEvent.class
+fr\byxis\essaim\essaimClass\Spawner.class
 fr\byxis\shop\ShopEventManager.class

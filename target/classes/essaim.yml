@@ -1,0 +1,6 @@
+essaim1:
+  spawners:
+    spawner1:
+      type: "Infecte"
+      amount: 6
+      command: "setblock edzojfozjo"

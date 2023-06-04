@@ -43,6 +43,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\speedFly.ja
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\workshop\workshopCraftingItemClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\zone\ZoneConfigFileManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\karma\PlayerKarmaClass.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\EssaimCommandCompleter.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DatabaseManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\scoreboardPlayer.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\intendant\IntendantCommand.java
@@ -57,9 +58,11 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\menu.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\spawn.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\DiscordCommand.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\stack.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\EssaimConfigManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DbCredentials.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\entitySpawn.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\PermissionUtilities.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\EssaimCommandManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\zone\DataZone.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\craft.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\playerDeath.java
@@ -103,3 +106,4 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\FactionPlay
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\chatListener.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\intendant\menu\MenuPlayerList.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\silverfishSilent.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\EssaimFunctions.java

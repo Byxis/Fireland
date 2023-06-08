@@ -1,16 +1,20 @@
 package fr.byxis.fireland.utilities;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import java.util.List;
+import java.util.UUID;
 
-public class ItemUtilities {
+public class InventoryUtilities {
 
     public static ItemStack setItemMeta(Material mat, String name, short dura) {
         ItemStack item = new ItemStack(mat);
@@ -20,6 +24,20 @@ public class ItemUtilities {
         item.setItemMeta(itemMeta);
         item.setDurability(dura);
         return item;
+    }
+
+    public static void clickManager(InventoryClickEvent e)
+    {
+        if (e.getClickedInventory() == e.getView().getTopInventory() || e.getClick().isKeyboardClick()) {
+            e.setCancelled(true);
+        }
+        else
+        {
+            if(e.isShiftClick())
+            {
+                e.setCancelled(true);
+            }
+        }
     }
     public static ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
         ItemStack item = new ItemStack(mat);
@@ -48,6 +66,16 @@ public class ItemUtilities {
         item.setItemMeta(itemMeta);
         item.setDurability(dura);
         return item;
+    }
+
+    public static ItemStack GetHead(UUID uuid, String displayName)
+    {
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta headMeta = (SkullMeta) head.getItemMeta();
+        headMeta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
+        headMeta.setDisplayName(displayName);
+        head.setItemMeta(headMeta);
+        return head;
     }
 
     public static ItemStack setItemCustomModelData(ItemStack i, int cmd)

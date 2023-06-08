@@ -24,7 +24,8 @@ public class DbConnection {
 			getClass().forName("com.mysql.jdbc.Driver");
 			this.connection = DriverManager.getConnection(this.dbCredentials.toURL(), this.dbCredentials.getUser(), this.dbCredentials.getPass());
 
-			Logger.getLogger("Minecraft").info("La base de donnée est connectée !");
+			Logger.getLogger("Fireland").info("La base de donnée est connectée !");
+			//Logger.getLogger("Minecraft").info("La base de donnée est connectée !");
 		} catch (ClassNotFoundException e)
 		{
 			e.printStackTrace();

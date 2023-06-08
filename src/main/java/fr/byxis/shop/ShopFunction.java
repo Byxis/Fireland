@@ -1,12 +1,13 @@
 package fr.byxis.shop;
 
 import fr.byxis.db.DbConnection;
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.jeton.jetonSql;
 import fr.byxis.karma.karmaManager;
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.utilities.ItemUtilities;
+import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -95,32 +96,32 @@ public class ShopFunction {
     {
         for(int i=0;i<9;i++)
         {
-            _inv.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            _inv.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             if(i+45 == 52)
             {
                 if(_currentPage == 1)
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else if(i+45 == 53)
             {
                 if(_currentPage == _pageMax)
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else
             {
-                _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
         }
@@ -132,7 +133,7 @@ public class ShopFunction {
         {
             l.add("§c§lPlus d'infos sur discord §6(/discord)");
         }
-        _inv.setItem(45, ItemUtilities.setItemMetaLore(Material.BOOK, "§r- Informations -", (short) 1, l));
+        _inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "§r- Informations -", (short) 1, l));
         int spot = 19-(_currentPage * 14)+14;
         for (int i = (_currentPage * 14)-14; i < _items.size() && i < _currentPage * 14; i++)
         {
@@ -160,7 +161,7 @@ public class ShopFunction {
                     lore.add("§8Achat: §6"+getPriceText(item, p, true));
                 }
             }
-            _inv.setItem(spot+i, ItemUtilities.setItemCustomModelData(ItemUtilities.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore),item.customModelData));
+            _inv.setItem(spot+i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore),item.customModelData));
         }
     }
 
@@ -353,7 +354,7 @@ public class ShopFunction {
                         }
                         else
                         {
-                            main.commandExecutor(_p, command, "crackshot.get.all");
+                            PermissionUtilities.commandExecutor(_p, command, "crackshot.get.all");
                         }
                         main.eco.withdrawPlayer(_p, prix);
                         _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §6"+prix+"$ §a!");
@@ -370,7 +371,7 @@ public class ShopFunction {
                     }
                     else
                     {
-                        main.commandExecutor(_p, command, "crackshot.give.all");
+                        PermissionUtilities.commandExecutor(_p, command, "crackshot.give.all");
                     }
                     _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
                     _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);

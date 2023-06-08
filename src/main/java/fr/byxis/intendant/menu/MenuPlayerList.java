@@ -3,8 +3,7 @@ package fr.byxis.intendant.menu;
 import fr.byxis.faction.FactionFunctions;
 import fr.byxis.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.utilities.BasicUtilities;
-import fr.byxis.fireland.utilities.ItemUtilities;
+import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,9 +32,9 @@ public class MenuPlayerList {
             ArrayList<FactionPlayerInformation> infos = ff.getPlayersFromFaction(pInfos.getFactionName());
 
             for(int i=0;i<9;i++) {
-                inventory.setItem(i + 45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                inventory.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
-            inventory.setItem(53, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+            inventory.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
             int member = 9;
             String you = "";
             String nouveau = "";
@@ -63,17 +62,17 @@ public class MenuPlayerList {
                 }
                 if(info.getRole() == 2)
                 {
-                    inventory.setItem(0, BasicUtilities.GetHead(info.getUuid(), connectionInformation+"§cLeader: "+Bukkit.getOfflinePlayer(info.getUuid()).getName()+you));
+                    inventory.setItem(0, InventoryUtilities.GetHead(info.getUuid(), connectionInformation+"§cLeader: "+Bukkit.getOfflinePlayer(info.getUuid()).getName()+you));
                 }
                 if(info.getRole() == 1)
                 {
 
-                    inventory.setItem(member, BasicUtilities.GetHead(info.getUuid(), connectionInformation+"§eModérateur: "+Bukkit.getOfflinePlayer(info.getUuid()).getName()+you+nouveau));
+                    inventory.setItem(member, InventoryUtilities.GetHead(info.getUuid(), connectionInformation+"§eModérateur: "+Bukkit.getOfflinePlayer(info.getUuid()).getName()+you+nouveau));
                     member++;
                 }
                 if(info.getRole() == 0)
                 {
-                    inventory.setItem(member, BasicUtilities.GetHead(info.getUuid(), connectionInformation+"§aMembre: "+Bukkit.getOfflinePlayer(info.getUuid()).getName()+you+nouveau));
+                    inventory.setItem(member, InventoryUtilities.GetHead(info.getUuid(), connectionInformation+"§aMembre: "+Bukkit.getOfflinePlayer(info.getUuid()).getName()+you+nouveau));
                     member++;
                 }
                 you = "";

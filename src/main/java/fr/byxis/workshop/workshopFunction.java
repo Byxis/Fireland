@@ -3,7 +3,8 @@ package fr.byxis.workshop;
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
-import fr.byxis.fireland.utilities.ItemUtilities;
+import fr.byxis.fireland.utilities.InventoryUtilities;
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -416,32 +417,32 @@ public class workshopFunction {
     {
         for(int i=0;i<9;i++)
         {
-            _inv.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            _inv.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             if(i+45 == 52)
             {
                 if(_currentPage == 1)
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else if(i+45 == 53)
             {
                 if(_currentPage == _pageMax)
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else
             {
-                _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
         }
@@ -466,7 +467,7 @@ public class workshopFunction {
                 lore.add("§6"+_craftableItems[0]+"§8/§6"+item.scrap+"§8férailles, §6");
                 lore.add("§6"+_craftableItems[1]+"§8/§6"+item.gunPowder+"§8 poudre à canon.");
             }
-            _inv.setItem(spot+i, ItemUtilities.setItemCustomModelData(ItemUtilities.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore),item.customModelData));
+            _inv.setItem(spot+i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore),item.customModelData));
         }
     }
 
@@ -537,7 +538,7 @@ public class workshopFunction {
                     removeItemsOnInventoryOfPlayer(p, Material.GUNPOWDER, item.gunPowder);
                     p.sendMessage("§aVous avez craft §6"+item.itemName+"§a !");
                 /*
-                main.commandExecutor(p, item.command, "crackshot.give.all");
+                PermissionUtilities.commandExecutor(p, item.command, "crackshot.give.all");
                 craftItemNbr(item.recipeName, p.getUniqueId().toString(), 1);*/
                 }
 
@@ -589,7 +590,7 @@ public class workshopFunction {
             }
             name = sb.toString().trim();
 //ws newrecipe nom type scrap gp nomitem mat dura    cmd
-            main.commandExecutor(p, "ws newrecipe Plan_de_fabrication_de_"+name+" "+_type+" "+_scrap+" "+poudre_canon+" "+name+" "+item.getType()+" "+item.getDurability()+" "+_command, "fireland.workshop.a:newrecipe");
+            PermissionUtilities.commandExecutor(p, "ws newrecipe Plan_de_fabrication_de_"+name+" "+_type+" "+_scrap+" "+poudre_canon+" "+name+" "+item.getType()+" "+item.getDurability()+" "+_command, "fireland.workshop.a:newrecipe");
         }
     }
 
@@ -677,32 +678,32 @@ public class workshopFunction {
     {
         for(int i=0;i<9;i++)
         {
-            _inv.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            _inv.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             if(i+45 == 52)
             {
                 if(_currentPage == 1)
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a["+(_currentPage-1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else if(i+45 == 53)
             {
                 if(_currentPage == _pageMax)
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+_currentPage+"/"+_pageMax+"]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
+                    _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c["+(_currentPage+1)+"/"+_pageMax+"]", (short) 1));
                 }
             }
             else
             {
-                _inv.setItem(i+45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                _inv.setItem(i+45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
         }
@@ -726,7 +727,7 @@ public class workshopFunction {
 
             lore.add("§8Date de fin de création : "+item.finishDate);
             lore.add("§8Date de création : "+item.creationDate);
-            _inv.setItem(spot+i, ItemUtilities.setItemCustomModelData(ItemUtilities.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore), item.customModelData));
+            _inv.setItem(spot+i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore), item.customModelData));
         }
     }
 
@@ -941,9 +942,9 @@ public class workshopFunction {
     public void openWorkshop(Player p)
     {
         Inventory craftMenu = Bukkit.createInventory(null, 9*3, "Plan de travail");
-        craftMenu.setItem(11, ItemUtilities.setItemMeta(Material.ANVIL, "§6Atelier", (short) 1));
-        craftMenu.setItem(13, ItemUtilities.setItemMeta(Material.NETHERITE_SCRAP, "§aRecyclage", (short) 1));
-        craftMenu.setItem(15, ItemUtilities.setItemMeta(Material.CHEST, "§6Création", (short) 1));
+        craftMenu.setItem(11, InventoryUtilities.setItemMeta(Material.ANVIL, "§6Atelier", (short) 1));
+        craftMenu.setItem(13, InventoryUtilities.setItemMeta(Material.NETHERITE_SCRAP, "§aRecyclage", (short) 1));
+        craftMenu.setItem(15, InventoryUtilities.setItemMeta(Material.CHEST, "§6Création", (short) 1));
         p.openInventory(craftMenu);
     }
 
@@ -967,35 +968,35 @@ public class workshopFunction {
                 ItemStack i;
                 if(rs.getString(2).equals("E"))
                 {
-                    i = ItemUtilities.setItemMeta(Material.PAPER, "§r§a"+rs.getString(1), (short) 1);
+                    i = InventoryUtilities.setItemMeta(Material.PAPER, "§r§a"+rs.getString(1), (short) 1);
                     ItemMeta itemMeta=i.getItemMeta();
                     itemMeta.setCustomModelData(1);
                     i.setItemMeta(itemMeta);
                 }
                 else if(rs.getString(2).equals("D"))
                 {
-                    i = ItemUtilities.setItemMeta(Material.PAPER, "§r§9"+rs.getString(1), (short) 1);
+                    i = InventoryUtilities.setItemMeta(Material.PAPER, "§r§9"+rs.getString(1), (short) 1);
                     ItemMeta itemMeta=i.getItemMeta();
                     itemMeta.setCustomModelData(2);
                     i.setItemMeta(itemMeta);
                 }
                 else if(rs.getString(2).equals("C"))
                 {
-                    i = ItemUtilities.setItemMeta(Material.PAPER, "§r§c"+rs.getString(1), (short) 1);
+                    i = InventoryUtilities.setItemMeta(Material.PAPER, "§r§c"+rs.getString(1), (short) 1);
                     ItemMeta itemMeta=i.getItemMeta();
                     itemMeta.setCustomModelData(3);
                     i.setItemMeta(itemMeta);
                 }
                 else if(rs.getString(2).equals("B"))
                 {
-                    i = ItemUtilities.setItemMeta(Material.PAPER, "§r§e"+rs.getString(1), (short) 1);
+                    i = InventoryUtilities.setItemMeta(Material.PAPER, "§r§e"+rs.getString(1), (short) 1);
                     ItemMeta itemMeta=i.getItemMeta();
                     itemMeta.setCustomModelData(4);
                     i.setItemMeta(itemMeta);
                 }
                 else
                 {
-                    i = ItemUtilities.setItemMeta(Material.PAPER, "§r§6§l"+rs.getString(1), (short) 1);
+                    i = InventoryUtilities.setItemMeta(Material.PAPER, "§r§6§l"+rs.getString(1), (short) 1);
                     ItemMeta itemMeta=i.getItemMeta();
                     itemMeta.setCustomModelData(5);
                     i.setItemMeta(itemMeta);

@@ -2,6 +2,7 @@ package fr.byxis.event;
 
 import fr.byxis.fireland.ConfigManager;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -20,6 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class menu implements Listener,CommandExecutor {
 
@@ -187,27 +189,59 @@ public class menu implements Listener,CommandExecutor {
     
     private void TeleportPlayer(Player player, ItemStack current, Location loc, int price)
     {
-    	if(player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)
+    	if((player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) && !main.hashMapManager.isTeleporting(player.getUniqueId()))
     	{
-            InGameUtilities.teleportPlayer(player, loc, 0, "", main);
+            InGameUtilities.teleportPlayer(player, loc, 0, "");
     	}
-    	else if(main.eco.hasAccount(player)) {
+    	else if(main.eco.hasAccount(player) && !main.hashMapManager.isTeleporting(player.getUniqueId())) {
         	if(main.eco.getBalance(player) >= price) {
-        		ConfigManager config = main.cfgm;
         		player.closeInventory();
         		player.sendMessage("§8La téléportation commence, veuillez ne pas bougez.");
-        		config.getPlayerDB().set("mouvement."+player.getUniqueId()+".time", 10);
-        		config.savePlayerDB();
-                if(InGameUtilities.teleportPlayer(player, loc, 15, "gun.hud.helico", main))
-                {
-                    player.sendMessage("§7Vous avez payé "+price+"$");
-                    main.eco.withdrawPlayer(player, price);
-                }
+                teleportPlayer(player, loc, 15, "gun.hub.helico", main, price);
 
         	}else{
         		player.sendMessage("§8Vous n'avez pas assez d'argent !");
         		player.closeInventory();
         	}
         }
+    }
+
+    public void teleportPlayer(Player player, Location loc, int duration, String sound, Fireland main, int price)
+    {
+        player.playSound(player.getLocation(), "minecraft:"+sound, (float) 0.1, (float) 1);
+        main.hashMapManager.addTeleporting(player.getUniqueId());
+
+        new BukkitRunnable() {
+            private int i = -1;
+
+            @Override
+            public void run() {
+                i++;
+                if(InGameUtilities.getPlayerMoving(player)){
+                    BasicUtilities.sendPlayerError(player,"Téléportation annulée !");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound "+player.getName()+" * minecraft:"+sound);
+                    main.hashMapManager.removeTeleporting(player.getUniqueId());
+                    cancel();
+                }
+                else
+                {
+                    if((i%5 == 0 && i != duration) || i == duration-3 ||i  == duration-2 || i  == duration-1)
+                    {
+                        BasicUtilities.sendPlayerInformation(player,"Téléportation dans " +(duration-i)+" secondes");
+                    }
+                    if(i == duration)
+                    {
+                        BasicUtilities.sendPlayerInformation(player,"Téléportation...");
+                        player.teleport(loc);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
+                        player.sendMessage("§7Vous avez payé "+price+"$");
+                        main.eco.withdrawPlayer(player, price);
+                        main.hashMapManager.removeTeleporting(player.getUniqueId());
+                        cancel();
+                    }
+                }
+
+            }
+        }.runTaskTimer(main, 0L, 20L);
     }
 }

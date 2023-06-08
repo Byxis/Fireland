@@ -1,5 +1,9 @@
 package fr.byxis.fireland.utilities;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -64,6 +68,13 @@ public class BasicUtilities {
             world.playSound(loc, "minecraft:"+sound, category, vol, pitch);
         }
     }
+    public static void playWorldSound(String worldName, Location loc, Sound sound, SoundCategory category, float vol, float pitch)
+    {
+        World world = Bukkit.getWorld(worldName);
+        if (world != null) {
+            world.playSound(loc, sound, category, vol, pitch);
+        }
+    }
 
     public static void playPlayerSound(Player p, String sound, SoundCategory category, float vol, float pitch)
     {
@@ -113,16 +124,6 @@ public class BasicUtilities {
         int nb;
         nb = borneInf+random.nextInt(borneSup-borneInf);
         return nb;
-    }
-
-    public static ItemStack GetHead(UUID uuid, String name)
-    {
-        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-        SkullMeta headMeta = (SkullMeta) head.getItemMeta();
-        headMeta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
-        headMeta.setDisplayName(name);
-        head.setItemMeta(headMeta);
-        return head;
     }
 
     public static List<String> listMaker(String str1, String str2, String str3, String str4){
@@ -180,5 +181,13 @@ public class BasicUtilities {
         }
         return "§7";
 
+    }
+
+    public static void sendInteractivePlayerMessage(Player p, String msg, String cmd, String hover, ClickEvent.Action action)
+    {
+        TextComponent message = new TextComponent("§6§lFireland§8§l >> §7"+msg);
+        message.setClickEvent(new ClickEvent(action, cmd));
+        message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
+        p.spigot().sendMessage(message);
     }
 }

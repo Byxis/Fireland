@@ -22,8 +22,13 @@ public class RankCustomMessage implements Listener {
     {
         Entity ent = e.getEntity();
         EntityDamageEvent ede = ent.getLastDamageCause();
+        if(ede == null)
+        {
+            return;
+        }
         EntityDamageEvent.DamageCause dc = ede.getCause();
-        if(ent instanceof Player p && p.hasPermission("fireland.message.admin"))
+        Player p = (Player) ent;
+        if(p.hasPermission("fireland.message.admin"))
         {
             switch (dc)
             {
@@ -47,15 +52,15 @@ public class RankCustomMessage implements Listener {
                 e.setDeathMessage("§c"+p.getName()+" s'est fait avoir par sa propre création : l'infection par les zombies §    kl");
             }
         }
-        else if(ent instanceof Player p && p.hasPermission("fireland.message.veteran"))
+        else if(p.hasPermission("fireland.message.veteran"))
         {
 
         }
-        else if(ent instanceof Player p && p.hasPermission("fireland.message.stratege"))
+        else if(p.hasPermission("fireland.message.stratege"))
         {
 
         }
-        else if(ent instanceof Player p && p.hasPermission("fireland.message.mercenaire"))
+        else if(p.hasPermission("fireland.message.mercenaire"))
         {
 
         }

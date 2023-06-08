@@ -32,13 +32,14 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\factionMana
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\packet\PacketFunctions.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\booster\BoosterClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\RemoveInteractionBlock.java
-C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\ItemUtilities.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\intendant\menu\MenuFaction.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\EssaimEventHandler.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\jetonsCommandManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\doorPass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\BlockUtilities.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DbConnection.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\quest\QuestClass.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\essaimClass\EssaimClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\speedFly.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\workshop\workshopCraftingItemClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\zone\ZoneConfigFileManager.java
@@ -47,9 +48,12 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\EssaimComman
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DatabaseManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\scoreboardPlayer.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\intendant\IntendantCommand.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\essaimClass\ActiveMobSpawning.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\FactionFunctions.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\rename.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\karma\karmaManager.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\essaimClass\EssaimGroup.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\InventoryUtilities.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\shop\ShopFunction.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\FactionPacket.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\discretion\rally.java
@@ -63,6 +67,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DbCredentials.ja
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\entitySpawn.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\PermissionUtilities.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\EssaimCommandManager.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\EssaimManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\zone\DataZone.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\craft.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\playerDeath.java
@@ -84,6 +89,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\FactionEven
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\jetonSql.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\bank.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\stairs.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\TextUtilities.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\zone\CaptureZone.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\booster\BoosterCommandCompleter.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\intendant\menu\MenuPerks.java
@@ -102,6 +108,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\zone\zoneclass\Fact
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\zone\ZoneSaveEvent.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\FactionPvp.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\fallDamage.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\essaim\essaimClass\Spawner.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\FactionPlayerInformation.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\chatListener.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\intendant\menu\MenuPlayerList.java

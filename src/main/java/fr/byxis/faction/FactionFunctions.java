@@ -793,7 +793,7 @@ public class FactionFunctions {
 			}
 			else
 			{
-				sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F018");
+				if(sender != null)sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F018");
 				return false;
 			}
 		} catch (SQLException e) {

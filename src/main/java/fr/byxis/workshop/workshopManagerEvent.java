@@ -1,5 +1,6 @@
 package fr.byxis.workshop;
 
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.jeton.jetonSql;
@@ -205,7 +206,7 @@ public class workshopManagerEvent implements Listener {
                                 }
                                 else
                                 {
-                                    main.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.get.all");
+                                    PermissionUtilities.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.get.all");
                                 }
                                 wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
                                 wf.craftItemNbr(item.planName, p.getUniqueId().toString(), 1);
@@ -229,7 +230,7 @@ public class workshopManagerEvent implements Listener {
                                     }
                                     else
                                     {
-                                        main.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.get.all");
+                                        PermissionUtilities.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.get.all");
                                     }
                                     wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
                                     wf.craftItemNbr(item.planName, p.getUniqueId().toString(),1);
@@ -269,11 +270,11 @@ public class workshopManagerEvent implements Listener {
             e.setCancelled(true);
             if(e.getCurrentItem().getType() == Material.CHEST)
             {
-                main.commandExecutor((Player) e.getView().getPlayer(), "ws craftinggui", "fireland.command.workshop.craftinggui");
+                PermissionUtilities.commandExecutor((Player) e.getView().getPlayer(), "ws craftinggui", "fireland.command.workshop.craftinggui");
             } else if (e.getCurrentItem().getType() == Material.ANVIL) {
-                main.commandExecutor((Player) e.getView().getPlayer(), "ws gui", "fireland.command.workshop.gui");
+                PermissionUtilities.commandExecutor((Player) e.getView().getPlayer(), "ws gui", "fireland.command.workshop.gui");
             } else if (e.getCurrentItem().getType() == Material.NETHERITE_SCRAP) {
-                main.commandExecutor((Player) e.getView().getPlayer(), "ws recycler", "fireland.command.workshop.recycler");
+                PermissionUtilities.commandExecutor((Player) e.getView().getPlayer(), "ws recycler", "fireland.command.workshop.recycler");
             }
         }
         else if(e.getView().getTitle().contains("Recycleur"))

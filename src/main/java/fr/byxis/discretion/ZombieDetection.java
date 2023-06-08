@@ -47,7 +47,7 @@ public class ZombieDetection implements Listener {
 			double score = main.hashMapManager.getDiscretionMap().get(player.getUniqueId()).getScore();
 
 			double calcul = 0.008*Math.pow((120-score), 2);
-			if(player.getLocation().distance(entity.getLocation()) >= calcul || main.cfgm.getPlayerDB().getBoolean("safezone."+player.getUniqueId()+".state"))
+			if(player.getLocation().distance(entity.getLocation()) >= calcul /*|| main.cfgm.getPlayerDB().getBoolean("safezone."+player.getUniqueId()+".state")*/)
 			{
 				e.setCancelled(true);
 			}
@@ -79,7 +79,7 @@ public class ZombieDetection implements Listener {
 
 	@EventHandler
     public void playerMouvement(PlayerMoveEvent e) {
-		if(!(e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockZ() != e.getTo().getBlockZ() || e.getFrom().getBlockY() != e.getTo().getBlockY()) ||main.hashMapManager.getDiscretionMap().get(e.getPlayer().getUniqueId()).isListeningMovements())
+		if(!(e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockZ() != e.getTo().getBlockZ() || e.getFrom().getBlockY() != e.getTo().getBlockY()) ||!main.hashMapManager.getDiscretionMap().containsKey(e.getPlayer().getUniqueId())||main.hashMapManager.getDiscretionMap().get(e.getPlayer().getUniqueId()).isListeningMovements())
 		{
 			return;
 		}

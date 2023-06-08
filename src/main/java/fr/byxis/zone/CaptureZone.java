@@ -25,7 +25,7 @@ public class CaptureZone {
     private static Fireland main;
     private DataZone data;
     private final int captureRefreshRate = 2;
-    private final int boosterCapture = 8;
+    private final int boosterCapture = 1;
     int i = 0;
 
     public CaptureZone(Fireland main, DataZone data)

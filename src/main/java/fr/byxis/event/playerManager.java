@@ -14,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 
 public class playerManager implements Listener {
@@ -78,6 +79,12 @@ public class playerManager implements Listener {
 
             }
          }
+    }
+
+    @EventHandler
+    private void playerQuit(PlayerQuitEvent e)
+    {
+        main.hashMapManager.removeTeleporting(e.getPlayer().getUniqueId());
     }
 
 }

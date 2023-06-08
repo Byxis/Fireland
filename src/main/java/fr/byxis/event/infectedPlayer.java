@@ -3,6 +3,8 @@ package fr.byxis.event;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -87,6 +89,10 @@ public class infectedPlayer implements Listener,CommandExecutor {
 					p.getItemInHand().setAmount(p.getItemInHand().getAmount() -1);
 				}
 			}
+		}
+		else if(p.getItemInHand().getType() == Material.IRON_INGOT) {
+			PermissionUtilities.commandExecutor(p, "wm repair "+p.getName()+" INVENTORY", "*");
+			p.getItemInHand().setAmount(p.getItemInHand().getAmount() -1);
 		}
 	}
 	

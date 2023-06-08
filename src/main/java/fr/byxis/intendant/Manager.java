@@ -1,13 +1,11 @@
 package fr.byxis.intendant;
 
-import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.fireland.utilities.*;
 import fr.byxis.intendant.menu.*;
 import fr.byxis.faction.FactionFunctions;
 import fr.byxis.faction.FactionInformation;
 import fr.byxis.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.utilities.BasicUtilities;
-import fr.byxis.fireland.utilities.BlockUtilities;
 import fr.byxis.zone.ZoneConfigFileManager;
 import fr.byxis.zone.zoneclass.FactionZoneInformation;
 import org.bukkit.Bukkit;
@@ -44,14 +42,14 @@ public class Manager implements Listener {
                 if (itemclicked == null) {
                     return;
                 }
-                clickManager(e);
+               InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
 
                 switch(itemclicked.getType())
                 {
-                    case EMERALD -> main.commandExecutor(p, "ah", "crazyauctions.access");
+                    case EMERALD -> PermissionUtilities.commandExecutor(p, "ah", "crazyauctions.access");
                     case DIAMOND_SWORD -> MenuFaction.OpenFaction(main, p, true);
                     case FIREWORK_ROCKET -> MenuBooster.OpenBoosters(main,p);
                 }
@@ -64,7 +62,7 @@ public class Manager implements Listener {
                 if (itemclicked == null) {
                     return;
                 }
-                clickManager(e);
+               InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -84,7 +82,7 @@ public class Manager implements Listener {
                         MenuPlayerList.OpenPlayerList(main, p);
                         break;
                     case BARRIER :
-                        main.commandExecutor(p, "faction leave", "fireland.command.faction.leave");
+                        PermissionUtilities.commandExecutor(p, "faction leave", "fireland.command.faction.leave");
                         p.closeInventory();
                         break;
                     case ENDER_CHEST:
@@ -98,22 +96,22 @@ public class Manager implements Listener {
                         {
                             if(e.isShiftClick())
                             {
-                                main.commandExecutor(p, "faction withdraw 1000", "fireland.command.faction.withdraw");
+                                PermissionUtilities.commandExecutor(p, "faction withdraw 1000", "fireland.command.faction.withdraw");
                             }
                             else
                             {
-                                main.commandExecutor(p, "faction withdraw 100", "fireland.command.faction.withdraw");
+                                PermissionUtilities.commandExecutor(p, "faction withdraw 100", "fireland.command.faction.withdraw");
                             }
                         }
                         else if(e.isLeftClick())
                         {
                             if(e.isShiftClick())
                             {
-                                main.commandExecutor(p, "faction deposit 1000", "fireland.command.faction.deposit");
+                                PermissionUtilities.commandExecutor(p, "faction deposit 1000", "fireland.command.faction.deposit");
                             }
                             else
                             {
-                                main.commandExecutor(p, "faction deposit 100", "fireland.command.faction.deposit");
+                                PermissionUtilities.commandExecutor(p, "faction deposit 100", "fireland.command.faction.deposit");
                             }
                         }
                         MenuFaction.OpenFaction(main, p, true);
@@ -131,7 +129,7 @@ public class Manager implements Listener {
                 if (itemclicked == null) {
                     return;
                 }
-                clickManager(e);
+               InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -149,7 +147,7 @@ public class Manager implements Listener {
                 if (itemclicked == null) {
                     return;
                 }
-                clickManager(e);
+               InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -162,7 +160,7 @@ public class Manager implements Listener {
                 switch(itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE -> MenuFaction.OpenFaction(main, p, true);
-                    case LIME_STAINED_GLASS_PANE -> main.commandExecutor(p, "faction upgrade", "fireland.command.faction.upgrade");
+                    case LIME_STAINED_GLASS_PANE -> PermissionUtilities.commandExecutor(p, "faction upgrade", "fireland.command.faction.upgrade");
                     case SHIELD -> {
                         if(!finfos.hasFriendlyFirePerk())
                         {
@@ -172,7 +170,7 @@ public class Manager implements Listener {
                             }
                             else
                             {
-                                main.commandExecutor(p, "faction perk friendly_fire", "fireland.command.faction.perk");
+                                PermissionUtilities.commandExecutor(p, "faction perk friendly_fire", "fireland.command.faction.perk");
                                 MenuPerks.OpenPerks(main, p);
                             }
 
@@ -188,7 +186,7 @@ public class Manager implements Listener {
                             }
                             else
                             {
-                                main.commandExecutor(p, "faction perk show_nickname", "fireland.command.faction.perk");
+                                PermissionUtilities.commandExecutor(p, "faction perk show_nickname", "fireland.command.faction.perk");
                                 MenuPerks.OpenPerks(main, p);
                             }
 
@@ -204,7 +202,7 @@ public class Manager implements Listener {
                             }
                             else
                             {
-                                main.commandExecutor(p, "faction perk has_skin", "fireland.command.faction.perk");
+                                PermissionUtilities.commandExecutor(p, "faction perk has_skin", "fireland.command.faction.perk");
                                 MenuPerks.OpenPerks(main, p);
                             }
 
@@ -220,7 +218,7 @@ public class Manager implements Listener {
                             }
                             else
                             {
-                                main.commandExecutor(p, "faction perk show_prefix", "fireland.command.faction.perk");
+                                PermissionUtilities.commandExecutor(p, "faction perk show_prefix", "fireland.command.faction.perk");
                                 MenuPerks.OpenPerks(main, p);
                             }
 
@@ -236,7 +234,7 @@ public class Manager implements Listener {
                             }
                             else
                             {
-                                main.commandExecutor(p, "faction perk capture_perk", "fireland.command.faction.perk");
+                                PermissionUtilities.commandExecutor(p, "faction perk capture_perk", "fireland.command.faction.perk");
                                 MenuPerks.OpenPerks(main, p);
                             }
 
@@ -252,7 +250,7 @@ public class Manager implements Listener {
                             }
                             else
                             {
-                                main.commandExecutor(p, "faction perk zone_tp", "fireland.command.faction.perk");
+                                PermissionUtilities.commandExecutor(p, "faction perk zone_tp", "fireland.command.faction.perk");
                                 MenuPerks.OpenPerks(main, p);
                             }
 
@@ -273,7 +271,7 @@ public class Manager implements Listener {
                 if (itemclicked == null) {
                     return;
                 }
-                clickManager(e);
+                InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -300,7 +298,7 @@ public class Manager implements Listener {
                 if (itemclicked == null) {
                     return;
                 }
-                clickManager(e);
+                InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -320,14 +318,14 @@ public class Manager implements Listener {
                             break;
                         }
                     }
-                    if(zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk())
+                    if(zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk() && main.hashMapManager.isTeleporting(p.getUniqueId()))
                     {
                         ZoneConfigFileManager configManager = new ZoneConfigFileManager(main);
                         configManager.notSafeSetup();
                         Location loc = new Location(Bukkit.getWorld("world"), configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".x"),
                                 configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".y"),
                                 configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".z"));
-                        InGameUtilities.teleportPlayer(p, loc, 15, "gun.hub.helico", main);
+                        InGameUtilities.teleportPlayer(p, loc, 15, "gun.hub.helico");
                     }
                 }
 
@@ -344,7 +342,7 @@ public class Manager implements Listener {
                 if (itemclicked == null) {
                     return;
                 }
-                clickManager(e);
+                InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -374,26 +372,14 @@ public class Manager implements Listener {
                     {
                         level = 3;
                     }
-                    main.commandExecutor(p, "booster create "+level+" "+duration, "fireland.command.booster");
+                    PermissionUtilities.commandExecutor(p, "booster create "+level+" "+duration, "fireland.command.booster");
                     MenuBooster.OpenBoosters(main,p);
                 }
             }
         }
     }
 
-    private void clickManager(InventoryClickEvent e)
-    {
-        if (e.getClickedInventory() == e.getView().getTopInventory() || e.getClick().isKeyboardClick()) {
-            e.setCancelled(true);
-        }
-        else
-        {
-            if(e.isShiftClick())
-            {
-                e.setCancelled(true);
-            }
-        }
-    }
+    
 
 
 

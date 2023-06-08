@@ -5,7 +5,7 @@ import fr.byxis.faction.FactionInformation;
 import fr.byxis.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
-import fr.byxis.fireland.utilities.ItemUtilities;
+import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,8 +30,8 @@ public class MenuFaction {
         if(pInfos != null && finfos != null)
         {
             for(int i=0;i<9;i++) {
-                inventory.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
-                inventory.setItem(i + 45, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                inventory.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                inventory.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
             String role = "§aMembre";
@@ -43,16 +43,16 @@ public class MenuFaction {
             {
                 role = "§cLeader";
             }
-            inventory.setItem(8, ItemUtilities.setItemMeta(Material.BARRIER, "§4§lQuitter la faction", (short) 0));
-            inventory.setItem(22, ItemUtilities.setItemMetaLore(Material.ENDER_CHEST, "§aStockage - "+finfos.getCurrentChestSize()+" slots", (short) 0, BasicUtilities.listMaker("§8- Faites un §dclic gauche§8 pour ouvrir votre stockage","","","")));
-            inventory.setItem(26, BasicUtilities.GetHead(finfos.getLeader(), "§7Leader: "+Bukkit.getOfflinePlayer(finfos.getLeader()).getName()));
-            inventory.setItem(30, ItemUtilities.setItemMetaLore(Material.GOLD_INGOT, "§aArgent - §6"+finfos.getCurrentMoney()+"/"+finfos.getMaxMoney(), (short) 0, BasicUtilities.listMaker("§8- Faites un §dclic gauche §8pour ajouter §6100$","§8à la faction (shift pour 1000$)", "§8- §c(Leader)§8 Faites un §dclic droit §8pour retirer §6100$","§8de la faction (shift pour 1000$)")));
-            inventory.setItem(32, ItemUtilities.setItemMetaLore(Material.GRASS_BLOCK, "§aTerritoires claims -", (short) 0, BasicUtilities.listMaker("§cNon disponible pour le moment", "","","")));
-            inventory.setItem(35, ItemUtilities.setItemMetaLore(Material.ANVIL, "§aAméliorations -", (short) 0, BasicUtilities.listMaker("§8Accédez aux améliorations de la faction !","§cSeul le leader peut acheter des améliorations !","","")));
-            inventory.setItem(45, ItemUtilities.setItemMetaLore(Material.BOOK, "§7Vous êtes "+role+"§7.", (short) 0, BasicUtilities.listMaker("§8Date de création: "+finfos.getCreatedAt(),"","","")));
+            inventory.setItem(8, InventoryUtilities.setItemMeta(Material.BARRIER, "§4§lQuitter la faction", (short) 0));
+            inventory.setItem(22, InventoryUtilities.setItemMetaLore(Material.ENDER_CHEST, "§aStockage - "+finfos.getCurrentChestSize()+" slots", (short) 0, BasicUtilities.listMaker("§8- Faites un §dclic gauche§8 pour ouvrir votre stockage","","","")));
+            inventory.setItem(26, InventoryUtilities.GetHead(finfos.getLeader(), "§7Leader: "+Bukkit.getOfflinePlayer(finfos.getLeader()).getName()));
+            inventory.setItem(30, InventoryUtilities.setItemMetaLore(Material.GOLD_INGOT, "§aArgent - §6"+finfos.getCurrentMoney()+"/"+finfos.getMaxMoney(), (short) 0, BasicUtilities.listMaker("§8- Faites un §dclic gauche §8pour ajouter §6100$","§8à la faction (shift pour 1000$)", "§8- §c(Leader)§8 Faites un §dclic droit §8pour retirer §6100$","§8de la faction (shift pour 1000$)")));
+            inventory.setItem(32, InventoryUtilities.setItemMetaLore(Material.GRASS_BLOCK, "§aTerritoires claims -", (short) 0, BasicUtilities.listMaker("§cNon disponible pour le moment", "","","")));
+            inventory.setItem(35, InventoryUtilities.setItemMetaLore(Material.ANVIL, "§aAméliorations -", (short) 0, BasicUtilities.listMaker("§8Accédez aux améliorations de la faction !","§cSeul le leader peut acheter des améliorations !","","")));
+            inventory.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "§7Vous êtes "+role+"§7.", (short) 0, BasicUtilities.listMaker("§8Date de création: "+finfos.getCreatedAt(),"","","")));
             if(canReturn)
             {
-                inventory.setItem(53, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+                inventory.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
             }
         }
 

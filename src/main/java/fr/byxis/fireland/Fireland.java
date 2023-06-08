@@ -22,6 +22,7 @@ import fr.byxis.faction.FactionPvp;
 import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.intendant.IntendantCommand;
 import fr.byxis.intendant.Manager;
 import fr.byxis.jeton.jetonsCommandManager;
@@ -69,6 +70,7 @@ public class Fireland extends JavaPlugin {
     public HashMapManager hashMapManager;
     public ZoneManager zoneManager;
     public EssaimManager essaimManager;
+    public PermissionUtilities permissionUtilities;
 
     @SuppressWarnings("ConstantConditions")
     public void enableCommand() {
@@ -201,6 +203,7 @@ public class Fireland extends JavaPlugin {
 
         zoneManager = new ZoneManager(this);
         essaimManager = new EssaimManager(this);
+        permissionUtilities = new PermissionUtilities(this);
 
         final scoreboardPlayer scoreboardPlayerClass;
         final ambientSound ambientSoundClass;
@@ -628,29 +631,7 @@ public class Fireland extends JavaPlugin {
         cfgm.setup();
     }
 
-    public void commandExecutor(Player p, String cmd, String perm)
-    {
-        HashMap<UUID, PermissionAttachment> perms = new HashMap<UUID, PermissionAttachment>();
 
-        PermissionAttachment attachment = p.addAttachment(this);
-        perms.put(p.getUniqueId(), attachment);
-
-        PermissionAttachment permissions = perms.get(p.getUniqueId());
-
-        try
-        {
-            permissions.setPermission(perm, true);
-            Bukkit.dispatchCommand(p, cmd);
-        }
-        catch(Exception e1)
-        {
-            e1.printStackTrace();
-        }
-        finally
-        {
-            perms.get(p.getUniqueId()).unsetPermission(perm);
-        }
-    }
 
     /*
     public void modifyStackSize(Material mat, int size)

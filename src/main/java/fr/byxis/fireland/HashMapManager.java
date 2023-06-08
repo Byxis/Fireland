@@ -15,6 +15,7 @@ public class HashMapManager {
     private HashMap<UUID, PlayerKarmaClass> rangMap;
     private HashMap<String, Inventory> storageFactionMap;
     private HashMap<UUID, String> factionPrefixMap;
+    private HashMap<UUID, Boolean> isTeleporting;
     private BoosterClass booster;
 
     public HashMapManager() {
@@ -29,6 +30,7 @@ public class HashMapManager {
         this.storageFactionMap = new HashMap<>();
         this.factionPrefixMap = new HashMap<>();
         this.booster = null;
+        this.isTeleporting = new HashMap<>();
     }
 
     public HashMap<UUID,String> getFactionMap()
@@ -127,5 +129,35 @@ public class HashMapManager {
 
     public void setBooster(BoosterClass booster) {
         this.booster = booster;
+    }
+
+    public boolean isTeleporting(UUID uuid) {
+        if(isTeleporting.containsKey(uuid))
+        {
+            return isTeleporting.get(uuid);
+        }
+        return false;
+    }
+
+    public void addTeleporting(UUID uuid) {
+        if(isTeleporting.containsKey(uuid))
+        {
+            isTeleporting.replace(uuid, true);
+        }
+        else
+        {
+            isTeleporting.put(uuid, true);
+        }
+    }
+
+    public void removeTeleporting(UUID uuid) {
+        if(isTeleporting.containsKey(uuid))
+        {
+            isTeleporting.replace(uuid, false);
+        }
+        else
+        {
+            isTeleporting.put(uuid, false);
+        }
     }
 }

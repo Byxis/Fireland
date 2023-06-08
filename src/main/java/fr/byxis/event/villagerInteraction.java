@@ -1,5 +1,6 @@
 package fr.byxis.event;
 
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -27,51 +28,51 @@ public class villagerInteraction implements Listener {
 		
 		if(e.getRightClicked().getCustomName().contains("Utilitaire"))
 		{
-			main.commandExecutor(p, "shop utilitaire", "fireland.command.shop");
+			PermissionUtilities.commandExecutor(p, "shop utilitaire", "fireland.command.shop");
 		}
 		else if(e.getRightClicked().getCustomName().contains("Assaut"))
 		{
-			main.commandExecutor(p, "shop assaut", "fireland.command.shop");
+			PermissionUtilities.commandExecutor(p, "shop assaut", "fireland.command.shop");
 		}
 		else if(e.getRightClicked().getCustomName().contains("Revolver"))
 		{
-			main.commandExecutor(p, "shop revolver", "fireland.command.shop");
+			PermissionUtilities.commandExecutor(p, "shop revolver", "fireland.command.shop");
 		}
 		else if(e.getRightClicked().getCustomName().contains("SMG"))
 		{
-			main.commandExecutor(p, "shop smg", "fireland.command.shop");
+			PermissionUtilities.commandExecutor(p, "shop smg", "fireland.command.shop");
 		}
 		else if(e.getRightClicked().getCustomName().contains("Fusil"))
 		{
-			main.commandExecutor(p, "shop fusil", "fireland.command.shop");
+			PermissionUtilities.commandExecutor(p, "shop fusil", "fireland.command.shop");
 		}
 		else if(e.getRightClicked().getCustomName().contains("lourdes"))
 		{
-			main.commandExecutor(p, "shop lourd", "fireland.command.shop");
+			PermissionUtilities.commandExecutor(p, "shop lourd", "fireland.command.shop");
 		}
 		else if(e.getRightClicked().getCustomName().contains("Héliport"))
 		{
-			main.commandExecutor(p, "heliport", "fireland.command.heliport");
+			PermissionUtilities.commandExecutor(p, "heliport", "fireland.command.heliport");
 		}
 		else if(e.getRightClicked().getCustomName().contains("Banquier"))
 		{
-			main.commandExecutor(p, "bank", "fireland.command.bank");
+			PermissionUtilities.commandExecutor(p, "bank", "fireland.command.bank");
 		}
 		else if(e.getRightClicked().getCustomName().contains("Vendeur de Pass Vert"))
 		{
-			main.commandExecutor(p, "shop passv", "fireland.command.shop");
+			PermissionUtilities.commandExecutor(p, "shop passv", "fireland.command.shop");
 		}
 		else if(e.getRightClicked().getCustomName().contains("Vendeur de Pass Bleu"))
 		{
-			main.commandExecutor(p, "shop passb", "fireland.command.shop");
+			PermissionUtilities.commandExecutor(p, "shop passb", "fireland.command.shop");
 		}
 		else if(e.getRightClicked().getCustomName().contains("Vendeur de Pass Jaune"))
 		{
-			main.commandExecutor(p, "shop passj", "fireland.command.shop");
+			PermissionUtilities.commandExecutor(p, "shop passj", "fireland.command.shop");
 		}
 		else if(e.getRightClicked().getCustomName().contains("Vendeur de Pass Rouge"))
 		{
-			main.commandExecutor(p, "shop passr", "fireland.command.shop");
+			PermissionUtilities.commandExecutor(p, "shop passr", "fireland.command.shop");
 		}
 	}
 	

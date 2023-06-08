@@ -17,7 +17,7 @@ public class entitySpawn implements Listener {
     @EventHandler
     public void pillagerSpawnEvent(EntitySpawnEvent e)
     {
-        if(e.getEntityType() == EntityType.PILLAGER || e.getEntityType() == EntityType.RAVAGER)
+        if(e.getEntityType() == EntityType.PILLAGER)
         {
             e.setCancelled(true);
         }

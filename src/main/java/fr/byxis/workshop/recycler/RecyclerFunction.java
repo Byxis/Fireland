@@ -1,7 +1,7 @@
 package fr.byxis.workshop.recycler;
 
 import fr.byxis.fireland.utilities.BasicUtilities;
-import fr.byxis.fireland.utilities.ItemUtilities;
+import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -155,11 +155,11 @@ public class RecyclerFunction {
         {
             if(i == 49)
             {
-                _inv.setItem(i, ItemUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "?cRecycler les items", (short) 1));
+                _inv.setItem(i, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "?cRecycler les items", (short) 1));
             }
             else
             {
-                _inv.setItem(i, ItemUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+                _inv.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
         }
@@ -167,13 +167,13 @@ public class RecyclerFunction {
         l.add("?8Pour recycler des items, faites un");
         l.add("?6clic gauche?8 sur le bouton");
         l.add("?8recyclage.?4?lLes items seront supprim?s?r?8.");
-        _inv.setItem(45, ItemUtilities.setItemMetaLore(Material.BOOK, "?r- Informations -", (short) 1, l));
+        _inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "?r- Informations -", (short) 1, l));
     }
 
     public void Recycle(InventoryView inv, Player p) {
-        ItemStack scrap= ItemUtilities.setItemMeta(Material.NETHERITE_SCRAP, "?7D?bris m?tallique", (short)0);
-        ItemStack gp= ItemUtilities.setItemMeta(Material.GUNPOWDER, "?7Poudre ? canon", (short)0);
-        ItemStack meds=ItemUtilities.setItemMeta(Material.AMETHYST_SHARD, "?7M?dicaments", (short)0);;
+        ItemStack scrap= InventoryUtilities.setItemMeta(Material.NETHERITE_SCRAP, "?7D?bris m?tallique", (short)0);
+        ItemStack gp= InventoryUtilities.setItemMeta(Material.GUNPOWDER, "?7Poudre ? canon", (short)0);
+        ItemStack meds= InventoryUtilities.setItemMeta(Material.AMETHYST_SHARD, "?7M?dicaments", (short)0);;
 
         int space = GetAmountOfSpaceScrap(p);
         for(int i=0;i<45;i++)

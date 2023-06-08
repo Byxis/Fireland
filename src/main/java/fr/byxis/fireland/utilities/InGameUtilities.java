@@ -8,9 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
-import javax.naming.ldap.HasControls;
 import java.util.HashMap;
 
 public class InGameUtilities implements Listener {
@@ -24,10 +22,10 @@ public class InGameUtilities implements Listener {
         main = fireland;
     }
 
-    public static boolean teleportPlayer(Player player, Location loc, int duration, String sound, Fireland main)
+    public static void teleportPlayer(Player player, Location loc, int duration, String sound)
     {
+        main.hashMapManager.addTeleporting(player.getUniqueId());
         player.playSound(player.getLocation(), "minecraft:"+sound, (float) 0.1, (float) 1);
-        final boolean[] teleported = {false};
 
         new BukkitRunnable() {
             private int i = -1;
@@ -35,10 +33,10 @@ public class InGameUtilities implements Listener {
             @Override
             public void run() {
                 i++;
-                if(playerMoving.containsKey(player) && playerMoving.get(player)){
-                    teleported[0] = false;
+                if(getPlayerMoving(player)){
                     BasicUtilities.sendPlayerError(player,"Téléportation annulée !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound "+player.getName()+" * minecraft:"+sound);
+                    main.hashMapManager.removeTeleporting(player.getUniqueId());
                     cancel();
                 }
                 else
@@ -52,16 +50,37 @@ public class InGameUtilities implements Listener {
                         BasicUtilities.sendPlayerInformation(player,"Téléportation...");
                         player.teleport(loc);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
-
+                        main.hashMapManager.removeTeleporting(player.getUniqueId());
                         cancel();
                     }
                 }
 
             }
         }.runTaskTimer(main, 0L, 20L);
-        return teleported[0];
     }
 
+    public static Boolean getPlayerMoving(Player player)
+    {
+        if(!playerMoving.containsKey(player))
+        {
+            return false;
+        }
+        return playerMoving.get(player);
+    }
+
+    public static void setPlayerMoving(Player player, Boolean moving)
+    {
+        if(!playerMoving.containsKey(player))
+        {
+            playerMoving.put(player, moving);
+        }
+        playerMoving.replace(player, moving);
+    }
+
+    public void playSound(Player p, String sound)
+    {
+        p.playSound(p.getLocation(), sound, 1, 1);
+    }
     @EventHandler
     public void PlayerMove(PlayerMoveEvent event)
     {

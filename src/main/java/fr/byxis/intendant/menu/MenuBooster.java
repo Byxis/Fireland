@@ -3,10 +3,12 @@ package fr.byxis.intendant.menu;
 import fr.byxis.booster.BoosterClass;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.jeton.jetonsCommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -16,6 +18,7 @@ public class MenuBooster {
 
     public static void OpenBoosters(Fireland main, Player p)
     {
+        InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
         Inventory boosterInv = Bukkit.createInventory(null, 54, "§8Boosters");
         SetBoostersItem(main, boosterInv, p);
         p.openInventory(boosterInv);

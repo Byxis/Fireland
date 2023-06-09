@@ -3,9 +3,11 @@ package fr.byxis.intendant.menu;
 import fr.byxis.faction.FactionFunctions;
 import fr.byxis.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -16,6 +18,7 @@ public class MenuPlayerList {
 
     public static void OpenPlayerList(Fireland main, Player p)
     {
+        InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation infos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
         Inventory PlayerList = Bukkit.createInventory(null, 54, "§8Membres de "+ff.GetColorCode(infos.getFactionName())+infos.getFactionName());

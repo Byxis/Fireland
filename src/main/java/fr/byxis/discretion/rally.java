@@ -135,7 +135,7 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 			if (entity instanceof Zombie || entity instanceof Stray ||  entity instanceof WitherSkeleton) {
 				Monster mob = (Monster) entity;
 
-				if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish) {
+				if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish || mob.getTarget().getLocation().distance(mob.getLocation()) > victim.getLocation().distance(mob.getLocation())) {
 					mob.setTarget(victim);
 					if (victim.getLocation().distance(mob.getLocation()) > 60D && Math.random() <= 0.1) {
 						victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
@@ -154,15 +154,13 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 
 	private void setHasShotted(Player victim)
 	{
-		main.cfgm.getPlayerDB().set("discretion." + victim.getUniqueId() + ".shot", true);
-		main.cfgm.savePlayerDB();
+		main.hashMapManager.getDiscretionMap().get(victim.getUniqueId()).setShooting(true);
 
 		new BukkitRunnable() {
 
 			@Override
 			public void run() {
-				main.cfgm.getPlayerDB().set("discretion." + victim.getUniqueId() + ".shot", false);
-				main.cfgm.savePlayerDB();
+				main.hashMapManager.getDiscretionMap().get(victim.getUniqueId()).setShooting(false);
 			}
 
 		}.runTaskLater(main, 20 * 10);

@@ -1,9 +1,12 @@
 package fr.byxis.packet;
 
 import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedBlockData;
 import fr.byxis.fireland.Fireland;
+import net.minecraft.world.level.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,24 +22,26 @@ public class PacketFunctions {
         this.main = main;
     }
 
-    public void playBorderPackets(Player player, boolean warn)
-    {
-
-        @SuppressWarnings("deprecation")
-        PacketContainer container = main.protocolManager.createPacket(PacketType.Play.Server.SET_BORDER_WARNING_DISTANCE);
-        container.getModifier().writeDefaults();
-        if(warn)
-        {
-            container.getIntegers().write(0, 999999999);
-            main.protocolManager.broadcastServerPacket(container, player, false);
+    public static void sendWorldBorderWarningDistancePacket(Player player, double intensity) {
+        int warningDistance = (int) (intensity*Integer.MAX_VALUE);
+        PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.SET_BORDER_WARNING_DISTANCE);
+        packet.getIntegers().write(0, warningDistance);
+        try {
+            ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else
-        {
-            container.getIntegers().write(0, 0);
-            main.protocolManager.broadcastServerPacket(container, player, false);
+    }
+
+    public static void sendWorldBorderWarningDistancePacket(Player player, double intensity, double distance) {
+        int warningDistance = (int) (intensity*distance);
+        PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.SET_BORDER_WARNING_DISTANCE);
+        packet.getIntegers().write(0, warningDistance);
+        try {
+            ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-
     }
 
     public void openDoor(Player p, Location loc, boolean openable)

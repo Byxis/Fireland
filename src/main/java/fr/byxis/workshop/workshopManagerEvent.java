@@ -1,5 +1,6 @@
 package fr.byxis.workshop;
 
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.fireland.utilities.BasicUtilities;
@@ -8,6 +9,7 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.workshop.recycler.RecyclerFunction;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -198,7 +200,7 @@ public class workshopManagerEvent implements Listener {
                         {
                             if(!wf.isBreakable(item, p.getUniqueId().toString()))
                             {
-                                BasicUtilities.playSound(p, "minecraft:block.anvil.use");
+                                InGameUtilities.playPlayerSound(p, "block.anvil.use", SoundCategory.AMBIENT, 1, 1);
                                 wf.removeFromQueue(item, p.getUniqueId().toString());
                                 if(item.command.contains("shot give"))
                                 {
@@ -216,13 +218,13 @@ public class workshopManagerEvent implements Listener {
                                 int rd = genererInt(0, 101);
                                 if(rd <= 10)
                                 {
-                                    BasicUtilities.playSound(p, "minecraft:block.anvil.destroy");
+                                    InGameUtilities.playPlayerSound(p, "block.anvil.destroy", SoundCategory.AMBIENT, 1, 1);
                                     p.sendMessage("§cPas de chance ! Votre item s'est cassé pendant la fabrication...");
                                     wf.removeFromQueue(item, p.getUniqueId().toString());
                                 }
                                 else
                                 {
-                                    BasicUtilities.playSound(p, "minecraft:block.anvil.use");
+                                    InGameUtilities.playPlayerSound(p, "block.anvil.use", SoundCategory.AMBIENT, 1, 1);
                                     wf.removeFromQueue(item, p.getUniqueId().toString());
                                     if(item.command.contains("shot give"))
                                     {

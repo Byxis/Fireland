@@ -5,6 +5,7 @@ import fr.byxis.essaim.essaimClass.EssaimClass;
 import fr.byxis.essaim.essaimClass.EssaimGroup;
 import fr.byxis.essaim.essaimClass.Spawner;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.zone.zoneclass.FactionCapturingClass;
 import io.lumine.mythic.api.mobs.MythicMob;
@@ -16,8 +17,10 @@ import io.lumine.mythic.core.mobs.ActiveMob;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +49,7 @@ public class EssaimManager {
         groups = new HashMap<>();
         SetupExistingSpawners();
         main.getServer().getPluginManager().registerEvents(new EssaimEventHandler(main), main);
+        loop();
     }
 
     public boolean EnableSpawner(Spawner spawner)
@@ -55,10 +59,10 @@ public class EssaimManager {
             return false;
         }
         MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(spawner.getMob()).orElse(null);
-        ActiveMobSpawning activeMobSpawning = new ActiveMobSpawning(getEntityNumber(spawner));
+        ActiveMobSpawning activeMobSpawning = new ActiveMobSpawning(getEntityNumber(spawner)+1);
         activeSpawners.put(spawner.getName(), activeMobSpawning);
         new BukkitRunnable(){
-            int entityNumber = getEntityNumber(spawner)-1;
+            int entityNumber = getEntityNumber(spawner);
 
             @Override
             public void run() {
@@ -68,7 +72,6 @@ public class EssaimManager {
                 if(!activeMob.validateLoadedMob())
                 {
                     activeMob.setDead();
-                    entityNumber++;
                     activeSpawners.get(spawner.getName()).removeActiveMob(activeMob);
                 }
                 if(entityNumber <= 0)
@@ -76,18 +79,21 @@ public class EssaimManager {
                     cancel();
                 }
             }
-        }.runTaskTimer(main, Math.round(spawner.getActivationDelay()*20), Math.round(spawner.getSpawnDelay()*20));
+        }.runTaskTimer(main, Math.round(spawner.getActivationDelay()*20/groups.get(spawner.getEssaim()).getMultiplicatorDifficulty()), Math.round(spawner.getSpawnDelay()*20));
         return true;
     }
 
     private int getEntityNumber(Spawner spawner)
     {
+
         if(spawner.isAffectedByDifficulty())
         {
+            main.getLogger().info("Old :"+spawner.getAmount()+"New :"+Math.round(spawner.getAmount()*main.essaimManager.groups.get(spawner.getEssaim()).getMultiplicatorDifficulty()));
             return Math.round(spawner.getAmount()*main.essaimManager.groups.get(spawner.getEssaim()).getMultiplicatorDifficulty());
         }
         else
         {
+            main.getLogger().info("NotChanged :"+spawner.getAmount());
             return spawner.getAmount();
         }
     }
@@ -96,6 +102,7 @@ public class EssaimManager {
     {
         if(activeEssaims.containsKey(name))
         {
+            activeEssaims.get(name).setClosed(false);
             return false;
         }
         EssaimClass essaimClass = new EssaimClass(name,
@@ -117,9 +124,13 @@ public class EssaimManager {
                         configManager.getConfig().getInt(name+".reset.position.z")
                 )
                 ,new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".entry.position.world")),//entry
-                        configManager.getConfig().getInt(name+".entry.position.x"),
-                        configManager.getConfig().getInt(name+".entry.position.y"),
-                        configManager.getConfig().getInt(name+".entry.position.z")
+                    configManager.getConfig().getInt(name+".entry.position.x"),
+                    configManager.getConfig().getInt(name+".entry.position.y"),
+                    configManager.getConfig().getInt(name+".entry.position.z")
+                ) ,new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".solo.position.world")),//entry
+                    configManager.getConfig().getInt(name+".solo.position.x"),
+                    configManager.getConfig().getInt(name+".solo.position.y"),
+                    configManager.getConfig().getInt(name+".solo.position.z")
                 ), configManager.getConfig().getInt(name+".jetons"));
         activeEssaims.put(name, essaimClass);
 
@@ -131,6 +142,11 @@ public class EssaimManager {
         if(!activeEssaims.containsKey(name))
         {
             return false;
+        }
+        else if(groups.containsKey(name))
+        {
+            activeEssaims.get(name).setClosed(true);
+            return true;
         }
         activeEssaims.remove(name);
 
@@ -166,16 +182,69 @@ public class EssaimManager {
     }
 
     public boolean resetEssaim(String arg) {
-        if(!activeEssaims.containsKey(arg))
-        {
-            return false;
-        }
         EssaimClass essaimClass = activeEssaims.get(arg);
         EssaimFunctions.setBlock(essaimClass.getReset().blockX(),
                 essaimClass.getReset().blockY(),
                 essaimClass.getReset().blockZ(),
                 Material.REDSTONE_BLOCK
-                );
+        );
         return true;
+    }
+
+    public boolean setSolo(String arg) {
+        if(!activeEssaims.containsKey(arg) || groups.get(arg).getMembers().size() != 1)
+        {
+            return false;
+        }
+        EssaimClass essaimClass = activeEssaims.get(arg);
+        EssaimFunctions.setBlock(essaimClass.getSolo().blockX(),
+                essaimClass.getSolo().blockY(),
+                essaimClass.getSolo().blockZ(),
+                Material.REDSTONE_BLOCK
+        );
+        return true;
+    }
+
+    public void loop()
+    {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if(isNewHour())
+                {
+                    for(String essaim : configManager.getConfig().getConfigurationSection("").getKeys(false))
+                    {
+                        if(configManager.getConfig().getInt(essaim+".hour") == (new Timestamp(System.currentTimeMillis()).getHours()))
+                        {
+                            EnableEssaim(essaim);
+                            for(Player p : Bukkit.getOnlinePlayers())
+                            {
+                                InGameUtilities.sendPlayerInformation(p, "L'essaim "+activeEssaims.get(essaim).getFormattedName()+" est désormais ouvert. Allez vite le pacifier avant que la menace se répande !");
+                            }
+                        }
+                    }
+                }
+                for(EssaimClass essaimClass : activeEssaims.values())
+                {
+                    if(essaimClass.isFinished() && essaimClass.shouldClose())
+                    {
+                        EssaimFunctions.leaveFinishedEssaim(essaimClass.getName(),groups.get(essaimClass.getName()).getMembers().get(0), true);
+                    }
+                    else if(essaimClass.isFinished())
+                    {
+                        for(Player player : groups.get(essaimClass.getName()).getMembers())
+                        {
+                            InGameUtilities.sendPlayerInformation(player, "Vous allez être expulsé de l'essaim dans "+(8 - new Timestamp(System.currentTimeMillis() - essaimClass.getFinishDate().getTime()).getMinutes()) + " minutes.");
+                        }
+                    }
+                }
+
+            }
+        }.runTaskTimer(main, 0, 20*60);
+    }
+    private boolean isNewHour()
+    {
+        Timestamp today = new Timestamp(System.currentTimeMillis());
+        return today.getMinutes() == 0;
     }
 }

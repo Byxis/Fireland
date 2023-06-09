@@ -3,8 +3,10 @@ package fr.byxis.karma;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import org.bukkit.Bukkit;
+import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -151,27 +153,27 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
                 }
             }
             p.sendTitle("", "§dPassage au rang Héros !");
-            BasicUtilities.playSound(p, heros);
+            InGameUtilities.playPlayerSound(p, heros, SoundCategory.AMBIENT, 1, 1);
         }
         else if( bef >= 75 && now < 75)
         {
             p.sendTitle("", "§7Rétrogradage au rang Civil.");
-            BasicUtilities.playSound(p, sound);
+            InGameUtilities.playPlayerSound(p, sound, SoundCategory.AMBIENT, 1, 1);
         }
         else if( bef >= 50 && now < 50)
         {
             p.sendTitle("", "§7Rétrogradage au rang Hors la Loi.");
-            BasicUtilities.playSound(p, sound);
+            InGameUtilities.playPlayerSound(p, sound, SoundCategory.AMBIENT, 1, 1);
         }
         else if( bef < 50 && now >= 50)
         {
             p.sendTitle("", "§7Passage au rang Civil !");
-            BasicUtilities.playSound(p, sound);
+            InGameUtilities.playPlayerSound(p, sound, SoundCategory.AMBIENT, 1, 1);
         }
         else if( bef <25  && now >= 25)
         {
             p.sendTitle("", "§7Passage au rang Hors la Loi.");
-            BasicUtilities.playSound(p, sound);
+            InGameUtilities.playPlayerSound(p, sound, SoundCategory.AMBIENT, 1, 1);
         }
         else if( bef >= 25 && now < 25)
         {
@@ -183,12 +185,12 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
                 }
             }
             p.sendTitle("", "§cRétrogradage au rang Criminel.");
-            BasicUtilities.playSound(p, crim);
+            InGameUtilities.playPlayerSound(p, crim, SoundCategory.AMBIENT, 1, 1);
         }
         else if( bef <= 25 && now == 0)
         {
             p.sendTitle("", "§4Rétrogradage au rang Criminel.");
-            BasicUtilities.playSound(p, crim);
+            InGameUtilities.playPlayerSound(p, crim, SoundCategory.AMBIENT, 1, 1);
         }
 
         if(bef >= 25 && now <25)

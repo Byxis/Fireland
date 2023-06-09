@@ -2,8 +2,8 @@ package fr.byxis.zone;
 
 import fr.byxis.db.DbConnection;
 import fr.byxis.faction.FactionPlayerInformation;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.jeton.jetonsCommandManager;
-import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.faction.FactionFunctions;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.zone.zoneclass.FactionCapturingClass;
@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -217,7 +216,7 @@ public class DataZone {
 
     public void AddCapturing(String zone, String factionName, Player p)
     {
-        BasicUtilities.playPlayerSound(p.getPlayer(), "entity.player.levelup", SoundCategory.AMBIENT, 1, 0);
+        InGameUtilities.playPlayerSound(p.getPlayer(), "entity.player.levelup", SoundCategory.AMBIENT, 1, 0);
         if(zoneInCapture.containsKey(zone))
         {
             boolean founded = false;

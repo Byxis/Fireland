@@ -2,7 +2,12 @@ package fr.byxis.fireland.utilities;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,7 +33,12 @@ public class InventoryUtilities {
 
     public static void clickManager(InventoryClickEvent e)
     {
-        if (e.getClickedInventory() == e.getView().getTopInventory() || e.getClick().isKeyboardClick()) {
+        if(e.getClickedInventory().getType() != InventoryType.PLAYER|| e.getView().getTopInventory().getType() != InventoryType.PLAYER)
+        {
+            e.setCancelled(true);
+        }
+        /*
+        if (e.getClickedInventory() != e.getView().getTopInventory() || e.getClick().isKeyboardClick()) {
             e.setCancelled(true);
         }
         else
@@ -37,7 +47,7 @@ public class InventoryUtilities {
             {
                 e.setCancelled(true);
             }
-        }
+        }*/
     }
     public static ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
         ItemStack item = new ItemStack(mat);

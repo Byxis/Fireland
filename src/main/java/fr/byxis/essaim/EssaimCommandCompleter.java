@@ -44,6 +44,7 @@ public class EssaimCommandCompleter implements TabCompleter {
             i1.add("setblock");
             i1.add("set");
             i1.add("finish");
+            i1.add("unfinish");
 
 
             l.addAll(addAll(strings[0], "", i1));
@@ -55,6 +56,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                     strings[0].equalsIgnoreCase("open") ||
                     strings[0].equalsIgnoreCase("close")||
                     strings[0].equalsIgnoreCase("finish")||
+                    strings[0].equalsIgnoreCase("unfinish")||
                     strings[0].equalsIgnoreCase("reset"))
             {
                 l.addAll(addAll(strings[1], "--name", main.essaimManager.existingEssaims.keySet()));
@@ -67,6 +69,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                 i1.add("entry");
                 i1.add("hub");
                 i1.add("key");
+                i1.add("solo");
 
                 l.addAll(addAll(strings[1], "", i1));
 
@@ -215,16 +218,16 @@ public class EssaimCommandCompleter implements TabCompleter {
         {
             if(strings[0].equalsIgnoreCase("spawner") && strings[1].equalsIgnoreCase("create"))
             {
-                l.add("--spawndelay");
+                l.add("--isAffectedByDifficulty");
+                l.add("true");
+                l.add("false");
             }
         }
         else if (strings.length >= 9)
         {
             if(strings[0].equalsIgnoreCase("spawner") && strings[1].equalsIgnoreCase("create"))
             {
-                l.add("--boolean");
-                l.add("true");
-                l.add("false");
+                l.add("--command");
             }
         }
 

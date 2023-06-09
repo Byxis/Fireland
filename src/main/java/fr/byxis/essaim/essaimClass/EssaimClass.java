@@ -14,10 +14,13 @@ public class EssaimClass {
     private final Location entry;
     private final Location reset;
     private final Location start;
+    private final Location solo;
     private final int jetons;
     private Timestamp finishDate;
+    private boolean isClosed;
 
-    public EssaimClass(String name, int day, int hour, Location hub,Location start,Location reset,Location entry, int jetons)
+
+    public EssaimClass(String name, int day, int hour, Location hub,Location start,Location reset,Location entry, Location solo, int jetons)
     {
         this.name = name;
         this.day = day;
@@ -26,8 +29,10 @@ public class EssaimClass {
         this.start = start;
         this.reset = reset;
         this.entry = entry;
+        this.solo = solo;
         finishDate = null;
         this.jetons = jetons;
+        this.isClosed = false;
     }
 
     public Location getHub() {
@@ -58,6 +63,10 @@ public class EssaimClass {
         return reset;
     }
 
+    public Location getSolo() {
+        return solo;
+    }
+
     public Location getStart() {
         return start;
     }
@@ -84,7 +93,19 @@ public class EssaimClass {
         this.finishDate = new Timestamp(System.currentTimeMillis());
     }
 
+    public void unFinish() {
+        this.finishDate = null;
+    }
+
     public int getJetons() {
         return jetons;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
+    }
+
+    public void setClosed(boolean closed) {
+        isClosed = closed;
     }
 }

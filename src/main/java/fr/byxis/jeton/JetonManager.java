@@ -6,14 +6,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.UUID;
 
 public abstract class JetonManager {
-    private final Fireland main;
+    private static Fireland main;
 
     public JetonManager(Fireland main)
     {
-        this.main = main;
+        JetonManager.main = main;
     }
 
-    public void updatePlayer(UUID _uuid)
+    public static void updatePlayer(UUID _uuid)
     {
         FileConfiguration jetonDB = main.cfgm.getJetonsDB();
         if(!jetonDB.contains(_uuid.toString()))
@@ -23,27 +23,27 @@ public abstract class JetonManager {
         }
     }
 
-    public int getJetonsPlayer(UUID _uuid)
+    public static int getJetonsPlayer(UUID _uuid)
     {
         FileConfiguration jetonDB = main.cfgm.getJetonsDB();
         return jetonDB.getInt(_uuid.toString());
     }
 
-    public void setJetonsPlayer(UUID _uuid, int amount)
+    public static void setJetonsPlayer(UUID _uuid, int amount)
     {
         FileConfiguration jetonDB = main.cfgm.getJetonsDB();
         jetonDB.set(_uuid.toString(), amount);
         main.cfgm.saveJetonsDB();
     }
 
-    public void addJetonsPlayer(UUID _uuid, int amount)
+    public static void addJetonsPlayer(UUID _uuid, int amount)
     {
         FileConfiguration jetonDB = main.cfgm.getJetonsDB();
         jetonDB.set(_uuid.toString(), jetonDB.getInt(_uuid.toString())+amount);
         main.cfgm.saveJetonsDB();
     }
 
-    public void removeJetonsPlayer(UUID _uuid, int amount)
+    public static void removeJetonsPlayer(UUID _uuid, int amount)
     {
         FileConfiguration jetonDB = main.cfgm.getJetonsDB();
         int jt = jetonDB.getInt(_uuid.toString());

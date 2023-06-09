@@ -5,9 +5,7 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -75,14 +73,14 @@ public class infectedPlayer implements Listener,CommandExecutor {
 	@EventHandler
 	public void playerSoin(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
-		if(p.getItemInHand().getType() == Material.GHAST_TEAR) {
+		if(p.getItemInHand().getType() == Material.WHEAT_SEEDS && p.getItemInHand().getItemMeta().hasCustomModelData() && p.getItemInHand().getItemMeta().getCustomModelData() == 102) {
 			
 			FileConfiguration config = main.cfgm.getPlayerDB();
 			
 			if(config.getBoolean("infected." + p.getUniqueId() + ".state")) {
 				config.set("infected."+p.getUniqueId()+".state", false);
 				main.cfgm.savePlayerDB();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.seringue ambient "+p.getName()+" "+p.getLocation().getX()+" "+p.getLocation().getY()+" "+p.getLocation().getZ()+" 1");
+				InGameUtilities.playWorldSound(p.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
 				
 				p.sendMessage("§8Vous avez soigné votre infection !");
 				if(!p.getGameMode().equals(GameMode.CREATIVE)) {
@@ -93,6 +91,7 @@ public class infectedPlayer implements Listener,CommandExecutor {
 		else if(p.getItemInHand().getType() == Material.IRON_INGOT) {
 			PermissionUtilities.commandExecutor(p, "wm repair "+p.getName()+" INVENTORY", "*");
 			p.getItemInHand().setAmount(p.getItemInHand().getAmount() -1);
+			InGameUtilities.playWorldSound(p.getLocation(), Sound.BLOCK_ANVIL_DESTROY, SoundCategory.PLAYERS, 1, 2f);
 		}
 	}
 	
@@ -101,7 +100,7 @@ public class infectedPlayer implements Listener,CommandExecutor {
 	public void friendInteraction(PlayerInteractEntityEvent e)
 	{
 		Player p = e.getPlayer();
-		if(p.getItemInHand().getType() == Material.GHAST_TEAR) {
+		if(p.getItemInHand().getType() == Material.WHEAT_SEEDS && p.getItemInHand().getItemMeta().hasCustomModelData() && p.getItemInHand().getItemMeta().getCustomModelData() == 102) {
 			FileConfiguration config = main.cfgm.getPlayerDB();
 			
 			if(!(e.getRightClicked() instanceof Player) && config.getBoolean("infected."+p.getUniqueId()+".state"))
@@ -112,8 +111,8 @@ public class infectedPlayer implements Listener,CommandExecutor {
 			if(config.getBoolean("infected." + friend.getUniqueId() + ".state")) {
 				config.set("infected."+friend.getUniqueId()+".state", false);
 				main.cfgm.savePlayerDB();
-				
-				friend.getWorld().playSound(friend.getLocation(), "minecraft:gun.hud.seringue", 1, 1);
+
+				InGameUtilities.playWorldSound(friend.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
 				
 				p.sendMessage("§8Vous avez soigné l'infection de "+friend.getName()+"!");
 				friend.sendMessage("§8"+p.getName()+" a soigné votre infection !");

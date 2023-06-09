@@ -3,9 +3,11 @@ package fr.byxis.intendant.menu;
 import fr.byxis.faction.FactionFunctions;
 import fr.byxis.faction.FactionInformation;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -13,6 +15,7 @@ public class MenuColor {
 
     public static void OpenColorMenu(Fireland main, Player p, FactionInformation infos)
     {
+        InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
         FactionFunctions ff = new FactionFunctions(main, p);
         Inventory faction = Bukkit.createInventory(null, 54, ff.GetColorCode(infos.getName())+"Changement de couleur");
         SetItemColorMenu(main, faction, p, infos);

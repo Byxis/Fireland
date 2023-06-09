@@ -5,6 +5,7 @@ fr\byxis\event\RankCustomMessage.class
 fr\byxis\faction\FactionFunctions.class
 fr\byxis\zone\CaptureZone$1.class
 fr\byxis\event\ambientSound.class
+fr\byxis\backpack\BackPackClass$BackpackInventoryHolder.class
 fr\byxis\command\rename.class
 fr\byxis\db\DbConnection.class
 fr\byxis\intendant\menu\MenuColor.class
@@ -24,7 +25,7 @@ fr\byxis\event\doorPass$1.class
 fr\byxis\workshop\workshopFunction.class
 fr\byxis\event\chatListener.class
 fr\byxis\faction\FactionPacket.class
-fr\byxis\event\RemoveInteractionBlock.class
+fr\byxis\fireland\utilities\WorldUtilities.class
 fr\byxis\essaim\EssaimCommandCompleter.class
 fr\byxis\faction\factionManager.class
 fr\byxis\event\modifiedInteractionItemstackSize.class
@@ -32,6 +33,7 @@ fr\byxis\booster\BoosterClass.class
 fr\byxis\workshop\workshopManager.class
 fr\byxis\event\heliport$2.class
 fr\byxis\command\nightVision.class
+fr\byxis\backpack\BackPackClass.class
 fr\byxis\intendant\menu\MenuFaction.class
 fr\byxis\faction\factionManagerTabCompleter.class
 fr\byxis\event\stairs.class
@@ -46,6 +48,7 @@ fr\byxis\karma\karmaManager.class
 fr\byxis\fireland\utilities\BasicUtilities$1.class
 fr\byxis\essaim\EssaimManager$1.class
 fr\byxis\workshop\recycler\RecyclerFunction.class
+fr\byxis\event\InteractionManager$1.class
 fr\byxis\intendant\menu\MenuPerks.class
 fr\byxis\fireland\utilities\InventoryUtilities.class
 fr\byxis\event\heliport$1.class
@@ -82,10 +85,12 @@ fr\byxis\essaim\EssaimConfigManager.class
 fr\byxis\event\menu$1.class
 fr\byxis\event\playerDeath.class
 fr\byxis\intendant\menu\MenuIntendant.class
+fr\byxis\essaim\EssaimManager$2.class
 fr\byxis\intendant\menu\MenuBooster.class
 fr\byxis\booster\BoosterCommandCompleter.class
 fr\byxis\fireland\ConfigManager.class
 fr\byxis\zone\zoneclass\FactionZoneInformation.class
+fr\byxis\packet\PacketEvent.class
 fr\byxis\packet\PacketFunctions.class
 fr\byxis\discretion\rally.class
 fr\byxis\event\stairs$1.class
@@ -93,7 +98,9 @@ fr\byxis\event\spawn.class
 fr\byxis\essaim\EssaimFunctions$1.class
 fr\byxis\shop\ShopItemClass.class
 fr\byxis\event\worldGuardEvent.class
+fr\byxis\event\InteractionManager.class
 fr\byxis\discretion\ZombieDetection$1.class
+fr\byxis\backpack\BackPackClass$1.class
 fr\byxis\workshop\workshopManagerTabCompleter.class
 fr\byxis\event\spawn$1.class
 fr\byxis\essaim\essaimClass\EssaimGroup.class
@@ -101,7 +108,6 @@ fr\byxis\command\speedFly.class
 fr\byxis\zone\WorldGuardEnterZoneEvent.class
 fr\byxis\event\fallDamage$1.class
 fr\byxis\fireland\Fireland$2.class
-fr\byxis\event\removeBedInteraction.class
 fr\byxis\zone\CaptureZone.class
 fr\byxis\shop\ShopFunction.class
 fr\byxis\zone\zoneclass\ZoneClass.class
@@ -145,5 +151,6 @@ fr\byxis\event\shop.class
 fr\byxis\fireland\Fireland$7.class
 fr\byxis\event\RankCustomMessage$1.class
 fr\byxis\faction\FactionEvent.class
+fr\byxis\fireland\utilities\Vector2.class
 fr\byxis\essaim\essaimClass\Spawner.class
 fr\byxis\shop\ShopEventManager.class

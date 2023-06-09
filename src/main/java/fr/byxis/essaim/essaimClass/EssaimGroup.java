@@ -1,9 +1,8 @@
 package fr.byxis.essaim.essaimClass;
 
 import fr.byxis.essaim.EssaimFunctions;
-import fr.byxis.faction.FactionFunctions;
-import fr.byxis.faction.FactionPlayerInformation;
-import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.fireland.utilities.TextUtilities;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.entity.Player;
 
@@ -27,13 +26,13 @@ public class EssaimGroup {
 
     public boolean invitePlayer(Player invitee) {
 
-        // Check if group is full or if player is already in group
+        //Check if group is full or if player is already in group
         if (members.size() >= 4 || members.contains(invitee)) {
             return false;
         }
 
         // Invite player to group
-        BasicUtilities.sendInteractivePlayerMessage(invitee, "Vous avez invité dans l'essaim " + name + " par "+leader.getName()+".", "/essaim join "+name+" Wowowowowowowowowowow1234567890", "§aCliquez ici pour rejoindre l'essaim", ClickEvent.Action.RUN_COMMAND);
+        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez invité dans l'essaim " + TextUtilities.convertStorableToClean(name) + " par "+leader.getName()+". Cliquez sur ce message pour rejoindre.", "/essaim join "+name+" Wowowowowowowowowowow1234567890", "§aCliquez ici pour rejoindre l'essaim", ClickEvent.Action.RUN_COMMAND);
         return true;
     }
 
@@ -85,7 +84,7 @@ public class EssaimGroup {
         }
         for(Player member : members)
         {
-            BasicUtilities.sendPlayerInformation(member, "§cLe joueur " + leaver.getName() + " a quitter l'expédition.");
+            InGameUtilities.sendPlayerInformation(member, "§cLe joueur " + leaver.getName() + " a quitter l'expédition.");
         }
     }
 

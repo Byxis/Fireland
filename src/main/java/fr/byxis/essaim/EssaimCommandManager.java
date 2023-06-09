@@ -1,18 +1,14 @@
 package fr.byxis.essaim;
 
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
-import io.lumine.mythic.api.mobs.MythicMob;
-import io.lumine.mythic.bukkit.MythicBukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class EssaimCommandManager implements @Nullable CommandExecutor {
@@ -29,21 +25,22 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
         if (args.length == 0) {
             if(sender instanceof Player p)
             {
-                BasicUtilities.sendPlayerError(p, "Mauvaise formulation de la commande !");
+                InGameUtilities.sendPlayerError(p, "Mauvaise formulation de la commande !");
             }
             return false;
         }
-        else if (sender.hasPermission("fireland.essaim.spawner") && args[0].equalsIgnoreCase("spawner")) {
+        else if (sender.hasPermission("fireland.essaim.admin") && args[0].equalsIgnoreCase("spawner")) {
             SpawnerCommand(sender, msg, args);
         }
-        else if (sender.hasPermission("fireland.essaim.general") &&
+        else if (sender.hasPermission("fireland.command.essaim") &&
                 (args[0].equalsIgnoreCase("create") ||
                         args[0].equalsIgnoreCase("open") ||
                         args[0].equalsIgnoreCase("close") ||
                         args[0].equalsIgnoreCase("remove")||
                         args[0].equalsIgnoreCase("set")||
                         args[0].equalsIgnoreCase("join")||
-                        args[0].equalsIgnoreCase("finish"))) {
+                        args[0].equalsIgnoreCase("finish")||
+                        args[0].equalsIgnoreCase("unfinish"))) {
             GeneralCommand(sender, msg, args);
         }
         else if (sender.hasPermission("fireland.essaim.setblock")
@@ -52,7 +49,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             EssaimFunctions.setBlock(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Material.getMaterial(args[4].toUpperCase()));
             if(sender instanceof Player p)
             {
-                BasicUtilities.sendPlayerInformation(p, "Le block a été mis à jour avec succès !");
+                InGameUtilities.sendPlayerInformation(p, "Le block a été mis à jour avec succès !");
             }
         }
         return false;
@@ -60,7 +57,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
 
     private void SpawnerCommand(CommandSender sender, String msg, String[] args) {
         if (args.length < 2) {
-            BasicUtilities.sendPlayerError((Player) sender, "Mauvaise formulation de la commande !");
+            InGameUtilities.sendPlayerError((Player) sender, "Mauvaise formulation de la commande !");
         }
         else if (args.length == 3) {
             if (args[1].equalsIgnoreCase("list")) {
@@ -71,48 +68,48 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
                 if (!main.essaimManager.existingEssaims.containsKey(args[2])) {
                     if(sender instanceof Player p)
                     {
-                        BasicUtilities.sendPlayerError(p, "L'essaim " + args[2] + " n'existe pas !");
+                        InGameUtilities.sendPlayerError(p, "L'essaim " + args[2] + " n'existe pas !");
                     }
                 } else if (!main.essaimManager.existingEssaims.get(args[2]).containsKey(args[3])) {
                     if(sender instanceof Player p)
                     {
-                        BasicUtilities.sendPlayerError(p, "Le spawner " + args[3] + " n'existe pas!");
+                        InGameUtilities.sendPlayerError(p, "Le spawner " + args[3] + " n'existe pas!");
                     }
                 } else {
                     EssaimFunctions.removeSpawner(args[2], args[3]);
                     if(sender instanceof Player p)
                     {
-                        BasicUtilities.sendPlayerError(p, "Le spawner " + args[3] + " a été supprimé avec succès !");
+                        InGameUtilities.sendPlayerError(p, "Le spawner " + args[3] + " a été supprimé avec succès !");
                     }
                 }
             } else if (args[1].equalsIgnoreCase("activate")) {
                 if (!main.essaimManager.existingEssaims.containsKey(args[2])) {
                     if(sender instanceof Player p)
                     {
-                        BasicUtilities.sendPlayerError(p, "L'essaim " + args[2] + " n'existe pas !");
+                        InGameUtilities.sendPlayerError(p, "L'essaim " + args[2] + " n'existe pas !");
                     }
                 } else if (!main.essaimManager.existingEssaims.get(args[2]).containsKey(args[3])) {
                     if(sender instanceof Player p)
                     {
-                        BasicUtilities.sendPlayerError(p, "Le spawner " + args[3] + " n'existe pas !");
+                        InGameUtilities.sendPlayerError(p, "Le spawner " + args[3] + " n'existe pas !");
                     }
                 } else {
                     if (main.essaimManager.EnableSpawner(main.essaimManager.existingEssaims.get(args[2]).get(args[3]))) {
                         if(sender instanceof Player p)
                         {
-                            BasicUtilities.sendPlayerInformation(p, "Le spawner " + args[3] + " activé avec succès !");
+                            InGameUtilities.sendPlayerInformation(p, "Le spawner " + args[3] + " activé avec succès !");
                         }
                     } else {
                         if(sender instanceof Player p)
                         {
-                            BasicUtilities.sendPlayerError(p, "Le spawner " + args[3] + " est déjà activé !");
+                            InGameUtilities.sendPlayerError(p, "Le spawner " + args[3] + " est déjà activé !");
                         }
                     }
                 }
             } else {
                 if(sender instanceof Player p)
                 {
-                    BasicUtilities.sendPlayerError((Player) sender, "Mauvaise formulation de la commande !");
+                    InGameUtilities.sendPlayerError((Player) sender, "Mauvaise formulation de la commande !");
                 }
             }
 
@@ -124,18 +121,18 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             String command = sb.toString().trim();
             EssaimFunctions.createNewSpawner(args[2], args[3], args[4], Integer.parseInt(args[5]),Integer.parseInt(args[6]),Integer.parseInt(args[7]), command, p.getLocation(), Boolean.valueOf(args[8]));
 
-            BasicUtilities.sendPlayerInformation(p, "Spawner " + args[3] + " créé avec succès!");
+            InGameUtilities.sendPlayerInformation(p, "Spawner " + args[3] + " créé avec succès!");
 
         } else {
             if(sender instanceof Player p)
             {
-                BasicUtilities.sendPlayerError(p, "Mauvaise formulation de la commande !");
+                InGameUtilities.sendPlayerError(p, "Mauvaise formulation de la commande !");
             }
         }
     }
 
     private void GeneralCommand(CommandSender sender, String msg, String[] args) {
-        if (args.length == 5 && args[0].equalsIgnoreCase("create")) {
+        if (args.length == 5 && args[0].equalsIgnoreCase("create") && sender.hasPermission("fireland.essaim.admin")) {
             if(sender instanceof Player p)
             {
                 Location loc = p.getLocation();
@@ -143,57 +140,64 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
                 loc.setY((double) Math.round(loc.getY() * 10) /10);
                 loc.setZ((double) Math.round(loc.getZ() * 10) /10);
                 EssaimFunctions.createNewEssaim(args[1], args[2], getDate(args[3]), Integer.parseInt(args[4]), loc);
-                BasicUtilities.sendPlayerInformation(p, "Essaim " + args[1] + " créé avec succès !");
+                InGameUtilities.sendPlayerInformation(p, "Essaim " + args[1] + " créé avec succès !");
             }
         }
-        else if (args.length == 2 && args[0].equalsIgnoreCase("finish"))
+        else if (args.length == 2 && args[0].equalsIgnoreCase("finish") && sender.hasPermission("fireland.essaim.admin"))
         {
             EssaimFunctions.finishEssaim(args[1]);
             if(sender instanceof Player p)
             {
-                BasicUtilities.sendPlayerInformation(p, "L'essaim " + TextUtilities.convertStorableToClean(args[1]) + " a été fini !");
+                InGameUtilities.sendPlayerInformation(p, "L'essaim " + TextUtilities.convertStorableToClean(args[1]) + " a été fini !");
             }
-        }else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
+        }else if (args.length == 2 && args[0].equalsIgnoreCase("unfinish") && sender.hasPermission("fireland.essaim.admin"))
+        {
+            EssaimFunctions.unfinishEssaim(args[1]);
+            if(sender instanceof Player p)
+            {
+                InGameUtilities.sendPlayerInformation(p, "L'essaim " + TextUtilities.convertStorableToClean(args[1]) + " a été fini !");
+            }
+        }else if (args.length == 2 && args[0].equalsIgnoreCase("remove") && sender.hasPermission("fireland.essaim.admin")) {
             EssaimFunctions.deleteEssaim(args[1]);
             if(sender instanceof Player p)
             {
-                BasicUtilities.sendPlayerError(p, "Essaim " + args[1] + " a été supprimé !");
+                InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " a été supprimé !");
             }
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("open")) {
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("open") && sender.hasPermission("fireland.essaim.admin")) {
             //open;
             if(sender instanceof Player p)
             {
                 if(main.essaimManager.EnableEssaim(args[1]))
                 {
-                    BasicUtilities.sendPlayerInformation(p, "Essaim " + args[1] + " a été ouvert avec succès !");
+                    InGameUtilities.sendPlayerInformation(p, "Essaim " + args[1] + " a été ouvert avec succès !");
                 }
                 else
                 {
-                    BasicUtilities.sendPlayerError(p, "Essaim " + args[1] + " est déjà activé !");
+                    InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " est déjà activé !");
                 }
             }
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("close")) {
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("close") && sender.hasPermission("fireland.essaim.admin")) {
             //close
             if(sender instanceof Player p)
             {
                 if(main.essaimManager.DisableEssaim(args[1]))
                 {
-                    BasicUtilities.sendPlayerError(p, "Essaim " + args[1] + " a été fermé !");
+                    InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " a été fermé !");
                 }
                 else
                 {
-                    BasicUtilities.sendPlayerError(p, "Essaim " + args[1] + " est déjà fermé !");
+                    InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " est déjà fermé !");
                 }
             }
 
         }
-        else if (args.length == 2 && args[0].equalsIgnoreCase("reset")) {
+        else if (args.length == 2 && args[0].equalsIgnoreCase("reset") && sender.hasPermission("fireland.essaim.admin")) {
             //close
             if (sender instanceof Player p) {
                 if (main.essaimManager.resetEssaim(args[1])) {
-                    BasicUtilities.sendPlayerError(p, "Essaim " + args[1] + " a été reset !");
+                    InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " a été reset !");
                 } else {
-                    BasicUtilities.sendPlayerError(p, "Essaim " + args[1] + " est déjà reset !");
+                    InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " est déjà reset !");
                 }
             }
         }
@@ -204,7 +208,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
                 EssaimFunctions.teleportJoinEssaim(p, main.essaimManager.activeEssaims.get(args[1]).getHub(), "gun.hub.helico",10, args[1]);
             }
         }
-        else if (args.length == 6) {
+        else if (args.length == 6 && sender.hasPermission("fireland.essaim.admin")) {
             if(args[0].equalsIgnoreCase("set") && sender instanceof Player p)
             {
                 Location loc = p.getLocation();
@@ -212,7 +216,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
                 loc.setY((double) Math.round(loc.getY()));
                 loc.setZ((double) Math.round(loc.getZ()));
                 EssaimFunctions.setPoint(args[5], loc, args[1].toLowerCase());
-                BasicUtilities.sendPlayerInformation(p, "Point créé avec succès!");
+                InGameUtilities.sendPlayerInformation(p, "Point créé avec succès!");
             }
         }
     }

@@ -1,7 +1,7 @@
 package fr.byxis.faction;
 
 import fr.byxis.db.DbConnection;
-import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.ItemSerializer;
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
@@ -159,7 +159,7 @@ public class FactionFunctions {
 					preparedStatement2.executeUpdate();
 					inviteFaction(connection, factionName, uuid);
 					sendFactionPlayer(factionName, ""+invited.getName()+" vient d'être invité dans la faction !");
-					BasicUtilities.sendPlayerInformation(invited, "Vous avez été invité dans la faction "+GetColorCode(factionName)+factionName+" !");
+					InGameUtilities.sendPlayerInformation(invited, "Vous avez été invité dans la faction "+GetColorCode(factionName)+factionName+" !");
 				}
 
 			}
@@ -167,8 +167,8 @@ public class FactionFunctions {
 			else
 			{
 				inviteFaction(connection, factionName, uuid);
-				BasicUtilities.sendPlayerInformation(p, ""+invited.getName()+" vient d'être invité dans la faction !");
-				BasicUtilities.sendPlayerInformation(invited, "Vous avez été invité dans la faction "+GetColorCode(factionName)+factionName+" !");
+				InGameUtilities.sendPlayerInformation(p, ""+invited.getName()+" vient d'être invité dans la faction !");
+				InGameUtilities.sendPlayerInformation(invited, "Vous avez été invité dans la faction "+GetColorCode(factionName)+factionName+" !");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -298,7 +298,7 @@ public class FactionFunctions {
 				preparedStatement2.setTimestamp(3, new Timestamp(time));
 				preparedStatement2.setInt(4, 0);
 				preparedStatement2.executeUpdate();
-				BasicUtilities.sendPlayerInformation(p, "Vous avez rejoint la faction " +GetColorCode(factionName)+ factionName + "§7.");
+				InGameUtilities.sendPlayerInformation(p, "Vous avez rejoint la faction " +GetColorCode(factionName)+ factionName + "§7.");
 
 				//Puis on ajoute 1 au nombre de membres actuels
 				final PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT nbr_members FROM faction WHERE name = ?");
@@ -453,7 +453,7 @@ public class FactionFunctions {
 			//On executes les requetes
 			insertionFaction.executeUpdate();
 			insertionPlayerFaction.executeUpdate();
-			BasicUtilities.sendPlayerInformation(p, "Vous avez créé la faction "+GetColorCode(name)+name+" !");
+			InGameUtilities.sendPlayerInformation(p, "Vous avez créé la faction "+GetColorCode(name)+name+" !");
 		} catch (SQLException e) {
 			//Une erreur est survenue (Problème de connexion à la BD)
 			e.printStackTrace();
@@ -498,12 +498,12 @@ public class FactionFunctions {
 				{
 					main.hashMapManager.removeFactionMap(p.getUniqueId());
 				}
-				BasicUtilities.sendPlayerError(p, "Vous avez supprimé la faction "+resultFactionName.getString(1)+".");
+				InGameUtilities.sendPlayerError(p, "Vous avez supprimé la faction "+resultFactionName.getString(1)+".");
 			}
 			else
 			{
 				//Le joueur n'est soit pas dans une faction, soit pas leader d'une faction
-				BasicUtilities.sendPlayerError(p, "Vous ne pouvez pas effectuer cela !");
+				InGameUtilities.sendPlayerError(p, "Vous ne pouvez pas effectuer cela !");
 			}
 			
 		} catch (SQLException e) {
@@ -708,7 +708,7 @@ public class FactionFunctions {
 				preparedStatement2.setInt(1, upgrade);
 				//On exécute la requete SQL
 				preparedStatement2.executeUpdate();
-				BasicUtilities.sendPlayerInformation(sender,"Votre faction a été amélioré au rang §d"+upgrade+"§7.");
+				InGameUtilities.sendPlayerInformation(sender,"Votre faction a été amélioré au rang §d"+upgrade+"§7.");
 			}
 			else
 			{
@@ -788,7 +788,7 @@ public class FactionFunctions {
 				preparedStatement2.setInt(1, money);
 				//On exécute la requete SQL
 				preparedStatement2.executeUpdate();
-				BasicUtilities.sendPlayerInformation(sender, "§7Vous avez déposé " + amount + "$ !");
+				InGameUtilities.sendPlayerInformation(sender, "§7Vous avez déposé " + amount + "$ !");
 				return true;
 			}
 			else
@@ -1287,7 +1287,7 @@ public class FactionFunctions {
 			String name = playerFactionName(p);
 			if(name.equalsIgnoreCase(factionName))
 			{
-				BasicUtilities.sendPlayerInformation(p, msg);
+				InGameUtilities.sendPlayerInformation(p, msg);
 			}
 		}
 	}

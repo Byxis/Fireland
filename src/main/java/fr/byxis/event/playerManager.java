@@ -53,19 +53,6 @@ public class playerManager implements Listener {
     }
 
     @EventHandler
-    public void PlayerClickInteraction(PlayerInteractEvent event) {
-        if(event.getAction() == Action.RIGHT_CLICK_BLOCK){
-            if(event.getClickedBlock().getType() == Material.DEAD_HORN_CORAL_FAN){
-                event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.BLOCK_GILDED_BLACKSTONE_HIT, SoundCategory.BLOCKS,1,1);
-            }
-            else if(event.getClickedBlock().getType() == Material.DEAD_TUBE_CORAL_FAN || event.getClickedBlock().getType() == Material.DEAD_FIRE_CORAL_FAN ||event.getClickedBlock().getType() == Material.DEAD_BRAIN_CORAL){
-                event.getPlayer().playSound(event.getClickedBlock().getLocation(), "minecraft:entity.horse.armor", SoundCategory.BLOCKS,1,1);
-            }
-        }
-
-    }
-
-    @EventHandler
     private void PlayerKillZombie(EntityDeathEvent e)
     {
         if(e.getEntity().getKiller() != null && main.hashMapManager.getBooster() != null)

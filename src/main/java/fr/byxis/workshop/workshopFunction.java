@@ -3,10 +3,12 @@ package fr.byxis.workshop;
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -533,7 +535,8 @@ public class workshopFunction {
                 }
                 if(addItemToCraft(p.getUniqueId().toString(), item, reduction))
                 {
-                    p.playSound(p.getLocation(), "minecraft:block.anvil.use", 1, 1);
+                    InGameUtilities.playPlayerSound(p, "block.anvil.use", SoundCategory.BLOCKS, 1, 0);
+                    InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 0);
                     removeItemsOnInventoryOfPlayer(p, Material.NETHERITE_SCRAP, item.scrap);
                     removeItemsOnInventoryOfPlayer(p, Material.GUNPOWDER, item.gunPowder);
                     p.sendMessage("§aVous avez craft §6"+item.itemName+"§a !");

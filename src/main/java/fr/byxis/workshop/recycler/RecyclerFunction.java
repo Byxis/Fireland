@@ -1,10 +1,12 @@
 package fr.byxis.workshop.recycler;
 
 import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -144,7 +146,7 @@ public class RecyclerFunction {
 
     public void OpenRecyclingGui(Player p)
     {
-        Inventory RecyclingMenu = Bukkit.createInventory(null, 54, "?2Recycleur");
+        Inventory RecyclingMenu = Bukkit.createInventory(null, 54, "§2Recycleur");
         setItemsGuiInv(RecyclingMenu);
         p.openInventory(RecyclingMenu);
     }
@@ -155,7 +157,7 @@ public class RecyclerFunction {
         {
             if(i == 49)
             {
-                _inv.setItem(i, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "?cRecycler les items", (short) 1));
+                _inv.setItem(i, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRecycler les items", (short) 1));
             }
             else
             {
@@ -164,16 +166,16 @@ public class RecyclerFunction {
 
         }
         ArrayList<String> l = new ArrayList<>();
-        l.add("?8Pour recycler des items, faites un");
-        l.add("?6clic gauche?8 sur le bouton");
-        l.add("?8recyclage.?4?lLes items seront supprim?s?r?8.");
-        _inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "?r- Informations -", (short) 1, l));
+        l.add("§8Pour recycler des items, faites un");
+        l.add("§6clic gauche§8 sur le bouton");
+        l.add("§8recyclage.§4§lLes items seront supprimés§r§8.");
+        _inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "§r- Informations -", (short) 1, l));
     }
 
     public void Recycle(InventoryView inv, Player p) {
-        ItemStack scrap= InventoryUtilities.setItemMeta(Material.NETHERITE_SCRAP, "?7D?bris m?tallique", (short)0);
-        ItemStack gp= InventoryUtilities.setItemMeta(Material.GUNPOWDER, "?7Poudre ? canon", (short)0);
-        ItemStack meds= InventoryUtilities.setItemMeta(Material.AMETHYST_SHARD, "?7M?dicaments", (short)0);;
+        ItemStack scrap= InventoryUtilities.setItemMeta(Material.NETHERITE_SCRAP, "§7Débris métallique", (short)0);
+        ItemStack gp= InventoryUtilities.setItemMeta(Material.GUNPOWDER, "§7Poudre à canon", (short)0);
+        ItemStack meds= InventoryUtilities.setItemMeta(Material.AMETHYST_SHARD, "§7Médicaments", (short)0);;
 
         int space = GetAmountOfSpaceScrap(p);
         for(int i=0;i<45;i++)
@@ -189,18 +191,20 @@ public class RecyclerFunction {
                     {
                         if(gbNbr > space)
                         {
-                            p.sendMessage("?cVous n'avez pas assez d'espace pour recycler cet item !");
+                            p.sendMessage("§cVous n'avez pas assez d'espace pour recycler cet item !");
                             break;
                         }
+                        InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 0);
                         gp.setAmount(gbNbr);
                         item.setAmount(0);
                         p.getInventory().addItem(gp);
                     }
                     if(scrapNbr > space)
                     {
-                        p.sendMessage("?cVous n'avez pas assez d'espace pour recycler cet item !");
+                        p.sendMessage("§cVous n'avez pas assez d'espace pour recycler cet item !");
                         break;
                     }
+                    InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 0);
                     scrap.setAmount(scrapNbr);
                     item.setAmount(0);
                     p.getInventory().addItem(scrap);
@@ -210,9 +214,10 @@ public class RecyclerFunction {
                 {
                     if(medsNbr > space)
                     {
-                        p.sendMessage("?cVous n'avez pas assez d'espace pour recycler cet item !");
+                        p.sendMessage("§cVous n'avez pas assez d'espace pour recycler cet item !");
                         break;
                     }
+                    InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 0);
                     meds.setAmount(medsNbr);
                     item.setAmount(0);
                     p.getInventory().addItem(meds);

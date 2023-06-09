@@ -1,7 +1,7 @@
 package fr.byxis.zone;
 
 import fr.byxis.faction.FactionInformation;
-import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.zone.zoneclass.ZoneClass;
 import de.netzkronehd.wgregionevents.events.RegionEnterEvent;
 import de.netzkronehd.wgregionevents.events.RegionLeftEvent;
@@ -42,7 +42,7 @@ public class WorldGuardEnterZoneEvent implements Listener {
         Player p = e.getPlayer();
         if (currentZone.isClaimed()) {
             e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans une zone contrôlée par " + currentZone.getClaimer()));
-            BasicUtilities.playPlayerSound(p.getPlayer(), "gun.hud.enter_area", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayerSound(p.getPlayer(), "gun.hud.enter_area", SoundCategory.AMBIENT, 1, 1);
         }
         FactionInformation info = ff.getFactionInfo(ff.playerFactionName(p));
         if (info == null || !info.hasCapturePerk()) {
@@ -74,7 +74,7 @@ public class WorldGuardEnterZoneEvent implements Listener {
         Player p = e.getPlayer();
         if (currentZone.isClaimed()) {
             e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§cVous quittez une zone contrôlée par " + currentZone.getClaimer()));
-            BasicUtilities.playPlayerSound(p.getPlayer(), "gun.hud.leaving_area", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayerSound(p.getPlayer(), "gun.hud.leaving_area", SoundCategory.AMBIENT, 1, 1);
         }
         FactionInformation info = ff.getFactionInfo(ff.playerFactionName(p));
 

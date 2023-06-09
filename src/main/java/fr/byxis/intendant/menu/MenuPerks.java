@@ -6,9 +6,11 @@ import fr.byxis.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.BlockUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -16,6 +18,7 @@ public class MenuPerks {
 
     public static void OpenPerks(Fireland main, Player p)
     {
+        InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation infos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
         Inventory perksInv = Bukkit.createInventory(null, 54, "§8Améliorations pour "+ff.GetColorCode(infos.getFactionName())+infos.getFactionName());

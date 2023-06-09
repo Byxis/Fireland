@@ -1,7 +1,7 @@
 package fr.byxis.zone;
 
-import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.BlockUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.zone.zoneclass.FactionCapturingClass;
 import fr.byxis.zone.zoneclass.ZoneClass;
 import fr.byxis.faction.FactionFunctions;
@@ -25,7 +25,7 @@ public class CaptureZone {
     private static Fireland main;
     private DataZone data;
     private final int captureRefreshRate = 2;
-    private final int boosterCapture = 1;
+    private final int boosterCapture = 3;
     int i = 0;
 
     public CaptureZone(Fireland main, DataZone data)
@@ -231,7 +231,7 @@ public class CaptureZone {
         {
             for(Player p: Bukkit.getOnlinePlayers())
             {
-                BasicUtilities.sendPlayerError(p, "La faction "+color+faction.getName()+"§R§c est en train de capturer la zone "+zone.getFormattedName()+" ! Allez-y vite pour contester la capture !");
+                InGameUtilities.sendPlayerError(p, "La faction "+color+faction.getName()+"§R§c est en train de capturer la zone "+zone.getFormattedName()+" ! Allez-y vite pour contester la capture !");
             }
         }
         if(prog >= 100)
@@ -250,11 +250,11 @@ public class CaptureZone {
                     break;
                 }
             }
-            BasicUtilities.playPlayersSound(faction.getPlayerList(), "item.goat_horn.sound.7", SoundCategory.AMBIENT, 1, 2);
+            InGameUtilities.playPlayersSound(faction.getPlayerList(), "item.goat_horn.sound.7", SoundCategory.AMBIENT, 1, 2);
             data.SaveAll();
             for(Player p: Bukkit.getOnlinePlayers())
             {
-                BasicUtilities.sendPlayerInformation(p, "La faction "+color+faction.getName()+"§R§7 a capturé la zone "+zone.getFormattedName()+" !");
+                InGameUtilities.sendPlayerInformation(p, "La faction "+color+faction.getName()+"§R§7 a capturé la zone "+zone.getFormattedName()+" !");
             }
 
             data.zoneInCapture.get(zone.getName()).clear();
@@ -276,57 +276,57 @@ public class CaptureZone {
         if((from <= 0 && to >= 0) || (from > 0  && to <=0))
         {
             changeAnimationStep(1, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 10 && to >= 10) || (from > 10  && to <=10))
         {
             changeAnimationStep(2, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 20 && to >= 20) || (from > 20  && to <=20))
         {
             changeAnimationStep(3, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 30 && to >= 30) || (from > 30  && to <=30))
         {
             changeAnimationStep(4, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 40 && to >= 40) || (from > 40  && to <=40))
         {
             changeAnimationStep(5, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 50 && to >= 50) || (from > 50  && to <=50))
         {
             changeAnimationStep(6, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 60 && to >= 60) || (from > 60  && to <=60))
         {
             changeAnimationStep(7, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 70 && to >= 70) || (from > 70  && to <=70))
         {
             changeAnimationStep(8, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 80 && to >= 80) || (from > 80  && to <=80))
         {
             changeAnimationStep(9, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 90 && to >= 90) || (from >= 90  && to <=90))
         {
             changeAnimationStep(10, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from >= 100 && to >= 100) || (from > 100  && to <=100))
         {
             changeAnimationStep(-1, zone, color);
-            BasicUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
+            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
     }
 

@@ -3,8 +3,10 @@ package fr.byxis.event;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -166,7 +168,7 @@ public class bank implements Listener, CommandExecutor {
 						if(playerMoney+playerBankMoney < max)
 						{
 							main.eco.withdrawPlayer(player, playerMoney);
-							player.playSound(player.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+							InGameUtilities.playPlayerSound(player, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
 							main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".money", playerBankMoney+playerMoney);
 							main.cfgm.saveEnderchest();
 							openBankMenu(player);
@@ -174,7 +176,7 @@ public class bank implements Listener, CommandExecutor {
 						else
 						{
 							main.eco.withdrawPlayer(player, (max - playerBankMoney));
-							player.playSound(player.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+							InGameUtilities.playPlayerSound(player, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
 							main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".money", max);
 							main.cfgm.saveEnderchest();
 							openBankMenu(player);
@@ -183,7 +185,7 @@ public class bank implements Listener, CommandExecutor {
 					else if (playerMoney >= 100 && playerBankMoney+100 <= getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")))
 					{
 						main.eco.withdrawPlayer(player, 100);
-						player.playSound(player.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+						InGameUtilities.playPlayerSound(player, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
 						main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".money", playerBankMoney+100);
 						main.cfgm.saveEnderchest();
 						openBankMenu(player);
@@ -194,7 +196,7 @@ public class bank implements Listener, CommandExecutor {
 					if(e.isShiftClick())
 					{
 						main.eco.depositPlayer(player, playerBankMoney);
-						player.playSound(player.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+						InGameUtilities.playPlayerSound(player, "gun.hud.money_pickup", SoundCategory.AMBIENT, 1, 1);
 						main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".money", 0);
 						main.cfgm.saveEnderchest();
 						openBankMenu(player);
@@ -202,7 +204,7 @@ public class bank implements Listener, CommandExecutor {
 					else if(playerBankMoney >= 100)
 					{
 						main.eco.depositPlayer(player, 100);
-						player.playSound(player.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+						InGameUtilities.playPlayerSound(player, "gun.hud.money_pickup", SoundCategory.AMBIENT, 1, 1);
 						main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".money", playerBankMoney-100);
 						main.cfgm.saveEnderchest();
 						openBankMenu(player);
@@ -260,9 +262,9 @@ public class bank implements Listener, CommandExecutor {
 					main.eco.withdrawPlayer(player, price);
 					main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".upgrade", main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1);
 					player.sendMessage("§aVous avez payé §6"+price+"$ §a pour améliorer votre banque au niveau §d"+(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1)+"§a !");
-					player.playSound(player.getLocation(), "minecraft:block.anvil.use", 1, 1);
+					InGameUtilities.playPlayerSound(player, "block.anvil.use", SoundCategory.AMBIENT, 1, 1);
+					InGameUtilities.playPlayerSound(player, "entity.player.levelup", SoundCategory.AMBIENT, 1, 1);
 					main.cfgm.saveEnderchest();
-					player.playSound(player.getLocation(), "minecraft:entity.player.levelup", 1, 1);
 					openBankMenu(player);
 				}
 				else
@@ -284,7 +286,7 @@ public class bank implements Listener, CommandExecutor {
 		Player player = (Player) e.getPlayer();
 		if(e.getView().getTitle().equalsIgnoreCase("§8Stockage de "+player.getName())) 
 		{
-			player.playSound(player.getLocation(), "minecraft:entity.villager.yes", 1, 1);
+			InGameUtilities.playPlayerSound(player, "entity.villager.yes", SoundCategory.AMBIENT, 1, 1);
 			//Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:entity.villager.yes ambient "+player.getName()+" ~ ~ ~ 1");
 			//saveEnderchest(e.getInventory().getContents(),player);
 		}

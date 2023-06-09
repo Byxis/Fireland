@@ -1,8 +1,11 @@
 package fr.byxis.fireland.utilities;
 
 import fr.byxis.fireland.Fireland;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +13,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class InGameUtilities implements Listener {
 
@@ -34,7 +38,7 @@ public class InGameUtilities implements Listener {
             public void run() {
                 i++;
                 if(getPlayerMoving(player)){
-                    BasicUtilities.sendPlayerError(player,"Téléportation annulée !");
+                    sendPlayerError(player,"Téléportation annulée !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound "+player.getName()+" * minecraft:"+sound);
                     main.hashMapManager.removeTeleporting(player.getUniqueId());
                     cancel();
@@ -43,11 +47,11 @@ public class InGameUtilities implements Listener {
                 {
                     if((i%5 == 0 && i != duration) || i == duration-3 ||i  == duration-2 || i  == duration-1)
                     {
-                        BasicUtilities.sendPlayerInformation(player,"Téléportation dans " +(duration-i)+" secondes");
+                        sendPlayerInformation(player,"Téléportation dans " +(duration-i)+" secondes");
                     }
                     if(i == duration)
                     {
-                        BasicUtilities.sendPlayerInformation(player,"Téléportation...");
+                        sendPlayerInformation(player,"Téléportation...");
                         player.teleport(loc);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
                         main.hashMapManager.removeTeleporting(player.getUniqueId());
@@ -77,9 +81,103 @@ public class InGameUtilities implements Listener {
         playerMoving.replace(player, moving);
     }
 
-    public void playSound(Player p, String sound)
+    public static void playWorldSound(Location loc, String sound, SoundCategory category, float vol, float pitch)
     {
-        p.playSound(p.getLocation(), sound, 1, 1);
+        World world = Bukkit.getWorld(loc.getWorld().getName());
+        world.playSound(loc, "minecraft:"+sound, category, vol, pitch);
+    }
+
+    public static void playWorldSound(Location loc, Sound sound, SoundCategory category, float vol, float pitch)
+    {
+        World world = Bukkit.getWorld(loc.getWorld().getName());
+        world.playSound(loc, sound, category, vol, pitch);
+    }
+
+    public static void playPlayerSound(Player p, String sound, SoundCategory category, float vol, float pitch)
+    {
+        if (p != null) {
+            p.playSound(p.getLocation(), "minecraft:"+sound, category, vol, pitch);
+        }
+    }
+    public static void playPlayerSound(Player p, Sound sound, SoundCategory category, float vol, float pitch)
+    {
+        if (p != null) {
+            p.playSound(p.getLocation(), sound, category, vol, pitch);
+        }
+    }
+
+    public static void playPlayersSound(List<Player> players, String sound, SoundCategory category, float vol, float pitch)
+    {
+        if(players == null)
+        {
+            return;
+        }
+        for(Player p : players)
+        {
+            playPlayerSound(p, "minecraft:"+sound, category, vol, pitch);
+        }
+    }
+    public static void playPlayersSound(List<Player> players, Sound sound, SoundCategory category, float vol, float pitch)
+    {
+        if(players == null)
+        {
+            return;
+        }
+        for(Player p : players)
+        {
+            playPlayerSound(p, sound, category, vol, pitch);
+        }
+    }
+
+    public static void playEveryoneSound(Sound sound, SoundCategory category, float vol, float pitch)
+    {
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            playPlayerSound(p, sound, category, vol, pitch);
+        }
+    }
+
+    public static void playEveryoneSound(String sound, SoundCategory category, float vol, float pitch)
+    {
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            playPlayerSound(p, sound, category, vol, pitch);
+        }
+    }
+
+    public static void sendMessageToAdmin(String msg) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if(p.hasPermission("group.admin"))
+            {
+                p.sendMessage(msg);
+            }
+        }
+    }
+
+    public static void sendPlayerInformation(Player p, String msg)
+    {
+        if(p == null)
+        {
+            return;
+        }
+        p.sendMessage("§6§lFireland§8§l >> §7"+msg);
+    }
+
+    public static void sendPlayerError(Player p, String msg)
+    {
+        if(p == null)
+        {
+            return;
+        }
+        p.sendMessage("§6§lFireland§8§l >> §c"+msg);
+    }
+
+    public static void sendInteractivePlayerMessage(Player p, String msg, String cmd, String hover, ClickEvent.Action action)
+    {
+        TextComponent message = new TextComponent("§6§lFireland§8§l >> §7"+msg);
+        message.setClickEvent(new ClickEvent(action, cmd));
+        message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
+        p.spigot().sendMessage(message);
     }
     @EventHandler
     public void PlayerMove(PlayerMoveEvent event)

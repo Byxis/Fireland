@@ -1,17 +1,14 @@
 package fr.byxis.shop;
 
 import fr.byxis.db.DbConnection;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.jeton.jetonsCommandManager;
-import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.jeton.jetonSql;
 import fr.byxis.karma.karmaManager;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InventoryUtilities;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -294,7 +291,7 @@ public class ShopFunction {
                 jetonsCommandManager jeton = new jetonsCommandManager(main);
                 if(_p.hasPermission(item.command) || _p.hasPermission("csp.skin.all"))
                 {
-                    BasicUtilities.sendPlayerError(_p, "Vous avez déjà ce skin !");
+                    InGameUtilities.sendPlayerError(_p, "Vous avez déjà ce skin !");
                 }
                 else if(jeton.getJetonsPlayer(_p.getUniqueId()) >= item.price)
                 {
@@ -304,12 +301,13 @@ public class ShopFunction {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user "+ _p.getName()+" permission set "+item.command+" true");
                         main.getLogger().info("[ACHAT] Achat de "+item.itemName+" par "+_p.getName()+" pour "+item.price+" jetons.");
                         jeton.removeJetonsPlayer(_p.getUniqueId(), item.price);
-                        BasicUtilities.sendPlayerInformation(_p, "Vous avez acheté le skin: "+item.itemName+" ! Merci pour votre achat !");
+                        InGameUtilities.sendPlayerInformation(_p, "Vous avez acheté le skin: "+item.itemName+" ! Merci pour votre achat !");
+                        InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                     }
                 }
                 else
                 {
-                    BasicUtilities.sendPlayerError(_p, "Vous n'avez pas assez de jetons !");
+                    InGameUtilities.sendPlayerError(_p, "Vous n'avez pas assez de jetons !");
                 }
             }
             else
@@ -358,7 +356,7 @@ public class ShopFunction {
                         }
                         main.eco.withdrawPlayer(_p, prix);
                         _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §6"+prix+"$ §a!");
-                        _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+                        InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                         buyItemKarma(_p.getUniqueId());
                     }
                 }
@@ -374,7 +372,7 @@ public class ShopFunction {
                         PermissionUtilities.commandExecutor(_p, command, "crackshot.give.all");
                     }
                     _p.sendMessage("§aVous avez acheté : "+item.itemName+" pour §c"+prix+"$ §a!");
-                    _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+                    InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                 }
                 else
                 {
@@ -497,7 +495,7 @@ public class ShopFunction {
                 {
                     main.eco.depositPlayer(_p, sell);
                     _p.sendMessage("§aVous avez vendu un §7"+item.itemName+"§a pour "+sell+"$ !");
-                    _p.playSound(_p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
+                    InGameUtilities.playPlayerSound(_p, "gun.hud.money_pickup", SoundCategory.AMBIENT, 1, 1);
                 }
                 else
                 {

@@ -11,6 +11,7 @@ import fr.byxis.zone.zoneclass.FactionZoneInformation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,9 +50,16 @@ public class Manager implements Listener {
 
                 switch(itemclicked.getType())
                 {
-                    case EMERALD -> PermissionUtilities.commandExecutor(p, "ah", "crazyauctions.access");
-                    case DIAMOND_SWORD -> MenuFaction.OpenFaction(main, p, true);
-                    case FIREWORK_ROCKET -> MenuBooster.OpenBoosters(main,p);
+                    case EMERALD -> {
+                        PermissionUtilities.commandExecutor(p, "ah", "crazyauctions.access");
+                        InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
+                    }
+                    case DIAMOND_SWORD -> {
+                        MenuFaction.OpenFaction(main, p, true);
+                    }
+                    case FIREWORK_ROCKET -> {
+                        MenuBooster.OpenBoosters(main,p);
+                    }
                 }
             }
             else if(inv.getTitle().contains("Votre faction"))
@@ -70,55 +78,48 @@ public class Manager implements Listener {
                 FactionFunctions ff = new FactionFunctions(main, p);
                 FactionPlayerInformation infos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
                 FactionInformation finfos = ff.getFactionInfo(infos.getFactionName());
-                switch(itemclicked.getType())
-                {
-                    case RED_STAINED_GLASS_PANE :
+                switch (itemclicked.getType()) {
+                    case RED_STAINED_GLASS_PANE -> {
                         MenuIntendant.OpenIntendant(main, p);
-                        break;
-                    case ANVIL:
+                    }
+                    case ANVIL -> {
                         MenuPerks.OpenPerks(main, p);
-                        break;
-                    case PLAYER_HEAD:
+                    }
+                    case PLAYER_HEAD -> {
                         MenuPlayerList.OpenPlayerList(main, p);
-                        break;
-                    case BARRIER :
+                    }
+                    case BARRIER -> {
                         PermissionUtilities.commandExecutor(p, "faction leave", "fireland.command.faction.leave");
+                        InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
                         p.closeInventory();
-                        break;
-                    case ENDER_CHEST:
-                        if(ff.GetAmeliorationsUpgrades(finfos.getCurrentUpgrade())[2] != 0)
-                        {
+                    }
+                    case ENDER_CHEST -> {
+                        if (ff.GetAmeliorationsUpgrades(finfos.getCurrentUpgrade())[2] != 0) {
+
+                            InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
                             p.openInventory(ff.LoadStorage(infos.getFactionName(), finfos.getCurrentUpgrade()));
+                        } else {
+                            InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                         }
-                        break;
-                    case GOLD_INGOT :
-                        if(e.isRightClick() && infos.getRole() == 2)
-                        {
-                            if(e.isShiftClick())
-                            {
+                    } case GOLD_INGOT -> {
+                        if (e.isRightClick() && infos.getRole() == 2) {
+                            if (e.isShiftClick()) {
                                 PermissionUtilities.commandExecutor(p, "faction withdraw 1000", "fireland.command.faction.withdraw");
-                            }
-                            else
-                            {
+                            } else {
                                 PermissionUtilities.commandExecutor(p, "faction withdraw 100", "fireland.command.faction.withdraw");
                             }
-                        }
-                        else if(e.isLeftClick())
-                        {
-                            if(e.isShiftClick())
-                            {
+                        } else if (e.isLeftClick()) {
+                            if (e.isShiftClick()) {
                                 PermissionUtilities.commandExecutor(p, "faction deposit 1000", "fireland.command.faction.deposit");
-                            }
-                            else
-                            {
+                            } else {
                                 PermissionUtilities.commandExecutor(p, "faction deposit 100", "fireland.command.faction.deposit");
                             }
                         }
                         MenuFaction.OpenFaction(main, p, true);
-                        break;
-                    case GRASS_BLOCK:
+                    }
+                    case GRASS_BLOCK -> {
                         MenuZone.OpenZone(main, p);
-                        break;
+                    }
                 }
             }
             else if(inv.getTitle().contains("Membres de "))
@@ -136,7 +137,9 @@ public class Manager implements Listener {
 
                 switch(itemclicked.getType())
                 {
-                    case RED_STAINED_GLASS_PANE -> MenuFaction.OpenFaction(main, p, true);
+                    case RED_STAINED_GLASS_PANE -> {
+                        MenuFaction.OpenFaction(main, p, true);
+                    }
                 }
             }
             else if(inv.getTitle().contains("Améliorations pour"))
@@ -160,13 +163,17 @@ public class Manager implements Listener {
                 switch(itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE -> MenuFaction.OpenFaction(main, p, true);
-                    case LIME_STAINED_GLASS_PANE -> PermissionUtilities.commandExecutor(p, "faction upgrade", "fireland.command.faction.upgrade");
+                    case LIME_STAINED_GLASS_PANE -> {
+                        PermissionUtilities.commandExecutor(p, "faction upgrade", "fireland.command.faction.upgrade");
+                        InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
+                    }
                     case SHIELD -> {
                         if(!finfos.hasFriendlyFirePerk())
                         {
                             if(finfos.getCurrentUpgrade() < 2)
                             {
-                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
+                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -182,7 +189,8 @@ public class Manager implements Listener {
                         {
                             if(finfos.getCurrentUpgrade() < 5)
                             {
-                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 5 pour débloquer cette amélioration.");
+                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 5 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -191,6 +199,10 @@ public class Manager implements Listener {
                             }
 
                         }
+                        else
+                        {
+                            InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                        }
                         return;
                     }
                     case LEATHER -> {
@@ -198,7 +210,8 @@ public class Manager implements Listener {
                         {
                             if(finfos.getCurrentUpgrade() < 4)
                             {
-                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 4 pour débloquer cette amélioration.");
+                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 4 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -207,6 +220,10 @@ public class Manager implements Listener {
                             }
 
                         }
+                        else
+                        {
+                            InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                        }
                         return;
                     }
                     case FLOWER_BANNER_PATTERN -> {
@@ -214,7 +231,8 @@ public class Manager implements Listener {
                         {
                             if(finfos.getCurrentUpgrade() < 3)
                             {
-                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
+                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -223,6 +241,10 @@ public class Manager implements Listener {
                             }
 
                         }
+                        else
+                        {
+                            InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                        }
                         return;
                     }
                     case GRASS_BLOCK -> {
@@ -230,7 +252,8 @@ public class Manager implements Listener {
                         {
                             if(finfos.getCurrentUpgrade() < 2)
                             {
-                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
+                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -239,6 +262,10 @@ public class Manager implements Listener {
                             }
 
                         }
+                        else
+                        {
+                            InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                        }
                         return;
                     }
                     case BEACON -> {
@@ -246,7 +273,8 @@ public class Manager implements Listener {
                         {
                             if(finfos.getCurrentUpgrade() < 6)
                             {
-                                BasicUtilities.sendPlayerError(p, "Vous devez être niveau de faction 6 pour débloquer cette amélioration.");
+                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 6 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -254,6 +282,10 @@ public class Manager implements Listener {
                                 MenuPerks.OpenPerks(main, p);
                             }
 
+                        }
+                        else
+                        {
+                            InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                         }
                         return;
                     }

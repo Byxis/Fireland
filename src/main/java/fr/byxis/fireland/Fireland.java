@@ -14,7 +14,6 @@ import fr.byxis.discretion.ZombieDetection;
 import fr.byxis.discretion.rally;
 import fr.byxis.essaim.EssaimCommandCompleter;
 import fr.byxis.essaim.EssaimCommandManager;
-import fr.byxis.essaim.EssaimFunctions;
 import fr.byxis.essaim.EssaimManager;
 import fr.byxis.event.*;
 import fr.byxis.faction.FactionEvent;
@@ -23,6 +22,7 @@ import fr.byxis.faction.factionManager;
 import fr.byxis.faction.factionManagerTabCompleter;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
+import fr.byxis.fireland.utilities.WorldUtilities;
 import fr.byxis.intendant.IntendantCommand;
 import fr.byxis.intendant.Manager;
 import fr.byxis.jeton.jetonsCommandManager;
@@ -39,7 +39,6 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
@@ -50,8 +49,8 @@ import org.fusesource.jansi.Ansi;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.UUID;
+
+import static fr.byxis.packet.PacketFunctions.sendWorldBorderWarningDistancePacket;
 
 
 public class Fireland extends JavaPlugin {
@@ -118,13 +117,12 @@ public class Fireland extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new craft(), this);
         getServer().getPluginManager().registerEvents(new villagerInteraction(this), this);
         getServer().getPluginManager().registerEvents(new playerDeath(this), this);
-        getServer().getPluginManager().registerEvents(new removeBedInteraction(), this);
         getServer().getPluginManager().registerEvents(new fallDamage(), this);
         getServer().getPluginManager().registerEvents(new ZombieDetection(this), this);
         getServer().getPluginManager().registerEvents(new ambientSound(this), this);
         getServer().getPluginManager().registerEvents(new scoreboardPlayer(this), this);
         getServer().getPluginManager().registerEvents(new silverfishSilent(), this);
-        getServer().getPluginManager().registerEvents(new RemoveInteractionBlock(), this);
+        getServer().getPluginManager().registerEvents(new InteractionManager(), this);
         getServer().getPluginManager().registerEvents(new stairs(this), this);
         getServer().getPluginManager().registerEvents(new modifiedInteractionItemstackSize(this), this);
         getServer().getPluginManager().registerEvents(new chatListener(), this);
@@ -184,13 +182,13 @@ public class Fireland extends JavaPlugin {
 
 
     public void onEnable() {
-        getLogger().info("================================");
+        getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString()+"================================");
         getLogger().info(" ");
         getLogger().info(" ");
-        getLogger().info("   Fireland is now enabled !");
+        getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString()+"   Fireland is now enabled !");
         getLogger().info(" ");
         getLogger().info(" ");
-        getLogger().info("-");
+        getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString()+"-");
         getLogger().info(" ");
 
         databaseManager = new DatabaseManager();
@@ -319,8 +317,8 @@ public class Fireland extends JavaPlugin {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a title {\"text\":\" \"}");
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"La lune de sang arrive !\",\"bold\":true,\"color\":\"dark_red\"}");
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.bloodmoon ambient @a ~ ~ ~ 99999999");
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.cryofunheard ambient @a");
+                            InGameUtilities.playEveryoneSound("gun.hud.bloodmoon", SoundCategory.WEATHER, 1, 1);
+                            InGameUtilities.playEveryoneSound("gun.hud.cryofunheard", SoundCategory.WEATHER, 1, 1);
 
                         }
 
@@ -330,7 +328,7 @@ public class Fireland extends JavaPlugin {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a title {\"text\":\" \"}");
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"La nuit arrive !\",\"bold\":true,\"color\":\"red\"}");
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:gun.hud.inception ambient @a ~ ~ ~ 99999999");
+                            InGameUtilities.playEveryoneSound("gun.hud.inception", SoundCategory.WEATHER, 1, 1);
                         }
                         night = false;
                         day = true;
@@ -341,14 +339,10 @@ public class Fireland extends JavaPlugin {
                     night = true;
                     day = false;
                     if(!getServer().getOnlinePlayers().isEmpty()) {
+                        InGameUtilities.playEveryoneSound("gun.hud.night_passed", SoundCategory.WEATHER, 1, 1);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a title {\"text\":\" \"}");
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a subtitle {\"text\":\"Le soleil se lève\",\"bold\":true,\"color\":\"gold\"}");
-                        for(Player p : getServer().getOnlinePlayers())
-                        {
-                            p.playSound(p.getLocation(), "minecraft:gun.hud.night_passed", 1, 1);
-                        }
-
                     }
                 }
             }
@@ -449,13 +443,20 @@ public class Fireland extends JavaPlugin {
                     if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE))
                     {
                         boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
-                        if (infected || p.getHealth() < 6) {
-                            //playBorderPackets(p, true);
-                            p.playSound(p.getLocation(), "minecraft:entity.player.heartbeat", 1, 1);
+                        if (infected ) {
+                            sendWorldBorderWarningDistancePacket(p, 1);
+                            InGameUtilities.playPlayerSound(p, "entity.player.heartbeat", SoundCategory.MASTER, 1, 1);
+                        }
+                        else if(p.getHealth() < 7)
+                        {
+                            InGameUtilities.playPlayerSound(p, "entity.player.heartbeat", SoundCategory.MASTER, (float) ((7-p.getHealth())/7), 1);
+                            double calcul = 10*WorldUtilities.getWorldBorderDistance(p.getLocation(), Bukkit.getWorld(p.getLocation().getWorld().getName()).getWorldBorder().getCenter());
+
+                            sendWorldBorderWarningDistancePacket(p, (float) ((7-p.getHealth())/7), calcul);
                         }
                         else
                         {
-                            //playBorderPackets(p, false);
+                            sendWorldBorderWarningDistancePacket(p, 0);
                         }
 
                         int safezone = cfgm.getPlayerDB().getInt("safezone."+p.getUniqueId()+".time");
@@ -483,7 +484,7 @@ public class Fireland extends JavaPlugin {
                     }
                     else
                     {
-                        //	playBorderPackets(p, false);
+                        sendWorldBorderWarningDistancePacket(p, 0);
                         //ATELIER
                     }
 					/*if(p.getOpenInventory().getTitle().contains("Attente"))
@@ -513,16 +514,16 @@ public class Fireland extends JavaPlugin {
     }
 
     public void onDisable() {
-        getLogger().info("================================");
+        getLogger().info(Ansi.ansi().fg(Ansi.Color.RED).toString()+"================================");
         getLogger().info(" ");
         getLogger().info(" ");
-        getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString()+"   Fireland is now disabled !");
+        getLogger().info(Ansi.ansi().fg(Ansi.Color.RED).toString()+"   Fireland is now disabled !");
         this.databaseManager.close();
         SaveEvent se = new SaveEvent(this);
         se.onDisable();
         getLogger().info(" ");
         getLogger().info(" ");
-        getLogger().info("================================");
+        getLogger().info(Ansi.ansi().fg(Ansi.Color.RED).toString()+"================================");
     }
 
 	/*void moveNextTick(Entity ent, Location loc)

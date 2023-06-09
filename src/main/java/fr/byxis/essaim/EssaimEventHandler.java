@@ -1,18 +1,14 @@
 package fr.byxis.essaim;
 
-import fr.byxis.essaim.essaimClass.EssaimClass;
 import fr.byxis.faction.FactionFunctions;
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.utilities.BasicUtilities;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
-import fr.byxis.intendant.menu.MenuBooster;
-import fr.byxis.intendant.menu.MenuFaction;
 import io.lumine.mythic.bukkit.events.MythicMobDeathEvent;
 import io.lumine.mythic.bukkit.events.MythicMobDespawnEvent;
 import io.lumine.mythic.bukkit.events.MythicMobSpawnEvent;
 import io.lumine.mythic.core.mobs.ActiveMob;
-import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import org.bukkit.*;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.ItemFrame;
@@ -22,14 +18,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Base64;
 
 public class EssaimEventHandler implements Listener {
 
@@ -71,6 +64,7 @@ public class EssaimEventHandler implements Listener {
                 if(main.essaimManager.activeSpawners.get(spawner).getActiveMobs().contains(mob))
                 {
                     main.essaimManager.activeSpawners.get(spawner).removeActiveMob(mob);
+                    main.getLogger().info("Killed, "+main.essaimManager.activeSpawners.get(spawner).getActiveMobs().size() +" remaining.");
                     if(main.essaimManager.activeSpawners.get(spawner).isSpawnerFinished())
                     {
                         for(String essaim : main.essaimManager.existingEssaims.keySet())
@@ -113,7 +107,7 @@ public class EssaimEventHandler implements Listener {
             }
             else
             {
-                BasicUtilities.sendPlayerError(e.getPlayer(), "Vous devez être dans une faction pour entrer dans un essaim.");
+                InGameUtilities.sendPlayerError(e.getPlayer(), "Vous devez être dans une faction pour entrer dans un essaim.");
             }
         }
     }
@@ -145,7 +139,8 @@ public class EssaimEventHandler implements Listener {
                 {
                     switch (itemclicked.getType()) {
                         case RED_STAINED_GLASS_PANE -> {
-                            EssaimFunctions.leaveFinishedEssaim(essaim, p);
+                            InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
+                            EssaimFunctions.leaveFinishedEssaim(essaim, p, false);
                         }
                     }
                 }
@@ -155,20 +150,24 @@ public class EssaimEventHandler implements Listener {
                         case LIME_STAINED_GLASS_PANE -> {
                             if (main.essaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
                                 EssaimFunctions.startEssaim(essaim);
+                                InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
                                 for (Player member : main.essaimManager.groups.get(essaim).getMembers()) {
                                     member.closeInventory();
-                                    BasicUtilities.sendPlayerInformation(member, "§aL'expédition a démarrée !");
+                                    InGameUtilities.sendPlayerInformation(member, "§aL'expédition a démarrée !");
                                 }
                             } else {
-                                BasicUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
+                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                                InGameUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
                             }
                         }
                         case RED_STAINED_GLASS_PANE -> EssaimFunctions.leaveGroup(essaim, p);
                         case YELLOW_STAINED_GLASS_PANE -> {
                             if (main.essaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
                                 EssaimFunctions.openInvitation(essaim, p);
+                                InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
                             } else {
-                                BasicUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
+                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                                InGameUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
                             }
                         }
                     }
@@ -200,10 +199,13 @@ public class EssaimEventHandler implements Listener {
                         {
                             String name = ChatColor.stripColor(itemclicked.getItemMeta().getDisplayName());
                             EssaimFunctions.inviteGroup(essaim,Bukkit.getPlayer(name));
+
+                            InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
                         }
                         break;
                     case RED_STAINED_GLASS_PANE:
                         EssaimFunctions.openMenu(essaim, p);
+                        InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 0);
                         break;
                 }
             }
@@ -225,7 +227,7 @@ public class EssaimEventHandler implements Listener {
                         if(member.getName().equalsIgnoreCase(e.getPlayer().getName()))
                         {
                             current = essaim;
-                            BasicUtilities.sendPlayerInformation(member, "§cVous avez échoué l'expédition !");
+                            InGameUtilities.sendPlayerInformation(member, "§cVous avez échoué l'expédition !");
                             break;
 
                         }
@@ -304,11 +306,11 @@ public class EssaimEventHandler implements Listener {
                     if((e.getClickedBlock().getLocation().distance(loc) < 1 ||e.getClickedBlock().getLocation().distance(locH) < 1) && !door.isOpen())
                     {
                         door.setOpen(true);
-                        BasicUtilities.playWorldSound("essaim", loc, Sound.BLOCK_IRON_DOOR_OPEN, SoundCategory.BLOCKS, 1, 1);
+                        InGameUtilities.playWorldSound(loc, Sound.BLOCK_IRON_DOOR_OPEN, SoundCategory.BLOCKS, 1, 1);
                         e.getClickedBlock().setBlockData(door);
                         if(e.getPlayer().getGameMode() != GameMode.CREATIVE)
                         {
-                            BasicUtilities.playWorldSound("essaim", loc, Sound.ITEM_SHIELD_BREAK, SoundCategory.BLOCKS, 1, 1);
+                            InGameUtilities.playWorldSound(loc, Sound.ITEM_SHIELD_BREAK, SoundCategory.BLOCKS, 1, 1);
                             e.getItem().setAmount(e.getItem().getAmount()-1);
                         }
                     }

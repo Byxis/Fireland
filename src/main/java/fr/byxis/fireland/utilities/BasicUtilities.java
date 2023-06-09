@@ -1,25 +1,16 @@
 package fr.byxis.fireland.utilities;
 
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.*;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class BasicUtilities {
 
@@ -56,69 +47,7 @@ public class BasicUtilities {
 
         return null;
     }
-    public static void playSound(Player p, String sound)
-    {
-        p.playSound(p.getLocation(), sound, 1, 1);
-    }
 
-    public static void playWorldSound(String worldName, Location loc, String sound, SoundCategory category, float vol, float pitch)
-    {
-        World world = Bukkit.getWorld(worldName);
-        if (world != null) {
-            world.playSound(loc, "minecraft:"+sound, category, vol, pitch);
-        }
-    }
-    public static void playWorldSound(String worldName, Location loc, Sound sound, SoundCategory category, float vol, float pitch)
-    {
-        World world = Bukkit.getWorld(worldName);
-        if (world != null) {
-            world.playSound(loc, sound, category, vol, pitch);
-        }
-    }
-
-    public static void playPlayerSound(Player p, String sound, SoundCategory category, float vol, float pitch)
-    {
-        if (p != null) {
-            p.playSound(p.getLocation(), "minecraft:"+sound, category, vol, pitch);
-        }
-    }
-
-    public static void playPlayersSound(List<Player> players, String sound, SoundCategory category, float vol, float pitch)
-    {
-        if(players == null)
-        {
-            return;
-        }
-        for(Player p : players)
-        {
-            p.playSound(p.getLocation(), "minecraft:"+sound, category, vol, pitch);
-        }
-    }
-
-    public static void sendMessageToAdmin(String msg) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if(p.hasPermission("group.admin"))
-            {
-                p.sendMessage(msg);
-            }
-        }
-    }
-    public static void sendPlayerInformation(Player p, String msg)
-    {
-        if(p == null)
-        {
-            return;
-        }
-        p.sendMessage("§6§lFireland§8§l >> §7"+msg);
-    }
-    public static void sendPlayerError(Player p, String msg)
-    {
-        if(p == null)
-        {
-            return;
-        }
-        p.sendMessage("§6§lFireland§8§l >> §c"+msg);
-    }
     public static int generateInt(int borneInf, int borneSup){
         Random random = new Random();
         int nb;
@@ -183,11 +112,4 @@ public class BasicUtilities {
 
     }
 
-    public static void sendInteractivePlayerMessage(Player p, String msg, String cmd, String hover, ClickEvent.Action action)
-    {
-        TextComponent message = new TextComponent("§6§lFireland§8§l >> §7"+msg);
-        message.setClickEvent(new ClickEvent(action, cmd));
-        message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
-        p.spigot().sendMessage(message);
-    }
 }

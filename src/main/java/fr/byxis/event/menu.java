@@ -1,8 +1,6 @@
 package fr.byxis.event;
 
-import fr.byxis.fireland.ConfigManager;
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -21,7 +19,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class menu implements Listener,CommandExecutor {
 
@@ -218,7 +215,7 @@ public class menu implements Listener,CommandExecutor {
             public void run() {
                 i++;
                 if(InGameUtilities.getPlayerMoving(player)){
-                    BasicUtilities.sendPlayerError(player,"Téléportation annulée !");
+                    InGameUtilities.sendPlayerError(player,"Téléportation annulée !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound "+player.getName()+" * minecraft:"+sound);
                     main.hashMapManager.removeTeleporting(player.getUniqueId());
                     cancel();
@@ -227,11 +224,11 @@ public class menu implements Listener,CommandExecutor {
                 {
                     if((i%5 == 0 && i != duration) || i == duration-3 ||i  == duration-2 || i  == duration-1)
                     {
-                        BasicUtilities.sendPlayerInformation(player,"Téléportation dans " +(duration-i)+" secondes");
+                        InGameUtilities.sendPlayerInformation(player,"Téléportation dans " +(duration-i)+" secondes");
                     }
                     if(i == duration)
                     {
-                        BasicUtilities.sendPlayerInformation(player,"Téléportation...");
+                        InGameUtilities.sendPlayerInformation(player,"Téléportation...");
                         player.teleport(loc);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
                         player.sendMessage("§7Vous avez payé "+price+"$");

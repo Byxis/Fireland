@@ -1,8 +1,7 @@
 package fr.byxis.packet;
 
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.utilities.BasicUtilities;
-import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -29,7 +28,7 @@ public class PacketPlayer implements CommandExecutor {
             {
                 if(strings.length < 2)
                 {
-                    BasicUtilities.sendPlayerInformation(p, "Packet envoyé.");
+                    InGameUtilities.sendPlayerInformation(p, "Packet envoyé.");
                     PlayTestBorderPacket(p);
                     return true;
                 }
@@ -39,34 +38,34 @@ public class PacketPlayer implements CommandExecutor {
                     {
                         if(players.getName().equalsIgnoreCase(strings[1]))
                         {
-                            BasicUtilities.sendPlayerInformation(p, "Packet envoyé à "+players.getName()+".");
+                            InGameUtilities.sendPlayerInformation(p, "Packet envoyé à "+players.getName()+".");
                             PlayTestBorderPacket(players);
                             return true;
                         }
                     }
-                    BasicUtilities.sendPlayerError(p, "Personne non trouvée.");
+                    InGameUtilities.sendPlayerError(p, "Personne non trouvée.");
                     return false;
                 }
             }
             else if(strings[0].equalsIgnoreCase("opendoor"))
             {
-                BasicUtilities.sendPlayerInformation(p, "Packet envoyé. Porte ouverte");
+                InGameUtilities.sendPlayerInformation(p, "Packet envoyé. Porte ouverte");
                 //noinspection removal
                 PlayTestOpenDoorPacket(p, p.getTargetBlock(50).getLocation());
             }
         }
-        BasicUtilities.sendPlayerError((Player) commandSender, "Erreur.");
+        InGameUtilities.sendPlayerError((Player) commandSender, "Erreur.");
         return false;
     }
 
     private void PlayTestBorderPacket(Player p)
     {
-        pf.playBorderPackets(p, true);
+        pf.sendWorldBorderWarningDistancePacket(p, 1);
         new BukkitRunnable()
         {
             @Override
             public void run() {
-                pf.playBorderPackets(p, false);
+                pf.sendWorldBorderWarningDistancePacket(p, 0);
             }
         }.runTaskLater(main, 20);
     }

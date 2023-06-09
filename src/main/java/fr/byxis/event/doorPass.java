@@ -1,8 +1,11 @@
 package fr.byxis.event;
 
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
@@ -23,6 +26,7 @@ public class doorPass implements Listener {
 	private void openDoor(Player p, Location door, BlockState blockState, Openable openable, int time)
 	{
 		openable.setOpen(true);
+		InGameUtilities.playWorldSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, SoundCategory.PLAYERS, 1, 1f);
 
 		blockState.setBlockData(openable);
 		blockState.update();
@@ -30,6 +34,8 @@ public class doorPass implements Listener {
 			
 			@Override
 			public void run() {
+				InGameUtilities.playWorldSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, SoundCategory.PLAYERS, 1, 1f);
+
 				openable.setOpen(false);
 				blockState.setBlockData(openable);
 				blockState.update();

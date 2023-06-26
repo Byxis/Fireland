@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class stack implements CommandExecutor {
+public class    stack implements CommandExecutor {
 
 	@SuppressWarnings({ "deprecation"})
 	@Override

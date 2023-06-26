@@ -86,7 +86,6 @@
             <name>Lumine Releases</name>
             <url>https://mvn.lumine.io/repository/maven-public/</url>
         </repository>
-
     </repositories>
 
     <dependencies>
@@ -144,6 +143,5 @@
             <version>5.2.1</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 </project>

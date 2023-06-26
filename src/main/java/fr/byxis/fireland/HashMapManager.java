@@ -1,8 +1,8 @@
 package fr.byxis.fireland;
 
-import fr.byxis.booster.BoosterClass;
-import fr.byxis.discretion.DiscretionClass;
-import fr.byxis.karma.PlayerKarmaClass;
+import fr.byxis.player.booster.BoosterClass;
+import fr.byxis.player.discretion.DiscretionClass;
+import fr.byxis.player.karma.PlayerKarmaClass;
 import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
@@ -19,6 +19,7 @@ public class HashMapManager {
     private BoosterClass booster;
 
     public HashMapManager() {
+        Init();
     }
 
     public void Init()

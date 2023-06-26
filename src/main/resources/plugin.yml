@@ -77,3 +77,6 @@ commands:
   essaim:
     description: commande pour l essaim
     permission: fireland.command.essaim
+  note:
+    description: permet de modifier les notes
+    permission: fireland.command.notes

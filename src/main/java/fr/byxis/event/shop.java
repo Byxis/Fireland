@@ -2,7 +2,7 @@ package fr.byxis.event;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
-import fr.byxis.karma.karmaManager;
+import fr.byxis.player.karma.karmaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;

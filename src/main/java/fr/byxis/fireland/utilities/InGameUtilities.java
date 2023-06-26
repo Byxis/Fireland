@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.fusesource.jansi.Ansi;
 
 import java.util.HashMap;
 import java.util.List;
@@ -163,6 +164,15 @@ public class InGameUtilities implements Listener {
         p.sendMessage("§6§lFireland§8§l >> §7"+msg);
     }
 
+    public static void sendPlayerSucces(Player p, String msg)
+    {
+        if(p == null)
+        {
+            return;
+        }
+        p.sendMessage("§6§lFireland§8§l >> §a"+msg);
+    }
+
     public static void sendPlayerError(Player p, String msg)
     {
         if(p == null)
@@ -170,6 +180,19 @@ public class InGameUtilities implements Listener {
             return;
         }
         p.sendMessage("§6§lFireland§8§l >> §c"+msg);
+    }
+
+    public static void debugp(Object txt)
+    {
+        if(Bukkit.getPlayer("Byxis_") != null && Bukkit.getPlayer("Byxis_").isOnline())
+        {
+            Bukkit.getPlayer("Byxis_").sendMessage("§c§lFireland§8§l >> §a"+txt);
+        }
+    }
+
+    public static void debug(String txt)
+    {
+        main.getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString()+"Debug "+Ansi.ansi().fg(Ansi.Color.WHITE).toString()+">> "+txt);
     }
 
     public static void sendInteractivePlayerMessage(Player p, String msg, String cmd, String hover, ClickEvent.Action action)

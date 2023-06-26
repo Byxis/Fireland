@@ -1,9 +1,9 @@
 package fr.byxis.event;
 
 import fr.byxis.jeton.jetonsCommandManager;
-import fr.byxis.karma.PlayerKarmaClass;
+import fr.byxis.player.karma.PlayerKarmaClass;
 import fr.byxis.fireland.Fireland;
-import fr.byxis.karma.karmaManager;
+import fr.byxis.player.karma.karmaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -87,6 +87,10 @@ public class scoreboardPlayer implements Listener {
 		if(main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).isShooting())
 		{
 			shotColor = "§4";
+		}
+		else if(main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingCamo())
+		{
+			shotColor = "§2";
 		}
 		else if(main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingLights())
 		{

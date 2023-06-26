@@ -1,6 +1,6 @@
 package fr.byxis.event;
 
-import fr.byxis.faction.FactionFunctions;
+import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;

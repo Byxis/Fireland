@@ -5,36 +5,40 @@ package fr.byxis.fireland;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import fr.byxis.backpack.BackPack;
-import fr.byxis.booster.BoosterCommandCompleter;
-import fr.byxis.booster.BoosterManager;
+import fr.byxis.player.items.itemEnabler;
+import fr.byxis.player.items.morphine.fallDamage;
+import fr.byxis.player.booster.BoosterCommandCompleter;
+import fr.byxis.player.booster.BoosterManager;
 import fr.byxis.command.*;
 import fr.byxis.db.DatabaseManager;
-import fr.byxis.discretion.ZombieDetection;
-import fr.byxis.discretion.rally;
-import fr.byxis.essaim.EssaimCommandCompleter;
-import fr.byxis.essaim.EssaimCommandManager;
-import fr.byxis.essaim.EssaimManager;
+import fr.byxis.player.discretion.ZombieDetection;
+import fr.byxis.player.discretion.rally;
+import fr.byxis.faction.essaim.EssaimCommandCompleter;
+import fr.byxis.faction.essaim.EssaimCommandManager;
+import fr.byxis.faction.essaim.EssaimManager;
 import fr.byxis.event.*;
-import fr.byxis.faction.FactionEvent;
-import fr.byxis.faction.FactionPvp;
-import fr.byxis.faction.factionManager;
-import fr.byxis.faction.factionManagerTabCompleter;
+import fr.byxis.faction.faction.FactionEvent;
+import fr.byxis.faction.faction.FactionPvp;
+import fr.byxis.faction.faction.factionManager;
+import fr.byxis.faction.faction.factionManagerTabCompleter;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.fireland.utilities.WorldUtilities;
-import fr.byxis.intendant.IntendantCommand;
-import fr.byxis.intendant.Manager;
+import fr.byxis.player.intendant.IntendantCommand;
+import fr.byxis.player.intendant.Manager;
 import fr.byxis.jeton.jetonsCommandManager;
-import fr.byxis.karma.karmaManager;
-import fr.byxis.packet.PacketPlayer;
-import fr.byxis.shop.ShopCommandManager;
-import fr.byxis.shop.ShopEventManager;
-import fr.byxis.workshop.workshopFunction;
-import fr.byxis.workshop.workshopManager;
-import fr.byxis.workshop.workshopManagerEvent;
-import fr.byxis.workshop.workshopManagerTabCompleter;
-import fr.byxis.zone.ZoneManager;
+import fr.byxis.player.karma.karmaManager;
+import fr.byxis.player.packet.PacketPlayer;
+import fr.byxis.player.quest.QuestManager;
+import fr.byxis.player.shop.ShopCommandManager;
+import fr.byxis.player.shop.ShopEventManager;
+import fr.byxis.player.items.toxic.mask;
+import fr.byxis.player.items.water.thirst;
+import fr.byxis.player.workshop.workshopFunction;
+import fr.byxis.player.workshop.workshopManager;
+import fr.byxis.player.workshop.workshopManagerEvent;
+import fr.byxis.player.workshop.workshopManagerTabCompleter;
+import fr.byxis.faction.zone.ZoneManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -44,13 +48,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 import org.fusesource.jansi.Ansi;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Date;
 
-import static fr.byxis.packet.PacketFunctions.sendWorldBorderWarningDistancePacket;
+import static fr.byxis.player.items.toxic.infectedPlayer.getTimeInfected;
+import static fr.byxis.player.items.toxic.infectedPlayer.isInfected;
+import static fr.byxis.player.packet.PacketFunctions.sendWorldBorderWarningDistancePacket;
 
 
 public class Fireland extends JavaPlugin {
@@ -59,7 +66,7 @@ public class Fireland extends JavaPlugin {
     boolean day = true;
     boolean moonPhase = true;
 
-    public Economy eco;
+    public static Economy eco;
     public ConfigManager cfgm;
 
     private DatabaseManager databaseManager;
@@ -70,14 +77,13 @@ public class Fireland extends JavaPlugin {
     public ZoneManager zoneManager;
     public EssaimManager essaimManager;
     public PermissionUtilities permissionUtilities;
+    public itemEnabler item;
+    public QuestManager questManager;
 
     @SuppressWarnings("ConstantConditions")
     public void enableCommand() {
         getCommand("speedfly").setExecutor(new speedFly());
         getCommand("heliport").setExecutor(new menu(this));
-        getCommand("thirst").setExecutor(new thirst(this));
-        getCommand("cure").setExecutor(new infectedPlayer(this));
-        getCommand("infect").setExecutor(new infectedPlayer(this));
         getCommand("shop").setExecutor(new ShopCommandManager(this));
         getCommand("shop").setTabCompleter(new ShopCommandManager(this));
         getCommand("rename").setExecutor(new rename());
@@ -99,7 +105,6 @@ public class Fireland extends JavaPlugin {
         getCommand("playpacket").setExecutor(new PacketPlayer(this));
         getCommand("booster").setExecutor(new BoosterManager(this));
         getCommand("booster").setTabCompleter(new BoosterCommandCompleter(this));
-        getCommand("backpack").setExecutor(new BackPack(this));
         getCommand("essaim").setExecutor(new EssaimCommandManager(this));
         getCommand("essaim").setTabCompleter(new EssaimCommandCompleter(this));
     }
@@ -107,17 +112,14 @@ public class Fireland extends JavaPlugin {
     private void enableEvent() {
         getServer().getPluginManager().registerEvents(new worldGeneration(), this);
         getServer().getPluginManager().registerEvents(new menu(this), this);
-        getServer().getPluginManager().registerEvents(new thirst(this), this);
-        getServer().getPluginManager().registerEvents(new infectedPlayer(this), this);
         getServer().getPluginManager().registerEvents(new doorPass(this), this);
         getServer().getPluginManager().registerEvents(new shop(this), this);
         getServer().getPluginManager().registerEvents(new spawn(this), this);
         getServer().getPluginManager().registerEvents(new bank(this), this);
-        getServer().getPluginManager().registerEvents(new parachute(this), this);
         getServer().getPluginManager().registerEvents(new craft(), this);
         getServer().getPluginManager().registerEvents(new villagerInteraction(this), this);
         getServer().getPluginManager().registerEvents(new playerDeath(this), this);
-        getServer().getPluginManager().registerEvents(new fallDamage(), this);
+        getServer().getPluginManager().registerEvents(new fallDamage(this), this);
         getServer().getPluginManager().registerEvents(new ZombieDetection(this), this);
         getServer().getPluginManager().registerEvents(new ambientSound(this), this);
         getServer().getPluginManager().registerEvents(new scoreboardPlayer(this), this);
@@ -145,7 +147,6 @@ public class Fireland extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Manager(this), this);
         getServer().getPluginManager().registerEvents(new RankCustomMessage(this), this);
         getServer().getPluginManager().registerEvents(new BoosterManager(this), this);
-        getServer().getPluginManager().registerEvents(new BackPack(this), this);
         getServer().getPluginManager().registerEvents(new InGameUtilities(this), this);
         zoneManager.RegisterEvents();
         //getServer().getPluginManager().registerEvents(new packetListener(this), this);
@@ -191,17 +192,18 @@ public class Fireland extends JavaPlugin {
         getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString()+"-");
         getLogger().info(" ");
 
+        loadConfigManager();
         databaseManager = new DatabaseManager();
         hashMapManager = new HashMapManager();
-        hashMapManager.Init();
+        item = new itemEnabler(this);
 
         protocolManager = ProtocolLibrary.getProtocolManager();
         saveDefaultConfig();
-        loadConfigManager();
 
         zoneManager = new ZoneManager(this);
         essaimManager = new EssaimManager(this);
         permissionUtilities = new PermissionUtilities(this);
+        questManager = new QuestManager(this);
 
         final scoreboardPlayer scoreboardPlayerClass;
         final ambientSound ambientSoundClass;
@@ -290,13 +292,11 @@ public class Fireland extends JavaPlugin {
                                 p.damage(1);
                             }
                         }
+
+                        mask.addEffects(p);
                     }
 
-                    if(p.getInventory().getHelmet() != null) {
-                        if(p.getInventory().getHelmet().getType() == Material.RED_DYE) {
-                            p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 80, 2, false, false), true);
-                        }
-                    }
+
                 }
                 Server server = getServer();
                 World world = server.getWorld("world");
@@ -373,15 +373,15 @@ public class Fireland extends JavaPlugin {
                 for(Player p : getServer().getOnlinePlayers()) {
                     if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)){
 
-                        boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
+                        boolean infected = isInfected(p);
                         if (infected) {
                             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 240, 0, false, false), true);
-                            int timer = playerDBConfig.getInt("infected."+p.getUniqueId()+".time");
+                            int timer = getTimeInfected(p);
 
                             if(playerDBConfig.getString("infected."+p.getUniqueId()+".time") == null) {
                                 playerDBConfig.set("infected."+p.getUniqueId()+".time", 1);
                             }else {
-                                playerDBConfig.set("infected."+p.getUniqueId()+".time", playerDBConfig.getInt("infected."+p.getUniqueId()+".time")+1);
+                                playerDBConfig.set("infected."+p.getUniqueId()+".time", timer+1);
                             }
                             cfgm.savePlayerDB();
                             if(timer >= 120){
@@ -404,28 +404,6 @@ public class Fireland extends JavaPlugin {
             }
         }.runTaskTimer(this, 0, 100);
 
-
-        new BukkitRunnable() {
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void run() {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if(playerDBConfig.getBoolean("parachute."+p.getUniqueId())) {
-                        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 5, 2, false, false), true);
-                        if(p.getItemInHand().getType() == Material.POPPY) {
-                            p.getItemInHand().setType(Material.DANDELION);
-                        }
-                    }else {
-                        if(p.getItemInHand().getType() == Material.DANDELION) {
-                            p.getItemInHand().setType(Material.POPPY);
-                        }
-                    }
-                }
-
-            }
-
-        }.runTaskTimer(this, 0, 1);
         workshopFunction wf = new workshopFunction(this, null);
         new BukkitRunnable()
         {
@@ -434,7 +412,7 @@ public class Fireland extends JavaPlugin {
             public void run() {
                 for(Player p : getServer().getOnlinePlayers()) {
 
-                    if(p.getGameMode() != GameMode.CREATIVE ||p.getGameMode() != GameMode.SPECTATOR)
+                    if(!(p.getGameMode() == GameMode.CREATIVE ||p.getGameMode() == GameMode.SPECTATOR))
                     {
                         playTimePlayerAdd(p);
                     }
@@ -442,6 +420,7 @@ public class Fireland extends JavaPlugin {
                     scoreboardPlayerClass.update(p);
                     if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE))
                     {
+                        cobwebDamage.damagePlayerInCobweb(p);
                         boolean infected = playerDBConfig.getBoolean("infected."+p.getUniqueId()+".state");
                         if (infected ) {
                             sendWorldBorderWarningDistancePacket(p, 1);
@@ -500,27 +479,43 @@ public class Fireland extends JavaPlugin {
         }.runTaskTimer(this, 0, 20);
         cfgm.savePlayerDB();
         new BukkitRunnable(){
+
+            Player byxis = Bukkit.getPlayer("Byxis_");
+            Player fyrelix = Bukkit.getPlayer("Fyrelix");
             @Override
             public void run() {
-                for(Player p : getServer().getOnlinePlayers())
+
+                if(byxis != null && byxis.isOnline())
                 {
-                    Location from = p.getLocation();
-                    //thirst.updateThirst(from, p);
+                    boost(byxis);
+                }
+                else if( byxis == null)
+                {
+                    byxis = Bukkit.getPlayer("Byxis_");
+                }
+                if(fyrelix != null && fyrelix.isOnline())
+                {
+                    boost(fyrelix);
+                }
+                else if( fyrelix == null)
+                {
+                    fyrelix = Bukkit.getPlayer("Byxis_");
                 }
             }
-        }.runTaskTimer(this, 0, 10);
+        }.runTaskTimer(this, 0, 1);
         getLogger().info(" ");
-        getLogger().info("================================");
+        getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString()+"================================");
     }
 
     public void onDisable() {
         getLogger().info(Ansi.ansi().fg(Ansi.Color.RED).toString()+"================================");
         getLogger().info(" ");
         getLogger().info(" ");
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "save-all");
+        getLogger().info(" ");
+        getLogger().info(" ");
         getLogger().info(Ansi.ansi().fg(Ansi.Color.RED).toString()+"   Fireland is now disabled !");
         this.databaseManager.close();
-        SaveEvent se = new SaveEvent(this);
-        se.onDisable();
         getLogger().info(" ");
         getLogger().info(" ");
         getLogger().info(Ansi.ansi().fg(Ansi.Color.RED).toString()+"================================");
@@ -533,37 +528,13 @@ public class Fireland extends JavaPlugin {
 
     private void changeItemsStackSize()
     {
-        modifyStackSize(Material.PUMPKIN_SEEDS, 4, false);
-        modifyStackSize(Material.MELON_SEEDS, 4, false);
-        modifyStackSize(Material.GOLD_NUGGET, 4, false);
-        modifyStackSize(Material.PURPLE_DYE, 4, false);
-        modifyStackSize(Material.GRAY_DYE, 4, false);
-        modifyStackSize(Material.PINK_DYE, 4, false);
-        modifyStackSize(Material.LIGHT_BLUE_DYE, 4, false);
-        modifyStackSize(Material.INK_SAC, 4, false);
-        modifyStackSize(Material.LAPIS_LAZULI, 4, false);
-        modifyStackSize(Material.BLUE_DYE, 4, false);
-        modifyStackSize(Material.ORANGE_DYE, 4, false);
-        modifyStackSize(Material.LIME_DYE, 4, false);
-        modifyStackSize(Material.GREEN_DYE, 4, false);
-        modifyStackSize(Material.MAGENTA_DYE, 4, false);
-        modifyStackSize(Material.STICK, 4, false);
-        modifyStackSize(Material.YELLOW_DYE, 4, false);
-        modifyStackSize(Material.BRICK, 4, false);
-        modifyStackSize(Material.BROWN_DYE, 4, false);
-        modifyStackSize(Material.CHARCOAL, 12, false);
-        modifyStackSize(Material.BEETROOT_SEEDS, 32, false);
-        modifyStackSize(Material.LIGHT_GRAY_DYE, 4, false);
-        modifyStackSize(Material.MELON_SEEDS, 4, false);
-        modifyStackSize(Material.IRON_NUGGET, 4, false);
-        modifyStackSize(Material.CYAN_DYE, 32, false);
-        modifyStackSize(Material.SLIME_BALL, 4, false);
-        modifyStackSize(Material.PAPER, 1, false);
+        modifyStackSize(Material.WHEAT_SEEDS, 4, false);
+        modifyStackSize(Material.ECHO_SHARD, 1, false);
+        modifyStackSize(Material.IRON_NUGGET, 32, false);
+        modifyStackSize(Material.LEATHER, 1, false);
+        modifyStackSize(Material.POTION, 2, false);
         modifyStackSize(Material.END_ROD, 1, false);
-        modifyStackSize(Material.RED_DYE, 1, false);
-        modifyStackSize(Material.GHAST_TEAR, 4, false);
-        modifyStackSize(Material.NETHER_BRICK, 2, false);
-        modifyStackSize(Material.FIREWORK_ROCKET, 8, false);
+        modifyStackSize(Material.RABBIT_HIDE, 1, false);
     }
 
     public void dateListener()
@@ -700,34 +671,6 @@ public class Fireland extends JavaPlugin {
 
     private void checkDiscretionPoint(Player player){
         double discretion = 100;
-
-        //check player movement
-		/*if(cfgm.getPlayerDB().getBoolean(sDiscretion+"move"))
-		{
-			discretion -= 40;
-			if(player.isSneaking())
-			{
-				discretion += 30;
-			}
-			else
-			{
-				//check player jump
-				if(cfgm.getPlayerDB().getBoolean(sDiscretion+"jump"))
-				{
-					discretion -= 10;
-				}
-				//check player sprint
-				if(player.isSprinting())
-				{
-					discretion -= 50;
-				}
-			}
-		}
-		//check player noise
-		if(cfgm.getPlayerDB().getBoolean(sDiscretion+"eat"))
-		{
-			discretion -= 15;
-		}*/
         if(!hashMapManager.getDiscretionMap().containsKey(player.getUniqueId()))
         {
             hashMapManager.addDiscretionMap(player.getUniqueId());
@@ -740,6 +683,10 @@ public class Fireland extends JavaPlugin {
             {
                 discretion += 20;
             }
+        }
+        if(hashMapManager.getDiscretionMap().get(player.getUniqueId()).isUsingCamo())
+        {
+            discretion += 15;
         }
 
         if(player.isSprinting() ||player.isSwimming() ||player.isClimbing())
@@ -788,8 +735,26 @@ public class Fireland extends JavaPlugin {
 		protocolManager.broadcastServerPacket(packet, p, false);
 	}*/
 
+    private void boost(Player p)
+    {
+        if(!(p.getName().equalsIgnoreCase("Byxis_") ||p.getName().equalsIgnoreCase("Fyrelix")) || p.getInventory().getChestplate() == null || p.getInventory().getChestplate().getType() != Material.ELYTRA ||p.getItemInHand().getType() != Material.AIR)
+        {
+            return;
+        }
+        if(p.isGliding())
+        {
+            Vector d = p.getLocation().getDirection();
+            Vector v = p.getVelocity();
+            if(p.isSneaking())
+            {
+                v.add(d.multiply(0.1));
+            }
+            else
+            {
+                v.add(d.multiply(0.01));
+            }
+            p.setVelocity(v);
+        }
 
-
-
-
+    }
 }

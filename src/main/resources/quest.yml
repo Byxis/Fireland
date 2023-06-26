@@ -1,0 +1,63 @@
+date: 19/06/2023
+quest:
+  1:
+    name: "Faire la fête des zombies"
+    desc: "Tuez <amount> infectés"
+    objective: "KILL"
+    amount : 20
+    type : "Infecte"
+    reward : 160
+    jetons : 0
+    next: null
+  2:
+    name: "Rallumez ma télé !"
+    desc: "Re-activez le générateur à la station radio"
+    objective: "INTERACT_SPECIFIC"
+    location:
+      x: 0
+      y: 0
+      z: 0
+      world: "world"
+    reward: 160
+    jetons : 0
+    next: null
+  3:
+    name: "Découvrir du pays (1/5)"
+    desc: "Découvrez l'hôpital"
+    objective : "ENTER_REGION"
+    region : "hospital"
+    reward: 160
+    jetons : 0
+    next: null
+  4:
+    name: "Les farmers sont de sorties"
+    desc: "Ouvrez <amount> coffre"
+    objective: "INTERACT"
+    type: "CHEST"
+    reward: 160
+    jetons : 0
+    next: null
+  5:
+    name: "Ramenez moi mes outils"
+    desc: "Craftez <amount> items"
+    objective: "CRAFT"
+    amount: 5
+    reward: 160
+    jetons : 0
+    next: null
+  6:
+    name: "Il est l'heure de faire du shopping"
+    desc: "Achetez pour un total de <amount>$"
+    objective: "BUY"
+    amount: 500
+    reward: 160
+    jetons : 0
+    next: null
+  7:
+    name: "L'ouverture du vide-grenier"
+    desc: "Vendez pour un total de <amount>$"
+    objective: "SELL"
+    amount: 500
+    reward: 160
+    jetons : 0
+    next: null

@@ -32,16 +32,16 @@ public class RankCustomMessage implements Listener {
         {
             switch (dc)
             {
-                case FALL -> e.setDeathMessage("§c"+p.getName()+" est mort d'une terrible chute, il était sûrement en train de développer... §kl");
+                case FALL -> e.setDeathMessage("§c"+p.getName()+" a oublié d'activer le fly §kl");
                 case FIRE, LAVA, LIGHTNING, FIRE_TICK, MELTING, HOT_FLOOR -> e.setDeathMessage("§c"+p.getName()+" a surchauffé §kl");
-                case FREEZE -> e.setDeathMessage("§c"+p.getName()+" a pris un bain d'eau glacée §kl");
-                case MAGIC -> e.setDeathMessage("§c"+p.getName()+" est mort après avoir été ensorcelé §kl");
+                case FREEZE -> e.setDeathMessage("§c"+p.getName()+" a freeze §kl");
+                case MAGIC -> e.setDeathMessage("§c"+p.getName()+" a été ensorcelé §kl");
                 case SUICIDE -> e.setDeathMessage("§c"+p.getName()+" en avait marre de la vie §kl");
-                case DROWNING -> e.setDeathMessage("§c"+p.getName()+" s'est noyé, il était sûrement en train de développer...  §kl");
+                case DROWNING -> e.setDeathMessage("§c"+p.getName()+" a fait glouglou dans l'eau  §kl");
                 case POISON -> e.setDeathMessage("§c"+p.getName()+" a avalé sa capsule de cyanure §kl");
                 case CRAMMING, SUFFOCATION -> e.setDeathMessage("§c"+p.getName()+" a été surpassé par les événements §kl");
-                case STARVATION -> e.setDeathMessage("§c"+p.getName()+" a oublié de se nourrir d'autres choses que des chips §kl");
-                case ENTITY_EXPLOSION, BLOCK_EXPLOSION -> e.setDeathMessage("§c"+p.getName()+" a explosé d'informations §kl");
+                case STARVATION -> e.setDeathMessage("§c"+p.getName()+" a oublié de manger ses chips §kl");
+                case ENTITY_EXPLOSION, BLOCK_EXPLOSION -> e.setDeathMessage("§c"+p.getName()+" a explosé §kl");
                 case ENTITY_ATTACK -> e.setDeathMessage("§c"+p.getName()+" s'est fait tué par un vilain zombie §kl");
             }
             if(e.getEntity().getKiller() != null)

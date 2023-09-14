@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ZoneManager {
 
-    private final DataZone data;
+    public final DataZone data;
     private final CaptureZone captureZone;
     private Fireland main;
 

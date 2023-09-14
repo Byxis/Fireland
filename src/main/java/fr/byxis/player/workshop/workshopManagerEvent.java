@@ -2,6 +2,7 @@ package fr.byxis.player.workshop;
 
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
+import fr.byxis.jeton.JetonManager;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.jeton.jetonSql;
 import fr.byxis.fireland.Fireland;
@@ -102,7 +103,7 @@ public class workshopManagerEvent implements Listener {
                 String[] amount = permString.split("\\.");
                 if(Integer.parseInt(amount[3]) > amountOfHeals)
                 {
-                    amountOfHeals = Integer.parseInt(amount[3]);
+                    amountOfHeals = Integer.parseInt(amount[3])-1;
                 }
 
             }
@@ -201,13 +202,13 @@ public class workshopManagerEvent implements Listener {
                             {
                                 InGameUtilities.playPlayerSound(p, "block.anvil.use", SoundCategory.AMBIENT, 1, 1);
                                 wf.removeFromQueue(item, p.getUniqueId().toString());
-                                if(item.command.contains("shot give"))
+                                if(item.command.contains("wm give"))
                                 {
                                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()));
                                 }
                                 else
                                 {
-                                    PermissionUtilities.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.get.all");
+                                    PermissionUtilities.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "*");
                                 }
                                 wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
                                 wf.craftItemNbr(item.planName, p.getUniqueId().toString(), 1);
@@ -225,13 +226,13 @@ public class workshopManagerEvent implements Listener {
                                 {
                                     InGameUtilities.playPlayerSound(p, "block.anvil.use", SoundCategory.AMBIENT, 1, 1);
                                     wf.removeFromQueue(item, p.getUniqueId().toString());
-                                    if(item.command.contains("shot give"))
+                                    if(item.command.contains("wm give"))
                                     {
                                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()));
                                     }
                                     else
                                     {
-                                        PermissionUtilities.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "crackshot.get.all");
+                                        PermissionUtilities.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "*");
                                     }
                                     wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
                                     wf.craftItemNbr(item.planName, p.getUniqueId().toString(),1);
@@ -240,20 +241,15 @@ public class workshopManagerEvent implements Listener {
                         }
                         else
                         {
-                            jetonsCommandManager jt = new jetonsCommandManager(main);
-                            if(jt.getJetonsPlayer(p.getUniqueId()) > 0)
+                            String desc = "Accélération de craft, nom d'arme : " +
+                                    item.itemName +", date création :"+item.creationDate.toString();
+                            if(JetonManager.payJetons(p, 1,
+                                    desc, true, false))
                             {
-                                jetonSql jtsql = new jetonSql(main, p);
-                                String desc = "Acceleration de craft, nom darme : " +
-                                        item.itemName +", date creation :"+item.creationDate.toString();
-                                if(jtsql.createFacture(p.getUniqueId().toString(), 1, desc))
-                                {
-                                    p.sendMessage("§aVous avez payé 1 jetons et accéléré le temps de craft de 30min !");
-                                    jt.removeJetonsPlayer(p.getUniqueId(), 1);
-                                    wf.setUnbreakable(item, p.getUniqueId().toString());
-                                    wf.removeTime(item, p.getUniqueId().toString());
-                                    wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
-                                }
+                                InGameUtilities.sendPlayerSucces(p,"Vous avez accéléré le temps de craft de 30min !");
+                                wf.setUnbreakable(item, p.getUniqueId().toString());
+                                wf.removeTime(item, p.getUniqueId().toString());
+                                wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
 
                             }
                             else

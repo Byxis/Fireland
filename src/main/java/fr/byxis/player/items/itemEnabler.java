@@ -6,6 +6,7 @@ import fr.byxis.player.items.boussole.boussole;
 import fr.byxis.player.items.lamp.lamp;
 import fr.byxis.player.items.notes.OpenNotes;
 import fr.byxis.player.items.parachute.parachute;
+import fr.byxis.player.items.serum.serum;
 import fr.byxis.player.items.toxic.SporeDamage;
 import fr.byxis.player.items.toxic.infectedPlayer;
 import fr.byxis.player.items.toxic.mask;
@@ -29,7 +30,7 @@ public class itemEnabler {
         Water();
         Boussole();
         Notes();
-
+        main.getServer().getPluginManager().registerEvents(new serum(), main);
     }
 
     private void Toxic()
@@ -62,7 +63,7 @@ public class itemEnabler {
 
     private void Water()
     {
-        main.getServer().getPluginManager().registerEvents(new bottleFilled(), main);
+        main.getServer().getPluginManager().registerEvents(new bottleFilled(main), main);
         main.getCommand("thirst").setExecutor(new thirst(main));
         main.getServer().getPluginManager().registerEvents(new thirst(main), main);
     }
@@ -75,7 +76,7 @@ public class itemEnabler {
     private void Notes()
     {
         main.getServer().getPluginManager().registerEvents(new OpenNotes(main), main);
-        main.getCommand("note").setExecutor(new OpenNotes(main));
+        main.getCommand("fnote").setExecutor(new OpenNotes(main));
 
     }
 

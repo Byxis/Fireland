@@ -1,6 +1,7 @@
 package fr.byxis.faction.essaim;
 
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.ListUtilities;
 import io.lumine.mythic.bukkit.MythicBukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -11,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+
+import static fr.byxis.fireland.utilities.ListUtilities.tabList;
 
 public class EssaimCommandCompleter implements TabCompleter {
 
@@ -46,7 +49,7 @@ public class EssaimCommandCompleter implements TabCompleter {
             i1.add("unfinish");
 
 
-            l.addAll(addAll(strings[0], "", i1));
+            l.addAll(ListUtilities.tabList(strings[0], "", i1));
 
         }
         else if (strings.length == 2)
@@ -58,7 +61,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                     strings[0].equalsIgnoreCase("unfinish")||
                     strings[0].equalsIgnoreCase("reset"))
             {
-                l.addAll(addAll(strings[1], "--name", main.essaimManager.existingEssaims.keySet()));
+                l.addAll(ListUtilities.tabList(strings[1], "--name", main.essaimManager.existingEssaims.keySet()));
             }
             else if(strings[0].equalsIgnoreCase("set"))
             {
@@ -70,7 +73,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                 i1.add("key");
                 i1.add("solo");
 
-                l.addAll(addAll(strings[1], "", i1));
+                l.addAll(ListUtilities.tabList(strings[1], "", i1));
 
             }
             else if(strings[0].equalsIgnoreCase("spawner"))
@@ -81,7 +84,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                 i1.add("remove");
                 i1.add("list");
 
-                l.addAll(addAll(strings[1], "", i1));
+                l.addAll(ListUtilities.tabList(strings[1], "", i1));
 
             }
             else if(strings[0].equalsIgnoreCase("setblock") )
@@ -116,7 +119,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                         strings[1].equalsIgnoreCase("remove")||
                         strings[1].equalsIgnoreCase("list"))
                 {
-                    l.addAll(addAll(strings[2], "--essaim", main.essaimManager.existingEssaims.keySet()));
+                    l.addAll(ListUtilities.tabList(strings[2], "--essaim", main.essaimManager.existingEssaims.keySet()));
                 }
             }
         }
@@ -134,7 +137,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                 i1.add("Samedi");
                 i1.add("Dimanche");
 
-                l.addAll(addAll(strings[3], "--jour", i1));
+                l.addAll(ListUtilities.tabList(strings[3], "--jour", i1));
             }
             else if(strings[0].equalsIgnoreCase("set"))
             {
@@ -154,7 +157,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                         strings[1].equalsIgnoreCase("activate") ||
                         strings[1].equalsIgnoreCase("remove"))
                 {
-                    l.addAll(addAll(strings[3], "--name", main.essaimManager.existingEssaims.get(strings[2]).keySet()));
+                    l.addAll(ListUtilities.tabList(strings[3], "--name", main.essaimManager.existingEssaims.get(strings[2]).keySet()));
                 }
             }
         }
@@ -167,7 +170,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                 {
                     i1.add(""+i);
                 }
-                l.addAll(addAll(strings[4], "--heure", i1));
+                l.addAll(ListUtilities.tabList(strings[4], "--heure", i1));
             }
             else if(strings[0].equalsIgnoreCase("set"))
             {
@@ -177,13 +180,13 @@ public class EssaimCommandCompleter implements TabCompleter {
             }
             else if(strings[0].equalsIgnoreCase("setblock"))
             {
-                l.addAll(addAll(strings[4], "--material", Material.values()));
+                l.addAll(ListUtilities.tabList(strings[4], "--material", Material.values()));
             }
             else if(strings[0].equalsIgnoreCase("spawner"))
             {
                 if(strings[1].equalsIgnoreCase("create"))
                 {
-                    l.addAll(addAll(strings[3], "--mobtype", MythicBukkit.inst().getMobManager().getMobNames()));
+                    l.addAll(ListUtilities.tabList(strings[3], "--mobtype", MythicBukkit.inst().getMobManager().getMobNames()));
                 }
             }
 
@@ -196,7 +199,7 @@ public class EssaimCommandCompleter implements TabCompleter {
             }
             else if(strings[0].equalsIgnoreCase("set"))
             {
-                l.addAll(addAll(strings[5], "--essaim", main.essaimManager.existingEssaims.keySet()));
+                l.addAll(ListUtilities.tabList(strings[5], "--essaim", main.essaimManager.existingEssaims.keySet()));
             }
         }
         else if (strings.length == 7)
@@ -240,51 +243,5 @@ public class EssaimCommandCompleter implements TabCompleter {
         return l;
     }
 
-    private Collection<String> addAll(String arg, String defaultText, Material[] values)
-    {
-        ArrayList<String> l = new ArrayList();
-        if(arg.equalsIgnoreCase(""))
-        {
-            l.add(defaultText);
-        }
-        for (Object str : values) {
-            if(str.toString().toLowerCase().startsWith(arg.toLowerCase()))
-            {
-                l.add(str.toString());
-            }
-        }
-        return l;
-    }
 
-    private Collection<String> addAll(String arg, String defaultText, Collection<String> collection)
-    {
-        ArrayList<String> l = new ArrayList();
-        if(arg.equalsIgnoreCase(""))
-        {
-            l.add(defaultText);
-        }
-        for (Object str : collection) {
-            if(str.toString().toLowerCase().startsWith(arg.toLowerCase()))
-            {
-                l.add(str.toString());
-            }
-        }
-        return l;
-    }
-
-    private ArrayList<String> addAll(String arg, String defaultText, HashMap set)
-    {
-        ArrayList<String> l = new ArrayList();
-        if(arg.equalsIgnoreCase(""))
-        {
-            l.add(defaultText);
-        }
-        for (Object str : set.keySet()) {
-            if(str.toString().toLowerCase().startsWith(arg.toLowerCase()))
-            {
-                l.add(str.toString());
-            }
-        }
-        return l;
-    }
 }

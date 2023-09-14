@@ -2,8 +2,10 @@ package fr.byxis.fireland.utilities;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -31,10 +33,24 @@ public class InventoryUtilities {
         return item;
     }
 
+    public static ItemStack setItemMeta(Material mat, String name, short dura, int modelData) {
+        ItemStack item = new ItemStack(mat);
+        ItemMeta itemMeta = item.getItemMeta();
+        assert itemMeta != null;
+        itemMeta.setDisplayName(name);
+        itemMeta.setCustomModelData(modelData);
+        item.setItemMeta(itemMeta);
+        item.setDurability(dura);
+        return item;
+    }
+
     public static void clickManager(InventoryClickEvent e)
     {
         if(e.getClickedInventory().getType() != InventoryType.PLAYER|| e.getView().getTopInventory().getType() != InventoryType.PLAYER)
+            e.setCancelled(true);
+        if(e.getClick() == ClickType.NUMBER_KEY)
         {
+            InGameUtilities.sendPlayerError((Player) e.getView().getPlayer(), "Pour des raisons de sécurité, cette fonctionnalité a été désactivée.");
             e.setCancelled(true);
         }
         /*

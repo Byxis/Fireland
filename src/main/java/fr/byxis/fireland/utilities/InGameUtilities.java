@@ -115,7 +115,7 @@ public class InGameUtilities implements Listener {
         }
         for(Player p : players)
         {
-            playPlayerSound(p, "minecraft:"+sound, category, vol, pitch);
+            playPlayerSound(p, sound, category, vol, pitch);
         }
     }
     public static void playPlayersSound(List<Player> players, Sound sound, SoundCategory category, float vol, float pitch)
@@ -143,6 +143,34 @@ public class InGameUtilities implements Listener {
         for(Player p : Bukkit.getOnlinePlayers())
         {
             playPlayerSound(p, sound, category, vol, pitch);
+        }
+    }
+
+    public static void playEveryoneSoundExcept(String sound, SoundCategory category, float vol, float pitch, World world)
+    {
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            if(!p.getWorld().getName().equalsIgnoreCase(world.getName()))
+            {
+                playPlayerSound(p, sound, category, vol, pitch);
+            }
+        }
+    }
+
+    public static void playEveryoneTitle(String title, String subtitle, int i1, int i2, int i3)
+    {
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            p.sendTitle(title, subtitle, i1, i2, i3);
+        }
+    }
+
+    public static void playEveryoneTitleExcept(String title, String subtitle, int i1, int i2, int i3, World world)
+    {
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            if(!p.getWorld().getName().equalsIgnoreCase(world.getName()))
+                p.sendTitle(title, subtitle, i1, i2, i3);
         }
     }
 
@@ -234,6 +262,25 @@ public class InGameUtilities implements Listener {
                 playerMoving.replace(event.getPlayer(), false);
             }
         }.runTaskLater(main, 20L);
+    }
+
+    public static void sendEveryoneCustomText(String text)
+    {
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            p.sendMessage(text);
+        }
+    }
+
+    public static void sendEveryoneCustomText(String text, Player n)
+    {
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            if(!n.getName().equalsIgnoreCase(p.getName()))
+            {
+                p.sendMessage(text);
+            }
+        }
     }
 
 }

@@ -9,6 +9,9 @@ depend:
   - WGRegionEvents
   - WorldGuard
 commands:
+  fireland:
+    description: Permet de gerer le plugin
+    permission: fireland.admin
   speedfly:
     description: Permet de changer la vitesse de vol
     permission: fireland.command.flyspeed
@@ -77,6 +80,11 @@ commands:
   essaim:
     description: commande pour l essaim
     permission: fireland.command.essaim
-  note:
+  fnote:
     description: permet de modifier les notes
     permission: fireland.command.notes
+  rank:
+    description: permet de modifier les messages de rangs
+    permission: fireland.admin
+  bunker:
+    description: permet de rejoindre les bunkers

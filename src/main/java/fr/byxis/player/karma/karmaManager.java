@@ -211,7 +211,11 @@ public class karmaManager implements Listener, CommandExecutor, TabCompleter {
     @EventHandler
     public void playerKillPlayer(PlayerDeathEvent e)
     {
-        if((e.getEntity().getKiller() != null))
+        if(e.getPlayer().getKiller() == null || e.getPlayer().getName().equalsIgnoreCase(e.getPlayer().getKiller().getName()))
+        {
+            return;
+        }
+        if(e.getEntity().getKiller() != null)
         {
             badAction(e.getEntity().getKiller().getUniqueId(), 10);
         }

@@ -129,6 +129,10 @@ public class PlayerQuests {
 
     public boolean hasFinished()
     {
+        if(first == null ||second == null || third == null || fourth == null)
+        {
+            return false;
+        }
         return first.getProgress() == -1 && second.getProgress() == -1 && third.getProgress() == -1 && fourth.getProgress() == -1;
     }
 

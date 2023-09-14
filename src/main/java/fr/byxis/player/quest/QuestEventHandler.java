@@ -26,7 +26,7 @@ public class QuestEventHandler implements @NotNull Listener {
         this.main = main;
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void playerJoin(PlayerJoinEvent e)
     {
         if(!QuestManager.getPlayerQuest().containsKey(e.getPlayer().getUniqueId()) || !QuestManager.getPlayerQuest().get(e.getPlayer().getUniqueId()).hasFinished())
@@ -42,6 +42,8 @@ public class QuestEventHandler implements @NotNull Listener {
     @EventHandler
     public void save(WorldSaveEvent e)
     {
+        if(!e.getWorld().getName().equalsIgnoreCase("world"))
+            return;
         QuestManager.saveProgress();
     }
 

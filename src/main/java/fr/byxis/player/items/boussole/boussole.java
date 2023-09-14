@@ -5,7 +5,9 @@ import fr.byxis.faction.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -61,6 +63,7 @@ public class boussole implements @NotNull Listener {
     {
         if(!e.getPlayer().hasPlayedBefore())
         {
+            e.getPlayer().teleport(new Location(Bukkit.getWorld("tutorial"), 0.5, -51, -0.5));
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "w give "+e.getPlayer().getName()+" Boussole");
         }
     }

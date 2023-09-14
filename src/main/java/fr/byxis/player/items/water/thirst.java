@@ -3,6 +3,7 @@ package fr.byxis.player.items.water;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,6 +17,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
@@ -31,12 +33,10 @@ public class thirst implements Listener,CommandExecutor {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
-		
-		if(sender instanceof Player) {
+		if(sender instanceof Player p && p.hasPermission("fireland.thirst.admin")) {
 			if(cmd.getName().equalsIgnoreCase("thirst")) {
-				Player p = (Player) sender;
 				FileConfiguration config = main.cfgm.getPlayerDB();
-				Float thirst = (float) config.getDouble("thirst."+p.getUniqueId());
+				float thirst;
 				
 				if(args.length == 0) {
 					if(config.getString("thirst."+p.getUniqueId()) == null) {
@@ -51,6 +51,12 @@ public class thirst implements Listener,CommandExecutor {
 						return true;
 					}
 				}else if(args.length == 1){
+					if(Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[0])) != null)
+					{
+						config.set("thirst."+BasicUtilities.getUuid(args[0]), 100);
+						main.cfgm.savePlayerDB();
+						return true;
+					}
 					if(Float.parseFloat(args[0]) < 0 || Float.parseFloat(args[0]) > 100) {
 						p.sendMessage("§cLa valeur entrée doit être comprise entre 0 et 100 !");
 						return true;
@@ -118,10 +124,10 @@ public class thirst implements Listener,CommandExecutor {
 		
 		Float thirst = (float) config.getDouble("thirst."+p.getUniqueId());
 		if((i.getType() == Material.POTION && e.getItem().getDurability() == 0)) {
-			if(((PotionMeta)i.getItemMeta()).getColor() == null)
+			if(((PotionMeta)i.getItemMeta()).getColor() == null || ((PotionMeta)i.getItemMeta()).getColor().getBlue() >= 100)
 			{
 				if(config.getString("thirst."+p.getUniqueId()) != null && config.getInt("thirst."+p.getUniqueId()) <= 75) {
-					config.set("thirst."+p.getUniqueId(), config.getDouble("thirst."+p.getUniqueId())+25);
+					config.set("thirst."+p.getUniqueId(), config.getDouble("thirst."+p.getUniqueId())+35);
 					main.cfgm.savePlayerDB();
 				} else {
 					thirst = 100f;
@@ -133,7 +139,7 @@ public class thirst implements Listener,CommandExecutor {
 			else
 			{
 				if(config.getString("thirst."+p.getUniqueId()) != null && config.getInt("thirst."+p.getUniqueId()) <= 75) {
-					config.set("thirst."+p.getUniqueId(), config.getDouble("thirst."+p.getUniqueId())+15);
+					config.set("thirst."+p.getUniqueId(), config.getDouble("thirst."+p.getUniqueId())+10);
 					main.cfgm.savePlayerDB();
 				} else {
 					thirst = 100f;
@@ -153,8 +159,8 @@ public class thirst implements Listener,CommandExecutor {
 	}
 	
 	@EventHandler
-	public void playerDeath(PlayerDeathEvent e) {
-		Player p = e.getEntity().getPlayer();
+	public void playerDeath(PlayerRespawnEvent e) {
+		Player p = e.getPlayer();
 		FileConfiguration config = main.cfgm.getPlayerDB();
 		
 		config.set("thirst."+p.getUniqueId(), 100);

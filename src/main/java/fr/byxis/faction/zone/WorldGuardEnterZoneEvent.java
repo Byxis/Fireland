@@ -29,59 +29,84 @@ public class WorldGuardEnterZoneEvent implements Listener {
 
     @EventHandler
     public void ZoneEnter(RegionEnterEvent e) {
-        ZoneClass currentZone = null;
+        ZoneClass captureZone = null;
+        ZoneClass capturedZone = null;
+        Player p = e.getPlayer();
         for (ZoneClass zone : data.zones) {
+            main.getLogger().info(zone.getName() + " " + e.getRegion().getId());
             if (e.getRegion().getId().contains("zonecapture-"+zone.getName())) {
-                currentZone = zone;
+                captureZone = zone;
+                break;
+            }
+            else if (e.getRegion().getId().contains("zoneenter-"+zone.getName())) {
+                capturedZone = zone;
+                data.addPlayerToZoneEnter(zone.getName(), p);
                 break;
             }
         }
-        if (currentZone == null) {
+        if (captureZone == null) {
+            if (capturedZone != null && capturedZone.isClaimed()) {
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans la zone "+capturedZone.getFormattedName()+" contrôlée par " + ff.getFactionInfo(capturedZone.getClaimer()).getColorcode()+capturedZone.getClaimer()));
+                InGameUtilities.playPlayerSound(p, "gun.hud.enter_area", SoundCategory.AMBIENT, 1, 1);
+            }
+            else if(capturedZone != null)
+            {
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans la zone "+capturedZone.getFormattedName()));
+                InGameUtilities.playPlayerSound(p, "gun.hud.enter_area", SoundCategory.AMBIENT, 1, 1);
+            }
             return;
         }
-        Player p = e.getPlayer();
-        if (currentZone.isClaimed()) {
-            e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans une zone contrôlée par " + currentZone.getClaimer()));
-            InGameUtilities.playPlayerSound(p.getPlayer(), "gun.hud.enter_area", SoundCategory.AMBIENT, 1, 1);
-        }
+
         FactionInformation info = ff.getFactionInfo(ff.playerFactionName(p));
         if (info == null || !info.hasCapturePerk()) {
             return;
         }
-        if(currentZone.isClaimed() && !currentZone.isClaimable())
+        if(captureZone.isClaimed() && !captureZone.isClaimable())
         {
             return;
         }
-        if(!data.isCapturing(currentZone.getName(), info.getName()) && currentZone.isClaimable())
+        if(!data.isCapturing(captureZone.getName(), info.getName()) && captureZone.isClaimable())
         {
-            data.AddCapturing(currentZone.getName(), info.getName(), p);
+            data.AddCapturing(captureZone.getName(), info.getName(), p);
         }
 
     }
 
     @EventHandler
     public void ZoneLeft(RegionLeftEvent e) {
-        ZoneClass currentZone = null;
+        ZoneClass captureZone = null;
+        ZoneClass capturedZone = null;
+        Player p = e.getPlayer();
         for (ZoneClass zone : data.zones) {
-            if (e.getRegion().getId().contains(zone.getName())) {
-                currentZone = zone;
+            main.getLogger().info(zone.getName() + " " + e.getRegion().getId());
+            if (e.getRegion().getId().contains("zonecapture-"+zone.getName())) {
+                captureZone = zone;
+                break;
+            }
+            else if (e.getRegion().getId().contains("zoneenter-"+zone.getName())) {
+                capturedZone = zone;
+                data.remPlayerToZoneEnter(zone.getName(), p);
                 break;
             }
         }
-        if (currentZone == null) {
+        if (captureZone == null) {
+            if (capturedZone != null && capturedZone.isClaimed()) {
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§cVous quittez dans la zone "+capturedZone.getFormattedName()+" contrôlée par " + ff.getFactionInfo(capturedZone.getClaimer()).getColorcode()+capturedZone.getClaimer()));
+                InGameUtilities.playPlayerSound(p, "gun.hud.leaving_area", SoundCategory.AMBIENT, 1, 1);
+            }
+            else if(capturedZone != null)
+            {
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous quittez dans la zone "+capturedZone.getFormattedName()));
+                InGameUtilities.playPlayerSound(p, "gun.hud.leaving_area", SoundCategory.AMBIENT, 1, 1);
+            }
             return;
-        }
-        Player p = e.getPlayer();
-        if (currentZone.isClaimed()) {
-            e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§cVous quittez une zone contrôlée par " + currentZone.getClaimer()));
-            InGameUtilities.playPlayerSound(p.getPlayer(), "gun.hud.leaving_area", SoundCategory.AMBIENT, 1, 1);
         }
         FactionInformation info = ff.getFactionInfo(ff.playerFactionName(p));
 
         if (info == null || !info.hasCapturePerk()) {
             return;
         }
-        data.RemoveCapturing(currentZone.getName(), info.getName(), p);
+        data.RemoveCapturing(captureZone.getName(), info.getName(), p);
     }
 
     @EventHandler
@@ -97,6 +122,7 @@ public class WorldGuardEnterZoneEvent implements Listener {
         {
             data.RemoveCapturing(zone.getName(), info.getName(), p);
         }
+        data.remPlayerToZoneEnter(p);
 
     }
 

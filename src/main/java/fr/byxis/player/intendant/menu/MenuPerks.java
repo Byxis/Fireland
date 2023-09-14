@@ -37,7 +37,8 @@ public class MenuPerks {
             for(int i=0;i<9;i++) {
                 inventory.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
-            inventory.setItem(45, InventoryUtilities.setItemMetaLore(Material.LIME_STAINED_GLASS_PANE, "§aAméliorer la faction au rang §d§l"+nextFinfos.getCurrentUpgrade(), (short) 0, BasicUtilities.listMaker("§8Coût: "+finfos.getCurrentMoney()+"/§6"+finfos.getMaxMoney()+"$", "§8Maximum d'argent: §6"+nextFinfos.getMaxMoney()+"$", "§8Maximum dans la banque: "+nextFinfos.getCurrentChestSize(), "§8Maximum de joueurs: "+nextFinfos.getMaxNbrOfPlayers())));
+            if(finfos.getCurrentUpgrade() < 11)
+                inventory.setItem(45, InventoryUtilities.setItemMetaLore(Material.LIME_STAINED_GLASS_PANE, "§aAméliorer la faction au rang §d§l"+nextFinfos.getCurrentUpgrade(), (short) 0, BasicUtilities.listMaker("§8Coût: "+finfos.getCurrentMoney()+"/§6"+finfos.getMaxMoney()+"$", "§8Maximum d'argent: §6"+nextFinfos.getMaxMoney()+"$", "§8Maximum de joueurs: "+nextFinfos.getMaxNbrOfPlayers(), "")));
             inventory.setItem(49, InventoryUtilities.setItemMetaLore(BlockUtilities.getGlassPaneColor(finfos.getColorcode()), finfos.getColorcode()+"Changer la couleur d'affichage de la faction", (short) 0, BasicUtilities.listMaker("§8Disponible seulement pour les personnes disposant ", "§8du grade Vétérant ou Stratège.", "§8Utilisable uniquement par le Leader.", "")));
             inventory.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour au menu Faction", (short) 0));
 

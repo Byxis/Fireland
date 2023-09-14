@@ -34,7 +34,7 @@ public class MenuBooster {
         if(main.hashMapManager.getBooster() != null)
         {
             BoosterClass booster = main.hashMapManager.getBooster();
-            inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, BasicUtilities.listMaker("§8Créé par "+((Player)Bukkit.getOfflinePlayer(booster.getUuid())).getName(), "§8Expiration dans "+ BasicUtilities.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()), "", "")));
+            inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, BasicUtilities.listMaker("§8Créé par "+((Player)Bukkit.getOfflinePlayer(booster.getUuid())).getName(), "§8Expiration dans "+ BasicUtilities.getStringTimeHour(booster.getFinished().getTime()-System.currentTimeMillis()), "", "")));
         }
         else
         {
@@ -42,7 +42,7 @@ public class MenuBooster {
         }
         ItemStack head = InventoryUtilities.GetHead(p.getUniqueId(), "§d"+p.getName());
         ItemMeta meta = head.getItemMeta();
-        meta.setLore(BasicUtilities.listMaker("§8Jetons : §b"+jeton.getJetonsPlayer(p.getUniqueId())+ " \u26c1" , "", "", ""));
+        meta.setLore(BasicUtilities.listMaker("§8Jetons : §b"+jeton.getJetonsPlayer(p.getUniqueId())+ "\u26c1" , "", "", ""));
         head.setItemMeta(meta);
         inv.setItem(8, head);
 

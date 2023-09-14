@@ -21,8 +21,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class EssaimEventHandler implements Listener {
 
@@ -133,9 +136,9 @@ public class EssaimEventHandler implements Listener {
                 {
                     sb.append((str[i]).toLowerCase()).append("-");
                 }
-                sb.append(str[str.length-1]);
+                sb.append(str[str.length-1].toLowerCase());
                 String essaim = sb.toString();
-                if(main.essaimManager.activeEssaims.get(essaim).isFinished())
+                if(EssaimManager.activeEssaims.get(essaim).isFinished())
                 {
                     switch (itemclicked.getType()) {
                         case RED_STAINED_GLASS_PANE -> {
@@ -148,10 +151,10 @@ public class EssaimEventHandler implements Listener {
                 {
                     switch (itemclicked.getType()) {
                         case LIME_STAINED_GLASS_PANE -> {
-                            if (main.essaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
+                            if (EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
                                 EssaimFunctions.startEssaim(essaim);
                                 InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-                                for (Player member : main.essaimManager.groups.get(essaim).getMembers()) {
+                                for (Player member : EssaimManager.groups.get(essaim).getMembers()) {
                                     member.closeInventory();
                                     InGameUtilities.sendPlayerInformation(member, "§aL'expédition a démarrée !");
                                 }
@@ -162,7 +165,7 @@ public class EssaimEventHandler implements Listener {
                         }
                         case RED_STAINED_GLASS_PANE -> EssaimFunctions.leaveGroup(essaim, p);
                         case YELLOW_STAINED_GLASS_PANE -> {
-                            if (main.essaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
+                            if (EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
                                 EssaimFunctions.openInvitation(essaim, p);
                                 InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
                             } else {
@@ -190,7 +193,7 @@ public class EssaimEventHandler implements Listener {
                 {
                     sb.append((str[i]).toLowerCase()).append("-");
                 }
-                sb.append(str[str.length-1]);
+                sb.append(str[str.length-1].toLowerCase());
                 String essaim = sb.toString();
                 switch (itemclicked.getType())
                 {
@@ -220,11 +223,11 @@ public class EssaimEventHandler implements Listener {
         {
             for(String essaim : main.essaimManager.existingEssaims.keySet())
             {
-                if(!main.essaimManager.groups.isEmpty() && main.essaimManager.groups.containsKey(essaim))
+                if(!EssaimManager.groups.isEmpty() && EssaimManager.groups.containsKey(essaim))
                 {
-                    if(main.essaimManager.groups.get(essaim).getMembers().size() >= 1)
+                    if(EssaimManager.groups.get(essaim).getMembers().size() >= 1)
                     {
-                        for(Player member : main.essaimManager.groups.get(essaim).getMembers())
+                        for(Player member : EssaimManager.groups.get(essaim).getMembers())
                         {
                             if(member.getName().equalsIgnoreCase(e.getPlayer().getName()))
                             {
@@ -246,7 +249,7 @@ public class EssaimEventHandler implements Listener {
         }
         if(current!= null)
         {
-            main.essaimManager.groups.get(current).loose(e.getPlayer());
+            EssaimManager.groups.get(current).loose(e.getPlayer());
         }
     }
 
@@ -258,14 +261,14 @@ public class EssaimEventHandler implements Listener {
         {
             for(String essaim : main.essaimManager.existingEssaims.keySet())
             {
-                if(!main.essaimManager.groups.isEmpty() && main.essaimManager.groups.containsKey(essaim))
+                if(!EssaimManager.groups.isEmpty() && EssaimManager.groups.containsKey(essaim))
                 {
-                    if(main.essaimManager.groups.get(essaim).getMembers().size() >= 1) {
-                        for(Player member : main.essaimManager.groups.get(essaim).getMembers())
+                    if(EssaimManager.groups.get(essaim).getMembers().size() >= 1) {
+                        for(Player member : EssaimManager.groups.get(essaim).getMembers())
                         {
                             if(member.getName().equalsIgnoreCase(e.getPlayer().getName()))
                             {
-                                if(member.getGameMode() != GameMode.CREATIVE || member.getGameMode() != GameMode.SPECTATOR)
+                                if(member.getGameMode() != GameMode.CREATIVE || member.getGameMode() != GameMode.SPECTATOR && EssaimManager.groups.get(essaim).hasStarted())
                                 {
                                     member.setInvulnerable(false);
                                     member.setHealth(0);
@@ -287,7 +290,7 @@ public class EssaimEventHandler implements Listener {
 
         if(current!= null)
         {
-            main.essaimManager.groups.get(current).loose(e.getPlayer());
+            EssaimManager.groups.get(current).loose(e.getPlayer());
         }
     }
 
@@ -313,7 +316,35 @@ public class EssaimEventHandler implements Listener {
                     }
                     else if(e.getItem().getItemMeta().getCustomModelData() == 4)
                     {
-                        name = "entrepots-militaire";
+                        name = "entrepot-militaire";
+                    }
+                    else if(e.getItem().getItemMeta().getCustomModelData() == 5)
+                    {
+                        name = "immeuble-infeste";
+                    }
+                    else if(e.getItem().getItemMeta().getCustomModelData() == 6)
+                    {
+                        name = "hangar-silencieux";
+                    }
+                    else if(e.getItem().getItemMeta().getCustomModelData() == 8)
+                    {
+                        name = "centrale-nucleaire";
+                    }
+                    else if(e.getItem().getItemMeta().getCustomModelData() == 9)
+                    {
+                        name = "epave-du-porte-avion";
+                    }
+                    else if(e.getItem().getItemMeta().getCustomModelData() == 10)
+                    {
+                        name = "crypte";
+                    }
+                    else if(e.getItem().getItemMeta().getCustomModelData() == 11)
+                    {
+                        name = "station-petroliere";
+                    }
+                    else if(e.getItem().getItemMeta().getCustomModelData() == 12)
+                    {
+                        name = "laboratoire";
                     }
                     if(!name.equals(""))
                     {
@@ -345,4 +376,14 @@ public class EssaimEventHandler implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void save(WorldSaveEvent e)
+    {
+        if(!e.getWorld().getName().equalsIgnoreCase("world"))
+        return;
+        EssaimFunctions.SaveEssaim();
+    }
+
+
 }

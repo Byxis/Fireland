@@ -1,6 +1,7 @@
 package fr.byxis.event;
 
 import fr.byxis.faction.faction.FactionFunctions;
+import fr.byxis.faction.housing.BunkerClass;
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,30 +14,32 @@ import java.util.UUID;
 
 public class SaveEvent implements Listener {
 
-    private final Fireland main;
+    private static Fireland main = null;
     public SaveEvent(Fireland main) {
-        this.main = main;
+        SaveEvent.main = main;
     }
 
     @EventHandler
     public void ServeurSave(WorldSaveEvent e)
     {
-        SaveAll();
+        if(!e.getWorld().getName().equalsIgnoreCase("world"))
+            return;
+        SaveAllPlayerDatas();
     }
 
     public void onDisable()
     {
-        SaveAll();
+        SaveAllPlayerDatas();
     }
 
-    private void SaveAll()
+    public static void SaveAllPlayerDatas()
     {
         SaveAllEnderchest();
         SaveAllKarma();
         SaveAllFactionStorages();
     }
 
-    private void saveEnderchest(Inventory inv , UUID uuid)
+    private static void saveEnderchest(Inventory inv, UUID uuid)
     {
         if(inv != null && main.hashMapManager.getStorageMap().containsKey(uuid))
         {
@@ -46,7 +49,7 @@ public class SaveEvent implements Listener {
         }
     }
 
-    private void SaveAllEnderchest()
+    private static void SaveAllEnderchest()
     {
         if(main.hashMapManager.getStorageMap().isEmpty())
         {
@@ -67,7 +70,7 @@ public class SaveEvent implements Listener {
         main.cfgm.saveEnderchest();
     }
 
-    private void SaveKarma(UUID uuid)
+    private static void SaveKarma(UUID uuid)
     {
         if(main.hashMapManager.getRangMap().containsKey(uuid))
         {
@@ -77,7 +80,7 @@ public class SaveEvent implements Listener {
         }
     }
 
-    private void SaveAllKarma()
+    private static void SaveAllKarma()
     {
         if(main.hashMapManager.getRangMap().isEmpty())
         {
@@ -90,14 +93,11 @@ public class SaveEvent implements Listener {
         main.cfgm.saveKarmaDB();
     }
 
-    private void SaveAllFactionStorages()
+    private static void SaveAllFactionStorages()
     {
-        FactionFunctions ff = new FactionFunctions(main, null);
-        for(String name : main.hashMapManager.getStorageFactionMap().keySet())
+        for(BunkerClass bk : main.bunkerManager.getLoadedBunker().values())
         {
-            ff.SaveAllItemsFactionStorage(name, main.hashMapManager.getStorageFactionMap().get(name));
-            main.hashMapManager.removeStorageFactionMap(name);
-            ff.loadAllItems(name, ff.getFactionInfo(name).getCurrentUpgrade());
+            bk.GetStorage().SaveAllItems();
         }
     }
 }

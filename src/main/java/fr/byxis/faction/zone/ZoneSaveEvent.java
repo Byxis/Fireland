@@ -15,8 +15,9 @@ public class ZoneSaveEvent implements Listener {
     @EventHandler
     public void SaveEvent(WorldSaveEvent e)
     {
+        if(!e.getWorld().getName().equalsIgnoreCase("world"))
+            return;
         data.SaveAll();
     }
-
 
 }

@@ -1,4 +1,4 @@
-package fr.byxis.event;
+package fr.byxis.player;
 
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
@@ -44,7 +44,8 @@ public class playerDeath implements Listener {
 	{
 		Player killed = e.getEntity();
 
-		Player killer = e.getEntity().getKiller();
+		if(!(e.getEntity().getLastDamageCause().getEntity() instanceof Player killer))
+			return;
 		
 		double money = main.eco.getBalance(killed);
 		double pay = money/2;
@@ -55,23 +56,11 @@ public class playerDeath implements Listener {
 		pay = round(pay, 1);
 		killed.sendMessage("§cVous avez perdu "+pay+"$ !");
 		main.eco.withdrawPlayer(killed, pay);
-		if(e.getEntity().getKiller() != null)
+		if(e.getEntity().getKiller() != null && !killed.getName().equalsIgnoreCase(killer.getName()))
 		{
 			killer.sendMessage("§7Vous avez gagné §c"+pay+"$§7 en tuant §c"+killed.getName()+"§7 !");
 			main.eco.depositPlayer(killer, pay);
-
 		}
-
-		/*
-		new BukkitRunnable()
-		{
-			@Override
-			public void run() {
-				main.cfgm.getPlayerDB().set("discretion."+killer.getName()+".hasKilled", false);
-				main.cfgm.savePlayerDB();
-			}
-			
-		}.runTaskLater(main, 20L * time);*/
 	}
 	
 }

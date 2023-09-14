@@ -23,10 +23,9 @@ public class mask implements Listener {
     @EventHandler
     public void playerPutMask(PlayerInteractEvent e)
     {
-        if(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK)
-        {
+        if(e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
-        }
+
         ItemStack item = e.getPlayer().getInventory().getHelmet();
         //Masque a gaz
         if(e.getPlayer().getItemInHand().getType() == Material.BROWN_DYE && ( e.getPlayer().getInventory().getHelmet() == null || (
@@ -87,7 +86,7 @@ public class mask implements Listener {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 800, 2, false, false), true);
                 remLoreDurability(p.getInventory().getHelmet(), 0.1f);
             }
-            else if(p.getGameMode() != GameMode.CREATIVE)
+            else if(p.getGameMode() != GameMode.CREATIVE && !p.hasPermission("fireland.command.n"))
             {
                 p.removePotionEffect(PotionEffectType.NIGHT_VISION);
             }

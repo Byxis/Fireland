@@ -20,7 +20,7 @@ import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 public class QuestManager {
 
     private static Fireland main = null;
-    private static QuestConfig config = null;
+    public static QuestConfig config = null;
 
     private static HashMap<Integer, QuestClass> availableQuests;
     private static HashMap<UUID, PlayerQuests> playerQuest;
@@ -114,16 +114,20 @@ public class QuestManager {
         }
         else
         {
-            for (String uuid : main.cfgm.getPlayerDB().getConfigurationSection("quest").getKeys(false))
+            if(main.cfgm.getPlayerDB().contains("quest."))
             {
-                PlayerQuests pq = new PlayerQuests(UUID.fromString(uuid));
-                pq.setFirst(new ProgressQuest(main.cfgm.getPlayerDB().getInt("quest."+uuid+".1.id"), main.cfgm.getPlayerDB().getInt("quest."+uuid+".1.progress")));
-                pq.setSecond(new ProgressQuest(main.cfgm.getPlayerDB().getInt("quest."+uuid+".2.id"), main.cfgm.getPlayerDB().getInt("quest."+uuid+".2.progress")));
-                pq.setThird(new ProgressQuest(main.cfgm.getPlayerDB().getInt("quest."+uuid+".3.id"), main.cfgm.getPlayerDB().getInt("quest."+uuid+".3.progress")));
-                pq.setFourth(new ProgressQuest(main.cfgm.getPlayerDB().getInt("quest."+uuid+".4.id"), main.cfgm.getPlayerDB().getInt("quest."+uuid+".4.progress")));
-                pq.setClaimed(main.cfgm.getPlayerDB().getBoolean("quest."+uuid+".claimed"));
-                playerQuest.put(UUID.fromString(uuid), pq);
+                for (String uuid : main.cfgm.getPlayerDB().getConfigurationSection("quest").getKeys(false))
+                {
+                    PlayerQuests pq = new PlayerQuests(UUID.fromString(uuid));
+                    pq.setFirst(new ProgressQuest(main.cfgm.getPlayerDB().getInt("quest."+uuid+".1.id"), main.cfgm.getPlayerDB().getInt("quest."+uuid+".1.progress")));
+                    pq.setSecond(new ProgressQuest(main.cfgm.getPlayerDB().getInt("quest."+uuid+".2.id"), main.cfgm.getPlayerDB().getInt("quest."+uuid+".2.progress")));
+                    pq.setThird(new ProgressQuest(main.cfgm.getPlayerDB().getInt("quest."+uuid+".3.id"), main.cfgm.getPlayerDB().getInt("quest."+uuid+".3.progress")));
+                    pq.setFourth(new ProgressQuest(main.cfgm.getPlayerDB().getInt("quest."+uuid+".4.id"), main.cfgm.getPlayerDB().getInt("quest."+uuid+".4.progress")));
+                    pq.setClaimed(main.cfgm.getPlayerDB().getBoolean("quest."+uuid+".claimed"));
+                    playerQuest.put(UUID.fromString(uuid), pq);
+                }
             }
+
         }
         for(Player p : Bukkit.getOnlinePlayers())
         {
@@ -237,6 +241,7 @@ public class QuestManager {
             if(main.cfgm.getPlayerDB().contains("quest."+p.getUniqueId()+".4"))pq.setFourth(new ProgressQuest(main.cfgm.getPlayerDB().getInt("quest."+p.getUniqueId()+".4.id"), main.cfgm.getPlayerDB().getInt("quest."+p.getUniqueId()+".4.progress")));
             if(main.cfgm.getPlayerDB().contains("quest."+p.getUniqueId()+".claimed"))pq.setClaimed(main.cfgm.getPlayerDB().getBoolean("quest."+p.getUniqueId()+".claimed"));
             playerQuest.replace(p.getUniqueId(), pq);
+            debugp("saved");
         }
         int i =0;
 
@@ -252,12 +257,18 @@ public class QuestManager {
                     {
                         if(playerQuest.get(p.getUniqueId()).getThird() == null || random != getOriginalQuest(playerQuest.get(p.getUniqueId()).getThird().getId()))
                         {
+                            debugp("setted");
                             ProgressQuest pq = new ProgressQuest(random, 0);
                             playerQuest.get(p.getUniqueId()).set(pq);
                         }
                     }
                 }
             }
+        }
+        debugp("Finished");
+        if(i > 100)
+        {
+            InGameUtilities.sendPlayerError(p, "Une erreur est survenue lors du chargement des quêtes.");
         }
     }
 
@@ -282,9 +293,9 @@ public class QuestManager {
             {
                 for(int i =1;  i<5; i++)
                 {
-                    main.cfgm.getPlayerDB().set("quest."+pq.getUuid()+"."+String.valueOf(i),null);
-                    main.cfgm.getPlayerDB().set("quest."+pq.getUuid()+"."+String.valueOf(i)+".id",pq.getQuest(i).getId());
-                    main.cfgm.getPlayerDB().set("quest."+pq.getUuid()+"."+String.valueOf(i)+".progress",pq.getQuest(i).getProgress());
+                    main.cfgm.getPlayerDB().set("quest."+pq.getUuid()+"."+ i,null);
+                    main.cfgm.getPlayerDB().set("quest."+pq.getUuid()+"."+ i +".id",pq.getQuest(i).getId());
+                    main.cfgm.getPlayerDB().set("quest."+pq.getUuid()+"."+ i +".progress",pq.getQuest(i).getProgress());
                 }
                 main.cfgm.getPlayerDB().set("quest."+pq.getUuid()+".claimed",pq.isClaimed());
             }

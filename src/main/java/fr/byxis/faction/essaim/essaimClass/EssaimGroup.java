@@ -4,8 +4,11 @@ import fr.byxis.faction.essaim.EssaimFunctions;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
 import net.md_5.bungee.api.chat.ClickEvent;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +17,13 @@ public class EssaimGroup {
     private Player leader;
     private List<Player> members;
     private int difficulty;
+    private Timestamp startTime;
 
     public EssaimGroup(String name, Player firstPlayer) {
         this.name = name;
         this.leader = firstPlayer;
         this.members = new ArrayList<Player>();
+        this.startTime = null;
 
         // Add the first player as a member (and leader)
         members.add(firstPlayer);
@@ -32,7 +37,7 @@ public class EssaimGroup {
         }
 
         // Invite player to group
-        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez invité dans l'essaim " + TextUtilities.convertStorableToClean(name) + " par "+leader.getName()+". Cliquez sur ce message pour rejoindre.", "/essaim join "+name+" Wowowowowowowowowowow1234567890", "§aCliquez ici pour rejoindre l'essaim", ClickEvent.Action.RUN_COMMAND);
+        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez été invité dans l'essaim " + TextUtilities.convertStorableToClean(name) + " par "+leader.getName()+". Cliquez sur ce message pour rejoindre.", "/essaim join "+name+" Wowowowowowowowowowow1234567890", "§aCliquez ici pour rejoindre l'essaim", ClickEvent.Action.RUN_COMMAND);
         return true;
     }
 
@@ -74,7 +79,7 @@ public class EssaimGroup {
     public void loose(Player leaver) {
         members.remove(leaver);
         if(leaver.getName().equalsIgnoreCase(leader.getName())){
-            if(members.size() > 0)
+            if(!members.isEmpty())
             {
                 leader = getMembers().get(0);
             }
@@ -85,6 +90,7 @@ public class EssaimGroup {
         }
         for(Player member : members)
         {
+            InGameUtilities.playPlayerSound(member, Sound.ENTITY_WITHER_HURT, SoundCategory.PLAYERS, 1, 0);
             InGameUtilities.sendPlayerInformation(member, "§cLe joueur " + leaver.getName() + " a quitter l'expédition.");
         }
     }
@@ -141,5 +147,16 @@ public class EssaimGroup {
             case 4 -> 2f;
             default -> 1.2f;
         };
+    }
+
+    public void startEssaim()
+    {
+        setDifficulty();
+        this.startTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    public boolean hasStarted()
+    {
+        return startTime != null;
     }
 }

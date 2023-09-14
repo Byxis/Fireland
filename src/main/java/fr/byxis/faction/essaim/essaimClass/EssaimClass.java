@@ -20,7 +20,7 @@ public class EssaimClass {
     private boolean isClosed;
 
 
-    public EssaimClass(String name, int day, int hour, Location hub,Location start,Location reset,Location entry, Location solo, int jetons)
+    public EssaimClass(String name, int day, int hour, Location hub,Location start,Location reset,Location entry, Location solo, int jetons, boolean isClosed)
     {
         this.name = name;
         this.day = day;
@@ -32,7 +32,7 @@ public class EssaimClass {
         this.solo = solo;
         finishDate = null;
         this.jetons = jetons;
-        this.isClosed = false;
+        this.isClosed = isClosed;
     }
 
     public Location getHub() {

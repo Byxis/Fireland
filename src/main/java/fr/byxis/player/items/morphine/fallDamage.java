@@ -14,10 +14,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-
-import static org.spigotmc.SpigotConfig.config;
 
 public class fallDamage implements Listener {
 	private static FileConfiguration config = null;
@@ -37,7 +36,7 @@ public class fallDamage implements Listener {
 		if(e.getEntity() instanceof Player)
 		{
 			Player player = (Player) e.getEntity();
-			if(e.getCause() == DamageCause.FALL)
+			if(e.getCause() == DamageCause.FALL && !player.getWorld().getName().equalsIgnoreCase("essaim"))
 			{
 				e.setDamage(e.getDamage()*1.25);
 				boolean reduce = false;
@@ -54,6 +53,7 @@ public class fallDamage implements Listener {
 
 				if(!hasLegsBroken(player) && doBreakLegs(e.getDamage()))
 				{
+					InGameUtilities.playWorldSound(player.getLocation(), "entity.player.bonebreak", SoundCategory.AMBIENT, 1, 1);
 					setLegsBroken(player, true);
 					InGameUtilities.sendPlayerError(player, "Vous vous êtes cassé la jambe ! Utilisez une seringue de morphine pour vous soigner.");
 				}
@@ -105,6 +105,12 @@ public class fallDamage implements Listener {
 		}
 	}
 
+	@EventHandler
+	public void playerDeath(PlayerDeathEvent e)
+	{
+		setLegsBroken(e.getPlayer(), false);
+	}
+
 
 
 	public boolean doBreakLegs(double damage)
@@ -115,12 +121,16 @@ public class fallDamage implements Listener {
 
 	public static boolean hasLegsBroken(Player p)
 	{
-		return config.getBoolean("legs." + p.getUniqueId() + ".state");
+		if(config.contains("legs." + p.getUniqueId() + ".state"))
+		{
+			return config.getBoolean("legs." + p.getUniqueId() + ".state");
+		}
+		return false;
 	}
 
 	public static void setLegsBroken(Player p, boolean bool)
 	{
 		config.set("legs." + p.getUniqueId() + ".state", bool);
 	}
-	
+
 }

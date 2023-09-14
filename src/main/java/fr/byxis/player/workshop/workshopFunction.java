@@ -540,7 +540,7 @@ public class workshopFunction {
                 if(addItemToCraft(p.getUniqueId().toString(), item, reduction))
                 {
                     InGameUtilities.playPlayerSound(p, "block.anvil.use", SoundCategory.BLOCKS, 1, 0);
-                    InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 0);
+                    InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 2);
                     removeItemsOnInventoryOfPlayer(p, Material.NETHERITE_SCRAP, item.scrap);
                     removeItemsOnInventoryOfPlayer(p, Material.GUNPOWDER, item.gunPowder);
                     p.sendMessage("§aVous avez craft §6"+item.itemName+"§a !");
@@ -597,7 +597,7 @@ public class workshopFunction {
             }
             name = sb.toString().trim();
 //ws newrecipe nom type scrap gp nomitem mat dura    cmd
-            PermissionUtilities.commandExecutor(p, "ws newrecipe Plan_de_fabrication_de_"+name+" "+_type+" "+_scrap+" "+poudre_canon+" "+name+" "+item.getType()+" "+item.getDurability()+" "+_command, "fireland.workshop.a:newrecipe");
+            PermissionUtilities.commandExecutor(p, "ws newrecipe Plan_de_fabrication_de_"+name+" "+_type+" "+_scrap+" "+poudre_canon+" "+name+" "+item.getType()+" "+item.getItemMeta().getCustomModelData()+" "+_command, "fireland.workshop.a:newrecipe");
         }
     }
 
@@ -729,7 +729,7 @@ public class workshopFunction {
             }
             else
             {
-                lore.add("§8Type : §d"+item.type +"§8, reste §c"+ BasicUtilities.getStringTime(item.finishDate.getTime() - System.currentTimeMillis()));
+                lore.add("§8Type : §d"+item.type +"§8, reste §c"+ BasicUtilities.getStringTimeHour(item.finishDate.getTime() - System.currentTimeMillis()));
             }
 
             lore.add("§8Date de fin de création : "+item.finishDate);
@@ -948,6 +948,7 @@ public class workshopFunction {
 
     public void openWorkshop(Player p)
     {
+        InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.AMBIENT, 1, 1);
         Inventory craftMenu = Bukkit.createInventory(null, 9*3, "Plan de travail");
         craftMenu.setItem(11, InventoryUtilities.setItemMeta(Material.ANVIL, "§6Atelier", (short) 1));
         craftMenu.setItem(13, InventoryUtilities.setItemMeta(Material.NETHERITE_SCRAP, "§aRecyclage", (short) 1));

@@ -2,6 +2,7 @@ package fr.byxis.player.booster;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.jeton.JetonManager;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.jeton.jetonSql;
@@ -38,7 +39,7 @@ public class BoosterManager implements CommandExecutor, Listener {
             {
                 BoosterClass booster = main.hashMapManager.getBooster();
                 Player creator = (Player) Bukkit.getOfflinePlayer(booster.getUuid());
-                InGameUtilities.sendPlayerInformation((Player) commandSender, "Un booster de niveau §d§l"+booster.getLevel()+"§r§7 est actif ! Il a été créé par §6"+creator.getName()+"§7 et se finit dans "+BasicUtilities.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()));
+                InGameUtilities.sendPlayerInformation((Player) commandSender, "Un booster de niveau §d§l"+booster.getLevel()+"§r§7 est actif ! Il a été créé par §6"+creator.getName()+"§7 et se finit dans "+BasicUtilities.getStringTimeHour(booster.getFinished().getTime()-System.currentTimeMillis()));
             }
         }
         else if(strings[0].equalsIgnoreCase("create") && ((Player)commandSender).hasPermission("fireland.command.booster"))
@@ -48,10 +49,8 @@ public class BoosterManager implements CommandExecutor, Listener {
                 jetonsCommandManager jeton = new jetonsCommandManager(main);
                 if(jeton.getJetonsPlayer(p.getUniqueId()) > 100*Integer.parseInt(strings[1])*Integer.parseInt(strings[2]))
                 {
-                    jeton.removeJetonsPlayer(p.getUniqueId(), 100*Integer.parseInt(strings[1])*Integer.parseInt(strings[2]));
-                    main.hashMapManager.setBooster(new BoosterClass(new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()+1000*3600*Long.parseLong(strings[2])), p.getUniqueId(), Integer.parseInt(strings[1])));
-                    jetonSql jetonsql = new jetonSql(main, p);
-                    jetonsql.createFacture(p.getUniqueId().toString(), 100*Integer.parseInt(strings[1])*Integer.parseInt(strings[2]), "Achat Booster lvl:"+Integer.parseInt(strings[1])+" duration:"+Integer.parseInt(strings[2]));
+                    JetonManager.payJetons(p, 100*Integer.parseInt(strings[1])*Integer.parseInt(strings[2]),
+                            "Achat Booster lvl "+Integer.parseInt(strings[1])+" pendant "+Integer.parseInt(strings[2])+"h", false, true);
                     InGameUtilities.sendPlayerInformation(p, "Vous avez acheté un Booster de niveau §d"+Integer.parseInt(strings[1])+"§r§7 pour "+Integer.parseInt(strings[2])+" heures !");
                     for(Player players : Bukkit.getOnlinePlayers())
                     {

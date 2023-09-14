@@ -12,12 +12,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-
-import static org.spigotmc.SpigotConfig.config;
 
 public class infectedPlayer implements Listener,CommandExecutor {
 
@@ -34,13 +33,27 @@ public class infectedPlayer implements Listener,CommandExecutor {
 	public void playerDeath(PlayerDeathEvent e) {
 		Player p = e.getEntity().getPlayer();
 		assert p != null;
-		if(isInfected(p) && e.getEntity().getKiller() == null)
+		if(isInfected(p) && !(e.getEntity().getLastDamageCause().getEntity() instanceof Player))
 		{
 			e.setDeathMessage(p.getName() + " est mort due à son infection !");
 		}
-		setInfection(p, false);
-		String cmd = "mm m spawn Infecte 1 world,"+p.getLocation().getX()+","+p.getLocation().getY()+","+p.getLocation().getZ();
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+		if(isInfected(p))
+		{
+			int level = getLevelInfection(p);
+			if(level == 0)
+			{
+
+				String cmd = "mm m spawn Infecte 1 world,"+p.getLocation().getX()+","+p.getLocation().getY()+","+p.getLocation().getZ();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+			}
+			else if(level == 1)
+			{
+
+				String cmd = "mm m spawn Malabar 1 world,"+p.getLocation().getX()+","+p.getLocation().getY()+","+p.getLocation().getZ();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+			}
+			setInfection(p, false);
+		}
 		p.playSound(p.getLocation(), "minecraft:gun.hud.death", 10, 1);
 	}
 	
@@ -53,7 +66,7 @@ public class infectedPlayer implements Listener,CommandExecutor {
 		boolean random = Math.random() < 0.2;
 		
 		if(damaged instanceof Player p) {
-			if(damager instanceof Zombie || damager instanceof Stray || damager instanceof IronGolem) {
+			if(damager instanceof Zombie || damager instanceof Stray) {
 				if(random && !p.isInvulnerable() /*&& config.getInt("safezone."+p.getName()+".time") > 0*/){
 
 			        
@@ -72,6 +85,8 @@ public class infectedPlayer implements Listener,CommandExecutor {
 	@EventHandler
 	public void playerSoin(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
+		if(e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)
+			return;
 		if(p.getItemInHand().getType() == Material.WHEAT_SEEDS && p.getItemInHand().getItemMeta().hasCustomModelData() && p.getItemInHand().getItemMeta().getCustomModelData() == 102) {
 
 			
@@ -119,10 +134,18 @@ public class infectedPlayer implements Listener,CommandExecutor {
 		}
 	}
 
-	public static void setInfection(Player p, boolean state)
+	public static void setInfection(Player p, boolean state, int... level)
 	{
 		if(!state)
 		{
+			if(level != null)
+			{
+				config.set("infected."+p.getUniqueId()+".level", level);
+			}
+			else
+			{
+				config.set("infected."+p.getUniqueId()+".level", 0);
+			}
 			config.set("infected."+p.getUniqueId()+".time", 0);
 		}
 		config.set("infected."+p.getUniqueId()+".state", state);
@@ -137,6 +160,13 @@ public class infectedPlayer implements Listener,CommandExecutor {
 	public static int getTimeInfected(Player p)
 	{
 		return config.getInt("infected."+p.getUniqueId()+".time");
+	}
+
+	public static int getLevelInfection(Player p)
+	{
+		if(config.contains("infected."+p.getUniqueId()+".level"))
+			return config.getInt("infected."+p.getUniqueId()+".level");
+		return 0;
 	}
 
 	@SuppressWarnings("deprecation")

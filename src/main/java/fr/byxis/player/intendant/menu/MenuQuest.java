@@ -13,7 +13,11 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+import static fr.byxis.player.items.notes.OpenNotes.usingSubstringMethod;
 import static fr.byxis.player.quest.QuestManager.getAvailableQuests;
 import static fr.byxis.player.quest.QuestManager.getPlayerQuest;
 
@@ -41,11 +45,15 @@ public class MenuQuest {
             QuestClass quest = getAvailableQuests().get(pq.getQuest(i).getId());
             if (pq.getQuest(i).getProgress() == -1)
             {
-                inv.setItem(17+2*i, InventoryUtilities.setItemMetaLore(Material.GLOW_ITEM_FRAME, "§a"+quest.getTitle(), (short) 0, BasicUtilities.listMaker("§7"+quest.getDesc(),"§7Progrès : §aFini.","","")));
+                List<String> desc = usingSubstringMethod(quest.getDesc(), 52, "§7");
+                desc.add("§7Progrès : §aFini.");
+                inv.setItem(17+2*i, InventoryUtilities.setItemMetaLore(Material.GLOW_ITEM_FRAME, "§a"+quest.getTitle(), (short) 0, desc));
             }
             else
             {
-                inv.setItem(17+2*i, InventoryUtilities.setItemMetaLore(Material.ITEM_FRAME, "§e"+quest.getTitle(), (short) 0, BasicUtilities.listMaker("§7"+quest.getDesc(),"§7Progrès : §8"+pq.getQuest(i).getProgress(),"","")));
+                List<String> desc = usingSubstringMethod(quest.getDesc(), 53, "§r§7");
+                desc.add("§7Progrès : §8"+pq.getQuest(i).getProgress());
+                inv.setItem(17+2*i, InventoryUtilities.setItemMetaLore(Material.ITEM_FRAME, "§e"+quest.getTitle(), (short) 0, desc));
             }
         }
 

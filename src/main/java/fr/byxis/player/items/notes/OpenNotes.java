@@ -70,7 +70,7 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
             int z = e.getBlockPlaced().getLocation().getBlockZ();
             config.getConfig().set(x+"."+y+"."+z+".content", "");
             config.save();
-            InGameUtilities.sendPlayerSucces(e.getPlayer(), "Une nouvelle note a été crée. Pour modifier son contenu, faites /note <text> en pointant sur la note");
+            InGameUtilities.sendPlayerSucces(e.getPlayer(), "Une nouvelle note a été crée. Pour modifier son contenu, faites /fnote <text> en pointant sur la note");
         }
     }
 
@@ -104,6 +104,18 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
 
         for (int i = 0; i < length; i += n) {
             results.add(text.substring(i, Math.min(length, i + n)));
+        }
+
+        return results;
+    }
+
+    public static List<String> usingSubstringMethod(String text, int n, String color) {
+        if(text == null  || text.equalsIgnoreCase("")) return Collections.singletonList("§4* Le texte n'est pas lisible *");
+        List<String> results = new ArrayList<>();
+        int length = text.length();
+
+        for (int i = 0; i < length; i += n) {
+            results.add(color+text.substring(i, Math.min(length, i + n)));
         }
 
         return results;

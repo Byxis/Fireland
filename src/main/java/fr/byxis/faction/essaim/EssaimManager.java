@@ -27,9 +27,9 @@ public class EssaimManager {
 
     public HashMap<String, ActiveMobSpawning> activeSpawners;
     public HashMap<String, HashMap<String, Spawner>> existingEssaims;
-    public HashMap<String, EssaimClass> activeEssaims;
+    public static HashMap<String, EssaimClass> activeEssaims;
 
-    public HashMap<String, EssaimGroup> groups;
+    public static HashMap<String, EssaimGroup> groups;
 
     public EssaimManager(Fireland main)
     {
@@ -81,10 +81,10 @@ public class EssaimManager {
     private int getEntityNumber(Spawner spawner)
     {
 
-        if(spawner.isAffectedByDifficulty() && main.essaimManager.groups.containsKey(spawner.getEssaim()))
+        if(spawner.isAffectedByDifficulty() && EssaimManager.groups.containsKey(spawner.getEssaim()))
         {
-            main.getLogger().info("Old :"+spawner.getAmount()+"New :"+Math.round(spawner.getAmount()*main.essaimManager.groups.get(spawner.getEssaim()).getMultiplicatorDifficulty()));
-            return Math.round(spawner.getAmount()*main.essaimManager.groups.get(spawner.getEssaim()).getMultiplicatorDifficulty());
+            main.getLogger().info("Old :"+spawner.getAmount()+"New :"+Math.round(spawner.getAmount()*EssaimManager.groups.get(spawner.getEssaim()).getMultiplicatorDifficulty()));
+            return Math.round(spawner.getAmount()*EssaimManager.groups.get(spawner.getEssaim()).getMultiplicatorDifficulty());
         }
         else
         {
@@ -100,49 +100,56 @@ public class EssaimManager {
             activeEssaims.get(name).setClosed(false);
             return false;
         }
-        EssaimClass essaimClass = new EssaimClass(name,
-                configManager.getConfig().getInt(name+".day"),
-                configManager.getConfig().getInt(name+".hour"),
-                new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".hub.position.world")), //hub
-                        configManager.getConfig().getInt(name+".hub.position.x"),
-                        configManager.getConfig().getInt(name+".hub.position.y"),
-                        configManager.getConfig().getInt(name+".hub.position.z")
-                ),
-                new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".start.position.world")),//start
-                        configManager.getConfig().getInt(name+".start.position.x"),
-                        configManager.getConfig().getInt(name+".start.position.y"),
-                        configManager.getConfig().getInt(name+".start.position.z")
-                ),
-                new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".reset.position.world")),//reset
-                        configManager.getConfig().getInt(name+".reset.position.x"),
-                        configManager.getConfig().getInt(name+".reset.position.y"),
-                        configManager.getConfig().getInt(name+".reset.position.z")
-                )
-                ,new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".entry.position.world")),//entry
+        try
+        {
+            EssaimClass essaimClass = new EssaimClass(name,
+                    configManager.getConfig().getInt(name+".day"),
+                    configManager.getConfig().getInt(name+".hour"),
+                    new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".hub.position.world")), //hub
+                            configManager.getConfig().getInt(name+".hub.position.x"),
+                            configManager.getConfig().getInt(name+".hub.position.y"),
+                            configManager.getConfig().getInt(name+".hub.position.z")
+                    ),
+                    new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".start.position.world")),//start
+                            configManager.getConfig().getInt(name+".start.position.x"),
+                            configManager.getConfig().getInt(name+".start.position.y"),
+                            configManager.getConfig().getInt(name+".start.position.z")
+                    ),
+                    new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".reset.position.world")),//reset
+                            configManager.getConfig().getInt(name+".reset.position.x"),
+                            configManager.getConfig().getInt(name+".reset.position.y"),
+                            configManager.getConfig().getInt(name+".reset.position.z")
+                    )
+                    ,new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".entry.position.world")),//entry
                     configManager.getConfig().getInt(name+".entry.position.x"),
                     configManager.getConfig().getInt(name+".entry.position.y"),
                     configManager.getConfig().getInt(name+".entry.position.z")
-                )
-                ,new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".solo.position.world")),//entry
+            )
+                    ,new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".solo.position.world")),//entry
                     configManager.getConfig().getInt(name+".solo.position.x"),
                     configManager.getConfig().getInt(name+".solo.position.y"),
                     configManager.getConfig().getInt(name+".solo.position.z")
-                ), configManager.getConfig().getInt(name+".jetons"));
-        activeEssaims.put(name, essaimClass);
+            ), configManager.getConfig().getInt(name+".jetons")
+                    ,false);
+            configManager.getConfig().set(name+".closed", false);
+            configManager.save();
+            activeEssaims.put(name, essaimClass);
+        } catch (Exception e) {
+            main.getLogger().severe("Un problème est survenu lors de l'activation de l'essaim "+name);
+            return false;
+        }
+
 
         return true;
     }
 
-    public boolean DisableEssaim(String name)
+    public static boolean DisableEssaim(String name)
     {
-        if(!activeEssaims.containsKey(name))
-        {
-            return false;
-        }
-        else if(groups.containsKey(name))
+        if(groups.containsKey(name))
         {
             activeEssaims.get(name).setClosed(true);
-            return true;
+            configManager.getConfig().set(name+".closed", true);
+            configManager.save();
         }
         activeEssaims.remove(name);
 
@@ -172,6 +179,10 @@ public class EssaimManager {
                     existingSpawnerInEssaim.put(spawner, new Spawner(spawner, essaim, loc, type, amount, activationDelay, spawnDelay, command, isAffectedByDifficulty));
                 }
                 existingEssaims.put(essaim, existingSpawnerInEssaim);
+                if(!configManager.getConfig().getBoolean(essaim+".closed"))
+                {
+                    EnableEssaim(essaim);
+                }
             }
         }
     }
@@ -254,5 +265,10 @@ public class EssaimManager {
     {
         Timestamp today = new Timestamp(System.currentTimeMillis());
         return today.getMinutes() == 0;
+    }
+
+    public boolean isEssaimActive(String essaim)
+    {
+        return activeEssaims.containsKey(essaim);
     }
 }

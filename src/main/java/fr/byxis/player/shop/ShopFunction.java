@@ -3,6 +3,7 @@ package fr.byxis.player.shop;
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
+import fr.byxis.jeton.JetonManager;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.jeton.jetonSql;
 import fr.byxis.player.karma.karmaManager;
@@ -296,21 +297,12 @@ public class ShopFunction {
                 {
                     InGameUtilities.sendPlayerError(_p, "Vous avez déjà ce skin !");
                 }
-                else if(jeton.getJetonsPlayer(_p.getUniqueId()) >= item.price)
+                else if( JetonManager.payJetons(_p, item.price,
+                    "Achat du skin "+item.itemName, false, true))
                 {
-                    jetonSql facture = new jetonSql(main, _p);
-                    if(facture.createFacture(_p.getUniqueId().toString(), item.price, "Achat du skin "+item.itemName+" le "+(new Date(System.currentTimeMillis())).getTime()))
-                    {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user "+ _p.getName()+" permission set "+item.command+" true");
-                        main.getLogger().info("[ACHAT] Achat de "+item.itemName+" par "+_p.getName()+" pour "+item.price+" jetons.");
-                        jeton.removeJetonsPlayer(_p.getUniqueId(), item.price);
-                        InGameUtilities.sendPlayerInformation(_p, "Vous avez acheté le skin: "+item.itemName+" ! Merci pour votre achat !");
-                        InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
-                    }
-                }
-                else
-                {
-                    InGameUtilities.sendPlayerError(_p, "Vous n'avez pas assez de jetons !");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user "+ _p.getName()+" permission set "+item.command+" true");
+                    InGameUtilities.sendPlayerInformation(_p, "Vous avez acheté le skin "+item.itemName+" ! Merci pour votre achat !");
+                    InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                 }
             }
             else
@@ -443,10 +435,14 @@ public class ShopFunction {
                             if(nbr+itemInv.getAmount() >=64)
                             {
                                 itemInv.setAmount(itemInv.getAmount()-nbr);
+                                nbr += 64-itemInv.getAmount();
                                 break;
                             }
-                            itemInv.setAmount(0);
-                            nbr += itemInv.getAmount();
+                            else
+                            {
+                                nbr += itemInv.getAmount();
+                                itemInv.setAmount(0);
+                            }
                         }
                     }
 

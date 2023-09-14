@@ -2,6 +2,7 @@ package fr.byxis.player.discretion;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.HashMapManager;
 import io.lumine.mythic.bukkit.utils.events.extra.ArmorEquipEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -52,7 +53,7 @@ public class ZombieDetection implements Listener {
 			double score = main.hashMapManager.getDiscretionMap().get(player.getUniqueId()).getScore();
 
 			double calcul = 0.008*Math.pow((120-score), 2);
-			if(player.getLocation().distance(entity.getLocation()) >= calcul /*|| main.cfgm.getPlayerDB().getBoolean("safezone."+player.getUniqueId()+".state")*/)
+			if(player.getLocation().distance(entity.getLocation()) >= calcul || HashMapManager.getDiscretionMap().get(player.getUniqueId()).isShooting())
 			{
 				e.setCancelled(true);
 			}

@@ -1,0 +1,92 @@
+success:
+  kill-1:
+    title: ""
+    desc: ""
+    type: "KILL"
+    item: ""
+    objective:
+      type: "Infecte"
+      amount: 1
+    reward:
+      money: 0
+      jeton: 0
+      permission: ""
+  playtime-1:
+    title: ""
+    desc: ""
+    type: "PLAY_TIME"
+    item: ""
+    objective:
+      amount: 1 #en secondes
+    reward:
+      money: 0
+      jeton: 0
+      permission: ""
+  learnrecipe-1:
+    title: ""
+    desc: ""
+    type: "LEARN_RECIPE"
+    item: ""
+    objective:
+      amount: 1
+    reward:
+      money: 0
+      jeton: 0
+      permission: ""
+  craft-1:
+    title: ""
+    desc: ""
+    type: "CRAFT"
+    item: ""
+    objective:
+      amount: 1
+    reward:
+      money: 0
+      jeton: 0
+      permission: ""
+  grade-1:
+    title: ""
+    desc: ""
+    type: "GRADE_CHANGE"
+    item: ""
+    objective:
+      grade: "Mercenaire"
+    reward:
+      money: 0
+      jeton: 0
+      permission: ""
+  rank-1:
+    title: ""
+    desc: ""
+    type: "RANK_CHANGE"
+    item: ""
+    objective:
+      rank: "Héros"
+    reward:
+      money: 0
+      jeton: 0
+      permission: ""
+  skin-1:
+    title: ""
+    desc: ""
+    type: "SKIN_EQUIP"
+    item: ""
+    objective:
+      skin: "" #vide = n'importe quel skin
+    reward:
+      money: 0
+      jeton: 0
+      permission: ""
+  boost-1:
+    title: ""
+    desc: ""
+    type: "USE_BOOST"
+    item: ""
+    objective:
+      duration: 1 #en heure (voir menu booster) et -1 si tu t'en blc de la durée/ du level
+      level: 1
+      amount: 1
+    reward:
+      money: 0
+      jeton: 0
+      permission: ""

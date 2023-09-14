@@ -13,6 +13,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+
 public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor {
 
 	private static boolean isParsable(String input) {
@@ -131,10 +133,10 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 	private void rallyEntities(Player victim, long distance) {
 		List<Entity> entities = nearbyEntities(victim.getLocation(), distance);
 		for (Entity entity : entities) {
-			if (entity instanceof Zombie || entity instanceof Stray ||  entity instanceof WitherSkeleton) {
+			if (entity instanceof Zombie || entity instanceof Stray  || entity instanceof Husk || entity instanceof Drowned ||  entity instanceof WitherSkeleton) {
 				Monster mob = (Monster) entity;
 
-				if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish || mob.getTarget().getLocation().distance(mob.getLocation()) > victim.getLocation().distance(mob.getLocation())) {
+				if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish ||mob.getTarget().getLocation().distance(mob.getLocation()) > victim.getLocation().distance(mob.getLocation())) {
 					mob.setTarget(victim);
 					if (victim.getLocation().distance(mob.getLocation()) > 60D && Math.random() <= 0.1) {
 						victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
@@ -144,7 +146,7 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 			else if (entity instanceof IronGolem )
 			{
 				((IronGolem) entity).setTarget(victim);
-				if (victim.getLocation().distance(entity.getLocation()) > 60D && Math.random() <= 0.1) {
+				if (victim.getLocation().distance(entity.getLocation()) > 60D && Math.random() <= 0.1 && (((IronGolem) entity).getTarget() == null ||(((IronGolem) entity).getTarget().getLocation().distance(entity.getLocation()) > victim.getLocation().distance(entity.getLocation())))) {
 					victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
 				}
 			}

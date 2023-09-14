@@ -1,6 +1,7 @@
 package fr.byxis.player.intendant.menu;
 
 import fr.byxis.faction.faction.FactionFunctions;
+import fr.byxis.faction.faction.FactionInformation;
 import fr.byxis.faction.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
@@ -14,6 +15,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,18 +45,22 @@ public class MenuZone {
             String color = ff.getFactionInfo(factionZoneInformation.getFactionName()).getColorcode();
             if(factionZoneInformation.getClaimedAt()!= null)
             {
-                lore.add("§8Zone capturée depuis le §a"+factionZoneInformation.getClaimedAt().toString());
-                lore.add("§8Temps de capture actuel : §a"+ BasicUtilities.getStringTime(System.currentTimeMillis()-factionZoneInformation.getClaimedAt().getTime()));
-                lore.add("§8Total cumulé: §a"+ BasicUtilities.getStringTime(factionZoneInformation.getTotalDuration()));
+                FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
+                if(finfos.hasZoneTpPerk())
+                {
+                    lore.add("§6Cliquez ici pour vous téléporter !");
+                }
+                lore.add("§8La zone sera contestable le : §a"+ new Timestamp((long) (factionZoneInformation.getClaimedAt().getTime() + main.zoneManager.data.configManager.config.getDouble("zone."+factionZoneInformation.getZoneName()+".privation-duration")*1000*3600)));
+                lore.add("§8Génère §6"+main.zoneManager.data.configManager.config.getInt("zone."+factionZoneInformation.getZoneName()+".daily-gain")+"§r§f$§8 par jour.");
+
                 inv.setItem(i, InventoryUtilities.setItemMetaLore(BlockUtilities.getBannerColor(color), "§a"+ factionZoneInformation.getFormattedName(), (short) 0, lore));
-                main.getLogger().info("Zone "+factionZoneInformation.getFormattedName() + " " + BlockUtilities.getBannerColor(color));
+
             }
             else
             {
                 lore.add("§8Zone non capturée");
-                lore.add("§8Total cumulé: §7"+BasicUtilities.getStringTime(factionZoneInformation.getTotalDuration()));
+                lore.add("§8Total cumulé: §7"+BasicUtilities.getStringTimeHour(factionZoneInformation.getTotalDuration()));
                 inv.setItem(i, InventoryUtilities.setItemMetaLore(Material.LIGHT_GRAY_BANNER, "§7"+ factionZoneInformation.getFormattedName(), (short) 0, lore));
-                main.getLogger().info("Zone "+factionZoneInformation.getFormattedName());
             }
 
             if(i == 17 ||i == 17+9 || i == 17+18)

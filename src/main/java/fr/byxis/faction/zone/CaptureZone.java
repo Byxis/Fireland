@@ -25,7 +25,7 @@ public class CaptureZone {
     private static Fireland main;
     private DataZone data;
     private final int captureRefreshRate = 2;
-    private final int boosterCapture = 3;
+    private final float boosterCapture = 15f;
     int i = 0;
 
     public CaptureZone(Fireland main, DataZone data)
@@ -208,13 +208,13 @@ public class CaptureZone {
             color = "§r";
         }
 
-        playAnimation(zone, prog, nextProg, color, faction.getPlayerList());
+        playAnimation(zone, prog, nextProg, color);
 
         if(nextProg >= 100)
         {
             faction.setProgression(100);
         }
-        else if(nextProg >= 90 && zone.getClaimer().equalsIgnoreCase(faction.getName()))
+        else if(nextProg >= 90 && zone.getClaimer() != null && zone.getClaimer().equalsIgnoreCase(faction.getName()))
         {
             faction.setProgression(90);
         }
@@ -227,6 +227,24 @@ public class CaptureZone {
             faction.addProgression((int) zone.getCaptureTime(), seconds);
         }
 
+        if(prog < nextProg)
+        {
+            data.setZoneEnterBool(zone.getName(), true);
+            if((int)nextProg%10 == 0)
+            {
+                data.playSoundToPlayerZoneEnter(zone.getName(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.AMBIENT, 1, 1);
+            }
+            else
+            {
+                data.playSoundToPlayerZoneEnter(zone.getName(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, SoundCategory.AMBIENT, 1, 1);
+            }
+        }
+        else if(data.getZoneEnterBool(zone.getName()))
+        {
+            data.setZoneEnterBool(zone.getName(), false);
+            data.sendTextToPlayerZoneEnter(zone.getName(), "§cLa zone se décapture !");
+        }
+
         if(prog <= 5 && nextProg >5)
         {
             for(Player p: Bukkit.getOnlinePlayers())
@@ -236,6 +254,8 @@ public class CaptureZone {
         }
         if(prog >= 100)
         {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "summon firework_rocket "+(zone.getLocation().getX()) +" "+(zone.getLocation().getY()+2) +" "+(zone.getLocation().getZ()-1) +" {LifeTime:30,FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:1,Flicker:1,Trail:1,Colors:[I;11743532],FadeColors:[I;15435844]}],Flight:2}}}}");
+
             for(ZoneClass zoneClass : data.zones)
             {
                 if(zoneClass.getName().equalsIgnoreCase(zone.getName()))
@@ -250,10 +270,10 @@ public class CaptureZone {
                     break;
                 }
             }
-            InGameUtilities.playPlayersSound(faction.getPlayerList(), "item.goat_horn.sound.7", SoundCategory.AMBIENT, 1, 2);
             data.SaveAll();
             for(Player p: Bukkit.getOnlinePlayers())
             {
+                InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
                 InGameUtilities.sendPlayerInformation(p, "La faction "+color+faction.getName()+"§R§7 a capturé la zone "+zone.getFormattedName()+" !");
             }
 
@@ -271,62 +291,51 @@ public class CaptureZone {
         }
     }
 
-    private void playAnimation(ZoneClass zone, double from, double to, String color, List<Player> players)
+    private void playAnimation(ZoneClass zone, double from, double to, String color)
     {
         if((from <= 0 && to >= 0) || (from > 0  && to <=0))
         {
             changeAnimationStep(1, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 10 && to >= 10) || (from > 10  && to <=10))
         {
             changeAnimationStep(2, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 20 && to >= 20) || (from > 20  && to <=20))
         {
             changeAnimationStep(3, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 30 && to >= 30) || (from > 30  && to <=30))
         {
             changeAnimationStep(4, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 40 && to >= 40) || (from > 40  && to <=40))
         {
             changeAnimationStep(5, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 50 && to >= 50) || (from > 50  && to <=50))
         {
             changeAnimationStep(6, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 60 && to >= 60) || (from > 60  && to <=60))
         {
             changeAnimationStep(7, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 70 && to >= 70) || (from > 70  && to <=70))
         {
             changeAnimationStep(8, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 80 && to >= 80) || (from > 80  && to <=80))
         {
             changeAnimationStep(9, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from < 90 && to >= 90) || (from >= 90  && to <=90))
         {
             changeAnimationStep(10, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
         if((from >= 100 && to >= 100) || (from > 100  && to <=100))
         {
             changeAnimationStep(-1, zone, color);
-            InGameUtilities.playPlayersSound(players, "block.note_block.basedrum", SoundCategory.AMBIENT, 1, 1);
         }
     }
 

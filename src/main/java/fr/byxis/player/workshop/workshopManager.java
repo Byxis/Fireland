@@ -33,6 +33,9 @@ public class workshopManager implements CommandExecutor {
 
                 String command = sb.toString().trim();
                 //String _itemName, String _mat, int _durability
+                //ws newrecipe Plan_de_fabrication_de_ D 60 0 NETHERITE_HOE 0 wm give Player SWR8
+                ///    0                 1             2  3 4           5   6  7  8     9     10
+                //public void createRecipe(String _name, String _command, String _type, Integer _scrap, Integer _gunpowder, String _itemName, String _mat, int _durability)
                 wf.createRecipe(name, command, args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]), args[5], args[6], Integer.parseInt(args[7]));
                 sender.sendMessage("§aNouveau plan créé : "+name);
                 return true;

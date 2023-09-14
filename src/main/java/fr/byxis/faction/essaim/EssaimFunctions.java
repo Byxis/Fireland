@@ -20,10 +20,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
+import static fr.byxis.faction.essaim.EssaimManager.DisableEssaim;
+
 public class EssaimFunctions {
 
     private static Fireland main;
-    private static EssaimConfigManager configManager;
+    public static EssaimConfigManager configManager;
     private static FactionFunctions ff;
 
     public EssaimFunctions(Fireland main, EssaimConfigManager configManager) {
@@ -89,20 +91,20 @@ public class EssaimFunctions {
     }
 
     public static boolean isEssaimOccuped(String essaim) {
-        if(!main.essaimManager.groups.containsKey(essaim))
+        if(!EssaimManager.groups.containsKey(essaim))
         {
             return false;
         }
-        return !main.essaimManager.groups.get(essaim).isEmpty();
+        return !EssaimManager.groups.get(essaim).isEmpty();
     }
 
     public static boolean isPlayerInEssaim(String essaim, Player p)
     {
-        if(!main.essaimManager.groups.containsKey(essaim))
+        if(!EssaimManager.groups.containsKey(essaim))
         {
             return false;
         }
-        for(Player member : main.essaimManager.groups.get(essaim).getMembers())
+        for(Player member : EssaimManager.groups.get(essaim).getMembers())
         {
             if(member.getName().equalsIgnoreCase(p.getName()))
             {
@@ -114,9 +116,9 @@ public class EssaimFunctions {
 
     public static boolean isEssaimOpened(String essaim)
     {
-        if(main.essaimManager.activeEssaims.containsKey(essaim))
+        if(EssaimManager.activeEssaims.containsKey(essaim))
         {
-            return !main.essaimManager.activeEssaims.get(essaim).isClosed();
+            return !EssaimManager.activeEssaims.get(essaim).isClosed();
         }
         return true;
     }
@@ -133,15 +135,15 @@ public class EssaimFunctions {
                 {
                     InGameUtilities.sendPlayerError(p, "Un groupe est déjà entré dans l'essaim !");
                 }
-            } else if (!main.hashMapManager.isTeleporting(p.getUniqueId() )&& main.essaimManager.activeEssaims.containsKey(essaim)){
+            } else if (!main.hashMapManager.isTeleporting(p.getUniqueId() )&& EssaimManager.activeEssaims.containsKey(essaim)){
                 InGameUtilities.setPlayerMoving(p, false);
                 if(p.getGameMode() != GameMode.CREATIVE)
                 {
-                    teleportCreateEssaim(p, main.essaimManager.activeEssaims.get(essaim).getHub(), "gun.hub.helico",10, essaim);
+                    teleportCreateEssaim(p, EssaimManager.activeEssaims.get(essaim).getHub(), "gun.hub.helico",10, essaim);
                 }
                 else
                 {
-                    teleportCreateEssaim(p, main.essaimManager.activeEssaims.get(essaim).getHub(), "gun.hub.helico",0, essaim);
+                    teleportCreateEssaim(p, EssaimManager.activeEssaims.get(essaim).getHub(), "gun.hub.helico",0, essaim);
                 }
             }
             else
@@ -160,22 +162,22 @@ public class EssaimFunctions {
     }
 
     public static void leaveGroup(String essaim, Player p) {
-        if(main.essaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName()))
+        if(EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName()))
         {
-            for(Player member : main.essaimManager.groups.get(essaim).getMembers())
+            for(Player member : EssaimManager.groups.get(essaim).getMembers())
             {
-                member.teleport(main.essaimManager.activeEssaims.get(essaim).getEntry());
+                member.teleport(EssaimManager.activeEssaims.get(essaim).getEntry());
                 member.closeInventory();
                 InGameUtilities.sendPlayerError(member, "L'expédition a été abandonnée !");
             }
         }
         else
         {
-            for(Player member : main.essaimManager.groups.get(essaim).getMembers())
+            for(Player member : EssaimManager.groups.get(essaim).getMembers())
             {
                 if(p.getName().equalsIgnoreCase(member.getName()))
                 {
-                    member.teleport(main.essaimManager.activeEssaims.get(essaim).getEntry());
+                    member.teleport(EssaimManager.activeEssaims.get(essaim).getEntry());
                     member.closeInventory();
                     InGameUtilities.sendPlayerError(member, "Vous avez abandonné l'expédition !");
                 }
@@ -185,22 +187,22 @@ public class EssaimFunctions {
                 }
             }
         }
-        main.essaimManager.groups.get(essaim).leaveGroup(p);
+        EssaimManager.groups.get(essaim).leaveGroup(p);
     }
 
     public static void inviteGroup(String essaim, Player p)
     {
         if (isEssaimOccuped(essaim))
         {
-            if(!main.essaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName()))
+            if(!EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName()))
             {
-                if(main.essaimManager.groups.get(essaim).invitePlayer(p))
+                if(EssaimManager.groups.get(essaim).invitePlayer(p))
                 {
-                    InGameUtilities.sendPlayerInformation(main.essaimManager.groups.get(essaim).getLeader(), "Vous avez invité "+p.getName()+" à votre groupe.");
+                    InGameUtilities.sendPlayerInformation(EssaimManager.groups.get(essaim).getLeader(), "Vous avez invité "+p.getName()+" à votre groupe.");
                 }
                 else
                 {
-                    InGameUtilities.sendPlayerError(main.essaimManager.groups.get(essaim).getLeader(), "Vous ne pouvez pas inviter ce joueur !");
+                    InGameUtilities.sendPlayerError(EssaimManager.groups.get(essaim).getLeader(), "Vous ne pouvez pas inviter ce joueur !");
                 }
             }
             else
@@ -218,26 +220,40 @@ public class EssaimFunctions {
     {
         if (isEssaimOccuped(essaim))
         {
-            if (!main.essaimManager.groups.get(essaim).getMembers().contains(p))
+            if (!EssaimManager.groups.get(essaim).getMembers().contains(p))
             {
-                if(ff.getFactionInfo(ff.playerFactionName(p)).getName().equalsIgnoreCase(ff.getFactionInfo(ff.playerFactionName(main.essaimManager.groups.get(essaim).getLeader())).getName()))
+                if(ff.getFactionInfo(ff.playerFactionName(p)).getName().equalsIgnoreCase(ff.getFactionInfo(ff.playerFactionName(EssaimManager.groups.get(essaim).getLeader())).getName()))
                 {
-                    InGameUtilities.sendPlayerInformation(p, "Vous êtes entré dans le groupe.");
-
-                    for(Player member : main.essaimManager.groups.get(essaim).getMembers())
+                    if(p.hasPermission("fireland.essaim."+essaim))
                     {
-                        InGameUtilities.sendPlayerInformation(member, p.getName()+" a rejoint l'expédition.");
-                        if(member.getOpenInventory().getTitle().contentEquals("Invitation :"))
+                        if(essaim.equalsIgnoreCase("crype") && p.hasPermission("group.bannis"))
                         {
-                            EssaimFunctions.openInvitation(essaim, member);
+                            InGameUtilities.sendPlayerInformation(p, "Vous êtes entré dans le groupe.");
+
+                            for(Player member : EssaimManager.groups.get(essaim).getMembers())
+                            {
+                                InGameUtilities.sendPlayerInformation(member, p.getName()+" a rejoint l'expédition.");
+                                if(member.getOpenInventory().getTitle().contentEquals("Invitation :"))
+                                {
+                                    EssaimFunctions.openInvitation(essaim, member);
+                                }
+                                else if(member.getOpenInventory().getTitle().contentEquals("Essaim :"))
+                                {
+                                    EssaimFunctions.openMenu(essaim, member);
+                                }
+                            }
+                            EssaimManager.groups.get(essaim).joinGroup(p);
+                            return true;
                         }
-                        else if(member.getOpenInventory().getTitle().contentEquals("Essaim :"))
+                        else
                         {
-                            EssaimFunctions.openMenu(essaim, member);
+                            InGameUtilities.sendPlayerError(p, "Cet essaim n'est disponible que pour les bannis.");
                         }
                     }
-                    main.essaimManager.groups.get(essaim).joinGroup(p);
-                    return true;
+                    else
+                    {
+                        InGameUtilities.sendPlayerError(p, "Vous n'avez pas complété la quête requise ou n'avez pas l'extension DLC.");
+                    }
                 }
                 else
                 {
@@ -265,15 +281,15 @@ public class EssaimFunctions {
     }
 
     private static void setItemMenu(Inventory inv, Player p, String essaim) {
-        if(main.essaimManager.activeEssaims.get(essaim).isFinished())
+        if(EssaimManager.activeEssaims.get(essaim).isFinished())
         {
             inv.setItem(13, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cQuitter l'essaim", (short) 1));
         }
         else
         {
-            ItemStack head = InventoryUtilities.GetHead(main.essaimManager.groups.get(essaim).getLeader().getUniqueId(), "§eMembres - §7("+main.essaimManager.groups.get(essaim).getMembers().size()+"/4)");
+            ItemStack head = InventoryUtilities.GetHead(EssaimManager.groups.get(essaim).getLeader().getUniqueId(), "§eMembres - §7("+EssaimManager.groups.get(essaim).getMembers().size()+"/4)");
             ArrayList<String> lore = new ArrayList<>();
-            for(Player member : main.essaimManager.groups.get(essaim).getMembers())
+            for(Player member : EssaimManager.groups.get(essaim).getMembers())
             {
                 lore.add("§8"+member.getName());
             }
@@ -289,20 +305,21 @@ public class EssaimFunctions {
     private static void creationGroup(String essaim, Player p)
     {
         main.essaimManager.resetEssaim(essaim);
-        if (!main.essaimManager.groups.containsKey(essaim)) {
-            main.essaimManager.groups.put(essaim, new EssaimGroup(essaim, p));
+        if (!EssaimManager.groups.containsKey(essaim)) {
+            EssaimManager.groups.put(essaim, new EssaimGroup(essaim, p));
         } else {
-            if(main.essaimManager.groups.get(essaim).getMembers().size() > 1)
+            if(!EssaimManager.groups.get(essaim).getMembers().isEmpty())
             {
                 FactionFunctions ff = new FactionFunctions(main, p);
-                if(ff.playerFactionName(p).equalsIgnoreCase(ff.playerFactionName(main.essaimManager.groups.get(essaim).getLeader())))
+                if(ff.playerFactionName(p).equalsIgnoreCase(ff.playerFactionName(EssaimManager.groups.get(essaim).getLeader())))
                 {
-                    main.essaimManager.groups.get(essaim).joinGroup(p);
+                    EssaimManager.groups.get(essaim).joinGroup(p);
                 }
             }
             else
             {
-                main.essaimManager.groups.get(essaim).joinGroup(p);
+                EssaimManager.groups.replace(essaim, new EssaimGroup(essaim, p));
+                EssaimManager.groups.get(essaim).joinGroup(p);
             }
         }
         InGameUtilities.sendPlayerInformation(p, "Vous avez créé un groupe dans l'essaim !");
@@ -390,14 +407,20 @@ public class EssaimFunctions {
     {
         resetEssaim(name);
         main.essaimManager.setSolo(name);
-        EssaimClass essaim = main.essaimManager.activeEssaims.get(name);
+        EssaimClass essaim = EssaimManager.activeEssaims.get(name);
         setBlock(essaim.getStart().blockX(), essaim.getStart().blockY(), essaim.getStart().blockZ(), Material.REDSTONE_BLOCK);
-        main.essaimManager.groups.get(name).setDifficulty();
+        EssaimManager.groups.get(name).startEssaim();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                resetEssaim(name);
+            }
+        }.runTaskLater(main, 5*20);
     }
 
     public static void resetEssaim(String name)
     {
-        EssaimClass essaim = main.essaimManager.activeEssaims.get(name);
+        EssaimClass essaim = EssaimManager.activeEssaims.get(name);
         setBlock(essaim.getReset().blockX(), essaim.getReset().blockY(), essaim.getReset().blockZ(), Material.REDSTONE_BLOCK);
         for(String spawner : main.essaimManager.activeSpawners.keySet())
         {
@@ -417,7 +440,7 @@ public class EssaimFunctions {
 
     private static void setItemInvitation(Inventory inv, Player p, String essaim) {
 
-        inv.setItem(0, InventoryUtilities.setItemMeta(Material.BOOK, "§eMembres - §7("+main.essaimManager.groups.get(essaim).getMembers().size()+"/4)", (short) 1));
+        inv.setItem(0, InventoryUtilities.setItemMeta(Material.BOOK, "§eMembres - §7("+EssaimManager.groups.get(essaim).getMembers().size()+"/4)", (short) 1));
 
         for(int i=0;i<9;i++) {
             inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
@@ -426,7 +449,7 @@ public class EssaimFunctions {
 
         inv.setItem(17, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, "§rCliquez sur un joueur pour l'inviter", (short) 1));
         int i = 1;
-        for(Player member : main.essaimManager.groups.get(essaim).getMembers())
+        for(Player member : EssaimManager.groups.get(essaim).getMembers())
         {
             inv.setItem(i, InventoryUtilities.GetHead(member.getUniqueId(),"§8"+member.getName()));
             i++;
@@ -436,7 +459,7 @@ public class EssaimFunctions {
         for(FactionPlayerInformation member : ff.getPlayersFromFaction(ff.playerFactionName(p)))
         {
             show = true;
-            for(Player player : main.essaimManager.groups.get(essaim).getMembers())
+            for(Player player : EssaimManager.groups.get(essaim).getMembers())
             {
                 if(player.getName().equalsIgnoreCase(member.getName()))
                 {
@@ -456,22 +479,22 @@ public class EssaimFunctions {
 
     public static void finishEssaim(String essaimName)
     {
-        if(main.essaimManager.activeEssaims.containsKey(essaimName))
+        if(EssaimManager.activeEssaims.containsKey(essaimName))
         {
-            main.essaimManager.activeEssaims.get(essaimName).setFinish();
-            for(Player player : main.essaimManager.groups.get(essaimName).getMembers())
+            EssaimManager.activeEssaims.get(essaimName).setFinish();
+            for(Player player : EssaimManager.groups.get(essaimName).getMembers())
             {
                 InGameUtilities.sendPlayerInformation(player,"Vous avez terminé l'expédition ! L'essaim se fermera automatiquement dans quelques minutes.");
-
             }
         }
+
     }
     public static void unfinishEssaim(String essaimName)
     {
-        if(main.essaimManager.activeEssaims.containsKey(essaimName))
+        if(EssaimManager.activeEssaims.containsKey(essaimName))
         {
-            main.essaimManager.activeEssaims.get(essaimName).unFinish();
-            for(Player player : main.essaimManager.groups.get(essaimName).getMembers())
+            EssaimManager.activeEssaims.get(essaimName).unFinish();
+            for(Player player : EssaimManager.groups.get(essaimName).getMembers())
             {
                 InGameUtilities.sendPlayerInformation(player,"Vous avez activé une mission annexe, le décompte a été annulé.");
 
@@ -485,7 +508,7 @@ public class EssaimFunctions {
         String color = pInfo.getColorcode();
         for(Player player : Bukkit.getOnlinePlayers())
         {
-            if(main.essaimManager.groups.get(essaimName).getMembers().contains(player))
+            if(EssaimManager.groups.get(essaimName).getMembers().contains(player))
             {
                 InGameUtilities.sendPlayerError(player,"Vous avez échoué l'expédition.");
             }
@@ -495,18 +518,19 @@ public class EssaimFunctions {
             }
             InGameUtilities.playPlayerSound(player, "entity.wither.death", SoundCategory.AMBIENT, 1, 1);
         }
-        main.essaimManager.groups.remove(essaimName);
+        EssaimManager.groups.remove(essaimName);
+        main.essaimManager.resetEssaim(essaimName);
     }
 
     public static void leaveFinishedEssaim(String essaimName, Player p, boolean forced)
     {
         FactionInformation pInfo = ff.getFactionInfo(ff.playerFactionName(p));
         String color = pInfo.getColorcode();
-        if(main.essaimManager.groups.get(essaimName).getLeader().getName().equals(p.getName()) ||forced )
+        if(EssaimManager.groups.get(essaimName).getLeader().getName().equals(p.getName()) ||forced )
         {
             for(Player player : Bukkit.getOnlinePlayers())
             {
-                if(main.essaimManager.groups.get(essaimName).getMembers().contains(player))
+                if(EssaimManager.groups.get(essaimName).getMembers().contains(player))
                 {
                     if(forced)
                     {
@@ -514,7 +538,7 @@ public class EssaimFunctions {
                     }
                     else
                     {
-                        if(main.essaimManager.groups.get(essaimName).getLeader().getName().equals(player.getName()))
+                        if(EssaimManager.groups.get(essaimName).getLeader().getName().equals(player.getName()))
                         {
                             InGameUtilities.sendPlayerInformation(player, "Vous avez quitté l'essaim, par conséquent, l'expédition est terminée");
                         }
@@ -524,9 +548,9 @@ public class EssaimFunctions {
                         }
 
                     }
-                    JetonManager.addJetonsPlayer(p.getUniqueId(), main.essaimManager.activeEssaims.get(essaimName).getJetons());
-                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagné §d"+main.essaimManager.activeEssaims.get(essaimName).getJetons()+"§r§7 jetons !");
-                    player.teleport(main.essaimManager.activeEssaims.get(essaimName).getEntry());
+                    JetonManager.addJetonsPlayer(p.getUniqueId(), EssaimManager.activeEssaims.get(essaimName).getJetons());
+                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagné §d"+EssaimManager.activeEssaims.get(essaimName).getJetons()+"§r§7 jetons !");
+                    player.teleport(EssaimManager.activeEssaims.get(essaimName).getEntry());
                 }
                 else
                 {
@@ -534,21 +558,22 @@ public class EssaimFunctions {
                 }
                 InGameUtilities.playPlayerSound(player, "gun.hud.boss_killed", SoundCategory.AMBIENT, 1, 1);
             }
-            main.essaimManager.activeEssaims.remove(essaimName);
-            main.essaimManager.groups.remove(essaimName);
+            DisableEssaim(essaimName);
+            EssaimManager.activeEssaims.remove(essaimName);
+            EssaimManager.groups.remove(essaimName);
         }
         else
         {
-            main.essaimManager.groups.get(essaimName).finish(p);
-            for(Player player : main.essaimManager.groups.get(essaimName).getMembers())
+            EssaimManager.groups.get(essaimName).finish(p);
+            for(Player player : EssaimManager.groups.get(essaimName).getMembers())
             {
                 if(player.getName().equalsIgnoreCase(p.getName()))
                 {
 
                     InGameUtilities.sendPlayerInformation(player, "Vous avez quitté l'essaim");
-                    JetonManager.addJetonsPlayer(p.getUniqueId(), main.essaimManager.activeEssaims.get(essaimName).getJetons());
-                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagné §d"+main.essaimManager.activeEssaims.get(essaimName).getJetons()+" §r§7 jetons !");
-                    player.teleport(main.essaimManager.activeEssaims.get(essaimName).getEntry());
+                    JetonManager.addJetonsPlayer(p.getUniqueId(), EssaimManager.activeEssaims.get(essaimName).getJetons());
+                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagné §d"+EssaimManager.activeEssaims.get(essaimName).getJetons()+" §r§7 jetons !");
+                    player.teleport(EssaimManager.activeEssaims.get(essaimName).getEntry());
                 }
                 else
                 {
@@ -556,5 +581,14 @@ public class EssaimFunctions {
                 }
             }
         }
+    }
+
+    public static void SaveEssaim()
+    {
+        for(String essaim : EssaimManager.configManager.getConfig().getConfigurationSection("").getKeys(false))
+        {
+            EssaimManager.configManager.getConfig().set(essaim+".closed", !EssaimManager.activeEssaims.containsKey(essaim));
+        }
+        EssaimManager.configManager.save();
     }
 }

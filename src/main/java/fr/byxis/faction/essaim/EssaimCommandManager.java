@@ -159,7 +159,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             EssaimFunctions.unfinishEssaim(args[1]);
             if(sender instanceof Player p)
             {
-                InGameUtilities.sendPlayerInformation(p, "L'essaim " + TextUtilities.convertStorableToClean(args[1]) + " a été fini !");
+                InGameUtilities.sendPlayerError(p, "L'essaim " + TextUtilities.convertStorableToClean(args[1]) + " n'est plus fini !");
             }
         }else if (args.length == 2 && args[0].equalsIgnoreCase("remove") && sender.hasPermission("fireland.essaim.admin")) {
             EssaimFunctions.deleteEssaim(args[1]);
@@ -209,7 +209,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             //close
             if(sender instanceof Player p && args[2].equalsIgnoreCase("Wowowowowowowowowowow1234567890") && !main.hashMapManager.isTeleporting(p.getUniqueId()))
             {
-                EssaimFunctions.teleportJoinEssaim(p, main.essaimManager.activeEssaims.get(args[1]).getHub(), "gun.hub.helico",10, args[1]);
+                EssaimFunctions.teleportJoinEssaim(p, EssaimManager.activeEssaims.get(args[1]).getHub(), "gun.hub.helico",10, args[1]);
             }
         }
         else if (args.length == 6 && sender.hasPermission("fireland.essaim.admin")) {

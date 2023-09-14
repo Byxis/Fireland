@@ -3,6 +3,7 @@ package fr.byxis.player.items.backpack;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
@@ -22,22 +23,38 @@ public class BackPackClass {
     private Gson gson = new Gson();
     private Type itemListType = new TypeToken<List<String>>(){}.getType();
 
-
     public BackPackClass(int level) {
         this.backpackKey = new NamespacedKey("fireland", "backpack");
-        if(level <= 1 || level >6)
+
+
+
+        if(level == 1 || level >8)
+        {
+            this.maxInventorySize = 5;
+        }
+        else if(level == 2)
+        {
+            this.maxInventorySize = 7;
+        }
+        else if(level <= 3)
         {
             this.maxInventorySize = 9;
         }
         else
         {
-            this.maxInventorySize = level*9;
+            this.maxInventorySize = (level-2)*9;
         }
     }
+    public boolean isBackPackEmpty(ItemStack item)
+    {
+        Inventory inventory = loadBackPack(item);
+        return inventory.isEmpty();
 
+    }
     public Inventory loadBackPack(ItemStack item) {
         PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
         Inventory inventory = createEmptyInventory(item.getItemMeta().getCustomModelData());
+
         if (container.has(backpackKey, PersistentDataType.STRING)) {
             try {
                 String data = container.get(backpackKey, PersistentDataType.STRING);
@@ -54,6 +71,22 @@ public class BackPackClass {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        ItemStack glass = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+        ItemMeta meta = glass.getItemMeta();
+        meta.setDisplayName(" ");
+        glass.setItemMeta(meta);
+        if(this.maxInventorySize == 5)
+        {
+            inventory.setItem(0, glass);
+            inventory.setItem(1, glass);
+            inventory.setItem(7, glass);
+            inventory.setItem(8, glass);
+        }
+        if(this.maxInventorySize == 7)
+        {
+            inventory.setItem(0, glass);
+            inventory.setItem(8, glass);
         }
         return inventory;
     }
@@ -92,12 +125,19 @@ public class BackPackClass {
         String name = null;
         switch(level)
         {
-            default -> name = "§cCeinture de munitions";
-            case 2,4,5 -> name = "§cA venir";
-            case 3 -> name = "§cSac à dos léger";
+            case 1 -> name = "§cPochette";
+            case 2 -> name = "§cSacoche";
+            case 3 -> name = "§cSac à dos";
+            case 4 -> name = "§cSac de sport";
+            case 5 -> name = "§cSac de randonnée";
             case 6 -> name = "§cSac à dos militaire";
+            default -> name = "§cA venir";
         }
-        return Bukkit.createInventory(new BackpackInventoryHolder(), level*9, name);
+        if(level > 3)
+        {
+            return Bukkit.createInventory(new BackpackInventoryHolder(), (level-2)*9, name);
+        }
+        return Bukkit.createInventory(new BackpackInventoryHolder(), 9, name);
     }
 
     private static class BackpackInventoryHolder implements InventoryHolder {

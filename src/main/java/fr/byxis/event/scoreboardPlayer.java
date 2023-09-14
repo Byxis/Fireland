@@ -4,6 +4,7 @@ import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.player.karma.PlayerKarmaClass;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.player.karma.karmaManager;
+import fr.byxis.player.primes.PrimeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -106,13 +107,18 @@ public class scoreboardPlayer implements Listener {
 		Score line2 = objective.getScore("§7- ");
 		Score none1 = objective.getScore("");
 		Score none2 = objective.getScore(" ");
-		Score money = objective.getScore("§8Monnaie : §6"+Math.round(main.eco.getBalance(p))+"$"+
-				"  §8| §b "+jetons.getJetonsPlayer(p.getUniqueId()) + " \u26c1");
-		Score bank = objective.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"$");
+		Score money = objective.getScore("§8Monnaie : §6"+Math.round(main.eco.getBalance(p))+"§r$"+
+				"  §8| §b "+jetons.getJetonsPlayer(p.getUniqueId()) + "§r\u26c1");
+		Score bank = objective.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"§r$");
 		Score infect = objective.getScore("§8État : "+state);
 		Score discretion = objective.getScore("§8Discretion : "+shotColor+numDiscretion+"%");
 		Score temps = objective.getScore("§8Temps survécu : §7"+time);
-		Score rang = objective.getScore("§8Rang : "+km.getRang(p.getUniqueId()));
+		String prime = "";
+		if(PrimeEvent.config.getConfig().contains(p.getUniqueId().toString()))
+		{
+			prime = " §c(Recherché)";
+		}
+		Score rang = objective.getScore("§8Rang : "+km.getRang(p.getUniqueId())+prime);
 		
 		line2.setScore(9);
 		none2.setScore(8);
@@ -157,7 +163,7 @@ public class scoreboardPlayer implements Listener {
 		Score money = null;
 		if (obj != null) {
 			money = obj.getScore("§8Monnaie : §6"+Math.round(main.eco.getBalance(p))+"$"+
-					" §8 | §b "+jetons.getJetonsPlayer(p.getUniqueId()) + " \u26c1");
+					" §8 | §b "+jetons.getJetonsPlayer(p.getUniqueId()) + "\u26c1");
 		}
 
 

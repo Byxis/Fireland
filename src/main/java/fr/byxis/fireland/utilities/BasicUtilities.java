@@ -14,13 +14,41 @@ import java.util.UUID;
 
 public class BasicUtilities {
 
-    public static String getStringTime(long durationInMillis)
+    public static String getStringTimeHour(long durationInMillis)
     {
         long second = (durationInMillis / 1000) % 60;
         long minute = (durationInMillis / (1000 * 60)) % 60;
         long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
+        if(hour > 0)
+        {
+            return String.format("%02dheures, %02dminutes et %02dsecondes", hour, minute, second);
+        }
+        else if(minute > 0)
+        {
+            return String.format("%02dminutes et %02dsecondes", hour, minute, second);
+        }
+        return String.format("%02dsecondes", hour, minute, second);
 
-        return String.format("%02dh%02dmin%02ds", hour, minute, second);
+    }
+    public static String getStringTimeDay(long durationInMillis)
+    {
+        long second = (durationInMillis / 1000) % 60;
+        long minute = (durationInMillis / (1000 * 60)) % 60;
+        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
+        long day = (durationInMillis / (1000 * 60 * 60*24));
+        if(day > 0)
+        {
+            return String.format("%02djours, %02dheures, %02dminutes et %02dsecondes.", day, hour, minute, second);
+        }
+        else if(hour > 0)
+        {
+            return String.format("%02dheures, %02dminutes et %02dsecondes", hour, minute, second);
+        }
+        else if(minute > 0)
+        {
+            return String.format("%02dminutes et %02dsecondes", hour, minute, second);
+        }
+        return String.format("%02dsecondes", hour, minute, second);
     }
 
     public static UUID getUuid(String name) {

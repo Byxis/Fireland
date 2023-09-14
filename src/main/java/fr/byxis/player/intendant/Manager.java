@@ -1,5 +1,6 @@
 package fr.byxis.player.intendant;
 
+import fr.byxis.faction.housing.BunkerClass;
 import fr.byxis.fireland.utilities.*;
 import fr.byxis.player.intendant.menu.*;
 import fr.byxis.faction.faction.FactionFunctions;
@@ -9,10 +10,7 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.faction.zone.ZoneConfigFileManager;
 import fr.byxis.faction.zone.zoneclass.FactionZoneInformation;
 import fr.byxis.player.quest.QuestManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.SoundCategory;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +20,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+
+import static fr.byxis.fireland.utilities.InGameUtilities.debug;
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+import static fr.byxis.player.intendant.menu.MenuEssaim.OpenEssaimMenu;
+import static fr.byxis.player.intendant.menu.MenuIntendant.OpenIntendant;
+import static fr.byxis.player.primes.PrimeEvent.addPrime;
 
 public class Manager implements Listener {
 
@@ -67,8 +71,11 @@ public class Manager implements Listener {
                     case NETHER_STAR -> {
                         //TODO: Succès
                     }
+                    case DEAD_FIRE_CORAL -> {
+                        OpenEssaimMenu(main, p);
+                    }
                     case PLAYER_HEAD -> {
-                        //TODO: Primes
+                        MenuPrime.OpenPrime(main, p);
                     }
                 }
             }
@@ -90,7 +97,7 @@ public class Manager implements Listener {
                 FactionInformation finfos = ff.getFactionInfo(infos.getFactionName());
                 switch (itemclicked.getType()) {
                     case RED_STAINED_GLASS_PANE -> {
-                        MenuIntendant.OpenIntendant(main, p);
+                        OpenIntendant(main, p);
                     }
                     case ANVIL -> {
                         MenuPerks.OpenPerks(main, p);
@@ -126,6 +133,14 @@ public class Manager implements Listener {
                             }
                         }
                         MenuFaction.OpenFaction(main, p, true);
+                    }
+                    case STONE -> {
+                        if(!main.bunkerManager.getLoadedBunker().containsKey(finfos.getName()))
+                        {
+                            BunkerClass bunker = new BunkerClass(finfos.getName(), main);
+                            main.bunkerManager.AddLoadedBunker(bunker);
+                        }
+                        main.bunkerManager.getLoadedBunker().get(finfos.getName()).Join(p);
                     }
                     case GRASS_BLOCK -> {
                         MenuZone.OpenZone(main, p);
@@ -347,6 +362,7 @@ public class Manager implements Listener {
 
                 if(itemclicked.getType().toString().endsWith("_BANNER"))
                 {
+                    debugp("Ouais");
                     FactionFunctions ff = new FactionFunctions(main, p);
 
                     FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
@@ -357,17 +373,19 @@ public class Manager implements Listener {
                     {
                         if(itemclicked.getItemMeta().getDisplayName().contains(fz.getFormattedName()))
                         {
+                            debugp("nice");
                             zoneinfo = fz;
                             break;
                         }
                     }
-                    if(zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk() && main.hashMapManager.isTeleporting(p.getUniqueId()))
+                    if(zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk() && !main.hashMapManager.isTeleporting(p.getUniqueId()))
                     {
+                        debugp("go");
                         ZoneConfigFileManager configManager = new ZoneConfigFileManager(main);
                         configManager.notSafeSetup();
-                        Location loc = new Location(Bukkit.getWorld("world"), configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".x"),
-                                configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".y"),
-                                configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".z"));
+                        Location loc = new Location(Bukkit.getWorld("world"), configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".teleportation.x"),
+                                configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".teleportation.y"),
+                                configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".teleportation.z"));
                         InGameUtilities.teleportPlayer(p, loc, 15, "gun.hub.helico");
                     }
                 }
@@ -392,7 +410,7 @@ public class Manager implements Listener {
 
                 if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
                 {
-                    MenuIntendant.OpenIntendant(main, p);
+                    OpenIntendant(main, p);
                 }
                 else if(itemclicked.getType() == Material.FIREWORK_ROCKET)
                 {
@@ -435,11 +453,187 @@ public class Manager implements Listener {
                 switch(itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE -> {
-                        MenuIntendant.OpenIntendant(main, p);
+                        OpenIntendant(main, p);
                     }
                     case STRUCTURE_VOID -> {
                         QuestManager.claimRewards(p);
                         MenuQuest.OpenQuestMenu(main, p);
+                    }
+                }
+            }
+            else if(inv.getTitle().equalsIgnoreCase("§4Primes"))
+            {
+                /**       Click check        **/
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null) {
+                    return;
+                }
+                InventoryUtilities.clickManager(e);
+
+                /**       Click check        **/
+
+
+                switch(itemclicked.getType())
+                {
+                    case RED_STAINED_GLASS_PANE -> {
+                        OpenIntendant(main, p);
+                    }
+                    case PLAYER_HEAD -> {
+                        MenuPrime.OpenPrimePlayer(main, p, 1);
+                    }
+                    case CHEST -> {
+                        MenuPrime.OpenPrimeList(main, p);
+                    }
+                }
+            }
+            else if(inv.getTitle().equalsIgnoreCase("§4Primes: Sélectionner un joueur"))
+            {
+                /**       Click check        **/
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null) {
+                    return;
+                }
+                InventoryUtilities.clickManager(e);
+
+                /**       Click check        **/
+
+
+                switch(itemclicked.getType())
+                {
+                    case RED_STAINED_GLASS_PANE -> {
+                        MenuPrime.OpenPrime(main, p);
+                    }
+                    case PLAYER_HEAD -> {
+                        MenuPrime.OpenPrimeMoney(main, p, ChatColor.stripColor(itemclicked.getItemMeta().getDisplayName()), 0 );
+                    }
+                }
+            }
+            else if(inv.getTitle().equalsIgnoreCase("§4Primes: Ajouter un montant"))
+            {
+                /**       Click check        **/
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null) {
+                    return;
+                }
+                InventoryUtilities.clickManager(e);
+
+                /**       Click check        **/
+                String player = ChatColor.stripColor(e.getClickedInventory().getItem(13).getItemMeta().getDisplayName());
+                int money = Integer.parseInt(ChatColor.stripColor(e.getClickedInventory().getItem(13).getItemMeta().getLore().get(0).split(" ")[1]));
+
+                switch(itemclicked.getType())
+                {
+                    case RED_STAINED_GLASS_PANE -> {
+                        MenuPrime.OpenPrimePlayer(main, p, 1);
+                    }
+                    case RAW_GOLD -> {
+                        if(itemclicked.getItemMeta().hasCustomModelData() && itemclicked.getItemMeta().getCustomModelData() == 1)
+                        {
+                            if(money-1000 > 0)
+                            {
+                                MenuPrime.OpenPrimeMoney(main, p, player, money -1000 );
+                            }
+                            else
+                            {
+
+                                MenuPrime.OpenPrimeMoney(main, p, player, 0 );
+                            }
+                        }
+                        else
+                        {
+                            MenuPrime.OpenPrimeMoney(main, p, player, money +1000 );
+                        }
+                    }
+                    case GOLD_INGOT -> {
+                        if(itemclicked.getItemMeta().hasCustomModelData() && itemclicked.getItemMeta().getCustomModelData() == 1)
+                        {
+                            if(money-100 > 0)
+                            {
+                                MenuPrime.OpenPrimeMoney(main, p, player, money -100 );
+                            }
+                            else
+                            {
+
+                                MenuPrime.OpenPrimeMoney(main, p, player, 0 );
+                            }
+                        }
+                        else
+                        {
+                            MenuPrime.OpenPrimeMoney(main, p, player, money +100 );
+                        }
+                    }
+                    case GOLD_NUGGET -> {
+                        if(itemclicked.getItemMeta().hasCustomModelData() && itemclicked.getItemMeta().getCustomModelData() == 1)
+                        {
+                            if(money-10 > 0)
+                            {
+                                MenuPrime.OpenPrimeMoney(main, p, player, money -10 );
+                            }
+                            else
+                            {
+
+                                MenuPrime.OpenPrimeMoney(main, p, player, 0 );
+                            }
+                        }
+                        else
+                        {
+                            MenuPrime.OpenPrimeMoney(main, p, player, money +10 );
+                        }
+                    }
+                    case STRUCTURE_VOID,BARRIER ->
+                    {
+                        if(Fireland.eco.getBalance(p) > money)
+                        {
+                            Fireland.eco.withdrawPlayer(p, money);
+                            addPrime(BasicUtilities.getUuid(player), money);
+                            if(Bukkit.getPlayer(player) != null && Bukkit.getPlayer(player).isOnline())
+                            {
+                                InGameUtilities.sendPlayerError(Bukkit.getPlayer(player), "Une prime de "+money+"$ vous a été attribué.");
+                            }
+                            InGameUtilities.sendPlayerSucces(p, "Une prime de "+money+"$ a été attribué à "+player+".");
+                        }
+                    }
+                }
+            }
+            else if(inv.getTitle().equalsIgnoreCase("§4Primes disponibles"))
+            {
+                /**       Click check        **/
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null) {
+                    return;
+                }
+                InventoryUtilities.clickManager(e);
+
+                /**       Click check        **/
+
+
+                switch(itemclicked.getType())
+                {
+                    case RED_STAINED_GLASS_PANE -> {
+                        MenuPrime.OpenPrime(main, p);
+                    }
+                }
+            }else if(inv.getTitle().equalsIgnoreCase("Calendrier des Essaims"))
+            {
+                /**       Click check        **/
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null) {
+                    return;
+                }
+                InventoryUtilities.clickManager(e);
+
+                /**       Click check        **/
+
+
+                switch(itemclicked.getType())
+                {
+                    case RED_STAINED_GLASS_PANE -> {
+                        OpenIntendant(main, p);
                     }
                 }
             }

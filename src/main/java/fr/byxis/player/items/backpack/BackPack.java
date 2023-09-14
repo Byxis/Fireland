@@ -50,7 +50,7 @@ public class BackPack implements Listener, CommandExecutor {
             // Si le joueur n'a pas encore de sac à dos, donne-lui-en un nouveau.
             if(isExceedingLimit(player))
             {
-                InGameUtilities.sendPlayerError(player, "Vous ne pouvez avoir qu'un seul sac à dos et une seule ceinture de munition à la fois  ou deux ceintures de munitions à la fois !");
+                InGameUtilities.sendPlayerError(player, "Vous ne pouvez avoir qu'un seul sac à dos à la fois !");
                 event.setCancelled(true);
                 return;
             }
@@ -72,17 +72,12 @@ public class BackPack implements Listener, CommandExecutor {
     public boolean isExceedingLimit(Player p)
     {
         int sacados = 1;
-        int ceinture = 2;
         for(ItemStack item : p.getInventory().getContents())
         {
             if(item != null && item.getType() == Material.LEATHER && item.getItemMeta().hasCustomModelData())
             {
-                ceinture -=1;
-                if(item.getItemMeta().getCustomModelData() != 1)
-                {
-                    sacados -=1;
-                }
-                if(sacados < 0 ||ceinture < 0)
+                sacados -= 1;
+                if(sacados < 0)
                 {
                     return true;
                 }
@@ -92,11 +87,16 @@ public class BackPack implements Listener, CommandExecutor {
     }
 
     @EventHandler
-    public void onInventoryClose(InventoryCloseEvent event) {
-        if (event.getView().getTitle().contains("Sac à dos") || event.getView().getTitle().contains("Ceinture de munitions")) {
-            Player player = (Player) event.getPlayer();
+    public void onInventoryClose(InventoryCloseEvent e) {
+        if (e.getView().getTitle().contains("Pochette")
+                || e.getView().getTitle().contains("Sacoche")
+                || e.getView().getTitle().contains("Sac à dos")
+                || e.getView().getTitle().contains("Sac de sport")
+                || e.getView().getTitle().contains("Sac de randonnée")
+                || e.getView().getTitle().contains("Sac à dos militaire")) {
+            Player player = (Player) e.getPlayer();
             InGameUtilities.playWorldSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 0.5f, 0f);
-            Inventory inventory = event.getInventory();
+            Inventory inventory = e.getInventory();
             ItemStack backPackItem = player.getInventory().getItemInMainHand();
             BackPackClass bp = new BackPackClass(27);
             bp.saveBackPack(backPackItem, inventory);
@@ -107,15 +107,53 @@ public class BackPack implements Listener, CommandExecutor {
     @EventHandler
     public void inventoryManager(InventoryClickEvent e)
     {
-        if(e.getCurrentItem() != null && e.getCurrentItem().getType() == Material.LEATHER)
+        if(e.getCurrentItem() != null && (e.getCurrentItem().getType() == Material.LEATHER))
         {
+            BackPackClass bp = new BackPackClass(54);
+            if(bp.isBackPackEmpty(e.getCurrentItem()))
+            {
+                return;
+            }
             if(e.getClickedInventory().getType() != InventoryType.PLAYER || (e.getView().getTopInventory().getType() != InventoryType.PLAYER
                     &&e.getView().getTopInventory().getType() != InventoryType.CRAFTING
-                    &&e.getView().getTopInventory().getType() != InventoryType.CREATIVE))
+                    &&e.getView().getTopInventory().getType() != InventoryType.CREATIVE)
+                    )
+            {
+                if(!e.getView().getTitle().contains("Coffre"))
+                {
+                    e.setCancelled(true);
+                    return;
+                }
+            }
+        }
+        if(e.getCurrentItem() != null && e.getCurrentItem().getType() == Material.WHITE_STAINED_GLASS_PANE)
+        {
+            if(e.getView().getTitle().contains("Pochette")
+                    || e.getView().getTitle().contains("Sacoche")
+                    || e.getView().getTitle().contains("Sac à dos")
+                    || e.getView().getTitle().contains("Sac de sport")
+                    || e.getView().getTitle().contains("Sac de randonnée")
+                    || e.getView().getTitle().contains("Sac à dos militaire")
+            ||e.getClick().isKeyboardClick())
             {
                 e.setCancelled(true);
             }
         }
+        if(e.getView().getTitle().contains("Pochette")
+                || e.getView().getTitle().contains("Sacoche")
+                || e.getView().getTitle().contains("Sac à dos")
+                || e.getView().getTitle().contains("Sac de sport")
+                || e.getView().getTitle().contains("Sac de randonnée")
+                || e.getView().getTitle().contains("Sac à dos militaire")
+                )
+        {
+            if(e.getClick().isKeyboardClick() ||e.getAction() == InventoryAction.DROP_ALL_SLOT
+            ||e.getAction() == InventoryAction.DROP_ONE_SLOT)
+            {
+                e.setCancelled(true);
+            }
+        }
+
     }
 
     public void giveItem(Player p, int level)
@@ -125,13 +163,18 @@ public class BackPack implements Listener, CommandExecutor {
 
         ItemMeta meta = backpack.getItemMeta();
         meta.setCustomModelData(level);
+        String name = "";
         switch(level)
         {
-            default -> meta.setDisplayName("§cCeinture de munitions");
-            case 2,4,5 -> meta.setDisplayName("§cA venir");
-            case 3 -> meta.setDisplayName("§cSac à dos léger");
-            case 6 -> meta.setDisplayName("§cSac à dos militaire");
+            case 1 -> name = "§cPochette";
+            case 2 -> name = "§cSacoche";
+            case 3 -> name = "§cSac à dos";
+            case 4 -> name = "§cSac de sport";
+            case 5 -> name = "§cSac de randonnée";
+            case 6 -> name = "§cSac à dos militaire";
+            default -> name = "§cA venir";
         }
+        meta.setDisplayName(name);
 
         ArrayList<String> lore = new ArrayList<String>();
         lore.add("§8Faites clic droit avec pour l'ouvrir");

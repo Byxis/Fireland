@@ -39,6 +39,11 @@ public class parachute implements Listener {
     		if(e.getItem() != null && e.getPlayer().getLocation().add(0,-1,0).getBlock().getType() == Material.AIR && e.getPlayer().getLocation().add(0,-2,0).getBlock().getType() == Material.AIR) {
     			if(e.getItem().getType() == Material.POPPY)
 				{
+					if(e.getPlayer().getWorld().getName().equalsIgnoreCase("essaim"))
+					{
+						InGameUtilities.sendPlayerError(e.getPlayer(), "Le parachute a été désactivé dans les essaims !");
+						return;
+					}
 					e.getItem().setType(Material.DANDELION);
 					e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 6, 0, false, false), true);
 					InGameUtilities.playWorldSound(e.getPlayer().getLocation(), "entity.bat.takeoff", SoundCategory.PLAYERS, 0.1f, 1);
@@ -46,6 +51,11 @@ public class parachute implements Listener {
 				}
 				else if(e.getItem().getType() == Material.DANDELION)
 				{
+					if(e.getPlayer().getWorld().getName().equalsIgnoreCase("essaim"))
+					{
+						InGameUtilities.sendPlayerError(e.getPlayer(), "Le parachute a été désactivé dans les essaims !");
+						return;
+					}
 					setParachuting(e.getPlayer(), true);
 				}
     		}

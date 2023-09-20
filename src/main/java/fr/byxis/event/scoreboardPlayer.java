@@ -13,6 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scoreboard.*;
 
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 public class scoreboardPlayer implements Listener {
 
 	private final Fireland main;
@@ -99,7 +101,6 @@ public class scoreboardPlayer implements Listener {
 		}
 
 		jetonsCommandManager jetons = new jetonsCommandManager(main);
-		karmaManager km = new karmaManager(main);
 		
 		String time = getTimeString(p);
 		
@@ -118,8 +119,8 @@ public class scoreboardPlayer implements Listener {
 		{
 			prime = " §c(Recherché)";
 		}
-		Score rang = objective.getScore("§8Rang : "+km.getRang(p.getUniqueId())+prime);
-		
+		Score rang = objective.getScore("§8Niveau : §7"+getPlayerLevel(p.getUniqueId()).getSringRang() +prime+" §8(Niv. "+getPlayerLevel(p.getUniqueId()).getLevel()+")");
+
 		line2.setScore(9);
 		none2.setScore(8);
 		money.setScore(7);
@@ -143,45 +144,6 @@ public class scoreboardPlayer implements Listener {
         }
         createScoreboard(player);
     }
-	
-	public void updateScoreboard(Player p)
-	{
-		Objective obj = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
-		
-		String state = "§7sain";
-		if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getUniqueId()))
-		{
-			state = "§2infecté";
-		}
-		
-		//double numDiscretion = main.cfgm.getPlayerDB().getDouble("discretion."+p.getUniqueId()+".score");
-		double numDiscretion = main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).getScore();
-		
-		String time = getTimeString(p);
-		jetonsCommandManager jetons = new jetonsCommandManager(main);
-		karmaManager km = new karmaManager(main);
-		Score money = null;
-		if (obj != null) {
-			money = obj.getScore("§8Monnaie : §6"+Math.round(main.eco.getBalance(p))+"$"+
-					" §8 | §b "+jetons.getJetonsPlayer(p.getUniqueId()) + "\u26c1");
-		}
-
-
-
-		Score bank = obj.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"$" );
-		Score discretion = obj.getScore("§8Discretion : §7"+numDiscretion+"%");
-		Score infecte = obj.getScore("§8État : "+state);
-		Score temps = obj.getScore("§8Temps survécu : §7"+time);
-		Score rang = obj.getScore("§8Rang : "+km.getRang(p.getUniqueId()));
-
-
-		money.setScore(7);
-		bank.setScore(6);
-		infecte.setScore(5);
-		discretion.setScore(4);
-		temps.setScore(3);
-		rang.setScore(2);
-	}
 	
 	private String getTimeString(Player p)
 	{

@@ -59,7 +59,7 @@ public class MenuZone {
             else
             {
                 lore.add("§8Zone non capturée");
-                lore.add("§8Total cumulé: §7"+BasicUtilities.getStringTimeHour(factionZoneInformation.getTotalDuration()));
+                lore.add("§8Total cumulé: §7"+BasicUtilities.getStringTime(factionZoneInformation.getTotalDuration()));
                 inv.setItem(i, InventoryUtilities.setItemMetaLore(Material.LIGHT_GRAY_BANNER, "§7"+ factionZoneInformation.getFormattedName(), (short) 0, lore));
             }
 

@@ -23,11 +23,12 @@ public class ShopEventManager implements Listener {
         {
             Player p = (Player) e.getView().getPlayer();
             ItemStack itemclicked = e.getCurrentItem();
+            if(e.getClick().isKeyboardClick() && e.getView().getPlayer().getInventory().getItem(e.getHotbarButton()) != null)
+            {
+                e.setCancelled(true);
+                return;
+            }
             if (itemclicked == null) {
-                if(e.getClick().isKeyboardClick() || e.isShiftClick())
-                {
-                    e.setResult(Event.Result.DENY);
-                }
                 return;
             }
             ShopFunction sf = new ShopFunction(main, p);
@@ -48,11 +49,11 @@ public class ShopEventManager implements Listener {
                     {
                         if(e.getView().getTitle().contains("skin"))
                         {
-                            sf.buyItem(itemclicked, p, sf.getShopName(e.getView()), true);
+                            sf.buyItem(itemclicked, p, sf.getShopName(e.getView()).replaceAll(" ", "_"), true);
                         }
                         else
                         {
-                            sf.buyItem(itemclicked, p, sf.getShopName(e.getView()), false);
+                            sf.buyItem(itemclicked, p, sf.getShopName(e.getView()).replaceAll(" ", "_"), false);
                         }
                     }
                     else if(e.isRightClick())

@@ -7,7 +7,6 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.events.PacketListener;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import com.nametagedit.plugin.NametagEdit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -34,9 +33,6 @@ public class HideNametag implements PacketListener {
                 if (displayName != null) {
                     String name = displayName.getJson();
                     Player target = plugin.getServer().getPlayer(name);
-                    if (target != null && !target.hasPermission("nametag.see")) {
-                        displayName.setJson(NametagEdit.getApi().getNametag(target).getPrefix() + name + NametagEdit.getApi().getNametag(target).getSuffix());
-                    }
                 }
             }
         }

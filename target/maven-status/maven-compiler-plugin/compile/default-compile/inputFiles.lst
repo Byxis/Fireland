@@ -14,9 +14,11 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\WorldG
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\ItemSerializer.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\itemEnabler.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\worldGuardEvent.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\FactureCommand.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuBunker.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuPrime.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\serum\serum.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelSavings.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\rank\RankConfig.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\timeAlive.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\HashMapManager.java
@@ -31,6 +33,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\heliport.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\NVGoogles.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\InteractQuestClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\QuestClass.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelTabCompleter.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\QuestEventHandler.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\FirelandCommand.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\BuyQuestClass.java
@@ -108,15 +111,18 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\housing\Bun
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\Fireland.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\PlayerAddonsEnabler.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\housing\BunkerManager.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\PlayerLevel.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\PlayerQuests.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\ConfigManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\booster\BoosterCommandCompleter.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\notes\OpenNotes.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuZone.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\jetonSql.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelStorage.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\bank.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionEvent.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\karma\PlayerKarmaClass.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelEvent.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\stairs.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\housing\BunkerCommand.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\TextUtilities.java
@@ -149,6 +155,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\advancements
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\factionManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\pvpmanager\PvPManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneManager.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelCommand.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\backpack\BackPack.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\IntendantCommand.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\booster\BoosterClass.java

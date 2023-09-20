@@ -14,6 +14,7 @@ import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -67,7 +68,6 @@ public class EssaimEventHandler implements Listener {
                 if(main.essaimManager.activeSpawners.get(spawner).getActiveMobs().contains(mob))
                 {
                     main.essaimManager.activeSpawners.get(spawner).removeActiveMob(mob);
-                    main.getLogger().info("Killed for spawner "+spawner+", "+main.essaimManager.activeSpawners.get(spawner).getActiveMobs().size() +" current spawned. Remaining :"+main.essaimManager.activeSpawners.get(spawner).getRemaining() +"/"+ main.essaimManager.activeSpawners.get(spawner).getMax() +", is finished :"+main.essaimManager.activeSpawners.get(spawner).isSpawnerFinished());
                     if(main.essaimManager.activeSpawners.get(spawner).isSpawnerFinished())
                     {
                         for(String essaim : main.essaimManager.existingEssaims.keySet())
@@ -76,7 +76,6 @@ public class EssaimEventHandler implements Listener {
                             {
                                 if(!main.essaimManager.existingEssaims.get(essaim).get(spawner).getCommand().equalsIgnoreCase(""))
                                 {
-                                    main.getLogger().info("Commande executée : "+main.essaimManager.existingEssaims.get(essaim).get(spawner).getCommand());
                                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), main.essaimManager.existingEssaims.get(essaim).get(spawner).getCommand());
                                 }
                                 break;
@@ -136,6 +135,7 @@ public class EssaimEventHandler implements Listener {
                 {
                     sb.append((str[i]).toLowerCase()).append("-");
                 }
+
                 sb.append(str[str.length-1].toLowerCase());
                 String essaim = sb.toString();
                 if(EssaimManager.activeEssaims.get(essaim).isFinished())
@@ -152,12 +152,7 @@ public class EssaimEventHandler implements Listener {
                     switch (itemclicked.getType()) {
                         case LIME_STAINED_GLASS_PANE -> {
                             if (EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
-                                EssaimFunctions.startEssaim(essaim);
-                                InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-                                for (Player member : EssaimManager.groups.get(essaim).getMembers()) {
-                                    member.closeInventory();
-                                    InGameUtilities.sendPlayerInformation(member, "§aL'expédition a démarrée !");
-                                }
+                                EssaimFunctions.openStartingMenu(essaim, p);
                             } else {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                                 InGameUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
@@ -212,10 +207,41 @@ public class EssaimEventHandler implements Listener {
                         break;
                 }
             }
+            else if (inv.getTitle().contains("Lancement de "))
+            {
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null) {
+                    return;
+                }
+                InventoryUtilities.clickManager(e);
+
+                /**       Click check        **/
+
+                StringBuilder sb = new StringBuilder();
+                String[] str = (ChatColor.stripColor(e.getView().getTitle())).split(" ");
+                for(int i = 2; i < str.length-1; i++)
+                {
+                    sb.append((str[i]).toLowerCase()).append("-");
+                }
+
+                sb.append(str[str.length-1].toLowerCase());
+                String essaim = sb.toString();
+                if(!EssaimManager.activeEssaims.get(essaim).isFinished())
+                {
+                    if (EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
+                        switch(itemclicked.getType())
+                        {
+                            case PLAYER_HEAD -> launchEssaimStart(essaim, p, 1);
+                            case SKELETON_SKULL -> launchEssaimStart(essaim, p, 2);
+                            case WITHER_SKELETON_SKULL -> InGameUtilities.sendPlayerError(p, "Cette difficulté n'est pas encore disponible.");//launchEssaimStart(essaim, p, 3);
+                        }
+                    }
+                }
+            }
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void playerDeath(PlayerDeathEvent e)
     {
         String current = null;
@@ -232,6 +258,11 @@ public class EssaimEventHandler implements Listener {
                             if(member.getName().equalsIgnoreCase(e.getPlayer().getName()))
                             {
                                 current = essaim;
+                                if(EssaimManager.groups.get(essaim).shouldKeepInventory())
+                                {
+                                    e.setKeepInventory(true);
+                                    e.getDrops().clear();
+                                }
                                 InGameUtilities.sendPlayerInformation(member, "§cVous avez échoué l'expédition !");
                                 break;
 
@@ -273,24 +304,13 @@ public class EssaimEventHandler implements Listener {
                                     member.setInvulnerable(false);
                                     member.setHealth(0);
                                 }
-                                current = essaim;
                                 break;
-
                             }
-                        }
-                        if(current!= null)
-                        {
-                            break;
                         }
                     }
                 }
 
             }
-        }
-
-        if(current!= null)
-        {
-            EssaimManager.groups.get(current).loose(e.getPlayer());
         }
     }
 
@@ -381,8 +401,18 @@ public class EssaimEventHandler implements Listener {
     public void save(WorldSaveEvent e)
     {
         if(!e.getWorld().getName().equalsIgnoreCase("world"))
-        return;
+            return;
         EssaimFunctions.SaveEssaim();
+    }
+
+    private void launchEssaimStart(String essaim, Player p, int difficulty)
+    {
+        EssaimFunctions.startEssaim(essaim, difficulty);
+        InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
+        for (Player member : EssaimManager.groups.get(essaim).getMembers()) {
+            member.closeInventory();
+            InGameUtilities.sendPlayerInformation(member, "§aL'expédition a démarrée !");
+        }
     }
 
 

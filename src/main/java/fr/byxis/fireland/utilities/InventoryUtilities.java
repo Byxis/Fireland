@@ -1,5 +1,6 @@
 package fr.byxis.fireland.utilities;
 
+import fr.byxis.player.items.backpack.BackPackClass;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -46,13 +47,10 @@ public class InventoryUtilities {
 
     public static void clickManager(InventoryClickEvent e)
     {
-        if(e.getClickedInventory().getType() != InventoryType.PLAYER|| e.getView().getTopInventory().getType() != InventoryType.PLAYER)
+        if((e.getClickedInventory() != null && e.getClickedInventory().getType() != InventoryType.PLAYER) || e.getView().getTopInventory().getType() != InventoryType.PLAYER)
             e.setCancelled(true);
-        if(e.getClick() == ClickType.NUMBER_KEY)
-        {
-            InGameUtilities.sendPlayerError((Player) e.getView().getPlayer(), "Pour des raisons de sécurité, cette fonctionnalité a été désactivée.");
+        if(e.getClick().isKeyboardClick() && e.getView().getPlayer().getInventory().getItem(e.getHotbarButton()) != null)
             e.setCancelled(true);
-        }
         /*
         if (e.getClickedInventory() != e.getView().getTopInventory() || e.getClick().isKeyboardClick()) {
             e.setCancelled(true);

@@ -729,7 +729,7 @@ public class workshopFunction {
             }
             else
             {
-                lore.add("§8Type : §d"+item.type +"§8, reste §c"+ BasicUtilities.getStringTimeHour(item.finishDate.getTime() - System.currentTimeMillis()));
+                lore.add("§8Type : §d"+item.type +"§8, reste §c"+ BasicUtilities.getStringTime(item.finishDate.getTime() - System.currentTimeMillis()));
             }
 
             lore.add("§8Date de fin de création : "+item.finishDate);

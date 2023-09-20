@@ -6,6 +6,7 @@ import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,6 +27,9 @@ import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class bank implements Listener, CommandExecutor {
 	
@@ -42,7 +46,13 @@ public class bank implements Listener, CommandExecutor {
 			if(cmd.getName().equalsIgnoreCase("bank")) 
 			{
 				int length = args.length;
-				if(!player.hasPermission("fireland.command.bank.set") || length == 0)
+				if(player.hasPermission("fireland.command.bank.see") && length == 1)
+				{
+					OfflinePlayer p = Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[0]));
+					if(p != null && p.hasPlayedBefore())
+						openBank(p, player);
+				}
+				else if(!player.hasPermission("fireland.command.bank.set") || length == 0)
 				{
 					openBankMenu(player);
 					return true;
@@ -214,44 +224,7 @@ public class bank implements Listener, CommandExecutor {
 			}
 			else if(current.getType().equals(Material.ENDER_CHEST))
 			{
-				int slot = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
-				if(!main.hashMapManager.getStorageMap().containsKey(e.getView().getPlayer().getUniqueId()))
-				{
-					Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+player.getName());
-					int i = 0;
-					for (ItemStack item : loadEnderchest(player))
-					{
-						if(i < slot)
-						{
-							ec.setItem(i, item);
-						}
-						i++;
-					}
-					player.openInventory(ec);
-					main.hashMapManager.addStorageMap(player.getUniqueId(), ec);
-				}
-				else
-				{
-					if(slot != main.hashMapManager.getStorageMap().get(e.getView().getPlayer().getUniqueId()).getSize())
-					{
-						Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+player.getName());
-						int i = 0;
-						for (ItemStack item : main.hashMapManager.getStorageMap().get(e.getView().getPlayer().getUniqueId()))
-						{
-							if(i < slot)
-							{
-								ec.setItem(i, item);
-							}
-							i++;
-						}
-						player.openInventory(ec);
-						main.hashMapManager.addStorageMap(player.getUniqueId(), ec);
-					}
-					else
-					{
-						player.openInventory(main.hashMapManager.getStorageMap().get(e.getView().getPlayer().getUniqueId()));
-					}
-				}
+				openBank(player, player);
 			}
 			
 			if(current.getType().equals(Material.ANVIL))
@@ -279,7 +252,89 @@ public class bank implements Listener, CommandExecutor {
 			//saveEnderchest(e.getInventory().getContents(),player);
 		}*/
 	}
-	
+
+	private void openBank(Player owner, Player consulter) {
+		int slot = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+ owner.getUniqueId()+".upgrade"));
+		if(!main.hashMapManager.getStorageMap().containsKey(owner.getUniqueId()))
+		{
+			Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+ owner.getName());
+			int i = 0;
+			for (ItemStack item : loadEnderchest(owner.getUniqueId()))
+			{
+				if(i < slot)
+				{
+					ec.setItem(i, item);
+				}
+				i++;
+			}
+			consulter.openInventory(ec);
+			main.hashMapManager.addStorageMap(owner.getUniqueId(), ec);
+		}
+		else
+		{
+			if(slot != main.hashMapManager.getStorageMap().get(owner.getUniqueId()).getSize())
+			{
+				Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+ owner.getName());
+				int i = 0;
+				for (ItemStack item : main.hashMapManager.getStorageMap().get(owner.getUniqueId()))
+				{
+					if(i < slot)
+					{
+						ec.setItem(i, item);
+					}
+					i++;
+				}
+				consulter.openInventory(ec);
+				main.hashMapManager.addStorageMap(owner.getUniqueId(), ec);
+			}
+			else
+			{
+				consulter.openInventory(main.hashMapManager.getStorageMap().get(owner.getUniqueId()));
+			}
+		}
+	}
+
+	private void openBank(OfflinePlayer owner, Player consulter) {
+		int slot = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+ owner.getUniqueId()+".upgrade"));
+		if(!main.hashMapManager.getStorageMap().containsKey(owner.getUniqueId()))
+		{
+			Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+ owner.getName());
+			int i = 0;
+			for (ItemStack item : loadEnderchest(owner.getUniqueId()))
+			{
+				if(i < slot)
+				{
+					ec.setItem(i, item);
+				}
+				i++;
+			}
+			consulter.openInventory(ec);
+			main.hashMapManager.addStorageMap(owner.getUniqueId(), ec);
+		}
+		else
+		{
+			if(slot != main.hashMapManager.getStorageMap().get(owner.getUniqueId()).getSize())
+			{
+				Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+ owner.getName());
+				int i = 0;
+				for (ItemStack item : main.hashMapManager.getStorageMap().get(owner.getUniqueId()))
+				{
+					if(i < slot)
+					{
+						ec.setItem(i, item);
+					}
+					i++;
+				}
+				consulter.openInventory(ec);
+				main.hashMapManager.addStorageMap(owner.getUniqueId(), ec);
+			}
+			else
+			{
+				consulter.openInventory(main.hashMapManager.getStorageMap().get(owner.getUniqueId()));
+			}
+		}
+	}
+
 	@EventHandler
 	public void closeInventory(InventoryCloseEvent e)
 	{
@@ -382,7 +437,7 @@ public class bank implements Listener, CommandExecutor {
 		return lore;
 	}
 	
-	public ItemStack[] loadEnderchest(Player player) {
+	public ItemStack[] loadEnderchest(UUID player) {
 		FileConfiguration config = main.cfgm.getEnderchest();
         List<ItemStack> itemstackList = new ArrayList<ItemStack>();
         
@@ -400,12 +455,12 @@ public class bank implements Listener, CommandExecutor {
         
         //boolean done = false;
 		int i = -1;
-		int maxSlots = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
+		int maxSlots = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player+".upgrade"));
 		while (i < maxSlots) {
 			i++;
-			if (config.contains("stockage."+player.getUniqueId()+"."+i))
+			if (config.contains("stockage."+player+"."+i))
 			{
-				itemstackList.add(config.getItemStack("stockage."+player.getUniqueId()+"."+i));
+				itemstackList.add(config.getItemStack("stockage."+player+"."+i));
 			}
 			else
 			{

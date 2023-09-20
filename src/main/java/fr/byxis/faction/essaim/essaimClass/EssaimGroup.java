@@ -1,6 +1,8 @@
 package fr.byxis.faction.essaim.essaimClass;
 
 import fr.byxis.faction.essaim.EssaimFunctions;
+import fr.byxis.faction.essaim.EssaimManager;
+import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -16,6 +18,7 @@ public class EssaimGroup {
     private String name;
     private Player leader;
     private List<Player> members;
+    private int adaptiveDifficulty;
     private int difficulty;
     private Timestamp startTime;
 
@@ -24,6 +27,7 @@ public class EssaimGroup {
         this.leader = firstPlayer;
         this.members = new ArrayList<Player>();
         this.startTime = null;
+        difficulty = 0;
 
         // Add the first player as a member (and leader)
         members.add(firstPlayer);
@@ -134,13 +138,13 @@ public class EssaimGroup {
         return leader;
     }
 
-    public void setDifficulty()
+    public void setAdaptativeDifficulty()
     {
-        difficulty = members.size();
+        adaptiveDifficulty = members.size();
     }
 
-    public float getMultiplicatorDifficulty() {
-        return switch (difficulty)
+    public float getAdaptativeDifficulty() {
+        return switch (adaptiveDifficulty)
         {
             case 1 -> 0.8f;
             case 3 -> 1.6f;
@@ -149,14 +153,29 @@ public class EssaimGroup {
         };
     }
 
-    public void startEssaim()
+    public void startEssaim(int _difficulty)
     {
-        setDifficulty();
+        difficulty = _difficulty;
+        setAdaptativeDifficulty();
         this.startTime = new Timestamp(System.currentTimeMillis());
     }
 
+    public int getRewardJetons()
+    {
+        int jetons = EssaimManager.activeEssaims.get(this.name).getJetons();
+        if(difficulty == 3)
+            return jetons+ 5;
+        else if(difficulty == 0)
+            return 0;
+        return jetons;
+    }
     public boolean hasStarted()
     {
         return startTime != null;
+    }
+
+    public boolean shouldKeepInventory()
+    {
+        return difficulty == 1;
     }
 }

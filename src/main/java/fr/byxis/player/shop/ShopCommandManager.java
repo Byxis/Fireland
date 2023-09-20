@@ -1,6 +1,7 @@
 package fr.byxis.player.shop;
 
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -13,6 +14,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class ShopCommandManager implements CommandExecutor, TabCompleter {
 
@@ -39,25 +42,12 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     player.sendMessage("§cCe shop n'existe pas.");
                     return true;
                 }
-                if(name.contains("lourds"))
-                {
-                    if(player.hasPermission("group.bannis") && player.getGameMode() != GameMode.CREATIVE)
-                    {
-                        sf.openInv(player, name.replaceAll("_", " "), 1);
-                        return true;
-                    }
-                    player.sendMessage("§cJe ne vends pas des armes de ce calibre à des gens comme vous !");
-                    return false;
-                }
-                if (sf.getKarma(player.getUniqueId()) < 25 && player.getGameMode() != GameMode.CREATIVE) {
-                    player.sendMessage("§cJe ne vends pas ma marchandise à des criminels comme vous !");
-                    return true;
-                }
-
-                if (main.hashMapManager.getRangMap().get(player.getUniqueId()).getRang() <= 75 && name.contains("pass") && player.getGameMode() != GameMode.CREATIVE) {
-                    player.sendMessage("§cJe ne vous fais pas encore assez confiance pour vous vendre des pass !");
-                } else
+                if(getPlayerLevel(player.getUniqueId()).hasAccesstoShop(name))
                     sf.openInv(player, name.replaceAll("_", " "), 1);
+                else
+                {
+                    InGameUtilities.sendPlayerError(player, "Vous n'avez pas encore accès à ce shop. Pour y avoir accès, augmentez votre niveau.");
+                }
 
             } else if (args[0].equalsIgnoreCase("newitem") && player.hasPermission("fireland.admin")) {
                 if (player.getItemInHand() != null && player.getItemInHand().hasItemMeta()) {

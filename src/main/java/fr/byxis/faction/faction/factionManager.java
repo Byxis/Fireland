@@ -13,6 +13,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import static fr.byxis.fireland.utilities.BasicUtilities.getUuid;
+import static fr.byxis.jeton.JetonManager.sendPlayerFacture;
+
 public class factionManager implements Listener, CommandExecutor  {
 	
 	final private Fireland main;
@@ -97,9 +100,14 @@ public class factionManager implements Listener, CommandExecutor  {
 				InGameUtilities.sendPlayerError(p, "Vous n'avez pas de faction.");
 			}
 		}
-		else if (args.length == 2 && args[0].equalsIgnoreCase("create") && p.hasPermission("fireland.command.faction.create"))
+		else if (args[0].equalsIgnoreCase("create") && p.hasPermission("fireland.command.faction.create"))
 		{
-			if (args[1].length() <= 36)
+			if(args.length != 2)
+			{
+				InGameUtilities.sendPlayerError(p, "Vous ne pouvez pas mettre d'espace dans le nom de votre faction !");
+				return false;
+			}
+			if (args[1].length() <= 16)
 			{
 				double money = main.eco.getBalance(p);
 				if(money >= 1000) {
@@ -578,6 +586,26 @@ public class factionManager implements Listener, CommandExecutor  {
 			else
 			{
 				InGameUtilities.sendPlayerError(p, "Utilisation : /faction perk <perk>");
+			}
+		}
+		else if(args[0].equalsIgnoreCase("list"))
+		{
+			if(args.length == 1)
+			{
+				factionFunctions.sendFactionList(p, 0);
+			}
+			else if(args.length == 2)
+			{
+				try
+				{
+					int amount = Integer.parseInt(args[1]);
+					factionFunctions.sendFactionList(p, amount);
+				}
+				catch (NumberFormatException e)
+				{
+					InGameUtilities.sendPlayerError(p, "Utilisation: /faction list [page]");
+					return false;
+				}
 			}
 		}
 		else

@@ -21,8 +21,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-import static fr.byxis.fireland.utilities.InGameUtilities.debug;
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.player.intendant.menu.MenuEssaim.OpenEssaimMenu;
 import static fr.byxis.player.intendant.menu.MenuIntendant.OpenIntendant;
 import static fr.byxis.player.primes.PrimeEvent.addPrime;
@@ -43,12 +41,12 @@ public class Manager implements Listener {
             if(inv.getTitle().contains("Intendant"))
             {
                 /**       Click check        **/
+                InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
                 if (itemclicked == null) {
                     return;
                 }
-               InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -82,12 +80,12 @@ public class Manager implements Listener {
             else if(inv.getTitle().contains("Votre faction"))
             {
                 /**       Click check        **/
+                InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
                 if (itemclicked == null) {
                     return;
                 }
-               InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -150,12 +148,12 @@ public class Manager implements Listener {
             else if(inv.getTitle().contains("Membres de "))
             {
                 /**       Click check        **/
+                InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
                 if (itemclicked == null) {
                     return;
                 }
-               InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -170,12 +168,12 @@ public class Manager implements Listener {
             else if(inv.getTitle().contains("Améliorations pour"))
             {
                 /**       Click check        **/
+                InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
                 if (itemclicked == null) {
                     return;
                 }
-               InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -324,12 +322,12 @@ public class Manager implements Listener {
             else if(inv.getTitle().contains("Changement de couleur"))
             {
                 /**       Click check        **/
+                InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
                 if (itemclicked == null) {
                     return;
                 }
-                InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -351,18 +349,17 @@ public class Manager implements Listener {
             {
 
                 /**       Click check        **/
+                InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
                 if (itemclicked == null) {
                     return;
                 }
-                InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
                 if(itemclicked.getType().toString().endsWith("_BANNER"))
                 {
-                    debugp("Ouais");
                     FactionFunctions ff = new FactionFunctions(main, p);
 
                     FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
@@ -373,14 +370,12 @@ public class Manager implements Listener {
                     {
                         if(itemclicked.getItemMeta().getDisplayName().contains(fz.getFormattedName()))
                         {
-                            debugp("nice");
                             zoneinfo = fz;
                             break;
                         }
                     }
                     if(zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk() && !main.hashMapManager.isTeleporting(p.getUniqueId()))
                     {
-                        debugp("go");
                         ZoneConfigFileManager configManager = new ZoneConfigFileManager(main);
                         configManager.notSafeSetup();
                         Location loc = new Location(Bukkit.getWorld("world"), configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".teleportation.x"),
@@ -399,11 +394,12 @@ public class Manager implements Listener {
             {
                 /**       Click check        **/
 
+                InventoryUtilities.clickManager(e);
+
                 ItemStack itemclicked = e.getCurrentItem();
                 if (itemclicked == null) {
                     return;
                 }
-                InventoryUtilities.clickManager(e);
 
                 /**       Click check        **/
 
@@ -441,11 +437,11 @@ public class Manager implements Listener {
             {
                 /**       Click check        **/
 
-                ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
-                    return;
-                }
                 InventoryUtilities.clickManager(e);
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null)
+                    return;
 
                 /**       Click check        **/
 
@@ -465,11 +461,11 @@ public class Manager implements Listener {
             {
                 /**       Click check        **/
 
-                ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
-                    return;
-                }
                 InventoryUtilities.clickManager(e);
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null)
+                    return;
 
                 /**       Click check        **/
 
@@ -491,11 +487,11 @@ public class Manager implements Listener {
             {
                 /**       Click check        **/
 
-                ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
-                    return;
-                }
                 InventoryUtilities.clickManager(e);
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null)
+                    return;
 
                 /**       Click check        **/
 
@@ -514,11 +510,11 @@ public class Manager implements Listener {
             {
                 /**       Click check        **/
 
-                ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
-                    return;
-                }
                 InventoryUtilities.clickManager(e);
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null)
+                    return;
 
                 /**       Click check        **/
                 String player = ChatColor.stripColor(e.getClickedInventory().getItem(13).getItemMeta().getDisplayName());
@@ -587,13 +583,20 @@ public class Manager implements Listener {
                     {
                         if(Fireland.eco.getBalance(p) > money)
                         {
-                            Fireland.eco.withdrawPlayer(p, money);
-                            addPrime(BasicUtilities.getUuid(player), money);
-                            if(Bukkit.getPlayer(player) != null && Bukkit.getPlayer(player).isOnline())
+                            if(money > 0)
                             {
-                                InGameUtilities.sendPlayerError(Bukkit.getPlayer(player), "Une prime de "+money+"$ vous a été attribué.");
+                                Fireland.eco.withdrawPlayer(p, money);
+                                addPrime(BasicUtilities.getUuid(player), money);
+                                if(Bukkit.getPlayer(player) != null && Bukkit.getPlayer(player).isOnline())
+                                {
+                                    InGameUtilities.sendPlayerError(Bukkit.getPlayer(player), "Une prime de "+money+"$ vous a été attribué.");
+                                }
+                                InGameUtilities.sendPlayerSucces(p, "Une prime de "+money+"$ a été attribué à "+player+".");
                             }
-                            InGameUtilities.sendPlayerSucces(p, "Une prime de "+money+"$ a été attribué à "+player+".");
+                            else
+                            {
+                                InGameUtilities.sendPlayerError(p, "Vous ne pouvez pas mettre une prime de 0$.");
+                            }
                         }
                     }
                 }
@@ -602,11 +605,11 @@ public class Manager implements Listener {
             {
                 /**       Click check        **/
 
-                ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
-                    return;
-                }
                 InventoryUtilities.clickManager(e);
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null)
+                    return;
 
                 /**       Click check        **/
 
@@ -621,11 +624,11 @@ public class Manager implements Listener {
             {
                 /**       Click check        **/
 
-                ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
-                    return;
-                }
                 InventoryUtilities.clickManager(e);
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null)
+                    return;
 
                 /**       Click check        **/
 

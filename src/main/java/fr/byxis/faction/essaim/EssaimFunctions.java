@@ -1,6 +1,5 @@
 package fr.byxis.faction.essaim;
 
-import fr.byxis.faction.essaim.essaimClass.ActiveMobSpawning;
 import fr.byxis.faction.essaim.essaimClass.EssaimClass;
 import fr.byxis.faction.essaim.essaimClass.EssaimGroup;
 import fr.byxis.faction.faction.FactionFunctions;
@@ -11,6 +10,7 @@ import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
 import fr.byxis.jeton.JetonManager;
+import fr.byxis.player.level.LevelStorage;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -21,6 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 
 import static fr.byxis.faction.essaim.EssaimManager.DisableEssaim;
+import static fr.byxis.player.level.LevelStorage.addPlayerXp;
 
 public class EssaimFunctions {
 
@@ -224,9 +225,9 @@ public class EssaimFunctions {
             {
                 if(ff.getFactionInfo(ff.playerFactionName(p)).getName().equalsIgnoreCase(ff.getFactionInfo(ff.playerFactionName(EssaimManager.groups.get(essaim).getLeader())).getName()))
                 {
-                    if(p.hasPermission("fireland.essaim."+essaim))
+                    if(p.hasPermission("fireland.essaim.access."+essaim))
                     {
-                        if(essaim.equalsIgnoreCase("crype") && p.hasPermission("group.bannis"))
+                        if((essaim.equalsIgnoreCase("crypte") && p.hasPermission("group.bannis")) || (!essaim.equalsIgnoreCase("crype")))
                         {
                             InGameUtilities.sendPlayerInformation(p, "Vous êtes entré dans le groupe.");
 
@@ -295,7 +296,17 @@ public class EssaimFunctions {
             }
             head.setLore(lore);
             inv.setItem(4, head);
-            inv.setItem(10, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§aLancer l'expédition", (short) 1));
+            lore = new ArrayList<>();
+            if(main.essaimManager.getConfig().contains(essaim+".recommendations.1"))
+                lore.add(main.essaimManager.getConfig().getString(essaim+".recommendations.1"));
+
+            if(main.essaimManager.getConfig().contains(essaim+".recommendations.2"))
+                lore.add(main.essaimManager.getConfig().getString(essaim+".recommendations.2"));
+
+            if(main.essaimManager.getConfig().contains(essaim+".recommendations.3"))
+                lore.add(main.essaimManager.getConfig().getString(essaim+".recommendations.3"));
+
+            inv.setItem(10, InventoryUtilities.setItemMetaLore(Material.LIME_STAINED_GLASS_PANE, "§aLancer l'expédition", (short) 1, lore));
             inv.setItem(13, InventoryUtilities.setItemMeta(Material.YELLOW_STAINED_GLASS_PANE, "§eInviter des membres de votre faction", (short) 1));
             inv.setItem(16, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cQuitter l'expédition", (short) 1));
 
@@ -366,6 +377,7 @@ public class EssaimFunctions {
     public static void teleportJoinEssaim(Player player, Location loc, String sound, int duration, String essaim)
     {
         player.playSound(player.getLocation(), "minecraft:"+sound, (float) 0.1, (float) 1);
+        InGameUtilities.setPlayerMoving(player, false);
         main.hashMapManager.addTeleporting(player.getUniqueId());
 
         new BukkitRunnable() {
@@ -403,13 +415,14 @@ public class EssaimFunctions {
         }.runTaskTimer(main, 0L, 20L);
     }
 
-    public static void startEssaim(String name)
+    public static void startEssaim(String name, int difficulty)
     {
         resetEssaim(name);
         main.essaimManager.setSolo(name);
+        main.essaimManager.setDifficulty(name, difficulty);
         EssaimClass essaim = EssaimManager.activeEssaims.get(name);
         setBlock(essaim.getStart().blockX(), essaim.getStart().blockY(), essaim.getStart().blockZ(), Material.REDSTONE_BLOCK);
-        EssaimManager.groups.get(name).startEssaim();
+        EssaimManager.groups.get(name).startEssaim(difficulty);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -422,11 +435,14 @@ public class EssaimFunctions {
     {
         EssaimClass essaim = EssaimManager.activeEssaims.get(name);
         setBlock(essaim.getReset().blockX(), essaim.getReset().blockY(), essaim.getReset().blockZ(), Material.REDSTONE_BLOCK);
-        for(String spawner : main.essaimManager.activeSpawners.keySet())
+        if(!main.essaimManager.activeSpawners.keySet().isEmpty())
         {
-            if(main.essaimManager.activeSpawners.get(spawner).getEssaim().equalsIgnoreCase(essaim.getName()))
+            for(String spawner : main.essaimManager.activeSpawners.keySet())
             {
-                main.essaimManager.activeSpawners.remove(spawner);
+                if(main.essaimManager.activeSpawners.get(spawner).getEssaim().equalsIgnoreCase(essaim.getName()))
+                {
+                    main.essaimManager.activeSpawners.remove(spawner);
+                }
             }
         }
     }
@@ -548,8 +564,9 @@ public class EssaimFunctions {
                         }
 
                     }
-                    JetonManager.addJetonsPlayer(p.getUniqueId(), EssaimManager.activeEssaims.get(essaimName).getJetons());
-                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagné §d"+EssaimManager.activeEssaims.get(essaimName).getJetons()+"§r§7 jetons !");
+                    addPlayerXp(player.getUniqueId(), 200, LevelStorage.Nation.Etat);
+                    JetonManager.addJetonsPlayer(player.getUniqueId(), EssaimManager.groups.get(essaimName).getRewardJetons());
+                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagné §d"+EssaimManager.groups.get(essaimName).getRewardJetons()+"§r§7 jetons !");
                     player.teleport(EssaimManager.activeEssaims.get(essaimName).getEntry());
                 }
                 else
@@ -569,10 +586,10 @@ public class EssaimFunctions {
             {
                 if(player.getName().equalsIgnoreCase(p.getName()))
                 {
-
+                    addPlayerXp(player.getUniqueId(), 200, LevelStorage.Nation.Etat);
                     InGameUtilities.sendPlayerInformation(player, "Vous avez quitté l'essaim");
-                    JetonManager.addJetonsPlayer(p.getUniqueId(), EssaimManager.activeEssaims.get(essaimName).getJetons());
-                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagné §d"+EssaimManager.activeEssaims.get(essaimName).getJetons()+" §r§7 jetons !");
+                    JetonManager.addJetonsPlayer(p.getUniqueId(), EssaimManager.groups.get(essaimName).getRewardJetons());
+                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagné §d"+EssaimManager.groups.get(essaimName).getRewardJetons()+" §r§7 jetons !");
                     player.teleport(EssaimManager.activeEssaims.get(essaimName).getEntry());
                 }
                 else
@@ -590,5 +607,32 @@ public class EssaimFunctions {
             EssaimManager.configManager.getConfig().set(essaim+".closed", !EssaimManager.activeEssaims.containsKey(essaim));
         }
         EssaimManager.configManager.save();
+    }
+
+    public static void openStartingMenu(String essaim, Player p)
+    {
+        InGameUtilities.playWorldSound( p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, SoundCategory.BLOCKS, 1, 1);
+        Inventory essaimInv = Bukkit.createInventory(null, 27, "§8Lancement de §c"+ TextUtilities.convertStorableToClean(essaim));
+        setStartingMenu(essaimInv, p, essaim);
+        p.openInventory(essaimInv);
+    }
+
+    private static void setStartingMenu(Inventory inv, Player p, String essaim) {
+        ArrayList<String> lore = new ArrayList<String>();
+        lore.add("§8Une issue s'offre à vous. Vous garderez votre inventaire");
+        lore.add("§8en cas de mort mais la récompense finale sera amoindrie.");
+        inv.setItem(10, InventoryUtilities.setItemMetaLore(Material.PLAYER_HEAD, "§eÉchappatoire", (short) 1, lore));
+
+        lore = new ArrayList<String>();
+        lore.add("§8Aucun retour possible. Vous perdrez votre inventaire");
+        lore.add("§8en cas de mort mais la récompense finale sera augmentée.");
+        inv.setItem(13, InventoryUtilities.setItemMetaLore(Material.SKELETON_SKULL, "§cÉtreinte Mortelle", (short) 1, lore));
+
+        lore = new ArrayList<String>();
+        lore.add("§8Personne ne peux vous retenir de choisir cette voie, mais");
+        lore.add("§8restez sur vos gardes. La récompense finale sera maximale et");
+        lore.add("§8suivie d'un bonus de 5 jetons.");
+        lore.add("§cÀ venir bientôt...");
+        inv.setItem(16, InventoryUtilities.setItemMetaLore(Material.WITHER_SKELETON_SKULL, "§4§lLune de Sang", (short) 1, lore));
     }
 }

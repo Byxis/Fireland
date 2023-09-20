@@ -55,16 +55,7 @@ public class QuestManager {
             }
             for (String uuid : main.cfgm.getPlayerDB().getConfigurationSection("quest").getKeys(false))
             {
-                debugp("uuid:" + uuid);
                 PlayerQuests pq = new PlayerQuests(UUID.fromString(uuid));
-                if(uuid.startsWith("aa6d"))
-                {
-                    debugp(config.getConfig().get("quest."+main.cfgm.getPlayerDB().getInt("quest."+uuid+".1.id")+".next") +" "+ main.cfgm.getPlayerDB().getInt("quest."+uuid+".1.progression"));
-                    debugp(config.getConfig().get("quest."+main.cfgm.getPlayerDB().getInt("quest."+uuid+".2.id")+".next") +" "+ main.cfgm.getPlayerDB().getInt("quest."+uuid+".2.progression"));
-                    debugp(config.getConfig().get("quest."+main.cfgm.getPlayerDB().getInt("quest."+uuid+".3.id")+".next") +" "+ main.cfgm.getPlayerDB().getInt("quest."+uuid+".3.progression"));
-                    debugp(config.getConfig().get("quest."+main.cfgm.getPlayerDB().getInt("quest."+uuid+".4.id")+".next") +" "+ main.cfgm.getPlayerDB().getInt("quest."+uuid+".4.progression"));
-
-                }
                 if(config.getConfig().get("quest."+main.cfgm.getPlayerDB().getInt("quest."+uuid+".1.id")+".next")!= null && main.cfgm.getPlayerDB().getInt("quest."+uuid+".1.progression") == -1)
                 {
                     pq.set(new ProgressQuest(config.getConfig().getInt("quest."+main.cfgm.getPlayerDB().getInt("quest."+uuid+".1.id")+".next"), 0));
@@ -222,7 +213,8 @@ public class QuestManager {
                         config.getConfig().getString("quest."+i+".objective"),
                         config.getConfig().getInt("quest."+i+".amount"));
             }
-            availableQuests.put(Integer.parseInt(i), quest);
+            if(quest != null)
+                availableQuests.put(Integer.parseInt(i), quest);
         }
     }
 
@@ -241,7 +233,6 @@ public class QuestManager {
             if(main.cfgm.getPlayerDB().contains("quest."+p.getUniqueId()+".4"))pq.setFourth(new ProgressQuest(main.cfgm.getPlayerDB().getInt("quest."+p.getUniqueId()+".4.id"), main.cfgm.getPlayerDB().getInt("quest."+p.getUniqueId()+".4.progress")));
             if(main.cfgm.getPlayerDB().contains("quest."+p.getUniqueId()+".claimed"))pq.setClaimed(main.cfgm.getPlayerDB().getBoolean("quest."+p.getUniqueId()+".claimed"));
             playerQuest.replace(p.getUniqueId(), pq);
-            debugp("saved");
         }
         int i =0;
 
@@ -257,7 +248,6 @@ public class QuestManager {
                     {
                         if(playerQuest.get(p.getUniqueId()).getThird() == null || random != getOriginalQuest(playerQuest.get(p.getUniqueId()).getThird().getId()))
                         {
-                            debugp("setted");
                             ProgressQuest pq = new ProgressQuest(random, 0);
                             playerQuest.get(p.getUniqueId()).set(pq);
                         }
@@ -265,8 +255,7 @@ public class QuestManager {
                 }
             }
         }
-        debugp("Finished");
-        if(i > 100)
+        if(i >= 100)
         {
             InGameUtilities.sendPlayerError(p, "Une erreur est survenue lors du chargement des quêtes.");
         }

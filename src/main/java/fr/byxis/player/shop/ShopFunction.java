@@ -4,23 +4,21 @@ import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.jeton.JetonManager;
-import fr.byxis.jeton.jetonsCommandManager;
-import fr.byxis.jeton.jetonSql;
-import fr.byxis.player.karma.karmaManager;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InventoryUtilities;
+import fr.byxis.player.level.PlayerLevel;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.permissions.Permission;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 import static fr.byxis.player.quest.QuestManager.actualiseBuyProgress;
 import static fr.byxis.player.quest.QuestManager.actualiseSellProgress;
 
@@ -93,7 +91,7 @@ public class ShopFunction {
         return null;
     }
 
-    public void setItemsOnShopInv(Inventory _inv, ArrayList<ShopItemClass> _items, int _currentPage, int _pageMax, Player p, boolean isSkinShop)
+    public void setItemsOnShopInv(Inventory _inv, ArrayList<ShopItemClass> _items, int _currentPage, int _pageMax, Player p, boolean isSkinShop, String _shop)
     {
         for(int i=0;i<9;i++)
         {
@@ -146,27 +144,25 @@ public class ShopFunction {
             List<String> lore = new ArrayList<>();
             if(!isSkinShop)
             {
-                lore.add("§8Achat: §6"+getPriceText(item, p, false));
+                lore.add("§8Achat: §6"+getPriceText(item, p, false, _shop));
                 lore.add("§8Vente: §6"+getSellText(item, p, false));
             }
             else
             {
-                Permission perm = new Permission(item.command);
-                Permission all = new Permission("csp.skin.all");
-                if(p.hasPermission(perm) || p.hasPermission(all))
+                if(PermissionUtilities.hasPermission(p, item.command))
                 {
                     lore.add("§aPossédé");
                 }
                 else
                 {
-                    lore.add("§8Achat: §6"+getPriceText(item, p, true));
+                    lore.add("§8Achat: §6"+getPriceText(item, p, true, _shop));
                 }
             }
             _inv.setItem(spot+i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.mat, "§r§7"+item.itemName, item.dura, lore),item.customModelData));
         }
     }
 
-    public String getPriceText(ShopItemClass item, Player p, boolean isSkinShop)
+    public String getPriceText(ShopItemClass item, Player p, boolean isSkinShop, String _shop)
     {
         if(isSkinShop)
         {
@@ -174,16 +170,16 @@ public class ShopFunction {
         }
         else
         {
-            double karma = getKarma(p.getUniqueId());
-            if(karma >= 75 && !item.itemName.contains("Pass"))
+            PlayerLevel pl = getPlayerLevel(p.getUniqueId());
+            if(pl.getReduction() > 0 && pl.hasAccessToReductions(_shop))
             {
-                double price = priceKarmaAdapter(p.getUniqueId(), item.price);
-                return "§6§m"+item.price+"$§r §d"+price+"$ §8("+Math.round(getReduction(p.getUniqueId())*100)+"%)";
+                double price = priceReduction(p.getUniqueId(), item.price, _shop);
+                return "§6§m"+item.price+"$§r §d"+price+"$ §8(-"+Math.round(pl.getReduction()*100)+"%)";
             }
-            else if(karma <=25 && !item.itemName.contains("Pass"))
+            else if(pl.getReduction() > 0 && pl.hasAccessToAugmentation(_shop))
             {
-                double price = priceKarmaAdapter(p.getUniqueId(), item.price);
-                return "§6§m"+item.price+"$§r §c"+price+"$ §8(+"+Math.round(getReduction(p.getUniqueId())*100)+"%)";
+                double price = priceReduction(p.getUniqueId(), item.price, _shop);
+                return "§6§m"+item.price+"$§r §c"+price+"$ §8(+"+Math.round(pl.getReduction()*100)+"%)";
             }
             return item.price+"$";
         }
@@ -202,6 +198,21 @@ public class ShopFunction {
     public String getShopName(InventoryView i)
     {
         String[] title = i.getTitle().split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (int j = 2; j<title.length;j++)
+        {
+            if(!(title[j].equalsIgnoreCase("Marchand") || title[j].equalsIgnoreCase("de")) && j+1 != title.length)
+            {
+                sb.append(title[j]).append(" ");
+            }
+        }
+
+        return sb.toString().trim();
+    }
+
+    public String getShopName(String str)
+    {
+        String[] title = str.split(" ");
         StringBuilder sb = new StringBuilder();
         for (int j = 2; j<title.length;j++)
         {
@@ -277,8 +288,8 @@ public class ShopFunction {
         {
             isASkinShop = true;
         }
-        Inventory craftMenu = Bukkit.createInventory(null, 54, "Marchand de "+_shop+" ("+page+"/"+maxPage+")");
-        setItemsOnShopInv(craftMenu, items, page, maxPage, _p, isASkinShop);
+        Inventory craftMenu = Bukkit.createInventory(null, 54, "Marchand de "+_shop.replaceAll("_", " ")+" ("+page+"/"+maxPage+")");
+        setItemsOnShopInv(craftMenu, items, page, maxPage, _p, isASkinShop, _shop);
         _p.openInventory(craftMenu);
     }
 
@@ -292,8 +303,7 @@ public class ShopFunction {
         {
             if(isSkinShop)
             {
-                jetonsCommandManager jeton = new jetonsCommandManager(main);
-                if(_p.hasPermission(item.command) || _p.hasPermission("csp.skin.all"))
+                if(_p.hasPermission(item.command))
                 {
                     InGameUtilities.sendPlayerError(_p, "Vous avez déjà ce skin !");
                 }
@@ -311,7 +321,7 @@ public class ShopFunction {
                 double prix;
                 if(!item.itemName.contains("Pass"))
                 {
-                    prix = priceKarmaAdapter(_p.getUniqueId(), item.price);
+                    prix = priceReduction(_p.getUniqueId(), item.price, _shop);
                 }
                 else
                 {
@@ -327,14 +337,12 @@ public class ShopFunction {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give "+_p.getName()+" minecraft:"+item.mat.name().toLowerCase()+"{display:{Name:'[{\"text\":\"§r"+"§r"+item.itemName+"\"}]'}} 1");
                         main.eco.withdrawPlayer(_p, prix);
                         _p.sendMessage("§aVous avez acheté : "+item.itemName+"§r§a pour §c"+prix+"$ §a!");
-                        buyItemKarma(_p.getUniqueId());
                     }
                     else if (command.contains("minecraft:give"))
                     {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command.replaceAll("Player", _p.getName()));
                         main.eco.withdrawPlayer(_p, prix);
                         _p.sendMessage("§aVous avez acheté : "+item.itemName+"§r§a pour §c"+prix+"$ §a!");
-                        buyItemKarma(_p.getUniqueId());
                     }
                     else
                     {
@@ -349,7 +357,6 @@ public class ShopFunction {
                         main.eco.withdrawPlayer(_p, prix);
                         _p.sendMessage("§aVous avez acheté : "+item.itemName+"§r§a pour §6"+prix+"$ §a!");
                         InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
-                        buyItemKarma(_p.getUniqueId());
                     }
                 }
                 else if(_p.getGameMode() == GameMode.CREATIVE)
@@ -503,50 +510,18 @@ public class ShopFunction {
         }
     }
 
-    private void buyItemKarma(UUID _uuid)
+    private double priceReduction(UUID _uuid, double amount, String _shop)
     {
-        karmaManager karma = new karmaManager(main);
-        karma.goodAction(_uuid, 0.1);
-    }
-
-    public double getKarma(UUID _uuid)
-    {
-        karmaManager karma = new karmaManager(main);
-        return karma.getKarma(_uuid);
-    }
-
-    private double priceKarmaAdapter(UUID _uuid, double amount)
-    {
-        double karma = getKarma(_uuid);
-        if(karma >= 75)
+        PlayerLevel pl = getPlayerLevel(_uuid);
+        if(pl.hasAccessToReductions(_shop))
         {
-            return Math.round(amount + Math.round(amount * getReduction(_uuid)));
+            return amount - amount*pl.getReduction();
         }
-        else if(karma < 25)
+        else if(pl.hasAccessToAugmentation(_shop))
         {
-            return Math.round(amount + Math.round(amount * getReduction(_uuid)));
+            return amount + amount*pl.getReduction();
         }
-        else
-        {
-            return amount;
-        }
-    }
-
-    private double getReduction(UUID _uuid)
-    {
-        double karma = getKarma(_uuid);
-
-        if(karma >= 75)
-        {
-            double reduction = karma-75;
-            return -(reduction)*0.01;
-        }
-        if(karma <= 25)
-        {
-            double reduction = karma -50;
-            return -(reduction)*0.02;
-        }
-        return 0;
+        return amount;
     }
 
     public void addItemOnShop(String _name, Material _item, short _dura, int _price, int _sell, String _shop, String _command, int _custommodeldata)

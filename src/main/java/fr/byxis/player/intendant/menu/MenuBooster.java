@@ -34,7 +34,7 @@ public class MenuBooster {
         if(main.hashMapManager.getBooster() != null)
         {
             BoosterClass booster = main.hashMapManager.getBooster();
-            inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, BasicUtilities.listMaker("§8Créé par "+((Player)Bukkit.getOfflinePlayer(booster.getUuid())).getName(), "§8Expiration dans "+ BasicUtilities.getStringTimeHour(booster.getFinished().getTime()-System.currentTimeMillis()), "", "")));
+            inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, BasicUtilities.listMaker("§8Créé par "+((Player)Bukkit.getPlayer(booster.getUuid())).getName(), "§8Expiration dans "+ BasicUtilities.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()), "", "")));
         }
         else
         {
@@ -46,9 +46,9 @@ public class MenuBooster {
         head.setItemMeta(meta);
         inv.setItem(8, head);
 
-        inv.setItem(11, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 1", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 1$ sur les zombies", "§8Donne 5% plus d'argent lors du kill", "§8Donne 5% plus de loot dans les coffres.", "")));
-        inv.setItem(13, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 2", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 2$ sur les zombies", "§8Donne 7.5% plus d'argent lors du kill", "§8Donne 7.5% plus de loot dans les coffres.", "")));
-        inv.setItem(15, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 3", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 3$ sur les zombies", "§8Donne 10% plus d'argent lors du kill", "§8Donne 10% plus de loot dans les coffres.", "")));
+        inv.setItem(11, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 1", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 1$ sur les zombies", "§8Donne 5% plus d'argent lors du kill", "§8Donne 5% plus de loot dans les coffres.", "Donne 25% plus d'xp.")));
+        inv.setItem(13, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 2", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 2$ sur les zombies", "§8Donne 7.5% plus d'argent lors du kill", "§8Donne 7.5% plus de loot dans les coffres.", "Donne 50% plus d'xp.")));
+        inv.setItem(15, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 3", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 3$ sur les zombies", "§8Donne 10% plus d'argent lors du kill", "§8Donne 10% plus de loot dans les coffres.", "Donne 75% plus d'xp.")));
 
         inv.setItem(20, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b100 \u26c1","", "")));
         inv.setItem(29, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b300 \u26c1","", "")));

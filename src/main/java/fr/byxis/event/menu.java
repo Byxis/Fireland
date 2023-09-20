@@ -104,7 +104,7 @@ public class menu implements Listener,CommandExecutor {
         Location zoneMilli = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.zonemilli.x"), main.getConfig().getDouble("heliport.zonemilli.y"), main.getConfig().getDouble("heliport.zonemilli.z"));
         //553.5D, 76.0D, 704.5D
         if (current != null) {
-        	if(e.getView().getTitle().equalsIgnoreCase("Héliport"))
+        	if(e.getView().getTitle().equalsIgnoreCase("§f\uD83C\uDFA0"))
         	{
         		switch(current.getItemMeta().getDisplayName())
         		{

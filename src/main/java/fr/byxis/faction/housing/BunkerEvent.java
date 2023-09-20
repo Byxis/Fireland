@@ -5,6 +5,7 @@ import fr.byxis.faction.faction.FactionInformation;
 import fr.byxis.faction.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.jeton.JetonManager;
 import fr.byxis.jeton.jetonSql;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -18,6 +19,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 import static fr.byxis.fireland.utilities.BasicUtilities.getUuid;
 import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
@@ -64,17 +66,23 @@ public class BunkerEvent implements Listener {
     @EventHandler
     public void PlayerClick(InventoryClickEvent e)
     {
-        if(!e.getView().getPlayer().getWorld().getName().equalsIgnoreCase("bunker") || e.getCurrentItem() == null )
+        if(!e.getView().getPlayer().getWorld().getName().equalsIgnoreCase("bunker"))
             return;
-        if(e.getClickedInventory().getType() == InventoryType.PLAYER)
-        {
-            return;
-        }
+
         Player p = (Player) e.getView().getPlayer();
 
         if(e.getView().getTitle().contains("Menu du Bunker"))
         {
-            e.setCancelled(true);
+            /**       Click check        **/
+
+            InventoryUtilities.clickManager(e);
+
+            ItemStack itemclicked = e.getCurrentItem();
+            if (itemclicked == null)
+                return;
+
+            /**       Click check        **/
+
             if(e.getCurrentItem().getType() == Material.BARRIER)
             {
                 BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
@@ -141,7 +149,16 @@ public class BunkerEvent implements Listener {
         }
         else if(e.getView().getTitle().contains("Inviter dans votre bunker"))
         {
-            e.setCancelled(true);
+            /**       Click check        **/
+
+            InventoryUtilities.clickManager(e);
+
+            ItemStack itemclicked = e.getCurrentItem();
+            if (itemclicked == null)
+                return;
+
+            /**       Click check        **/
+
             if(e.getCurrentItem().getType() == Material.PLAYER_HEAD)
             {
                 String name = e.getCurrentItem().getItemMeta().getDisplayName();
@@ -169,7 +186,16 @@ public class BunkerEvent implements Listener {
         }
         else if(e.getView().getTitle().contains("Nourriture du bunker"))
         {
-            e.setCancelled(true);
+            /**       Click check        **/
+
+            InventoryUtilities.clickManager(e);
+
+            ItemStack itemclicked = e.getCurrentItem();
+            if (itemclicked == null)
+                return;
+
+            /**       Click check        **/
+
             if(e.getCurrentItem().getType() == Material.COOKED_BEEF)
             {
                 BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
@@ -182,7 +208,16 @@ public class BunkerEvent implements Listener {
         }
         else if(e.getView().getTitle().contains("Atelier du bunker"))
         {
-            e.setCancelled(true);
+            /**       Click check        **/
+
+            InventoryUtilities.clickManager(e);
+
+            ItemStack itemclicked = e.getCurrentItem();
+            if (itemclicked == null)
+                return;
+
+            /**       Click check        **/
+
             BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
             if(bk != null)
             {
@@ -209,7 +244,16 @@ public class BunkerEvent implements Listener {
         }
         else if(e.getView().getTitle().contains("Atelier d'Alchimie du bunker"))
         {
-            e.setCancelled(true);
+            /**       Click check        **/
+
+            InventoryUtilities.clickManager(e);
+
+            ItemStack itemclicked = e.getCurrentItem();
+            if (itemclicked == null)
+                return;
+
+            /**       Click check        **/
+
             BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
             if(bk != null)
             {
@@ -239,7 +283,16 @@ public class BunkerEvent implements Listener {
         }
         else if(e.getView().getTitle().contains("Stockage du bunker"))
         {
-            e.setCancelled(true);
+            /**       Click check        **/
+
+            InventoryUtilities.clickManager(e);
+
+            ItemStack itemclicked = e.getCurrentItem();
+            if (itemclicked == null)
+                return;
+
+            /**       Click check        **/
+
             BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
             if(bk != null)
             {
@@ -262,7 +315,16 @@ public class BunkerEvent implements Listener {
         }
         else if(e.getView().getTitle().contains("Skin de Bunker"))
         {
-            e.setCancelled(true);
+            /**       Click check        **/
+
+            InventoryUtilities.clickManager(e);
+
+            ItemStack itemclicked = e.getCurrentItem();
+            if (itemclicked == null)
+                return;
+
+            /**       Click check        **/
+
             BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
             if(bk != null)
             {
@@ -279,13 +341,18 @@ public class BunkerEvent implements Listener {
             }
         }
         else if(e.getView().getTitle().contains("Stockage ")) {
-            if(e.getCurrentItem().getType() == Material.WHITE_STAINED_GLASS_PANE)
+            /**       Click check        **/
+
+            InventoryUtilities.clickManager(e);
+
+            ItemStack itemclicked = e.getCurrentItem();
+            if (itemclicked == null)
+                return;
+
+            /**       Click check        **/
+
+           if(e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE)
             {
-                e.setCancelled(true);
-            }
-            else if(e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE)
-            {
-                e.setCancelled(true);
                 OpenBunkerChest(main, p);
             }
         }

@@ -209,7 +209,15 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             //close
             if(sender instanceof Player p && args[2].equalsIgnoreCase("Wowowowowowowowowowow1234567890") && !main.hashMapManager.isTeleporting(p.getUniqueId()))
             {
-                EssaimFunctions.teleportJoinEssaim(p, EssaimManager.activeEssaims.get(args[1]).getHub(), "gun.hub.helico",10, args[1]);
+                if(!main.essaimManager.groups.get(args[1]).getMembers().contains(p))
+                {
+
+                    EssaimFunctions.teleportJoinEssaim(p, EssaimManager.activeEssaims.get(args[1]).getHub(), "gun.hub.helico",10, args[1]);
+                }
+                else
+                {
+                    InGameUtilities.sendPlayerError(p, "Vous êtes déjà dans l'essaim.s");
+                }
             }
         }
         else if (args.length == 6 && sender.hasPermission("fireland.essaim.admin")) {

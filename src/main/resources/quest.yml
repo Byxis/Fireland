@@ -1,63 +1,130 @@
-date: 19/06/2023
+date: '2023-09-18 05:15:11.622'
 quest:
-  1:
-    name: "Faire la f�te des zombies"
-    desc: "Tuez <amount> infect�s"
-    objective: "KILL"
-    amount : 20
-    type : "Infecte"
-    reward : 160
-    jetons : 0
-    next: null
-  2:
-    name: "Rallumez ma t�l� !"
-    desc: "Re-activez le g�n�rateur � la station radio"
-    objective: "INTERACT_SPECIFIC"
+  '1':
+    name: Massacre (1/4)
+    desc: Tuez <amount> infectÃ©(s)
+    objective: KILL
+    amount: 20
+    type: Infecte
+    reward: 100
+    jetons: 0
+    next: 14
+  '2':
+    name: Tour radio (3/3)
+    desc: Re-activez la radio de la station radio de ville en x:<location.x>, y:<location.y>
+      et z:<location.z>
+    objective: INTERACT_SPECIFIC
     location:
-      x: 0
-      y: 0
-      z: 0
-      world: "world"
-    reward: 160
-    jetons : 0
-    next: null
-  3:
-    name: "D�couvrir du pays (1/5)"
-    desc: "D�couvrez l'h�pital"
-    objective : "ENTER_REGION"
-    region : "hospital"
-    reward: 160
-    jetons : 0
-    next: null
-  4:
-    name: "Les farmers sont de sorties"
-    desc: "Ouvrez <amount> coffre"
-    objective: "INTERACT"
-    type: "CHEST"
-    reward: 160
-    jetons : 0
-    next: null
-  5:
-    name: "Ramenez moi mes outils"
-    desc: "Craftez <amount> items"
-    objective: "CRAFT"
+      x: -708
+      y: 111
+      z: -424
+      world: world
+    reward: 100
+    jetons: 1
+  '3':
+    name: Errances (1/5)
+    desc: DÃ©couvrez l'hÃ´pital
+    objective: ENTER_REGION
+    region: hospital
+    reward: 100
+    jetons: 1
+    next: 4
+  '4':
+    name: Errances (2/5)
+    desc: DÃ©couvrez l'hÃ´pital
+    objective: ENTER_REGION
+    region: hospital
+    reward: 100
+    jetons: 1
+    next: 5
+    before: 3
+  '5':
+    name: Errances (3/5)
+    desc: DÃ©couvrez l'hÃ´pital
+    objective: ENTER_REGION
+    region: hospital
+    reward: 100
+    jetons: 1
+    next: 6
+    before: 4
+  '6':
+    name: Errances (4/5)
+    desc: DÃ©couvrez l'hÃ´pital
+    objective: ENTER_REGION
+    region: hospital
+    reward: 100
+    jetons: 1
+    next: 7
+    before: 5
+  '7':
+    name: Errances (5/5)
+    desc: DÃ©couvrez l'hÃ´pital
+    objective: ENTER_REGION
+    region: hospital
+    reward: 100
+    jetons: 3
+    before: 6
+  '8':
+    name: Les farmers sont de sorties
+    desc: Ouvrez <amount> coffre
+    objective: INTERACT
+    amount: 40
+    type: CHEST
+    reward: 100
+    jetons: 0
+  '9':
+    name: Artisanat
+    desc: Craftez <amount> items
+    objective: CRAFT
     amount: 5
-    reward: 160
-    jetons : 0
-    next: null
-  6:
-    name: "Il est l'heure de faire du shopping"
-    desc: "Achetez pour un total de <amount>$"
-    objective: "BUY"
+    reward: 100
+    jetons: 0
+  '10':
+    name: Commerce (1/1)
+    desc: Achetez pour un total de <amount>$
+    objective: BUY
+    amount: 500
+    reward: 100
+    jetons: 0
+  '11':
+    name: Commerce (2/2)
+    desc: Vendez pour un total de <amount>$
+    objective: SELL
     amount: 500
     reward: 160
-    jetons : 0
-    next: null
-  7:
-    name: "L'ouverture du vide-grenier"
-    desc: "Vendez pour un total de <amount>$"
-    objective: "SELL"
-    amount: 500
-    reward: 160
-    jetons : 0
-    next: null
+    jetons: 0
+  '12':
+    name: Tour radio (1/3)
+    desc: Re-activez la radio de la station radio de la colline en x:<location.x>,
+      y:<location.y> et z:<location.z>
+    objective: INTERACT_SPECIFIC
+    location:
+      x: -196
+      y: 165
+      z: 171
+      world: world
+    reward: 100
+    jetons: 1
+    next: 13
+  '13':
+    name: Tour radio (2/3)
+    desc: Re-activez la radio de la station radio de la station millitaire en x:<location.x>,
+      y:<location.y> et z:<location.z>
+    objective: INTERACT_SPECIFIC
+    location:
+      x: -196
+      y: 165
+      z: 171
+      world: world
+    reward: 100
+    jetons: 1
+    next: 14
+    before: 12
+  '14':
+    name: Massacre (4/4)
+    desc: Tuez <amount> exploseur(s)
+    objective: KILL
+    amount: 1
+    type: Exploseur
+    reward: 100
+    jetons: 1

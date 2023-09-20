@@ -6,10 +6,12 @@ import fr.byxis.jeton.JetonManager;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.jeton.jetonSql;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.player.level.LevelStorage;
 import fr.byxis.player.workshop.recycler.RecyclerFunction;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -25,6 +27,8 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Random;
+
+import static fr.byxis.player.level.LevelStorage.addPlayerXp;
 
 public class workshopManagerEvent implements Listener {
 
@@ -63,9 +67,18 @@ public class workshopManagerEvent implements Listener {
                 {
                     if( crafted>= max)
                     {
+                        switch(max)
+                        {
+                            case 1 -> addPlayerXp(e.getPlayer().getUniqueId(), 20, LevelStorage.Nation.Null);
+                            case 3 -> addPlayerXp(e.getPlayer().getUniqueId(), 40, LevelStorage.Nation.Null);
+                            case 5 -> addPlayerXp(e.getPlayer().getUniqueId(), 60, LevelStorage.Nation.Null);
+                            case 10 -> addPlayerXp(e.getPlayer().getUniqueId(), 80, LevelStorage.Nation.Null);
+                            case 20 -> addPlayerXp(e.getPlayer().getUniqueId(), 100, LevelStorage.Nation.Null);
+                        }
                         e.getPlayer().playSound(e.getPlayer().getLocation(), "minecraft:entity.player.levelup", 1, 1);
                         wf.learnRecipe(name, e.getPlayer().getUniqueId().toString());
                         e.getItem().setAmount( e.getItem().getAmount()-1);
+
                         e.getPlayer().sendMessage("§aVous avez appris le plan : "+name);
                     }
                     else

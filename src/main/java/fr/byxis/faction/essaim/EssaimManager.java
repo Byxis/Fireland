@@ -13,6 +13,7 @@ import io.lumine.mythic.core.mobs.ActiveMob;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -52,7 +53,6 @@ public class EssaimManager {
         {
             return false;
         }
-        main.getLogger().info("Spawner from "+spawner.getEssaim()+" enabled");
         MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(spawner.getMob()).orElse(null);
         ActiveMobSpawning activeMobSpawning = new ActiveMobSpawning(spawner.getEssaim(), getEntityNumber(spawner)+1);
         activeSpawners.put(spawner.getName(), activeMobSpawning);
@@ -83,12 +83,10 @@ public class EssaimManager {
 
         if(spawner.isAffectedByDifficulty() && EssaimManager.groups.containsKey(spawner.getEssaim()))
         {
-            main.getLogger().info("Old :"+spawner.getAmount()+"New :"+Math.round(spawner.getAmount()*EssaimManager.groups.get(spawner.getEssaim()).getMultiplicatorDifficulty()));
-            return Math.round(spawner.getAmount()*EssaimManager.groups.get(spawner.getEssaim()).getMultiplicatorDifficulty());
+            return Math.round(spawner.getAmount()*EssaimManager.groups.get(spawner.getEssaim()).getAdaptativeDifficulty());
         }
         else
         {
-            main.getLogger().info("NotChanged :"+spawner.getAmount());
             return spawner.getAmount();
         }
     }
@@ -102,35 +100,7 @@ public class EssaimManager {
         }
         try
         {
-            EssaimClass essaimClass = new EssaimClass(name,
-                    configManager.getConfig().getInt(name+".day"),
-                    configManager.getConfig().getInt(name+".hour"),
-                    new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".hub.position.world")), //hub
-                            configManager.getConfig().getInt(name+".hub.position.x"),
-                            configManager.getConfig().getInt(name+".hub.position.y"),
-                            configManager.getConfig().getInt(name+".hub.position.z")
-                    ),
-                    new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".start.position.world")),//start
-                            configManager.getConfig().getInt(name+".start.position.x"),
-                            configManager.getConfig().getInt(name+".start.position.y"),
-                            configManager.getConfig().getInt(name+".start.position.z")
-                    ),
-                    new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".reset.position.world")),//reset
-                            configManager.getConfig().getInt(name+".reset.position.x"),
-                            configManager.getConfig().getInt(name+".reset.position.y"),
-                            configManager.getConfig().getInt(name+".reset.position.z")
-                    )
-                    ,new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".entry.position.world")),//entry
-                    configManager.getConfig().getInt(name+".entry.position.x"),
-                    configManager.getConfig().getInt(name+".entry.position.y"),
-                    configManager.getConfig().getInt(name+".entry.position.z")
-            )
-                    ,new Location(Bukkit.getWorld(configManager.getConfig().getString(name+".solo.position.world")),//entry
-                    configManager.getConfig().getInt(name+".solo.position.x"),
-                    configManager.getConfig().getInt(name+".solo.position.y"),
-                    configManager.getConfig().getInt(name+".solo.position.z")
-            ), configManager.getConfig().getInt(name+".jetons")
-                    ,false);
+            EssaimClass essaimClass = new EssaimClass(name, configManager);
             configManager.getConfig().set(name+".closed", false);
             configManager.save();
             activeEssaims.put(name, essaimClass);
@@ -209,18 +179,59 @@ public class EssaimManager {
         return true;
     }
 
-    public boolean setSolo(String arg) {
-        if(!activeEssaims.containsKey(arg) || groups.get(arg).getMembers().size() != 1)
+    public void setSolo(String essaim) {
+        if(!activeEssaims.containsKey(essaim) || groups.get(essaim).getMembers().size() != 1)
         {
-            return false;
+            return;
         }
-        EssaimClass essaimClass = activeEssaims.get(arg);
+        EssaimClass essaimClass = activeEssaims.get(essaim);
         EssaimFunctions.setBlock(essaimClass.getSolo().blockX(),
                 essaimClass.getSolo().blockY(),
                 essaimClass.getSolo().blockZ(),
                 Material.REDSTONE_BLOCK
         );
-        return true;
+    }
+
+    public void setDifficulty(String essaim, int difficulty) {
+        if(!activeEssaims.containsKey(essaim) || groups.get(essaim).getMembers().size() != 1)
+        {
+            return;
+        }
+        EssaimClass essaimClass = activeEssaims.get(essaim);
+        switch (difficulty)
+        {
+            case 1 ->
+            {
+                if(essaimClass.getDifficulty1() == null)
+                    return;
+                EssaimFunctions.setBlock(essaimClass.getDifficulty1().blockX(),
+                        essaimClass.getDifficulty1().blockY(),
+                        essaimClass.getDifficulty1().blockZ(),
+                        Material.REDSTONE_BLOCK
+                );
+            }
+            case 2 ->
+            {
+                if(essaimClass.getDifficulty2() == null)
+                    return;
+                EssaimFunctions.setBlock(essaimClass.getDifficulty2().blockX(),
+                        essaimClass.getDifficulty2().blockY(),
+                        essaimClass.getDifficulty2().blockZ(),
+                        Material.REDSTONE_BLOCK
+                );
+            }
+            case 3 ->
+            {
+                if(essaimClass.getDifficulty3() == null)
+                    return;
+                EssaimFunctions.setBlock(essaimClass.getDifficulty3().blockX(),
+                        essaimClass.getDifficulty3().blockY(),
+                        essaimClass.getDifficulty3().blockZ(),
+                        Material.REDSTONE_BLOCK
+                );
+            }
+        }
+
     }
 
     public void loop()
@@ -270,5 +281,10 @@ public class EssaimManager {
     public boolean isEssaimActive(String essaim)
     {
         return activeEssaims.containsKey(essaim);
+    }
+
+    public FileConfiguration getConfig()
+    {
+        return configManager.getConfig();
     }
 }

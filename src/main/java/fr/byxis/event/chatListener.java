@@ -16,8 +16,6 @@ public class chatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent e){
         for(Player on : Bukkit.getServer().getOnlinePlayers())
         {
-            if(on.equals(e.getPlayer()))continue;
-            
             if(e.getMessage().contains("@"+on.getName()))
             {
             	e.setMessage(e.getMessage().replaceAll("@"+on.getName(), on.getName()));
@@ -32,11 +30,6 @@ public class chatListener implements Listener {
             	}
             }
         }
-        /*
-        if(e.getPlayer().hasPermission("fireland.chat.color"))
-        {
-            e.setMessage(e.getMessage().replaceAll("&", "§"));
-        }*/
         
         if(e.getPlayer().hasPermission("fireland.chat.admin"))
         {
@@ -49,7 +42,6 @@ public class chatListener implements Listener {
         		e.setMessage(e.getMessage().replaceAll("everyone", ChatColor.GOLD + "@"+ ChatColor.RESET+""+ChatColor.BOLD+""+ ChatColor.YELLOW +"everyone"+ChatColor.RESET));
         		for(Player on : Bukkit.getServer().getOnlinePlayers())
                 {
-        			
                 	on.playNote(on.getLocation(), Instrument.PIANO, Note.natural(1, Tone.A));
                 }
             }

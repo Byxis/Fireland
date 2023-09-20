@@ -3,6 +3,7 @@ package fr.byxis.faction.zone;
 import fr.byxis.db.DbConnection;
 import fr.byxis.faction.faction.FactionPlayerInformation;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.jeton.JetonManager;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.fireland.Fireland;
@@ -84,6 +85,9 @@ public class DataZone {
                         SetRewardNumber(zone, today);
                     }
                     SaveClaiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
+                    FactionFunctions ff = new FactionFunctions(main, null);
+
+                    CaptureZone.changeAnimationStep(-1, zone, ff.getFactionInfo(zone.getClaimer()).getColorcode());
                 }
             } else {
 
@@ -140,14 +144,12 @@ public class DataZone {
                 ps.setLong(1, rs.getLong(1) + diff);
                 ps.setString(2, zone);
                 ps.setString(3, factionName);
-                main.getLogger().info("3");
                 ps.executeUpdate();
             } else {
                 final PreparedStatement ps = connection.prepareStatement("INSERT INTO faction_zone(faction_name,zone,duration) VALUES (?,?,?)");
                 ps.setString(2, zone);
                 ps.setString(1, factionName);
                 ps.setInt(3, (int) diff);
-                main.getLogger().info("2");
                 ps.executeUpdate();
             }
         } catch (SQLException e) {
@@ -155,7 +157,7 @@ public class DataZone {
         }
     }
 
-    private void RemoveSavedClaiming(String zone, String faction) {
+    void RemoveSavedClaiming(String zone, String faction) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
         try {
@@ -166,13 +168,13 @@ public class DataZone {
 
             ResultSet rs = isInDb.executeQuery();
             if (rs.next()) {
-                if (faction != null && !faction.equalsIgnoreCase("")) {
+                /*if (faction != null && !faction.equalsIgnoreCase("")) {
                     final PreparedStatement hasEverClaimedThisZone = connection.prepareStatement("SELECT duration FROM faction_zone WHERE zone = ? AND faction_name = ?");
                     hasEverClaimedThisZone.setString(1, zone);
                     hasEverClaimedThisZone.setString(2, faction);
                     ResultSet result = hasEverClaimedThisZone.executeQuery();
                     if (rs.next()) {
-                        final PreparedStatement update = connection.prepareStatement("UPDATE INTO faction_zone SET duration = ? WHERE faction_name = ? AND zone = ?");
+                        final PreparedStatement update = connection.prepareStatement("UPDATE faction_zone SET duration = ? WHERE faction_name = ? AND zone = ?");
                         update.setInt(1, result.getInt(1) + (int) ((System.currentTimeMillis() - rs.getTimestamp(2).getTime()) + rs.getTimestamp(2).getTime()));
                         update.setString(2, zone);
                         update.setString(3, faction);
@@ -184,7 +186,7 @@ public class DataZone {
                         update.setInt(3, (int) ((System.currentTimeMillis() - rs.getTimestamp(2).getTime()) + rs.getTimestamp(2).getTime()));
                         update.executeUpdate();
                     }
-                }
+                }*/
                 final PreparedStatement delete = connection.prepareStatement("DELETE FROM capture_zone WHERE zone = ?");
                 delete.setString(1, zone);
                 delete.executeUpdate();
@@ -276,16 +278,13 @@ public class DataZone {
     private void rewardFaction(ZoneClass zone, String factionName, boolean isFinal) {
         FactionFunctions ff = new FactionFunctions(main, null);
         if (isFinal) {
-            main.getLogger().info("Final Reward");
             ff.deposit(factionName, zone.getFinalDollarsGain());
-            jetonsCommandManager jt = new jetonsCommandManager(main);
             if (ff.getPlayersFromFaction(factionName) != null) {
                 for (FactionPlayerInformation player : ff.getPlayersFromFaction(factionName)) {
-                    jt.addJetonsPlayer(player.getUuid(), zone.getFinalJetonsGain());
+                    JetonManager.addJetonsPlayer(player.getUuid(), zone.getFinalJetonsGain());
                 }
             }
         } else {
-            main.getLogger().info("Reward !!");
             ff.deposit(factionName, zone.getDaily_gain());
         }
     }
@@ -319,7 +318,7 @@ public class DataZone {
                                     break;
                                 }
                             }
-                            if (!founded) {
+                            if (!founded && zoneInCapture.get(zone.getName()).isEmpty()) {
                                 zoneInCapture.get(zone.getName()).add(factionCapturingClass);
                             }
                         } else {

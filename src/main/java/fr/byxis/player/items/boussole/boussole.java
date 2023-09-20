@@ -14,6 +14,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerPreLoginEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 public class boussole implements @NotNull Listener {
@@ -61,10 +64,17 @@ public class boussole implements @NotNull Listener {
     @EventHandler
     public void firstPlayerJoin(PlayerJoinEvent e)
     {
-        if(!e.getPlayer().hasPlayedBefore())
+        if(!main.cfgm.getPlayerDB().contains("hasplayedbefore."+e.getPlayer().getUniqueId()))
         {
+            main.cfgm.getPlayerDB().set("hasplayedbefore."+e.getPlayer().getUniqueId(), true);
+            main.cfgm.savePlayerDB();
             e.getPlayer().teleport(new Location(Bukkit.getWorld("tutorial"), 0.5, -51, -0.5));
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "w give "+e.getPlayer().getName()+" Boussole");
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "w give "+e.getPlayer().getName()+" Boussole");
+                }
+            }.runTaskLater(main, 20);
         }
     }
 }

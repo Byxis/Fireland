@@ -34,6 +34,14 @@ public class PermissionUtilities {
         api.getUserManager().saveUser(user);
     }
 
+    public static boolean hasPermission(Player p, String permission)
+    {
+        LuckPerms api = LuckPermsProvider.get();
+
+        User user = api.getPlayerAdapter(Player.class).getUser(p);
+        return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
+    }
+
     public static void addTempPermission(Player p, String permission, Date finished) {
         LuckPerms api = LuckPermsProvider.get();
 

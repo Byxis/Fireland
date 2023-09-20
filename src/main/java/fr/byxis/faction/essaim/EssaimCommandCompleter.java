@@ -72,6 +72,9 @@ public class EssaimCommandCompleter implements TabCompleter {
                 i1.add("hub");
                 i1.add("key");
                 i1.add("solo");
+                i1.add("difficulty.1");
+                i1.add("difficulty.2");
+                i1.add("difficulty.3");
 
                 l.addAll(ListUtilities.tabList(strings[1], "", i1));
 
@@ -186,7 +189,7 @@ public class EssaimCommandCompleter implements TabCompleter {
             {
                 if(strings[1].equalsIgnoreCase("create"))
                 {
-                    l.addAll(ListUtilities.tabList(strings[3], "--mobtype", MythicBukkit.inst().getMobManager().getMobNames()));
+                    l.addAll(ListUtilities.tabList(strings[3], "--mobtype", MythicBukkit.inst().getMobManager().getMobNames().toArray()));
                 }
             }
 

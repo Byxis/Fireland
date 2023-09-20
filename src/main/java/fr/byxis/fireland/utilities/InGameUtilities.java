@@ -218,7 +218,7 @@ public class InGameUtilities implements Listener {
         }
     }
 
-    public static void debug(String txt)
+    public static void debugConsole(String txt)
     {
         main.getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString()+"Debug "+Ansi.ansi().fg(Ansi.Color.WHITE).toString()+">> "+txt);
     }

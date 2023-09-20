@@ -6,7 +6,10 @@ import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.ItemSerializer;
 import fr.byxis.fireland.Fireland;
 import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -51,35 +54,35 @@ public class FactionFunctions {
 			//Récupération du nom des modérateurs de la faction
 			} else if (player.getRole() == 1) {
 				if (mod.toString().equals("")) {
-					mod.append("§r").append(player.getName());
+					mod.append("§7").append(player.getName());
 				} else {
-					mod.append("§a, §r").append(player.getName());
+					mod.append("§8, §7").append(player.getName());
 				}
 			//Récupération du nom des autres membres de la faction
 			} else if (player.getRole() == 0) {
 				if (members.toString().equals("")) {
-					members.append("§r").append(player.getName());
+					members.append("§7").append(player.getName());
 				} else {
-					members.append("§a, §r").append(player.getName());
+					members.append("§8, §7").append(player.getName());
 				}
 			}
 		}
 		//Envoi du message contenant les informations au joueur
-		p.sendMessage("§a==");
-		p.sendMessage("§aNom: "+infos.getColorcode()+infos.getName());
-		p.sendMessage("§aDate de création: §r"+infos.getCreatedAt());
-		p.sendMessage("§aNombre de membres: §r"+infos.getCurrentNbrOfPlayers()+"/"+infos.getMaxNbrOfPlayers());
-		p.sendMessage("§aAmélioration actuelle: §r"+infos.getCurrentUpgrade());
-		p.sendMessage("§aArgent: §r$"+ infos.getCurrentMoney()+"/"+infos.getMaxMoney());
+		String title = "§8------------- "+infos.getColorcode()+infos.getName()+ "§8 - §dNiv. "+infos.getCurrentUpgrade()+" §8-------------";
+		p.sendMessage(title);
+		p.sendMessage(" ");
+		p.sendMessage("§8Date de création: §7"+infos.getCreatedAt());
+		p.sendMessage("§8Nombre de membres: §7"+infos.getCurrentNbrOfPlayers()+"/"+infos.getMaxNbrOfPlayers());
+		p.sendMessage("§8Argent: §7$"+ infos.getCurrentMoney()+"/"+infos.getMaxMoney());
 		p.sendMessage("");
-		p.sendMessage("§aChef:");
+		p.sendMessage("§8Chef:");
 		assert leader != null;
-		p.sendMessage(leader);
-		p.sendMessage("§aModérateurs:");
+		p.sendMessage("§7"+leader);
+		p.sendMessage("§8Modérateurs:");
 		p.sendMessage(mod.toString());
-		p.sendMessage("§aMembres:");
+		p.sendMessage("§8Membres:");
 		p.sendMessage(members.toString());
-		p.sendMessage("§a==");
+		p.sendMessage("§8"+("-".repeat(ChatColor.stripColor(title).split("").length-5)));
 	}
 	
 	public ArrayList<FactionPlayerInformation> getPlayersFromFaction(String factionName)
@@ -1281,5 +1284,70 @@ public class FactionFunctions {
 				InGameUtilities.sendPlayerInformation(p, msg);
 			}
 		}
+	}
+
+	public ArrayList<String[]> getFactions()
+	{
+		ArrayList<String[]> faction = new ArrayList<>();
+		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+		try {
+			//On prépare la requête SQL
+			final Connection connection = firelandConnection.getConnection();
+
+			final PreparedStatement preparedStatement = connection.prepareStatement("SELECT faction.color_code, faction.name FROM faction ORDER BY faction.upgrade DESC, faction.name, faction.created_at;");
+			//On exécute la requete SQL
+			ResultSet rs = preparedStatement.executeQuery();
+			while(rs.next())
+			{
+				faction.add(new String[]{rs.getString(1), rs.getString(2)});
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return faction;
+	}
+
+	public void sendFactionList(Player p, int page)
+	{
+		ArrayList<String[]> factions = getFactions();
+		int pageSize = 5;
+		p.sendMessage("§8------------- §7Factions §8-------------");
+		ComponentBuilder message = new ComponentBuilder();
+		for(int i = page*pageSize; i < pageSize*(page+1) && i < factions.size(); i++)
+		{
+			message.append("§8"+(i+1)+". "+factions.get(i)[0]+factions.get(i)[1])
+					.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§aVoir les informations de la faction "+factions.get(i)[1]).create()))
+					.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/faction info "+factions.get(i)[1]));
+			p.spigot().sendMessage(message.create());
+			message = new ComponentBuilder();
+		}
+		if(page > 0)
+		{
+			message.append("§2[<]")
+					.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page précédente").create()))
+					.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/faction list "+(page-1)));
+		}
+		else
+		{
+			message.append("§7[<]")
+					.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
+					.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
+		}
+		message.append("§8 ----------------------------- ")
+				.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
+				.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
+		if(page*pageSize + pageSize < factions.size())
+		{
+			message.append("§4[>]")
+					.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page suivante").create()))
+					.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/faction list "+(page+1)));
+		}
+		else
+		{
+			message.append("§7[>]")
+					.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
+					.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
+		}
+		p.spigot().sendMessage(message.create());
 	}
 }

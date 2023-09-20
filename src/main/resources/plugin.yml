@@ -59,6 +59,9 @@ commands:
     description: commandes pour les jetons
     permission: fireland.command.jeton
     aliases: [ jt, jetons ]
+  facture:
+    description: commandes pour les factures
+    permission: fireland.command.facture
   rang:
     description: commandes pour les rangs
     aliases: [rangs]
@@ -88,3 +91,6 @@ commands:
     permission: fireland.admin
   bunker:
     description: permet de rejoindre les bunkers
+  level:
+    description: commande pour les levels
+    aliases: [lvl]

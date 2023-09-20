@@ -44,7 +44,7 @@ public class playerDeath implements Listener {
 	{
 		Player killed = e.getEntity();
 
-		if(!(e.getEntity().getLastDamageCause().getEntity() instanceof Player killer))
+		if(e.getEntity().getLastDamageCause() == null || !(e.getEntity().getLastDamageCause().getEntity() instanceof Player killer))
 			return;
 		
 		double money = main.eco.getBalance(killed);

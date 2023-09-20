@@ -1,8 +1,8 @@
 package fr.byxis.event;
 
-import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.faction.housing.BunkerClass;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.player.level.LevelStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
@@ -37,6 +37,8 @@ public class SaveEvent implements Listener {
         SaveAllEnderchest();
         SaveAllKarma();
         SaveAllFactionStorages();
+        LevelStorage.SaveLevels();
+        LevelStorage.SavePlayerKillMap();
     }
 
     private static void saveEnderchest(Inventory inv, UUID uuid)

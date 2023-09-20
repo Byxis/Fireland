@@ -4,6 +4,9 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
+import io.lumine.mythic.api.mobs.MythicMob;
+import io.lumine.mythic.bukkit.BukkitAdapter;
+import io.lumine.mythic.bukkit.MythicBukkit;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -40,18 +43,18 @@ public class infectedPlayer implements Listener,CommandExecutor {
 		if(isInfected(p))
 		{
 			int level = getLevelInfection(p);
+			MythicMob mob = null;
 			if(level == 0)
 			{
+				mob = MythicBukkit.inst().getMobManager().getMythicMob("Infecte").orElse(null);
 
-				String cmd = "mm m spawn Infecte 1 world,"+p.getLocation().getX()+","+p.getLocation().getY()+","+p.getLocation().getZ();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
 			}
 			else if(level == 1)
 			{
-
-				String cmd = "mm m spawn Malabar 1 world,"+p.getLocation().getX()+","+p.getLocation().getY()+","+p.getLocation().getZ();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+				mob = MythicBukkit.inst().getMobManager().getMythicMob("Malabar").orElse(null);
 			}
+			if(mob != null)
+				mob.spawn(BukkitAdapter.adapt(p.getLocation()), 1);
 			setInfection(p, false);
 		}
 		p.playSound(p.getLocation(), "minecraft:gun.hud.death", 10, 1);

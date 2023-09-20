@@ -6,6 +6,7 @@ import fr.byxis.faction.zone.zoneclass.FactionCapturingClass;
 import fr.byxis.faction.zone.zoneclass.ZoneClass;
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.player.level.LevelStorage;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -20,17 +21,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import static fr.byxis.player.level.LevelStorage.addPlayerXp;
+
 public class CaptureZone {
 
     private static Fireland main;
     private DataZone data;
     private final int captureRefreshRate = 2;
-    private final float boosterCapture = 15f;
+    private final float boosterCapture = 1.5f;
     int i = 0;
 
     public CaptureZone(Fireland main, DataZone data)
     {
-        this.main = main;
+        CaptureZone.main = main;
         this.data = data;
     }
 
@@ -264,8 +267,8 @@ public class CaptureZone {
                     {
                         data.SaveTiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
                         zoneClass.unclaim();
-                        changeAnimationStep(-1, zone, "§r");
                     }
+                    changeAnimationStep(-1, zone, color);
                     zoneClass.setClaimed(faction.getName(), new Timestamp(System.currentTimeMillis()));
                     break;
                 }
@@ -273,6 +276,10 @@ public class CaptureZone {
             data.SaveAll();
             for(Player p: Bukkit.getOnlinePlayers())
             {
+                if(faction.getPlayerList().contains(p))
+                {
+                    addPlayerXp(p.getUniqueId(), 150, LevelStorage.Nation.Bannis);
+                }
                 InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
                 InGameUtilities.sendPlayerInformation(p, "La faction "+color+faction.getName()+"§R§7 a capturé la zone "+zone.getFormattedName()+" !");
             }
@@ -285,6 +292,7 @@ public class CaptureZone {
             {
                 changeAnimationStep(-1, zone, "§r");
                 zone.unclaim();
+                data.RemoveSavedClaiming(zone.getName(), null);
                 data.SaveTiming(faction.getName(), zone.getClaimedAt(), zone.getName());
             }
             data.zoneInCapture.get(zone.getName()).remove(faction);

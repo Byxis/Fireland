@@ -28,6 +28,11 @@ public class factionManagerTabCompleter implements TabCompleter {
 			 l.add("money");
 			 l.add("upgrade");
 			 l.add("kick");
+			 if(sender.hasPermission("fireland.admin.faction"))
+			 {
+				 l.add("withdraw");
+				 l.add("deposit");
+			 }
 	    	 return l;
 	     }
 	     else if(args.length == 2)

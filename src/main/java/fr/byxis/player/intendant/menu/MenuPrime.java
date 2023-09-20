@@ -135,7 +135,7 @@ public class MenuPrime {
             ItemMeta meta = item.getItemMeta();
             ArrayList<String> lore = new ArrayList<String>();
             lore.add("§8Valeur: §6"+getPrime(uuid)+"$");
-            lore.add("§8Durée restante: §7"+BasicUtilities.getStringTimeDay(getPrimeMaxDay()* 24 * 60 * 60 * 1000+getPrimeDate(uuid).getTime()-System.currentTimeMillis()));
+            lore.add("§8Durée restante: §7"+BasicUtilities.getStringTime(getPrimeMaxDay()* 24 * 60 * 60 * 1000+getPrimeDate(uuid).getTime()-System.currentTimeMillis()));
             meta.setLore(lore);
 
             item.setItemMeta(meta);

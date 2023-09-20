@@ -93,7 +93,6 @@ public class bottleFilled implements Listener {
         p.setCooldown(Material.GLASS_BOTTLE, 20);
         if(purify)
         {
-            debugp(1);
             givePotion(p, Color.fromRGB(150, 180, 255));
         }
         else if (canPurify(p))
@@ -126,7 +125,6 @@ public class bottleFilled implements Listener {
         }
         else
         {
-            debugp(3);
             givePotion(p, Color.OLIVE);
         }
     }

@@ -50,7 +50,7 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 	
 	private Fireland main;
 	
-	public shop(Fireland main) {
+	public @Deprecated shop(Fireland main) {
 		this.main = main;
 	}
 

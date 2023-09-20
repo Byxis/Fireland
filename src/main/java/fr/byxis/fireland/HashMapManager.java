@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -23,8 +24,8 @@ public class HashMapManager {
     private static Fireland main;
 
     public HashMapManager(Fireland main) {
-        Init();
         HashMapManager.main = main;
+        Init();
     }
 
     public void Init()
@@ -36,6 +37,7 @@ public class HashMapManager {
         this.storageFactionMap = new HashMap<>();
         this.factionPrefixMap = new HashMap<>();
         this.booster = null;
+        loadBooster();
         this.isTeleporting = new HashMap<>();
         purify = new HashMap<>();
     }
@@ -193,6 +195,35 @@ public class HashMapManager {
         else
         {
             purify.put(uuid, b);
+        }
+    }
+
+    private void loadBooster()
+    {
+        if(main.cfgm.getPlayerDB().contains("booster.player"))
+        {
+            booster = new BoosterClass(
+                    new Date(main.cfgm.getPlayerDB().getLong("booster.started")),
+                    new Date(main.cfgm.getPlayerDB().getLong("booster.finished")),
+                    UUID.fromString(main.cfgm.getPlayerDB().getString("booster.player")),
+                    main.cfgm.getPlayerDB().getInt("booster.level"));
+        }
+    }
+
+    public void saveBooster()
+    {
+        if(booster != null && booster.getFinished().after(new java.util.Date()))
+        {
+            main.cfgm.getPlayerDB().set("booster.started", booster.getStarted().getTime());
+            main.cfgm.getPlayerDB().set("booster.finished", booster.getFinished().getTime());
+            main.cfgm.getPlayerDB().set("booster.player", booster.getUuid().toString());
+            main.cfgm.getPlayerDB().set("booster.level", booster.getLevel());
+            main.cfgm.savePlayerDB();
+        }
+        else
+        {
+            main.cfgm.getPlayerDB().set("booster", null);
+            main.cfgm.savePlayerDB();
         }
     }
 }

@@ -18,6 +18,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+
 public class BackPack implements Listener, CommandExecutor {
 
     private static Fireland main;
@@ -114,16 +116,38 @@ public class BackPack implements Listener, CommandExecutor {
             {
                 return;
             }
+            else if(e.getClick().isKeyboardClick())
+            {
+                e.setCancelled(true);
+                return;
+            }
             if(e.getClickedInventory().getType() != InventoryType.PLAYER || (e.getView().getTopInventory().getType() != InventoryType.PLAYER
                     &&e.getView().getTopInventory().getType() != InventoryType.CRAFTING
                     &&e.getView().getTopInventory().getType() != InventoryType.CREATIVE)
-                    )
+            )
             {
-                if(!e.getView().getTitle().contains("Coffre"))
+                if(!e.getView().getTitle().contains("Coffre") || !e.getView().getTitle().contains("Corps de ") || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
                 {
                     e.setCancelled(true);
                     return;
                 }
+            }
+        }
+        if(e.getClick().isKeyboardClick() && e.getView().getPlayer().getInventory().getItem(e.getHotbarButton()) != null)
+        {
+            ItemStack item = e.getView().getPlayer().getInventory().getItem(e.getHotbarButton());
+            if(item.getType() != Material.LEATHER)
+                return;
+
+            BackPackClass bp = new BackPackClass(54);
+            if(bp.isBackPackEmpty(item))
+            {
+                return;
+            }
+            else if(e.getClick().isKeyboardClick())
+            {
+                e.setCancelled(true);
+                return;
             }
         }
         if(e.getCurrentItem() != null && e.getCurrentItem().getType() == Material.WHITE_STAINED_GLASS_PANE)
@@ -134,26 +158,35 @@ public class BackPack implements Listener, CommandExecutor {
                     || e.getView().getTitle().contains("Sac de sport")
                     || e.getView().getTitle().contains("Sac de randonnée")
                     || e.getView().getTitle().contains("Sac à dos militaire")
-            ||e.getClick().isKeyboardClick())
-            {
-                e.setCancelled(true);
-            }
-        }
-        if(e.getView().getTitle().contains("Pochette")
-                || e.getView().getTitle().contains("Sacoche")
-                || e.getView().getTitle().contains("Sac à dos")
-                || e.getView().getTitle().contains("Sac de sport")
-                || e.getView().getTitle().contains("Sac de randonnée")
-                || e.getView().getTitle().contains("Sac à dos militaire")
-                )
-        {
-            if(e.getClick().isKeyboardClick() ||e.getAction() == InventoryAction.DROP_ALL_SLOT
-            ||e.getAction() == InventoryAction.DROP_ONE_SLOT)
+            )
             {
                 e.setCancelled(true);
             }
         }
 
+    }
+
+    @EventHandler
+    public void playerDrag(InventoryDragEvent e)
+    {
+        if(e.getCursor() != null && (e.getCursor().getType() == Material.LEATHER))
+        {
+            BackPackClass bp = new BackPackClass(54);
+            if(bp.isBackPackEmpty(e.getCursor()))
+            {
+                return;
+            }
+            if(e.getInventory().getType() != InventoryType.PLAYER || (e.getView().getTopInventory().getType() != InventoryType.PLAYER
+                    &&e.getView().getTopInventory().getType() != InventoryType.CRAFTING
+                    &&e.getView().getTopInventory().getType() != InventoryType.CREATIVE)
+            )
+            {
+                if(!e.getView().getTitle().contains("Coffre") || !e.getView().getTitle().contains("Corps de ") || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
+                {
+                    e.setCancelled(true);
+                }
+            }
+        }
     }
 
     public void giveItem(Player p, int level)

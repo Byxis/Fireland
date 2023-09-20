@@ -227,26 +227,16 @@ public class doorPass implements Listener {
 					Location door = getDoorLocation(e.getClickedBlock().getLocation());
 	                if(door != null)
 	                {
-						if(main.hashMapManager.getRangMap().get(p.getUniqueId()).getRang() <= 25)
+						if(PvPManager.isOnTimer(p))
 						{
-							e.getPlayer().sendMessage("§4L'accès à cette zone vous a été refusé en raison de vos actes criminels.");
+							e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
+							InGameUtilities.sendPlayerError(p, "L'accès à cette zone vous a été refusé car vous êtes en combat.");
 						}
-	                	/*else if(main.cfgm.getPlayerDB().getBoolean("discretion."+p.getUniqueId()+".hasKilled"))
-	                	{
-	                		e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
-	                		e.getPlayer().sendMessage("§cL'accès vous a été refusé ! Vous avez tué un joueur il y a moins de 5 minutes !");
-	                	}
-
-	                	 */
 	                	else if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getUniqueId()+".state"))
 	                	{
 	                		e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
-	                		e.getPlayer().sendMessage("§cL'accès vous a été refusé ! Vous êtes infecté !");
+							InGameUtilities.sendPlayerError(p, "L'accès à cette zone vous a été refusé car vous êtes infecté.");
 	                	}
-						else if(PvPManager.isOnTimer(p))
-						{
-							e.getPlayer().sendMessage("§cL'accès vous a été refusé car vous êtes en combat.");
-						}
 	                	else
 	                	{
 							InitOpenDoor(e, p, handTime);

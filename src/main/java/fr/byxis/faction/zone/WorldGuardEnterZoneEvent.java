@@ -13,7 +13,10 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.Date;
 
 public class WorldGuardEnterZoneEvent implements Listener {
 
@@ -33,7 +36,6 @@ public class WorldGuardEnterZoneEvent implements Listener {
         ZoneClass capturedZone = null;
         Player p = e.getPlayer();
         for (ZoneClass zone : data.zones) {
-            main.getLogger().info(zone.getName() + " " + e.getRegion().getId());
             if (e.getRegion().getId().contains("zonecapture-"+zone.getName())) {
                 captureZone = zone;
                 break;
@@ -65,7 +67,7 @@ public class WorldGuardEnterZoneEvent implements Listener {
         {
             return;
         }
-        if(!data.isCapturing(captureZone.getName(), info.getName()) && captureZone.isClaimable())
+        if(!data.isCapturing(captureZone.getName(), info.getName()) && captureZone.isClaimable() && isTimeToCapture())
         {
             data.AddCapturing(captureZone.getName(), info.getName(), p);
         }
@@ -78,7 +80,6 @@ public class WorldGuardEnterZoneEvent implements Listener {
         ZoneClass capturedZone = null;
         Player p = e.getPlayer();
         for (ZoneClass zone : data.zones) {
-            main.getLogger().info(zone.getName() + " " + e.getRegion().getId());
             if (e.getRegion().getId().contains("zonecapture-"+zone.getName())) {
                 captureZone = zone;
                 break;
@@ -123,7 +124,28 @@ public class WorldGuardEnterZoneEvent implements Listener {
             data.RemoveCapturing(zone.getName(), info.getName(), p);
         }
         data.remPlayerToZoneEnter(p);
+    }
 
+    @EventHandler
+    public void onWorldChange(PlayerChangedWorldEvent e)
+    {
+        Player p = e.getPlayer();
+        FactionInformation info = ff.getFactionInfo(ff.playerFactionName(p));
+        if (info == null)
+        {
+            return;
+        }
+        for(ZoneClass zone : data.zones)
+        {
+            data.RemoveCapturing(zone.getName(), info.getName(), p);
+        }
+        data.remPlayerToZoneEnter(p);
+    }
+
+    public boolean isTimeToCapture()
+    {
+        Date current = new Date();
+        return current.getHours() >= 18 && current.getHours() <= 19;
     }
 
 }

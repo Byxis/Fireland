@@ -21,9 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static fr.byxis.fireland.utilities.InGameUtilities.debug;
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
-
 public class BunkerStorage {
 
     HashMap<Integer, ItemStack> m_items;

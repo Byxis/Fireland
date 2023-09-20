@@ -6,6 +6,7 @@ package fr.byxis.fireland;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import fr.byxis.faction.housing.BunkerManager;
+import fr.byxis.jeton.FactureCommand;
 import fr.byxis.player.PlayerAddonsEnabler;
 import fr.byxis.player.playerDeath;
 import fr.byxis.player.items.morphine.fallDamage;
@@ -99,8 +100,10 @@ public class Fireland extends JavaPlugin {
         getCommand("discord").setExecutor(new DiscordCommand());
         getCommand("jeton").setExecutor(new jetonsCommandManager(this));
         getCommand("jeton").setTabCompleter(new jetonsCommandManager(this));
-        getCommand("rang").setExecutor(new karmaManager(this));
-        getCommand("rang").setTabCompleter(new karmaManager(this));
+        getCommand("facture").setExecutor(new FactureCommand(this));
+        getCommand("facture").setTabCompleter(new FactureCommand(this));
+        //getCommand("rang").setExecutor(new karmaManager(this));
+        //getCommand("rang").setTabCompleter(new karmaManager(this));
         getCommand("workshop").setExecutor(new workshopManager(this));
         getCommand("workshop").setTabCompleter(new workshopManagerTabCompleter(this));
         getCommand("intendant").setExecutor(new IntendantCommand(this));
@@ -140,7 +143,7 @@ public class Fireland extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new playerManager(this), this);
         getServer().getPluginManager().registerEvents(new zombieManager(this), this);
         getServer().getPluginManager().registerEvents(new jetonsCommandManager(this), this);
-        getServer().getPluginManager().registerEvents(new karmaManager(this), this);
+        //getServer().getPluginManager().registerEvents(new karmaManager(this), this);
         getServer().getPluginManager().registerEvents(new workshopManagerEvent(this), this);
         getServer().getPluginManager().registerEvents(new entitySpawn(), this);
         getServer().getPluginManager().registerEvents(new ShopEventManager(this), this);
@@ -506,7 +509,7 @@ public class Fireland extends JavaPlugin {
                     boost(fyrelix);
                 }
                 byxis = Bukkit.getPlayer("Byxis_");
-                fyrelix = Bukkit.getPlayer("Byxis_");
+                fyrelix = Bukkit.getPlayer("Fyrelix");
             }
         }.runTaskTimer(this, 0, 1);
         getLogger().info(" ");
@@ -515,6 +518,7 @@ public class Fireland extends JavaPlugin {
 
     public void onDisable() {
         SaveAll(this);
+        hashMapManager.saveBooster();
         getLogger().info(Ansi.ansi().fg(Ansi.Color.RED).toString()+"================================");
         getLogger().info(" ");
         getLogger().info(" ");

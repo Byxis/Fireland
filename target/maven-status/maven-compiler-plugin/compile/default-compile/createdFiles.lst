@@ -10,6 +10,7 @@ fr\byxis\player\advancements\AdvancementsConfig.class
 fr\byxis\player\items\water\thirst.class
 fr\byxis\command\rename.class
 fr\byxis\player\discretion\DiscretionClass.class
+fr\byxis\player\level\LevelCommand.class
 fr\byxis\player\items\morphine\fallDamage$1.class
 fr\byxis\player\items\morphine\fallDamage.class
 fr\byxis\player\quest\questclass\BuyQuestClass.class
@@ -27,6 +28,7 @@ fr\byxis\player\quest\QuestEventHandler.class
 fr\byxis\event\stairs.class
 fr\byxis\player\advancements\PossessJetonsAdvancements.class
 fr\byxis\faction\essaim\essaimClass\EssaimClass.class
+fr\byxis\player\level\LevelEvent.class
 fr\byxis\event\cobwebDamage.class
 fr\byxis\event\bank.class
 fr\byxis\faction\faction\FactionPacket.class
@@ -60,6 +62,7 @@ fr\byxis\player\intendant\menu\MenuPlayerList.class
 fr\byxis\fireland\ConfigManager.class
 fr\byxis\faction\faction\FactionPvp.class
 fr\byxis\player\items\lamp\lamp$1.class
+fr\byxis\player\level\LevelStorage.class
 fr\byxis\player\items\parachute\parachute$1.class
 fr\byxis\player\pvpmanager\PvPManager$2.class
 fr\byxis\event\worldGuardEvent.class
@@ -105,6 +108,7 @@ fr\byxis\faction\essaim\EssaimManager$2.class
 fr\byxis\event\scoreboardPlayer.class
 fr\byxis\player\pvpmanager\PvPManager$1.class
 fr\byxis\fireland\utilities\TextUtilities.class
+fr\byxis\player\level\PlayerLevel$1.class
 fr\byxis\fireland\utilities\BasicUtilities.class
 fr\byxis\player\items\lamp\lamp.class
 fr\byxis\fireland\Fireland$7.class
@@ -119,6 +123,7 @@ fr\byxis\player\workshop\workshopFunction.class
 fr\byxis\db\DbConnection.class
 fr\byxis\faction\housing\BunkerCommand.class
 fr\byxis\fireland\Fireland.class
+fr\byxis\jeton\FactureCommand.class
 fr\byxis\db\DbCredentials.class
 fr\byxis\fireland\Fireland$6.class
 fr\byxis\command\stack.class
@@ -133,6 +138,9 @@ fr\byxis\event\heliport$2.class
 fr\byxis\player\packet\PacketPlayer.class
 fr\byxis\player\workshop\recycler\RecyclerFunction$1.class
 fr\byxis\player\items\itemDurability.class
+fr\byxis\player\level\LevelStorage$Nation.class
+fr\byxis\player\level\LevelTabCompleter.class
+fr\byxis\player\level\PlayerLevel.class
 fr\byxis\player\items\backpack\BackPackClass.class
 fr\byxis\player\packet\PacketPlayer$2.class
 fr\byxis\fireland\utilities\BlockUtilities.class
@@ -154,6 +162,7 @@ fr\byxis\player\shop\ShopEventManager.class
 fr\byxis\faction\zone\WorldGuardEnterZoneEvent.class
 fr\byxis\event\join.class
 fr\byxis\player\discretion\rally$1.class
+fr\byxis\player\items\boussole\boussole$1.class
 fr\byxis\faction\zone\zoneclass\FactionZoneInformation.class
 fr\byxis\event\packetListener.class
 fr\byxis\db\DatabaseManager.class
@@ -201,6 +210,7 @@ fr\byxis\jeton\jetonSql.class
 fr\byxis\player\intendant\IntendantCommand.class
 fr\byxis\player\items\toxic\mask.class
 fr\byxis\player\quest\questclass\PlayerQuests.class
+fr\byxis\player\level\LevelSavings.class
 fr\byxis\player\karma\karmaManager.class
 fr\byxis\fireland\utilities\PermissionUtilities.class
 fr\byxis\faction\housing\BunkerEvent$1.class

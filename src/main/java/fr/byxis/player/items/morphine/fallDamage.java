@@ -38,6 +38,8 @@ public class fallDamage implements Listener {
 			Player player = (Player) e.getEntity();
 			if(e.getCause() == DamageCause.FALL && !player.getWorld().getName().equalsIgnoreCase("essaim"))
 			{
+				if(player.isInvulnerable() || e.isCancelled())
+					return;
 				e.setDamage(e.getDamage()*1.25);
 				boolean reduce = false;
 				switch (player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType()) {

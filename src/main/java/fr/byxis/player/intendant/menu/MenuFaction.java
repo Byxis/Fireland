@@ -13,6 +13,8 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.util.ArrayList;
+
 public class MenuFaction {
 
     public static void OpenFaction(Fireland main, Player p, boolean canReturn)
@@ -51,7 +53,13 @@ public class MenuFaction {
             inventory.setItem(30, InventoryUtilities.setItemMetaLore(Material.GOLD_INGOT, "§aArgent - §6"+finfos.getCurrentMoney()+"/"+finfos.getMaxMoney(), (short) 0, BasicUtilities.listMaker("§8- Faites un §dclic gauche §8pour ajouter §6100$","§8à la faction (shift pour 1000$)", "§8- §c(Leader)§8 Faites un §dclic droit §8pour retirer §6100$","§8de la faction (shift pour 1000$)")));
             if(finfos.getCurrentUpgrade() >= 5)
                 inventory.setItem(22, InventoryUtilities.setItemMeta(Material.STONE, "§7Bunker de faction", (short) 0));
-            inventory.setItem(32, InventoryUtilities.setItemMetaLore(Material.GRASS_BLOCK, "§aTerritoires claims -", (short) 0, BasicUtilities.listMaker("§cNon disponible pour le moment", "","","")));
+            else
+            {
+                ArrayList<String> lore = new ArrayList();
+                lore.add("§cDisponible après l'amélioration de faction &l5");
+                inventory.setItem(22, InventoryUtilities.setItemMetaLore(Material.STONE, "§7Bunker de faction", (short) 0, lore));
+            }
+            inventory.setItem(32, InventoryUtilities.setItemMetaLore(Material.GRASS_BLOCK, "§aTerritoires claims -", (short) 0, BasicUtilities.listMaker("§8Consulter vos territoires claims", "§8et vous y téléporter.","","")));
             inventory.setItem(35, InventoryUtilities.setItemMetaLore(Material.ANVIL, "§aAméliorations -", (short) 0, BasicUtilities.listMaker("§8Accédez aux améliorations de la faction !","§cSeul le leader peut acheter des améliorations !","","")));
             inventory.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "§7Vous êtes "+role+"§7.", (short) 0, BasicUtilities.listMaker("§8Date de création: "+finfos.getCreatedAt(),"","","")));
             if(canReturn)

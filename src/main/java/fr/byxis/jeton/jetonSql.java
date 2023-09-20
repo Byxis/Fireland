@@ -23,13 +23,12 @@ public class jetonSql {
 
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement = connection.prepareStatement("" +
-                    "SELECT MAX(number)" +
+            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(number)" +
                     " FROM jeton_history");
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next())
             {
-                final PreparedStatement preparedStatement1 = connection.prepareStatement("" +
+                final PreparedStatement preparedStatement1 = connection.prepareStatement(
                         "SELECT number, amount" +
                         " FROM jeton_history" +
                         " WHERE description = ?" +

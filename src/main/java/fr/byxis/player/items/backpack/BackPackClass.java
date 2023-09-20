@@ -48,7 +48,15 @@ public class BackPackClass {
     public boolean isBackPackEmpty(ItemStack item)
     {
         Inventory inventory = loadBackPack(item);
-        return inventory.isEmpty();
+        if(!inventory.isEmpty())
+        {
+            for(ItemStack itemStack : inventory.getContents())
+            {
+                if(itemStack != null && itemStack.getType() != Material.WHITE_STAINED_GLASS_PANE)
+                    return false;
+            }
+        }
+        return true;
 
     }
     public Inventory loadBackPack(ItemStack item) {

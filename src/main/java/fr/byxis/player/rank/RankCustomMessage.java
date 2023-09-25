@@ -53,8 +53,8 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
         grades.add("mercenaire");
         for(String grade : grades) {
             if (p.hasPermission("fireland.message." + grade)) {
-                if (e.getEntity().getKiller() != null) {
-                    e.setDeathMessage(config.getConfig().getString(grade + ".PLAYERKILL").replace("player", e.getPlayer().getName()).replace("killer", p.getKiller().getName()));
+                if (e.getEntity().getLastDamageCause().getEntity() != null) {
+                    e.setDeathMessage(config.getConfig().getString(grade + ".PLAYERKILL").replace("player", e.getPlayer().getName()).replace("killer", p.getLastDamageCause().getEntity().getName()));
                 } else if (main.cfgm.getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state") && e.getEntity().getKiller() == null) {
                     e.setDeathMessage(config.getConfig().getString(grade + ".INFECTION").replace("player", e.getPlayer().getName()));
                 }

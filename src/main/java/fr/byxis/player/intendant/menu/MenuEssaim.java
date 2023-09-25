@@ -79,7 +79,7 @@ public class MenuEssaim {
         if(main.essaimManager.isEssaimActive("none"))
             lore.add("§8Disponibilité :§a Ouvert");
         else
-            lore.add("§8Disponibilité :§c Bientôt");
+            lore.add("§8Disponibilité :§7 Samedi 15h");
         lore.add("§8Difficulté : "+getDifficulty(6));
         inv.setItem(15, InventoryUtilities.setItemMetaLore(Material.COAL_BLOCK, "§7Hangar Silencieux", (short) 1, lore));
 

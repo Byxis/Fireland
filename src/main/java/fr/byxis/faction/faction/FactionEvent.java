@@ -2,6 +2,7 @@ package fr.byxis.faction.faction;
 
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.fireland.Fireland;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,15 +13,24 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class FactionEvent implements Listener {
 
     private final Fireland main;
+    private final FactionFunctions ff;
     public FactionEvent(Fireland main) {
         this.main = main;
+        ff = new FactionFunctions(main, null);
+        if(Bukkit.getOnlinePlayers().isEmpty())
+            return;
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            ff.actualizeTeam(p);
+        }
     }
 
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent e)
     {
-        FactionFunctions ff = new FactionFunctions(main, e.getPlayer());
+        ff.setSender(e.getPlayer());
         String fname = ff.playerFactionName(e.getPlayer());
+        ff.actualizeTeam(e.getPlayer());
         FactionInformation infos = ff.getFactionInfo(fname);
         if(!fname.equals(""))
         {

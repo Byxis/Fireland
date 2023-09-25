@@ -75,8 +75,9 @@ public class itemEnabler {
 
     private void Notes()
     {
-        main.getServer().getPluginManager().registerEvents(new OpenNotes(main), main);
-        main.getCommand("fnote").setExecutor(new OpenNotes(main));
+        OpenNotes openNotes = new OpenNotes(main);
+        main.getServer().getPluginManager().registerEvents(openNotes, main);
+        main.getCommand("fnote").setExecutor(openNotes);
 
     }
 

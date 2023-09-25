@@ -31,7 +31,6 @@ fr\byxis\faction\essaim\essaimClass\EssaimClass.class
 fr\byxis\player\level\LevelEvent.class
 fr\byxis\event\cobwebDamage.class
 fr\byxis\event\bank.class
-fr\byxis\faction\faction\FactionPacket.class
 fr\byxis\fireland\utilities\BasicUtilities$1.class
 fr\byxis\player\items\toxic\SporeDamage$1.class
 fr\byxis\player\primes\PrimesConfig.class
@@ -44,6 +43,7 @@ fr\byxis\command\FirelandCommand.class
 fr\byxis\faction\zone\zoneclass\FactionCapturingClass.class
 fr\byxis\player\items\water\bottleFilled.class
 fr\byxis\event\craft.class
+fr\byxis\player\intendant\menu\MenuIntendant$1.class
 fr\byxis\player\playerDeath.class
 fr\byxis\faction\essaim\EssaimCommandCompleter.class
 fr\byxis\player\quest\questclass\QuestClass.class
@@ -90,7 +90,6 @@ fr\byxis\event\zombieManager$1.class
 fr\byxis\faction\essaim\EssaimConfigManager.class
 fr\byxis\fireland\Fireland$5.class
 fr\byxis\event\doorPass$2.class
-fr\byxis\player\nametag\HideNametag.class
 fr\byxis\command\DiscordCommand.class
 fr\byxis\event\SaveEvent.class
 fr\byxis\faction\essaim\EssaimEventHandler.class
@@ -116,6 +115,7 @@ fr\byxis\player\advancements\GradeChangeAdvancements.class
 fr\byxis\player\quest\questclass\EnterRegionQuestClass.class
 fr\byxis\faction\essaim\EssaimManager.class
 fr\byxis\player\advancements\AdvancementsManager$Success.class
+fr\byxis\player\intendant\menu\MenuLevel$1.class
 fr\byxis\player\advancements\CraftBreakAdvancements.class
 fr\byxis\player\workshop\recycler\RecyclerFunction.class
 fr\byxis\player\items\backpack\BackPackClass$BackpackInventoryHolder.class
@@ -161,7 +161,6 @@ fr\byxis\faction\essaim\EssaimFunctions$2.class
 fr\byxis\player\shop\ShopEventManager.class
 fr\byxis\faction\zone\WorldGuardEnterZoneEvent.class
 fr\byxis\event\join.class
-fr\byxis\player\discretion\rally$1.class
 fr\byxis\player\items\boussole\boussole$1.class
 fr\byxis\faction\zone\zoneclass\FactionZoneInformation.class
 fr\byxis\event\packetListener.class
@@ -170,6 +169,7 @@ fr\byxis\player\intendant\menu\MenuQuest.class
 fr\byxis\player\booster\BoosterClass.class
 fr\byxis\player\quest\questclass\InteractSpecificQuestClass.class
 fr\byxis\event\doorPass.class
+fr\byxis\player\intendant\menu\MenuLevel.class
 fr\byxis\faction\essaim\EssaimCommandManager.class
 fr\byxis\faction\essaim\EssaimFunctions$1.class
 fr\byxis\player\items\toxic\SporeDamage.class
@@ -189,6 +189,7 @@ fr\byxis\player\intendant\menu\MenuPerks.class
 fr\byxis\faction\housing\BunkerStorage.class
 fr\byxis\fireland\Fireland$2.class
 fr\byxis\player\advancements\RankChangeAdvancements.class
+fr\byxis\player\intendant\menu\MenuChoixNation.class
 fr\byxis\faction\essaim\EssaimFunctions$3.class
 fr\byxis\fireland\HashMapManager.class
 fr\byxis\event\menu.class

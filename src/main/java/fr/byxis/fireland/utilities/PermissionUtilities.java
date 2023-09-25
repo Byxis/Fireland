@@ -56,14 +56,17 @@ public class PermissionUtilities {
     }
 
     public static void removePermission(Player p, String permission) {
-        LuckPerms api = LuckPermsProvider.get();
+        if(hasPermission(p, permission))
+        {
+            LuckPerms api = LuckPermsProvider.get();
 
-        User user = api.getPlayerAdapter(Player.class).getUser(p);
-        // Add the permission
-        user.data().remove(Node.builder(permission).build());
+            User user = api.getPlayerAdapter(Player.class).getUser(p);
+            // Add the permission
+            user.data().remove(Node.builder(permission).build());
 
-        // Now we need to save changes.
-        api.getUserManager().saveUser(user);
+            // Now we need to save changes.
+            api.getUserManager().saveUser(user);
+        }
     }
 
 

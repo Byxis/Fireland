@@ -7,7 +7,9 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import fr.byxis.faction.housing.BunkerManager;
 import fr.byxis.jeton.FactureCommand;
+import fr.byxis.jeton.JetonManager;
 import fr.byxis.player.PlayerAddonsEnabler;
+import fr.byxis.player.discretion.DiscretionClass;
 import fr.byxis.player.playerDeath;
 import fr.byxis.player.items.morphine.fallDamage;
 import fr.byxis.player.booster.BoosterCommandCompleter;
@@ -30,7 +32,6 @@ import fr.byxis.fireland.utilities.WorldUtilities;
 import fr.byxis.player.intendant.IntendantCommand;
 import fr.byxis.player.intendant.Manager;
 import fr.byxis.jeton.jetonsCommandManager;
-import fr.byxis.player.karma.karmaManager;
 import fr.byxis.player.packet.PacketPlayer;
 import fr.byxis.player.shop.ShopCommandManager;
 import fr.byxis.player.shop.ShopEventManager;
@@ -203,6 +204,7 @@ public class Fireland extends JavaPlugin {
         protocolManager = ProtocolLibrary.getProtocolManager();
         saveDefaultConfig();
 
+        new JetonManager(this);
         zoneManager = new ZoneManager(this);
         essaimManager = new EssaimManager(this);
         bunkerManager = new BunkerManager(this);
@@ -217,8 +219,6 @@ public class Fireland extends JavaPlugin {
         scoreboardPlayerClass = new scoreboardPlayer(this);
         ambientSoundClass = new ambientSound(this);
         cobwebDamageClass = new cobwebDamage();
-
-        //HideNametag nametag = new HideNametag(this, protocolManager);
 
         changeItemsStackSize();
 
@@ -489,6 +489,10 @@ public class Fireland extends JavaPlugin {
 						int current = wf.getInvPageCurrent(p.getOpenInventory());
 						wf.setItemsCraftingInv((Inventory) p.getOpenInventory(), wf.getAllCraftingItems(p, p.getUniqueId().toString()), current, max);
 					}*/
+                }
+                for(DiscretionClass dc : hashMapManager.getDiscretionMap().values())
+                {
+                    dc.reduceTimeShooting();
                 }
             }
 

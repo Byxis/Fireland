@@ -9,7 +9,10 @@ import fr.byxis.faction.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.faction.zone.ZoneConfigFileManager;
 import fr.byxis.faction.zone.zoneclass.FactionZoneInformation;
+import fr.byxis.player.level.LevelStorage;
+import fr.byxis.player.level.PlayerLevel;
 import fr.byxis.player.quest.QuestManager;
+import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,6 +26,8 @@ import java.util.List;
 
 import static fr.byxis.player.intendant.menu.MenuEssaim.OpenEssaimMenu;
 import static fr.byxis.player.intendant.menu.MenuIntendant.OpenIntendant;
+import static fr.byxis.player.intendant.menu.MenuLevel.OpenLevelMenu;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 import static fr.byxis.player.primes.PrimeEvent.addPrime;
 
 public class Manager implements Listener {
@@ -57,7 +62,7 @@ public class Manager implements Listener {
                         PermissionUtilities.commandExecutor(p, "ah", "crazyauctions.access");
                         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
                     }
-                    case DIAMOND_SWORD -> {
+                    case NETHERITE_SWORD -> {
                         MenuFaction.OpenFaction(main, p, true);
                     }
                     case FIREWORK_ROCKET -> {
@@ -68,6 +73,9 @@ public class Manager implements Listener {
                     }
                     case NETHER_STAR -> {
                         //TODO: Succès
+                    }
+                    case WHITE_BANNER, BLACK_BANNER -> {
+                        OpenLevelMenu(main, p, 0);
                     }
                     case DEAD_FIRE_CORAL -> {
                         OpenEssaimMenu(main, p);
@@ -620,7 +628,8 @@ public class Manager implements Listener {
                         MenuPrime.OpenPrime(main, p);
                     }
                 }
-            }else if(inv.getTitle().equalsIgnoreCase("Calendrier des Essaims"))
+            }
+            else if(inv.getTitle().equalsIgnoreCase("Calendrier des Essaims"))
             {
                 /**       Click check        **/
 
@@ -640,7 +649,99 @@ public class Manager implements Listener {
                     }
                 }
             }
+            else if(inv.getTitle().contains("Choisir sa nation"))
+            {
+                /**       Click check        **/
+                InventoryUtilities.clickManager(e);
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null) {
+                    return;
+                }
+
+                /**       Click check        **/
+
+
+                if(itemclicked.getType().name().contains("_BANNER"))
+                {
+                    if(itemclicked.getItemMeta().getDisplayName().contains("Bannis"))
+                    {
+                        getPlayerLevel(p.getUniqueId()).setNation(LevelStorage.Nation.Bannis);
+                        InGameUtilities.sendPlayerError(p, "Vous avez rejoint la nation des Bannis.");
+                        InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
+                        for(Player player : Bukkit.getOnlinePlayers())
+                        {
+                            if(!player.getName().equalsIgnoreCase(p.getName()))
+                                player.sendMessage("§cLe joueur "+p.getName()+" a rejoint la nation des Bannis.");
+                        }
+                    }
+                    else if(itemclicked.getItemMeta().getDisplayName().contains("Neutre"))
+                    {
+                        getPlayerLevel(p.getUniqueId()).setNation(LevelStorage.Nation.Neutre);
+                        InGameUtilities.sendPlayerInformation(p, "Vous avez rejoint la nation des Neutres.");
+                        InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
+                        for(Player player : Bukkit.getOnlinePlayers())
+                        {
+                            if(!player.getName().equalsIgnoreCase(p.getName()))
+                                player.sendMessage("§7Le joueur "+p.getName()+" a rejoint la nation des Neutres.");
+                        }
+                    }
+                    else if(itemclicked.getItemMeta().getDisplayName().contains("Etat"))
+                    {
+                        getPlayerLevel(p.getUniqueId()).setNation(LevelStorage.Nation.Etat);
+                        InGameUtilities.sendPlayerSucces(p, "Vous avez rejoint la nation de l'Etat.");
+                        InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
+                        for(Player player : Bukkit.getOnlinePlayers())
+                        {
+                            if(!player.getName().equalsIgnoreCase(p.getName()))
+                                player.sendMessage("§aLe joueur "+p.getName()+" a rejoint la nation de l'Etat.");
+                        }
+                    }
+                    p.closeInventory();
+                    PermissionUtilities.removePermission(p, "fireland.nation.change");
+                }
+            }
+            else if(inv.getTitle().contains("Votre niveau : "))
+            {
+                /**       Click check        **/
+
+                InventoryUtilities.clickManager(e);
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null)
+                    return;
+
+                /**       Click check        **/
+
+
+                switch(itemclicked.getType())
+                {
+                    case RED_STAINED_GLASS_PANE, LIME_STAINED_GLASS_PANE -> {
+                        OpenLevelMenu(main, p, getPageNumber(itemclicked)-1);
+                    }
+                    case DIAMOND_BLOCK, DIAMOND-> {
+                        getPlayerLevel(p.getUniqueId()).ClaimRewards(main, Integer.parseInt(itemclicked.getItemMeta().getDisplayName().split(" ")[1]));
+                        OpenLevelMenu(main, p, Integer.parseInt(itemclicked.getItemMeta().getDisplayName().split(" ")[1])/44);
+                    }
+                    case WHITE_BANNER , BLACK_BANNER-> {
+                        PlayerLevel pl = getPlayerLevel(p.getUniqueId());
+                        InGameUtilities.sendInteractivePlayerMessage(p, "§cPour changer de nation, cliquez sur ce message. Vous devez payer "+pl.GetJetonPriceNationChange()+ "§f\u26C1§c et "+pl.GetMoneyPriceNationChange()+"§f$", "/level changeNation", "§cCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
+                        p.closeInventory();
+                    }
+                }
+            }
         }
+    }
+
+    public int getPageNumber(ItemStack item) {
+        // Remove color codes
+        String strippedInput = ChatColor.stripColor(item.getItemMeta().getDisplayName());
+
+        // Extract the number before the slash
+        String numberString = strippedInput.substring(strippedInput.indexOf('[') + 1, strippedInput.indexOf('/'));
+
+        // Convert the number string to an integer and return it
+        return Integer.parseInt(numberString);
     }
 
 }

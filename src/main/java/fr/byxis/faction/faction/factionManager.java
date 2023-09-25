@@ -120,6 +120,7 @@ public class factionManager implements Listener, CommandExecutor  {
 							InGameUtilities.sendPlayerInformation(p, "La faction §d"+args[1]+"§7 a été créé par "+p.getName()+" !");
 						}
 					}
+					ThingsToDoWhileJoining(p, args[1], factionFunctions.getFactionInfo(args[1]));
 				}
 				else
 				{
@@ -299,6 +300,7 @@ public class factionManager implements Listener, CommandExecutor  {
 						factionUpgradeInfo.getMaxMoney()+"$§7, de §d"+factionUpgradeInfo.getCurrentChestSize()
 						+"§7 slots de stockage et vous pourrez recruter §d"+factionUpgradeInfo.getMaxNbrOfPlayers()+"§7 personnes !");
 				InGameUtilities.sendPlayerInformation(p, "Pour l'améliorer, faites §c/faction upgrade yes§7.");
+				p.closeInventory();
 			}
 		}
 		else if(args[0].equalsIgnoreCase("demote") && p.hasPermission("fireland.command.faction.demote"))
@@ -674,6 +676,8 @@ public class factionManager implements Listener, CommandExecutor  {
 
 	private void ThingsToDoWhileLeaving(Player p)
 	{
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team leave "+p.getName());
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team join server "+p.getName());
 		BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
 		if(bk != null)
 		{
@@ -692,6 +696,8 @@ public class factionManager implements Listener, CommandExecutor  {
 
 	private void ThingsToDoWhileJoining(Player p, String name, FactionInformation factionInfo)
 	{
+		FactionFunctions ff = new FactionFunctions(main, p);
+		ff.actualizeTeam(p);
 		if(factionInfo == null)
 		{
 			return;

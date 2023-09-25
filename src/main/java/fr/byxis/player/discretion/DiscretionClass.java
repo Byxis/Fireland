@@ -4,7 +4,7 @@ public class DiscretionClass {
 
     private double score;
     private boolean eating;
-    private boolean shooting;
+    private int shooting;
     private boolean moving;
     private boolean isListeningMovements;
     private boolean isUsingLights;
@@ -14,11 +14,12 @@ public class DiscretionClass {
     {
         this.score = 100;
         this.eating = false;
-        this.shooting = false;
+        this.shooting = 0;
         this.moving = false;
         this.isListeningMovements = false;
         this.isUsingLights = false;
         this.isUsingCamo = false;
+
     }
 
     public double getScore() {
@@ -38,10 +39,18 @@ public class DiscretionClass {
     }
 
     public boolean isShooting() {
-        return shooting;
+        return shooting > 0;
+    }
+    public void reduceTimeShooting()
+    {
+        if(!isShooting())
+            return;
+        shooting -= 1;
+        if(shooting < 0)
+            shooting = 0;
     }
 
-    public void setShooting(boolean shooting) {
+    public void setShooting(int shooting) {
         this.shooting = shooting;
     }
 

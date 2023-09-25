@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class SaveEvent implements Listener {
 
-    private static Fireland main = null;
+    private static Fireland main;
     public SaveEvent(Fireland main) {
         SaveEvent.main = main;
     }

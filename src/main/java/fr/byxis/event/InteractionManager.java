@@ -8,7 +8,48 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.ArrayList;
+
 public class InteractionManager implements Listener {
+
+	ArrayList<Material> m_forbiddenMats;
+
+	public InteractionManager()
+	{
+		m_forbiddenMats = new ArrayList<>();
+		m_forbiddenMats.add(Material.GRINDSTONE);
+		m_forbiddenMats.add(Material.JUKEBOX);
+		m_forbiddenMats.add(Material.ENCHANTING_TABLE);
+		m_forbiddenMats.add(Material.ANVIL);
+		m_forbiddenMats.add(Material.FURNACE);
+		m_forbiddenMats.add(Material.BLAST_FURNACE);
+		m_forbiddenMats.add(Material.DAMAGED_ANVIL);
+		m_forbiddenMats.add(Material.SMOKER);
+		m_forbiddenMats.add(Material.HOPPER);
+		m_forbiddenMats.add(Material.SHULKER_BOX);
+		m_forbiddenMats.add(Material.BREWING_STAND);
+		m_forbiddenMats.add(Material.DROPPER);
+		m_forbiddenMats.add(Material.DISPENSER);
+		m_forbiddenMats.add(Material.BARREL);
+		m_forbiddenMats.add(Material.LEGACY_BED);
+		m_forbiddenMats.add(Material.LEGACY_BED_BLOCK);
+		m_forbiddenMats.add(Material.BLACK_BED);
+		m_forbiddenMats.add(Material.BLUE_BED);
+		m_forbiddenMats.add(Material.BROWN_BED);
+		m_forbiddenMats.add(Material.CYAN_BED);
+		m_forbiddenMats.add(Material.GRAY_BED);
+		m_forbiddenMats.add(Material.GREEN_BED);
+		m_forbiddenMats.add(Material.LIGHT_BLUE_BED);
+		m_forbiddenMats.add(Material.LIGHT_GRAY_BED);
+		m_forbiddenMats.add(Material.MAGENTA_BED);
+		m_forbiddenMats.add(Material.ORANGE_BED);
+		m_forbiddenMats.add(Material.PINK_BED);
+		m_forbiddenMats.add(Material.PURPLE_BED);
+		m_forbiddenMats.add(Material.RED_BED);
+		m_forbiddenMats.add(Material.WHITE_BED);
+		m_forbiddenMats.add(Material.YELLOW_BED);
+		m_forbiddenMats.add(Material.MAGENTA_BED);
+	}
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler
@@ -17,43 +58,14 @@ public class InteractionManager implements Listener {
 		{
 			return;
 		}
-		if ((e.getClickedBlock().getType() == Material.GRINDSTONE ||
-				e.getClickedBlock().getType() == Material.JUKEBOX ||
-				e.getClickedBlock().getType() == Material.ENCHANTING_TABLE ||
-				e.getClickedBlock().getType() == Material.ANVIL ||
-				e.getClickedBlock().getType() == Material.FURNACE ||
-				e.getClickedBlock().getType() == Material.BLAST_FURNACE ||
-				e.getClickedBlock().getType() == Material.DAMAGED_ANVIL ||
-				e.getClickedBlock().getType() == Material.SMOKER
-		) && e.getAction() == Action.RIGHT_CLICK_BLOCK)
+		if (m_forbiddenMats.contains(e.getClickedBlock().getType()) && e.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{
 			e.setCancelled(true);
+			return;
 		}
 
 		if(e.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{
-			if(e.getClickedBlock().getType() == Material.LEGACY_BED ||
-					e.getClickedBlock().getType() == Material.LEGACY_BED_BLOCK ||
-					e.getClickedBlock().getType() == Material.BLACK_BED ||
-					e.getClickedBlock().getType() == Material.BLUE_BED ||
-					e.getClickedBlock().getType() == Material.BROWN_BED ||
-					e.getClickedBlock().getType() == Material.CYAN_BED ||
-					e.getClickedBlock().getType() == Material.GRAY_BED ||
-					e.getClickedBlock().getType() == Material.GREEN_BED ||
-					e.getClickedBlock().getType() == Material.LIGHT_BLUE_BED ||
-					e.getClickedBlock().getType() == Material.LIGHT_GRAY_BED ||
-					e.getClickedBlock().getType() == Material.MAGENTA_BED ||
-					e.getClickedBlock().getType() == Material.ORANGE_BED ||
-					e.getClickedBlock().getType() == Material.PINK_BED ||
-					e.getClickedBlock().getType() == Material.PURPLE_BED ||
-					e.getClickedBlock().getType() == Material.RED_BED ||
-					e.getClickedBlock().getType() == Material.WHITE_BED ||
-					e.getClickedBlock().getType() == Material.YELLOW_BED ||
-					e.getClickedBlock().getType() == Material.MAGENTA_BED
-			)
-			{
-				e.setCancelled(true);
-			}
 			Block blk = e.getClickedBlock();
 			if ((blk.getType().name().startsWith("POTTED_") || blk.getType() == Material.FLOWER_POT) && !(e.getPlayer().getGameMode() == GameMode.CREATIVE)) {
 				e.setCancelled(true);

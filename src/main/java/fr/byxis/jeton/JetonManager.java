@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public abstract class JetonManager {
+public class JetonManager {
     private static Fireland main;
     private static jetonSql jt;
 

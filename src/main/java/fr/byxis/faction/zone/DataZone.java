@@ -32,12 +32,12 @@ public class DataZone {
     private final Fireland main;
 
     public DataZone(Fireland main) {
+        this.main = main;
         this.configManager = new ZoneConfigFileManager(main);
         this.zones = new ArrayList<>();
         this.zoneInCapture = new HashMap<>();
         m_zoneEnter = new HashMap<>();
         m_zoneEnterBool = new HashMap<>();
-        this.main = main;
         InitZones();
     }
 

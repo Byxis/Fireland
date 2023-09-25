@@ -11,9 +11,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -77,4 +79,16 @@ public class playerManager implements Listener {
         main.hashMapManager.removeTeleporting(e.getPlayer().getUniqueId());
     }
 
+    @EventHandler
+    private void playerPickup(EntityPickupItemEvent e)
+    {
+        if(e.getEntity() instanceof Player p && !p.isOp())
+        {
+            if(e.getItem().getItemStack().getType() == Material.IRON_DOOR)
+            {
+                e.setCancelled(true);
+                e.getItem().remove();
+            }
+        }
+    }
 }

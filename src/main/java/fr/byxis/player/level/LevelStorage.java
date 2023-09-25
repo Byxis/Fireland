@@ -51,10 +51,6 @@ public class LevelStorage {
         {
             pl.addXp(m_main, (int) (_xp*1.5f));
         }
-        else
-        {
-            pl.addXp(m_main, _xp);
-        }
     }
 
     public static void addPlayerXp(UUID _uuid, int _xp, Nation _nation, boolean isOnly)
@@ -70,6 +66,7 @@ public class LevelStorage {
 
     public static void SaveLevels()
     {
+        if(m_levelMap.isEmpty()) return;
         for(PlayerLevel pl : m_levelMap.values())
         {
             pl.Save(m_main);
@@ -90,13 +87,17 @@ public class LevelStorage {
                 for(String uuid : m_main.cfgm.getPlayerDB()
                         .getConfigurationSection("levelmap.uuid").getKeys(false))
                 {
-                    if(isNew)
-                        m_main.cfgm.getPlayerDB().set("levelmap.uuid."+uuid+".victims", null);
-
-                    if(m_main.cfgm.getPlayerDB().contains("levelmap.uuid."+uuid))
+                    if(uuid != null && !uuid.equalsIgnoreCase(""))
                     {
-                        m_levelSavingsMap.put(UUID.fromString(uuid), new LevelSavings(UUID.fromString(uuid), m_main));
+                        if(isNew)
+                            m_main.cfgm.getPlayerDB().set("levelmap.uuid."+uuid+".victims", null);
+
+                        if(m_main.cfgm.getPlayerDB().contains("levelmap.uuid."+uuid))
+                        {
+                            m_levelSavingsMap.put(UUID.fromString(uuid), new LevelSavings(UUID.fromString(uuid), m_main));
+                        }
                     }
+
                 }
                 return;
             }
@@ -117,11 +118,19 @@ public class LevelStorage {
     {
         if(!m_levelSavingsMap.containsKey(killer.getUniqueId()))
             m_levelSavingsMap.put(killer.getUniqueId(), new LevelSavings(killer.getUniqueId(), m_main));
+
         if(!m_levelSavingsMap.get(killer.getUniqueId()).getVictims().contains(victim.getUniqueId()))
         {
             m_levelSavingsMap.get(killer.getUniqueId()).addVictim(victim.getUniqueId());
             m_levelSavingsMap.get(killer.getUniqueId()).addKills(1);
         }
+    }
+
+    public static LevelSavings GetPlayerLevelSavings(UUID p)
+    {
+        if(!m_levelSavingsMap.containsKey(p))
+            m_levelSavingsMap.put(p, new LevelSavings(p, m_main));
+        return m_levelSavingsMap.get(p);
     }
 
     public static void AddPlayerZombieKill(Player killer)
@@ -133,6 +142,8 @@ public class LevelStorage {
 
     public static boolean HasPlayerAlreadyKilled(Player killer, Player victim)
     {
+        if(!m_levelSavingsMap.containsKey(killer.getUniqueId()))
+            m_levelSavingsMap.put(killer.getUniqueId(), new LevelSavings(killer.getUniqueId(), m_main));
         return m_levelSavingsMap.get(killer.getUniqueId()).getVictims().contains(victim.getUniqueId());
     }
 }

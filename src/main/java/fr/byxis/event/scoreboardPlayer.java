@@ -3,7 +3,6 @@ package fr.byxis.event;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.player.karma.PlayerKarmaClass;
 import fr.byxis.fireland.Fireland;
-import fr.byxis.player.karma.karmaManager;
 import fr.byxis.player.primes.PrimeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -12,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scoreboard.*;
+
+import java.util.UUID;
 
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
@@ -102,8 +103,6 @@ public class scoreboardPlayer implements Listener {
 
 		jetonsCommandManager jetons = new jetonsCommandManager(main);
 		
-		String time = getTimeString(p);
-		
 		Score line1 = objective.getScore("§7-");
 		Score line2 = objective.getScore("§7- ");
 		Score none1 = objective.getScore("");
@@ -113,21 +112,19 @@ public class scoreboardPlayer implements Listener {
 		Score bank = objective.getScore("§8Banque : §6"+Math.round(main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"§r$");
 		Score infect = objective.getScore("§8État : "+state);
 		Score discretion = objective.getScore("§8Discretion : "+shotColor+numDiscretion+"%");
-		Score temps = objective.getScore("§8Temps survécu : §7"+time);
 		String prime = "";
 		if(PrimeEvent.config.getConfig().contains(p.getUniqueId().toString()))
 		{
 			prime = " §c(Recherché)";
 		}
-		Score rang = objective.getScore("§8Niveau : §7"+getPlayerLevel(p.getUniqueId()).getSringRang() +prime+" §8(Niv. "+getPlayerLevel(p.getUniqueId()).getLevel()+")");
+		Score rang = objective.getScore("§8Niveau : §7"+getPlayerLevel(p.getUniqueId()).getStringRank() +prime+" §8(Niv. "+getPlayerLevel(p.getUniqueId()).getLevel()+")");
 
-		line2.setScore(9);
-		none2.setScore(8);
-		money.setScore(7);
-		bank.setScore(6);
-		infect.setScore(5);
-		discretion.setScore(4);
-		temps.setScore(3);
+		line2.setScore(8);
+		none2.setScore(7);
+		money.setScore(6);
+		bank.setScore(5);
+		infect.setScore(4);
+		discretion.setScore(3);
 		rang.setScore(2);
 		none1.setScore(1);
 		line1.setScore(0);
@@ -145,9 +142,9 @@ public class scoreboardPlayer implements Listener {
         createScoreboard(player);
     }
 	
-	private String getTimeString(Player p)
+	public static String getTimeString(Fireland main, UUID p)
 	{
-		double time = main.cfgm.getPlayerDB().getDouble("playtime."+p.getUniqueId());
+		double time = main.cfgm.getPlayerDB().getDouble("playtime."+p);
 		int iTime = (int) time;
 		String sTime = "s";
 		

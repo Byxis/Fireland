@@ -419,13 +419,13 @@ public class QuestManager {
         {
             if(playerQuest.get(p.getUniqueId()).getQuest(i).getProgress() != -1)
             {
-                InGameUtilities.sendPlayerError(p, "Vous n'avez pas terminé les quêtes.");
+                InGameUtilities.sendPlayerError(p, "Vous n'avez pas terminé les missions.");
                 return;
             }
         }
         main.eco.depositPlayer(p, 200);
         JetonManager.addJetonsPlayer(p.getUniqueId(), 1);
-        InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré les récompenses..");
+        InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré les récompenses de missions.");
         playerQuest.get(p.getUniqueId()).setClaimed(true);
     }
 }

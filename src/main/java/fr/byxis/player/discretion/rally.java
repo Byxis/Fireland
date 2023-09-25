@@ -155,16 +155,7 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 
 	private void setHasShotted(Player victim)
 	{
-		main.hashMapManager.getDiscretionMap().get(victim.getUniqueId()).setShooting(true);
-
-		new BukkitRunnable() {
-
-			@Override
-			public void run() {
-				main.hashMapManager.getDiscretionMap().get(victim.getUniqueId()).setShooting(false);
-			}
-
-		}.runTaskLater(main, 20 * 10);
+		main.hashMapManager.getDiscretionMap().get(victim.getUniqueId()).setShooting(10);
 	}
 
 }

@@ -1,20 +1,20 @@
 package fr.byxis.player.level;
 
-import com.comphenix.protocol.PacketType;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.fireland.utilities.PermissionUtilities;
+import fr.byxis.jeton.JetonManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
-public class LevelCommand implements @Nullable CommandExecutor {
+public class LevelCommand implements CommandExecutor {
     private final Fireland m_main;
     public LevelCommand(Fireland main) {
         m_main = main;
@@ -29,11 +29,25 @@ public class LevelCommand implements @Nullable CommandExecutor {
             {
                 pl = getPlayerLevel(p.getUniqueId());
                 InGameUtilities.sendPlayerInformation(p, "Votre niveau : "+pl.getLevel() +" ("+pl.getXp()+"/"+pl.getRemainingXp()+")");
-                InGameUtilities.sendPlayerInformation(p, "Votre rang : "+pl.getSringRang()+" ("+pl.getNation().name()+")");
+                InGameUtilities.sendPlayerInformation(p, "Votre rang : "+pl.getStringRank()+" ("+pl.getNation().name()+")");
                 return true;
             }
             else if(args.length == 1)
             {
+                if(args[0].equalsIgnoreCase("changeNation"))
+                {
+                    pl = getPlayerLevel(p.getUniqueId());
+                    if(JetonManager.getJetonsPlayer(p.getUniqueId()) > pl.GetJetonPriceNationChange() && Fireland.eco.has(p, pl.GetMoneyPriceNationChange()))
+                    {
+                        InGameUtilities.sendPlayerSucces(p, "Vous avez acheté un changement de nation. Pour changer, votre nation, allez voir l'intendant");
+                        JetonManager.payJetons(p, pl.GetJetonPriceNationChange(), "Changement de Nation", false, true);
+                        Fireland.eco.withdrawPlayer(p, pl.GetMoneyPriceNationChange());
+                        PermissionUtilities.addPermission(p, "fireland.nation.change");
+                        return true;
+                    }
+                    InGameUtilities.sendPlayerError(p, "Vous n'avez pas les fonds nécessaire.");
+                    return false;
+                }
                 if(BasicUtilities.getUuid(args[0]) == null)
                 {
                     InGameUtilities.sendPlayerError(p, "Player inconnu");
@@ -41,7 +55,7 @@ public class LevelCommand implements @Nullable CommandExecutor {
                 }
                 pl = getPlayerLevel(BasicUtilities.getUuid(args[0]));
                 InGameUtilities.sendPlayerInformation(p, "Niveau de "+args[0]+" : "+pl.getLevel() +" ("+pl.getXp()+"/"+pl.getRemainingXp()+")");
-                InGameUtilities.sendPlayerInformation(p, "Rang de "+args[0]+" : "+pl.getSringRang()+" ("+pl.getNation().name()+")");
+                InGameUtilities.sendPlayerInformation(p, "Rang de "+args[0]+" : "+pl.getStringRank()+" ("+pl.getNation().name()+")");
                 return true;
             }
             else if(p.hasPermission("fireland.admin.level"))

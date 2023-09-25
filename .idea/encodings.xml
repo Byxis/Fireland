@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/faction/essaim/EssaimEventHandler.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/faction/essaim/EssaimFunctions.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/faction/essaim/EssaimManager.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/faction/faction/FactionFunctions.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/faction/housing/BunkerClass.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/fireland/Fireland.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/player/intendant/Manager.java" charset="windows-1252" />

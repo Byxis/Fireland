@@ -3,6 +3,7 @@ package fr.byxis.player.level;
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.skytasul.quests.api.QuestsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
@@ -12,9 +13,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+import static fr.byxis.jeton.JetonManager.addJetonsPlayer;
 
 public class PlayerLevel {
 
@@ -24,9 +27,12 @@ public class PlayerLevel {
     private int m_rang;
     private LevelStorage.Nation m_nation;
 
+    private HashMap<Integer, Boolean> m_rewardsClaimed;
+
     public PlayerLevel(Fireland main, UUID uuid)
     {
         m_uuid = uuid;
+        m_rewardsClaimed = new HashMap<Integer, Boolean>();
         DbConnection connectionDb = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = connectionDb.getConnection();
@@ -122,6 +128,9 @@ public class PlayerLevel {
             Player p = Bukkit.getPlayer(m_uuid);
             InGameUtilities.playPlayerSound(p, "gun.hud.rangchange", SoundCategory.AMBIENT, 1, 1);
         }
+
+        for(int i = oldLevel; i <= m_level; i++)
+            GivePlayerMission(i);
     }
 
     public int getRemainingXp()
@@ -138,6 +147,11 @@ public class PlayerLevel {
             return -1;
     }
 
+    public int getLevelCap()
+    {
+        return m_level/25;
+    }
+
     public int getRang()
     {
         return m_rang;
@@ -151,7 +165,7 @@ public class PlayerLevel {
         m_nation = _nation;
     }
 
-    public String getSringRang()
+    public String getStringRank()
     {
         return switch(m_nation)
         {
@@ -201,28 +215,28 @@ public class PlayerLevel {
 
     public boolean hasAccesstoShop(String _shop)
     {
-        int rang = getRang();
-        if(rang == 4)
+        int cap = getLevelCap();
+        if(cap == 4)
             return true;
-        if(rang <= 3)
+        if(cap <= 3)
         {
             if(_shop.contains("lourd") ||
                     _shop.equalsIgnoreCase("passr"))
                 return false;
         }
-        if(rang <= 2)
+        if(cap <= 2)
         {
             if(_shop.equalsIgnoreCase("passjr") ||
                     _shop.contains("assaut"))
                 return false;
         }
-        if(rang <= 1)
+        if(cap <= 1)
         {
             if(_shop.equalsIgnoreCase("passb") ||
                     _shop.contains("fusil"))
                 return false;
         }
-        if(rang <= 0)
+        if(cap <= 0)
         {
             if(_shop.equalsIgnoreCase("passv") ||
                     _shop.contains("smg"))
@@ -280,5 +294,158 @@ public class PlayerLevel {
         Player p = Bukkit.getPlayer(m_uuid);
         InGameUtilities.playPlayerSound(p, "gun.hud.rangchange", SoundCategory.AMBIENT, 1, 1);
         p.sendTitle("", "§7Passage au "+type+ " "+ amount);
+    }
+
+    public boolean HasClaimedReward(Fireland _main, int _lvl)
+    {
+        if(!m_rewardsClaimed.containsKey(_lvl))
+        {
+            DbConnection connectionDb = _main.getDatabaseManager().getFirelandConnection();
+            try {
+                final Connection connection = connectionDb.getConnection();
+                //Préparation de la commande
+                PreparedStatement hasClaimedReward = connection.prepareStatement("SELECT * FROM player_level_rewards WHERE uuid = ? AND level = ?");
+                hasClaimedReward.setString(1, m_uuid.toString());
+                hasClaimedReward.setInt(2, _lvl);
+                ResultSet rs = hasClaimedReward.executeQuery();
+                if(rs.next())
+                {
+                    m_rewardsClaimed.put(_lvl, true);
+                }
+                else
+                {
+                    m_rewardsClaimed.put(_lvl, false);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return m_rewardsClaimed.get(_lvl);
+    }
+
+    private void SetClaimedRewards(Fireland _main, int _lvl)
+    {
+        m_rewardsClaimed.put(_lvl, true);
+        DbConnection connectionDb = _main.getDatabaseManager().getFirelandConnection();
+        try {
+            final Connection connection = connectionDb.getConnection();
+            //Préparation de la commande
+            PreparedStatement setClaimedReward = connection.prepareStatement("INSERT INTO player_level_rewards(uuid, level) VALUES (?,?)");
+            setClaimedReward.setString(1, m_uuid.toString());
+            setClaimedReward.setInt(2, _lvl);
+            setClaimedReward.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ClaimRewards(Fireland _main, int _lvl)
+    {
+        Player p = Bukkit.getPlayer(m_uuid);
+        if(!HasClaimedReward(_main, _lvl))
+        {
+            int jetons = GetRewardsJetons(_lvl);
+            int money = GetRewardsMoney(_lvl);
+            String item = GetRewardsItems(_lvl);
+            if(jetons > 0)
+                InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré "+jetons+"§f\u26c1§a et "+money +"§f$§a.");
+            else
+                InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré "+money +"§f$§a.");
+            if(!item.isEmpty())
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.replace("Player", p.getName()));
+            addJetonsPlayer(m_uuid, jetons);
+            Fireland.eco.depositPlayer(p, money);
+            SetClaimedRewards(_main, _lvl);
+        }
+        else
+        {
+            InGameUtilities.sendPlayerError(p, "Vous avez déjà récupéré cette récompense.");
+        }
+    }
+
+
+    public int GetRewardsJetons(int lvl)
+    {
+        return switch(lvl)
+        {
+            default -> 0;
+            case 25 -> 10;
+            case 50 -> 15;
+            case 75 -> 25;
+            case 100 -> 50;
+        };
+    }
+
+    public int GetRewardsMoney(int lvl)
+    {
+        return lvl*10;
+    }
+
+    public String GetRewardsItems(int lvl)
+    {
+        return switch(lvl)
+        {
+            default -> "";
+            case 5 -> "wm give Player colt";
+            case 10 -> "wm give Player SWModel686";
+            case 20 -> "wm give Player glock17";
+            case 30 -> "wm give Player uzi";
+            case 40 -> "wm give Player mp9";
+            case 50 -> "wm give Player thompson";
+            case 60 -> "wm give Player mosin";
+            case 70 -> "wm give Player benellinova";
+            case 80 -> "wm give Player hk416";
+            case 90 -> "wm give Player m60";
+            case 100 -> "wm give Player aa12";
+        };
+    }
+
+    public void GivePlayerMission(int _level)
+    {
+        ArrayList<Integer> questIds = new ArrayList<Integer>();
+        switch(_level)
+        {
+            //case 1 -> questIds.add(1);
+        };
+        if(!questIds.isEmpty())
+        {
+            Player p = Bukkit.getPlayer(m_uuid);
+            if(questIds.size() > 1)
+            {
+                InGameUtilities.sendPlayerSucces(p, "Vous avez débloqué une nouvelle quête !");
+            }
+            else
+            {
+                InGameUtilities.sendPlayerSucces(p, "Vous avez débloqué de nouvelles quêtes !");
+            }
+            for(Integer id : questIds)
+            {
+                QuestsAPI.getQuests().getQuest(id).start(p, true);
+            }
+        }
+    }
+
+    public int GetJetonPriceNationChange()
+    {
+        return switch(getRang())
+        {
+            case 0 -> 5;
+            case 1 -> 10;
+            case 2 -> 15;
+            case 3 -> 20;
+            default -> 25;
+        };
+    }
+
+    public int GetMoneyPriceNationChange()
+    {
+        return switch(getRang())
+        {
+            case 0 -> 1000;
+            case 1 -> 3000;
+            case 2 -> 5000;
+            case 3 -> 7000;
+            default -> 10000;
+        };
     }
 }

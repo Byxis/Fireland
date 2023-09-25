@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class FactionFunctions {
 	
 	final private Fireland main;
-	final private Player sender;
+	private Player sender;
 
 	public FactionFunctions(Fireland main, Player sender)
 	{
@@ -440,6 +440,8 @@ public class FactionFunctions {
 			//On executes les requetes
 			insertionFaction.executeUpdate();
 			insertionPlayerFaction.executeUpdate();
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team add "+name);
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team modify "+name+" nametagVisibility hideForOtherTeams");
 			InGameUtilities.sendPlayerInformation(p, "Vous avez créé la faction "+GetColorCode(name)+name+" !");
 		} catch (SQLException e) {
 			//Une erreur est survenue (Problème de connexion à la BD)
@@ -491,6 +493,7 @@ public class FactionFunctions {
 				}
 				BunkerClass bk = new BunkerClass(resultFactionName.getString(1), main);
 				bk.Destroy();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team remove "+resultFactionName.getString(1));
 				InGameUtilities.sendPlayerError(p, "Vous avez supprimé la faction "+resultFactionName.getString(1)+".");
 			}
 			else
@@ -868,6 +871,14 @@ public class FactionFunctions {
 
 			//On exécute la requete SQL
 			renameFaction.executeUpdate();
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team remove "+_factionName);
+
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team add "+_newName);
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team modify "+_newName+" nametagVisibility hideForOtherTeams");
+			for(Player p : Bukkit.getOnlinePlayers())
+			{
+				actualizeTeam(p);
+			}
 			sender.sendMessage("§cVotre faction a été renommée. Elle s'appelle désormais "+GetColorCode(_newName)+_newName+" §c!");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1349,5 +1360,22 @@ public class FactionFunctions {
 					.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
 		}
 		p.spigot().sendMessage(message.create());
+	}
+
+	public void actualizeTeam(Player _p)
+	{
+		return;
+		/*String name =playerFactionName(_p);
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team leave "+_p.getName());
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team join server "+_p.getName());
+		if(!name.isEmpty() && getFactionInfo(name).hasNicknameVisibilityPerk())
+		{
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team join "+name+" "+_p.getName());
+		}*/
+	}
+
+	public void setSender(Player _p)
+	{
+		sender = _p;
 	}
 }

@@ -1,6 +1,7 @@
 package fr.byxis.player.shop;
 
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -22,12 +23,9 @@ public class ShopEventManager implements Listener {
         if(e.getView().getTitle().contains("Marchand"))
         {
             Player p = (Player) e.getView().getPlayer();
+            InventoryUtilities.clickManager(e);
+
             ItemStack itemclicked = e.getCurrentItem();
-            if(e.getClick().isKeyboardClick() && e.getView().getPlayer().getInventory().getItem(e.getHotbarButton()) != null)
-            {
-                e.setCancelled(true);
-                return;
-            }
             if (itemclicked == null) {
                 return;
             }

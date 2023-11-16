@@ -1,5 +1,6 @@
 package fr.byxis.faction.faction;
 
+import fr.byxis.faction.faction.events.FactionBuyPerkEvent;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
@@ -19,10 +20,6 @@ public class FactionEvent implements Listener {
         ff = new FactionFunctions(main, null);
         if(Bukkit.getOnlinePlayers().isEmpty())
             return;
-        for(Player p : Bukkit.getOnlinePlayers())
-        {
-            ff.actualizeTeam(p);
-        }
     }
 
     @EventHandler
@@ -30,7 +27,6 @@ public class FactionEvent implements Listener {
     {
         ff.setSender(e.getPlayer());
         String fname = ff.playerFactionName(e.getPlayer());
-        ff.actualizeTeam(e.getPlayer());
         FactionInformation infos = ff.getFactionInfo(fname);
         if(!fname.equals(""))
         {
@@ -70,6 +66,23 @@ public class FactionEvent implements Listener {
         if(main.hashMapManager.getFactionPrefixMap().containsKey(e.getPlayer().getUniqueId()))
         {
             e.setFormat(main.hashMapManager.getFactionPrefixMap().get(e.getPlayer().getUniqueId())+e.getFormat());
+        }
+    }
+
+    @EventHandler
+    public void FactionBuyPerk(FactionBuyPerkEvent e)
+    {
+        if(e.getPerk().equalsIgnoreCase("friendly_fire"))
+        {
+            FactionFunctions ff = new FactionFunctions(main, null);
+            for(Player p : Bukkit.getOnlinePlayers())
+            {
+                String name = ff.playerFactionName(p);
+                if(name.equalsIgnoreCase(e.getFaction()))
+                {
+                    main.hashMapManager.addFactionMap(p.getUniqueId(), e.getFaction());
+                }
+            }
         }
     }
 

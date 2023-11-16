@@ -148,7 +148,7 @@ public class BunkerStorage {
     public void SaveAllItems()
     {
         ActualiseItems();
-        for(int i = 0; i < 540; i++)
+        for(int i = 0; i < getMaxSpaceStorage(); i++)
         {
             SaveItemFactionStorage(i, m_items.get(i));
         }
@@ -452,5 +452,20 @@ public class BunkerStorage {
                 _p.openInventory(m_storage9);
             }
         }
+    }
+
+    private int getMaxSpaceStorage()
+    {
+        BunkerClass bk = m_main.bunkerManager.getLoadedBunker().get(m_name);
+        return 27 * switch(bk.GetBunkerLevel())
+        {
+            default -> 10;
+            case 0, 1, 2-> 1;
+            case 3-> 2;
+            case 4-> 3;
+            case 5, 6, 7-> 4;
+            case 8-> 6;
+            case 9-> 8;
+        };
     }
 }

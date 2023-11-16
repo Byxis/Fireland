@@ -340,20 +340,21 @@ public class BunkerEvent implements Listener {
                 }
             }
         }
-        else if(e.getView().getTitle().contains("Stockage ")) {
+        else if(e.getView().getTitle().contains("Stockage ") &&e.getView().getTitle().contains(" du bunker"))  {
             /**       Click check        **/
-
-            InventoryUtilities.clickManager(e);
-
-            ItemStack itemclicked = e.getCurrentItem();
-            if (itemclicked == null)
-                return;
+            if(e.getClick().isKeyboardClick() && e.getView().getPlayer().getInventory().getItem(e.getHotbarButton()) != null)
+                e.setCancelled(true);
 
             /**       Click check        **/
 
-           if(e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE)
+            if(e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE)
             {
+                e.setCancelled(true);
                 OpenBunkerChest(main, p);
+            }
+            else if(e.getCurrentItem().getType() == Material.WHITE_STAINED_GLASS_PANE)
+            {
+                e.setCancelled(true);
             }
         }
     }

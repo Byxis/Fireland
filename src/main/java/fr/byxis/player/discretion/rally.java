@@ -37,16 +37,23 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 				p.sendMessage("§cUtilisation : /rally <joueur> [distance]");
 			}
 		} else if (args.length == 1) {
-			final Player victim = Bukkit.getPlayer(args[0]);
+
+			Player victim = null;
+
+			for(Player p : Bukkit.getOnlinePlayers())
+			{
+				if(p.getName().equalsIgnoreCase(args[0]))
+				{
+					victim = p;
+					break;
+				}
+			}
+
 			if (victim != null) {
 
 				int distance = 100;
 
-				if (main.cfgm.getPlayerDB().getBoolean("safezone." + victim.getUniqueId() + ".state")) {
-					return false;
-				}
-
-				if (victim.hasPermission("fireland.command.rally.admin")) {
+				if (!(sender instanceof Player) || sender.hasPermission("fireland.admin.rally")) {
 					rallyEntities(victim, distance);
 					setHasShotted(victim);
 				}
@@ -57,7 +64,8 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 				rallyEntities(p, ChangeDistanceIfHasSilencer(100, p));
 				setHasShotted(p);
 			}
-			else {
+			else if (sender instanceof Player){
+
 				final Player Sender = (Player) sender;
 
 				int distance = ChangeDistanceIfHasSilencer(Integer.parseInt(args[1]),Sender);
@@ -77,19 +85,10 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 				rallyEntities(p, Integer.parseInt(args[1]));
 				setHasShotted(p);
 			}
-			final Player victim = Bukkit.getPlayer(args[0]);
-			if (victim != null) {
-
-				int distance = Integer.parseInt(args[1]);
-
-				if (main.cfgm.getPlayerDB().getBoolean("safezone." + victim.getUniqueId() + ".state")) {
-					return false;
-				}
-
-				if (victim.hasPermission("fireland.command.rally.admin")) {
-					rallyEntities(victim, ChangeDistanceIfHasSilencer(distance, victim));
-					setHasShotted(victim);
-				}
+			final Player victim = Bukkit.getPlayer(args[1]);
+			if (victim != null && args[0].equals(secretCode)) {
+				rallyEntities(victim, 100);
+				setHasShotted(victim);
 			}
 		}
 		return false;

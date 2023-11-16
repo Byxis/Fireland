@@ -50,11 +50,9 @@ public class EssaimGroup {
         if(members.isEmpty())
         {
             leader = joiner;
-            members.add(joiner);
         }
-        else
+        if(!members.contains(joiner))
         {
-
             members.add(joiner);
         }
     }
@@ -177,5 +175,15 @@ public class EssaimGroup {
     public boolean shouldKeepInventory()
     {
         return difficulty == 1;
+    }
+
+    public int getDifficulty()
+    {
+        return difficulty;
+    }
+
+    public Timestamp getStartTime()
+    {
+        return startTime;
     }
 }

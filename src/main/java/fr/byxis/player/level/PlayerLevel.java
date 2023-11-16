@@ -220,25 +220,24 @@ public class PlayerLevel {
             return true;
         if(cap <= 3)
         {
-            if(_shop.contains("lourd") ||
-                    _shop.equalsIgnoreCase("passr"))
+            if(_shop.contains("lourd"))
                 return false;
         }
         if(cap <= 2)
         {
-            if(_shop.equalsIgnoreCase("passjr") ||
+            if(_shop.equalsIgnoreCase("passr") ||
                     _shop.contains("assaut"))
                 return false;
         }
         if(cap <= 1)
         {
-            if(_shop.equalsIgnoreCase("passb") ||
+            if(_shop.equalsIgnoreCase("passjr") ||
                     _shop.contains("fusil"))
                 return false;
         }
         if(cap <= 0)
         {
-            if(_shop.equalsIgnoreCase("passv") ||
+            if(_shop.equalsIgnoreCase("passb") ||
                     _shop.contains("smg"))
                 return false;
         }

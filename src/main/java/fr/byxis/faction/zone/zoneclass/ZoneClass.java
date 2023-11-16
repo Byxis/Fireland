@@ -1,8 +1,16 @@
 package fr.byxis.faction.zone.zoneclass;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
+import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
+
+import static fr.byxis.faction.zone.WorldGuardEnterZoneEvent.isTimeToCapture;
+import static fr.byxis.fireland.utilities.BlockUtilities.getBossBarColor;
 
 public class ZoneClass {
     private final String name;
@@ -23,6 +31,8 @@ public class ZoneClass {
     private boolean claimed;
     private String claimer;
     private Timestamp claimedAt;
+    private BossBar bar;
+    private String barColor;
 
     public ZoneClass(String name, Location loc, int price, int daily_gain, int finalDollarsGain, int finalJetonsGain, double privationDuration, double autoRelease, double captureTime, boolean claimable)
     {
@@ -36,6 +46,14 @@ public class ZoneClass {
         this.autoRelease = autoRelease;
         this.captureTime = captureTime;
         this.claimable = claimable;
+        bar = Bukkit.createBossBar("Capture de la zone "+getFormattedName() +" disponible", BarColor.WHITE, BarStyle.SEGMENTED_10);
+        bar.setProgress(0);
+        setColor("§f");
+        if(!isTimeToCapture())
+        {
+            bar.setTitle("Zone "+getFormattedName());
+            setColor("§7");
+        }
     }
 
     public String getName() {
@@ -126,5 +144,43 @@ public class ZoneClass {
     public String getFormattedName()
     {
         return (name.substring(0, 1).toUpperCase() + name.substring(1)).replaceAll("-", " ");
+    }
+
+    public void addBar(Player p)
+    {
+        if(!bar.getPlayers().contains(p))
+            bar.addPlayer(p);
+    }
+
+    public void removeBar(Player p)
+    {
+        if(bar.getPlayers().contains(p))
+            bar.removePlayer(p);
+    }
+
+    public void removeAllBar()
+    {
+        bar.removeAll();
+    }
+
+    public void setProgressBar(double prog, String faction)
+    {
+        if(prog != 0)
+        {
+            bar.setProgress( prog /100);
+            bar.setTitle(barColor+"Capture par "+faction+" - "+prog+"%");
+        }
+        else
+        {
+            bar.setProgress(0);
+            bar.setTitle("Capture de la zone "+getFormattedName() +" disponible");
+            bar.setColor(BarColor.WHITE);
+        }
+    }
+
+    public void setColor(String color)
+    {
+        barColor = color;
+        bar.setColor(getBossBarColor(color));
     }
 }

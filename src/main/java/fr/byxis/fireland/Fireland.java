@@ -10,6 +10,7 @@ import fr.byxis.jeton.FactureCommand;
 import fr.byxis.jeton.JetonManager;
 import fr.byxis.player.PlayerAddonsEnabler;
 import fr.byxis.player.discretion.DiscretionClass;
+import fr.byxis.player.scoreboard.NameTagManager;
 import fr.byxis.player.playerDeath;
 import fr.byxis.player.items.morphine.fallDamage;
 import fr.byxis.player.booster.BoosterCommandCompleter;
@@ -33,6 +34,7 @@ import fr.byxis.player.intendant.IntendantCommand;
 import fr.byxis.player.intendant.Manager;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.player.packet.PacketPlayer;
+import fr.byxis.player.scoreboard.scoreboardPlayer;
 import fr.byxis.player.shop.ShopCommandManager;
 import fr.byxis.player.shop.ShopEventManager;
 import fr.byxis.player.items.toxic.mask;
@@ -128,7 +130,6 @@ public class Fireland extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new fallDamage(this), this);
         getServer().getPluginManager().registerEvents(new ZombieDetection(this), this);
         getServer().getPluginManager().registerEvents(new ambientSound(this), this);
-        getServer().getPluginManager().registerEvents(new scoreboardPlayer(this), this);
         getServer().getPluginManager().registerEvents(new silverfishSilent(), this);
         getServer().getPluginManager().registerEvents(new InteractionManager(), this);
         getServer().getPluginManager().registerEvents(new stairs(this), this);
@@ -211,12 +212,10 @@ public class Fireland extends JavaPlugin {
         permissionUtilities = new PermissionUtilities(this);
         playerAddonsEnabler = new PlayerAddonsEnabler(this);
 
-        final scoreboardPlayer scoreboardPlayerClass;
         final ambientSound ambientSoundClass;
         final cobwebDamage cobwebDamageClass;
 
         final thirst thirst = null;
-        scoreboardPlayerClass = new scoreboardPlayer(this);
         ambientSoundClass = new ambientSound(this);
         cobwebDamageClass = new cobwebDamage();
 
@@ -434,7 +433,6 @@ public class Fireland extends JavaPlugin {
                         playTimePlayerAdd(p);
                     }
                     checkDiscretionPoint(p);
-                    scoreboardPlayerClass.update(p);
                     if(p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE))
                     {
                         cobwebDamage.damagePlayerInCobweb(p);
@@ -521,18 +519,23 @@ public class Fireland extends JavaPlugin {
     }
 
     public void onDisable() {
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            p.closeInventory();
+        }
         SaveAll(this);
         hashMapManager.saveBooster();
         getLogger().info(Ansi.ansi().fg(Ansi.Color.RED).toString()+"================================");
         getLogger().info(" ");
         getLogger().info(" ");
         getLogger().info(" ");
-        getLogger().info(" ");
         getLogger().info(Ansi.ansi().fg(Ansi.Color.RED).toString()+"   Fireland is now disabled !");
-        this.databaseManager.close();
+        getLogger().info(" ");
         getLogger().info(" ");
         getLogger().info(" ");
         getLogger().info(Ansi.ansi().fg(Ansi.Color.RED).toString()+"================================");
+
+        this.databaseManager.close();
     }
 
 	/*void moveNextTick(Entity ent, Location loc)

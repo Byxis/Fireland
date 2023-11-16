@@ -141,12 +141,15 @@ public class Manager implements Listener {
                         MenuFaction.OpenFaction(main, p, true);
                     }
                     case STONE -> {
-                        if(!main.bunkerManager.getLoadedBunker().containsKey(finfos.getName()))
+                        if(finfos.getCurrentUpgrade() >= 5)
                         {
-                            BunkerClass bunker = new BunkerClass(finfos.getName(), main);
-                            main.bunkerManager.AddLoadedBunker(bunker);
+                            if(!main.bunkerManager.getLoadedBunker().containsKey(finfos.getName()))
+                            {
+                                BunkerClass bunker = new BunkerClass(finfos.getName(), main);
+                                main.bunkerManager.AddLoadedBunker(bunker);
+                            }
+                            main.bunkerManager.getLoadedBunker().get(finfos.getName()).Join(p);
                         }
-                        main.bunkerManager.getLoadedBunker().get(finfos.getName()).Join(p);
                     }
                     case GRASS_BLOCK -> {
                         MenuZone.OpenZone(main, p);
@@ -284,7 +287,7 @@ public class Manager implements Listener {
                             if(finfos.getCurrentUpgrade() < 2)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
+                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -664,6 +667,7 @@ public class Manager implements Listener {
 
                 if(itemclicked.getType().name().contains("_BANNER"))
                 {
+                    PermissionUtilities.removePermission(p, "fireland.nation.change");
                     if(itemclicked.getItemMeta().getDisplayName().contains("Bannis"))
                     {
                         getPlayerLevel(p.getUniqueId()).setNation(LevelStorage.Nation.Bannis);
@@ -698,7 +702,6 @@ public class Manager implements Listener {
                         }
                     }
                     p.closeInventory();
-                    PermissionUtilities.removePermission(p, "fireland.nation.change");
                 }
             }
             else if(inv.getTitle().contains("Votre niveau : "))

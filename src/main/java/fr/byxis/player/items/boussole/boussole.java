@@ -72,7 +72,7 @@ public class boussole implements @NotNull Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "w give "+e.getPlayer().getName()+" Boussole");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give "+e.getPlayer().getName()+" Boussole");
                 }
             }.runTaskLater(main, 20);
         }

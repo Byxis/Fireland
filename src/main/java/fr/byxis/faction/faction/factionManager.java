@@ -1,5 +1,7 @@
 package fr.byxis.faction.faction;
 
+import fr.byxis.faction.faction.events.PlayerJoinFactionEvent;
+import fr.byxis.faction.faction.events.PlayerLeaveFactionEvent;
 import fr.byxis.faction.housing.BunkerClass;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
@@ -11,6 +13,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import static fr.byxis.fireland.utilities.BasicUtilities.getUuid;
@@ -117,7 +120,7 @@ public class factionManager implements Listener, CommandExecutor  {
 					{
 						if(op != p)
 						{
-							InGameUtilities.sendPlayerInformation(p, "La faction §d"+args[1]+"§7 a été créé par "+p.getName()+" !");
+							InGameUtilities.sendPlayerInformation(op, "La faction §d"+args[1]+"§7 a été créée par "+p.getName()+" !");
 						}
 					}
 					ThingsToDoWhileJoining(p, args[1], factionFunctions.getFactionInfo(args[1]));
@@ -172,7 +175,8 @@ public class factionManager implements Listener, CommandExecutor  {
 				}
 				else
 				{
-					ThingsToDoWhileLeaving(p);
+					PlayerLeaveFactionEvent event = new PlayerLeaveFactionEvent(p, factionInfo.getName(), false);
+					Bukkit.getPluginManager().callEvent(event);
 					factionFunctions.leaveFaction(p, factionInfo.getLeader());
 					factionFunctions.sendFactionPlayer(factionInfo.getName(), "§c"+p.getName()+" a quitté la faction.");
 				}
@@ -192,9 +196,10 @@ public class factionManager implements Listener, CommandExecutor  {
 			else if(args.length > 1 && args[1].equalsIgnoreCase("yes"))
 			{
 				factionFunctions.deleteFaction(p);
-				ThingsToDoWhileLeaving(p);
 				for(Player op : Bukkit.getOnlinePlayers())
 				{
+					PlayerLeaveFactionEvent event = new PlayerLeaveFactionEvent(op, factionInfo.getName(), true);
+					Bukkit.getPluginManager().callEvent(event);
 					if(op != p)
 					{
 						InGameUtilities.sendPlayerError(op, "La faction "+args[1]+" a été supprimée par "+p.getName()+".");
@@ -529,8 +534,8 @@ public class factionManager implements Listener, CommandExecutor  {
 							{
 								p.sendMessage("§cVous ne pouvez pas exclure quelqu'un de même rang que vous !");
 							}
-
-							ThingsToDoWhileLeaving((Player) victim);
+							PlayerLeaveFactionEvent event = new PlayerLeaveFactionEvent((Player) victim, factionInfo.getName(), true);
+							Bukkit.getPluginManager().callEvent(event);
 							InGameUtilities.sendPlayerError(p, "Vous avez exclu §4"+victim.getName()+" §c !");
 							factionFunctions.kickPlayer(factionInfo, (Player) victim);
 							factionFunctions.sendFactionPlayer(factionInfo.getName(), "§cLe joueur "+victim.getName()+" a été exclu de la faction.");
@@ -648,12 +653,12 @@ public class factionManager implements Listener, CommandExecutor  {
 		return result;
 	}
 
-	private double getCostPerk(String perk)
+	public static double getCostPerk(String perk)
 	{
 		double amount = 0;
 		if(perk.equalsIgnoreCase("friendly_fire"))
 		{
-			amount = 2000;
+			amount = 8000;
 		}
 		else if(perk.equalsIgnoreCase("show_nickname"))
 		{
@@ -674,10 +679,10 @@ public class factionManager implements Listener, CommandExecutor  {
 		return amount;
 	}
 
-	private void ThingsToDoWhileLeaving(Player p)
+	@EventHandler
+	private void ThingsToDoWhileLeaving(PlayerLeaveFactionEvent e)
 	{
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team leave "+p.getName());
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team join server "+p.getName());
+		Player p = e.getPlayer();
 		BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
 		if(bk != null)
 		{
@@ -697,7 +702,6 @@ public class factionManager implements Listener, CommandExecutor  {
 	private void ThingsToDoWhileJoining(Player p, String name, FactionInformation factionInfo)
 	{
 		FactionFunctions ff = new FactionFunctions(main, p);
-		ff.actualizeTeam(p);
 		if(factionInfo == null)
 		{
 			return;

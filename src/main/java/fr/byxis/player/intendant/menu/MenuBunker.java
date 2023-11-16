@@ -45,7 +45,7 @@ public class MenuBunker {
         if (bk != null && pInfos.getRole() == 2) {
             inv.setItem(10, InventoryUtilities.setItemMeta(Material.BARRIER, "§cQuitter le Bunker", (short) 0));
             List<String> lore = new ArrayList<String>();
-            lore.add("§r§8Prix : §6" + bk.GetAmeliorationPriceMoney() + "§r$§f§8 et §b" + bk.GetAmeliorationPriceJetons() + "§f\u26c1");
+            lore.add("§r§8Prix : §6" + bk.GetAmeliorationPriceMoney() + "§r§f$§8 et §b" + bk.GetAmeliorationPriceJetons() + "§f\u26c1");
             inv.setItem(12, InventoryUtilities.setItemMetaLore(Material.ANVIL, "§aAméliorer le bunker", (short) 0, lore));
             inv.setItem(14, InventoryUtilities.setItemMeta(Material.RABBIT_HIDE, "§dChanger de skin", (short) 0));
             inv.setItem(16, InventoryUtilities.setItemMeta(Material.MAP, "§eInviter un joueur", (short) 0));
@@ -72,7 +72,7 @@ public class MenuBunker {
         //TODO: si il y a bcp de joueurs, faire un meilleur systeme pour voir tous les joueurs
         int i = 0;
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (!player.getName().equalsIgnoreCase(p.getName()) || p.getName().equalsIgnoreCase("Byxis_")) {
+            if (!player.getName().equalsIgnoreCase(p.getName())) {
                 inv.setItem(i, GetHead(player.getUniqueId(), "§eInviter " + player.getName()));
                 i++;
             }

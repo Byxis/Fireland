@@ -1,6 +1,8 @@
 package fr.byxis.faction.faction;
 
 import fr.byxis.db.DbConnection;
+import fr.byxis.faction.faction.events.FactionBuyPerkEvent;
+import fr.byxis.faction.faction.events.PlayerJoinFactionEvent;
 import fr.byxis.faction.housing.BunkerClass;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.ItemSerializer;
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class FactionFunctions {
 	
@@ -305,6 +309,8 @@ public class FactionFunctions {
 				preparedStatement2.setTimestamp(3, new Timestamp(time));
 				preparedStatement2.setInt(4, 0);
 				preparedStatement2.executeUpdate();
+				PlayerJoinFactionEvent event = new PlayerJoinFactionEvent(p, factionName);
+				Bukkit.getPluginManager().callEvent(event);
 				InGameUtilities.sendPlayerInformation(p, "Vous avez rejoint la faction " +GetColorCode(factionName)+ factionName + "§7.");
 			}
 			//S'il y a un résultat dans la table, le joueur appartient donc déjà à une faction.
@@ -338,7 +344,7 @@ public class FactionFunctions {
 				final Connection connection = firelandConnection.getConnection();
 				FactionInformation infos = getFactionInfo(GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName()).getFactionName());
 
-				final PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM player_faction WHERE player_faction=? AND player_uuid = ?");
+				final PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM player_faction WHERE player_faction.player_faction=? AND player_uuid = ?");
 				preparedStatement1.setString(1, infos.getName());
 				preparedStatement1.setString(2, p.getUniqueId().toString());
 				//On exécute la requete SQL
@@ -440,8 +446,8 @@ public class FactionFunctions {
 			//On executes les requetes
 			insertionFaction.executeUpdate();
 			insertionPlayerFaction.executeUpdate();
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team add "+name);
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team modify "+name+" nametagVisibility hideForOtherTeams");
+			PlayerJoinFactionEvent event = new PlayerJoinFactionEvent(p, name);
+			Bukkit.getPluginManager().callEvent(event);
 			InGameUtilities.sendPlayerInformation(p, "Vous avez créé la faction "+GetColorCode(name)+name+" !");
 		} catch (SQLException e) {
 			//Une erreur est survenue (Problème de connexion à la BD)
@@ -474,13 +480,14 @@ public class FactionFunctions {
 			if(resultFactionName.next())
 			{
 				//Preparations des requetes pour supprimer
-				final PreparedStatement removeFaction = connection.prepareStatement("DELETE FROM faction WHERE name = ?;\n" +
-						"DELETE FROM player_faction WHERE player_faction = ?;\n" +
-						"DELETE FROM faction_zone WHERE faction_zone.faction_name = ?;\n" +
-						"DELETE FROM capture_zone WHERE faction_name = ?;\n" +
-						"DELETE FROM faction_storage WHERE faction = ?;\n" +
-						"DELETE FROM faction_housing WHERE faction = ?;\n" +
-						"DELETE FROM invite WHERE invite.faction_name = ?;");
+				final PreparedStatement removeFaction = connection.prepareStatement("""
+                        DELETE FROM faction WHERE name = ?;
+                        DELETE FROM player_faction WHERE player_faction.player_faction = ?;
+                        DELETE FROM faction_zone WHERE faction_zone.faction_name = ?;
+                        DELETE FROM capture_zone WHERE faction_name = ?;
+                        DELETE FROM faction_storage WHERE faction = ?;
+                        DELETE FROM faction_housing WHERE faction = ?;
+                        DELETE FROM invite WHERE invite.faction_name = ?;""");
 				for(int i =1; i < 8; i++)
 				{
 					removeFaction.setString(i, resultFactionName.getString(1));
@@ -493,7 +500,6 @@ public class FactionFunctions {
 				}
 				BunkerClass bk = new BunkerClass(resultFactionName.getString(1), main);
 				bk.Destroy();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team remove "+resultFactionName.getString(1));
 				InGameUtilities.sendPlayerError(p, "Vous avez supprimé la faction "+resultFactionName.getString(1)+".");
 			}
 			else
@@ -855,13 +861,14 @@ public class FactionFunctions {
 
 			//On prépare la requete de modification :
 
-			final PreparedStatement renameFaction = connection.prepareStatement("UPDATE faction SET name=? WHERE name = ?;\n" +
-					"UPDATE player_faction SET player_faction = ? WHERE player_faction = ?;\n" +
-					"UPDATE faction_zone SET faction_name = ? WHERE faction_zone.faction_name = ?;\n" +
-					"UPDATE capture_zone SET faction_name = ? WHERE faction_name = ?;\n" +
-					"UPDATE faction_storage SET faction = ? WHERE faction = ?;\n" +
-					"UPDATE faction_housing SET faction = ? WHERE faction = ?;\n" +
-					"UPDATE invite SET faction_name = ? WHERE invite.faction_name = ?;");
+			final PreparedStatement renameFaction = connection.prepareStatement("""
+                    UPDATE faction SET name=? WHERE name = ?;
+                    UPDATE player_faction SET player_faction = ? WHERE player_faction = ?;
+                    UPDATE faction_zone SET faction_name = ? WHERE faction_zone.faction_name = ?;
+                    UPDATE capture_zone SET faction_name = ? WHERE faction_name = ?;
+                    UPDATE faction_storage SET faction = ? WHERE faction = ?;
+                    UPDATE faction_housing SET faction = ? WHERE faction = ?;
+                    UPDATE invite SET faction_name = ? WHERE invite.faction_name = ?;""");
 
 			for(int i =1; i < 8; i+=2)
 			{
@@ -871,14 +878,7 @@ public class FactionFunctions {
 
 			//On exécute la requete SQL
 			renameFaction.executeUpdate();
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team remove "+_factionName);
 
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team add "+_newName);
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team modify "+_newName+" nametagVisibility hideForOtherTeams");
-			for(Player p : Bukkit.getOnlinePlayers())
-			{
-				actualizeTeam(p);
-			}
 			sender.sendMessage("§cVotre faction a été renommée. Elle s'appelle désormais "+GetColorCode(_newName)+_newName+" §c!");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -945,8 +945,8 @@ public class FactionFunctions {
 		 * 	- String _factionName : le nom de la faction que l'on améliore.
 		 */
 		final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-
-		try {
+		try
+		{
 			//On prépare la requête SQL
 			final Connection connection = firelandConnection.getConnection();
 
@@ -962,17 +962,9 @@ public class FactionFunctions {
 					preparedStatement.setString(1, _factionName);
 					//On exécute la requete SQL
 					preparedStatement.executeUpdate();
-					if(_perk.equalsIgnoreCase("friendly_fire"))
-					{
-						for(Player p : Bukkit.getOnlinePlayers())
-						{
-							String name = playerFactionName(p);
-							if(name.equalsIgnoreCase(_factionName))
-							{
-								main.hashMapManager.addFactionMap(p.getUniqueId(), _factionName);
-							}
-						}
-					}
+
+					FactionBuyPerkEvent event = new FactionBuyPerkEvent(_factionName, _perk);
+					Bukkit.getPluginManager().callEvent(event);
 				}
 			}
 		} catch (SQLException e) {
@@ -1360,18 +1352,6 @@ public class FactionFunctions {
 					.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
 		}
 		p.spigot().sendMessage(message.create());
-	}
-
-	public void actualizeTeam(Player _p)
-	{
-		return;
-		/*String name =playerFactionName(_p);
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team leave "+_p.getName());
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team join server "+_p.getName());
-		if(!name.isEmpty() && getFactionInfo(name).hasNicknameVisibilityPerk())
-		{
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team join "+name+" "+_p.getName());
-		}*/
 	}
 
 	public void setSender(Player _p)

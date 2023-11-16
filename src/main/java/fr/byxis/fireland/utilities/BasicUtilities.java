@@ -14,10 +14,44 @@ import java.util.UUID;
 
 public class BasicUtilities {
 
-
     public static String getStringTime(long durationInMillis)
     {
-        long second = (durationInMillis / 1000) % 60;
+        long second = 1000;
+        long minute = 60 * second;
+        long hour = 60 * minute;
+        long day = 24 * hour;
+        long month = 30 * day;
+        long year = 12 * month;
+
+        String[] units = {"année", "mois", "jour", "heure", "minute", "seconde"};
+        long[] times = {year, month, day, hour, minute, second};
+
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+
+        for (int i = 0; i < times.length; i++) {
+            if (durationInMillis >= times[i]) {
+                long num = durationInMillis / times[i];
+                durationInMillis %= times[i];
+                if (num > 0) {
+                    sb.append(num).append(units[i]);
+                    if (num > 1 && !units[i].equals("mois")) {
+                        sb.append("s");
+                    }
+                    sb.append(", ");
+                    if (++count == 3) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!sb.isEmpty()) {
+            sb.setLength(sb.length() - 2);
+        }
+
+        return sb.toString();
+        /*long second = (durationInMillis / 1000) % 60;
         long minute = (durationInMillis / (1000 * 60)) % 60;
         long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
         long day = (durationInMillis / (1000 * 60 * 60*24)%30);
@@ -43,7 +77,7 @@ public class BasicUtilities {
         {
             return String.format("%2dminute(s) et %2dseconde(s).", minute, second);
         }
-        return String.format("%2dseconde(s).", second);
+        return String.format("%2dseconde(s).", second);*/
     }
 
     public static UUID getUuid(String name) {

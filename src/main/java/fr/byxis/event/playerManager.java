@@ -2,6 +2,8 @@ package fr.byxis.event;
 
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.player.level.LevelStorage;
+import fr.byxis.player.level.PlayerLevel;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -13,13 +15,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 
 public class playerManager implements Listener {
@@ -88,6 +89,23 @@ public class playerManager implements Listener {
             {
                 e.setCancelled(true);
                 e.getItem().remove();
+            }
+        }
+    }
+
+    @EventHandler
+    public void firstPlayerJoin(PlayerJoinEvent e)
+    {
+        if(e.getPlayer().getLocation().getWorld().getName().equals("essaim"))
+        {
+            PlayerLevel pl = getPlayerLevel(e.getPlayer().getUniqueId());
+            if(pl.getNation().equals(LevelStorage.Nation.Bannis))
+            {
+                e.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 341.5, 72, -209.5));
+            }
+            else
+            {
+                e.getPlayer().teleport(new Location(Bukkit.getWorld("world"), -447.5, 65, -447.5));
             }
         }
     }

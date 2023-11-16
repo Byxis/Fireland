@@ -76,7 +76,7 @@ public class MenuEssaim {
         inv.setItem(14, InventoryUtilities.setItemMetaLore(Material.PRISMARINE_BRICKS, "§7Epave du porte-avion", (short) 1, lore));
 
         lore = new ArrayList<>();
-        if(main.essaimManager.isEssaimActive("none"))
+        if(main.essaimManager.isEssaimActive("hangar-silencieux"))
             lore.add("§8Disponibilité :§a Ouvert");
         else
             lore.add("§8Disponibilité :§7 Samedi 15h");

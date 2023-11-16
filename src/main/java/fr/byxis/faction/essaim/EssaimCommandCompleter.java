@@ -47,6 +47,7 @@ public class EssaimCommandCompleter implements TabCompleter {
             i1.add("set");
             i1.add("finish");
             i1.add("unfinish");
+            i1.add("info");
 
 
             l.addAll(ListUtilities.tabList(strings[0], "", i1));
@@ -95,6 +96,10 @@ public class EssaimCommandCompleter implements TabCompleter {
                 l.add("--x");
                 Player p = (Player) commandSender;
                 l.add(String.valueOf(Math.round(p.getTargetBlock(null, 50).getX())));
+            }
+            else if(strings[0].equalsIgnoreCase("info"))
+            {
+                l.addAll(ListUtilities.tabList(strings[1], "--name", main.essaimManager.existingEssaims.keySet()));
             }
         }
         else if (strings.length == 3)

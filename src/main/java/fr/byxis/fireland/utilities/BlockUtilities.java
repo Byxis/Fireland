@@ -1,6 +1,7 @@
 package fr.byxis.fireland.utilities;
 
 import org.bukkit.Material;
+import org.bukkit.boss.BarColor;
 
 public class BlockUtilities {
 
@@ -101,6 +102,26 @@ public class BlockUtilities {
             case "§e" -> Material.YELLOW_BANNER;
             case "§r" -> Material.WHITE_BANNER;
             default   -> Material.LIGHT_GRAY_BANNER;
+        };
+    }
+
+    public static BarColor getBossBarColor(String color)
+    {
+        return switch (color) {
+            case "§0" -> BarColor.PURPLE;
+            case "§1" -> BarColor.BLUE;
+            case "§2" -> BarColor.GREEN;
+            case "§3" -> BarColor.BLUE;
+            case "§4" -> BarColor.RED;
+            case "§5" -> BarColor.PURPLE;
+            case "§6" -> BarColor.RED;
+            case "§8" -> BarColor.WHITE;
+            case "§a" -> BarColor.GREEN;
+            case "§b" -> BarColor.BLUE;
+            case "§d" -> BarColor.PURPLE;
+            case "§e" -> BarColor.YELLOW;
+            case "§r" -> BarColor.WHITE;
+            default   -> BarColor.WHITE;
         };
     }
 }

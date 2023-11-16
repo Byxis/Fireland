@@ -97,10 +97,6 @@
             <id>codemc</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
-        <repository>
-            <id>upstream</id>
-            <url>https://ci.nametagedit.com/plugin/repository/everything/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -161,11 +157,6 @@
             <artifactId>beautyquests-core</artifactId>
             <version>0.21-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.nametagedit</groupId>
-            <artifactId>nametagedit</artifactId>
-            <version>4.4.16</version>
         </dependency>
     </dependencies>
 </project>

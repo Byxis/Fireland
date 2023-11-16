@@ -14,6 +14,8 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+
 public class PrimeEvent implements Listener {
 
     public static PrimesConfig config;
@@ -45,7 +47,7 @@ public class PrimeEvent implements Listener {
         {
             for(String uuid : config.getConfig().getConfigurationSection("").getKeys(false))
             {
-                if(new Timestamp(getPrimeDate(uuid).getTime() + getPrimeMaxDay() * 24 * 60 * 60 * 1000).after(new Timestamp(System.currentTimeMillis())))
+                if(new Timestamp(getPrimeDate(uuid).getTime() + getPrimeMaxDay() * 24 * 60 * 60 * 1000).before(new Timestamp(System.currentTimeMillis())))
                 {
                     setPrime(uuid, 0);
                 }
@@ -150,6 +152,7 @@ public class PrimeEvent implements Listener {
         if(value == 0)
         {
             config.getConfig().set(uuid, null);
+            config.save();
             return;
         }
         config.getConfig().set(uuid+".value", value);

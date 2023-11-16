@@ -9,6 +9,7 @@ import fr.byxis.player.primes.PrimesConfig;
 import fr.byxis.player.pvpmanager.PvPManager;
 import fr.byxis.player.quest.QuestManager;
 import fr.byxis.player.rank.RankCustomMessage;
+import fr.byxis.player.scoreboard.PlayerScoreboardManager;
 
 public class PlayerAddonsEnabler {
 
@@ -29,5 +30,6 @@ public class PlayerAddonsEnabler {
         main.getCommand("rank").setExecutor(rankCustomMessage);
         main.getCommand("rank").setTabCompleter(rankCustomMessage);
         main.getServer().getPluginManager().registerEvents(new PvPManager(main), main);
+        main.getServer().getPluginManager().registerEvents(new PlayerScoreboardManager(main), main);
     }
 }

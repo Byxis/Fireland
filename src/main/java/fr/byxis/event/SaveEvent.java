@@ -9,8 +9,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
+
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class SaveEvent implements Listener {
 
@@ -99,7 +102,17 @@ public class SaveEvent implements Listener {
     {
         for(BunkerClass bk : main.bunkerManager.getLoadedBunker().values())
         {
+            debugp("Saving storage of bunker "+bk.GetName());
             bk.GetStorage().SaveAllItems();
         }
+
+        for(BunkerClass bk : main.bunkerManager.getLoadedBunker().values())
+        {
+            if(bk.getPlayerInside() <= 0)
+            {
+                main.bunkerManager.getLoadedBunker().remove(bk.GetName());
+            }
+        }
+
     }
 }

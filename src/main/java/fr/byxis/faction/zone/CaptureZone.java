@@ -137,39 +137,11 @@ public class CaptureZone {
                                     addProgressionTime(zone, factionToUncapture, -2*captureRefreshRate*boosterCapture);
                                     //Si tu décaptures une faction, ça décapture
                                 }
-
-                                for(Player p : factionCapturing.getPlayerList()) {
-                                    if (factionToUncapture.getName().equalsIgnoreCase(factionCapturing.getName()))
-                                    {
-                                        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§6Vous êtes en train de protéger votre faction."));
-                                    }
-                                    else
-                                    {
-                                        if(zone.getClaimer() != null)
-                                        {
-                                            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§6Vous décapturez la zone "+zone.getFormattedName()+" contrôlée par "+zone.getClaimer()+" ("+((double)Math.round(factionToUncapture.getProgression()*100)/100D)+"%)"));
-                                        }
-                                    }
-                                }
                             }
                             else
                             {
                                 addProgressionTime(zone, factionCapturing, boosterCapture*captureRefreshRate);
                                 //Si t'es tout seul, tu captures
-                                for(Player p : factionCapturing.getPlayerList())
-                                {
-                                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§aVous capturez la zone "+zone.getFormattedName()+" ("+((double)Math.round(factionCapturing.getProgression()*100)/100D)+"%)"));
-                                }
-                            }
-                        }
-                        if(!factionInContest.isEmpty())
-                        {
-                            for (FactionCapturingClass factionContesting : factionInContest)
-                            {
-                                for(Player p : factionContesting.getPlayerList())
-                                {
-                                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§eVous êtes en contestation avec une autre faction"));
-                                }
                             }
                         }
                         if(!factionInMinority.isEmpty())
@@ -180,10 +152,6 @@ public class CaptureZone {
                                 {
                                     //Si t'es minoritaire, tu décaptures
                                     addProgressionTime(zone, factionCapturing, -2*captureRefreshRate);
-                                    for(Player p : factionMonority.getPlayerList())
-                                    {
-                                        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§cVous êtes en train de perdre votre capture  "+zone.getFormattedName()));
-                                    }
                                 }
                             }
                         }
@@ -199,8 +167,12 @@ public class CaptureZone {
         double prog = faction.getProgression();
         double nextProg = faction.getNextProgression((int) zone.getCaptureTime(), seconds);
 
-        FactionFunctions ff = new FactionFunctions(main, null);
+        if(prog == 1 && nextProg < 1)
+        {
+            nextProg =0;
+        }
 
+        FactionFunctions ff = new FactionFunctions(main, null);
         String color;
         if(seconds > 0)
         {
@@ -210,6 +182,9 @@ public class CaptureZone {
         {
             color = "§r";
         }
+
+        zone.setColor(color);
+        zone.setProgressBar(nextProg, faction.getFormattedName());
 
         playAnimation(zone, prog, nextProg, color);
 
@@ -258,7 +233,7 @@ public class CaptureZone {
         if(prog >= 100)
         {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "summon firework_rocket "+(zone.getLocation().getX()) +" "+(zone.getLocation().getY()+2) +" "+(zone.getLocation().getZ()-1) +" {LifeTime:30,FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:1,Flicker:1,Trail:1,Colors:[I;11743532],FadeColors:[I;15435844]}],Flight:2}}}}");
-
+            zone.removeAllBar();
             for(ZoneClass zoneClass : data.zones)
             {
                 if(zoneClass.getName().equalsIgnoreCase(zone.getName()))

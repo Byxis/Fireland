@@ -12,10 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static fr.byxis.event.scoreboardPlayer.getTimeString;
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+import static fr.byxis.player.scoreboard.scoreboardPlayer.getTimeString;
 import static fr.byxis.player.level.LevelStorage.GetPlayerLevelSavings;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 

@@ -1,5 +1,6 @@
 package fr.byxis.faction.essaim;
 
+import fr.byxis.faction.essaim.essaimClass.EssaimGroup;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
@@ -10,6 +11,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class EssaimCommandManager implements @Nullable CommandExecutor {
 
@@ -40,6 +43,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
                         args[0].equalsIgnoreCase("set")||
                         args[0].equalsIgnoreCase("join")||
                         args[0].equalsIgnoreCase("finish")||
+                        args[0].equalsIgnoreCase("info")||
                         args[0].equalsIgnoreCase("unfinish"))) {
             GeneralCommand(sender, msg, args);
         }
@@ -202,6 +206,43 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
                     InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " a été reset !");
                 } else {
                     InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " est déjà reset !");
+                }
+            }
+        }
+        else if (args.length == 2 && args[0].equalsIgnoreCase("info") && sender.hasPermission("fireland.essaim.admin")) {
+            if (sender instanceof Player p)
+            {
+                if(EssaimManager.groups.containsKey(args[1]))
+                {
+                    EssaimGroup grp = EssaimManager.groups.get(args[1]);
+                    p.sendMessage("§8Info de l'essaim §f"+args[1]+" §8 -");
+                    StringBuilder members = new StringBuilder("§8Joueur(s) :");
+                    for(int i = 0 ; i <grp.getMembers().size() -2; i++)
+                    {
+                        if(grp.getMembers().get(i).getName().equalsIgnoreCase(grp.getLeader().getName()))
+                        {
+                            members.append("§6").append(grp.getMembers().get(i).getName()).append("§7,");
+                        }
+                        else
+                        {
+                            members.append("§f").append(grp.getMembers().get(i).getName()).append("§7,");
+                        }
+                    }
+                    if(grp.getMembers().get(grp.getMembers().size()-1).getName().equalsIgnoreCase(grp.getLeader().getName()))
+                    {
+                        members.append("§6").append(grp.getMembers().get(grp.getMembers().size()-1).getName()).append("§7.");
+                    }
+                    else
+                    {
+                        members.append("§f").append(grp.getMembers().get(grp.getMembers().size()-1).getName()).append("§7.");
+                    }
+                    p.sendMessage(members.toString());
+                    p.sendMessage("§8Difficulté : §f"+grp.getDifficulty());
+                    p.sendMessage("§8Début : §f"+grp.getStartTime());
+                }
+                else
+                {
+                    InGameUtilities.sendPlayerError(p, "L'essaim est inconnu ou inactif.");
                 }
             }
         }

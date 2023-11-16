@@ -111,8 +111,8 @@ public class BackPack implements Listener, CommandExecutor {
     {
         if(e.getCurrentItem() != null && (e.getCurrentItem().getType() == Material.LEATHER))
         {
-            BackPackClass bp = new BackPackClass(54);
-            if(bp.isBackPackEmpty(e.getCurrentItem()))
+            BackPackClass bp = new BackPackClass(8);
+            if(bp.isBackPackEmpty(e.getCurrentItem()) || e.getView().getTitle().contains("Corps de "))
             {
                 return;
             }
@@ -121,12 +121,15 @@ public class BackPack implements Listener, CommandExecutor {
                 e.setCancelled(true);
                 return;
             }
-            if(e.getClickedInventory().getType() != InventoryType.PLAYER || (e.getView().getTopInventory().getType() != InventoryType.PLAYER
-                    &&e.getView().getTopInventory().getType() != InventoryType.CRAFTING
-                    &&e.getView().getTopInventory().getType() != InventoryType.CREATIVE)
+            if(e.getClickedInventory().getType() != InventoryType.PLAYER ||
+                    (
+                        e.getView().getTopInventory().getType() != InventoryType.PLAYER
+                        &&e.getView().getTopInventory().getType() != InventoryType.CRAFTING
+                        &&e.getView().getTopInventory().getType() != InventoryType.CREATIVE
+                    )
             )
             {
-                if(!e.getView().getTitle().contains("Coffre") || !e.getView().getTitle().contains("Corps de ") || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
+                if(!e.getView().getTitle().contains("Coffre") || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
                 {
                     e.setCancelled(true);
                     return;
@@ -136,10 +139,11 @@ public class BackPack implements Listener, CommandExecutor {
         if(e.getClick().isKeyboardClick() && e.getView().getPlayer().getInventory().getItem(e.getHotbarButton()) != null)
         {
             ItemStack item = e.getView().getPlayer().getInventory().getItem(e.getHotbarButton());
+            assert item != null;
             if(item.getType() != Material.LEATHER)
                 return;
 
-            BackPackClass bp = new BackPackClass(54);
+            BackPackClass bp = new BackPackClass(8);
             if(bp.isBackPackEmpty(item))
             {
                 return;
@@ -171,8 +175,8 @@ public class BackPack implements Listener, CommandExecutor {
     {
         if(e.getCursor() != null && (e.getCursor().getType() == Material.LEATHER))
         {
-            BackPackClass bp = new BackPackClass(54);
-            if(bp.isBackPackEmpty(e.getCursor()))
+            BackPackClass bp = new BackPackClass(8);
+            if(bp.isBackPackEmpty(e.getCursor()) || e.getView().getTitle().contains("Corps de "))
             {
                 return;
             }
@@ -181,7 +185,7 @@ public class BackPack implements Listener, CommandExecutor {
                     &&e.getView().getTopInventory().getType() != InventoryType.CREATIVE)
             )
             {
-                if(!e.getView().getTitle().contains("Coffre") || !e.getView().getTitle().contains("Corps de ") || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
+                if(!e.getView().getTitle().contains("Coffre") || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
                 {
                     e.setCancelled(true);
                 }

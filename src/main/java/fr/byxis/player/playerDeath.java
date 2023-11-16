@@ -1,6 +1,8 @@
 package fr.byxis.player;
 
 import fr.byxis.fireland.Fireland;
+import fr.byxis.player.level.LevelStorage;
+import fr.byxis.player.level.PlayerLevel;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -11,6 +13,8 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class playerDeath implements Listener {
 	
@@ -31,8 +35,8 @@ public class playerDeath implements Listener {
 	@EventHandler
 	public void PlayerRespawn(PlayerRespawnEvent e)
 	{
-		Player p = e.getPlayer();
-		if(p.hasPermission("group.bannis") && !p.hasPermission("fireland.admin"))
+		PlayerLevel pl = getPlayerLevel(e.getPlayer().getUniqueId());
+		if(pl.getNation().equals(LevelStorage.Nation.Bannis))
 		{
 			Location loc = new Location(Bukkit.getWorld("world"), 341.5, 72, -209.5);
 			e.setRespawnLocation(loc);

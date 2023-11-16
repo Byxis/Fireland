@@ -56,7 +56,7 @@ public class MenuFaction {
             else
             {
                 ArrayList<String> lore = new ArrayList();
-                lore.add("§cDisponible après l'amélioration de faction &l5");
+                lore.add("§cDisponible après l'amélioration de faction §l5");
                 inventory.setItem(22, InventoryUtilities.setItemMetaLore(Material.STONE, "§7Bunker de faction", (short) 0, lore));
             }
             inventory.setItem(32, InventoryUtilities.setItemMetaLore(Material.GRASS_BLOCK, "§aTerritoires claims -", (short) 0, BasicUtilities.listMaker("§8Consulter vos territoires claims", "§8et vous y téléporter.","","")));

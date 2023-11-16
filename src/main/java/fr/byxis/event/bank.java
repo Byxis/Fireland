@@ -4,6 +4,7 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+import static fr.byxis.fireland.utilities.InventoryUtilities.setItemMetaLore;
 
 public class bank implements Listener, CommandExecutor {
 	
@@ -159,7 +161,7 @@ public class bank implements Listener, CommandExecutor {
 		{
 			e.setCancelled(true);
 			
-			int playerBankMoney = main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".money");
+			int playerBankMoney = GetBankMoney(player);
 			double playerMoney = main.eco.getBalance(player);
 			
 			if(current.getType().equals(Material.GOLD_INGOT))
@@ -168,7 +170,7 @@ public class bank implements Listener, CommandExecutor {
 				{
 					if(e.isShiftClick())
 					{
-						int max = getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
+						int max = getMaxMoney(player);
 
 						if(playerBankMoney >= max)
 						{
@@ -192,7 +194,7 @@ public class bank implements Listener, CommandExecutor {
 							openBankMenu(player);
 						}
 					}
-					else if (playerMoney >= 100 && playerBankMoney+100 <= getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")))
+					else if (playerMoney >= 100 && playerBankMoney+100 <= getMaxMoney(player))
 					{
 						main.eco.withdrawPlayer(player, 100);
 						InGameUtilities.playPlayerSound(player, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
@@ -229,11 +231,11 @@ public class bank implements Listener, CommandExecutor {
 			
 			if(current.getType().equals(Material.ANVIL))
 			{
-				int price = getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
+				int price = getMaxMoney(player);
 				if(playerMoney >= price)
 				{
 					main.eco.withdrawPlayer(player, price);
-					main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".upgrade", main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1);
+					main.cfgm.getEnderchest().set("bank."+player.getUniqueId()+".upgrade", GetBankUpgrade(player)+1);
 					player.sendMessage("§aVous avez payé §6"+price+"$ §a pour améliorer votre banque au niveau §d"+(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1)+"§a !");
 					InGameUtilities.playPlayerSound(player, "block.anvil.use", SoundCategory.AMBIENT, 1, 1);
 					InGameUtilities.playPlayerSound(player, "entity.player.levelup", SoundCategory.AMBIENT, 1, 1);
@@ -254,12 +256,12 @@ public class bank implements Listener, CommandExecutor {
 	}
 
 	private void openBank(Player owner, Player consulter) {
-		int slot = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+ owner.getUniqueId()+".upgrade"));
+		int slot = getMaxSlots(owner);
 		if(!main.hashMapManager.getStorageMap().containsKey(owner.getUniqueId()))
 		{
-			Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+ owner.getName());
+			Inventory ec = Bukkit.createInventory(null, ((slot-1)%54)+1, "§8Stockage de "+ owner.getName());
 			int i = 0;
-			for (ItemStack item : loadEnderchest(owner.getUniqueId()))
+			for (ItemStack item : loadEnderchest(owner))
 			{
 				if(i < slot)
 				{
@@ -274,7 +276,7 @@ public class bank implements Listener, CommandExecutor {
 		{
 			if(slot != main.hashMapManager.getStorageMap().get(owner.getUniqueId()).getSize())
 			{
-				Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+ owner.getName());
+				Inventory ec = Bukkit.createInventory(null, ((slot-1)%54)+1, "§8Stockage de "+ owner.getName());
 				int i = 0;
 				for (ItemStack item : main.hashMapManager.getStorageMap().get(owner.getUniqueId()))
 				{
@@ -295,12 +297,12 @@ public class bank implements Listener, CommandExecutor {
 	}
 
 	private void openBank(OfflinePlayer owner, Player consulter) {
-		int slot = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+ owner.getUniqueId()+".upgrade"));
+		int slot = getMaxSlots(owner);
 		if(!main.hashMapManager.getStorageMap().containsKey(owner.getUniqueId()))
 		{
 			Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de "+ owner.getName());
 			int i = 0;
-			for (ItemStack item : loadEnderchest(owner.getUniqueId()))
+			for (ItemStack item : loadEnderchest(owner))
 			{
 				if(i < slot)
 				{
@@ -350,16 +352,18 @@ public class bank implements Listener, CommandExecutor {
 	private void openBankMenu(Player player)
 	{
 		int money = main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".money");
-		int maxMoney = getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
+		int maxMoney = getMaxMoney(player);
 		
 		Inventory bank = Bukkit.createInventory(null, 27, "§8Votre argent : §6"+money+"$ / "+maxMoney+"$");
 		setItemsMenuBank(bank, player);
 		player.openInventory(bank);
 	}
 
-	private int getMaxMoney(int upgrade) 
+	private int getMaxMoney(Player _p)
 	{
-		int max = switch (upgrade) {
+		int upgrade = GetBankUpgrade(_p);
+
+		return switch (upgrade) {
 			case 1 -> 2500;
 			case 2 -> 5000;
 			case 3 -> 10000;
@@ -368,64 +372,127 @@ public class bank implements Listener, CommandExecutor {
 			case 6, 7 -> 100000;
 			default -> 1000;
 		};
-
-		return max;
 	}
-	
-	private int getMaxSlots(int upgrade) 
+
+	private int getMaxMoney(Player _p, int bonus)
 	{
-		int max = switch (upgrade) {
-			case 0 -> 9;
-			case 1 -> 18;
-			case 2 -> 27;
-			case 3 -> 36;
-			case 4 -> 45;
-			case 5, 6, 7 -> 54;
-			default -> 0;
+		int upgrade = GetBankUpgrade(_p)+bonus;
+
+		return switch (upgrade) {
+			case 1 -> 2500;
+			case 2 -> 5000;
+			case 3 -> 10000;
+			case 4 -> 25000;
+			case 5 -> 50000;
+			case 6, 7 -> 100000;
+			default -> 1000;
 		};
+	}
 
+	private int getMaxSlots(Player _p)
+	{
+		int upgrade = GetBankUpgrade(_p);
+		int max = 0;
+		switch (upgrade) {
+			case 0 -> max = 9;
+			case 1 -> max = 18;
+			case 2 -> max = 27;
+			case 3 -> max = 36;
+			case 4 -> max = 45;
+			case 5, 6, 7 ->
+			{
+				max = 54;
+				if(PermissionUtilities.hasPermission(_p, "fireland.bank.bonus.1"))
+				{
+					max += 54;
+				}
+				if(PermissionUtilities.hasPermission(_p, "fireland.bank..bonus.2"))
+				{
+					max += 54;
+				}
+				if(PermissionUtilities.hasPermission(_p, "fireland.bank.bonus.3"))
+				{
+					max += 54;
+				}
+			}
+		};
+		return max;
+	}
+
+	private int getMaxSlots(Player _p, int _bonus)
+	{
+		int upgrade = GetBankUpgrade(_p)+_bonus;
+		int max = 0;
+		switch (upgrade) {
+			case 0 -> max = 9;
+			case 1 -> max = 18;
+			case 2 -> max = 27;
+			case 3 -> max = 36;
+			case 4 -> max = 45;
+			case 5, 6, 7 ->
+			{
+				max = 54;
+				if(PermissionUtilities.hasPermission(_p, "fireland.bank.bonus.1"))
+				{
+					max += 54;
+				}
+				if(PermissionUtilities.hasPermission(_p, "fireland.bank..bonus.2"))
+				{
+					max += 54;
+				}
+				if(PermissionUtilities.hasPermission(_p, "fireland.bank.bonus.3"))
+				{
+					max += 54;
+				}
+			}
+		};
+		return max;
+	}
+
+	private int getMaxSlots(OfflinePlayer _p)
+	{
+		int upgrade = GetBankUpgrade(_p);
+		int max = 0;
+		switch (upgrade) {
+			case 0 -> max = 9;
+			case 1 -> max = 18;
+			case 2 -> max = 27;
+			case 3 -> max = 36;
+			case 4 -> max = 45;
+			case 5, 6, 7 ->
+			{
+				max = 54;
+				if(PermissionUtilities.hasPermission(_p, "fireland.bank.bonus.1"))
+				{
+					max += 54;
+				}
+				if(PermissionUtilities.hasPermission(_p, "fireland.bank..bonus.2"))
+				{
+					max += 54;
+				}
+				if(PermissionUtilities.hasPermission(_p, "fireland.bank.bonus.3"))
+				{
+					max += 54;
+				}
+			}
+		};
 		return max;
 	}
 	
-	private void setItemsMenuBank(Inventory inv, Player player)
+	private void setItemsMenuBank(Inventory _inv, Player _p)
 	{
-		inv.setItem(11, setItemMetaLore(Material.GOLD_INGOT, "§aArgent -", (short) 0, listMaker("§8Faites un §dclic gauche §8pour ajouter §6100$","§8à votre compte en banque", "§8Faites un §dclic droit §8pour retirer §6100$","§8de votre compte en banque")));
-		if(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade") < 7)
+		_inv.setItem(11, setItemMetaLore(Material.GOLD_INGOT, "§aArgent -", (short) 0, listMaker("§8Faites un §dclic gauche §8pour ajouter §6100$","§8à votre compte en banque", "§8Faites un §dclic droit §8pour retirer §6100$","§8de votre compte en banque")));
+		if(main.cfgm.getEnderchest().getInt("bank."+_p.getUniqueId()+".upgrade") < 7)
 		{
-			inv.setItem(13, setItemMetaLore(Material.ANVIL, "§aAmélioration - Prix : §6"+getMaxMoney(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"))+"$", (short) 0, listMaker("§8Vous avez actuellement l'amélioration n°§d"+main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+" ","§8Pour l'améliorer au niveau suivant :","§8- Maximum de la banque : §6"+getMaxMoney((main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1))+"$", "§8- Maximum du stockage : §6"+getMaxSlots((main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade")+1))+" slots")));
+			_inv.setItem(13, setItemMetaLore(Material.ANVIL, "§aAmélioration - Prix : §6"+getMaxMoney(_p)+"$", (short) 0, listMaker("§8Vous avez actuellement l'amélioration n°§d"+GetBankUpgrade(_p)+" ","§8Pour l'améliorer au niveau suivant :","§8- Maximum de la banque : §6"+getMaxMoney(_p, 1)+"$", "§8- Maximum du stockage : §6"+getMaxSlots(_p, +1)+" slots")));
 		}
 		else
 		{
 
-			inv.setItem(13, setItemMetaLore(Material.BOOK, "§aAmélioration -", (short) 0, listMaker("§8Vous avez atteint le maximum d'amélioration !","","","")));
+			_inv.setItem(13, setItemMetaLore(Material.BOOK, "§aAmélioration -", (short) 0, listMaker("§8Vous avez atteint le maximum d'amélioration !","","","")));
 		}
-		int slots = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player.getUniqueId()+".upgrade"));
-		inv.setItem(15, setItemMetaLore(Material.ENDER_CHEST, "§aStockage personnel - ", (short) 0, listMaker("§8Faites un §dclic gauche§8 pour ouvrir votre stockage","§8Vous disposez actuellement de §6"+slots+"§8 slots de stockage !","§8L'amélioration suivant vous permettra de passer §6","§8à §6"+(slots+9)+"§8 slots !")));
-	}
-	
-	@SuppressWarnings({ "deprecation" })
-	private ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
-		ItemStack item = new ItemStack(mat);
-		
-		if(mat.equals(Material.GLASS_BOTTLE))
-		{
-			item = new ItemStack(Material.POTION, 1);
-			ItemMeta meta = item.getItemMeta();
-			PotionMeta pmeta = (PotionMeta) meta;
-			PotionData pdata = new PotionData(PotionType.WATER);
-			pmeta.setBasePotionData(pdata);
-			item.setItemMeta(meta);
-		}
-
-		ItemMeta itemMeta = item.getItemMeta();
-		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-		itemMeta.setDisplayName(name);
-		itemMeta.setLore(lore);
-		itemMeta.setUnbreakable(true);
-		item.setItemMeta(itemMeta);
-		item.setDurability(dura);
-		return item;
+		int slots = getMaxSlots(_p);
+		_inv.setItem(15, setItemMetaLore(Material.ENDER_CHEST, "§aStockage personnel - ", (short) 0, listMaker("§8Faites un §dclic gauche§8 pour ouvrir votre stockage","§8Vous disposez actuellement de §6"+slots+"§8 slots de stockage !","§8L'amélioration suivant vous permettra de passer §6","§8à §6"+(slots+9)+"§8 slots !")));
 	}
 	
 	private List<String> listMaker(String str1, String str2,String str3, String str4){
@@ -436,26 +503,13 @@ public class bank implements Listener, CommandExecutor {
 		if(str4 != "")lore.add(str4);
 		return lore;
 	}
-	
-	public ItemStack[] loadEnderchest(UUID player) {
+
+	public ItemStack[] loadEnderchest(Player _p) {
 		FileConfiguration config = main.cfgm.getEnderchest();
-        List<ItemStack> itemstackList = new ArrayList<ItemStack>();
-        
-        /*for(int i = 0; i < main.getConfig().getInt("bank."+player.getUniqueId()+".upgrade")*9; i++)
-        {
-        	if (config.contains(player.getUniqueId()+"."+i))
-       	 	{
-       		 	itemstackList.add(config.getItemStack(player.getUniqueId()+"."+i));
-       	 	} 
-       	 	else
-       	 	{
-       	 		itemstackList.add(null);
-       	 	}
-        }*/
-        
-        //boolean done = false;
+		List<ItemStack> itemstackList = new ArrayList<ItemStack>();
 		int i = -1;
-		int maxSlots = getMaxSlots(main.cfgm.getEnderchest().getInt("bank."+player+".upgrade"));
+		UUID player = _p.getUniqueId();
+		int maxSlots = getMaxSlots(_p);
 		while (i < maxSlots) {
 			i++;
 			if (config.contains("stockage."+player+"."+i))
@@ -471,5 +525,48 @@ public class bank implements Listener, CommandExecutor {
 		//Some converting and returning
 		ItemStack[] toReturn = itemstackList.toArray(new ItemStack[itemstackList.size()]);
 		return toReturn;
+	}
+
+	public ItemStack[] loadEnderchest(OfflinePlayer _p) {
+		FileConfiguration config = main.cfgm.getEnderchest();
+		List<ItemStack> itemstackList = new ArrayList<ItemStack>();
+		int i = -1;
+		UUID player = _p.getUniqueId();
+		int maxSlots = getMaxSlots(_p);
+		while (i < maxSlots) {
+			i++;
+			if (config.contains("stockage."+player+"."+i))
+			{
+				itemstackList.add(config.getItemStack("stockage."+player+"."+i));
+			}
+			else
+			{
+				itemstackList.add(null);
+			}
+
+		}
+		//Some converting and returning
+		ItemStack[] toReturn = itemstackList.toArray(new ItemStack[itemstackList.size()]);
+		return toReturn;
+	}
+
+	private int GetBankUpgrade(Player _p)
+	{
+		return main.cfgm.getEnderchest().getInt("bank."+_p.getUniqueId()+".upgrade");
+	}
+
+	private int GetBankUpgrade(OfflinePlayer _p)
+	{
+		return main.cfgm.getEnderchest().getInt("bank."+_p.getUniqueId()+".upgrade");
+	}
+
+	private int GetBankMoney(Player _p)
+	{
+		return main.cfgm.getEnderchest().getInt("bank."+_p.getUniqueId()+".money");
+	}
+
+	private int GetBankMoney(OfflinePlayer _p)
+	{
+		return main.cfgm.getEnderchest().getInt("bank."+_p.getUniqueId()+".money");
 	}
 }

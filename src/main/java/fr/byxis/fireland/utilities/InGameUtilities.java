@@ -283,4 +283,23 @@ public class InGameUtilities implements Listener {
         }
     }
 
+    public static ChatColor getStringColor(String color)
+    {
+        return switch (color) {
+            case "§0" -> ChatColor.BLACK;
+            case "§1" -> ChatColor.DARK_BLUE;
+            case "§2" -> ChatColor.DARK_GREEN;
+            case "§3" -> ChatColor.BLUE;
+            case "§4" -> ChatColor.RED;
+            case "§5" -> ChatColor.DARK_PURPLE;
+            case "§6" -> ChatColor.GOLD;
+            case "§8" -> ChatColor.DARK_GRAY;
+            case "§a" -> ChatColor.GREEN;
+            case "§b" -> ChatColor.AQUA;
+            case "§d" -> ChatColor.LIGHT_PURPLE;
+            case "§e" -> ChatColor.YELLOW;
+            case "§r" -> ChatColor.WHITE;
+            default   -> ChatColor.GRAY;
+        };
+    }
 }

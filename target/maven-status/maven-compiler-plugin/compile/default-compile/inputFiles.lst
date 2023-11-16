@@ -18,6 +18,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\FactureComman
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuBunker.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuPrime.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\serum\serum.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\PlayerScoreboardManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelSavings.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\rank\RankConfig.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\timeAlive.java
@@ -47,7 +48,9 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\jetonsCommand
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\packet\sway.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\doorPass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\BlockUtilities.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\scoreboardPlayer.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopItemClass.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\SideBoardManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DbConnection.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneEvent.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\housing\BunkerEvent.java
@@ -57,7 +60,6 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\essaimClass\EssaimClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DatabaseManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\WorldUtilities.java
-C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\scoreboardPlayer.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuPlayerList.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\zoneclass\FactionCapturingClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\parachute\parachute.java
@@ -72,12 +74,14 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\menu.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopCommandManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\spawn.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\essaimClass\Spawner.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\events\FactionBuyPerkEvent.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\DiscordCommand.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\stack.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionFunctions.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\backpack\BackPackClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DbCredentials.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\entitySpawn.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\events\PlayerJoinFactionEvent.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\PermissionUtilities.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\boussole\boussole.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\water\thirst.java
@@ -98,6 +102,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneSa
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\discretion\DiscretionClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\packet\PacketEvent.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuPerks.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\events\PlayerLeaveFactionEvent.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\itemDurability.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\lamp\lamp.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopFunction.java
@@ -154,6 +159,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\Fac
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\advancements\AdvancementsManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\factionManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\pvpmanager\PvPManager.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\NameTagManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelCommand.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\backpack\BackPack.java

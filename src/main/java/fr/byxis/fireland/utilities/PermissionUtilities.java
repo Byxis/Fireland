@@ -3,9 +3,12 @@ package fr.byxis.fireland.utilities;
 import fr.byxis.fireland.Fireland;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.context.DefaultContextKeys;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
+import net.luckperms.api.node.types.PermissionNode;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
@@ -42,6 +45,14 @@ public class PermissionUtilities {
         return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
     }
 
+    public static boolean hasPermission(OfflinePlayer p, String permission)
+    {
+        LuckPerms api = LuckPermsProvider.get();
+
+        User user = api.getPlayerAdapter(OfflinePlayer.class).getUser(p);
+        return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
+    }
+
     public static void addTempPermission(Player p, String permission, Date finished) {
         LuckPerms api = LuckPermsProvider.get();
 
@@ -56,17 +67,21 @@ public class PermissionUtilities {
     }
 
     public static void removePermission(Player p, String permission) {
-        if(hasPermission(p, permission))
-        {
-            LuckPerms api = LuckPermsProvider.get();
+        LuckPerms api = LuckPermsProvider.get();
 
-            User user = api.getPlayerAdapter(Player.class).getUser(p);
-            // Add the permission
-            user.data().remove(Node.builder(permission).build());
-
-            // Now we need to save changes.
+        User user = api.getUserManager().getUser(p.getUniqueId());
+        if (user != null) {
+            PermissionNode node = PermissionNode.builder(permission)
+                    .withContext(DefaultContextKeys.SERVER_KEY, "fireland")
+                    .build();
+            user.data().remove(node);
+            node = PermissionNode.builder(permission)
+                    .build();
+            user.data().remove(node);
             api.getUserManager().saveUser(user);
         }
+        PermissionAttachment attachment = p.addAttachment(main);
+        attachment.unsetPermission(permission);
     }
 
 

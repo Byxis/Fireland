@@ -13,6 +13,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -129,18 +130,27 @@ public class MenuPrime {
             inv.setItem(i + 9*5, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
         int i =0;
-        for(String uuid : PrimeEvent.config.getConfig().getConfigurationSection("").getKeys(false))
+        for(String sUuid : PrimeEvent.config.getConfig().getConfigurationSection("").getKeys(false))
         {
-            ItemStack item = GetHead(UUID.fromString(uuid), "§r"+Bukkit.getPlayer(UUID.fromString(uuid)).getName());
+            UUID uuid = UUID.fromString(sUuid);
+            ItemStack item = GetHead(uuid, "§r"+Bukkit.getOfflinePlayer(uuid).getName());
             ItemMeta meta = item.getItemMeta();
             ArrayList<String> lore = new ArrayList<String>();
             lore.add("§8Valeur: §6"+getPrime(uuid)+"$");
-            lore.add("§8Durée restante: §7"+BasicUtilities.getStringTime(getPrimeMaxDay()* 24 * 60 * 60 * 1000+getPrimeDate(uuid).getTime()-System.currentTimeMillis()));
+            lore.add("§8Durée restante: §7"+BasicUtilities.getStringTime(getPrimeMaxDay()* 24 * 60 * 60 * 1000+getPrimeDate(sUuid).getTime()-System.currentTimeMillis()));
             meta.setLore(lore);
 
             item.setItemMeta(meta);
-            inv.setItem(i, item);
-            i++;
+
+            if(new Timestamp(getPrimeDate(sUuid).getTime() + getPrimeMaxDay() * 24 * 60 * 60 * 1000).after(new Timestamp(System.currentTimeMillis())))
+            {
+                inv.setItem(i, item);
+                i++;
+            }
+            if(i >= 45)
+            {
+                break;
+            }
         }
 
         inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour au menu des primes", (short) 0));

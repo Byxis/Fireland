@@ -49,20 +49,30 @@ public class LevelSavings {
             return 20;
         if(m_kills < 60)
             return 60;
-        if(m_kills <120)
-            return 120;
+        if(m_kills <150)
+            return 150;
         return -1;
     }
 
+    public int getKillsRank()
+    {
+        if(m_kills < 60)
+            return 1;
+        if(m_kills <150)
+            return 2;
+        return 0;
+    }
+
     public void addKills(int _amount) {
-        int old = m_kills;
-        m_kills += _amount;
-        if((old < 20 && m_kills > 20
-        || old < 60 && m_kills > 60
-        ||old < 120 && m_kills > 120) &&
-        getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Bannis))
+        int old = getCurrentMaxKills();
+        m_zombieKills += _amount;
+        if(
+                getCurrentMaxKills() > old
+                        &&
+                        getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Bannis)
+        )
         {
-            getPlayerLevel(m_uuid).addRang(1);
+            getPlayerLevel(m_uuid).setRang(getKillsRank());
         }
     }
 
@@ -75,20 +85,30 @@ public class LevelSavings {
             return 600;
         if(m_zombieKills < 1500)
             return 1500;
-        if(m_zombieKills <3000)
-            return 3000;
+        if(m_zombieKills <5000)
+            return 5000;
         return -1;
     }
 
+    public int getZombieKillsRank()
+    {
+        if(m_zombieKills < 1500)
+            return 1;
+        if(m_zombieKills <5000)
+            return 2;
+        return 0;
+    }
+
     public void addZombieKills(int _amount) {
-        int old = m_kills;
+        int old = getCurrentMaxZombieKills();
         m_zombieKills += _amount;
-        if((old < 200 && m_zombieKills > 200
-                || old < 500 && m_zombieKills > 500
-                ||old < 1000 && m_zombieKills > 1000) &&
-                getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Etat))
+        if(
+                getCurrentMaxZombieKills() > old
+                        &&
+                getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Etat)
+        )
         {
-            getPlayerLevel(m_uuid).addRang(1);
+            getPlayerLevel(m_uuid).setRang(getZombieKillsRank());
         }
     }
 
@@ -100,7 +120,7 @@ public class LevelSavings {
         {
             for(UUID uuid : m_victims)
             {
-                _main.cfgm.getPlayerDB().set("levelmap.uuid."+m_uuid+".victims", uuid);
+                _main.cfgm.getPlayerDB().set("levelmap.uuid."+m_uuid+".victims"+uuid, 1);
             }
             _main.cfgm.getPlayerDB().set("levelmap.uuid."+m_uuid+".kills", m_kills);
             _main.cfgm.getPlayerDB().set("levelmap.uuid."+m_uuid+".zombieKills", m_zombieKills);

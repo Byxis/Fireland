@@ -143,9 +143,9 @@ public class RecyclerFunction {
     }
 
     public void Recycle(InventoryView inv, Player p) {
-        ItemStack scrap= InventoryUtilities.setItemMeta(Material.NETHERITE_SCRAP, "§7Débris métallique", (short)0);
-        ItemStack gp= InventoryUtilities.setItemMeta(Material.GUNPOWDER, "§7Poudre à canon", (short)0);
-        ItemStack meds= InventoryUtilities.setItemMeta(Material.AMETHYST_SHARD, "§7Médicaments", (short)0);;
+        ItemStack scrap = new ItemStack(Material.NETHERITE_SCRAP);
+        ItemStack gp = new ItemStack(Material.GUNPOWDER);
+        ItemStack meds = new ItemStack(Material.AMETHYST_SHARD);
 
         InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 2);
         int space = GetAmountOfSpaceScrap(p);
@@ -154,47 +154,41 @@ public class RecyclerFunction {
             if(inv.getItem(i) != null)
             {
                 ItemStack item = inv.getItem(i);
+                if(item== null) continue;
                 int scrapNbr = (GetItemScrapNumber(item));
+                int gbNbr = (GetItemGunpowderNumber(item));
                 if (scrapNbr != 0)
                 {
-                    int gbNbr = (GetItemGunpowderNumber(item));
                     if (gbNbr != 0)
                     {
-                        if(gbNbr > space)
-                        {
-                            p.sendMessage("§cVous n'avez pas assez d'espace pour recycler cet item !");
-                            break;
-                        }
-                        InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 0);
-                        gp.setAmount(gbNbr);
-                        item.setAmount(0);
-                        p.getInventory().addItem(gp);
+                        if (hasGived(p, gp, space, item, gbNbr)) break;
                     }
-                    if(scrapNbr > space)
-                    {
-                        p.sendMessage("§cVous n'avez pas assez d'espace pour recycler cet item !");
-                        break;
-                    }
-                    InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 0);
-                    scrap.setAmount(scrapNbr);
-                    item.setAmount(0);
-                    p.getInventory().addItem(scrap);
+                    if (hasGived(p, scrap, space, item, scrapNbr)) break;
+                }
+                else if(gbNbr > 0)
+                {
+                    if (hasGived(p, meds, space, item, gbNbr)) break;
                 }
                 int medsNbr = (GetItemMedsNumber(item));
                 if (medsNbr != 0)
                 {
-                    if(medsNbr > space)
-                    {
-                        p.sendMessage("§cVous n'avez pas assez d'espace pour recycler cet item !");
-                        break;
-                    }
-                    InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 0);
-                    meds.setAmount(medsNbr);
-                    item.setAmount(0);
-                    p.getInventory().addItem(meds);
+                    if (hasGived(p, meds, space, item, medsNbr)) break;
                 }
             }
         }
+    }
+
+    private boolean hasGived(Player p, ItemStack component, int space, ItemStack item, int scrapNbr) {
+        if(scrapNbr > space)
+        {
+            p.sendMessage("§cVous n'avez pas assez d'espace pour recycler cet item !");
+            return true;
+        }
+        InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 0);
+        component.setAmount(scrapNbr);
+        item.setAmount(0);
+        p.getInventory().addItem(component);
+        return false;
     }
 
     public void GiveBackItem(InventoryView inv, Player p)

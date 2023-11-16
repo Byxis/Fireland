@@ -235,37 +235,19 @@ public class BunkerClass {
 
     Location GetLocationFromNumber(int _number)
     {
-        if(_number <= 1)
-        {
-            return new Location(Bukkit.getWorld("bunker"), 0, 0, 0);
+        int n = (int) Math.ceil(Math.sqrt(_number)); // taille de la grille
+        int p = n*n - _number; // position dans la grille
+        int x, y;
+
+        if (p < n) {
+            x = p;
+            y = n - 1;
+        } else {
+            x = n - 1;
+            y = 2*n - p - 2;
         }
-        else {
-            int number = 1;
-            int x = padding;
-            int maxX = padding;
-            int z = 0;
-            int maxZ = padding;
-            while(number < _number)
-            {
-                if(x >= maxX)
-                {
-                    x = 0;
-                    z += padding;
-                }
-                if(z > maxZ)
-                {
-                    x = maxX + padding;
-                    maxX = x;
-                    maxZ = maxX;
-                    z = 0;
-                }
-                else {
-                    x += padding;
-                }
-                number++;
-            }
-            return new Location(Bukkit.getWorld("bunker"), x, 0, z);
-        }
+
+        return new Location(Bukkit.getWorld("bunker"), x * 500, 0, y * 500);
     }
 
     public String GetName()
@@ -742,6 +724,11 @@ public class BunkerClass {
         {
             InGameUtilities.sendPlayerSucces(p, "Le skin de bunker a été équipé et appliqué !");
         }
+    }
+
+    public int getPlayerInside()
+    {
+        return m_playerInsideOldLocation.size();
     }
 
 }

@@ -17,6 +17,7 @@ fr\byxis\player\quest\questclass\BuyQuestClass.class
 fr\byxis\event\modifiedInteractionItemstackSize.class
 fr\byxis\player\intendant\Manager.class
 fr\byxis\player\PlayerAddonsEnabler.class
+fr\byxis\faction\faction\events\PlayerJoinFactionEvent.class
 fr\byxis\player\advancements\LearnRecipeAdvancements.class
 fr\byxis\command\nightVision.class
 fr\byxis\faction\zone\ZoneConfigFileManager.class
@@ -52,6 +53,7 @@ fr\byxis\fireland\Fireland$4.class
 fr\byxis\jeton\JetonManager.class
 fr\byxis\player\workshop\workshopManagerTabCompleter.class
 fr\byxis\fireland\utilities\InGameUtilities.class
+fr\byxis\player\scoreboard\scoreboardPlayer.class
 fr\byxis\faction\faction\FactionPlayerInformation.class
 fr\byxis\player\workshop\workshopCraftingItemClass.class
 fr\byxis\faction\housing\BunkerClass.class
@@ -94,6 +96,7 @@ fr\byxis\command\DiscordCommand.class
 fr\byxis\event\SaveEvent.class
 fr\byxis\faction\essaim\EssaimEventHandler.class
 fr\byxis\event\doorPass$3.class
+fr\byxis\player\scoreboard\NameTagManager.class
 fr\byxis\event\playerManager.class
 fr\byxis\faction\essaim\EssaimManager$1.class
 fr\byxis\player\quest\questclass\SellQuestClass.class
@@ -104,7 +107,6 @@ fr\byxis\player\items\parachute\parachute.class
 fr\byxis\player\advancements\CraftAdvancements.class
 fr\byxis\player\karma\PlayerKarmaClass.class
 fr\byxis\faction\essaim\EssaimManager$2.class
-fr\byxis\event\scoreboardPlayer.class
 fr\byxis\player\pvpmanager\PvPManager$1.class
 fr\byxis\fireland\utilities\TextUtilities.class
 fr\byxis\player\level\PlayerLevel$1.class
@@ -118,6 +120,7 @@ fr\byxis\player\advancements\AdvancementsManager$Success.class
 fr\byxis\player\intendant\menu\MenuLevel$1.class
 fr\byxis\player\advancements\CraftBreakAdvancements.class
 fr\byxis\player\workshop\recycler\RecyclerFunction.class
+fr\byxis\faction\faction\events\PlayerLeaveFactionEvent.class
 fr\byxis\player\items\backpack\BackPackClass$BackpackInventoryHolder.class
 fr\byxis\player\workshop\workshopFunction.class
 fr\byxis\db\DbConnection.class
@@ -155,9 +158,11 @@ fr\byxis\event\heliport$1.class
 fr\byxis\faction\housing\BunkerEvent.class
 fr\byxis\player\items\backpack\BackPack.class
 fr\byxis\event\entitySpawn.class
+fr\byxis\faction\faction\events\FactionBuyPerkEvent.class
 fr\byxis\event\worldGeneration.class
 fr\byxis\player\items\water\bottleFilled$1.class
 fr\byxis\faction\essaim\EssaimFunctions$2.class
+fr\byxis\player\scoreboard\PlayerScoreboardManager$1.class
 fr\byxis\player\shop\ShopEventManager.class
 fr\byxis\faction\zone\WorldGuardEnterZoneEvent.class
 fr\byxis\event\join.class
@@ -178,10 +183,12 @@ fr\byxis\player\packet\PacketFunctions.class
 fr\byxis\player\rank\RankCustomMessage.class
 fr\byxis\faction\zone\ZoneSaveEvent.class
 fr\byxis\player\intendant\menu\MenuColor.class
+fr\byxis\player\scoreboard\SideBoardManager.class
 fr\byxis\player\quest\questclass\KillQuestClass.class
 fr\byxis\event\stairs$1.class
 fr\byxis\player\primes\PrimeEvent.class
 fr\byxis\event\spawn.class
+fr\byxis\player\scoreboard\PlayerScoreboardManager.class
 fr\byxis\player\intendant\menu\MenuFaction.class
 fr\byxis\event\spawn$1.class
 fr\byxis\faction\faction\FactionInformation.class

@@ -19,9 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -251,7 +249,7 @@ public class EssaimEventHandler implements Listener {
             {
                 if(!EssaimManager.groups.isEmpty() && EssaimManager.groups.containsKey(essaim))
                 {
-                    if(EssaimManager.groups.get(essaim).getMembers().size() >= 1)
+                    if(!EssaimManager.groups.get(essaim).getMembers().isEmpty())
                     {
                         for(Player member : EssaimManager.groups.get(essaim).getMembers())
                         {
@@ -294,7 +292,7 @@ public class EssaimEventHandler implements Listener {
             {
                 if(!EssaimManager.groups.isEmpty() && EssaimManager.groups.containsKey(essaim))
                 {
-                    if(EssaimManager.groups.get(essaim).getMembers().size() >= 1) {
+                    if(!EssaimManager.groups.get(essaim).getMembers().isEmpty()) {
                         for(Player member : EssaimManager.groups.get(essaim).getMembers())
                         {
                             if(member.getName().equalsIgnoreCase(e.getPlayer().getName()))
@@ -305,6 +303,58 @@ public class EssaimEventHandler implements Listener {
                                     member.setHealth(0);
                                 }
                                 break;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    @EventHandler
+    public void playerJoin(PlayerJoinEvent e)
+    {
+        String current = null;
+        if(!main.essaimManager.existingEssaims.isEmpty())
+        {
+            for(String essaim : main.essaimManager.existingEssaims.keySet())
+            {
+                if(!EssaimManager.groups.isEmpty() && EssaimManager.groups.containsKey(essaim))
+                {
+                    if(!EssaimManager.groups.get(essaim).getMembers().isEmpty()) {
+                        for(Player member : EssaimManager.groups.get(essaim).getMembers())
+                        {
+                            if(member.getName().equalsIgnoreCase(e.getPlayer().getName()))
+                            {
+                                EssaimManager.groups.get(essaim).leaveGroup(e.getPlayer());
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    @EventHandler
+    public void playerChangeWorld(PlayerChangedWorldEvent e)
+    {
+        if(!e.getFrom().getName().equalsIgnoreCase("essaim"))
+            return;
+        String current = null;
+        if(!main.essaimManager.existingEssaims.isEmpty())
+        {
+            for(String essaim : main.essaimManager.existingEssaims.keySet())
+            {
+                if(!EssaimManager.groups.isEmpty() && EssaimManager.groups.containsKey(essaim))
+                {
+                    if(!EssaimManager.groups.get(essaim).getMembers().isEmpty()) {
+                        for(Player member : EssaimManager.groups.get(essaim).getMembers())
+                        {
+                            if(member.getName().equalsIgnoreCase(e.getPlayer().getName()))
+                            {
+                                EssaimManager.groups.get(essaim).leaveGroup(e.getPlayer());
                             }
                         }
                     }

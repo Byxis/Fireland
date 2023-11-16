@@ -1,10 +1,9 @@
-package fr.byxis.event;
+package fr.byxis.player.scoreboard;
 
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.player.karma.PlayerKarmaClass;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.player.primes.PrimeEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +13,7 @@ import org.bukkit.scoreboard.*;
 
 import java.util.UUID;
 
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class scoreboardPlayer implements Listener {
@@ -29,17 +29,16 @@ public class scoreboardPlayer implements Listener {
 	{
 		createScoreboard(e.getPlayer());
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	private void createScoreboard(Player p)
 	{
-		ScoreboardManager manager = Bukkit.getScoreboardManager();
-		Scoreboard board = null;
-		if (manager != null) {
-			board = manager.getNewScoreboard();
-		}
-		Objective objective = board.registerNewObjective("fireland", "dummy");
-		
+		Scoreboard board = p.getScoreboard();
+		Objective objective = null;
+		if(board.getObjective("fireland") == null)
+        	objective = board.registerNewObjective("fireland", "dummy");
+		else
+			objective = board.getObjective("fireland");
+
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		objective.setDisplayName("§f§lStatistiques");
 		
@@ -50,7 +49,7 @@ public class scoreboardPlayer implements Listener {
 		}
 		if(main.cfgm.getPlayerDB().getDouble("thirst."+p.getUniqueId()) <= 10)
 		{
-			if(state != "")
+			if(!state.isEmpty())
 			{
 				state += "§7, ";
 			}
@@ -58,13 +57,13 @@ public class scoreboardPlayer implements Listener {
 		}
 		if(p.getFoodLevel() <= 6)
 		{
-			if(state != "")
+			if(!state.isEmpty())
 			{
 				state += "§7, ";
 			}
 			state += "§caffamé";
 		}
-		if(state.equals(""))
+		if(!state.isEmpty())
 		{
 			state = "§7sain";
 		}
@@ -128,14 +127,12 @@ public class scoreboardPlayer implements Listener {
 		rang.setScore(2);
 		none1.setScore(1);
 		line1.setScore(0);
-		
 		p.setScoreboard(board);
-		
 	}
 	
 	public void update(Player player) {
 		
-        for (String str : player.getScoreboard().getEntries()) 
+        for (String str : player.getScoreboard().getEntries())
         {
         	player.getScoreboard().resetScores(str);
         }

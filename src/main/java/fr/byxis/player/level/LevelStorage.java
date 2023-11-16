@@ -51,16 +51,9 @@ public class LevelStorage {
         {
             pl.addXp(m_main, (int) (_xp*1.5f));
         }
-    }
-
-    public static void addPlayerXp(UUID _uuid, int _xp, Nation _nation, boolean isOnly)
-    {
-        if(!m_levelMap.containsKey(_uuid))
-            m_levelMap.put(_uuid, new PlayerLevel(m_main, _uuid));
-        PlayerLevel pl = m_levelMap.get(_uuid);
-        if(pl.getNation().equals(_nation) && isOnly)
+        else
         {
-            pl.addXp(m_main, _xp);
+            pl.addXp(m_main, (int) (_xp*0.5f));
         }
     }
 
@@ -144,6 +137,7 @@ public class LevelStorage {
     {
         if(!m_levelSavingsMap.containsKey(killer.getUniqueId()))
             m_levelSavingsMap.put(killer.getUniqueId(), new LevelSavings(killer.getUniqueId(), m_main));
+
         return m_levelSavingsMap.get(killer.getUniqueId()).getVictims().contains(victim.getUniqueId());
     }
 }

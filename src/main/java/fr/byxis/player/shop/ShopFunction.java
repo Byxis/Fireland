@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -414,8 +415,7 @@ public class ShopFunction {
             if(_isShiftClicked && !item.command.contains("wm give"))
             {
                 int nbr = 0;
-                Inventory inv = _p.getInventory();
-                for(ItemStack itemInv : inv)
+                for(ItemStack itemInv : getPlayerContent(_p))
                 {
                     if(itemInv != null)
                     {
@@ -460,36 +460,39 @@ public class ShopFunction {
             }
             else
             {
-                Inventory inv = _p.getInventory();
                 boolean founded = false;
-                for(ItemStack itemInv : inv)
+                for(ItemStack itemInv : getPlayerContent(_p))
                 {
                     if(itemInv != null)
                     {
-                        words = itemInv.getItemMeta().getDisplayName().replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7","").split(" ");
-                        sbb = new StringBuilder();
-                        for (int i = 0; i < words.length; i++) {
-                            if(i+1 != words.length)
-                            {
+                        String itemName;
+                        if(itemInv.hasItemMeta())
+                        {
+                            words = itemInv.getItemMeta().getDisplayName().replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7","").split(" ");
+                            sbb = new StringBuilder();
+                            for (int i = 0; i < words.length; i++) {
+                                if(i+1 != words.length)
+                                {
 
-                                if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
-                                    sbb.append(words[i]);
-                                    break;
-                                }//«
+                                    if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                                        sbb.append(words[i]);
+                                        break;
+                                    }//«
+                                    else {
+                                        sbb.append(words[i]).append(" ");
+                                    }
+                                }
                                 else {
-                                    sbb.append(words[i]).append(" ");
+                                    sbb.append(words[i]);
                                 }
                             }
-                            else {
-                                sbb.append(words[i]);
+                            itemName = sbb.toString().trim();
+                            if(ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.itemName)) ||ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.itemName)+" B"))
+                            {
+                                itemInv.setAmount(itemInv.getAmount()-1);
+                                founded = true;
+                                break;
                             }
-                        }
-                        String itemName = sbb.toString().trim();
-                        if(ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.itemName)) ||ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.itemName)+" B"))
-                        {
-                            itemInv.setAmount(itemInv.getAmount()-1);
-                            founded = true;
-                            break;
                         }
                     }
                 }
@@ -586,6 +589,26 @@ public class ShopFunction {
             e.printStackTrace();
         }
         return l;
+    }
+
+    private List<ItemStack> getPlayerContent(Player _p)
+    {
+        PlayerInventory inventory = _p.getInventory();
+
+        List<ItemStack> items = new ArrayList<>();
+
+        for (int i = 0; i < 36; i++) {
+            ItemStack item = inventory.getItem(i);
+            if (item != null) {
+                items.add(item);
+            }
+        }
+
+        ItemStack offHandItem = inventory.getItemInOffHand();
+        if (offHandItem != null) {
+            items.add(offHandItem);
+        }
+        return items;
     }
 
 

@@ -53,6 +53,7 @@ public class WorldGuardEnterZoneEvent implements Listener {
             }
             else if(capturedZone != null)
             {
+                capturedZone.addBar(p);
                 p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans la zone "+capturedZone.getFormattedName()));
                 InGameUtilities.playPlayerSound(p, "gun.hud.enter_area", SoundCategory.AMBIENT, 1, 1);
             }
@@ -67,6 +68,9 @@ public class WorldGuardEnterZoneEvent implements Listener {
         {
             return;
         }
+
+        if(isTimeToCapture() && captureZone.isClaimable())
+
         if(!data.isCapturing(captureZone.getName(), info.getName()) && captureZone.isClaimable() && isTimeToCapture())
         {
             data.AddCapturing(captureZone.getName(), info.getName(), p);
@@ -97,6 +101,7 @@ public class WorldGuardEnterZoneEvent implements Listener {
             }
             else if(capturedZone != null)
             {
+                capturedZone.removeBar(p);
                 p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous quittez dans la zone "+capturedZone.getFormattedName()));
                 InGameUtilities.playPlayerSound(p, "gun.hud.leaving_area", SoundCategory.AMBIENT, 1, 1);
             }
@@ -142,7 +147,7 @@ public class WorldGuardEnterZoneEvent implements Listener {
         data.remPlayerToZoneEnter(p);
     }
 
-    public boolean isTimeToCapture()
+    public static boolean isTimeToCapture()
     {
         Date current = new Date();
         return current.getHours() >= 18 && current.getHours() <= 19;

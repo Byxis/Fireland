@@ -8,9 +8,11 @@ import fr.byxis.faction.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
 import fr.byxis.jeton.JetonManager;
 import fr.byxis.player.level.LevelStorage;
+import fr.byxis.player.level.PlayerLevel;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 
 import static fr.byxis.faction.essaim.EssaimManager.DisableEssaim;
 import static fr.byxis.player.level.LevelStorage.addPlayerXp;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class EssaimFunctions {
 
@@ -225,31 +228,24 @@ public class EssaimFunctions {
             {
                 if(ff.getFactionInfo(ff.playerFactionName(p)).getName().equalsIgnoreCase(ff.getFactionInfo(ff.playerFactionName(EssaimManager.groups.get(essaim).getLeader())).getName()))
                 {
-                    if(p.hasPermission("fireland.essaim.access."+essaim))
+                    if(PermissionUtilities.hasPermission(p, "fireland.essaim.access."+essaim))
                     {
-                        if((essaim.equalsIgnoreCase("crypte") && p.hasPermission("group.bannis")) || (!essaim.equalsIgnoreCase("crype")))
-                        {
-                            InGameUtilities.sendPlayerInformation(p, "Vous êtes entré dans le groupe.");
+                        InGameUtilities.sendPlayerInformation(p, "Vous êtes entré dans le groupe.");
 
-                            for(Player member : EssaimManager.groups.get(essaim).getMembers())
-                            {
-                                InGameUtilities.sendPlayerInformation(member, p.getName()+" a rejoint l'expédition.");
-                                if(member.getOpenInventory().getTitle().contentEquals("Invitation :"))
-                                {
-                                    EssaimFunctions.openInvitation(essaim, member);
-                                }
-                                else if(member.getOpenInventory().getTitle().contentEquals("Essaim :"))
-                                {
-                                    EssaimFunctions.openMenu(essaim, member);
-                                }
-                            }
-                            EssaimManager.groups.get(essaim).joinGroup(p);
-                            return true;
-                        }
-                        else
+                        for(Player member : EssaimManager.groups.get(essaim).getMembers())
                         {
-                            InGameUtilities.sendPlayerError(p, "Cet essaim n'est disponible que pour les bannis.");
+                            InGameUtilities.sendPlayerInformation(member, p.getName()+" a rejoint l'expédition.");
+                            if(member.getOpenInventory().getTitle().contentEquals("Invitation :"))
+                            {
+                                EssaimFunctions.openInvitation(essaim, member);
+                            }
+                            else if(member.getOpenInventory().getTitle().contentEquals("Essaim :"))
+                            {
+                                EssaimFunctions.openMenu(essaim, member);
+                            }
                         }
+                        EssaimManager.groups.get(essaim).joinGroup(p);
+                        return true;
                     }
                     else
                     {

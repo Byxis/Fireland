@@ -42,25 +42,25 @@ public class MenuBooster {
         }
         ItemStack head = InventoryUtilities.GetHead(p.getUniqueId(), "§d"+p.getName());
         ItemMeta meta = head.getItemMeta();
-        meta.setLore(BasicUtilities.listMaker("§8Jetons : §b"+jeton.getJetonsPlayer(p.getUniqueId())+ "\u26c1" , "", "", ""));
+        meta.setLore(BasicUtilities.listMaker("§8Jetons : §b"+jeton.getJetonsPlayer(p.getUniqueId())+ " §f\u26c1" , "", "", ""));
         head.setItemMeta(meta);
         inv.setItem(8, head);
 
-        inv.setItem(11, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 1", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 1$ sur les zombies", "§8Donne 5% plus d'argent lors du kill", "§8Donne 5% plus de loot dans les coffres.", "Donne 25% plus d'xp.")));
-        inv.setItem(13, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 2", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 2$ sur les zombies", "§8Donne 7.5% plus d'argent lors du kill", "§8Donne 7.5% plus de loot dans les coffres.", "Donne 50% plus d'xp.")));
-        inv.setItem(15, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 3", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 3$ sur les zombies", "§8Donne 10% plus d'argent lors du kill", "§8Donne 10% plus de loot dans les coffres.", "Donne 75% plus d'xp.")));
+        inv.setItem(11, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 1", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 1$ sur les zombies", "§8Donne 5% plus d'argent lors du kill", "§8Donne 5% plus de loot dans les coffres.", "§8Donne 25% plus d'xp.")));
+        inv.setItem(13, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 2", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 2$ sur les zombies", "§8Donne 7.5% plus d'argent lors du kill", "§8Donne 7.5% plus de loot dans les coffres.", "§8Donne 50% plus d'xp.")));
+        inv.setItem(15, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 3", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 3$ sur les zombies", "§8Donne 10% plus d'argent lors du kill", "§8Donne 10% plus de loot dans les coffres.", "§8Donne 75% plus d'xp.")));
 
-        inv.setItem(20, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b100 \u26c1","", "")));
-        inv.setItem(29, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b300 \u26c1","", "")));
-        inv.setItem(38, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b500 \u26c1","", "")));
+        inv.setItem(20, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b100 §f\u26c1","", "")));
+        inv.setItem(29, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b300 §f\u26c1","", "")));
+        inv.setItem(38, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b500 §f\u26c1","", "")));
 
-        inv.setItem(22, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b200 \u26c1","", "")));
-        inv.setItem(31, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b600 \u26c1","", "")));
-        inv.setItem(40, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b1000 \u26c1","", "")));
+        inv.setItem(22, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b200 §f\u26c1","", "")));
+        inv.setItem(31, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b600 §f\u26c1","", "")));
+        inv.setItem(40, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b1000 §f\u26c1","", "")));
 
-        inv.setItem(24, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b300 \u26c1","", "")));
-        inv.setItem(33, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b900 \u26c1","", "")));
-        inv.setItem(42, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b1500 \u26c1","", "")));
+        inv.setItem(24, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b300 §f\u26c1","", "")));
+        inv.setItem(33, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b900 §f\u26c1","", "")));
+        inv.setItem(42, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b1500 §f\u26c1","", "")));
 
         inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
     }

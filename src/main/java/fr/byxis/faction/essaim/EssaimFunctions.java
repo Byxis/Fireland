@@ -23,6 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 
 import static fr.byxis.faction.essaim.EssaimManager.DisableEssaim;
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.player.level.LevelStorage.addPlayerXp;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
@@ -166,6 +167,7 @@ public class EssaimFunctions {
     }
 
     public static void leaveGroup(String essaim, Player p) {
+        debugp("FBUG03 "+"leaveGroup "+EssaimManager.groups.get(essaim).getLeader().getName() +" "+p.getName());
         if(EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName()))
         {
             for(Player member : EssaimManager.groups.get(essaim).getMembers())
@@ -542,21 +544,21 @@ public class EssaimFunctions {
         {
             for(Player player : Bukkit.getOnlinePlayers())
             {
-                if(EssaimManager.groups.get(essaimName).getMembers().contains(player))
+                if(EssaimManager.groups.get(essaimName).getMembersName().contains(player.getName()))
                 {
                     if(forced)
                     {
-                        InGameUtilities.sendPlayerError(player, "Vous avez été expulsé de l'essaim, par conséquent, l'expédition est terminée");
+                        InGameUtilities.sendPlayerError(player, "Vous avez été expulsé de l'essaim, par conséquent, l'expédition est terminée.");
                     }
                     else
                     {
                         if(EssaimManager.groups.get(essaimName).getLeader().getName().equals(player.getName()))
                         {
-                            InGameUtilities.sendPlayerInformation(player, "Vous avez quitté l'essaim, par conséquent, l'expédition est terminée");
+                            InGameUtilities.sendPlayerInformation(player, "Vous avez quitté l'essaim, par conséquent, l'expédition est terminée.");
                         }
                         else
                         {
-                            InGameUtilities.sendPlayerInformation(player, "Le leader a quitté l'essaim, par conséquent, l'expédition est terminée !");
+                            InGameUtilities.sendPlayerInformation(player, "Le leader a quitté l'essaim, par conséquent, l'expédition est terminée.");
                         }
 
                     }

@@ -253,7 +253,7 @@ public class CaptureZone {
             {
                 if(faction.getPlayerList().contains(p))
                 {
-                    addPlayerXp(p.getUniqueId(), 150, LevelStorage.Nation.Bannis);
+                    addPlayerXp(p.getUniqueId(), 300, LevelStorage.Nation.Bannis);
                 }
                 InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
                 InGameUtilities.sendPlayerInformation(p, "La faction "+color+faction.getName()+"§R§7 a capturé la zone "+zone.getFormattedName()+" !");

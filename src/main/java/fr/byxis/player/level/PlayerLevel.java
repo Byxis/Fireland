@@ -25,6 +25,7 @@ public class PlayerLevel {
     private int m_level;
     private int m_xp;
     private int m_rang;
+    private boolean m_canChange;
     private LevelStorage.Nation m_nation;
 
     private HashMap<Integer, Boolean> m_rewardsClaimed;
@@ -138,11 +139,11 @@ public class PlayerLevel {
         if(m_level < 25)
             return 20*(m_level+1);
         else if(m_level < 50)
-            return 25*(m_level+1) - 20*25;
+            return 25*(m_level+1) - 20*24;
         else if(m_level < 75)
-            return 30*(m_level+1) - 25*25 - 20*25;
+            return 30*(m_level+1) - 25*24 - 20*25;
         else if(m_level < 100)
-            return 40*(m_level+1) - 30*25 - 25*25 - 20*25;
+            return 40*(m_level+1) - 30*24 - 25*25 - 20*25;
         else
             return -1;
     }
@@ -196,12 +197,13 @@ public class PlayerLevel {
         try {
             final Connection connection = connectionDb.getConnection();
             //Préparation de la commande
-            PreparedStatement updateInfos = connection.prepareStatement("UPDATE player_level SET level = ?, xp = ?, nation = ?, rang = ? WHERE uuid = ?");
+            PreparedStatement updateInfos = connection.prepareStatement("UPDATE player_level SET level = ?, xp = ?, nation = ?, rang = ?, can_change = ? WHERE uuid = ?");
             updateInfos.setInt(1, m_level);
             updateInfos.setInt(2, m_xp);
             updateInfos.setString(3, m_nation.name());
             updateInfos.setInt(4, m_rang);
-            updateInfos.setString(5, m_uuid.toString());
+            updateInfos.setBoolean(5, m_canChange);
+            updateInfos.setString(6, m_uuid.toString());
             updateInfos.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -446,5 +448,13 @@ public class PlayerLevel {
             case 3 -> 7000;
             default -> 10000;
         };
+    }
+
+    public void setCanChange(boolean _canChange) {
+        this.m_canChange = _canChange;
+    }
+
+    public Boolean canChange() {
+        return m_canChange;
     }
 }

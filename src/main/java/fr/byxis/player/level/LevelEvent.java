@@ -47,6 +47,11 @@ public class LevelEvent implements Listener {
                     addPlayerXp(p.getUniqueId(), 20, LevelStorage.Nation.Etat);
                     AddPlayerZombieKill(p);
                 }
+                case "Malabar" ->
+                {
+                    addPlayerXp(p.getUniqueId(), 500, LevelStorage.Nation.Etat);
+                    AddPlayerZombieKill(p);
+                }
             }
         }
     }
@@ -63,7 +68,7 @@ public class LevelEvent implements Listener {
                 {
                     if(!LevelStorage.HasPlayerAlreadyKilled(killer, e.getEntity()))
                     {
-                        addPlayerXp(killer.getUniqueId(), 60, LevelStorage.Nation.Bannis);
+                        addPlayerXp(killer.getUniqueId(), 180, LevelStorage.Nation.Bannis);
                         LevelStorage.AddPlayerKill(killer, e.getEntity());
                     }
                 }

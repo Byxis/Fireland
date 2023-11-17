@@ -39,7 +39,11 @@ public class LevelTabCompleter implements TabCompleter {
             if (args.length == 2)
             {
                 if(args[0].equalsIgnoreCase("set"))
+                {
+                    texts.add("canchange");
                     texts.add("nation");
+                    texts.add("rang");
+                }
                 texts.add("level");
                 texts.add("xp");
                 texts.addAll(ListUtilities.tabList(args[0], "", texts));

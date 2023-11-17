@@ -78,6 +78,11 @@ public class EssaimGroup {
         }
     }
 
+    public void leaveAllGroup() {
+        // If it's not the leader leaving then remove them from list of players.
+        members.clear();
+    }
+
     public void loose(Player leaver) {
         members.remove(leaver);
         if(leaver.getName().equalsIgnoreCase(leader.getName())){
@@ -129,6 +134,16 @@ public class EssaimGroup {
     public List<Player> getMembers()
     {
         return members;
+    }
+
+    public List<String> getMembersName()
+    {
+        List<String> list = new ArrayList<>();
+        for(Player p : members)
+        {
+            list.add(p.getName());
+        }
+        return list;
     }
 
     public Player getLeader()

@@ -143,12 +143,7 @@ public class Manager implements Listener {
                     case STONE -> {
                         if(finfos.getCurrentUpgrade() >= 5)
                         {
-                            if(!main.bunkerManager.getLoadedBunker().containsKey(finfos.getName()))
-                            {
-                                BunkerClass bunker = new BunkerClass(finfos.getName(), main);
-                                main.bunkerManager.AddLoadedBunker(bunker);
-                            }
-                            main.bunkerManager.getLoadedBunker().get(finfos.getName()).Join(p);
+                            main.bunkerManager.getBunker(finfos.getName()).Join(p);
                         }
                     }
                     case GRASS_BLOCK -> {
@@ -667,7 +662,7 @@ public class Manager implements Listener {
 
                 if(itemclicked.getType().name().contains("_BANNER"))
                 {
-                    PermissionUtilities.removePermission(p, "fireland.nation.change");
+                    getPlayerLevel(p.getUniqueId()).setCanChange(false);
                     if(itemclicked.getItemMeta().getDisplayName().contains("Bannis"))
                     {
                         getPlayerLevel(p.getUniqueId()).setNation(LevelStorage.Nation.Bannis);
@@ -728,7 +723,7 @@ public class Manager implements Listener {
                     }
                     case WHITE_BANNER , BLACK_BANNER-> {
                         PlayerLevel pl = getPlayerLevel(p.getUniqueId());
-                        InGameUtilities.sendInteractivePlayerMessage(p, "§cPour changer de nation, cliquez sur ce message. Vous devez payer "+pl.GetJetonPriceNationChange()+ "§f\u26C1§c et "+pl.GetMoneyPriceNationChange()+"§f$", "/level changeNation", "§cCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
+                        InGameUtilities.sendInteractivePlayerMessage(p, "§cPour changer de nation, cliquez sur ce message. Vous devez payer "+pl.GetJetonPriceNationChange()+ "§f\u26C1§c et "+pl.GetMoneyPriceNationChange()+"§f$", "/level changeNation8484", "§cCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
                         p.closeInventory();
                     }
                 }

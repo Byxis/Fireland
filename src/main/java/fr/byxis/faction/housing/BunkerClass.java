@@ -5,22 +5,15 @@ import com.google.common.collect.Multimap;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
-import com.sk89q.worldedit.function.mask.BlockMask;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
-import com.sk89q.worldedit.function.pattern.BlockPattern;
 import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.regions.CuboidRegion;
-import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
-import com.sk89q.worldedit.world.block.BaseBlock;
-import com.sk89q.worldedit.world.block.BlockType;
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
@@ -34,9 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 public class BunkerClass {
@@ -145,7 +136,7 @@ public class BunkerClass {
                 m_playerInsideOldLocation.remove(p);
                 for(Player players : m_playerInsideOldLocation.keySet())
                 {
-                    InGameUtilities.sendPlayerError(p, "Le joueur "+p.getName()+" a quitté le bunker");
+                    InGameUtilities.sendPlayerError(players, "Le joueur "+p.getName()+" a quitté le bunker");
                 }
             }
             m_invitations.removeAll(_p);
@@ -726,9 +717,19 @@ public class BunkerClass {
         }
     }
 
-    public int getPlayerInside()
+    public int GetPlayerInsideSize()
     {
         return m_playerInsideOldLocation.size();
+    }
+
+    public Set<Player> GetPlayerInside()
+    {
+        return m_playerInsideOldLocation.keySet();
+    }
+
+    public Location GetBunkerLocation()
+    {
+        return m_location;
     }
 
 }

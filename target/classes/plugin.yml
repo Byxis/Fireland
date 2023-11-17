@@ -93,3 +93,6 @@ commands:
   level:
     description: commande pour les levels
     aliases: [lvl]
+  frestart:
+    description: commande pour redemarrer le serveur
+    aliases: [restart, frs, rs]

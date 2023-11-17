@@ -1,22 +1,13 @@
 package fr.byxis.faction.housing;
 
-import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.managers.RegionManager;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Set;
-
-import static com.sk89q.jnbt.NBTUtils.toVector;
 import static fr.byxis.fireland.utilities.WGUtilities.isWithinRegion;
 
 public class BunkerCommand implements CommandExecutor {
@@ -30,6 +21,39 @@ public class BunkerCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if(commandSender instanceof Player p)
         {
+            if(p.hasPermission("fireland.bunker.mod") && strings.length >= 2 && strings[0].equalsIgnoreCase("join"))
+            {
+                BunkerClass bunker = main.bunkerManager.getBunker(strings[1]);
+                if(!main.bunkerManager.getLoadedBunker().containsKey(strings[1]))
+                {
+                    bunker.Join(p);
+                    InGameUtilities.sendPlayerInformation(p, "Vous avez forcé l'entrée dans le bunker.");
+                    return true;
+                }
+            }
+            else if(p.hasPermission("fireland.bunker.mod") && strings.length >= 2 && strings[0].equalsIgnoreCase("info"))
+            {
+                BunkerClass bk = main.bunkerManager.getBunker(strings[1]);
+                p.sendMessage("§8Bunker de la faction §7"+bk.GetName() +" §d(Niv. "+bk.GetBunkerLevel()+")");
+                StringBuilder sb = new StringBuilder("§8Joueurs dedans : §7");
+                for(Player pl : bk.GetPlayerInside())
+                {
+                    sb.append(pl.getName()).append(" ");
+                }
+                p.sendMessage(sb.toString());
+                p.sendMessage("§8Location : x§7"+bk.GetBunkerLocation().getBlockX()+"§8 y§7"+bk.GetBunkerLocation().getBlockZ()+"§8 z§7"+bk.GetBunkerLocation().getBlockZ());
+                return true;
+            }
+            else if(p.hasPermission("fireland.bunker.mod") && strings.length == 1 && strings[0].equalsIgnoreCase("info"))
+            {
+                StringBuilder sb = new StringBuilder("§8Bunkers chargés : §7");
+                for(BunkerClass bk : main.bunkerManager.getLoadedBunker().values())
+                {
+                    sb.append(bk.GetName()).append(" ");
+                }
+                p.sendMessage(sb.toString());
+                return true;
+            }
             for(BunkerClass bk : main.bunkerManager.getLoadedBunker().values())
             {
                 if(bk.IsInvited(p) ||p.hasPermission("fireland.bunker.mod"))
@@ -45,18 +69,7 @@ public class BunkerCommand implements CommandExecutor {
                     return true;
                 }
             }
-            if(p.hasPermission("fireland.bunker.mod") && strings.length >= 2)
-            {
-                if(!main.bunkerManager.getLoadedBunker().containsKey(strings[1]))
-                {
-                    BunkerClass bunker = new BunkerClass(strings[1], main);
-                    main.bunkerManager.AddLoadedBunker(bunker);
-                    bunker.Join(p);
-                    InGameUtilities.sendPlayerInformation(p, "Vous avez forcé l'entrée dans le bunker.");
-                    return true;
-                }
-            }
-            InGameUtilities.sendPlayerError(p, "Utilisation: /bunker join <faction>");
+            InGameUtilities.sendPlayerError(p, "Utilisation: /bunker <join/info> <faction>");
         }
         return false;
     }

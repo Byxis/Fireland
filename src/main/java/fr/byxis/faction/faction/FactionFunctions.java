@@ -104,22 +104,16 @@ public class FactionFunctions {
 			preparedStatement1.setString(1, factionName);
 			
 			final ResultSet resultSet = preparedStatement1.executeQuery();
-			//On vérifie s'il y a un résultat à la requête
-			if (resultSet.next())
+			ArrayList<FactionPlayerInformation> ar = new ArrayList<>();
+			FactionPlayerInformation player;
+			while(resultSet.next())
 			{
-				//On initialise les variables
-				ArrayList<FactionPlayerInformation> ar = new ArrayList<>();
-				FactionPlayerInformation player = new FactionPlayerInformation(resultSet.getString(1), factionName, (resultSet.getInt(2)), UUID.fromString(resultSet.getString(3)), resultSet.getTimestamp(4));
-				//On ajoute les joueurs de la faction dans la liste
+				player = new FactionPlayerInformation(resultSet.getString(1), factionName, (resultSet.getInt(2)), UUID.fromString(resultSet.getString(3)), resultSet.getTimestamp(4));
 				ar.add(player);
-				while(resultSet.next())
-				{
-					player = new FactionPlayerInformation(resultSet.getString(1), factionName, (resultSet.getInt(2)), UUID.fromString(resultSet.getString(3)), resultSet.getTimestamp(4));
-					ar.add(player);
-				}
-				//On renvoie la liste
-				return ar;
+				debugp("FBUG01"+player.getName() +" "+ player.getFactionName());
 			}
+			//On renvoie la liste
+			return ar;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème. Erreur : #F001");
@@ -360,7 +354,7 @@ public class FactionFunctions {
 		}
 	}
 	
-	public void creatingFaction(Player p, String name)
+	public boolean creatingFaction(Player p, String name)
 	{
 		/*
 		* Initialise la création d'une faction avec quelques vérifications :
@@ -388,6 +382,7 @@ public class FactionFunctions {
 			{
 				//La requête a trouvé une faction qui a ce nom
 				p.sendMessage("§cLe nom de cette faction est déjà pris !");
+				return false;
 			}
 			else
 			{
@@ -399,11 +394,12 @@ public class FactionFunctions {
 				{
 					//La requête a trouvé que le joueur a une faction
 					p.sendMessage("§cVous êtes déjà dans une faction !");
+					return false;
 				}
 				else
 				{
 					//La requête a trouvé que le joueur n'a pas de faction, on crée donc la faction
-					createFaction(connection, uuid, name, p);
+					return createFaction(connection, uuid, name, p);
 				}
 				
 			}
@@ -412,9 +408,10 @@ public class FactionFunctions {
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F009");
 		}
+		return false;
 	}
 	
-	public void createFaction(Connection connection, UUID uuid, String name, Player p)
+	public boolean createFaction(Connection connection, UUID uuid, String name, Player p)
 	{
 		/*
 		 * Créer une faction
@@ -449,11 +446,13 @@ public class FactionFunctions {
 			PlayerJoinFactionEvent event = new PlayerJoinFactionEvent(p, name);
 			Bukkit.getPluginManager().callEvent(event);
 			InGameUtilities.sendPlayerInformation(p, "Vous avez créé la faction "+GetColorCode(name)+name+" !");
+			return true;
 		} catch (SQLException e) {
 			//Une erreur est survenue (Problème de connexion à la BD)
 			e.printStackTrace();
 			sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F010");
 		}
+		return false;
 	}
 
 	public void deleteFaction(Player p)
@@ -480,20 +479,22 @@ public class FactionFunctions {
 			if(resultFactionName.next())
 			{
 				//Preparations des requetes pour supprimer
-				final PreparedStatement removeFaction = connection.prepareStatement("""
-                        DELETE FROM faction WHERE name = ?;
-                        DELETE FROM player_faction WHERE player_faction.player_faction = ?;
-                        DELETE FROM faction_zone WHERE faction_zone.faction_name = ?;
-                        DELETE FROM capture_zone WHERE faction_name = ?;
-                        DELETE FROM faction_storage WHERE faction = ?;
-                        DELETE FROM faction_housing WHERE faction = ?;
-                        DELETE FROM invite WHERE invite.faction_name = ?;""");
-				for(int i =1; i < 8; i++)
-				{
-					removeFaction.setString(i, resultFactionName.getString(1));
+				String[] queries = {
+						"DELETE FROM faction WHERE name = ?",
+						"DELETE FROM player_faction WHERE player_faction.player_faction = ?",
+						"DELETE FROM faction_zone WHERE faction_zone.faction_name = ?",
+						"DELETE FROM capture_zone WHERE faction_name = ?",
+						"DELETE FROM faction_storage WHERE faction = ?",
+						"DELETE FROM faction_housing WHERE faction = ?",
+						"DELETE FROM invite WHERE invite.faction_name = ?"
+				};
+
+				for (String query : queries) {
+					PreparedStatement statement = connection.prepareStatement(query);
+					statement.setString(1, resultFactionName.getString(1));
+					statement.executeUpdate();
 				}
 
-				removeFaction.executeUpdate();
 				if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
 				{
 					main.hashMapManager.removeFactionMap(p.getUniqueId());
@@ -1129,7 +1130,7 @@ public class FactionFunctions {
 			ResultSet rs = preparedStatement2.executeQuery();
 			while(rs.next())
 			{
-				inv.setItem(rs.getInt(1), parse(rs.getString(2)));
+				inv.setItem(rs.getInt(1), parse(main, rs.getString(2)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1137,8 +1138,8 @@ public class FactionFunctions {
 		return inv;
 	}
 
-	public static ItemStack parse(String input) {
-		return ItemSerializer.deserialize(input);
+	public static ItemStack parse(Fireland _main, String input) {
+		return ItemSerializer.deserialize(_main, input);
 	}
 
 	public Inventory LoadStorage(String factionName, int rang)

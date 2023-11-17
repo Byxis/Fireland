@@ -113,9 +113,9 @@ public class factionManager implements Listener, CommandExecutor  {
 			if (args[1].length() <= 16)
 			{
 				double money = main.eco.getBalance(p);
-				if(money >= 1000) {
+				if(money >= 1000 && factionFunctions.creatingFaction(p, args[1])) {
 					main.eco.withdrawPlayer(p, 1000);
-					factionFunctions.creatingFaction(p, args[1]);
+					InGameUtilities.sendPlayerSucces(p, "Vous avez créé la faction "+args[1]);
 					for(Player op : Bukkit.getOnlinePlayers())
 					{
 						if(op != p)
@@ -359,7 +359,7 @@ public class factionManager implements Listener, CommandExecutor  {
 			}
 
 		}
-		else if(args[0].equalsIgnoreCase("promote") && p.hasPermission("fireland.command.faction.promote"))
+		else if(args[0].equalsIgnoreCase("promote"))
 		{
 			if (args.length >= 2)
 			{

@@ -63,6 +63,7 @@ public class RecyclerFunction {
             {
                 case NETHERITE_SCRAP-> amount += 1;
                 case NETHERITE_HOE -> amount += BasicUtilities.generateInt(2, 10);
+                case ARROW -> amount += BasicUtilities.generateInt(1, 2);
                 case NETHERITE_CHESTPLATE, CHAINMAIL_CHESTPLATE, DIAMOND_CHESTPLATE, GOLDEN_CHESTPLATE, IRON_CHESTPLATE, LEATHER_CHESTPLATE
                     -> amount += BasicUtilities.generateInt(1, 8);
                 case NETHERITE_HELMET, CHAINMAIL_HELMET, DIAMOND_HELMET, GOLDEN_HELMET, IRON_HELMET, LEATHER_HELMET
@@ -145,7 +146,6 @@ public class RecyclerFunction {
     public void Recycle(InventoryView inv, Player p) {
         ItemStack scrap = new ItemStack(Material.NETHERITE_SCRAP);
         ItemStack gp = new ItemStack(Material.GUNPOWDER);
-        ItemStack meds = new ItemStack(Material.AMETHYST_SHARD);
 
         InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 2);
         int space = GetAmountOfSpaceScrap(p);
@@ -167,12 +167,7 @@ public class RecyclerFunction {
                 }
                 else if(gbNbr > 0)
                 {
-                    if (hasGived(p, meds, space, item, gbNbr)) break;
-                }
-                int medsNbr = (GetItemMedsNumber(item));
-                if (medsNbr != 0)
-                {
-                    if (hasGived(p, meds, space, item, medsNbr)) break;
+                    if (hasGived(p, gp, space, item, gbNbr)) break;
                 }
             }
         }

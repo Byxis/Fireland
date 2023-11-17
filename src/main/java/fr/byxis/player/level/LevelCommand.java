@@ -34,7 +34,7 @@ public class LevelCommand implements CommandExecutor {
             }
             else if(args.length == 1)
             {
-                if(args[0].equalsIgnoreCase("changeNation"))
+                if(args[0].equalsIgnoreCase("changeNation8484"))
                 {
                     pl = getPlayerLevel(p.getUniqueId());
                     if(JetonManager.getJetonsPlayer(p.getUniqueId()) > pl.GetJetonPriceNationChange() && Fireland.eco.has(p, pl.GetMoneyPriceNationChange()))
@@ -42,7 +42,7 @@ public class LevelCommand implements CommandExecutor {
                         InGameUtilities.sendPlayerSucces(p, "Vous avez acheté un changement de nation. Pour changer, votre nation, allez voir l'intendant");
                         JetonManager.payJetons(p, pl.GetJetonPriceNationChange(), "Changement de Nation", false, true);
                         Fireland.eco.withdrawPlayer(p, pl.GetMoneyPriceNationChange());
-                        PermissionUtilities.addPermission(p, "fireland.nation.change");
+                        pl.setCanChange(true);
                         return true;
                     }
                     InGameUtilities.sendPlayerError(p, "Vous n'avez pas les fonds nécessaire.");
@@ -62,7 +62,7 @@ public class LevelCommand implements CommandExecutor {
             {
                 if(args.length != 4)
                 {
-                    InGameUtilities.sendPlayerError(p, "Utilisation : /level <set/add/remove> <level/xp/nation> <amount/nation> <player>");
+                    InGameUtilities.sendPlayerError(p, "Utilisation : /level <set/add/remove> <level/xp/nation/rang/canchange> <amount/nation/true/false> <player>");
                     return false;
                 }
                 if(BasicUtilities.getUuid(args[3]) == null)
@@ -78,6 +78,32 @@ public class LevelCommand implements CommandExecutor {
                         try{
                             int amount = Integer.parseInt(args[2]);
                             pl.setLevel(amount);
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs "+args[3] +" mis à jour avec succès");
+                            return true;
+                        }
+                        catch (Exception ignored)
+                        {
+
+                        }
+                    }
+                    else if(args[1].equalsIgnoreCase("canchange"))
+                    {
+                        try{
+                            boolean amount = Boolean.parseBoolean(args[2]);
+                            pl.setCanChange(amount);
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs "+args[3] +" mis à jour avec succès");
+                            return true;
+                        }
+                        catch (Exception ignored)
+                        {
+
+                        }
+                    }
+                    else if(args[1].equalsIgnoreCase("rang"))
+                    {
+                        try{
+                            int amount = Integer.parseInt(args[2]);
+                            pl.setRang(amount);
                             InGameUtilities.sendPlayerSucces(p, "Joueurs "+args[3] +" mis à jour avec succès");
                             return true;
                         }

@@ -346,7 +346,7 @@ public class BunkerEvent implements Listener {
                 e.setCancelled(true);
 
             /**       Click check        **/
-
+            if(e.getCurrentItem() == null) return;
             if(e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE)
             {
                 e.setCancelled(true);

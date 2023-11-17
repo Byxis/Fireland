@@ -54,9 +54,25 @@ public class BunkerManager {
         return m_loadedBunker;
     }
 
+    public BunkerClass getBunker(String name)
+    {
+        loadBunker(name);
+        return m_loadedBunker.get(name);
+    }
+
+    public void loadBunker(String name)
+    {
+        if(!m_loadedBunker.containsKey(name))
+        {
+            BunkerClass bunker = new BunkerClass(name, m_main);
+            m_main.bunkerManager.AddLoadedBunker(bunker);
+        }
+    }
+
     public void AddLoadedBunker(BunkerClass bk)
     {
-        m_loadedBunker.put(bk.GetName(), bk);
+        if(!m_loadedBunker.containsKey(bk.GetName()))
+            m_loadedBunker.put(bk.GetName(), bk);
     }
 
     public HashMap<Material, String[]> GetBunkerSkins()

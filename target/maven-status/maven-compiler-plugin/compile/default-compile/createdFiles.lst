@@ -6,6 +6,7 @@ fr\byxis\player\items\boussole\boussole.class
 fr\byxis\faction\essaim\EssaimFunctions.class
 fr\byxis\faction\essaim\EssaimEventHandler$1.class
 fr\byxis\event\ambientSound.class
+fr\byxis\fireland\restart\RestartManager$2.class
 fr\byxis\player\advancements\AdvancementsConfig.class
 fr\byxis\player\items\water\thirst.class
 fr\byxis\command\rename.class
@@ -31,6 +32,7 @@ fr\byxis\player\advancements\PossessJetonsAdvancements.class
 fr\byxis\faction\essaim\essaimClass\EssaimClass.class
 fr\byxis\player\level\LevelEvent.class
 fr\byxis\event\cobwebDamage.class
+fr\byxis\fireland\restart\restartCommand.class
 fr\byxis\event\bank.class
 fr\byxis\fireland\utilities\BasicUtilities$1.class
 fr\byxis\player\items\toxic\SporeDamage$1.class
@@ -59,6 +61,7 @@ fr\byxis\player\workshop\workshopCraftingItemClass.class
 fr\byxis\faction\housing\BunkerClass.class
 fr\byxis\faction\zone\DataZone.class
 fr\byxis\player\quest\questclass\ProgressQuest.class
+fr\byxis\fireland\restart\RestartManager$1.class
 fr\byxis\player\workshop\workshopManager.class
 fr\byxis\player\intendant\menu\MenuPlayerList.class
 fr\byxis\fireland\ConfigManager.class
@@ -125,6 +128,7 @@ fr\byxis\player\items\backpack\BackPackClass$BackpackInventoryHolder.class
 fr\byxis\player\workshop\workshopFunction.class
 fr\byxis\db\DbConnection.class
 fr\byxis\faction\housing\BunkerCommand.class
+fr\byxis\fireland\restart\RestartManager.class
 fr\byxis\fireland\Fireland.class
 fr\byxis\jeton\FactureCommand.class
 fr\byxis\db\DbCredentials.class
@@ -133,6 +137,7 @@ fr\byxis\command\stack.class
 fr\byxis\fireland\utilities\InGameUtilities$1.class
 fr\byxis\player\intendant\menu\MenuBooster.class
 fr\byxis\event\doorPass$1.class
+fr\byxis\fireland\restart\restartEvent.class
 fr\byxis\event\chatListener.class
 fr\byxis\player\advancements\PlayTimeAdvancements.class
 fr\byxis\fireland\utilities\WorldUtilities.class

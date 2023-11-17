@@ -218,6 +218,14 @@ public class InGameUtilities implements Listener {
         }
     }
 
+    public static void debugp(int code, Object txt)
+    {
+        if(Bukkit.getPlayer("Byxis_") != null && Bukkit.getPlayer("Byxis_").isOnline())
+        {
+            Bukkit.getPlayer("Byxis_").sendMessage("§c[FBUG-"+code+"]§lFireland§8§l >> §a"+txt);
+        }
+    }
+
     public static void debugConsole(String txt)
     {
         main.getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString()+"Debug "+Ansi.ansi().fg(Ansi.Color.WHITE).toString()+">> "+txt);

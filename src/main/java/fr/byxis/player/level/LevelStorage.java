@@ -4,9 +4,7 @@ import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class LevelStorage {
 
@@ -60,11 +58,16 @@ public class LevelStorage {
     public static void SaveLevels()
     {
         if(m_levelMap.isEmpty()) return;
+        List<UUID> uuidList = new ArrayList<UUID>();
         for(PlayerLevel pl : m_levelMap.values())
         {
             pl.Save(m_main);
             if(!Bukkit.getOfflinePlayer(pl.getUuid()).isOnline())
-                m_levelMap.remove(pl.getUuid());
+                uuidList.add(pl.getUuid());
+        }
+        for(UUID uuid : uuidList)
+        {
+            m_levelMap.remove(uuid);
         }
     }
 

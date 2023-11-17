@@ -322,7 +322,7 @@ public class BunkerStorage {
             ResultSet rs = preparedStatement2.executeQuery();
             while(rs.next())
             {
-                m_items.put(rs.getInt(1), ItemSerializer.deserialize(rs.getString(2)));
+                m_items.put(rs.getInt(1), ItemSerializer.deserialize(m_main, rs.getString(2)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -456,7 +456,7 @@ public class BunkerStorage {
 
     private int getMaxSpaceStorage()
     {
-        BunkerClass bk = m_main.bunkerManager.getLoadedBunker().get(m_name);
+        BunkerClass bk = m_main.bunkerManager.getBunker(m_name);
         return 27 * switch(bk.GetBunkerLevel())
         {
             default -> 10;

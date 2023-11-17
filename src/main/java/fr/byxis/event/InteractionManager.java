@@ -49,6 +49,8 @@ public class InteractionManager implements Listener {
 		m_forbiddenMats.add(Material.WHITE_BED);
 		m_forbiddenMats.add(Material.YELLOW_BED);
 		m_forbiddenMats.add(Material.MAGENTA_BED);
+		m_forbiddenMats.add(Material.CAVE_VINES);
+		m_forbiddenMats.add(Material.CAVE_VINES_PLANT);
 	}
 	
 	@SuppressWarnings("deprecation")

@@ -1,18 +1,26 @@
 package fr.byxis.fireland.utilities;
 
+import fr.byxis.fireland.Fireland;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 /**
  * Serializes and deserializes ItemStacks
@@ -36,10 +44,11 @@ public class ItemSerializer {
         String owner = getOwner(item);
         if(owner != null) builder.append(" owner:" + owner);
         int modeldata = getCustomData(item);
-        builder.append(" custommodeldata:" + modeldata);
+        builder.append(" custommodeldata:").append(modeldata);
+        builder.append(" persistentdatacontainer:").append(getCustomPDC(item));
         return builder.toString();
     }
-    public static ItemStack deserialize(String serializedItem){
+    public static ItemStack deserialize(Fireland _main, String serializedItem){
         String[] strings = serializedItem.split(" ");
         Map<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();
         String[] args;
@@ -78,6 +87,10 @@ public class ItemSerializer {
                 setCustomData(item, Integer.parseInt(args[1]));
                 continue;
             }
+            if(args[0].equalsIgnoreCase("persistentdatacontainer")){
+                setCustomPersistentData(_main, item, args[1]);
+                continue;
+            }
             if(Enchantment.getByName(args[0].toUpperCase()) != null){
                 enchants.put(Enchantment.getByName(args[0].toUpperCase()), Integer.parseInt(args[1]));
                 continue;
@@ -111,6 +124,42 @@ public class ItemSerializer {
         meta.setCustomModelData(i);
         item.setItemMeta(meta);
     }
+
+    private static void setCustomPersistentData(Fireland _main, ItemStack item, String data){
+        YamlConfiguration yaml = new YamlConfiguration();
+        try {
+            yaml.loadFromString(data);
+        } catch (InvalidConfigurationException e) {
+            e.printStackTrace();
+            return;
+        }
+        PersistentDataContainer dataPdc = item.getItemMeta().getPersistentDataContainer();
+        for (String key : yaml.getKeys(false)) {
+            dataPdc.set(new NamespacedKey(_main, key), PersistentDataType.STRING, yaml.getString(key));
+        }
+        ItemMeta meta = item.getItemMeta();
+        item.setItemMeta(meta);
+    }
+
+    private static String getCustomPDC(ItemStack item)
+    {
+        PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
+        YamlConfiguration yaml = new YamlConfiguration();
+        data.getKeys().forEach(key -> {
+            debugp("FBUG4 "+key.value());
+            try {
+                yaml.set(key.getKey(), data.get(key, PersistentDataType.STRING));
+            } catch (IllegalArgumentException e1) {
+                try {
+                    yaml.set(key.getKey(), data.get(key, PersistentDataType.INTEGER));
+                } catch (IllegalArgumentException e2) {
+                    // Ajoutez d'autres types si nécessaire
+                }
+            }
+        });
+        return yaml.saveToString();
+    }
+
     private static String getName(ItemStack item){
         if(!item.hasItemMeta()) return null;
         if(!item.getItemMeta().hasDisplayName()) return null;

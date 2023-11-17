@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.player.intendant.menu.MenuChoixNation.OpenChoixNation;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class IntendantCommand implements CommandExecutor {
 
@@ -42,17 +43,14 @@ public class IntendantCommand implements CommandExecutor {
             }
             if(p != null)
             {
-                MenuIntendant.OpenIntendant(main, p);
-                /*
-                debugp(p.getName() + PermissionUtilities.hasPermission(p, "fireland.nation.change") + !p.isOp());
-                if(PermissionUtilities.hasPermission(p, "fireland.nation.change") && !p.isOp())
+                if(getPlayerLevel(p.getUniqueId()).canChange())
                 {
                     OpenChoixNation(main, p);
                 }
                 else
                 {
                     MenuIntendant.OpenIntendant(main, p);
-                }*/
+                }
             }
         }
         return false;

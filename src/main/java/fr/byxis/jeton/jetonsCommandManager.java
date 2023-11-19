@@ -50,10 +50,10 @@ public class jetonsCommandManager extends JetonManager implements Listener, Comm
             }
             else if(args.length == 1)
             {
-                UUID uuid = BasicUtilities.getUuid(args[2]);
+                UUID uuid = BasicUtilities.getUuid(args[0]);
                 if(uuid != null)
                 {
-                    sender.sendMessage("§a"+args[2]+" possède §d"+getJetonsPlayer(uuid)+"§a jetons !");
+                    sender.sendMessage("§a"+args[0]+" possède §d"+getJetonsPlayer(uuid)+"§a jetons !");
                 }
                 else
                 {

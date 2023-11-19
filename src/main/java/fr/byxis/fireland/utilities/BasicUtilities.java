@@ -2,30 +2,82 @@ package fr.byxis.fireland.utilities;
 
 import org.apache.commons.io.IOUtils;
 import org.bukkit.*;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class BasicUtilities {
 
     public static String getStringTime(long durationInMillis)
     {
-        long second = (durationInMillis / 1000) % 60;
+        long second = 1000;
+        long minute = 60 * second;
+        long hour = 60 * minute;
+        long day = 24 * hour;
+        long month = 30 * day;
+        long year = 12 * month;
+
+        String[] units = {"année", "mois", "jour", "heure", "minute", "seconde"};
+        long[] times = {year, month, day, hour, minute, second};
+
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+
+        for (int i = 0; i < times.length; i++) {
+            if (durationInMillis >= times[i]) {
+                long num = durationInMillis / times[i];
+                durationInMillis %= times[i];
+                if (num > 0) {
+                    sb.append(num).append(units[i]);
+                    if (num > 1 && !units[i].equals("mois")) {
+                        sb.append("s");
+                    }
+                    sb.append(", ");
+                    if (++count == 3) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!sb.isEmpty()) {
+            sb.setLength(sb.length() - 2);
+        }
+
+        return sb.toString();
+        /*long second = (durationInMillis / 1000) % 60;
         long minute = (durationInMillis / (1000 * 60)) % 60;
         long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
-
-        return String.format("%02dh%02dmin%02ds", hour, minute, second);
+        long day = (durationInMillis / (1000 * 60 * 60*24)%30);
+        long month = (durationInMillis / (1000L * 60 * 60*24*30)%364);
+        long year = (durationInMillis / (1000L * 60 * 60*24*30*364));
+        if(year > 0)
+        {
+            return String.format("%2dan(s), %2dmois, %2djour(s).", year, month, day);
+        }
+        if(month > 0)
+        {
+            return String.format("%2dmois, %2djour(s), %2dheure(s)", month, day, hour);
+        }
+        if(day > 0)
+        {
+            return String.format("%2djour(s), %2dheure(s), %2dminute(s)", day, hour, minute);
+        }
+        else if(hour > 0)
+        {
+            return String.format("%2dheure(s), %2dminute(s) et %2dseconde(s).", year, hour, minute);
+        }
+        else if(minute > 0)
+        {
+            return String.format("%2dminute(s) et %2dseconde(s).", minute, second);
+        }
+        return String.format("%2dseconde(s).", second);*/
     }
 
     public static UUID getUuid(String name) {
@@ -52,77 +104,12 @@ public class BasicUtilities {
 
         return null;
     }
-    public static void playSound(Player p, String sound)
-    {
-        p.playSound(p.getLocation(), sound, 1, 1);
-    }
 
-    public static void playWorldSound(String worldName, Location loc, String sound, SoundCategory category, float vol, float pitch)
-    {
-        World world = Bukkit.getWorld(worldName);
-        if (world != null) {
-            world.playSound(loc, "minecraft:"+sound, category, vol, pitch);
-        }
-    }
-
-    public static void playPlayerSound(Player p, String sound, SoundCategory category, float vol, float pitch)
-    {
-        if (p != null) {
-            p.playSound(p.getLocation(), "minecraft:"+sound, category, vol, pitch);
-        }
-    }
-
-    public static void playPlayersSound(List<Player> players, String sound, SoundCategory category, float vol, float pitch)
-    {
-        if(players == null)
-        {
-            return;
-        }
-        for(Player p : players)
-        {
-            p.playSound(p.getLocation(), "minecraft:"+sound, category, vol, pitch);
-        }
-    }
-
-    public static void sendMessageToAdmin(String msg) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if(p.hasPermission("group.admin"))
-            {
-                p.sendMessage(msg);
-            }
-        }
-    }
-    public static void sendPlayerInformation(Player p, String msg)
-    {
-        if(p == null)
-        {
-            return;
-        }
-        p.sendMessage("§6§lFireland§8§l >> §7"+msg);
-    }
-    public static void sendPlayerError(Player p, String msg)
-    {
-        if(p == null)
-        {
-            return;
-        }
-        p.sendMessage("§6§lFireland§8§l >> §c"+msg);
-    }
     public static int generateInt(int borneInf, int borneSup){
         Random random = new Random();
         int nb;
         nb = borneInf+random.nextInt(borneSup-borneInf);
         return nb;
-    }
-
-    public static ItemStack GetHead(UUID uuid, String name)
-    {
-        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-        SkullMeta headMeta = (SkullMeta) head.getItemMeta();
-        headMeta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
-        headMeta.setDisplayName(name);
-        head.setItemMeta(headMeta);
-        return head;
     }
 
     public static List<String> listMaker(String str1, String str2, String str3, String str4){
@@ -181,4 +168,5 @@ public class BasicUtilities {
         return "§7";
 
     }
+
 }

@@ -1,6 +1,5 @@
 package fr.byxis.event;
 
-import fr.byxis.fireland.ConfigManager;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Bukkit;
@@ -31,107 +30,49 @@ public class menu implements Listener,CommandExecutor {
     }
 
     private void setItems(Inventory inv) {
-        ItemStack blueGlass = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
-        ItemMeta modifiedBlueGlass = blueGlass.getItemMeta();
-        modifiedBlueGlass.setDisplayName(" ");
-        blueGlass.setItemMeta(modifiedBlueGlass);
-        
-        ItemStack limeGlass = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
-        ItemMeta modifiedLimeGlass = limeGlass.getItemMeta();
-        modifiedLimeGlass.setDisplayName(" ");
-        limeGlass.setItemMeta(modifiedLimeGlass);
-        
-        ItemStack greenGlass = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
-        ItemMeta modifiedGreenGlass = greenGlass.getItemMeta();
-        modifiedGreenGlass.setDisplayName("Héliport");
-        greenGlass.setItemMeta(modifiedGreenGlass);
-        
-        ItemStack centreVille = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+        ItemStack centreVille = new ItemStack(Material.WHEAT_SEEDS);
         ItemMeta modifiedCentreVille = centreVille.getItemMeta();
+        modifiedCentreVille.setCustomModelData(200);
         modifiedCentreVille.setDisplayName("§lCentre-Ville");
         ArrayList<String> lore = new ArrayList<String>();
         lore.add("§eCoût de la téléportation : "+main.getConfig().getInt("heliport.centreville.price")+"$");
         modifiedCentreVille.setLore(lore);
         centreVille.setItemMeta(modifiedCentreVille);
+        inv.setItem(11, centreVille);
+        inv.setItem(12, centreVille);
         
-        ItemStack zoneNordEst = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+        ItemStack zoneNordEst = new ItemStack(Material.WHEAT_SEEDS);
 		ItemMeta modifiedzoneNordEst = zoneNordEst.getItemMeta();
+        modifiedzoneNordEst.setCustomModelData(200);
 		modifiedzoneNordEst.setDisplayName("§lZone Nord-Est");
 		lore = new ArrayList<String>();
 		lore.add("§eCoût de la téléportation : "+main.getConfig().getInt("heliport.zonene.price")+"$");
 		modifiedzoneNordEst.setLore(lore);
 		zoneNordEst.setItemMeta(modifiedzoneNordEst);
+        inv.setItem(14, zoneNordEst);
+        inv.setItem(15, zoneNordEst);
 		
-		ItemStack zoneSud = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+		ItemStack zoneSud = new ItemStack(Material.WHEAT_SEEDS);
 		ItemMeta modifiedzoneSud = zoneNordEst.getItemMeta();
+        modifiedzoneSud.setCustomModelData(200);
 		modifiedzoneSud.setDisplayName("§lZone Sud");
 		lore = new ArrayList<String>();
 		lore.add("§eCoût de la téléportation : "+main.getConfig().getInt("heliport.zones.price")+"$");
 		modifiedzoneSud.setLore(lore);
 		zoneSud.setItemMeta(modifiedzoneSud);
+        inv.setItem(48, zoneSud);
+        inv.setItem(49, zoneSud);
 		
-		ItemStack zoneMili = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+		ItemStack zoneMili = new ItemStack(Material.WHEAT_SEEDS);
 		ItemMeta modifiedzoneMili = zoneNordEst.getItemMeta();
+        modifiedzoneMili.setCustomModelData(200);
 		modifiedzoneMili.setDisplayName("§lBase Militaire");
 		lore = new ArrayList<String>();
 		lore.add("§eCoût de la téléportation : "+main.getConfig().getInt("heliport.zonemilli.price")+"$");
 		modifiedzoneMili.setLore(lore);
 		zoneMili.setItemMeta(modifiedzoneMili);
-        
-        inv.setItem(0, blueGlass);
-        inv.setItem(1, blueGlass);
-        inv.setItem(2, limeGlass);
-        inv.setItem(3, limeGlass);
-        inv.setItem(4, blueGlass);
-        inv.setItem(5, blueGlass);
-        inv.setItem(6, limeGlass);
-        inv.setItem(7, limeGlass);
-        inv.setItem(8, blueGlass);
-        inv.setItem(9, blueGlass);
-        inv.setItem(10, limeGlass);
-        inv.setItem(11, centreVille);
-        inv.setItem(12, limeGlass);
-        inv.setItem(13, limeGlass);
-        inv.setItem(14, limeGlass);
-        inv.setItem(15, zoneNordEst);
-        inv.setItem(16, blueGlass);
-        inv.setItem(17, blueGlass);
-        inv.setItem(18, blueGlass);
-        inv.setItem(19, limeGlass);
-        inv.setItem(20, limeGlass);
-        inv.setItem(21, limeGlass);
-        inv.setItem(22, limeGlass);
-        inv.setItem(23, limeGlass);
-        inv.setItem(24, limeGlass);
-        inv.setItem(25, blueGlass);
-        inv.setItem(26, blueGlass);
-        inv.setItem(27, blueGlass);
-        inv.setItem(28, blueGlass);
-        inv.setItem(29, limeGlass);
-        inv.setItem(30, limeGlass);
-        inv.setItem(31, limeGlass);
-        inv.setItem(32, limeGlass);
-        inv.setItem(33, limeGlass);
-        inv.setItem(34, blueGlass);
-        inv.setItem(35, blueGlass);
-        inv.setItem(36, limeGlass);
-        inv.setItem(37, blueGlass);
-        inv.setItem(38, limeGlass);
-        inv.setItem(39, limeGlass);
-        inv.setItem(40, zoneSud);
-        inv.setItem(41, limeGlass);
-        inv.setItem(42, limeGlass);
-        inv.setItem(43, blueGlass);
-        inv.setItem(44, zoneMili);
-        inv.setItem(45, blueGlass);
-        inv.setItem(46, blueGlass);
-        inv.setItem(47, limeGlass);
-        inv.setItem(48, limeGlass);
-        inv.setItem(49, limeGlass);
-        inv.setItem(50, blueGlass);
-        inv.setItem(51, blueGlass);
-        inv.setItem(52, blueGlass);
-        inv.setItem(53, blueGlass);
+        inv.setItem(51, zoneMili);
+        inv.setItem(52, zoneMili);
     }
     
     @Override
@@ -139,7 +80,8 @@ public class menu implements Listener,CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player)sender;
             if (cmd.getName().equalsIgnoreCase("menu") || cmd.getName().equalsIgnoreCase("heliport")) {
-                Inventory inv = Bukkit.createInventory(null, 54, "Héliport");
+                //"\uD83E\uDED4"
+                Inventory inv = Bukkit.createInventory(null, 54, "§f\uD83C\uDFA0");
                 setItems(inv);
                 player.openInventory(inv);
                 return true;
@@ -162,7 +104,7 @@ public class menu implements Listener,CommandExecutor {
         Location zoneMilli = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.zonemilli.x"), main.getConfig().getDouble("heliport.zonemilli.y"), main.getConfig().getDouble("heliport.zonemilli.z"));
         //553.5D, 76.0D, 704.5D
         if (current != null) {
-        	if(e.getView().getTitle().equalsIgnoreCase("Héliport"))
+        	if(e.getView().getTitle().equalsIgnoreCase("§f\uD83C\uDFA0"))
         	{
         		switch(current.getItemMeta().getDisplayName())
         		{
@@ -187,27 +129,59 @@ public class menu implements Listener,CommandExecutor {
     
     private void TeleportPlayer(Player player, ItemStack current, Location loc, int price)
     {
-    	if(player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)
+    	if((player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) && !main.hashMapManager.isTeleporting(player.getUniqueId()))
     	{
-            InGameUtilities.teleportPlayer(player, loc, 0, "", main);
+            InGameUtilities.teleportPlayer(player, loc, 0, "");
     	}
-    	else if(main.eco.hasAccount(player)) {
+    	else if(main.eco.hasAccount(player) && !main.hashMapManager.isTeleporting(player.getUniqueId())) {
         	if(main.eco.getBalance(player) >= price) {
-        		ConfigManager config = main.cfgm;
         		player.closeInventory();
         		player.sendMessage("§8La téléportation commence, veuillez ne pas bougez.");
-        		config.getPlayerDB().set("mouvement."+player.getUniqueId()+".time", 10);
-        		config.savePlayerDB();
-                if(InGameUtilities.teleportPlayer(player, loc, 15, "gun.hud.helico", main))
-                {
-                    player.sendMessage("§7Vous avez payé "+price+"$");
-                    main.eco.withdrawPlayer(player, price);
-                }
+                teleportPlayer(player, loc, 15, "gun.hub.helico", main, price);
 
         	}else{
         		player.sendMessage("§8Vous n'avez pas assez d'argent !");
         		player.closeInventory();
         	}
         }
+    }
+
+    public void teleportPlayer(Player player, Location loc, int duration, String sound, Fireland main, int price)
+    {
+        player.playSound(player.getLocation(), "minecraft:"+sound, (float) 0.1, (float) 1);
+        main.hashMapManager.addTeleporting(player.getUniqueId());
+
+        new BukkitRunnable() {
+            private int i = -1;
+
+            @Override
+            public void run() {
+                i++;
+                if(InGameUtilities.getPlayerMoving(player)){
+                    InGameUtilities.sendPlayerError(player,"Téléportation annulée !");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound "+player.getName()+" * minecraft:"+sound);
+                    main.hashMapManager.removeTeleporting(player.getUniqueId());
+                    cancel();
+                }
+                else
+                {
+                    if((i%5 == 0 && i != duration) || i == duration-3 ||i  == duration-2 || i  == duration-1)
+                    {
+                        InGameUtilities.sendPlayerInformation(player,"Téléportation dans " +(duration-i)+" secondes");
+                    }
+                    if(i == duration)
+                    {
+                        InGameUtilities.sendPlayerInformation(player,"Téléportation...");
+                        player.teleport(loc);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
+                        player.sendMessage("§7Vous avez payé "+price+"$");
+                        main.eco.withdrawPlayer(player, price);
+                        main.hashMapManager.removeTeleporting(player.getUniqueId());
+                        cancel();
+                    }
+                }
+
+            }
+        }.runTaskTimer(main, 0L, 20L);
     }
 }

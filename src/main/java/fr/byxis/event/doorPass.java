@@ -1,8 +1,12 @@
 package fr.byxis.event;
 
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.player.pvpmanager.PvPManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
@@ -12,17 +16,26 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+
 public class doorPass implements Listener {
 	
 	private Fireland main;
 
 	public doorPass(Fireland main) {
 		this.main = main;
+		canAcces = new ArrayList<>();
 	}
 	
 	private void openDoor(Player p, Location door, BlockState blockState, Openable openable, int time)
 	{
 		openable.setOpen(true);
+		InGameUtilities.playWorldSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, SoundCategory.PLAYERS, 1, 1f);
 
 		blockState.setBlockData(openable);
 		blockState.update();
@@ -30,6 +43,8 @@ public class doorPass implements Listener {
 			
 			@Override
 			public void run() {
+				InGameUtilities.playWorldSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, SoundCategory.PLAYERS, 1, 1f);
+
 				openable.setOpen(false);
 				blockState.setBlockData(openable);
 				blockState.update();
@@ -40,48 +55,51 @@ public class doorPass implements Listener {
 	@SuppressWarnings("deprecation")
 	private Location getDoorLocation(Location init)
 	{
-		Location block = null;
+		ArrayList<Location> blocks = new ArrayList<>();
 		
 		if(!(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()-1).getBlock().isPassable()))
 		{
-			block = new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()-1);
+			blocks.add(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()-1));
 		}
-		else if(!(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()+1).getBlock().isPassable()))
+		if(!(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()+1).getBlock().isPassable()))
 		{
-			block = new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()+1);
+			blocks.add(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()+1));
 		}
-		else if(!(new Location(init.getWorld(), init.getX()+1, init.getY(), init.getZ()).getBlock().isPassable()))
+		if(!(new Location(init.getWorld(), init.getX()+1, init.getY(), init.getZ()).getBlock().isPassable()))
 		{
-			block = new Location(init.getWorld(), init.getX()+1, init.getY(), init.getZ());
+			blocks.add(new Location(init.getWorld(), init.getX()+1, init.getY(), init.getZ()));
 		}
-		else if(!(new Location(init.getWorld(), init.getX()-1, init.getY(), init.getZ()).getBlock().isPassable()))
+		if(!(new Location(init.getWorld(), init.getX()-1, init.getY(), init.getZ()).getBlock().isPassable()))
 		{
-			block = new Location(init.getWorld(), init.getX()-1, init.getY(), init.getZ());
+			blocks.add(new Location(init.getWorld(), init.getX()-1, init.getY(), init.getZ()));
 		}
-		
-		if(block != null)
+		if(!blocks.isEmpty())
 		{
 			Location result = null;
-			if(new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()-1).getBlock().getType() == Material.LEGACY_IRON_DOOR_BLOCK || new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()-1).getBlock().getType() == Material.IRON_DOOR)
+			for(Location block : blocks)
 			{
-				result = new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()-1);
+				if(new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()-1).getBlock().getType() == Material.LEGACY_IRON_DOOR_BLOCK || new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()-1).getBlock().getType() == Material.IRON_DOOR)
+				{
+					result = new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()-1);
+				}
+				else if(new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()+1).getBlock().getType() == Material.LEGACY_IRON_DOOR_BLOCK || new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()+1).getBlock().getType() == Material.IRON_DOOR)
+				{
+					result = new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()+1);
+				}
+				else if(new Location(block.getWorld(), block.getX()+1, block.getY(), block.getZ()).getBlock().getType() == Material.LEGACY_IRON_DOOR_BLOCK || new Location(block.getWorld(), block.getX()+1, block.getY(), block.getZ()).getBlock().getType() == Material.IRON_DOOR)
+				{
+					result = new Location(block.getWorld(), block.getX()+1, block.getY(), block.getZ());
+				}
+				else if(new Location(block.getWorld(), block.getX()-1, block.getY(), block.getZ()).getBlock().getType() == Material.LEGACY_IRON_DOOR_BLOCK || new Location(block.getWorld(), block.getX()-1, block.getY(), block.getZ()).getBlock().getType() == Material.IRON_DOOR)
+				{
+					result = new Location(block.getWorld(), block.getX()-1, block.getY(), block.getZ());
+				}
+				if(result != null)
+				{
+					break;
+				}
 			}
-			else if(new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()+1).getBlock().getType() == Material.LEGACY_IRON_DOOR_BLOCK || new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()+1).getBlock().getType() == Material.IRON_DOOR)
-			{
-				result = new Location(block.getWorld(), block.getX(), block.getY(), block.getZ()+1);
-			}
-			else if(new Location(block.getWorld(), block.getX()+1, block.getY(), block.getZ()).getBlock().getType() == Material.LEGACY_IRON_DOOR_BLOCK || new Location(block.getWorld(), block.getX()+1, block.getY(), block.getZ()).getBlock().getType() == Material.IRON_DOOR)
-			{
-				result = new Location(block.getWorld(), block.getX()+1, block.getY(), block.getZ());
-			}
-			else if(new Location(block.getWorld(), block.getX()-1, block.getY(), block.getZ()).getBlock().getType() == Material.LEGACY_IRON_DOOR_BLOCK || new Location(block.getWorld(), block.getX()-1, block.getY(), block.getZ()).getBlock().getType() == Material.IRON_DOOR)
-			{
-				result = new Location(block.getWorld(), block.getX()-1, block.getY(), block.getZ());
-			}
-			if(result != null)
-			{
-				return result;
-			}
+			return result;
 		}
 		
 		
@@ -113,14 +131,28 @@ public class doorPass implements Listener {
 		return result;
 	}
 
+	private ArrayList<UUID> canAcces;
+
 	@SuppressWarnings({"deprecation" })
 	@EventHandler
 	public void playerInteract(PlayerInteractEvent e) {
-		
+
+		if(!e.getPlayer().getWorld().getName().equalsIgnoreCase("world"))
+			return;
 		
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			Player p = e.getPlayer();
-			
+			if(canAcces.contains(p.getUniqueId()))
+			{
+				return;
+			}
+			canAcces.add(p.getUniqueId());
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					canAcces.remove(p.getUniqueId());
+				}
+			}.runTaskLater(main, 20);
 			int passTime = main.getConfig().getInt("time.doorpass");
 			int handTime = main.getConfig().getInt("time.handpass");
 			
@@ -195,21 +227,15 @@ public class doorPass implements Listener {
 					Location door = getDoorLocation(e.getClickedBlock().getLocation());
 	                if(door != null)
 	                {
-						if(main.hashMapManager.getRangMap().get(p.getUniqueId()).getRang() <= 25)
+						if(PvPManager.isOnTimer(p))
 						{
-							e.getPlayer().sendMessage("§4L'accès à cette zone vous a été refusé en raison de vos actes criminels.");
+							e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
+							InGameUtilities.sendPlayerError(p, "L'accès à cette zone vous a été refusé car vous êtes en combat.");
 						}
-	                	/*else if(main.cfgm.getPlayerDB().getBoolean("discretion."+p.getUniqueId()+".hasKilled"))
-	                	{
-	                		e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
-	                		e.getPlayer().sendMessage("§cL'accès vous a été refusé ! Vous avez tué un joueur il y a moins de 5 minutes !");
-	                	}
-
-	                	 */
 	                	else if(main.cfgm.getPlayerDB().getBoolean("infected."+p.getUniqueId()+".state"))
 	                	{
 	                		e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
-	                		e.getPlayer().sendMessage("§cL'accès vous a été refusé ! Vous êtes infecté !");
+							InGameUtilities.sendPlayerError(p, "L'accès à cette zone vous a été refusé car vous êtes infecté.");
 	                	}
 	                	else
 	                	{

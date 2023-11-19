@@ -1,5 +1,5 @@
 name: Fireland
-version: '4.0-SNAPSHOT2'
+version: '4.0-SNAPSHOT3'
 main: fr.byxis.fireland.Fireland
 api-version: 1.19
 author: Byxis
@@ -9,6 +9,9 @@ depend:
   - WGRegionEvents
   - WorldGuard
 commands:
+  fireland:
+    description: Permet de gerer le plugin
+    permission: fireland.admin
   speedfly:
     description: Permet de changer la vitesse de vol
     permission: fireland.command.flyspeed
@@ -54,8 +57,10 @@ commands:
     description: renvoie le discord officiel de Fireland
   jeton:
     description: commandes pour les jetons
-    permission: fireland.command.jeton
     aliases: [ jt, jetons ]
+  facture:
+    description: commandes pour les factures
+    permission: fireland.command.facture
   rang:
     description: commandes pour les rangs
     aliases: [rangs]
@@ -74,3 +79,20 @@ commands:
   backpack:
     description: donne un sac a dos
     permission: fireland.command.backpack
+  essaim:
+    description: commande pour l essaim
+    permission: fireland.command.essaim
+  fnote:
+    description: permet de modifier les notes
+    permission: fireland.command.notes
+  rank:
+    description: permet de modifier les messages de rangs
+    permission: fireland.admin
+  bunker:
+    description: permet de rejoindre les bunkers
+  level:
+    description: commande pour les levels
+    aliases: [lvl]
+  frestart:
+    description: commande pour redemarrer le serveur
+    aliases: [restart, frs, rs]

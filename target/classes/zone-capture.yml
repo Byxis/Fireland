@@ -1,0 +1,14 @@
+zone:
+  port-principal: #pour World Guard : zonecapture-portprincipal1,zonecapture-portprincipal2,...
+    world: "essaim"
+    x: 37
+    y: -61
+    z: -23
+    teleportation-price: 500
+    privation-duration: 1 #En heure
+    auto-release: 168 #En heure, 168 = 7j
+    daily-gain: 500
+    capture-time: 5 #En minutes
+    final-gain:
+      dollars: 0
+      jetons: 50

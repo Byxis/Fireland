@@ -1,10 +1,12 @@
 package fr.byxis.event;
 
 import fr.byxis.fireland.Fireland;
-import fr.byxis.karma.karmaManager;
+import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.player.karma.karmaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,7 +50,7 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 	
 	private Fireland main;
 	
-	public shop(Fireland main) {
+	public @Deprecated shop(Fireland main) {
 		this.main = main;
 	}
 
@@ -561,7 +563,7 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 					float totalSell = (float) (num*sell);
 					main.eco.depositPlayer(p, num);
 					p.sendMessage("§7Vous avez vendu "+name+"§ax"+num+"§7 pour "+totalSell+"$ !");
-					p.playSound(p.getLocation(), "minecraft:gun.hud.money_pickup", (float) 0.1, 1);
+					InGameUtilities.playPlayerSound(p, "gun.hud.money_pickup", SoundCategory.AMBIENT, 1, 1);
 
 					sellItemKarma(p.getUniqueId());
 
@@ -579,7 +581,7 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 							s.setAmount(s.getAmount() -1);
 							main.eco.depositPlayer(p, sell);
 							p.sendMessage("§7Vous avez vendu "+name+" pour "+sell+"$ !");
-							p.playSound(p.getLocation(), "minecraft:gun.hud.money_pickup", (float) 0.1, 1);
+							InGameUtilities.playPlayerSound(p, "gun.hud.money_pickup", SoundCategory.AMBIENT, 1, 1);
 
 							sellItemKarma(p.getUniqueId());
 
@@ -591,7 +593,7 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
 							s.setAmount(s.getAmount() -1);
 							main.eco.depositPlayer(p, sell);
 							p.sendMessage("§7Vous avez vendu "+name+" pour "+sell+"$ !");
-							p.playSound(p.getLocation(), "minecraft:gun.hud.money_pickup", (float) 0.1, 1);
+							InGameUtilities.playPlayerSound(p, "gun.hud.money_pickup", SoundCategory.AMBIENT, 1, 1);
 
 							sellItemKarma(p.getUniqueId());
 

@@ -3,6 +3,7 @@ package fr.byxis.event;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockSpreadEvent;
 
 public class worldGeneration implements Listener {
@@ -14,5 +15,13 @@ public class worldGeneration implements Listener {
 			return;
 		}
 	}
-	
+
+	@EventHandler
+	public void onCoralDead(BlockFadeEvent e)
+	{
+		if(e.getBlock().getType().toString().contains("CORAL"))
+		{
+			e.setCancelled(true);
+		}
+	}
 }

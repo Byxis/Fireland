@@ -45,31 +45,37 @@ public class LevelSavings {
 
     public int getCurrentMaxKills()
     {
-        if(m_kills < 20)
-            return 20;
-        if(m_kills < 60)
+        if(m_kills <= 0)
+            return 1;
+        else if(m_kills < 60)
             return 60;
-        if(m_kills <150)
+        else if(m_kills <150)
             return 150;
+        else if(m_kills < 300)
+            return 300;
         return -1;
     }
 
     public int getKillsRank()
     {
-        if(m_kills < 60)
+        if(m_kills <= 0)
+            return 0;
+        else if(m_kills < 60)
             return 1;
-        if(m_kills <150)
+        else if(m_kills <150)
             return 2;
-        return 0;
+        else if(m_kills < 300)
+            return 3;
+        return 4;
     }
 
     public void addKills(int _amount) {
         int old = getCurrentMaxKills();
         m_zombieKills += _amount;
-        if(
-                getCurrentMaxKills() > old
-                        &&
-                        getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Bannis)
+        if(getCurrentMaxKills() > old
+                &&
+           getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Bannis)
+                && getCurrentMaxKills() != -1
         )
         {
             getPlayerLevel(m_uuid).setRang(getKillsRank());
@@ -81,31 +87,37 @@ public class LevelSavings {
     }
     public int getCurrentMaxZombieKills()
     {
-        if(m_zombieKills < 600)
-            return 600;
-        if(m_zombieKills < 1500)
+        if(m_zombieKills <= 0)
+            return 1;
+        else if(m_zombieKills < 1500)
             return 1500;
-        if(m_zombieKills <5000)
+        else if(m_zombieKills < 5000)
             return 5000;
+        else if(m_zombieKills < 10000)
+            return 10000;
         return -1;
     }
 
     public int getZombieKillsRank()
     {
-        if(m_zombieKills < 1500)
+        if(m_zombieKills <= 0)
+            return 0;
+        else if(m_zombieKills < 600)
             return 1;
-        if(m_zombieKills <5000)
+        else if(m_zombieKills <1500)
             return 2;
-        return 0;
+        else if(m_zombieKills < 3000)
+            return 3;
+        return 4;
     }
 
     public void addZombieKills(int _amount) {
         int old = getCurrentMaxZombieKills();
         m_zombieKills += _amount;
-        if(
-                getCurrentMaxZombieKills() > old
-                        &&
-                getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Etat)
+        if(getCurrentMaxZombieKills() > old
+                &&
+           getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Etat)
+                && getCurrentMaxZombieKills() != -1
         )
         {
             getPlayerLevel(m_uuid).setRang(getZombieKillsRank());

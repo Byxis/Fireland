@@ -347,7 +347,7 @@ public class ShopFunction {
                     }
                     else
                     {
-                        if(command.contains("wm give"))
+                        if(command.contains("wm give") || command.contains("wmp give"))
                         {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
                         }
@@ -412,7 +412,7 @@ public class ShopFunction {
         {
             double sell = item.sell;
 
-            if(_isShiftClicked && !item.command.contains("wm give"))
+            if(_isShiftClicked && !(item.command.contains("wm give") || item.command.contains("wmp give")))
             {
                 int nbr = 0;
                 for(ItemStack itemInv : getPlayerContent(_p))

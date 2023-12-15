@@ -87,7 +87,13 @@ public class ZombieDetection implements Listener {
 	public void playerEquip(PlayerArmorChangeEvent e)
 	{
 		Player p = e.getPlayer();
-		main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).setUsingCamo(isCamo(p));
+		if(HashMapManager.getDiscretionMap().containsKey(p.getUniqueId()))
+			HashMapManager.getDiscretionMap().get(p.getUniqueId()).setUsingCamo(isCamo(p));
+		else
+		{
+			HashMapManager.addDiscretionMap(p.getUniqueId());
+			HashMapManager.getDiscretionMap().get(p.getUniqueId()).setUsingCamo(isCamo(p));
+		}
 	}
 
 	@EventHandler

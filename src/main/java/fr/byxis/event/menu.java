@@ -31,6 +31,7 @@ public class menu implements Listener,CommandExecutor {
 
     private void setItems(Inventory inv) {
         ItemStack centreVille = new ItemStack(Material.WHEAT_SEEDS);
+
         ItemMeta modifiedCentreVille = centreVille.getItemMeta();
         modifiedCentreVille.setCustomModelData(200);
         modifiedCentreVille.setDisplayName("§lCentre-Ville");

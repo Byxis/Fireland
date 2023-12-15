@@ -1,5 +1,6 @@
 package fr.byxis.fireland.utilities;
 
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import fr.byxis.fireland.Fireland;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -8,6 +9,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -45,9 +47,66 @@ public class ItemSerializer {
         if(owner != null) builder.append(" owner:" + owner);
         int modeldata = getCustomData(item);
         builder.append(" custommodeldata:").append(modeldata);
+        PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
         builder.append(" persistentdatacontainer:").append(getCustomPDC(item));
+
+        // Ajout des nouvelles valeurs
+        NamespacedKey keyMaxDurability = new NamespacedKey("weaponmechanics", "max-durability");
+        NamespacedKey keyWeaponTitle = new NamespacedKey("weaponmechanics", "weapon-title");
+        NamespacedKey keyAmmoLeft = new NamespacedKey("weaponmechanics", "ammo-left");
+        NamespacedKey keyDurability = new NamespacedKey("weaponmechanics", "durability");
+        NamespacedKey keyFirearmActionState = new NamespacedKey("weaponmechanics", "firearm-action-state");
+        NamespacedKey keySelectiveFire = new NamespacedKey("weaponmechanics", "selective-fire");
+        NamespacedKey keyAttachments = new NamespacedKey("weaponmechanics", "attachments");
+        NamespacedKey keyDenyCrafting = new NamespacedKey("mechanicscore", "deny-crafting");
+
+        if (container.has(keyMaxDurability, PersistentDataType.INTEGER)) {
+            int maxDurability = container.get(keyMaxDurability, PersistentDataType.INTEGER);
+            builder.append(" publicbukkitvalues:max-durability:").append(maxDurability);
+        }
+        if (container.has(keyWeaponTitle, PersistentDataType.STRING)) {
+            String weaponTitle = container.get(keyWeaponTitle, PersistentDataType.STRING);
+            builder.append(" publicbukkitvalues:weapon-title:").append(weaponTitle);
+        }
+        if (container.has(keyAmmoLeft, PersistentDataType.INTEGER)) {
+            int ammoLeft = container.get(keyAmmoLeft, PersistentDataType.INTEGER);
+            builder.append(" publicbukkitvalues:ammo-left:").append(ammoLeft);
+        }
+        if (container.has(keyDurability, PersistentDataType.INTEGER)) {
+            int durability = container.get(keyDurability, PersistentDataType.INTEGER);
+            builder.append(" publicbukkitvalues:durability:").append(durability);
+        }
+        if (container.has(keyFirearmActionState, PersistentDataType.INTEGER)) {
+            int firearmActionState = container.get(keyFirearmActionState, PersistentDataType.INTEGER);
+            builder.append(" publicbukkitvalues:firearm-action-state:").append(firearmActionState);
+        }
+        if (container.has(keySelectiveFire, PersistentDataType.INTEGER)) {
+            int selectiveFire = container.get(keySelectiveFire, PersistentDataType.INTEGER);
+            builder.append(" publicbukkitvalues:selective-fire:").append(selectiveFire);
+        }
+        if (container.has(keyAttachments, PersistentDataType.STRING)) {
+            String attachments = container.get(keyAttachments, PersistentDataType.STRING);
+            builder.append(" publicbukkitvalues:attachments:").append(attachments);
+        }
+        if (container.has(keyDenyCrafting, PersistentDataType.INTEGER)) {
+            int denyCrafting = container.get(keyDenyCrafting, PersistentDataType.INTEGER);
+            builder.append(" publicbukkitvalues:deny-crafting:").append(denyCrafting);
+        }
+
         return builder.toString();
     }
+
+    public static String serializeNBT(ItemStack item)
+    {
+        return new NBTItem(item).toString();
+    }
+//
+//    public static ItemStack deserializeNBT(String str)
+//    {
+//        return NBTItem.convertNBTtoItemArray();
+//    }
+
+
     public static ItemStack deserialize(Fireland _main, String serializedItem){
         String[] strings = serializedItem.split(" ");
         Map<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();
@@ -91,6 +150,36 @@ public class ItemSerializer {
                 setCustomPersistentData(_main, item, args[1]);
                 continue;
             }
+            if(args[0].equalsIgnoreCase("publicbukkitvalues")){
+                if(args.length < 3) {
+                    continue; // ou gérer l'erreur comme vous le souhaitez
+                }
+                String key = args[1];
+                String value = args[2];
+                NamespacedKey namespacedKey = new NamespacedKey("weaponmechanics", key);
+                PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+                switch (key) {
+                    case "max-durability":
+                    case "ammo-left":
+                    case "durability":
+                    case "firearm-action-state":
+                    case "selective-fire":
+                        container.set(namespacedKey, PersistentDataType.INTEGER, Integer.parseInt(value));
+                        break;
+                    case "weapon-title":
+                    case "attachments":
+                        container.set(namespacedKey, PersistentDataType.STRING, value);
+                        break;
+                    case "deny-crafting":
+                        NamespacedKey denyCraftingKey = new NamespacedKey("mechanicscore", key);
+                        container.set(denyCraftingKey, PersistentDataType.INTEGER, Integer.parseInt(value));
+                        break;
+                    default:
+                        break;
+                }
+                continue;
+            }
+
             if(Enchantment.getByName(args[0].toUpperCase()) != null){
                 enchants.put(Enchantment.getByName(args[0].toUpperCase()), Integer.parseInt(args[1]));
                 continue;
@@ -99,6 +188,9 @@ public class ItemSerializer {
         item.addUnsafeEnchantments(enchants);
         return item.getType().equals(Material.AIR) ? null : item;
     }
+
+
+
     private static String getOwner(ItemStack item){
         if(!(item.getItemMeta() instanceof SkullMeta)) return null;
         return ((SkullMeta)item.getItemMeta()).getOwner();

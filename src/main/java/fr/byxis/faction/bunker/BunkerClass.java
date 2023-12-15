@@ -1,4 +1,4 @@
-package fr.byxis.faction.housing;
+package fr.byxis.faction.bunker;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -17,6 +17,8 @@ import com.sk89q.worldedit.session.ClipboardHolder;
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.player.level.LevelStorage;
+import fr.byxis.player.level.PlayerLevel;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,9 +32,11 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Set;
 
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 public class BunkerClass {
 
-    private static String m_name;
+    private final String m_name;
     private Location m_location;
     private int m_level;
     private String m_skin;
@@ -77,7 +81,7 @@ public class BunkerClass {
         }
     }
 
-    void Upgrade(Fireland _main)
+    void Upgrade()
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try {
@@ -132,27 +136,56 @@ public class BunkerClass {
             for(Player p : m_invitations.get(_p))
             {
                 InGameUtilities.sendPlayerError(p,"Vous avez quitté le bunker de "+m_name+" car la personne qui vous a invité est partie.");
-                p.teleport(m_playerInsideOldLocation.get(p));
-                m_playerInsideOldLocation.remove(p);
-                for(Player players : m_playerInsideOldLocation.keySet())
-                {
-                    InGameUtilities.sendPlayerError(players, "Le joueur "+p.getName()+" a quitté le bunker");
-                }
+                teleportBack(p, false);
             }
             m_invitations.removeAll(_p);
-            return;
         }
         else if(IsInvited(_p))
         {
             m_invitations.removeAll(_p);
         }
-        _p.teleport(m_playerInsideOldLocation.get(_p));
-        m_playerInsideOldLocation.remove(_p);
-        for(Player p : m_playerInsideOldLocation.keySet())
-        {
-            InGameUtilities.sendPlayerError(p, "Le joueur "+_p.getName()+" a quitté le bunker");
-        }
+        teleportBack(_p);
         InGameUtilities.sendPlayerError(_p,"Vous avez quitté le bunker de "+m_name);
+    }
+
+    private void teleportBack(Player p) {
+        if(m_playerInsideOldLocation.containsKey(p))
+        {
+            p.teleport(m_playerInsideOldLocation.get(p));
+            m_playerInsideOldLocation.remove(p);
+        }
+        else
+        {
+            PlayerLevel pl = getPlayerLevel(p.getUniqueId());
+            if(pl.getNation().equals(LevelStorage.Nation.Bannis))
+                p.teleport(new Location(Bukkit.getWorld("world"), 341.5, 72, -209.5));
+            else
+                p.teleport(new Location(Bukkit.getWorld("world"), -448.5, 65, -448.5));
+        }
+        for(Player players : m_playerInsideOldLocation.keySet())
+        {
+            InGameUtilities.sendPlayerError(players, "Le joueur "+p.getName()+" a quitté le bunker");
+        }
+    }
+
+    private void teleportBack(Player p, boolean doTpBackSpawn) {
+        if(m_playerInsideOldLocation.containsKey(p))
+        {
+            p.teleport(m_playerInsideOldLocation.get(p));
+            m_playerInsideOldLocation.remove(p);
+        }
+        else if(doTpBackSpawn)
+        {
+            PlayerLevel pl = getPlayerLevel(p.getUniqueId());
+            if(pl.getNation().equals(LevelStorage.Nation.Bannis))
+                p.teleport(new Location(Bukkit.getWorld("world"), 341.5, 72, -209.5));
+            else
+                p.teleport(new Location(Bukkit.getWorld("world"), -448.5, 65, -448.5));
+        }
+        for(Player players : m_playerInsideOldLocation.keySet())
+        {
+            InGameUtilities.sendPlayerError(players, "Le joueur "+p.getName()+" a quitté le bunker");
+        }
     }
 
     void Create()
@@ -270,8 +303,12 @@ public class BunkerClass {
     {
         return switch (m_level) {
             case 1,2,3,4,5,6 -> 0;
-            case 7 -> 800;
-            case 8, 9, 10, 11, 12 -> 1000;
+            case 7 -> 250;
+            case 8 -> 275;
+            case 9-> 300;
+            case 10-> 325;
+            case 11-> 350;
+            case 12 -> 375;
             default -> -1;
         };
     }
@@ -340,8 +377,8 @@ public class BunkerClass {
         return switch (m_level)
             {
                 case 0,1 -> 0;
-                case 2 -> 10;
-                default -> 32;
+                case 2 -> 32;
+                default -> 64;
             };
     }
 
@@ -395,8 +432,8 @@ public class BunkerClass {
         return switch (m_level)
         {
             case 0,1,2,3,4 -> 0;
-            case 5 -> 24;
-            default -> 48;
+            case 5 -> 32;
+            default -> 64;
         };
     }
 
@@ -450,8 +487,8 @@ public class BunkerClass {
         return switch (m_level)
         {
             case 0,1,2,3,4 -> 0;
-            case 5 -> 5;
-            default -> 15;
+            case 5 -> 10;
+            default -> 20;
         };
     }
 
@@ -611,7 +648,7 @@ public class BunkerClass {
         return switch (m_level)
         {
             case 0,1,2,3,4,5,6 -> 0;
-            default -> 6;
+            default -> 18;
         };
     }
 

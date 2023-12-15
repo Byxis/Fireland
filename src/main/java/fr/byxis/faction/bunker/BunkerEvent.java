@@ -1,4 +1,4 @@
-package fr.byxis.faction.housing;
+package fr.byxis.faction.bunker;
 
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.faction.faction.FactionInformation;
@@ -7,7 +7,6 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.jeton.JetonManager;
-import fr.byxis.jeton.jetonSql;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -16,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -117,7 +115,7 @@ public class BunkerEvent implements Listener {
                 {
                     if(bk.GetAmeliorationFactionLevel() <= infos.getCurrentUpgrade())
                     {
-                        if(infos.getCurrentMoney() > bk.GetAmeliorationPriceMoney())
+                        if(infos.getCurrentMoney() >= bk.GetAmeliorationPriceMoney())
                         {
                             if(JetonManager.getJetonsPlayer(p.getUniqueId()) >= bk.GetAmeliorationPriceJetons())
                             {
@@ -128,7 +126,7 @@ public class BunkerEvent implements Listener {
                                 }
                                 ff.sendFactionPlayer(infos.getName(), "Le bunker de votre faction a été amélioré !");
                                 ff.take(infos.getName(), bk.GetAmeliorationPriceMoney());
-                                bk.Upgrade(main);
+                                bk.Upgrade();
                             }
                             else
                             {

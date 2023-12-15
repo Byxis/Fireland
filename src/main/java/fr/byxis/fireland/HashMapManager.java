@@ -84,8 +84,8 @@ public class HashMapManager {
         return discretionMap;
     }
 
-    public void addDiscretionMap(UUID uuid) {
-        this.discretionMap.put(uuid, new DiscretionClass());
+    public static void addDiscretionMap(UUID uuid) {
+        discretionMap.put(uuid, new DiscretionClass());
     }
 
     public void removeDiscretionMap(UUID uuid) {

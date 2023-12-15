@@ -12,7 +12,6 @@ import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
 import fr.byxis.jeton.JetonManager;
 import fr.byxis.player.level.LevelStorage;
-import fr.byxis.player.level.PlayerLevel;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -23,9 +22,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 
 import static fr.byxis.faction.essaim.EssaimManager.DisableEssaim;
+import static fr.byxis.fireland.restart.RestartManager.IsServerRestartingSoon;
 import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.player.level.LevelStorage.addPlayerXp;
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class EssaimFunctions {
 
@@ -131,6 +130,11 @@ public class EssaimFunctions {
     public static void createGroup(String essaim, Player p) {
         if(isEssaimOpened(essaim))
         {
+            if(!PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.essaim.access."+essaim))
+            {
+                InGameUtilities.sendPlayerError(p, "Vous n'avez pas complété la quête requise ou n'avez pas l'extension DLC.");
+                return;
+            }
             if (isEssaimOccuped(essaim)) {
                 if(isPlayerInEssaim(essaim, p))
                 {
@@ -230,10 +234,11 @@ public class EssaimFunctions {
             {
                 if(ff.getFactionInfo(ff.playerFactionName(p)).getName().equalsIgnoreCase(ff.getFactionInfo(ff.playerFactionName(EssaimManager.groups.get(essaim).getLeader())).getName()))
                 {
-                    if(PermissionUtilities.hasPermission(p, "fireland.essaim.access."+essaim))
+                    if(PermissionUtilities.hasPermission(p.getUniqueId(),"fireland.essaim.access."+essaim))
                     {
                         InGameUtilities.sendPlayerInformation(p, "Vous êtes entré dans le groupe.");
-
+                        if(IsServerRestartingSoon())
+                            InGameUtilities.sendPlayerError(p, "Le serveur redémarre bientôt, lancer un essaim est fortement déconseillé.");
                         for(Player member : EssaimManager.groups.get(essaim).getMembers())
                         {
                             InGameUtilities.sendPlayerInformation(member, p.getName()+" a rejoint l'expédition.");
@@ -313,6 +318,8 @@ public class EssaimFunctions {
 
     private static void creationGroup(String essaim, Player p)
     {
+        if(IsServerRestartingSoon())
+            InGameUtilities.sendPlayerError(p, "Le serveur redémarre bientôt, lancer un essaim est fortement déconseillé.");
         main.essaimManager.resetEssaim(essaim);
         if (!EssaimManager.groups.containsKey(essaim)) {
             EssaimManager.groups.put(essaim, new EssaimGroup(essaim, p));
@@ -540,7 +547,7 @@ public class EssaimFunctions {
     {
         FactionInformation pInfo = ff.getFactionInfo(ff.playerFactionName(p));
         String color = pInfo.getColorcode();
-        if(EssaimManager.groups.get(essaimName).getLeader().getName().equals(p.getName()) ||forced )
+        if(EssaimManager.groups.get(essaimName).getLeader().getName().equals(p.getName()) || forced )
         {
             for(Player player : Bukkit.getOnlinePlayers())
             {

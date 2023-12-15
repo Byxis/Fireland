@@ -2,11 +2,8 @@ package fr.byxis.player.intendant.menu;
 
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.faction.faction.FactionPlayerInformation;
-import fr.byxis.faction.housing.BunkerClass;
-import fr.byxis.faction.zone.zoneclass.FactionZoneInformation;
+import fr.byxis.faction.bunker.BunkerClass;
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.utilities.BasicUtilities;
-import fr.byxis.fireland.utilities.BlockUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Bukkit;
@@ -42,14 +39,14 @@ public class MenuBunker {
 
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
-        if (bk != null && pInfos.getRole() == 2) {
+        if (bk != null && pInfos.getRole() == 2 && bk.GetName().equalsIgnoreCase(pInfos.getFactionName())) {
             inv.setItem(10, InventoryUtilities.setItemMeta(Material.BARRIER, "§cQuitter le Bunker", (short) 0));
             List<String> lore = new ArrayList<String>();
             lore.add("§r§8Prix : §6" + bk.GetAmeliorationPriceMoney() + "§r§f$§8 et §b" + bk.GetAmeliorationPriceJetons() + "§f\u26c1");
             inv.setItem(12, InventoryUtilities.setItemMetaLore(Material.ANVIL, "§aAméliorer le bunker", (short) 0, lore));
             inv.setItem(14, InventoryUtilities.setItemMeta(Material.RABBIT_HIDE, "§dChanger de skin", (short) 0));
             inv.setItem(16, InventoryUtilities.setItemMeta(Material.MAP, "§eInviter un joueur", (short) 0));
-        } else if (bk != null && pInfos.getRole() == 1) {
+        } else if (bk != null && pInfos.getRole() == 1 && bk.GetName().equalsIgnoreCase(pInfos.getFactionName())) {
             inv.setItem(12, InventoryUtilities.setItemMeta(Material.BARRIER, "§cQuitter le Bunker", (short) 0));
             inv.setItem(14, InventoryUtilities.setItemMeta(Material.MAP, "§eInviter un joueur", (short) 0));
         } else {

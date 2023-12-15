@@ -29,12 +29,12 @@ public class BoosterClass {
             case 2:
                 this.moneyMin = -9;
                 this.moneyMax = 2;
-                this.boosterLootPercent = 7.5;
+                this.boosterLootPercent = 10;
                 break;
             case 3:
                 this.moneyMin = -14;
                 this.moneyMax = 3;
-                this.boosterLootPercent = 10;
+                this.boosterLootPercent = 15;
                 break;
         }
     }

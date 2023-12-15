@@ -201,6 +201,23 @@ public class MenuLevel {
                 lore.add(color+"Récompense : §7"+pl.GetRewardsMoney(pos)+"§f$");
             }
         }
+        switch (pl.getLevel()) {
+            case 0:
+                lore.add("§aAccès au pass vert");
+                break;
+            case 25:
+                lore.add("§9Accès au pass bleu");
+                break;
+            case 50:
+                lore.add("§eAccès au pass jaune");
+                break;
+            case 75:
+                lore.add("§4Accès au pass rouge");
+                break;
+            default:
+                break;
+        }
+
     }
 
 }

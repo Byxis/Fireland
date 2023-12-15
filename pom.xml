@@ -6,7 +6,7 @@
 
     <groupId>fr.byxis</groupId>
     <artifactId>Fireland</artifactId>
-    <version>4.0-SNAPSHOT3</version>
+    <version>4.0</version>
     <packaging>jar</packaging>
 
     <name>Fireland</name>
@@ -158,5 +158,12 @@
             <version>0.21-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>de.tr7zw</groupId>
+            <artifactId>item-nbt-api</artifactId>
+            <version>2.12.2</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 </project>

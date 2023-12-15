@@ -16,10 +16,12 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class PermissionUtilities {
 
     private static Fireland main;
+    private static final LuckPerms m_api = LuckPermsProvider.get();;
 
     public PermissionUtilities(Fireland main)
     {
@@ -27,49 +29,44 @@ public class PermissionUtilities {
     }
 
     public static void addPermission(Player p, String permission) {
-        LuckPerms api = LuckPermsProvider.get();
 
-        User user = api.getPlayerAdapter(Player.class).getUser(p);
+        User user = m_api.getPlayerAdapter(Player.class).getUser(p);
         // Add the permission
         user.data().add(Node.builder(permission).build());
 
         // Now we need to save changes.
-        api.getUserManager().saveUser(user);
+        m_api.getUserManager().saveUser(user);
     }
 
     public static boolean hasPermission(Player p, String permission)
     {
-        LuckPerms api = LuckPermsProvider.get();
-
-        User user = api.getPlayerAdapter(Player.class).getUser(p);
+        User user = m_api.getPlayerAdapter(Player.class).getUser(p);
         return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
     }
+    public static boolean hasPermission(UUID playerUUID, String permission) {
+        LuckPerms api = LuckPermsProvider.get();
+        User user = api.getUserManager().getUser(playerUUID);
+        if (user != null) {
+            return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
+        }
+        return false;
+    }
 
-    public static boolean hasPermission(OfflinePlayer p, String permission)
+    public static void addTempPermission(Player p, String permission, Date finished)
     {
-        LuckPerms api = LuckPermsProvider.get();
-
-        User user = api.getPlayerAdapter(OfflinePlayer.class).getUser(p);
-        return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
-    }
-
-    public static void addTempPermission(Player p, String permission, Date finished) {
-        LuckPerms api = LuckPermsProvider.get();
-
-        User user = api.getPlayerAdapter(Player.class).getUser(p);
+        User user = m_api.getPlayerAdapter(Player.class).getUser(p);
         // Add the permission
         Date current = new Date(System.currentTimeMillis());
         long secondes = (finished.getTime()-current.getTime())/1000;
         user.data().add(Node.builder(permission).expiry(Duration.ofSeconds(secondes)).build());
 
         // Now we need to save changes.
-        api.getUserManager().saveUser(user);
+        m_api.getUserManager().saveUser(user);
     }
 
     public static void removePermission(Player p, String permission) {
-        LuckPerms api = LuckPermsProvider.get();
 
-        User user = api.getUserManager().getUser(p.getUniqueId());
+        User user = m_api.getUserManager().getUser(p.getUniqueId());
         if (user != null) {
             PermissionNode node = PermissionNode.builder(permission)
                     .withContext(DefaultContextKeys.SERVER_KEY, "fireland")
@@ -78,10 +75,19 @@ public class PermissionUtilities {
             node = PermissionNode.builder(permission)
                     .build();
             user.data().remove(node);
-            api.getUserManager().saveUser(user);
+            m_api.getUserManager().saveUser(user);
         }
         PermissionAttachment attachment = p.addAttachment(main);
         attachment.unsetPermission(permission);
+    }
+
+    public static void removePermission(UUID playerUUID, String permission) {
+        LuckPerms api = LuckPermsProvider.get();
+        api.getUserManager().loadUser(playerUUID).thenAcceptAsync(user -> {
+            PermissionNode node = PermissionNode.builder(permission).build();
+            user.data().remove(node);
+            api.getUserManager().saveUser(user);
+        });
     }
 
 

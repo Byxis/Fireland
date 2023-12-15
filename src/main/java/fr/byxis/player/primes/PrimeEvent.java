@@ -58,12 +58,13 @@ public class PrimeEvent implements Listener {
     @EventHandler
     public void playerKill(PlayerDeathEvent e)
     {
-        if(e.getPlayer().getKiller() != null)
+        if(e.getPlayer().getLastDamageCause().getEntity() != null)
         {
             Player p = e.getPlayer();
             if(!(p.getLastDamageCause().getEntity() instanceof Player killer))
                 return;
             int prime = getPrime(p);
+            debugp(5, "player : "+p.getName()+", killer : "+killer.getName()+", prime : "+prime);
 
             FactionFunctions ff = new FactionFunctions(main, null);
 
@@ -93,9 +94,9 @@ public class PrimeEvent implements Listener {
 
     public static int getPrime(Player p)
     {
-        if(config.getConfig().contains(p.getUniqueId().toString()))
+        if(config.getConfig().contains(p.getUniqueId()+".value"))
         {
-            return config.getConfig().getInt(p.getUniqueId().toString());
+            return config.getConfig().getInt(p.getUniqueId()+".value");
         }
         return 0;
     }
@@ -118,7 +119,7 @@ public class PrimeEvent implements Listener {
     }
     public static Timestamp getPrimeDate(String uuid)
     {
-        if(config.getConfig().contains(uuid.toString()+".date"))
+        if(config.getConfig().contains(uuid +".date"))
         {
             return Timestamp.valueOf(config.getConfig().getString(uuid.toString()+".date"));
         }
@@ -132,8 +133,8 @@ public class PrimeEvent implements Listener {
             config.getConfig().set(p.getUniqueId().toString(), null);
             return;
         }
-        config.getConfig().set(p.getUniqueId().toString()+".value", value);
-        config.getConfig().set(p.getUniqueId().toString()+".date", new Timestamp(System.currentTimeMillis()).toString());
+        config.getConfig().set(p.getUniqueId() +".value", value);
+        config.getConfig().set(p.getUniqueId() +".date", new Timestamp(System.currentTimeMillis()).toString());
         config.save();
     }
     private static void setPrime(UUID uuid, int value)

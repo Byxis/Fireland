@@ -24,6 +24,7 @@ import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+import static fr.byxis.faction.essaim.EssaimFunctions.leaveGroup;
 import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class EssaimEventHandler implements Listener {
@@ -156,7 +157,7 @@ public class EssaimEventHandler implements Listener {
                                 InGameUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
                             }
                         }
-                        case RED_STAINED_GLASS_PANE -> EssaimFunctions.leaveGroup(essaim, p);
+                        case RED_STAINED_GLASS_PANE -> leaveGroup(essaim, p);
                         case YELLOW_STAINED_GLASS_PANE -> {
                             if (EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
                                 EssaimFunctions.openInvitation(essaim, p);
@@ -256,7 +257,7 @@ public class EssaimEventHandler implements Listener {
                             if(member.getName().equalsIgnoreCase(e.getPlayer().getName()))
                             {
                                 current = essaim;
-                                if(EssaimManager.groups.get(essaim).shouldKeepInventory())
+                                if(EssaimManager.groups.get(essaim).shouldKeepInventory() && EssaimManager.groups.get(essaim).hasStarted())
                                 {
                                     e.setKeepInventory(true);
                                     e.getDrops().clear();
@@ -297,10 +298,14 @@ public class EssaimEventHandler implements Listener {
                         {
                             if(member.getName().equalsIgnoreCase(e.getPlayer().getName()))
                             {
-                                if(member.getGameMode() != GameMode.CREATIVE || member.getGameMode() != GameMode.SPECTATOR && EssaimManager.groups.get(essaim).hasStarted())
+                                if((member.getGameMode() != GameMode.CREATIVE || member.getGameMode() != GameMode.SPECTATOR) && EssaimManager.groups.get(essaim).hasStarted())
                                 {
                                     member.setInvulnerable(false);
                                     member.setHealth(0);
+                                }
+                                else if((member.getGameMode() != GameMode.CREATIVE || member.getGameMode() != GameMode.SPECTATOR) && EssaimManager.groups.get(essaim).hasStarted())
+                                {
+                                    leaveGroup(essaim, member);
                                 }
                                 break;
                             }

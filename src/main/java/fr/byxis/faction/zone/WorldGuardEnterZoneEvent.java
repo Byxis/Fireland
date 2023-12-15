@@ -7,6 +7,7 @@ import de.netzkronehd.wgregionevents.events.RegionEnterEvent;
 import de.netzkronehd.wgregionevents.events.RegionLeftEvent;
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.player.level.PlayerLevel;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.SoundCategory;
@@ -17,6 +18,8 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Date;
+
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class WorldGuardEnterZoneEvent implements Listener {
 
@@ -66,6 +69,13 @@ public class WorldGuardEnterZoneEvent implements Listener {
         }
         if(captureZone.isClaimed() && !captureZone.isClaimable())
         {
+            return;
+        }
+
+        PlayerLevel pl = getPlayerLevel(p.getUniqueId());
+        if(pl.getLevel() < 10)
+        {
+            InGameUtilities.sendPlayerError(p, "Vous devez atteindre le niveau 10 pour capturer une zone.");
             return;
         }
 

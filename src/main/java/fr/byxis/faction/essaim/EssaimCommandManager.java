@@ -3,6 +3,7 @@ package fr.byxis.faction.essaim;
 import fr.byxis.faction.essaim.essaimClass.EssaimGroup;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -252,7 +253,11 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             {
                 if(!main.essaimManager.groups.get(args[1]).getMembers().contains(p))
                 {
-
+                    if(!PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.essaim.access."+args[1]))
+                    {
+                        InGameUtilities.sendPlayerError(p, "Vous n'avez pas complété la quête requise ou n'avez pas l'extension DLC.");
+                        return;
+                    }
                     EssaimFunctions.teleportJoinEssaim(p, EssaimManager.activeEssaims.get(args[1]).getHub(), "gun.hub.helico",10, args[1]);
                 }
                 else

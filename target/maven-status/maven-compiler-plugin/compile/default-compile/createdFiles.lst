@@ -1,5 +1,6 @@
 fr\byxis\player\discretion\ZombieDetection$1.class
 fr\byxis\player\advancements\AdvancementsManager.class
+fr\byxis\faction\bunker\BunkerManager.class
 fr\byxis\fireland\Fireland$3.class
 fr\byxis\faction\zone\zoneclass\ZoneClass.class
 fr\byxis\player\items\boussole\boussole.class
@@ -40,7 +41,6 @@ fr\byxis\player\primes\PrimesConfig.class
 fr\byxis\faction\essaim\essaimClass\EssaimGroup.class
 fr\byxis\event\heliport.class
 fr\byxis\player\items\serum\serum.class
-fr\byxis\faction\housing\BunkerManager.class
 fr\byxis\player\items\notes\OpenNotes.class
 fr\byxis\command\FirelandCommand.class
 fr\byxis\faction\zone\zoneclass\FactionCapturingClass.class
@@ -53,12 +53,12 @@ fr\byxis\player\quest\questclass\QuestClass.class
 fr\byxis\event\villagerInteraction.class
 fr\byxis\fireland\Fireland$4.class
 fr\byxis\jeton\JetonManager.class
+fr\byxis\fireland\utilities\InGameUtilities$3.class
 fr\byxis\player\workshop\workshopManagerTabCompleter.class
 fr\byxis\fireland\utilities\InGameUtilities.class
 fr\byxis\player\scoreboard\scoreboardPlayer.class
 fr\byxis\faction\faction\FactionPlayerInformation.class
 fr\byxis\player\workshop\workshopCraftingItemClass.class
-fr\byxis\faction\housing\BunkerClass.class
 fr\byxis\faction\zone\DataZone.class
 fr\byxis\player\quest\questclass\ProgressQuest.class
 fr\byxis\fireland\restart\RestartManager$1.class
@@ -94,6 +94,7 @@ fr\byxis\player\pvpmanager\PvPManager.class
 fr\byxis\event\zombieManager$1.class
 fr\byxis\faction\essaim\EssaimConfigManager.class
 fr\byxis\fireland\Fireland$5.class
+fr\byxis\faction\bunker\BunkerEvent$1.class
 fr\byxis\event\doorPass$2.class
 fr\byxis\command\DiscordCommand.class
 fr\byxis\event\SaveEvent.class
@@ -107,6 +108,7 @@ fr\byxis\event\zombieManager.class
 fr\byxis\event\quadListener.class
 fr\byxis\faction\zone\ZoneEvent.class
 fr\byxis\player\items\parachute\parachute.class
+fr\byxis\faction\bunker\BunkerEvent.class
 fr\byxis\player\advancements\CraftAdvancements.class
 fr\byxis\player\karma\PlayerKarmaClass.class
 fr\byxis\faction\essaim\EssaimManager$2.class
@@ -127,7 +129,6 @@ fr\byxis\faction\faction\events\PlayerLeaveFactionEvent.class
 fr\byxis\player\items\backpack\BackPackClass$BackpackInventoryHolder.class
 fr\byxis\player\workshop\workshopFunction.class
 fr\byxis\db\DbConnection.class
-fr\byxis\faction\housing\BunkerCommand.class
 fr\byxis\fireland\restart\RestartManager.class
 fr\byxis\fireland\Fireland.class
 fr\byxis\jeton\FactureCommand.class
@@ -155,12 +156,12 @@ fr\byxis\fireland\utilities\BlockUtilities.class
 fr\byxis\player\intendant\menu\MenuBunker.class
 fr\byxis\player\quest\questclass\InteractQuestClass.class
 fr\byxis\player\advancements\AdvancementsManager$1.class
+fr\byxis\faction\bunker\BunkerCommand.class
 fr\byxis\event\InteractionManager$1.class
 fr\byxis\player\advancements\SkinEquipAdvancements.class
 fr\byxis\player\workshop\workshopManagerEvent.class
 fr\byxis\fireland\utilities\InventoryUtilities.class
 fr\byxis\event\heliport$1.class
-fr\byxis\faction\housing\BunkerEvent.class
 fr\byxis\player\items\backpack\BackPack.class
 fr\byxis\event\entitySpawn.class
 fr\byxis\faction\faction\events\FactionBuyPerkEvent.class
@@ -186,6 +187,7 @@ fr\byxis\player\items\toxic\SporeDamage.class
 fr\byxis\event\menu$1.class
 fr\byxis\player\packet\PacketFunctions.class
 fr\byxis\player\rank\RankCustomMessage.class
+fr\byxis\faction\bunker\BunkerStorage.class
 fr\byxis\faction\zone\ZoneSaveEvent.class
 fr\byxis\player\intendant\menu\MenuColor.class
 fr\byxis\player\scoreboard\SideBoardManager.class
@@ -198,7 +200,6 @@ fr\byxis\player\intendant\menu\MenuFaction.class
 fr\byxis\event\spawn$1.class
 fr\byxis\faction\faction\FactionInformation.class
 fr\byxis\player\intendant\menu\MenuPerks.class
-fr\byxis\faction\housing\BunkerStorage.class
 fr\byxis\fireland\Fireland$2.class
 fr\byxis\player\advancements\RankChangeAdvancements.class
 fr\byxis\player\intendant\menu\MenuChoixNation.class
@@ -226,7 +227,6 @@ fr\byxis\player\quest\questclass\PlayerQuests.class
 fr\byxis\player\level\LevelSavings.class
 fr\byxis\player\karma\karmaManager.class
 fr\byxis\fireland\utilities\PermissionUtilities.class
-fr\byxis\faction\housing\BunkerEvent$1.class
 fr\byxis\faction\zone\CaptureZone.class
 fr\byxis\faction\zone\ZoneManager.class
 fr\byxis\fireland\Fireland$1.class
@@ -241,3 +241,4 @@ fr\byxis\fireland\utilities\Vector2.class
 fr\byxis\player\items\itemEnabler.class
 fr\byxis\player\intendant\menu\MenuEssaim.class
 fr\byxis\player\packet\PacketEvent.class
+fr\byxis\faction\bunker\BunkerClass.class

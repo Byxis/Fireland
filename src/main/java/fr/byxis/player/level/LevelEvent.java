@@ -37,7 +37,7 @@ public class LevelEvent implements Listener {
                     addPlayerXp(p.getUniqueId(), 10, LevelStorage.Nation.Etat);
                     AddPlayerZombieKill(p);
                 }
-                case "Hurleur" ->
+                case "Hurleur", "Chien Infecte" ->
                 {
                     addPlayerXp(p.getUniqueId(), 5, LevelStorage.Nation.Etat);
                     AddPlayerZombieKill(p);
@@ -50,6 +50,12 @@ public class LevelEvent implements Listener {
                 case "Malabar" ->
                 {
                     addPlayerXp(p.getUniqueId(), 500, LevelStorage.Nation.Etat);
+                    AddPlayerZombieKill(p);
+                }
+
+                case "Chimere" ->
+                {
+                    addPlayerXp(p.getUniqueId(), 1000, LevelStorage.Nation.Etat);
                     AddPlayerZombieKill(p);
                 }
             }
@@ -83,12 +89,12 @@ public class LevelEvent implements Listener {
 
             if(getPlayerLevel(target.getUniqueId()).getLevel() < 10)
             {
-                InGameUtilities.sendPlayerError(damager, "Ce joueur n'a pas acc�s au pvp, son niveau est inf�rieur � 10.");
+                InGameUtilities.sendPlayerError(damager, "Ce joueur n'a pas accès au pvp, son niveau est inférieur à 10.");
                 event.setCancelled(true);
             }
             else if(getPlayerLevel(damager.getUniqueId()).getLevel() < 10)
             {
-                InGameUtilities.sendPlayerError(damager, "vous n'avez pas acc�s au pvp, votre niveau est inf�rieur � 10.");
+                InGameUtilities.sendPlayerError(damager, "vous n'avez pas accès au pvp, votre niveau est inférieur à 10.");
                 event.setCancelled(true);
             }
         }

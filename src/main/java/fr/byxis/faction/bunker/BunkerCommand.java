@@ -1,4 +1,4 @@
-package fr.byxis.faction.housing;
+package fr.byxis.faction.bunker;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
@@ -51,25 +51,34 @@ public class BunkerCommand implements CommandExecutor {
                 {
                     sb.append(bk.GetName()).append(" ");
                 }
+                sb.append("§b");
+                for(String str : main.bunkerManager.getLoadedBunker().keySet())
+                {
+                    sb.append(str).append(" ");
+                }
                 p.sendMessage(sb.toString());
                 return true;
             }
-            for(BunkerClass bk : main.bunkerManager.getLoadedBunker().values())
+            else if(strings[0].equalsIgnoreCase("join"))
             {
-                if(bk.IsInvited(p) ||p.hasPermission("fireland.bunker.mod"))
+                for(BunkerClass bk : main.bunkerManager.getLoadedBunker().values())
                 {
-                    if(isWithinRegion(p, "safe-zone_") || p.hasPermission("fireland.bunker.mod"))
+                    if(bk.IsInvited(p) ||p.hasPermission("fireland.bunker.mod"))
                     {
-                        bk.Join(p);
+                        if(isWithinRegion(p, "safe-zone_") || p.hasPermission("fireland.bunker.mod"))
+                        {
+                            bk.Join(p);
+                        }
+                        else
+                        {
+                            InGameUtilities.sendPlayerError(p, "Vous devez être en safe zone pour rejoindre un bunker !");
+                        }
+                        return true;
                     }
-                    else
-                    {
-                        InGameUtilities.sendPlayerError(p, "Vous devez être en safe zone pour rejoindre un bunker !");
-                    }
-                    return true;
                 }
+                InGameUtilities.sendPlayerError(p, "Utilisation: /bunker <join/info> <faction>");
             }
-            InGameUtilities.sendPlayerError(p, "Utilisation: /bunker <join/info> <faction>");
+
         }
         return false;
     }

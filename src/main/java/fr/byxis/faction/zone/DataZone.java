@@ -1,6 +1,7 @@
 package fr.byxis.faction.zone;
 
 import fr.byxis.db.DbConnection;
+import fr.byxis.faction.faction.FactionInformation;
 import fr.byxis.faction.faction.FactionPlayerInformation;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.jeton.JetonManager;
@@ -86,8 +87,15 @@ public class DataZone {
                     }
                     SaveClaiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
                     FactionFunctions ff = new FactionFunctions(main, null);
-
-                    CaptureZone.changeAnimationStep(-1, zone, ff.getFactionInfo(zone.getClaimer()).getColorcode());
+                    FactionInformation info =ff.getFactionInfo(zone.getClaimer());
+                    if(info != null)
+                        CaptureZone.changeAnimationStep(-1, zone, ff.getFactionInfo(zone.getClaimer()).getColorcode());
+                    else
+                    {
+                        System.err.println("Erreur lors de la récupération de la faction "+zone.getClaimer());
+                        RemoveSavedClaiming(zone.getName(), null);
+                        CaptureZone.changeAnimationStep(-1, zone, "§r");
+                    }
                 }
             } else {
 

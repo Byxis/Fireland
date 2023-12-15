@@ -19,11 +19,11 @@ public class MenuIntendant {
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         Inventory craftMenu = Bukkit.createInventory(null, 45, "§8Intendant");
-        SetIntendantItems(main, craftMenu, p);
+        SetIntendantItems(craftMenu, p);
         p.openInventory(craftMenu);
     }
 
-    private static void SetIntendantItems(Fireland main, Inventory craftMenu, Player p)
+    private static void SetIntendantItems(Inventory craftMenu, Player p)
     {
         craftMenu.setItem(28, InventoryUtilities.setItemMeta(Material.NETHER_STAR, "§bSuccès", (short) 0));
         craftMenu.setItem(12, InventoryUtilities.setItemMeta(Material.FIREWORK_ROCKET, "§eBoosters", (short) 0));
@@ -34,7 +34,6 @@ public class MenuIntendant {
         craftMenu.setItem(32, InventoryUtilities.setItemMeta(Material.NETHERITE_SWORD, "§aFactions", (short) 0));
         switch(getPlayerLevel(p.getUniqueId()).getNation())
         {
-
             case Etat -> craftMenu.setItem(34, InventoryUtilities.getEtatBanner("§aVotre niveau"));
             case Bannis -> craftMenu.setItem(34, InventoryUtilities.getBannisBanner( "§cVotre niveau"));
             default-> craftMenu.setItem(34, InventoryUtilities.getNeutreBanner( "§fVotre niveau"));

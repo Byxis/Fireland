@@ -90,11 +90,11 @@ public class MenuPerks {
             }
             if(finfos.hasZoneTpPerk())
             {
-                inventory.setItem(34, InventoryUtilities.setItemMetaLore(Material.BEACON, "§aTP de zones... §d- Lvl. 6", (short)0, BasicUtilities.listMaker("§8Permet de se téléporter aux", "§8zones claims par la faction.", "§aDébloqué", "")));
+                inventory.setItem(34, InventoryUtilities.setItemMetaLore(Material.BEACON, "§aTP de zones... §d- Lvl. 6", (short)0, BasicUtilities.listMaker("§8Permet de se téléporter aux", "§8zones claims par la faction toutes", "§8les heures","§aDébloqué")));
             }
             else
             {
-                inventory.setItem(34, InventoryUtilities.setItemMetaLore(Material.BEACON, "§cTP de zones... §d- Lvl. 6", (short)0, BasicUtilities.listMaker("§8Permet de se téléporter aux", "§8zones claims par la faction.", "§8Coût: §620000$", "")));
+                inventory.setItem(34, InventoryUtilities.setItemMetaLore(Material.BEACON, "§cTP de zones... §d- Lvl. 6", (short)0, BasicUtilities.listMaker("§8Permet de se téléporter aux", "§8zones claims par la faction toutes", "§8les heures", "§8Coût: §620000$")));
             }
             inventory.setItem(40, InventoryUtilities.setItemMetaLore(Material.PAPER, "§cD'autres fonctionalité sont à venir...", (short)0, BasicUtilities.listMaker("", "", "", "")));
 

@@ -3,7 +3,6 @@ package fr.byxis.fireland.restart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.jetbrains.annotations.NotNull;
 
 public class restartEvent implements Listener {
 
@@ -11,7 +10,7 @@ public class restartEvent implements Listener {
     @EventHandler
     public void playerJoin(PlayerJoinEvent e)
     {
-        if(RestartManager.IsRestartingSoon())
+        if(RestartManager.IsServerRestartingSoon())
         {
             RestartManager.AddPlayerBar(e.getPlayer());
         }

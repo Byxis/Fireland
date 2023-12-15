@@ -139,11 +139,11 @@ public class PlayerLevel {
         if(m_level < 25)
             return 20*(m_level+1);
         else if(m_level < 50)
-            return 25*(m_level+1) - 20*24;
+            return 25*(m_level+1-24) + 20*24;
         else if(m_level < 75)
-            return 30*(m_level+1) - 25*24 - 20*25;
+            return 30*(m_level+1-49) + 25*24 + 20*25;
         else if(m_level < 100)
-            return 40*(m_level+1) - 30*24 - 25*25 - 20*25;
+            return 40*(m_level+1-74) + 30*24 + 25*25 + 20*25;
         else
             return -1;
     }
@@ -227,23 +227,33 @@ public class PlayerLevel {
         }
         if(cap <= 2)
         {
-            if(_shop.equalsIgnoreCase("passr") ||
-                    _shop.contains("assaut"))
+            if(_shop.contains("passr") || _shop.contains("anticaire") || _shop.contains("assaut"))
                 return false;
         }
         if(cap <= 1)
         {
-            if(_shop.equalsIgnoreCase("passjr") ||
-                    _shop.contains("fusil"))
+            if(_shop.contains("passj") || _shop.contains("fusil"))
                 return false;
         }
         if(cap <= 0)
         {
-            if(_shop.equalsIgnoreCase("passb") ||
-                    _shop.contains("smg"))
+            if(_shop.contains("passb") || _shop.contains("smg"))
                 return false;
         }
         return true;
+    }
+
+    public int getLevelAccesstoShop(String _shop)
+    {
+        if(_shop.contains("anticaire"))
+            return 100;
+        if(_shop.contains("passr") || _shop.contains("assaut"))
+            return 75;
+        if(_shop.contains("passj") || _shop.contains("fusil"))
+            return 50;
+        if(_shop.contains("passb") || _shop.contains("smg"))
+            return 25;
+        return 0;
     }
 
     public boolean hasAccessToReductions(String _shop)

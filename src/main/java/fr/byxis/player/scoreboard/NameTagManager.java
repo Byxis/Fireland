@@ -10,13 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.fireland.utilities.InGameUtilities.getStringColor;
@@ -67,11 +63,13 @@ public class NameTagManager implements Listener {
             {
                 team = getMainScoreboard().registerNewTeam("server");
                 team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+                team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
             }
             else
             {
                 team = getMainScoreboard().getTeam("server");
                 team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+                team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
             }
             return team;
         }
@@ -79,12 +77,14 @@ public class NameTagManager implements Listener {
         {
             team = getMainScoreboard().registerNewTeam(name);
             team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
+            team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
             team.setColor(getStringColor(ff.getFactionInfo(name).getColorcode()));
         }
         else
         {
             team = getMainScoreboard().getTeam(name);
             team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
+            team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
             team.setColor(getStringColor(ff.getFactionInfo(name).getColorcode()));
         }
         return team;
@@ -99,7 +99,8 @@ public class NameTagManager implements Listener {
     @EventHandler
     public void playerLeaveFaction(PlayerLeaveFactionEvent e)
     {
-        actualizeTeam(e.getPlayer());
+        if(Bukkit.getPlayer(e.getPlayerUuid()) != null)
+            actualizeTeam(Bukkit.getPlayer(e.getPlayerUuid()));
     }
 
     @EventHandler

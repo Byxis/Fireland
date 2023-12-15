@@ -1,6 +1,6 @@
 package fr.byxis.event;
 
-import fr.byxis.faction.housing.BunkerClass;
+import fr.byxis.faction.bunker.BunkerClass;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.player.level.LevelStorage;
 import org.bukkit.Bukkit;
@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.Inventory;
 
+import java.util.Iterator;
 import java.util.UUID;
 
 import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
@@ -49,6 +50,7 @@ public class SaveEvent implements Listener {
         {
             for (int i = 0; i < inv.getSize(); i++) {
                 main.cfgm.getEnderchest().set("stockage."+uuid+"."+i, inv.getItem(i));
+
             }
         }
     }
@@ -59,18 +61,17 @@ public class SaveEvent implements Listener {
         {
             return;
         }
-        for(UUID uuid :main.hashMapManager.getStorageMap().keySet())
-        {
-            if(main.hashMapManager.getStorageMap().containsKey(uuid))
-            {
+        Iterator<UUID> iterator = main.hashMapManager.getStorageMap().keySet().iterator();
+        while (iterator.hasNext()) {
+            UUID uuid = iterator.next();
+            if(main.hashMapManager.getStorageMap().containsKey(uuid)) {
                 saveEnderchest(main.hashMapManager.getStorageMap().get(uuid), uuid);
-                if(!Bukkit.getOfflinePlayer(uuid).isOnline())
-                {
-                    main.hashMapManager.getStorageMap().remove(uuid);
+                if(!Bukkit.getOfflinePlayer(uuid).isOnline()) {
+                    iterator.remove();
                 }
             }
-
         }
+
         main.cfgm.saveEnderchest();
     }
 
@@ -99,7 +100,12 @@ public class SaveEvent implements Listener {
 
     private static void SaveAllFactionStorages()
     {
-        debugp(2, "Values : "+main.bunkerManager.getLoadedBunker().values());
+        StringBuilder sb = new StringBuilder();
+        for(String str : main.bunkerManager.getLoadedBunker().keySet())
+        {
+            sb.append('"').append(str).append('"').append("  ");
+        }
+        debugp(2, "Values : "+sb);
         for(BunkerClass bk : main.bunkerManager.getLoadedBunker().values())
         {
             debugp(2, "Saving storage of bunker "+bk.GetName());

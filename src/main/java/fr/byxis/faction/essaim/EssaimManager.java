@@ -141,10 +141,10 @@ public class EssaimManager {
                             configManager.getConfig().getInt(essaim+".spawners."+spawner+".position.z")
                     );
                     String type = configManager.getConfig().getString(essaim+".spawners."+spawner+".type");
-                    Integer amount = configManager.getConfig().getInt(essaim+".spawners."+spawner+".amount");
+                    int amount = configManager.getConfig().getInt(essaim+".spawners."+spawner+".amount");
                     String command = configManager.getConfig().getString(essaim+".spawners."+spawner+".command");
-                    Double activationDelay = configManager.getConfig().getDouble(essaim+".spawners."+spawner+".activation-delay");
-                    Double spawnDelay = configManager.getConfig().getDouble(essaim+".spawners."+spawner+".spawn-delay");
+                    double activationDelay = configManager.getConfig().getDouble(essaim+".spawners."+spawner+".activation-delay");
+                    double spawnDelay = configManager.getConfig().getDouble(essaim+".spawners."+spawner+".spawn-delay");
                     Boolean isAffectedByDifficulty = configManager.getConfig().getBoolean(essaim+".spawners."+spawner+".affected-by-difficulty");
                     existingSpawnerInEssaim.put(spawner, new Spawner(spawner, essaim, loc, type, amount, activationDelay, spawnDelay, command, isAffectedByDifficulty));
                 }

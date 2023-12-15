@@ -61,6 +61,8 @@ public class BackPackClass {
     }
     public Inventory loadBackPack(ItemStack item) {
         PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+        if(!item.getItemMeta().hasCustomModelData())
+            return createEmptyInventory(1);
         Inventory inventory = createEmptyInventory(item.getItemMeta().getCustomModelData());
 
         if (container.has(backpackKey, PersistentDataType.STRING)) {

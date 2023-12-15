@@ -1,4 +1,4 @@
-package fr.byxis.faction.housing;
+package fr.byxis.faction.bunker;
 
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Material;
@@ -65,7 +65,7 @@ public class BunkerManager {
         if(!m_loadedBunker.containsKey(name))
         {
             BunkerClass bunker = new BunkerClass(name, m_main);
-            m_main.bunkerManager.AddLoadedBunker(bunker);
+            AddLoadedBunker(bunker);
         }
     }
 

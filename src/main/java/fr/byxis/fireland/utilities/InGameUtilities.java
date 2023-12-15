@@ -13,15 +13,18 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.fusesource.jansi.Ansi;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class InGameUtilities implements Listener {
 
 
     private static Fireland main;
 
-    public static HashMap<Player, Boolean> playerMoving = new HashMap<Player, Boolean>();
+    public static HashMap<UUID, Boolean> playerMoving = new HashMap<UUID, Boolean>();
+    public static HashMap<UUID, Date> playerCooldown = new HashMap<UUID, Date>();
 
     public InGameUtilities(Fireland fireland) {
         main = fireland;
@@ -63,23 +66,69 @@ public class InGameUtilities implements Listener {
             }
         }.runTaskTimer(main, 0L, 20L);
     }
+    public static void teleportPlayer(Player player, Location loc, int duration, String sound, int cooldown)
+    {
+        if(playerCooldown.containsKey(player.getUniqueId()) && playerCooldown.get(player.getUniqueId()).after(new Date()))
+        {
+            InGameUtilities.sendPlayerError(player, "Vous êtes en cooldown. Vous pourrez vous téléporter dans "+BasicUtilities.getStringTime(new Date().getTime() - playerCooldown.get(player).getTime()));
+            return;
+        }
+        playerCooldown.remove(player.getUniqueId());
+        player.playSound(player.getLocation(), "minecraft:"+sound, (float) 0.1, (float) 1);
+
+        new BukkitRunnable() {
+            private int i = -1;
+
+            @Override
+            public void run() {
+                i++;
+                if(getPlayerMoving(player)){
+                    sendPlayerError(player,"Téléportation annulée !");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound "+player.getName()+" * minecraft:"+sound);
+                    main.hashMapManager.removeTeleporting(player.getUniqueId());
+                    cancel();
+                }
+                else
+                {
+                    if((i%5 == 0 && i != duration) || i == duration-3 ||i  == duration-2 || i  == duration-1)
+                    {
+                        sendPlayerInformation(player,"Téléportation dans " +(duration-i)+" secondes");
+                    }
+                    if(i == duration)
+                    {
+                        sendPlayerInformation(player,"Téléportation...");
+                        player.teleport(loc);
+                        playerCooldown.put(player.getUniqueId(), new Date(System.currentTimeMillis() + cooldown* 1000L));
+                        main.hashMapManager.addTeleporting(player.getUniqueId());
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
+                        main.hashMapManager.removeTeleporting(player.getUniqueId());
+                        cancel();
+                    }
+                }
+
+            }
+        }.runTaskTimer(main, 0L, 20L);
+    }
 
     public static Boolean getPlayerMoving(Player player)
     {
-        if(!playerMoving.containsKey(player))
+        if(!playerMoving.containsKey(player.getUniqueId()))
         {
             return false;
         }
-        return playerMoving.get(player);
+        return playerMoving.get(player.getUniqueId());
     }
 
     public static void setPlayerMoving(Player player, Boolean moving)
     {
-        if(!playerMoving.containsKey(player))
+        if(!playerMoving.containsKey(player.getUniqueId()))
         {
-            playerMoving.put(player, moving);
+            playerMoving.put(player.getUniqueId(), moving);
         }
-        playerMoving.replace(player, moving);
+        else
+        {
+            playerMoving.replace(player.getUniqueId(), moving);
+        }
     }
 
     public static void playWorldSound(Location loc, String sound, SoundCategory category, float vol, float pitch)
@@ -222,7 +271,7 @@ public class InGameUtilities implements Listener {
     {
         if(Bukkit.getPlayer("Byxis_") != null && Bukkit.getPlayer("Byxis_").isOnline())
         {
-            Bukkit.getPlayer("Byxis_").sendMessage("§c[FBUG-"+code+"]§lFireland§8§l >> §a"+txt);
+            Bukkit.getPlayer("Byxis_").sendMessage("§c[FBUG-§l"+code+"§r§c] >> §a"+txt);
         }
     }
 
@@ -239,35 +288,21 @@ public class InGameUtilities implements Listener {
         p.spigot().sendMessage(message);
     }
     @EventHandler
-    public void PlayerMove(PlayerMoveEvent event)
+    public void PlayerMove(PlayerMoveEvent e)
     {
-        if(event.hasChangedPosition())
+        if(e.hasChangedPosition())
         {
-            if(!playerMoving.containsKey(event.getPlayer()))
-            {
-                playerMoving.put(event.getPlayer(), true);
-            }
-            else
-            {
-                playerMoving.replace(event.getPlayer(), true);
-            }
+            setPlayerMoving(e.getPlayer(), true);
         }
         else
         {
-            if(!playerMoving.containsKey(event.getPlayer()))
-            {
-                playerMoving.put(event.getPlayer(), false);
-            }
-            else
-            {
-                playerMoving.replace(event.getPlayer(), false);
-            }
+            setPlayerMoving(e.getPlayer(), false);
         }
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                playerMoving.replace(event.getPlayer(), false);
+                setPlayerMoving(e.getPlayer(), false);
             }
         }.runTaskLater(main, 20L);
     }

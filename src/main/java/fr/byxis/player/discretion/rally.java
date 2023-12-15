@@ -132,7 +132,7 @@ public record rally(fr.byxis.fireland.Fireland main) implements CommandExecutor 
 	private void rallyEntities(Player victim, long distance) {
 		List<Entity> entities = nearbyEntities(victim.getLocation(), distance);
 		for (Entity entity : entities) {
-			if (entity instanceof Zombie || entity instanceof Stray  || entity instanceof Husk || entity instanceof Drowned ||  entity instanceof WitherSkeleton) {
+			if (entity instanceof Zombie || entity instanceof Stray || entity instanceof WitherSkeleton || entity instanceof Wolf) {
 				Monster mob = (Monster) entity;
 
 				if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish ||mob.getTarget().getLocation().distance(mob.getLocation()) > victim.getLocation().distance(mob.getLocation())) {

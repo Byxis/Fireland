@@ -5,12 +5,12 @@ package fr.byxis.fireland;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import fr.byxis.faction.housing.BunkerManager;
+import fr.byxis.faction.bunker.BunkerManager;
+import fr.byxis.fireland.restart.RestartManager;
 import fr.byxis.jeton.FactureCommand;
 import fr.byxis.jeton.JetonManager;
 import fr.byxis.player.PlayerAddonsEnabler;
 import fr.byxis.player.discretion.DiscretionClass;
-import fr.byxis.player.scoreboard.NameTagManager;
 import fr.byxis.player.playerDeath;
 import fr.byxis.player.items.morphine.fallDamage;
 import fr.byxis.player.booster.BoosterCommandCompleter;
@@ -34,7 +34,6 @@ import fr.byxis.player.intendant.IntendantCommand;
 import fr.byxis.player.intendant.Manager;
 import fr.byxis.jeton.jetonsCommandManager;
 import fr.byxis.player.packet.PacketPlayer;
-import fr.byxis.player.scoreboard.scoreboardPlayer;
 import fr.byxis.player.shop.ShopCommandManager;
 import fr.byxis.player.shop.ShopEventManager;
 import fr.byxis.player.items.toxic.mask;
@@ -84,6 +83,7 @@ public class Fireland extends JavaPlugin {
     public BunkerManager bunkerManager;
     public PermissionUtilities permissionUtilities;
     public PlayerAddonsEnabler playerAddonsEnabler;
+    public RestartManager restartManager;
 
     @SuppressWarnings("ConstantConditions")
     public void enableCommand() {
@@ -211,7 +211,6 @@ public class Fireland extends JavaPlugin {
         bunkerManager = new BunkerManager(this);
         permissionUtilities = new PermissionUtilities(this);
         playerAddonsEnabler = new PlayerAddonsEnabler(this);
-
         final ambientSound ambientSoundClass;
         final cobwebDamage cobwebDamageClass;
 
@@ -223,6 +222,8 @@ public class Fireland extends JavaPlugin {
 
         enableCommand();
         enableEvent();
+
+        restartManager = new RestartManager(this);
 
 
 
@@ -459,7 +460,7 @@ public class Fireland extends JavaPlugin {
                         {
                             cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", (safezone-1));
                             cfgm.savePlayerDB();
-                            if(safezone == 5 || safezone == 10)
+                            if(safezone%15 == 0)
                             {
                                 p.sendTitle("", "§cIl vous reste "+safezone+" secondes d'invincibilité");
                             }
@@ -468,7 +469,7 @@ public class Fireland extends JavaPlugin {
                         {
                             if(safezone == 0)
                             {
-                                p.sendMessage("§cVous n'êtes plus invincible !");
+                                p.sendMessage("§4Vous n'êtes plus invincible !");
                                 cfgm.getPlayerDB().set("safezone."+p.getUniqueId()+".time", -1);
                                 p.setInvulnerable(false);
                                 cfgm.savePlayerDB();

@@ -98,7 +98,7 @@ public class EssaimGroup {
         for(Player member : members)
         {
             InGameUtilities.playPlayerSound(member, Sound.ENTITY_WITHER_HURT, SoundCategory.PLAYERS, 1, 0);
-            InGameUtilities.sendPlayerInformation(member, "§cLe joueur " + leaver.getName() + " a quitter l'expédition.");
+            InGameUtilities.sendPlayerInformation(member, "§cLe joueur " + leaver.getName() + " a quitté l'expédition.");
         }
     }
 

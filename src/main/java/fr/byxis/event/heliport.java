@@ -157,7 +157,7 @@ public class heliport implements Listener,CommandExecutor {
 					
 					@Override
 					public void run() {
-						if (mouvement == true) {
+						if (mouvement) {
 							player.sendMessage("§cTéléportation annulée !");
 							i = 50;
 							mouvement = false;

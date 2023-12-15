@@ -1,6 +1,5 @@
 package fr.byxis.player.intendant;
 
-import fr.byxis.faction.housing.BunkerClass;
 import fr.byxis.fireland.utilities.*;
 import fr.byxis.player.intendant.menu.*;
 import fr.byxis.faction.faction.FactionFunctions;
@@ -63,7 +62,11 @@ public class Manager implements Listener {
                         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
                     }
                     case NETHERITE_SWORD -> {
-                        MenuFaction.OpenFaction(main, p, true);
+                        FactionFunctions ff = new FactionFunctions(main, p);
+                        if(!ff.playerFactionName(p).equalsIgnoreCase(""))
+                            MenuFaction.OpenFaction(main, p, true);
+                        else
+                            InGameUtilities.sendPlayerError(p, "Vous n'avez pas de faction.");
                     }
                     case FIREWORK_ROCKET -> {
                         MenuBooster.OpenBoosters(main,p);
@@ -319,7 +322,7 @@ public class Manager implements Listener {
                         return;
                     }
                 }
-                if(itemclicked.getType() == color && p.hasPermission("fireland.command.faction.color") && !itemclicked.getItemMeta().getDisplayName().contains("Améliorer la faction au rang")
+                if(itemclicked.getType() == color && PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.command.faction.color") && !itemclicked.getItemMeta().getDisplayName().contains("Améliorer la faction au rang")
                         && !itemclicked.getItemMeta().getDisplayName().contains("Retour au menu Faction") && pInfos.getRole() == 2)
                 {
                     MenuColor.OpenColorMenu(main, p, finfos);
@@ -387,7 +390,8 @@ public class Manager implements Listener {
                         Location loc = new Location(Bukkit.getWorld("world"), configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".teleportation.x"),
                                 configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".teleportation.y"),
                                 configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".teleportation.z"));
-                        InGameUtilities.teleportPlayer(p, loc, 15, "gun.hub.helico");
+
+                        InGameUtilities.teleportPlayer(p, loc, 15, "gun.hub.helico", 3600);
                     }
                 }
 

@@ -1,4 +1,4 @@
-package fr.byxis.faction.housing;
+package fr.byxis.faction.bunker;
 
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;

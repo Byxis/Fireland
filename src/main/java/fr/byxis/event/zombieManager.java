@@ -34,10 +34,12 @@ public class zombieManager implements Listener {
     {
         if(e.getEntityType() == EntityType.ZOMBIE_VILLAGER)
         {
-            if(e.getCause() == EntityDamageEvent.DamageCause.FIRE
-                            || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK
-                            || e.getCause() == EntityDamageEvent.DamageCause.LAVA
-                            || e.getCause() == EntityDamageEvent.DamageCause.MELTING)
+            if (e.getCause() == EntityDamageEvent.DamageCause.FIRE
+                    || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK
+                    || e.getCause() == EntityDamageEvent.DamageCause.LAVA
+                    || e.getCause() == EntityDamageEvent.DamageCause.MELTING
+                    || e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR
+            )
             {
                 if(((LivingEntity)e.getEntity()).hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE))
                 {

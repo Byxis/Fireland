@@ -1,18 +1,18 @@
 package fr.byxis.faction.faction.events;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 public class PlayerLeaveFactionEvent extends Event {
 
-    private final Player player;
+    private final UUID player;
     private final String faction;
     private final boolean isKicked;
     private static final HandlerList handlers = new HandlerList();
 
-    public PlayerLeaveFactionEvent(Player p, String faction, boolean isKicked)
+    public PlayerLeaveFactionEvent(UUID p, String faction, boolean isKicked)
     {
         this.player = p;
         this.faction = faction;
@@ -27,7 +27,7 @@ public class PlayerLeaveFactionEvent extends Event {
         return handlers;
     }
 
-    public Player getPlayer() {
+    public UUID getPlayerUuid() {
         return player;
     }
 

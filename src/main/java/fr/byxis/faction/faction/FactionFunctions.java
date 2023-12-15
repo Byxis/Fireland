@@ -3,7 +3,7 @@ package fr.byxis.faction.faction;
 import fr.byxis.db.DbConnection;
 import fr.byxis.faction.faction.events.FactionBuyPerkEvent;
 import fr.byxis.faction.faction.events.PlayerJoinFactionEvent;
-import fr.byxis.faction.housing.BunkerClass;
+import fr.byxis.faction.bunker.BunkerClass;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.ItemSerializer;
 import fr.byxis.fireland.Fireland;
@@ -18,7 +18,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -377,7 +376,7 @@ public class FactionFunctions {
 
 			//Réalisation de la requête SQL
 			final ResultSet resultSet1 = verificationFactionWithName.executeQuery();
-			
+
 			if (resultSet1.next())
 			{
 				//La requête a trouvé une faction qui a ce nom
@@ -445,7 +444,6 @@ public class FactionFunctions {
 			insertionPlayerFaction.executeUpdate();
 			PlayerJoinFactionEvent event = new PlayerJoinFactionEvent(p, name);
 			Bukkit.getPluginManager().callEvent(event);
-			InGameUtilities.sendPlayerInformation(p, "Vous avez créé la faction "+GetColorCode(name)+name+" !");
 			return true;
 		} catch (SQLException e) {
 			//Une erreur est survenue (Problème de connexion à la BD)
@@ -862,23 +860,22 @@ public class FactionFunctions {
 
 			//On prépare la requete de modification :
 
-			final PreparedStatement renameFaction = connection.prepareStatement("""
-                    UPDATE faction SET name=? WHERE name = ?;
-                    UPDATE player_faction SET player_faction = ? WHERE player_faction = ?;
-                    UPDATE faction_zone SET faction_name = ? WHERE faction_zone.faction_name = ?;
-                    UPDATE capture_zone SET faction_name = ? WHERE faction_name = ?;
-                    UPDATE faction_storage SET faction = ? WHERE faction = ?;
-                    UPDATE faction_housing SET faction = ? WHERE faction = ?;
-                    UPDATE invite SET faction_name = ? WHERE invite.faction_name = ?;""");
+			String[] queries = {
+					"UPDATE faction SET name=? WHERE name = ?",
+					"UPDATE player_faction SET player_faction = ? WHERE player_faction = ?",
+					"UPDATE faction_zone SET faction_name = ? WHERE faction_zone.faction_name = ?",
+					"UPDATE capture_zone SET faction_name = ? WHERE faction_name = ?",
+					"UPDATE faction_storage SET faction = ? WHERE faction = ?",
+					"UPDATE faction_housing SET faction = ? WHERE faction = ?",
+					"UPDATE invite SET faction_name = ? WHERE invite.faction_name = ?"
+			};
 
-			for(int i =1; i < 8; i+=2)
-			{
-				renameFaction.setString(i, _newName);
-				renameFaction.setString(i+1, _factionName);
+			for (String query : queries) {
+				PreparedStatement statement = connection.prepareStatement(query);
+				statement.setString(1, _newName);
+				statement.setString(2, _factionName);
+				statement.executeUpdate();
 			}
-
-			//On exécute la requete SQL
-			renameFaction.executeUpdate();
 
 			sender.sendMessage("§cVotre faction a été renommée. Elle s'appelle désormais "+GetColorCode(_newName)+_newName+" §c!");
 		} catch (SQLException e) {
@@ -908,7 +905,7 @@ public class FactionFunctions {
 		return -1;
 	}
 
-	public void kickPlayer(FactionInformation infos, Player victim)
+	public void kickPlayer(FactionInformation infos, UUID victim)
 	{
 		/*
 		 * Renomme une faction.
@@ -924,12 +921,12 @@ public class FactionFunctions {
 
 			final PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM player_faction WHERE player_faction=? AND player_uuid = ?");
 			preparedStatement1.setString(1, infos.getName());
-			preparedStatement1.setString(2, victim.getUniqueId().toString());
+			preparedStatement1.setString(2, victim.toString());
 			//On exécute la requete SQL
 			preparedStatement1.executeUpdate();
-			if(main.hashMapManager.getFactionMap().containsKey(victim.getUniqueId()))
+			if(main.hashMapManager.getFactionMap().containsKey(victim))
 			{
-				main.hashMapManager.removeFactionMap(victim.getUniqueId());
+				main.hashMapManager.removeFactionMap(victim);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

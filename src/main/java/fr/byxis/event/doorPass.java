@@ -2,6 +2,7 @@ package fr.byxis.event;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.player.level.PlayerLevel;
 import fr.byxis.player.pvpmanager.PvPManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class doorPass implements Listener {
 	
@@ -155,10 +157,14 @@ public class doorPass implements Listener {
 			}.runTaskLater(main, 20);
 			int passTime = main.getConfig().getInt("time.doorpass");
 			int handTime = main.getConfig().getInt("time.handpass");
-			
+			PlayerLevel pl = getPlayerLevel(p.getUniqueId());
 			if(e.getClickedBlock().getType() == Material.DEAD_TUBE_CORAL_WALL_FAN) 
 			{
-				if(p.getItemInHand().getType() == Material.MUSIC_DISC_CAT) 
+				if(!pl.hasAccesstoShop("passv"))
+				{
+					e.getPlayer().sendMessage("§cVous devez être niveau "+pl.getLevelAccesstoShop("passv")+" afin de débloquer cette zone.");
+				}
+				else if(p.getItemInHand().getType() == Material.MUSIC_DISC_CAT)
 				{
 					InitOpenDoor(e, p, passTime);
 				}
@@ -174,7 +180,11 @@ public class doorPass implements Listener {
 			}
 			else if(e.getClickedBlock().getType() == Material.DEAD_BRAIN_CORAL_WALL_FAN) 
 			{
-				if(p.getItemInHand().getType() == Material.MUSIC_DISC_WAIT)  
+				if(!pl.hasAccesstoShop("passb"))
+				{
+					e.getPlayer().sendMessage("§cVous devez être niveau "+pl.getLevelAccesstoShop("passb")+" afin de débloquer cette zone.");
+				}
+				else if(p.getItemInHand().getType() == Material.MUSIC_DISC_WAIT)
 				{
 					InitOpenDoor(e, p, passTime);
 				}
@@ -190,7 +200,11 @@ public class doorPass implements Listener {
 			}
 			else if(e.getClickedBlock().getType() == Material.DEAD_BUBBLE_CORAL_WALL_FAN) 
 			{
-				if(p.getItemInHand().getType() == Material.MUSIC_DISC_13) 
+				if(!pl.hasAccesstoShop("passj"))
+				{
+					e.getPlayer().sendMessage("§cVous devez être niveau "+pl.getLevelAccesstoShop("passj")+" afin de débloquer cette zone.");
+				}
+				else if(p.getItemInHand().getType() == Material.MUSIC_DISC_13)
 				{
 					InitOpenDoor(e, p, passTime);
 				}
@@ -206,7 +220,11 @@ public class doorPass implements Listener {
 			}
 			else if(e.getClickedBlock().getType() == Material.DEAD_FIRE_CORAL_WALL_FAN) 
 			{
-				if(p.getItemInHand().getType() == Material.MUSIC_DISC_BLOCKS) 
+				if(!pl.hasAccesstoShop("passr"))
+				{
+					e.getPlayer().sendMessage("§cVous devez être niveau "+pl.getLevelAccesstoShop("passr")+" afin de débloquer cette zone.");
+				}
+				else if(p.getItemInHand().getType() == Material.MUSIC_DISC_BLOCKS)
 				{
 					InitOpenDoor(e, p, passTime);
 				}

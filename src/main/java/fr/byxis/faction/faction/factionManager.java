@@ -1,8 +1,7 @@
 package fr.byxis.faction.faction;
 
-import fr.byxis.faction.faction.events.PlayerJoinFactionEvent;
 import fr.byxis.faction.faction.events.PlayerLeaveFactionEvent;
-import fr.byxis.faction.housing.BunkerClass;
+import fr.byxis.faction.bunker.BunkerClass;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
@@ -16,8 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import static fr.byxis.fireland.utilities.BasicUtilities.getUuid;
-import static fr.byxis.jeton.JetonManager.sendPlayerFacture;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class factionManager implements Listener, CommandExecutor  {
 	
@@ -70,9 +68,13 @@ public class factionManager implements Listener, CommandExecutor  {
 						}
 						else
 						{
-
 							if(!victim.getName().equalsIgnoreCase(p.getName()))
 							{
+								if(getPlayerLevel(victim.getUniqueId()).getLevel() < 10)
+								{
+									InGameUtilities.sendPlayerError(p, "Le joueur doit Ítre le niveau 10 afin de rejoindre une faction !");
+									return false;
+								}
 								if(factionFunctions.playerFactionName(victim).equalsIgnoreCase(factionInfo.getName()))
 								{
 									InGameUtilities.sendPlayerError(p, "Ce joueur est dÈj‡ dans votre faction !");
@@ -110,8 +112,18 @@ public class factionManager implements Listener, CommandExecutor  {
 				InGameUtilities.sendPlayerError(p, "Vous ne pouvez pas mettre d'espace dans le nom de votre faction !");
 				return false;
 			}
+			if(getPlayerLevel(p.getUniqueId()).getLevel() < 10)
+			{
+				InGameUtilities.sendPlayerError(p, "Vous devez atteindre le niveau 10 pour crÈer une faction !");
+				return false;
+			}
 			if (args[1].length() <= 16)
 			{
+				if(!isValidText(args[1]))
+				{
+					InGameUtilities.sendPlayerError(p, "Le nom est invalide. Merci de ne pas utiliser de caractËres spÈciaux.");
+					return false;
+				}
 				double money = main.eco.getBalance(p);
 				if(money >= 1000 && factionFunctions.creatingFaction(p, args[1])) {
 					main.eco.withdrawPlayer(p, 1000);
@@ -141,6 +153,12 @@ public class factionManager implements Listener, CommandExecutor  {
 			{
 				InGameUtilities.sendPlayerError(p, "Vous avez dÈj‡ une faction.");
 				return true;
+			}
+
+			if(getPlayerLevel(p.getUniqueId()).getLevel() < 10)
+			{
+				InGameUtilities.sendPlayerError(p, "Vous devez atteindre le niveau 10 pour rejoindre une faction !");
+				return false;
 			}
 			if(factionFunctions.isInvitedToFaction(p, args[1]))
 			{
@@ -175,7 +193,7 @@ public class factionManager implements Listener, CommandExecutor  {
 				}
 				else
 				{
-					PlayerLeaveFactionEvent event = new PlayerLeaveFactionEvent(p, factionInfo.getName(), false);
+					PlayerLeaveFactionEvent event = new PlayerLeaveFactionEvent(p.getUniqueId(), factionInfo.getName(), false);
 					Bukkit.getPluginManager().callEvent(event);
 					factionFunctions.leaveFaction(p, factionInfo.getLeader());
 					factionFunctions.sendFactionPlayer(factionInfo.getName(), "ßc"+p.getName()+" a quittÈ la faction.");
@@ -198,7 +216,7 @@ public class factionManager implements Listener, CommandExecutor  {
 				factionFunctions.deleteFaction(p);
 				for(Player op : Bukkit.getOnlinePlayers())
 				{
-					PlayerLeaveFactionEvent event = new PlayerLeaveFactionEvent(op, factionInfo.getName(), true);
+					PlayerLeaveFactionEvent event = new PlayerLeaveFactionEvent(op.getUniqueId(), factionInfo.getName(), true);
 					Bukkit.getPluginManager().callEvent(event);
 					if(op != p)
 					{
@@ -213,7 +231,7 @@ public class factionManager implements Listener, CommandExecutor  {
 			}
 
 		}
-		else if (args[0].equalsIgnoreCase("info") && p.hasPermission("fireland.command.faction.info"))
+		else if (args[0].equalsIgnoreCase("info"))
 		{
 			if(args.length == 1)
 			{
@@ -483,7 +501,7 @@ public class factionManager implements Listener, CommandExecutor  {
 				return true;
 			}
 			if (args.length == 2) {
-				if (playerInfo.getRole() == 2 )
+				if (playerInfo.getRole() == 2 || playerInfo.getRole() == 1 )
 				{
 					int amount = Integer.parseInt(args[1]);
 					if (factionInfo.getCurrentMoney()-amount >=0 && amount >= 0)
@@ -501,7 +519,7 @@ public class factionManager implements Listener, CommandExecutor  {
 				}
 				else
 				{
-					InGameUtilities.sendPlayerError(p, "Seul le leader peut effectuer cette action !");
+					InGameUtilities.sendPlayerError(p, "Seul le leader ou les modÈrateurs peuvent effectuer cette action !");
 				}
 			} else {
 				InGameUtilities.sendPlayerError(p, "Utilisation : /faction withdraw <nombre>");
@@ -534,10 +552,10 @@ public class factionManager implements Listener, CommandExecutor  {
 							{
 								p.sendMessage("ßcVous ne pouvez pas exclure quelqu'un de mÍme rang que vous !");
 							}
-							PlayerLeaveFactionEvent event = new PlayerLeaveFactionEvent((Player) victim, factionInfo.getName(), true);
+							PlayerLeaveFactionEvent event = new PlayerLeaveFactionEvent(victim.getUniqueId(), factionInfo.getName(), true);
 							Bukkit.getPluginManager().callEvent(event);
 							InGameUtilities.sendPlayerError(p, "Vous avez exclu ß4"+victim.getName()+" ßc !");
-							factionFunctions.kickPlayer(factionInfo, (Player) victim);
+							factionFunctions.kickPlayer(factionInfo, victim.getUniqueId());
 							factionFunctions.sendFactionPlayer(factionInfo.getName(), "ßcLe joueur "+victim.getName()+" a ÈtÈ exclu de la faction.");
 
 						}
@@ -676,32 +694,38 @@ public class factionManager implements Listener, CommandExecutor  {
 		{
 			amount = 4000;
 		}
+		else if(perk.equalsIgnoreCase("zone_tp"))
+		{
+			amount = 20000;
+		}
 		return amount;
 	}
 
 	@EventHandler
 	private void ThingsToDoWhileLeaving(PlayerLeaveFactionEvent e)
 	{
-		Player p = e.getPlayer();
-		BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
-		if(bk != null)
+		if(Bukkit.getPlayer(e.getPlayerUuid()) != null)
 		{
-			bk.Leave(p);
+			Player p = Bukkit.getPlayer(e.getPlayerUuid());
+			BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
+			if(bk != null)
+			{
+				bk.Leave(p);
+			}
 		}
-		if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
+		if(main.hashMapManager.getFactionMap().containsKey(e.getPlayerUuid()))
 		{
-			main.hashMapManager.removeFactionMap(p.getUniqueId());
+			main.hashMapManager.removeFactionMap(e.getPlayerUuid());
 		}
-		if(main.hashMapManager.getFactionPrefixMap().containsKey(p.getUniqueId()))
+		if(main.hashMapManager.getFactionPrefixMap().containsKey(e.getPlayerUuid()))
 		{
-			main.hashMapManager.removeFactionMap(p.getUniqueId());
+			main.hashMapManager.removeFactionPrefixMap(e.getPlayerUuid());
 		}
-		PermissionUtilities.removePermission(p, "csp.skin.Faction");
+		PermissionUtilities.removePermission(e.getPlayerUuid(), "csp.skin.Faction");
 	}
 
 	private void ThingsToDoWhileJoining(Player p, String name, FactionInformation factionInfo)
 	{
-		FactionFunctions ff = new FactionFunctions(main, p);
 		if(factionInfo == null)
 		{
 			return;
@@ -719,4 +743,11 @@ public class factionManager implements Listener, CommandExecutor  {
 			PermissionUtilities.addPermission(p, "csp.skin.Faction");
 		}
 	}
+
+	public boolean isValidText(String text) {
+		String pattern = "^[a-zA-Z‡‚‰ÈËÍÎÓÔÙˆ˘˚¸ˇÁ¿¬ƒ…» ÀŒœ‘÷Ÿ€‹ü«\\-_.]*$";
+		return text.matches(pattern);
+	}
+
+
 }

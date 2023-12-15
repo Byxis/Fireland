@@ -462,15 +462,15 @@ public class bank implements Listener, CommandExecutor {
 			case 5, 6, 7 ->
 			{
 				max = 54;
-				if(PermissionUtilities.hasPermission(_p, "fireland.bank.bonus.1"))
+				if(PermissionUtilities.hasPermission(_p.getUniqueId(), "fireland.bank.bonus.1"))
 				{
 					max += 54;
 				}
-				if(PermissionUtilities.hasPermission(_p, "fireland.bank..bonus.2"))
+				if(PermissionUtilities.hasPermission(_p.getUniqueId(), "fireland.bank..bonus.2"))
 				{
 					max += 54;
 				}
-				if(PermissionUtilities.hasPermission(_p, "fireland.bank.bonus.3"))
+				if(PermissionUtilities.hasPermission(_p.getUniqueId(), "fireland.bank.bonus.3"))
 				{
 					max += 54;
 				}

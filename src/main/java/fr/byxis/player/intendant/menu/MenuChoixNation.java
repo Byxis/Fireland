@@ -1,20 +1,13 @@
 package fr.byxis.player.intendant.menu;
 
-import fr.byxis.faction.faction.FactionFunctions;
-import fr.byxis.faction.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
-import org.bukkit.block.banner.Pattern;
-import org.bukkit.block.banner.PatternType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +44,8 @@ public class MenuChoixNation {
         lore.add("§8Diminution du prix dans les magasins d'Etat.");
         inv.setItem(15, InventoryUtilities.getEtatBanner("§cRejoindre la nation de l'Etat", lore));
 
-        for(int i =0; i < 9; i++)
-            inv.setItem(i+27, InventoryUtilities.getWhiteGlassPane());
+        for (int i = 0; i < 9; i++)
+            inv.setItem(i + 27, InventoryUtilities.getWhiteGlassPane());
 
         lore = new ArrayList<>();
         lore.add("§cVotre choix n'est pas définitif, mais il");

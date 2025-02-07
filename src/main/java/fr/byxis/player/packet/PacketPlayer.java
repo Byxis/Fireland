@@ -22,11 +22,11 @@ public class PacketPlayer implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings)
     {
-        if(commandSender instanceof Player p && strings.length >=1)
+        if (commandSender instanceof Player p && strings.length >= 1)
         {
-            if(strings[0].equalsIgnoreCase("border"))
+            if (strings[0].equalsIgnoreCase("border"))
             {
-                if(strings.length < 2)
+                if (strings.length < 2)
                 {
                     InGameUtilities.sendPlayerInformation(p, "Packet envoyé.");
                     PlayTestBorderPacket(p);
@@ -34,11 +34,11 @@ public class PacketPlayer implements CommandExecutor {
                 }
                 else
                 {
-                    for(Player players : Bukkit.getOnlinePlayers())
+                    for (Player players : Bukkit.getOnlinePlayers())
                     {
-                        if(players.getName().equalsIgnoreCase(strings[1]))
+                        if (players.getName().equalsIgnoreCase(strings[1]))
                         {
-                            InGameUtilities.sendPlayerInformation(p, "Packet envoyé à "+players.getName()+".");
+                            InGameUtilities.sendPlayerInformation(p, "Packet envoyé à " + players.getName() + ".");
                             PlayTestBorderPacket(players);
                             return true;
                         }
@@ -47,13 +47,13 @@ public class PacketPlayer implements CommandExecutor {
                     return false;
                 }
             }
-            else if(strings[0].equalsIgnoreCase("opendoor"))
+            else if (strings[0].equalsIgnoreCase("opendoor"))
             {
                 InGameUtilities.sendPlayerInformation(p, "Packet envoyé. Porte ouverte");
                 //noinspection removal
                 PlayTestOpenDoorPacket(p, p.getTargetBlock(50).getLocation());
             }
-            else if(strings[0].equalsIgnoreCase("spyglass"))
+            else if (strings[0].equalsIgnoreCase("spyglass"))
             {
 
             }

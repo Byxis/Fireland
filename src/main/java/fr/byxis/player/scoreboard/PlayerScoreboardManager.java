@@ -9,15 +9,12 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 public class PlayerScoreboardManager implements @NotNull Listener {
 
     private final Fireland m_main;
-    private final SideBoardManager m_sbManager;
+    private static SideBoardManager m_sbManager = null;
     private final NameTagManager m_ntManager;
-    private ScoreboardManager m_manager;
+    private static ScoreboardManager m_manager;
 
     private static Scoreboard m_scoreboard;
 
@@ -33,14 +30,19 @@ public class PlayerScoreboardManager implements @NotNull Listener {
         loop();
     }
 
+    public static void refreshScoreboard(Player _p)
+    {
+        m_sbManager.updateSideBoard(_p, m_scoreboard, m_manager.getNewScoreboard());
+    }
+
     private void loop()
     {
         new BukkitRunnable() {
             @Override
             public void run() {
-                for(Player p : Bukkit.getOnlinePlayers())
+                for (Player p : Bukkit.getOnlinePlayers())
                 {
-                    m_sbManager.updateSideBoard(p, m_scoreboard, m_manager.getNewScoreboard());
+                    refreshScoreboard(p);
                 }
             }
         }.runTaskTimer(m_main, 0, 10);
@@ -53,11 +55,11 @@ public class PlayerScoreboardManager implements @NotNull Listener {
 
     /*public static Scoreboard getPlayerScoreboard(Player p)
     {
-        if(!m_scoreboardPlayers.containsKey(p.getUniqueId()))
+        if (!m_scoreboardPlayers.containsKey(p.getUniqueId()))
         {
             m_scoreboardPlayers.put(p.getUniqueId(), m_scoreboard);
         }
-        else if(m_hasScoreboardChanged)
+        else if (m_hasScoreboardChanged)
         {
             m_scoreboardPlayers.replace(p.getUniqueId(), m_scoreboard);
         }

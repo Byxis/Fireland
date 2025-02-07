@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
-
 public class PvPManager implements Listener {
 
     private static Map<UUID, Integer> pvpTimer;
@@ -36,35 +34,75 @@ public class PvPManager implements Listener {
         loop();
     }
 
+    public static void putPvpTimer(Player p)
+    {
+        if (pvpTimer.containsKey(p.getUniqueId()))
+        {
+            pvpTimer.replace(p.getUniqueId(), 30);
+        }
+        else
+        {
+            pvpTimer.put(p.getUniqueId(), 30);
+        }
+    }
+
+    public static boolean isOnTimer(Player p)
+    {
+        if (pvpTimer.containsKey(p.getUniqueId()))
+        {
+            return pvpTimer.get(p.getUniqueId()) > 0;
+        }
+        return false;
+    }
+
+    public static void removeTimer(UUID uuid)
+    {
+        if (pvpTimer.containsKey(uuid))
+        {
+            pvpTimer.replace(uuid, pvpTimer.get(uuid) - 1);
+        }
+    }
+
+    public static void deleteTimer(UUID uuid)
+    {
+        pvpTimer.remove(uuid);
+    }
+
+    public static void deleteTimer(Player p)
+    {
+        pvpTimer.remove(p.getUniqueId());
+    }
+
     @EventHandler
     public void playerHit(EntityDamageByEntityEvent e)
     {
-        if(e.getEntity() instanceof Player p && e.getDamager() instanceof Player d && !e.isCancelled())
+        if (e.getEntity() instanceof Player p && e.getDamager() instanceof Player d && !e.isCancelled())
         {
             ItemStack itemCrackData = new ItemStack(Material.REDSTONE_BLOCK);
             p.getWorld().spawnParticle(Particle.ITEM_CRACK, p.getLocation().add(0,1,0), 20, 0, 0, 0, 0.1,  itemCrackData);
 
-            if(p.getName().equalsIgnoreCase(d.getName()))
+            if (p.getName().equalsIgnoreCase(d.getName()))
                 return;
 
-            if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()) && main.hashMapManager.getFactionMap().containsKey(d.getUniqueId()))
+            if (main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()) && main.hashMapManager.getFactionMap().containsKey(d.getUniqueId()))
             {
-                if(main.hashMapManager.getFactionMap().get(p.getUniqueId()).equals(main.hashMapManager.getFactionMap().get(d.getUniqueId())))
+                if (main.hashMapManager.getFactionMap().get(p.getUniqueId()).equals(main.hashMapManager.getFactionMap().get(d.getUniqueId())))
                 {
                     return;
                 }
             }
 
-            if(d.getGameMode() != GameMode.CREATIVE && !d.isInvulnerable())
+            if (d.getGameMode() != GameMode.CREATIVE && !d.isInvulnerable())
             {
-                if(!pvpTimer.containsKey(d.getUniqueId()))
+                if (!pvpTimer.containsKey(d.getUniqueId()))
                 {
                     InGameUtilities.sendPlayerError(d, "Vous entrez en combat pendant 30s. Ne vous déconnectez pas où vous perdrez votre stuff.");
                 }
                 putPvpTimer(d);
             }
-            if(p.getGameMode() != GameMode.CREATIVE  && !p.isInvulnerable()) {
-                if(!pvpTimer.containsKey(p.getUniqueId()))
+            if (p.getGameMode() != GameMode.CREATIVE && !p.isInvulnerable())
+            {
+                if (!pvpTimer.containsKey(p.getUniqueId()))
                 {
                     InGameUtilities.sendPlayerError(p, "Vous entrez en combat pendant 30s. Ne vous déconnectez pas où vous perdrez votre stuff.");
                 }
@@ -74,57 +112,13 @@ public class PvPManager implements Listener {
         }
     }
 
-    public static void putPvpTimer(Player p)
-    {
-        if(pvpTimer.containsKey(p.getUniqueId()))
-        {
-            pvpTimer.replace(p.getUniqueId(),30);
-        }
-        else
-        {
-            pvpTimer.put(p.getUniqueId(),30);
-        }
-    }
-
-    public static boolean isOnTimer(Player p)
-    {
-        if(pvpTimer.containsKey(p.getUniqueId()))
-        {
-            return pvpTimer.get(p.getUniqueId()) > 0;
-        }
-        return false;
-    }
-
-    public static void removeTimer(UUID uuid)
-    {
-        if(pvpTimer.containsKey(uuid))
-        {
-            pvpTimer.replace(uuid, pvpTimer.get(uuid)-1);
-        }
-    }
-
-    public static void deleteTimer(UUID uuid)
-    {
-        if(pvpTimer.containsKey(uuid))
-        {
-            pvpTimer.remove(uuid);
-        }
-    }
-    public static void deleteTimer(Player p)
-    {
-        if(pvpTimer.containsKey(p.getUniqueId()))
-        {
-            pvpTimer.remove(p.getUniqueId());
-        }
-    }
-
     @EventHandler
     public void playerLeave(PlayerQuitEvent e)
     {
-        if(isOnTimer(e.getPlayer()))
+        if (isOnTimer(e.getPlayer()))
         {
             e.getPlayer().setHealth(0);
-            InGameUtilities.sendEveryoneCustomText("§c"+e.getPlayer().getName()+" est mort par déco-combat.");
+            InGameUtilities.sendEveryoneCustomText("§c " + e.getPlayer().getName() + " est mort par déco-combat.");
             deleteTimer(e.getPlayer());
         }
     }
@@ -132,7 +126,7 @@ public class PvPManager implements Listener {
     @EventHandler
     public void playerDeath(PlayerDeathEvent e)
     {
-        if(isOnTimer(e.getPlayer()))
+        if (isOnTimer(e.getPlayer()))
         {
             deleteTimer(e.getPlayer());
         }
@@ -143,19 +137,19 @@ public class PvPManager implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if(pvpTimer.keySet().isEmpty())
+                if (pvpTimer.keySet().isEmpty())
                 {
                     return;
                 }
-                for(UUID uuid : pvpTimer.keySet())
+                for (UUID uuid : pvpTimer.keySet())
                 {
                     removeTimer(uuid);
                     Player p = Bukkit.getPlayer(uuid);
-                    if(p!=null && p.isOnline())
+                    if (p != null && p.isOnline())
                     {
                         showTimerBar(p);
                     }
-                    if(pvpTimer.get(p.getUniqueId()) < 0)
+                    if (pvpTimer.get(p.getUniqueId()) < 0)
                     {
                         deleteTimer(p.getUniqueId());
                         InGameUtilities.sendPlayerInformation(p, "Vous n'êtes plus en combat.");
@@ -166,9 +160,9 @@ public class PvPManager implements Listener {
     }
 
     private void showTimerBar(Player p) {
-        BossBar bar = Bukkit.createBossBar("§c§lEn combat pendant " + (pvpTimer.get(p.getUniqueId())+1) + "s", BarColor.RED, BarStyle.SOLID);
+        BossBar bar = Bukkit.createBossBar("§c§lEn combat pendant " + (pvpTimer.get(p.getUniqueId()) + 1) + "s", BarColor.RED, BarStyle.SOLID);
         bar.setVisible(true);
-        bar.setProgress((double) (pvpTimer.get(p.getUniqueId())+1) / 30);
+        bar.setProgress((double) (pvpTimer.get(p.getUniqueId()) + 1) / 30);
         bar.addPlayer(p);
         new BukkitRunnable() {
             @Override

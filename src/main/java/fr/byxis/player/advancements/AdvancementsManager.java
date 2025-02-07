@@ -3,12 +3,9 @@ package fr.byxis.player.advancements;
 import com.google.common.collect.ArrayListMultimap;
 import fr.byxis.fireland.Fireland;
 import io.lumine.mythic.api.mobs.MythicMob;
-import org.antlr.v4.runtime.misc.MultiMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdvancementsManager {
@@ -79,7 +76,7 @@ public class AdvancementsManager {
     {
         for (String success : m_config.getConfig().getConfigurationSection("success").getKeys(false))
         {
-            Success type = Success.valueOf(m_config.getConfig().getString("success."+success+".type"));
+            Success type = Success.valueOf(m_config.getConfig().getString("success." + success + ".type"));
             switch(type)
             {
                 case KILL -> m_success.put(type, new KillAdvancements(this, success));
@@ -103,9 +100,9 @@ public class AdvancementsManager {
         {
             case KILL ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof KillAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof KillAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (MythicMob) params[0], (Integer) params[1]);
                     }
@@ -113,9 +110,9 @@ public class AdvancementsManager {
             }
             case PLAY_TIME ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof PlayTimeAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof PlayTimeAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (Integer) params[0]);
                     }
@@ -123,9 +120,9 @@ public class AdvancementsManager {
             }
             case LEARN_RECIPE ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof LearnRecipeAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof LearnRecipeAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (Integer) params[0]);
                     }
@@ -133,9 +130,9 @@ public class AdvancementsManager {
             }
             case CRAFT ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof CraftAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof CraftAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (Integer) params[0]);
                     }
@@ -143,9 +140,9 @@ public class AdvancementsManager {
             }
             case CRAFT_SUCCES ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof CraftSuccessAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof CraftSuccessAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (Integer) params[0]);
                     }
@@ -153,9 +150,9 @@ public class AdvancementsManager {
             }
             case CRAFT_BREAK ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof CraftBreakAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof CraftBreakAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (Integer) params[0]);
                     }
@@ -163,9 +160,9 @@ public class AdvancementsManager {
             }
             case GRADE_CHANGE ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof GradeChangeAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof GradeChangeAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (String) params[0]);
                     }
@@ -173,9 +170,9 @@ public class AdvancementsManager {
             }
             case RANK_CHANGE ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof RankChangeAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof RankChangeAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (String) params[0]);
                     }
@@ -183,9 +180,9 @@ public class AdvancementsManager {
             }
             case EQUIP_SKIN ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof SkinEquipAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof SkinEquipAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (String) params[0]);
                     }
@@ -193,9 +190,9 @@ public class AdvancementsManager {
             }
             case USE_BOOSTER ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof UseBoosterAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof UseBoosterAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (int) params[0], (int) params[1], (int) params[2]);
                     }
@@ -203,9 +200,9 @@ public class AdvancementsManager {
             }
             case POSSESS_JETONS ->
             {
-                for(AdvancementsClass advancement : m_success.get(Success.KILL))
+                for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
-                    if(advancement instanceof PossessJetonsAdvancements success && !isSuccessFinished(advancement, p))
+                    if (advancement instanceof PossessJetonsAdvancements success && !isSuccessFinished(advancement, p))
                     {
                         success.updatePlayer(p, (int) params[0]);
                     }
@@ -216,7 +213,7 @@ public class AdvancementsManager {
 
     public int getSuccessInt(String path)
     {
-        if(m_changementList.containsKey(path))
+        if (m_changementList.containsKey(path))
         {
             return m_changementList.get(path);
         }
@@ -225,12 +222,12 @@ public class AdvancementsManager {
 
     public void addSuccessInt(String path, int value)
     {
-        m_changementList.put(path, getSuccessInt(path)+value);
+        m_changementList.put(path, getSuccessInt(path) + value);
     }
 
     public void setSuccessInt(String path, int value)
     {
-        if(m_changementList.containsKey(path))
+        if (m_changementList.containsKey(path))
         {
             m_changementList.replace(path, value);
         }
@@ -252,9 +249,7 @@ public class AdvancementsManager {
 
     public boolean isSuccessFinished(AdvancementsClass adv, Player p)
     {
-        if(getSuccessInt(adv.getPath(p)) == -1)
-            return true;
-        return false;
+        return getSuccessInt(adv.getPath(p)) == -1;
     }
 
 }

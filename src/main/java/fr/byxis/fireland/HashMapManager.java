@@ -5,7 +5,6 @@ import fr.byxis.player.discretion.DiscretionClass;
 import fr.byxis.player.karma.PlayerKarmaClass;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Date;
 import java.util.HashMap;
@@ -140,44 +139,14 @@ public class HashMapManager {
         this.booster = booster;
     }
 
-    public boolean isTeleporting(UUID uuid) {
-        if(isTeleporting.containsKey(uuid))
-        {
-            return isTeleporting.get(uuid);
-        }
-        return false;
-    }
-
-    public void addTeleporting(UUID uuid) {
-        if(isTeleporting.containsKey(uuid))
-        {
-            isTeleporting.replace(uuid, true);
-        }
-        else
-        {
-            isTeleporting.put(uuid, true);
-        }
-    }
-
-    public void removeTeleporting(UUID uuid) {
-        if(isTeleporting.containsKey(uuid))
-        {
-            isTeleporting.replace(uuid, false);
-        }
-        else
-        {
-            isTeleporting.put(uuid, false);
-        }
-    }
-
     public static boolean canPurify(Player p)
     {
         UUID uuid = p.getUniqueId();
-        if(p.hasPermission("fireland.thirst.1") ||p.hasPermission("fireland.thirst.2") ||p.hasPermission("fireland.thirst.3"))
+        if (p.hasPermission("fireland.thirst.1") || p.hasPermission("fireland.thirst.2") || p.hasPermission("fireland.thirst.3"))
         {
-            if(!purify.containsKey(uuid))
+            if (!purify.containsKey(uuid))
             {
-                purify.put(uuid,true);
+                purify.put(uuid, true);
             }
             return purify.get(uuid);
         }
@@ -188,7 +157,7 @@ public class HashMapManager {
     {
 
         UUID uuid = p.getUniqueId();
-        if(purify.containsKey(uuid))
+        if (purify.containsKey(uuid))
         {
             purify.replace(uuid, b);
         }
@@ -198,9 +167,39 @@ public class HashMapManager {
         }
     }
 
+    public boolean isTeleporting(UUID uuid) {
+        if (isTeleporting.containsKey(uuid))
+        {
+            return isTeleporting.get(uuid);
+        }
+        return false;
+    }
+
+    public void addTeleporting(UUID uuid) {
+        if (isTeleporting.containsKey(uuid))
+        {
+            isTeleporting.replace(uuid, true);
+        }
+        else
+        {
+            isTeleporting.put(uuid, true);
+        }
+    }
+
+    public void removeTeleporting(UUID uuid) {
+        if (isTeleporting.containsKey(uuid))
+        {
+            isTeleporting.replace(uuid, false);
+        }
+        else
+        {
+            isTeleporting.put(uuid, false);
+        }
+    }
+
     private void loadBooster()
     {
-        if(main.cfgm.getPlayerDB().contains("booster.player"))
+        if (main.cfgm.getPlayerDB().contains("booster.player"))
         {
             booster = new BoosterClass(
                     new Date(main.cfgm.getPlayerDB().getLong("booster.started")),
@@ -212,7 +211,7 @@ public class HashMapManager {
 
     public void saveBooster()
     {
-        if(booster != null && booster.getFinished().after(new java.util.Date()))
+        if (booster != null && booster.getFinished().after(new java.util.Date()))
         {
             main.cfgm.getPlayerDB().set("booster.started", booster.getStarted().getTime());
             main.cfgm.getPlayerDB().set("booster.finished", booster.getFinished().getTime());

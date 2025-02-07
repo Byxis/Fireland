@@ -12,8 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static fr.byxis.player.items.toxic.infectedPlayer.isInfected;
-import static fr.byxis.player.items.toxic.infectedPlayer.setInfection;
+import static fr.byxis.player.items.toxic.InfectedPlayer.isInfected;
+import static fr.byxis.player.items.toxic.InfectedPlayer.setInfection;
 
 public class SporeDamage {
 
@@ -29,10 +29,11 @@ public class SporeDamage {
 
     public void loop()
     {
-        new BukkitRunnable(){
+        new BukkitRunnable()
+{
             @Override
             public void run() {
-                for(Player p : Bukkit.getOnlinePlayers())
+                for (Player p : Bukkit.getOnlinePlayers())
                 {
                     toxicityDamageHandler(p);
                 }
@@ -43,15 +44,15 @@ public class SporeDamage {
 
     private void toxicityDamageHandler(Player p)
     {
-        if(p.getGameMode() == GameMode.CREATIVE || p.getGameMode() == GameMode.SPECTATOR || p.isInvulnerable())
+        if (p.getGameMode() == GameMode.CREATIVE || p.getGameMode() == GameMode.SPECTATOR || p.isInvulnerable())
         {
             return;
         }
-        if(isAffectedByToxicity.containsKey(p.getUniqueId()))
+        if (isAffectedByToxicity.containsKey(p.getUniqueId()))
         {
-            if(isAffectedByToxicity.get(p.getUniqueId()))
+            if (isAffectedByToxicity.get(p.getUniqueId()))
             {
-                if(isInfected(p))
+                if (isInfected(p))
                 {
                     p.damage(3);
                     EntityDamageEvent e = new EntityDamageEvent(p, EntityDamageEvent.DamageCause.POISON, 3);
@@ -62,7 +63,8 @@ public class SporeDamage {
                     p.damage(1);
                     EntityDamageEvent e = new EntityDamageEvent(p, EntityDamageEvent.DamageCause.POISON, 1);
                     p.setLastDamageCause(e);
-                    if(Math.random() < 0.1) {
+                    if (Math.random() < 0.1)
+                    {
                         setInfection(p, true);
                         p.sendMessage("§8Vous avez été infecté par les spores ! Trouvez vite une seringue avant l'infection ne vous tue");
                         p.sendTitle("§8Vous avez été infecté !", "");
@@ -81,7 +83,7 @@ public class SporeDamage {
 
     private boolean isAffected(Player p) {
         Location loc = p.getLocation();
-        if((p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.BROWN_DYE))
+        if ((p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.BROWN_DYE))
         {
             return false;
         }
@@ -99,25 +101,25 @@ public class SporeDamage {
                 }
             }
         }
-        if(detected)
+        if (detected)
         {
             boolean toit = false;
-            for(int y =0; y <= h; y++)
+            for (int y = 0; y <= h; y++)
             {
-                if(new Location(loc.getWorld(), loc.getX() , loc.getY() + y, loc.getZ()).getBlock().getType() != Material.AIR)
+                if (new Location(loc.getWorld(), loc.getX(), loc.getY() + y, loc.getZ()).getBlock().getType() != Material.AIR)
                 {
                     toit = true;
                     h = y;
                     break;
                 }
             }
-            if(toit)
+            if (toit)
             {
-                for(int x = -1; x <= 1; x++)
+                for (int x = -1; x <= 1; x++)
                 {
-                    for(int z = -1; z <= 1; z++)
+                    for (int z = -1; z <= 1; z++)
                     {
-                        if(new Location(loc.getWorld(), loc.getX() + x, loc.getY()+h, loc.getZ() + z).getBlock().getType() == Material.AIR)
+                        if (new Location(loc.getWorld(), loc.getX() + x, loc.getY() + h, loc.getZ() + z).getBlock().getType() == Material.AIR)
                         {
                             return true;
                         }

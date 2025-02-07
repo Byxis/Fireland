@@ -1,7 +1,7 @@
 package fr.byxis.fireland.utilities;
 
 import org.apache.commons.io.IOUtils;
-import org.bukkit.*;
+import org.bukkit.Material;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -57,23 +57,23 @@ public class BasicUtilities {
         long day = (durationInMillis / (1000 * 60 * 60*24)%30);
         long month = (durationInMillis / (1000L * 60 * 60*24*30)%364);
         long year = (durationInMillis / (1000L * 60 * 60*24*30*364));
-        if(year > 0)
+        if (year > 0)
         {
             return String.format("%2dan(s), %2dmois, %2djour(s).", year, month, day);
         }
-        if(month > 0)
+        if (month > 0)
         {
             return String.format("%2dmois, %2djour(s), %2dheure(s)", month, day, hour);
         }
-        if(day > 0)
+        if (day > 0)
         {
             return String.format("%2djour(s), %2dheure(s), %2dminute(s)", day, hour, minute);
         }
-        else if(hour > 0)
+        else if (hour > 0)
         {
             return String.format("%2dheure(s), %2dminute(s) et %2dseconde(s).", year, hour, minute);
         }
-        else if(minute > 0)
+        else if (minute > 0)
         {
             return String.format("%2dminute(s) et %2dseconde(s).", minute, second);
         }
@@ -81,18 +81,18 @@ public class BasicUtilities {
     }
 
     public static UUID getUuid(String name) {
-        String url = "https://api.mojang.com/users/profiles/minecraft/"+name;
+        String url = "https://api.mojang.com/users/profiles/minecraft/" + name;
         try {
             @SuppressWarnings("deprecation")
             String UUIDJson = IOUtils.toString(new URL(url));
-            if(UUIDJson.isEmpty()) return null;
+            if (UUIDJson.isEmpty()) return null;
             JSONObject UUIDObject = (JSONObject) JSONValue.parseWithException(UUIDJson);
             String[] uuid = UUIDObject.get("id").toString().split("");
             StringBuilder sb = new StringBuilder();
-            for(int i =0; i<uuid.length; i++)
+            for (int i = 0; i < uuid.length; i++)
             {
                 sb.append(uuid[i]);
-                if(i == 7 | i == 11 || i == 15 || i == 19)
+                if (i == 7 | i == 11 || i == 15 || i == 19)
                 {
                     sb.append("-");
                 }
@@ -105,19 +105,21 @@ public class BasicUtilities {
         return null;
     }
 
-    public static int generateInt(int borneInf, int borneSup){
+    public static int generateInt(int borneInf, int borneSup)
+{
         Random random = new Random();
         int nb;
-        nb = borneInf+random.nextInt(borneSup-borneInf);
+        nb = borneInf + random.nextInt(borneSup-borneInf);
         return nb;
     }
 
-    public static List<String> listMaker(String str1, String str2, String str3, String str4){
+    public static List<String> listMaker(String str1, String str2, String str3, String str4)
+{
         List<String> lore = new ArrayList<String>();
-        if(str1 != "") lore.add(str1);
-        if(str2 != "") lore.add(str2);
-        if(str3 != "")lore.add(str3);
-        if(str4 != "")lore.add(str4);
+        if (str1 != "") lore.add(str1);
+        if (str2 != "") lore.add(str2);
+        if (str3 != "") lore.add(str3);
+        if (str4 != "") lore.add(str4);
         return lore;
     }
 

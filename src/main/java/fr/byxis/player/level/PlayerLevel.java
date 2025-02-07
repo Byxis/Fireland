@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.jeton.JetonManager.addJetonsPlayer;
 
 public class PlayerLevel {
@@ -84,20 +83,20 @@ public class PlayerLevel {
 
     public void addLevel(int _level)
     {
-        m_level+=_level;
+        m_level += _level;
     }
 
     public void setLevel(int _level)
     {
-        m_level=_level;
+        m_level = _level;
     }
 
     public void addXp(Fireland _main, int _xp)
     {
         double booster = 1;
-        if(_main.hashMapManager.getBooster() != null)
-            booster = 1 + 0.25*_main.hashMapManager.getBooster().getLevel();
-        addXp((int) (_xp*booster));
+        if (_main.hashMapManager.getBooster() != null)
+            booster = 1 + 0.25 *_main.hashMapManager.getBooster().getLevel();
+        addXp((int) Math.ceil((_xp * booster)));
     }
 
     public void addXp(int _xp)
@@ -109,7 +108,7 @@ public class PlayerLevel {
             m_xp -= getRemainingXp();
             addLevel(1);
         }
-        if(oldLevel < m_level)
+        if (oldLevel < m_level)
         {
             passage("niveau", m_level);
         }
@@ -124,26 +123,26 @@ public class PlayerLevel {
             m_xp -= getRemainingXp();
             addLevel(1);
         }
-        if(oldLevel < m_level)
+        if (oldLevel < m_level)
         {
             Player p = Bukkit.getPlayer(m_uuid);
             InGameUtilities.playPlayerSound(p, "gun.hud.rangchange", SoundCategory.AMBIENT, 1, 1);
         }
 
-        for(int i = oldLevel; i <= m_level; i++)
+        for (int i = oldLevel; i <= m_level; i++)
             GivePlayerMission(i);
     }
 
     public int getRemainingXp()
     {
-        if(m_level < 25)
-            return 20*(m_level+1);
-        else if(m_level < 50)
-            return 25*(m_level+1-24) + 20*24;
-        else if(m_level < 75)
-            return 30*(m_level+1-49) + 25*24 + 20*25;
-        else if(m_level < 100)
-            return 40*(m_level+1-74) + 30*24 + 25*25 + 20*25;
+        if (m_level < 25)
+            return 20 *(m_level + 1);
+        else if (m_level < 50)
+            return 25 *(m_level + 1-24) + 20 *24;
+        else if (m_level < 75)
+            return 30 *(m_level + 1-49) + 25 *24 + 20 *25;
+        else if (m_level < 100)
+            return 40 *(m_level + 1-74) + 30 *24 + 25 *25 + 20 *25;
         else
             return -1;
     }
@@ -218,65 +217,64 @@ public class PlayerLevel {
     public boolean hasAccesstoShop(String _shop)
     {
         int cap = getLevelCap();
-        if(cap == 4)
+        if (cap == 4)
             return true;
-        if(cap <= 3)
+        if (cap <= 3)
         {
-            if(_shop.contains("lourd"))
+            if (_shop.contains("lourd"))
                 return false;
         }
-        if(cap <= 2)
+        if (cap <= 2)
         {
-            if(_shop.contains("passr") || _shop.contains("anticaire") || _shop.contains("assaut"))
+            if (_shop.contains("passr") || _shop.contains("anticaire") || _shop.contains("assaut"))
                 return false;
         }
-        if(cap <= 1)
+        if (cap <= 1)
         {
-            if(_shop.contains("passj") || _shop.contains("fusil"))
+            if (_shop.contains("passj") || _shop.contains("fusil"))
                 return false;
         }
-        if(cap <= 0)
+        if (cap <= 0)
         {
-            if(_shop.contains("passb") || _shop.contains("smg"))
-                return false;
+            return !_shop.contains("passb") && !_shop.contains("smg");
         }
         return true;
     }
 
     public int getLevelAccesstoShop(String _shop)
     {
-        if(_shop.contains("anticaire"))
+        if (_shop.contains("anticaire"))
             return 100;
-        if(_shop.contains("passr") || _shop.contains("assaut"))
+        if (_shop.contains("passr") || _shop.contains("assaut"))
             return 75;
-        if(_shop.contains("passj") || _shop.contains("fusil"))
+        if (_shop.contains("passj") || _shop.contains("fusil"))
             return 50;
-        if(_shop.contains("passb") || _shop.contains("smg"))
+        if (_shop.contains("passb") || _shop.contains("smg"))
             return 25;
         return 0;
     }
 
     public boolean hasAccessToReductions(String _shop)
     {
-        if(m_nation.equals(LevelStorage.Nation.Bannis))
+        if (m_nation.equals(LevelStorage.Nation.Bannis))
             return _shop.contains("_bannis");
-        if(m_nation.equals(LevelStorage.Nation.Etat))
+        if (m_nation.equals(LevelStorage.Nation.Etat))
             return _shop.contains("_nation");
         return false;
     }
 
     public boolean hasAccessToAugmentation(String _shop)
     {
-        if(m_nation.equals(LevelStorage.Nation.Bannis))
+        if (m_nation.equals(LevelStorage.Nation.Bannis))
             return _shop.contains("_nation");
-        if(m_nation.equals(LevelStorage.Nation.Etat))
+        if (m_nation.equals(LevelStorage.Nation.Etat))
             return _shop.contains("_bannis");
         return false;
     }
 
     public double getReduction()
     {
-        return 0.05*getRang();
+        return 0.05 *getRang();
     }
 
     public void addRang(int _rang)
@@ -294,7 +292,7 @@ public class PlayerLevel {
 
     public void setRangLimit()
     {
-        if(m_rang < 0)
+        if (m_rang < 0)
             m_rang = 0;
         if (m_rang > 4)
             m_rang = 4;
@@ -304,12 +302,12 @@ public class PlayerLevel {
     {
         Player p = Bukkit.getPlayer(m_uuid);
         InGameUtilities.playPlayerSound(p, "gun.hud.rangchange", SoundCategory.AMBIENT, 1, 1);
-        p.sendTitle("", "§7Passage au "+type+ " "+ amount);
+        p.sendTitle("", "§7Passage au " + type + " " + amount);
     }
 
     public boolean HasClaimedReward(Fireland _main, int _lvl)
     {
-        if(!m_rewardsClaimed.containsKey(_lvl))
+        if (!m_rewardsClaimed.containsKey(_lvl))
         {
             DbConnection connectionDb = _main.getDatabaseManager().getFirelandConnection();
             try {
@@ -319,7 +317,7 @@ public class PlayerLevel {
                 hasClaimedReward.setString(1, m_uuid.toString());
                 hasClaimedReward.setInt(2, _lvl);
                 ResultSet rs = hasClaimedReward.executeQuery();
-                if(rs.next())
+                if (rs.next())
                 {
                     m_rewardsClaimed.put(_lvl, true);
                 }
@@ -353,16 +351,16 @@ public class PlayerLevel {
     public void ClaimRewards(Fireland _main, int _lvl)
     {
         Player p = Bukkit.getPlayer(m_uuid);
-        if(!HasClaimedReward(_main, _lvl))
+        if (!HasClaimedReward(_main, _lvl))
         {
             int jetons = GetRewardsJetons(_lvl);
             int money = GetRewardsMoney(_lvl);
             String item = GetRewardsItems(_lvl);
-            if(jetons > 0)
-                InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré "+jetons+"§f\u26c1§a et "+money +"§f$§a.");
+            if (jetons > 0)
+                InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré " + jetons + "§f\u26c1§a et " + money + "§f$§a.");
             else
-                InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré "+money +"§f$§a.");
-            if(!item.isEmpty())
+                InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré " + money + "§f$§a.");
+            if (!item.isEmpty())
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.replace("Player", p.getName()));
             addJetonsPlayer(m_uuid, jetons);
             Fireland.eco.depositPlayer(p, money);
@@ -389,7 +387,7 @@ public class PlayerLevel {
 
     public int GetRewardsMoney(int lvl)
     {
-        return lvl*10;
+        return lvl *10;
     }
 
     public String GetRewardsItems(int lvl)
@@ -418,10 +416,10 @@ public class PlayerLevel {
         {
             //case 1 -> questIds.add(1);
         };
-        if(!questIds.isEmpty())
+        if (!questIds.isEmpty())
         {
             Player p = Bukkit.getPlayer(m_uuid);
-            if(questIds.size() > 1)
+            if (questIds.size() > 1)
             {
                 InGameUtilities.sendPlayerSucces(p, "Vous avez débloqué une nouvelle quête !");
             }
@@ -429,7 +427,7 @@ public class PlayerLevel {
             {
                 InGameUtilities.sendPlayerSucces(p, "Vous avez débloqué de nouvelles quêtes !");
             }
-            for(Integer id : questIds)
+            for (Integer id : questIds)
             {
                 QuestsAPI.getQuests().getQuest(id).start(p, true);
             }

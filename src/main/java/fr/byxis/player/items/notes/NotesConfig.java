@@ -21,18 +21,18 @@ public class NotesConfig {
     private String name;
 
     public void setup(boolean log) {
-        file = new File(plugin.getDataFolder(), name+".yml");
+        file = new File(plugin.getDataFolder(), name + ".yml");
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                if(log)plugin.getLogger().info(name+".yml has been created !");
+                if (log) plugin.getLogger().info(name + ".yml has been created !");
             } catch (IOException e) {
-                if(log)System.err.println("/!\\ Could not create "+name+".yml");
+                if (log) System.err.println("/!\\ Could not create " + name + ".yml");
             }
         }
 
         config = YamlConfiguration.loadConfiguration(file);
-        if(log)plugin.getLogger().info(name+".yml has been loaded !");
+        if (log) plugin.getLogger().info(name + ".yml has been loaded !");
     }
 
     public FileConfiguration getConfig()
@@ -48,14 +48,14 @@ public class NotesConfig {
         }
         catch(IOException e)
         {
-            System.err.println("/!\\ Could not save "+name+".yml");
+            System.err.println("/!\\ Could not save " + name + ".yml");
         }
     }
 
     public FileConfiguration reload()
     {
         config = YamlConfiguration.loadConfiguration(file);
-        plugin.getLogger().info(name+".yml has been reloaded !");
+        plugin.getLogger().info(name + ".yml has been reloaded !");
         return config;
     }
 }

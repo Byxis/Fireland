@@ -4,7 +4,10 @@ import fr.byxis.db.DbConnection;
 import fr.byxis.faction.zone.zoneclass.FactionZoneInformation;
 import fr.byxis.fireland.Fireland;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,17 +76,17 @@ public class ZoneManager {
                 int j = 0;
                 for (FactionZoneInformation zone : list)
                 {
-                    if(j > i)
+                    if (j > i)
                     {
                         break;
                     }
-                    if(zone.getZoneName().equals(factionZoneInformation.getZoneName()))
+                    if (zone.getZoneName().equals(factionZoneInformation.getZoneName()))
                     {
                         inside = true;
                         zone.setTotalDuration(zone.getTotalDuration() + factionZoneInformation.getTotalDuration());
                     }
                 }
-                if(!inside)
+                if (!inside)
                 {
                     list.add(factionZoneInformation);
                 }

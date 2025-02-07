@@ -2,10 +2,8 @@ package fr.byxis.player.packet;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedBlockData;
-import com.comphenix.protocol.wrappers.EnumWrappers;
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,19 +11,17 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class PacketFunctions {
 
     private final Fireland main;
 
-    public PacketFunctions(Fireland main)
+    public PacketFunctions(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
 
     public static void sendWorldBorderWarningDistancePacket(Player player, double intensity) {
-        int warningDistance = (int) (intensity*Integer.MAX_VALUE);
+        int warningDistance = (int) (intensity *Integer.MAX_VALUE);
         PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.SET_BORDER_WARNING_DISTANCE);
         packet.getIntegers().write(0, warningDistance);
         try {
@@ -36,7 +32,7 @@ public class PacketFunctions {
     }
 
     public static void sendWorldBorderWarningDistancePacket(Player player, double intensity, double distance) {
-        int warningDistance = (int) (intensity*distance);
+        int warningDistance = (int) (intensity *distance);
         PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.SET_BORDER_WARNING_DISTANCE);
         packet.getIntegers().write(0, warningDistance);
         try {

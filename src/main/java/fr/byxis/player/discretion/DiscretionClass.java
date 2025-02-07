@@ -43,10 +43,10 @@ public class DiscretionClass {
     }
     public void reduceTimeShooting()
     {
-        if(!isShooting())
+        if (!isShooting())
             return;
         shooting -= 1;
-        if(shooting < 0)
+        if (shooting < 0)
             shooting = 0;
     }
 

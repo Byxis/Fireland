@@ -1,3 +1,9 @@
+database:
+  host: ""
+  user: ""
+  pass: ""
+  name: ""
+  port: 0
 heliport:
   centreville:
     x: -444.5

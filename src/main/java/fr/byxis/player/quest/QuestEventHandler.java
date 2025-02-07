@@ -21,17 +21,17 @@ public class QuestEventHandler implements @NotNull Listener {
 
     private final Fireland main;
 
-    public QuestEventHandler(Fireland main)
+    public QuestEventHandler(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void playerJoin(PlayerJoinEvent e)
     {
-        if(!QuestManager.getPlayerQuest().containsKey(e.getPlayer().getUniqueId()) || !QuestManager.getPlayerQuest().get(e.getPlayer().getUniqueId()).hasFinished())
+        if (!QuestManager.getPlayerQuest().containsKey(e.getPlayer().getUniqueId()) || !QuestManager.getPlayerQuest().get(e.getPlayer().getUniqueId()).hasFinished())
         {
-            if(e.getPlayer().hasPlayedBefore())
+            if (e.getPlayer().hasPlayedBefore())
             {
                 InGameUtilities.sendPlayerSucces(e.getPlayer(), "De nouvelles quêtes quotidiennes sont disponibles !");
             }
@@ -42,7 +42,7 @@ public class QuestEventHandler implements @NotNull Listener {
     @EventHandler
     public void save(WorldSaveEvent e)
     {
-        if(!e.getWorld().getName().equalsIgnoreCase("world"))
+        if (!e.getWorld().getName().equalsIgnoreCase("world"))
             return;
         QuestManager.saveProgress();
     }
@@ -51,7 +51,7 @@ public class QuestEventHandler implements @NotNull Listener {
     public void playerKillEntity(MythicMobDeathEvent e)
     {
 
-        if(e.getKiller() instanceof Player p)
+        if (e.getKiller() instanceof Player p)
         {
             actualiseKillProgress(p, ChatColor.stripColor(e.getEntity().getName()));
         }
@@ -66,7 +66,7 @@ public class QuestEventHandler implements @NotNull Listener {
     @EventHandler
     public void playerInteraction(PlayerInteractEvent e)
     {
-        if(e.getAction() == Action.RIGHT_CLICK_BLOCK)
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
             actualiseInteractProgress(e.getPlayer(), e.getMaterial());
             actualiseInteractSpecificProgress(e.getPlayer(), e.getClickedBlock().getLocation());

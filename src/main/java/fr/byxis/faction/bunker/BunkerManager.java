@@ -36,11 +36,11 @@ public class BunkerManager {
 
     public BunkerClass FindBunkerEnteredByPlayer(String player)
     {
-        for(BunkerClass bunker : m_loadedBunker.values())
+        for (BunkerClass bunker : m_loadedBunker.values())
         {
-            for(Player p : bunker.m_playerInsideOldLocation.keySet())
+            for (Player p : bunker.m_playerInsideOldLocation.keySet())
             {
-                if(p.getName().equals(player))
+                if (p.getName().equals(player))
                 {
                     return bunker;
                 }
@@ -62,7 +62,7 @@ public class BunkerManager {
 
     public void loadBunker(String name)
     {
-        if(!m_loadedBunker.containsKey(name))
+        if (!m_loadedBunker.containsKey(name))
         {
             BunkerClass bunker = new BunkerClass(name, m_main);
             AddLoadedBunker(bunker);
@@ -71,7 +71,7 @@ public class BunkerManager {
 
     public void AddLoadedBunker(BunkerClass bk)
     {
-        if(!m_loadedBunker.containsKey(bk.GetName()))
+        if (!m_loadedBunker.containsKey(bk.GetName()))
             m_loadedBunker.put(bk.GetName(), bk);
     }
 

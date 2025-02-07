@@ -1,15 +1,14 @@
 package fr.byxis.fireland.utilities;
 
 import org.bukkit.Location;
-import org.bukkit.util.Vector;
 
 public class WorldUtilities {
 
     public static Vector2 getPrimaryAxe(int x, int y)
     {
-        if(x*x > y*y)
+        if (x * x > y * y)
         {
-            if(x > 0)
+            if (x > 0)
             {
                 return new Vector2(1000,0);
             }
@@ -20,7 +19,7 @@ public class WorldUtilities {
         }
         else
         {
-            if(y > 0)
+            if (y > 0)
             {
                 return new Vector2(0,1000);
             }
@@ -34,7 +33,7 @@ public class WorldUtilities {
     public static double getCosAngleFromTwoVector2(Vector2 a, Vector2 b)
     {
         double produitScalaire = (a.x * b.x) + (a.y * b.y);
-        double autre = Math.sqrt(Math.pow(a.x, 2) +Math.pow(a.y, 2)) * Math.sqrt(Math.pow(b.x, 2) + Math.pow(b.y, 2));
+        double autre = Math.sqrt(Math.pow(a.x, 2) + Math.pow(a.y, 2)) * Math.sqrt(Math.pow(b.x, 2) + Math.pow(b.y, 2));
         return  produitScalaire/autre;
     }
 
@@ -46,7 +45,7 @@ public class WorldUtilities {
         loc2.setY(0);
         double distance = loc.distance(loc2);
         double value = 0;
-        if(primary.x ==0)
+        if (primary.x == 0)
         {
             value = primary.y;
         }
@@ -54,8 +53,8 @@ public class WorldUtilities {
         {
             value = primary.x;
         }
-        double calcul = 1000 - distance*getCosAngleFromTwoVector2(primary, player);
-        if(calcul < 0)
+        double calcul = 1000 - distance *getCosAngleFromTwoVector2(primary, player);
+        if (calcul < 0)
         {
             calcul *= -1;
         }

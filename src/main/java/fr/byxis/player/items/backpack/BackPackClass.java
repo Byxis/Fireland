@@ -21,38 +21,37 @@ public class BackPackClass {
     private int maxInventorySize;
     private NamespacedKey backpackKey;
     private Gson gson = new Gson();
-    private Type itemListType = new TypeToken<List<String>>(){}.getType();
+    private Type itemListType = new TypeToken<List<String>>()
+{}.getType();
 
     public BackPackClass(int level) {
         this.backpackKey = new NamespacedKey("fireland", "backpack");
 
-
-
-        if(level == 1 || level >8)
+        if (level == 1 || level > 8)
         {
             this.maxInventorySize = 5;
         }
-        else if(level == 2)
+        else if (level == 2)
         {
             this.maxInventorySize = 7;
         }
-        else if(level <= 3)
+        else if (level <= 3)
         {
             this.maxInventorySize = 9;
         }
         else
         {
-            this.maxInventorySize = (level-2)*9;
+            this.maxInventorySize = (level-2) *9;
         }
     }
     public boolean isBackPackEmpty(ItemStack item)
     {
         Inventory inventory = loadBackPack(item);
-        if(!inventory.isEmpty())
+        if (!inventory.isEmpty())
         {
-            for(ItemStack itemStack : inventory.getContents())
+            for (ItemStack itemStack : inventory.getContents())
             {
-                if(itemStack != null && itemStack.getType() != Material.WHITE_STAINED_GLASS_PANE)
+                if (itemStack != null && itemStack.getType() != Material.WHITE_STAINED_GLASS_PANE)
                     return false;
             }
         }
@@ -61,7 +60,7 @@ public class BackPackClass {
     }
     public Inventory loadBackPack(ItemStack item) {
         PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
-        if(!item.getItemMeta().hasCustomModelData())
+        if (!item.getItemMeta().hasCustomModelData())
             return createEmptyInventory(1);
         Inventory inventory = createEmptyInventory(item.getItemMeta().getCustomModelData());
 
@@ -86,14 +85,14 @@ public class BackPackClass {
         ItemMeta meta = glass.getItemMeta();
         meta.setDisplayName(" ");
         glass.setItemMeta(meta);
-        if(this.maxInventorySize == 5)
+        if (this.maxInventorySize == 5)
         {
             inventory.setItem(0, glass);
             inventory.setItem(1, glass);
             inventory.setItem(7, glass);
             inventory.setItem(8, glass);
         }
-        if(this.maxInventorySize == 7)
+        if (this.maxInventorySize == 7)
         {
             inventory.setItem(0, glass);
             inventory.setItem(8, glass);
@@ -143,9 +142,9 @@ public class BackPackClass {
             case 6 -> name = "§cSac à dos militaire";
             default -> name = "§cA venir";
         }
-        if(level > 3)
+        if (level > 3)
         {
-            return Bukkit.createInventory(new BackpackInventoryHolder(), (level-2)*9, name);
+            return Bukkit.createInventory(new BackpackInventoryHolder(), (level-2) *9, name);
         }
         return Bukkit.createInventory(new BackpackInventoryHolder(), 9, name);
     }

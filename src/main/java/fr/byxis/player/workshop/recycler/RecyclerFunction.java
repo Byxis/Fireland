@@ -1,9 +1,9 @@
 package fr.byxis.player.workshop.recycler;
 
+import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
-import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
@@ -19,21 +19,21 @@ public class RecyclerFunction {
 
     private Fireland main;
 
-    public RecyclerFunction(Fireland main)
+    public RecyclerFunction(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
 
     public int GetAmountOfSpaceScrap(Player p)
     {
         int amount = 0;
-        for(ItemStack i : p.getInventory().getContents())
+        for (ItemStack i : p.getInventory().getContents())
         {
-            if(i == null )
+            if (i == null)
             {
                 amount += 64;
             }
-            else if(i.getType() == Material.NETHERITE_SCRAP)
+            else if (i.getType() == Material.NETHERITE_SCRAP)
             {
                 amount += (64-i.getAmount());
             }
@@ -44,9 +44,9 @@ public class RecyclerFunction {
     public int GetAmountOfSpaceGp(Player p)
     {
         int amount = 0;
-        for(ItemStack i : p.getInventory().getContents())
+        for (ItemStack i : p.getInventory().getContents())
         {
-            if(i.getType() == Material.GUNPOWDER)
+            if (i.getType() == Material.GUNPOWDER)
             {
                 amount += (64-i.getAmount());
             }
@@ -57,7 +57,7 @@ public class RecyclerFunction {
     public int GetItemScrapNumber(ItemStack item)
     {
         int amount = 0;
-        for(int i=0;i< item.getAmount();i++)
+        for (int i = 0; i < item.getAmount(); i++)
         {
             switch (item.getType())
             {
@@ -84,10 +84,10 @@ public class RecyclerFunction {
     public int GetItemGunpowderNumber(ItemStack item)
     {
         int amount = 0;
-        for(int i=0;i< item.getAmount();i++)
+        for (int i = 0; i < item.getAmount(); i++)
         {
             switch (item.getType()) {
-                case GUNPOWDER -> amount +=1;
+                case GUNPOWDER -> amount += 1;
                 case WHEAT_SEEDS -> amount += BasicUtilities.generateInt(0, 2);
                 case IRON_NUGGET -> amount += BasicUtilities.generateInt(0, 1);
             }
@@ -98,14 +98,14 @@ public class RecyclerFunction {
     public int GetItemMedsNumber(ItemStack item)
     {
         int amount = 0;
-        for(int i=0;i< item.getAmount();i++)
+        for (int i = 0; i < item.getAmount(); i++)
         {
             switch (item.getType()) {
                 case QUARTZ:
                     amount += BasicUtilities.generateInt(1, 3);
                     break;
                 case AMETHYST_SHARD:
-                    amount +=1;
+                    amount += 1;
                     break;
                 case GHAST_TEAR:
                     amount += BasicUtilities.generateInt(2, 5);
@@ -124,9 +124,9 @@ public class RecyclerFunction {
 
     public void setItemsGuiInv(Inventory _inv)
     {
-        for(int i=46;i<54;i++)
+        for (int i = 46; i < 54; i++)
         {
-            if(i == 49)
+            if (i == 49)
             {
                 _inv.setItem(i, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRecycler les items", (short) 1));
             }
@@ -149,12 +149,12 @@ public class RecyclerFunction {
 
         InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 2);
         int space = GetAmountOfSpaceScrap(p);
-        for(int i=0;i<45;i++)
+        for (int i = 0; i < 45; i++)
         {
-            if(inv.getItem(i) != null)
+            if (inv.getItem(i) != null)
             {
                 ItemStack item = inv.getItem(i);
-                if(item== null) continue;
+                if (item == null) continue;
                 int scrapNbr = (GetItemScrapNumber(item));
                 int gbNbr = (GetItemGunpowderNumber(item));
                 if (scrapNbr != 0)
@@ -165,7 +165,7 @@ public class RecyclerFunction {
                     }
                     if (hasGived(p, scrap, space, item, scrapNbr)) break;
                 }
-                else if(gbNbr > 0)
+                else if (gbNbr > 0)
                 {
                     if (hasGived(p, gp, space, item, gbNbr)) break;
                 }
@@ -174,7 +174,7 @@ public class RecyclerFunction {
     }
 
     private boolean hasGived(Player p, ItemStack component, int space, ItemStack item, int scrapNbr) {
-        if(scrapNbr > space)
+        if (scrapNbr > space)
         {
             p.sendMessage("§cVous n'avez pas assez d'espace pour recycler cet item !");
             return true;
@@ -188,12 +188,12 @@ public class RecyclerFunction {
 
     public void GiveBackItem(InventoryView inv, Player p)
     {
-        for(int i=0;i<45;i++)
+        for (int i = 0; i < 45; i++)
         {
-            if(inv.getItem(i) != null)
+            if (inv.getItem(i) != null)
             {
                 HashMap<Integer,ItemStack> items = p.getInventory().addItem(inv.getItem(i));
-                for(int j=0;j<items.size();j++)
+                for (int j = 0; j < items.size(); j++)
                 {
                     p.getWorld().dropItem(p.getLocation(), items.get(j));
                 }

@@ -14,7 +14,6 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
 
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.fireland.utilities.InGameUtilities.getStringColor;
 import static fr.byxis.player.scoreboard.PlayerScoreboardManager.getMainScoreboard;
 
@@ -29,24 +28,27 @@ public class NameTagManager implements Listener {
         ff = new FactionFunctions(fireland, null);
         m_factionTeams.put("", createFactionTeam("server"));
 
-        for(Player p : Bukkit.getOnlinePlayers()) actualizeTeam(p);
+        for (Player p : Bukkit.getOnlinePlayers())
+        {
+            actualizeTeam(p);
+        }
     }
 
     public void actualizeTeam(Player p)
     {
         String factionName = ff.playerFactionName(p);
-        if(!ff.HasPerk(factionName, "show_nickname"))
+        if (!ff.HasPerk(factionName, "show_nickname"))
         {
             factionName = "";
         }
-        for(Team team : m_factionTeams.values())
+        for (Team team : m_factionTeams.values())
         {
-            if(team.hasPlayer(p))
+            if (team.hasPlayer(p))
             {
                 team.removePlayer(p);
             }
         }
-        if(!m_factionTeams.containsKey(factionName))
+        if (!m_factionTeams.containsKey(factionName))
         {
             m_factionTeams.put(factionName, createFactionTeam(factionName));
         }
@@ -57,9 +59,9 @@ public class NameTagManager implements Listener {
     private Team createFactionTeam(String name)
     {
         Team team = null;
-        if(name.isEmpty() || name.equals("server"))
+        if (name.isEmpty() || name.equals("server"))
         {
-            if(getMainScoreboard().getTeam("server") == null)
+            if (getMainScoreboard().getTeam("server") == null)
             {
                 team = getMainScoreboard().registerNewTeam("server");
                 team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
@@ -73,7 +75,7 @@ public class NameTagManager implements Listener {
             }
             return team;
         }
-        if(getMainScoreboard().getTeam(name) == null)
+        if (getMainScoreboard().getTeam(name) == null)
         {
             team = getMainScoreboard().registerNewTeam(name);
             team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
@@ -99,7 +101,7 @@ public class NameTagManager implements Listener {
     @EventHandler
     public void playerLeaveFaction(PlayerLeaveFactionEvent e)
     {
-        if(Bukkit.getPlayer(e.getPlayerUuid()) != null)
+        if (Bukkit.getPlayer(e.getPlayerUuid()) != null)
             actualizeTeam(Bukkit.getPlayer(e.getPlayerUuid()));
     }
 
@@ -112,9 +114,9 @@ public class NameTagManager implements Listener {
     @EventHandler
     public void FactionBuyPerk(FactionBuyPerkEvent e)
     {
-        if(e.getPerk().equalsIgnoreCase("show_nickname"))
+        if (e.getPerk().equalsIgnoreCase("show_nickname"))
         {
-            for(Player p : Bukkit.getOnlinePlayers())
+            for (Player p : Bukkit.getOnlinePlayers())
             {
                 actualizeTeam(p);
             }

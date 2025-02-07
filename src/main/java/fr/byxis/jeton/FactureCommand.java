@@ -2,7 +2,6 @@ package fr.byxis.jeton;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
-import io.r2dbc.spi.Parameter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static fr.byxis.fireland.utilities.BasicUtilities.getUuid;
@@ -28,13 +26,14 @@ public class FactureCommand implements @Nullable CommandExecutor, @Nullable TabC
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        if(!(commandSender instanceof Player))
+        if (!(commandSender instanceof Player))
             return false;
-        Player p = (Player)commandSender;
-        if(args.length == 0) {
+        Player p = (Player) commandSender;
+        if (args.length == 0)
+        {
             sendPlayerFacture(p, p, 0);
         }
-        if(args.length == 1)
+        if (args.length == 1)
         {
             try
             {
@@ -43,10 +42,10 @@ public class FactureCommand implements @Nullable CommandExecutor, @Nullable TabC
             }
             catch (NumberFormatException e)
             {
-                if(p.hasPermission("fireland.admin.facture"))
+                if (p.hasPermission("fireland.admin.facture"))
                 {
                     Player victim = Bukkit.getPlayer(getUuid(args[0]));
-                    if(victim != null)
+                    if (victim != null)
                     {
                         sendPlayerFacture(p, victim, 0);
                     }
@@ -60,13 +59,13 @@ public class FactureCommand implements @Nullable CommandExecutor, @Nullable TabC
                 return false;
             }
         }
-        if(args.length == 2 && p.hasPermission("fireland.admin.facture"))
+        if (args.length == 2 && p.hasPermission("fireland.admin.facture"))
         {
             try
             {
                 int amount = Integer.parseInt(args[0]);
                 Player victim = Bukkit.getPlayer(getUuid(args[1]));
-                if(victim != null)
+                if (victim != null)
                 {
                     sendPlayerFacture(p, victim, amount);
                 }
@@ -88,12 +87,12 @@ public class FactureCommand implements @Nullable CommandExecutor, @Nullable TabC
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         List<String> list = new ArrayList<String>();
 
-        if(!(commandSender instanceof Player))
+        if (!(commandSender instanceof Player))
             return null;
-        Player p = (Player)commandSender;
-        if(args.length == 1)
+        Player p = (Player) commandSender;
+        if (args.length == 1)
         {
-            if(p.hasPermission("fireland.admin.facture"))
+            if (p.hasPermission("fireland.admin.facture"))
             {
                 list.addAll(tabList(args[0], "0", Bukkit.getOnlinePlayers()));
             }

@@ -1,8 +1,8 @@
 package fr.byxis.faction.faction;
 
 import fr.byxis.faction.faction.events.FactionBuyPerkEvent;
-import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +18,7 @@ public class FactionEvent implements Listener {
     public FactionEvent(Fireland main) {
         this.main = main;
         ff = new FactionFunctions(main, null);
-        if(Bukkit.getOnlinePlayers().isEmpty())
+        if (Bukkit.getOnlinePlayers().isEmpty())
             return;
     }
 
@@ -28,20 +28,20 @@ public class FactionEvent implements Listener {
         ff.setSender(e.getPlayer());
         String fname = ff.playerFactionName(e.getPlayer());
         FactionInformation infos = ff.getFactionInfo(fname);
-        if(!fname.equals(""))
+        if (!fname.equals(""))
         {
-            if(infos.hasFriendlyFirePerk())
+            if (infos.hasFriendlyFirePerk())
             {
                 main.hashMapManager.addFactionMap(e.getPlayer().getUniqueId(), fname);
             }
 
-            if(infos.hasSkinPerk())
+            if (infos.hasSkinPerk())
             {
                 PermissionUtilities.addPermission(e.getPlayer(), "csp.skin.Faction");
             }
-            if(infos.DoShowPrefix())
+            if (infos.DoShowPrefix())
             {
-                main.hashMapManager.addFactionPrefixMap(e.getPlayer().getUniqueId(), infos.getColorcode()+infos.getName()+" > §r");
+                main.hashMapManager.addFactionPrefixMap(e.getPlayer().getUniqueId(), infos.getColorcode() + infos.getName() + " > §r");
             }
         }
     }
@@ -50,11 +50,11 @@ public class FactionEvent implements Listener {
     public void playerLeaveEvent(PlayerQuitEvent e)
     {
         Player p = e.getPlayer();
-        if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
+        if (main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
         {
             main.hashMapManager.removeFactionMap(p.getUniqueId());
         }
-        if(main.hashMapManager.getFactionPrefixMap().containsKey(p.getUniqueId()))
+        if (main.hashMapManager.getFactionPrefixMap().containsKey(p.getUniqueId()))
         {
             main.hashMapManager.removeFactionMap(p.getUniqueId());
         }
@@ -63,22 +63,22 @@ public class FactionEvent implements Listener {
     @EventHandler
     public void PlayerChat(PlayerChatEvent e)
     {
-        if(main.hashMapManager.getFactionPrefixMap().containsKey(e.getPlayer().getUniqueId()))
+        if (main.hashMapManager.getFactionPrefixMap().containsKey(e.getPlayer().getUniqueId()))
         {
-            e.setFormat(main.hashMapManager.getFactionPrefixMap().get(e.getPlayer().getUniqueId())+e.getFormat());
+            e.setFormat(main.hashMapManager.getFactionPrefixMap().get(e.getPlayer().getUniqueId()) + e.getFormat());
         }
     }
 
     @EventHandler
     public void FactionBuyPerk(FactionBuyPerkEvent e)
     {
-        if(e.getPerk().equalsIgnoreCase("friendly_fire"))
+        if (e.getPerk().equalsIgnoreCase("friendly_fire"))
         {
             FactionFunctions ff = new FactionFunctions(main, null);
-            for(Player p : Bukkit.getOnlinePlayers())
+            for (Player p : Bukkit.getOnlinePlayers())
             {
                 String name = ff.playerFactionName(p);
-                if(name.equalsIgnoreCase(e.getFaction()))
+                if (name.equalsIgnoreCase(e.getFaction()))
                 {
                     main.hashMapManager.addFactionMap(p.getUniqueId(), e.getFaction());
                 }
@@ -89,7 +89,7 @@ public class FactionEvent implements Listener {
     /*@EventHandler
     public void PlayerInteraction(InventoryClickEvent e)
     {
-        if(e.getView().getTitle().contains("Stockage de la faction"))
+        if (e.getView().getTitle().contains("Stockage de la faction"))
         {
             Player p = (Player) e.getView().getPlayer();
             FactionFunctions ff = new FactionFunctions(main, p);
@@ -101,7 +101,7 @@ public class FactionEvent implements Listener {
     @EventHandler
     public void PlayerCloseInv(InventoryCloseEvent e)
     {
-        if(e.getView().getTitle().contains("Stockage de la faction"))
+        if (e.getView().getTitle().contains("Stockage de la faction"))
         {
             Player p = (Player) e.getView().getPlayer();
             FactionFunctions ff = new FactionFunctions(main, p);

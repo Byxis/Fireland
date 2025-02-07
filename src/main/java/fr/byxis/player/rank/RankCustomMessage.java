@@ -40,7 +40,7 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
     {
         Entity ent = e.getEntity();
         EntityDamageEvent ede = ent.getLastDamageCause();
-        if(ede == null)
+        if (ede == null)
         {
             return;
         }
@@ -51,7 +51,8 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
         grades.add("veteran");
         grades.add("stratege");
         grades.add("mercenaire");
-        for(String grade : grades) {
+        for (String grade : grades)
+        {
             if (p.hasPermission("fireland.message." + grade)) {
                 if (e.getEntity().getLastDamageCause().getEntity() != null) {
                     e.setDeathMessage(config.getConfig().getString(grade + ".PLAYERKILL").replace("player", e.getPlayer().getName()).replace("killer", p.getLastDamageCause().getEntity().getName()));
@@ -68,20 +69,20 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
     public void playerJoin(PlayerJoinEvent e)
     {
         Player p = e.getPlayer();
-        sendEveryoneCustomText("§8[§a+§8] "+p.getName());
-        if(p.hasPermission("fireland.message.admin") && config.getConfig().getString("admin.JOIN") != null && !config.getConfig().getString("admin.JOIN").equals(""))
+        sendEveryoneCustomText("§8[§a+§8] " + p.getName());
+        if (p.hasPermission("fireland.message.admin") && config.getConfig().getString("admin.JOIN") != null && !config.getConfig().getString("admin.JOIN").equals(""))
         {
             sendEveryoneCustomText(config.getConfig().getString("admin.JOIN").replace("player", e.getPlayer().getName()));
         }
-        else if(p.hasPermission("fireland.message.veteran") && config.getConfig().getString("veteran.JOIN") != null && !config.getConfig().getString("veteran.JOIN").equals(""))
+        else if (p.hasPermission("fireland.message.veteran") && config.getConfig().getString("veteran.JOIN") != null && !config.getConfig().getString("veteran.JOIN").equals(""))
         {
             sendEveryoneCustomText(config.getConfig().getString("veteran.JOIN").replace("player", e.getPlayer().getName()));
         }
-        else if(p.hasPermission("fireland.message.stratege") && config.getConfig().getString("stratege.JOIN") != null && !config.getConfig().getString("stratege.JOIN").equals(""))
+        else if (p.hasPermission("fireland.message.stratege") && config.getConfig().getString("stratege.JOIN") != null && !config.getConfig().getString("stratege.JOIN").equals(""))
         {
             sendEveryoneCustomText(config.getConfig().getString("stratege.JOIN").replace("player", e.getPlayer().getName()));
         }
-        else if(p.hasPermission("fireland.message.mercenaire") && config.getConfig().getString("mercenaire.JOIN") != null && !config.getConfig().getString("mercenaire.JOIN").equals(""))
+        else if (p.hasPermission("fireland.message.mercenaire") && config.getConfig().getString("mercenaire.JOIN") != null && !config.getConfig().getString("mercenaire.JOIN").equals(""))
         {
             sendEveryoneCustomText(config.getConfig().getString("mercenaire.JOIN").replace("player", e.getPlayer().getName()));
         }
@@ -91,20 +92,20 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
     public void playerLeave(PlayerQuitEvent e)
     {
         Player p = e.getPlayer();
-        sendEveryoneCustomText("§8[§c-§8] "+p.getName());
-        if(p.hasPermission("fireland.message.admin") && config.getConfig().getString("admin.LEAVE") != null && !config.getConfig().getString("admin.LEAVE").equals(""))
+        sendEveryoneCustomText("§8[§c-§8] " + p.getName());
+        if (p.hasPermission("fireland.message.admin") && config.getConfig().getString("admin.LEAVE") != null && !config.getConfig().getString("admin.LEAVE").equals(""))
         {
             sendEveryoneCustomText(config.getConfig().getString("admin.LEAVE").replace("player", e.getPlayer().getName()));
         }
-        else if(p.hasPermission("fireland.message.veteran") && config.getConfig().getString("veteran.LEAVE") != null && !config.getConfig().getString("veteran.LEAVE").equals(""))
+        else if (p.hasPermission("fireland.message.veteran") && config.getConfig().getString("veteran.LEAVE") != null && !config.getConfig().getString("veteran.LEAVE").equals(""))
         {
             sendEveryoneCustomText(config.getConfig().getString("veteran.LEAVE").replace("player", e.getPlayer().getName()));
         }
-        else if(p.hasPermission("fireland.message.stratege") && config.getConfig().getString("stratege.LEAVE") != null && !config.getConfig().getString("stratege.LEAVE").equals(""))
+        else if (p.hasPermission("fireland.message.stratege") && config.getConfig().getString("stratege.LEAVE") != null && !config.getConfig().getString("stratege.LEAVE").equals(""))
         {
             sendEveryoneCustomText(config.getConfig().getString("stratege.LEAVE").replace("player", e.getPlayer().getName()));
         }
-        else if(p.hasPermission("fireland.message.mercenaire") && config.getConfig().getString("mercenaire.LEAVE") != null && !config.getConfig().getString("mercenaire.LEAVE").equals(""))
+        else if (p.hasPermission("fireland.message.mercenaire") && config.getConfig().getString("mercenaire.LEAVE") != null && !config.getConfig().getString("mercenaire.LEAVE").equals(""))
         {
             sendEveryoneCustomText(config.getConfig().getString("mercenaire.LEAVE").replace("player", e.getPlayer().getName()));
         }
@@ -112,19 +113,19 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if(commandSender instanceof Player p && p.hasPermission("fireland.admin") && strings.length > 3)
+        if (commandSender instanceof Player p && p.hasPermission("fireland.admin") && strings.length > 3)
         {
             StringBuilder sb = new StringBuilder();
             sb.append(strings[2].replace("&", "§"));
-            for(int i = 3; i < strings.length; i++)
+            for (int i = 3; i < strings.length; i++)
             {
-                sb.append(" "+strings[i].replace("&", "§"));
+                sb.append(" " + strings[i].replace("&", "§"));
             }
-            config.getConfig().set(strings[0]+"."+strings[1], sb.toString());
+            config.getConfig().set(strings[0] + "." + strings[1], sb.toString());
             config.save();
             InGameUtilities.sendPlayerSucces(p, "Le message a été mis à jour avec succès.");
         }
-        if(commandSender instanceof Player p && p.hasPermission("fireland.admin") && strings.length == 1)
+        if (commandSender instanceof Player p && p.hasPermission("fireland.admin") && strings.length == 1)
         {
             Collection<String> l = tabList("", "", EntityDamageEvent.DamageCause.values());
             ArrayList<String> more = new ArrayList<String>();
@@ -133,12 +134,12 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
             more.add("PLAYERKILL");
             more.add("JOIN");
             more.add("LEAVE");
-            for(String str : more)
+            for (String str : more)
             {
 
-                if(!config.getConfig().contains(strings[0]+"."+str))
+                if (!config.getConfig().contains(strings[0] + "." + str))
                 {
-                    config.getConfig().set(strings[0]+"."+str, "");
+                    config.getConfig().set(strings[0] + "." + str, "");
                 }
             }
             config.save();
@@ -150,8 +151,9 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         Collection<String> l = new ArrayList<String>();
-        if(commandSender instanceof Player p && p.hasPermission("fireland.admin")) {
-            if(strings.length == 1)
+        if (commandSender instanceof Player p && p.hasPermission("fireland.admin"))
+        {
+            if (strings.length == 1)
             {
                 ArrayList<String> more = new ArrayList<String>();
                 more.add("admin");
@@ -160,7 +162,7 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
                 more.add("mercenaire");
                 l = tabList(strings[0], "-Group", more);
             }
-            else if(strings.length == 2)
+            else if (strings.length == 2)
             {
                 l = tabList(strings[1], "", EntityDamageEvent.DamageCause.values());
                 ArrayList<String> more = new ArrayList<String>();
@@ -171,7 +173,7 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
                 more.add("LEAVE");
                 l = tabList(strings[1], "-Type", more);
             }
-            else if(strings.length >= 2)
+            else if (strings.length >= 2)
             {
                 l.add("-Text");
             }

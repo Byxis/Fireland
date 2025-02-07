@@ -46,12 +46,12 @@ public class ZoneClass {
         this.autoRelease = autoRelease;
         this.captureTime = captureTime;
         this.claimable = claimable;
-        bar = Bukkit.createBossBar("Capture de la zone "+getFormattedName() +" disponible", BarColor.WHITE, BarStyle.SEGMENTED_10);
+        bar = Bukkit.createBossBar("Capture de la zone " + getFormattedName() + " disponible", BarColor.WHITE, BarStyle.SEGMENTED_10);
         bar.setProgress(0);
         setColor("§f");
-        if(!isTimeToCapture())
+        if (!isTimeToCapture())
         {
-            bar.setTitle("Zone "+getFormattedName());
+            bar.setTitle("Zone " + getFormattedName());
             setColor("§7");
         }
     }
@@ -148,13 +148,13 @@ public class ZoneClass {
 
     public void addBar(Player p)
     {
-        if(!bar.getPlayers().contains(p))
+        if (!bar.getPlayers().contains(p))
             bar.addPlayer(p);
     }
 
     public void removeBar(Player p)
     {
-        if(bar.getPlayers().contains(p))
+        if (bar.getPlayers().contains(p))
             bar.removePlayer(p);
     }
 
@@ -165,15 +165,15 @@ public class ZoneClass {
 
     public void setProgressBar(double prog, String faction)
     {
-        if(prog != 0)
+        if (prog != 0)
         {
             bar.setProgress( prog /100);
-            bar.setTitle(barColor+"Capture par "+faction+" - "+prog+"%");
+            bar.setTitle(barColor + "Capture par " + faction + " - " + prog + "%");
         }
         else
         {
             bar.setProgress(0);
-            bar.setTitle("Capture de la zone "+getFormattedName() +" disponible");
+            bar.setTitle("Capture de la zone " + getFormattedName() + " disponible");
             bar.setColor(BarColor.WHITE);
         }
     }

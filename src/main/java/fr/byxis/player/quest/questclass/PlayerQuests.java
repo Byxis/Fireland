@@ -1,10 +1,6 @@
 package fr.byxis.player.quest.questclass;
 
-import org.bukkit.entity.Player;
-
 import java.util.UUID;
-
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class PlayerQuests {
 
@@ -27,19 +23,19 @@ public class PlayerQuests {
 
     public void set(ProgressQuest progress)
     {
-        if(first == null)
+        if (first == null)
         {
             first = progress;
         }
-        else if(second == null)
+        else if (second == null)
         {
             second = progress;
         }
-        else if(third == null)
+        else if (third == null)
         {
             third = progress;
         }
-        else if( fourth == null)
+        else if (fourth == null)
         {
             fourth = progress;
         }
@@ -52,19 +48,19 @@ public class PlayerQuests {
     public int numberOfQuests()
     {
         int i = 0;
-        if(first != null)
+        if (first != null)
         {
             i++;
         }
-        if(second != null)
+        if (second != null)
         {
             i++;
         }
-        if(third != null)
+        if (third != null)
         {
             i++;
         }
-        if( fourth != null)
+        if (fourth != null)
         {
             i++;
         }
@@ -129,7 +125,7 @@ public class PlayerQuests {
 
     public boolean hasFinished()
     {
-        if(first == null ||second == null || third == null || fourth == null)
+        if (first == null || second == null || third == null || fourth == null)
         {
             return false;
         }

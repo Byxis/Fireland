@@ -21,7 +21,7 @@ public class MenuPlayerList {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation infos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
-        Inventory PlayerList = Bukkit.createInventory(null, 54, "§8Membres de "+ff.GetColorCode(infos.getFactionName())+infos.getFactionName());
+        Inventory PlayerList = Bukkit.createInventory(null, 54, "§8Membres de " + ff.GetColorCode(infos.getFactionName()) + infos.getFactionName());
         SetPlayerListItems(main, PlayerList, p);
         p.openInventory(PlayerList);
     }
@@ -30,24 +30,25 @@ public class MenuPlayerList {
     {
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
-        if(pInfos != null)
+        if (pInfos != null)
         {
             ArrayList<FactionPlayerInformation> infos = ff.getPlayersFromFaction(pInfos.getFactionName());
 
-            for(int i=0;i<9;i++) {
+            for (int i = 0; i < 9; i++)
+            {
                 inventory.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
             inventory.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
             int member = 9;
             String you = "";
             String nouveau = "";
-            for(FactionPlayerInformation info :infos)
+            for (FactionPlayerInformation info : infos)
             {
                 LocalDate lDate = info.getJoinDate().toLocalDateTime().toLocalDate();
 
                 java.time.Period prd = java.time.Period.between(lDate, java.time.LocalDate.now());
                 String connectionInformation = "";
-                if(Bukkit.getOfflinePlayer(info.getUuid()).isOnline())
+                if (Bukkit.getOfflinePlayer(info.getUuid()).isOnline())
                 {
                     connectionInformation = "§b\u23FA §r";
                 }
@@ -55,27 +56,27 @@ public class MenuPlayerList {
                 {
                     connectionInformation = "§8\u2B58 §r";
                 }
-                if(info.getName().equalsIgnoreCase(p.getName()))
+                if (info.getName().equalsIgnoreCase(p.getName()))
                 {
                     you = " §d(Vous)";
                 }
-                if(prd.getDays() <=7)
+                if (prd.getDays() <= 7)
                 {
                     nouveau = " §1(Nouveau)";
                 }
-                if(info.getRole() == 2)
+                if (info.getRole() == 2)
                 {
-                    inventory.setItem(0, InventoryUtilities.GetHead(info.getUuid(), connectionInformation+"§cLeader: "+Bukkit.getOfflinePlayer(info.getUuid()).getName()+you));
+                    inventory.setItem(0, InventoryUtilities.GetHead(info.getUuid(), connectionInformation + "§cLeader: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you));
                 }
-                if(info.getRole() == 1)
+                if (info.getRole() == 1)
                 {
 
-                    inventory.setItem(member, InventoryUtilities.GetHead(info.getUuid(), connectionInformation+"§eModérateur: "+Bukkit.getOfflinePlayer(info.getUuid()).getName()+you+nouveau));
+                    inventory.setItem(member, InventoryUtilities.GetHead(info.getUuid(), connectionInformation + "§eModérateur: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you + nouveau));
                     member++;
                 }
-                if(info.getRole() == 0)
+                if (info.getRole() == 0)
                 {
-                    inventory.setItem(member, InventoryUtilities.GetHead(info.getUuid(), connectionInformation+"§aMembre: "+Bukkit.getOfflinePlayer(info.getUuid()).getName()+you+nouveau));
+                    inventory.setItem(member, InventoryUtilities.GetHead(info.getUuid(), connectionInformation + "§aMembre: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you + nouveau));
                     member++;
                 }
                 you = "";

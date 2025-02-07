@@ -1,15 +1,14 @@
 package fr.byxis.faction.zone;
 
 import fr.byxis.db.DbConnection;
+import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.faction.faction.FactionInformation;
 import fr.byxis.faction.faction.FactionPlayerInformation;
-import fr.byxis.fireland.utilities.InGameUtilities;
-import fr.byxis.jeton.JetonManager;
-import fr.byxis.jeton.jetonsCommandManager;
-import fr.byxis.faction.faction.FactionFunctions;
-import fr.byxis.fireland.Fireland;
 import fr.byxis.faction.zone.zoneclass.FactionCapturingClass;
 import fr.byxis.faction.zone.zoneclass.ZoneClass;
+import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.jeton.JetonManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -20,7 +19,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class DataZone {
@@ -87,12 +85,12 @@ public class DataZone {
                     }
                     SaveClaiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
                     FactionFunctions ff = new FactionFunctions(main, null);
-                    FactionInformation info =ff.getFactionInfo(zone.getClaimer());
-                    if(info != null)
+                    FactionInformation info = ff.getFactionInfo(zone.getClaimer());
+                    if (info != null)
                         CaptureZone.changeAnimationStep(-1, zone, ff.getFactionInfo(zone.getClaimer()).getColorcode());
                     else
                     {
-                        System.err.println("Erreur lors de la récupération de la faction "+zone.getClaimer());
+                        System.err.println("Erreur lors de la récupération de la faction " + zone.getClaimer());
                         RemoveSavedClaiming(zone.getName(), null);
                         CaptureZone.changeAnimationStep(-1, zone, "§r");
                     }

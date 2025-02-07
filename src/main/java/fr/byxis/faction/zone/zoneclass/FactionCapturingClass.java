@@ -20,7 +20,7 @@ public class FactionCapturingClass {
         this.name = name;
         this.playerList = playerList;
         this.progression = progression;
-        if(color != null)
+        if (color != null)
         {
             this.color = Arrays.toString(color);
         }
@@ -58,8 +58,8 @@ public class FactionCapturingClass {
     }
 
     public void addProgression(int totalProgressionNeeded, double seconds) {
-        int TotalTime = totalProgressionNeeded*60;
-        this.progression += (seconds/TotalTime)*100;
+        int TotalTime = totalProgressionNeeded *60;
+        this.progression += (seconds/TotalTime) *100;
     }
 
     public void setProgression(int progression) {
@@ -67,8 +67,8 @@ public class FactionCapturingClass {
     }
 
     public double getNextProgression(int totalProgressionNeeded, double seconds) {
-        int TotalTime = totalProgressionNeeded*60;
-        return this.progression + (seconds/TotalTime)*100;
+        int TotalTime = totalProgressionNeeded *60;
+        return this.progression + (seconds/TotalTime) *100;
     }
 
     public String getFormattedName()

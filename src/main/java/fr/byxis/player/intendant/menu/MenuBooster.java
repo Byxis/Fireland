@@ -1,11 +1,11 @@
 package fr.byxis.player.intendant.menu;
 
-import fr.byxis.player.booster.BoosterClass;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
-import fr.byxis.jeton.jetonsCommandManager;
+import fr.byxis.jeton.JetonsCommandManager;
+import fr.byxis.player.booster.BoosterClass;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
@@ -26,23 +26,24 @@ public class MenuBooster {
 
     private static void SetBoostersItem(Fireland main,Inventory inv, Player p)
     {
-        for(int i=0;i<9;i++) {
+        for (int i = 0; i < 9; i++)
+        {
             inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        jetonsCommandManager jeton = new jetonsCommandManager(main);
+        JetonsCommandManager jeton = new JetonsCommandManager(main);
 
-        if(main.hashMapManager.getBooster() != null)
+        if (main.hashMapManager.getBooster() != null)
         {
             BoosterClass booster = main.hashMapManager.getBooster();
-            inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, BasicUtilities.listMaker("§8Créé par "+((Player)Bukkit.getPlayer(booster.getUuid())).getName(), "§8Expiration dans "+ BasicUtilities.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()), "", "")));
+            inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, BasicUtilities.listMaker("§8Créé par " + ((Player) Bukkit.getPlayer(booster.getUuid())).getName(), "§8Expiration dans " + BasicUtilities.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()), "", "")));
         }
         else
         {
             inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.RED_WOOL, "§cAucun Booster n'est actif.", (short) 0, BasicUtilities.listMaker("", "", "", "")));
         }
-        ItemStack head = InventoryUtilities.GetHead(p.getUniqueId(), "§d"+p.getName());
+        ItemStack head = InventoryUtilities.GetHead(p.getUniqueId(), "§d " + p.getName());
         ItemMeta meta = head.getItemMeta();
-        meta.setLore(BasicUtilities.listMaker("§8Jetons : §b"+jeton.getJetonsPlayer(p.getUniqueId())+ " §f\u26c1" , "", "", ""));
+        meta.setLore(BasicUtilities.listMaker("§8Jetons : §b " + jeton.getJetonsPlayer(p.getUniqueId()) + " §f\u26c1" , "", "", ""));
         head.setItemMeta(meta);
         inv.setItem(8, head);
 

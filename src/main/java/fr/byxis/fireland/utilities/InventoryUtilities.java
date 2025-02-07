@@ -1,19 +1,12 @@
 package fr.byxis.fireland.utilities;
 
-import fr.byxis.player.items.backpack.BackPackClass;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
@@ -61,9 +54,9 @@ public class InventoryUtilities {
 
     public static void clickManager(InventoryClickEvent e)
     {
-        if((e.getClickedInventory() != null && e.getClickedInventory().getType() != InventoryType.PLAYER) || e.getView().getTopInventory().getType() != InventoryType.PLAYER)
+        if ((e.getClickedInventory() != null && e.getClickedInventory().getType() != InventoryType.PLAYER) || e.getView().getTopInventory().getType() != InventoryType.PLAYER)
             e.setCancelled(true);
-        if(e.getClick().isKeyboardClick() && e.getView().getPlayer().getInventory().getItem(e.getHotbarButton()) != null)
+        if (e.getClick().isKeyboardClick() && e.getView().getPlayer().getInventory().getItem(e.getHotbarButton()) != null)
             e.setCancelled(true);
         /*
         if (e.getClickedInventory() != e.getView().getTopInventory() || e.getClick().isKeyboardClick()) {
@@ -71,7 +64,7 @@ public class InventoryUtilities {
         }
         else
         {
-            if(e.isShiftClick())
+            if (e.isShiftClick())
             {
                 e.setCancelled(true);
             }
@@ -80,7 +73,7 @@ public class InventoryUtilities {
     public static ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
         ItemStack item = new ItemStack(mat);
 
-        if(mat.equals(Material.POTION))
+        if (mat.equals(Material.POTION))
         {
             item = new ItemStack(Material.POTION, 1);
             ItemMeta meta = item.getItemMeta();
@@ -108,7 +101,7 @@ public class InventoryUtilities {
     public static ItemStack setItemMetaLore(Material mat, String name,  List<String> lore) {
         ItemStack item = new ItemStack(mat);
 
-        if(mat.equals(Material.POTION))
+        if (mat.equals(Material.POTION))
         {
             item = new ItemStack(Material.POTION, 1);
             ItemMeta meta = item.getItemMeta();

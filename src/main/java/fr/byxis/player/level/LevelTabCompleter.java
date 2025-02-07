@@ -1,6 +1,5 @@
 package fr.byxis.player.level;
 
-import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.ListUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -30,7 +29,7 @@ public class LevelTabCompleter implements TabCompleter {
                 texts.add("set");
                 texts.add("add");
                 texts.add("remove");
-                for(Player p : Bukkit.getOnlinePlayers())
+                for (Player p : Bukkit.getOnlinePlayers())
                 {
                     texts.add(p.getName());
                 }
@@ -38,7 +37,7 @@ public class LevelTabCompleter implements TabCompleter {
             }
             if (args.length == 2)
             {
-                if(args[0].equalsIgnoreCase("set"))
+                if (args[0].equalsIgnoreCase("set"))
                 {
                     texts.add("canchange");
                     texts.add("nation");
@@ -50,7 +49,7 @@ public class LevelTabCompleter implements TabCompleter {
             }
             if (args.length == 3)
             {
-                if(args[1].equalsIgnoreCase("nation"))
+                if (args[1].equalsIgnoreCase("nation"))
                 {
                     texts.add("Neutre");
                     texts.add("Bannis");
@@ -66,7 +65,7 @@ public class LevelTabCompleter implements TabCompleter {
             }
             if (args.length == 4)
             {
-                for(Player p : Bukkit.getOnlinePlayers())
+                for (Player p : Bukkit.getOnlinePlayers())
                 {
                     texts.add(p.getName());
                 }

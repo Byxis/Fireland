@@ -10,25 +10,26 @@ public class FactionPvp implements Listener {
 
     private final Fireland main;
 
-    public FactionPvp(Fireland main) {
-        this.main = main;
+    public FactionPvp(Fireland _main)
+    {
+        this.main = _main;
     }
 
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event)
     {
-        if(event.getEntity() instanceof Player && event.getDamager() instanceof Player)
+        if (event.getEntity() instanceof Player && event.getDamager() instanceof Player)
         {
             Player p = ((Player) event.getEntity()).getPlayer();
             Player d = ((Player) event.getDamager()).getPlayer();
 
-            if(p.getName().equalsIgnoreCase(d.getName()))
+            if (p.getName().equalsIgnoreCase(d.getName()))
                 return;
 
-            if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()) && main.hashMapManager.getFactionMap().containsKey(d.getUniqueId()))
+            if (main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()) && main.hashMapManager.getFactionMap().containsKey(d.getUniqueId()))
             {
-                if(main.hashMapManager.getFactionMap().get(p.getUniqueId()).equals(main.hashMapManager.getFactionMap().get(d.getUniqueId())))
+                if (main.hashMapManager.getFactionMap().get(p.getUniqueId()).equals(main.hashMapManager.getFactionMap().get(d.getUniqueId())))
                 {
                     event.setCancelled(true);
                 }

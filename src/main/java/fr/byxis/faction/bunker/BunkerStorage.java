@@ -98,7 +98,7 @@ public class BunkerStorage {
             preparedStatement2.setInt(2, index);
             //On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
-            if(rs.next())
+            if (rs.next())
             {
                 return true;
             }
@@ -128,9 +128,9 @@ public class BunkerStorage {
 
     public void SaveItemFactionStorage(int index, ItemStack item)
     {
-        if(item != null)
+        if (item != null)
         {
-            if(IndexStorageUsed(index))
+            if (IndexStorageUsed(index))
             {
                 UpdateItemStorage(index, item);
             }
@@ -148,7 +148,7 @@ public class BunkerStorage {
     public void SaveAllItems()
     {
         ActualiseItems();
-        for(int i = 0; i < getMaxSpaceStorage(); i++)
+        for (int i = 0; i < getMaxSpaceStorage(); i++)
         {
             SaveItemFactionStorage(i, m_items.get(i));
         }
@@ -157,152 +157,152 @@ public class BunkerStorage {
     public void ActualiseItems()
     {
         int number = 0;
-        if(m_storage0 != null)
+        if (m_storage0 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage0.getItem(i) != null)
+                if (m_storage0.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage0.getItem(i));
+                    m_items.put(i + 27 *number, m_storage0.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 *number);
                 }
             }
         }
         number++;
-        if(m_storage1 != null)
+        if (m_storage1 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage1.getItem(i) != null)
+                if (m_storage1.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage1.getItem(i));
+                    m_items.put(i + 27 *number, m_storage1.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 *number);
                 }
             }
         }
         number++;
-        if(m_storage2 != null)
+        if (m_storage2 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage2.getItem(i) != null)
+                if (m_storage2.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage2.getItem(i));
+                    m_items.put(i + 27 *number, m_storage2.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 *number);
                 }
             }
         }
         number++;
-        if(m_storage3 != null)
+        if (m_storage3 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage3.getItem(i) != null)
+                if (m_storage3.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage3.getItem(i));
+                    m_items.put(i + 27 *number, m_storage3.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 *number);
                 }
             }
         }
         number++;
-        if(m_storage4 != null)
+        if (m_storage4 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage4.getItem(i) != null)
+                if (m_storage4.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage4.getItem(i));
+                    m_items.put(i + 27 *number, m_storage4.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 *number);
                 }
             }
         }
         number++;
-        if(m_storage5 != null)
+        if (m_storage5 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage5.getItem(i) != null)
+                if (m_storage5.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage5.getItem(i));
+                    m_items.put(i + 27 *number, m_storage5.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 *number);
                 }
             }
         }
         number++;
-        if(m_storage6 != null)
+        if (m_storage6 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage6.getItem(i) != null)
+                if (m_storage6.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage6.getItem(i));
+                    m_items.put(i + 27 *number, m_storage6.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 *number);
                 }
             }
         }
         number++;
-        if(m_storage7 != null)
+        if (m_storage7 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage7.getItem(i) != null)
+                if (m_storage7.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage7.getItem(i));
+                    m_items.put(i + 27 *number, m_storage7.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 *number);
                 }
             }
         }
         number++;
-        if(m_storage8 != null)
+        if (m_storage8 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage8.getItem(i) != null)
+                if (m_storage8.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage8.getItem(i));
+                    m_items.put(i + 27 *number, m_storage8.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 *number);
                 }
             }
         }
         number++;
-        if(m_storage9 != null)
+        if (m_storage9 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage9.getItem(i) != null)
+                if (m_storage9.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage9.getItem(i));
+                    m_items.put(i + 27 *number, m_storage9.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 *number);
                 }
             }
         }
@@ -332,7 +332,7 @@ public class BunkerStorage {
     public List<ItemStack> GetItemsOfStorageNumber(int _number)
     {
         List<ItemStack> items = new ArrayList<>();
-        for(int i = (27 * _number); i<27+(27*_number); i++)
+        for (int i = (27 * _number); i < 27 + (27 * _number); i++)
         {
             items.add(m_items.getOrDefault(i, null));
         }
@@ -342,18 +342,18 @@ public class BunkerStorage {
     public void SetItemsOnInventoryStorage(Inventory inv, int _number)
     {
         int i = 0;
-        for(ItemStack item : GetItemsOfStorageNumber(_number))
+        for (ItemStack item : GetItemsOfStorageNumber(_number))
         {
-            if(item != null)
+            if (item != null)
                 inv.setItem(i, item);
             i++;
         }
 
-        for(int j = 0; j < 9; j++)
+        for (int j = 0; j < 9; j++)
         {
-            inv.setItem(j+27, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            inv.setItem(j + 27, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        inv.setItem(8+27, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cQuitter", (short) 1));
+        inv.setItem(8 + 27, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cQuitter", (short) 1));
     }
 
     public void OpenStorage(Player _p, int _storage)
@@ -363,7 +363,7 @@ public class BunkerStorage {
         {
             case 0 ->
             {
-                if(m_storage0 == null)
+                if (m_storage0 == null)
                 {
                     m_storage0 = Bukkit.createInventory(null, 36, "§8Stockage 1 du bunker");
                     SetItemsOnInventoryStorage(m_storage0, 0);
@@ -372,7 +372,7 @@ public class BunkerStorage {
             }
             case 1 ->
             {
-                if(m_storage1 == null)
+                if (m_storage1 == null)
                 {
                     m_storage1 = Bukkit.createInventory(null, 36, "§8Stockage 2 du bunker");
                     SetItemsOnInventoryStorage(m_storage1, 1);
@@ -381,7 +381,7 @@ public class BunkerStorage {
             }
             case 2 ->
             {
-                if(m_storage2 == null)
+                if (m_storage2 == null)
                 {
                     m_storage2 = Bukkit.createInventory(null, 36, "§8Stockage 3 du bunker");
                     SetItemsOnInventoryStorage(m_storage2, 2);
@@ -390,7 +390,7 @@ public class BunkerStorage {
             }
             case 3 ->
             {
-                if(m_storage3 == null)
+                if (m_storage3 == null)
                 {
                     m_storage3 = Bukkit.createInventory(null, 36, "§8Stockage 4 du bunker");
                     SetItemsOnInventoryStorage(m_storage3, 3);
@@ -399,7 +399,7 @@ public class BunkerStorage {
             }
             case 4 ->
             {
-                if(m_storage4 == null)
+                if (m_storage4 == null)
                 {
                     m_storage4 = Bukkit.createInventory(null, 36, "§8Stockage 5 du bunker");
                     SetItemsOnInventoryStorage(m_storage4, 4);
@@ -408,7 +408,7 @@ public class BunkerStorage {
             }
             case 5 ->
             {
-                if(m_storage5 == null)
+                if (m_storage5 == null)
                 {
                     m_storage5 = Bukkit.createInventory(null, 36, "§8Stockage 6 du bunker");
                     SetItemsOnInventoryStorage(m_storage5, 5);
@@ -417,7 +417,7 @@ public class BunkerStorage {
             }
             case 6 ->
             {
-                if(m_storage6 == null)
+                if (m_storage6 == null)
                 {
                     m_storage6 = Bukkit.createInventory(null, 36, "§8Stockage 7 du bunker");
                     SetItemsOnInventoryStorage(m_storage6, 6);
@@ -426,7 +426,7 @@ public class BunkerStorage {
             }
             case 7 ->
             {
-                if(m_storage7 == null)
+                if (m_storage7 == null)
                 {
                     m_storage7 = Bukkit.createInventory(null, 36, "§8Stockage 8 du bunker");
                     SetItemsOnInventoryStorage(m_storage7, 7);
@@ -435,7 +435,7 @@ public class BunkerStorage {
             }
             case 8 ->
             {
-                if(m_storage8 == null)
+                if (m_storage8 == null)
                 {
                     m_storage8 = Bukkit.createInventory(null, 36, "§8Stockage 9 du bunker");
                     SetItemsOnInventoryStorage(m_storage8, 8);
@@ -444,7 +444,7 @@ public class BunkerStorage {
             }
             case 9 ->
             {
-                if(m_storage9 == null)
+                if (m_storage9 == null)
                 {
                     m_storage9 = Bukkit.createInventory(null, 36, "§8Stockage 10 du bunker");
                     SetItemsOnInventoryStorage(m_storage9, 9);

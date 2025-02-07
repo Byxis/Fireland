@@ -2,7 +2,6 @@ package fr.byxis.player.shop;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,15 +14,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class ShopCommandManager implements CommandExecutor, TabCompleter {
 
     private final Fireland main;
 
-    public ShopCommandManager(Fireland main) {
-        this.main = main;
+    public ShopCommandManager(Fireland _main)
+    {
+        this.main = _main;
     }
 
     @Override
@@ -43,7 +42,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     player.sendMessage("§cCe shop n'existe pas.");
                     return true;
                 }
-                if(getPlayerLevel(player.getUniqueId()).hasAccesstoShop(name))
+                if (getPlayerLevel(player.getUniqueId()).hasAccesstoShop(name))
                     sf.openInv(player, name.replaceAll("_", " "), 1);
                 else
                 {
@@ -62,7 +61,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     String[] words = name.split(" ");
                     StringBuilder sbb = new StringBuilder();
                     for (int i = 0; i < words.length; i++) {
-                        if(i+1 != words.length)
+                        if (i + 1 != words.length)
                         {
 
                             if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
@@ -91,21 +90,21 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                         sb.append(args[i]).append(" ");
                     }
                     int custommodeldata = 0;
-                    if(player.getItemInHand().getItemMeta().hasCustomModelData())
+                    if (player.getItemInHand().getItemMeta().hasCustomModelData())
                     {
                         custommodeldata = player.getItemInHand().getItemMeta().getCustomModelData();
                     }
 
-                    player.sendMessage("n:"+name);
-                    player.sendMessage("i:"+item);
-                    player.sendMessage("d:"+dura);
-                    player.sendMessage("p:"+price);
-                    player.sendMessage("se:"+sell);
-                    player.sendMessage("sh:"+shop);
+                    player.sendMessage("n:" + name);
+                    player.sendMessage("i:" + item);
+                    player.sendMessage("d:" + dura);
+                    player.sendMessage("p:" + price);
+                    player.sendMessage("se:" + sell);
+                    player.sendMessage("sh:" + shop);
 
                     String command = sb.toString().trim();
 
-                    player.sendMessage("c:"+command);
+                    player.sendMessage("c:" + command);
                     ShopFunction sf = new ShopFunction(main, player);
                     sf.addItemOnShop(name, item, dura, price, sell, shop, command, custommodeldata);
                     player.sendMessage("§aItem " + name + "§r§a mis en vente dans le shop " + shop + " !");
@@ -126,13 +125,14 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         ArrayList<String> l = new ArrayList<>();
-        if(strings.length == 1 && commandSender.hasPermission("fireland.shop.admin"))
+        if (strings.length == 1 && commandSender.hasPermission("fireland.shop.admin"))
         {
             ShopFunction sf = new ShopFunction(main , null);
             l = sf.getAllShop();
             l.add("newitem");
         }
-        else if(strings.length > 1 && commandSender.hasPermission("fireland.shop.admin")) {
+        else if (strings.length > 1 && commandSender.hasPermission("fireland.shop.admin"))
+        {
             if (strings.length == 2)
             {
                 l.add("--Prix");
@@ -156,7 +156,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
             }
             else if (strings.length == 6)
             {
-                if(strings[4].equalsIgnoreCase("mcgive"))
+                if (strings[4].equalsIgnoreCase("mcgive"))
                 {
                     l.add("NE RIEN METTRE APRES mcgive");
                 }
@@ -167,7 +167,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
             }
             else if (strings.length == 7)
             {
-                if(strings[4].equalsIgnoreCase("mcgive"))
+                if (strings[4].equalsIgnoreCase("mcgive"))
                 {
                     l.add("NE RIEN METTRE APRES mcgive");
                 }
@@ -178,7 +178,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
             }
             else if (strings.length == 8)
             {
-                if(strings[4].equalsIgnoreCase("mcgive"))
+                if (strings[4].equalsIgnoreCase("mcgive"))
                 {
                     l.add("NE RIEN METTRE APRES mcgive");
                 }

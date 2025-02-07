@@ -11,9 +11,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-
-import static fr.byxis.fireland.utilities.ListUtilities.tabList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EssaimCommandCompleter implements TabCompleter {
 
@@ -27,11 +26,11 @@ public class EssaimCommandCompleter implements TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         List<String> l = new ArrayList<>();
-        if(!(commandSender instanceof Player player))
+        if (!(commandSender instanceof Player player))
         {
             return null;
         }
-        if(!player.hasPermission("fireland.essaim.admin"))
+        if (!player.hasPermission("fireland.essaim.admin"))
         {
             return null;
         }
@@ -55,7 +54,7 @@ public class EssaimCommandCompleter implements TabCompleter {
         }
         else if (strings.length == 2)
         {
-            if(strings[0].equalsIgnoreCase("create") ||
+            if (strings[0].equalsIgnoreCase("create") ||
                     strings[0].equalsIgnoreCase("open") ||
                     strings[0].equalsIgnoreCase("close")||
                     strings[0].equalsIgnoreCase("finish")||
@@ -64,7 +63,7 @@ public class EssaimCommandCompleter implements TabCompleter {
             {
                 l.addAll(ListUtilities.tabList(strings[1], "--name", main.essaimManager.existingEssaims.keySet()));
             }
-            else if(strings[0].equalsIgnoreCase("set"))
+            else if (strings[0].equalsIgnoreCase("set"))
             {
                 ArrayList<String> i1 = new ArrayList<>();
                 i1.add("reset");
@@ -80,7 +79,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                 l.addAll(ListUtilities.tabList(strings[1], "", i1));
 
             }
-            else if(strings[0].equalsIgnoreCase("spawner"))
+            else if (strings[0].equalsIgnoreCase("spawner"))
             {
                 ArrayList<String> i1 = new ArrayList<>();
                 i1.add("activate");
@@ -91,38 +90,38 @@ public class EssaimCommandCompleter implements TabCompleter {
                 l.addAll(ListUtilities.tabList(strings[1], "", i1));
 
             }
-            else if(strings[0].equalsIgnoreCase("setblock") )
+            else if (strings[0].equalsIgnoreCase("setblock"))
             {
                 l.add("--x");
                 Player p = (Player) commandSender;
                 l.add(String.valueOf(Math.round(p.getTargetBlock(null, 50).getX())));
             }
-            else if(strings[0].equalsIgnoreCase("info"))
+            else if (strings[0].equalsIgnoreCase("info"))
             {
                 l.addAll(ListUtilities.tabList(strings[1], "--name", main.essaimManager.existingEssaims.keySet()));
             }
         }
         else if (strings.length == 3)
         {
-            if(strings[0].equalsIgnoreCase("create"))
+            if (strings[0].equalsIgnoreCase("create"))
             {
                 l.add("--region");
             }
-            else if(strings[0].equalsIgnoreCase("setblock"))
+            else if (strings[0].equalsIgnoreCase("setblock"))
             {
                 l.add("--y");
                 Player p = (Player) commandSender;
                 l.add(String.valueOf(Math.round(p.getTargetBlock(null, 50).getY())));
             }
-            else if(strings[0].equalsIgnoreCase("set"))
+            else if (strings[0].equalsIgnoreCase("set"))
             {
                 l.add("--x");
                 Player p = (Player) commandSender;
                 l.add(String.valueOf(Math.round(p.getTargetBlock(null, 50).getX())));
             }
-            else if(strings[0].equalsIgnoreCase("spawner"))
+            else if (strings[0].equalsIgnoreCase("spawner"))
             {
-                if(strings[1].equalsIgnoreCase("create") ||
+                if (strings[1].equalsIgnoreCase("create") ||
                     strings[1].equalsIgnoreCase("activate") ||
                         strings[1].equalsIgnoreCase("remove")||
                         strings[1].equalsIgnoreCase("list"))
@@ -133,7 +132,7 @@ public class EssaimCommandCompleter implements TabCompleter {
         }
         else if (strings.length == 4)
         {
-            if(strings[0].equalsIgnoreCase("create"))
+            if (strings[0].equalsIgnoreCase("create"))
             {
                 ArrayList<String> i1 = new ArrayList<>();
                 i1.add("--jour");
@@ -147,21 +146,21 @@ public class EssaimCommandCompleter implements TabCompleter {
 
                 l.addAll(ListUtilities.tabList(strings[3], "--jour", i1));
             }
-            else if(strings[0].equalsIgnoreCase("set"))
+            else if (strings[0].equalsIgnoreCase("set"))
             {
                 l.add("--y");
                 Player p = (Player) commandSender;
                 l.add(String.valueOf(Math.round(p.getTargetBlock(null, 50).getY())));
             }
-            else if(strings[0].equalsIgnoreCase("setblock"))
+            else if (strings[0].equalsIgnoreCase("setblock"))
             {
                 l.add("--z");
                 Player p = (Player) commandSender;
                 l.add(String.valueOf(Math.round(p.getTargetBlock(null, 50).getZ())));
             }
-            else if(strings[0].equalsIgnoreCase("spawner"))
+            else if (strings[0].equalsIgnoreCase("spawner"))
             {
-                if(strings[1].equalsIgnoreCase("create") ||
+                if (strings[1].equalsIgnoreCase("create") ||
                         strings[1].equalsIgnoreCase("activate") ||
                         strings[1].equalsIgnoreCase("remove"))
                 {
@@ -171,28 +170,28 @@ public class EssaimCommandCompleter implements TabCompleter {
         }
         else if (strings.length == 5)
         {
-            if(strings[0].equalsIgnoreCase("create"))
+            if (strings[0].equalsIgnoreCase("create"))
             {
                 ArrayList<String> i1 = new ArrayList<>();
-                for(int i =0; i < 24; i++)
+                for (int i = 0; i < 24; i++)
                 {
-                    i1.add(""+i);
+                    i1.add("" + i);
                 }
                 l.addAll(ListUtilities.tabList(strings[4], "--heure", i1));
             }
-            else if(strings[0].equalsIgnoreCase("set"))
+            else if (strings[0].equalsIgnoreCase("set"))
             {
                 l.add("--z");
                 Player p = (Player) commandSender;
                 l.add(String.valueOf(Math.round(p.getTargetBlock(null, 50).getZ())));
             }
-            else if(strings[0].equalsIgnoreCase("setblock"))
+            else if (strings[0].equalsIgnoreCase("setblock"))
             {
                 l.addAll(ListUtilities.tabList(strings[4], "--material", Material.values()));
             }
-            else if(strings[0].equalsIgnoreCase("spawner"))
+            else if (strings[0].equalsIgnoreCase("spawner"))
             {
-                if(strings[1].equalsIgnoreCase("create"))
+                if (strings[1].equalsIgnoreCase("create"))
                 {
                     l.addAll(ListUtilities.tabList(strings[3], "--mobtype", MythicBukkit.inst().getMobManager().getMobNames().toArray()));
                 }
@@ -201,32 +200,32 @@ public class EssaimCommandCompleter implements TabCompleter {
         }
         else if (strings.length == 6)
         {
-            if(strings[0].equalsIgnoreCase("spawner"))
+            if (strings[0].equalsIgnoreCase("spawner"))
             {
                 l.add("--amount");
             }
-            else if(strings[0].equalsIgnoreCase("set"))
+            else if (strings[0].equalsIgnoreCase("set"))
             {
                 l.addAll(ListUtilities.tabList(strings[5], "--essaim", main.essaimManager.existingEssaims.keySet()));
             }
         }
         else if (strings.length == 7)
         {
-            if(strings[0].equalsIgnoreCase("spawner") && strings[1].equalsIgnoreCase("create"))
+            if (strings[0].equalsIgnoreCase("spawner") && strings[1].equalsIgnoreCase("create"))
             {
                 l.add("--activationdelay");
             }
         }
         else if (strings.length == 8)
         {
-            if(strings[0].equalsIgnoreCase("spawner") && strings[1].equalsIgnoreCase("create"))
+            if (strings[0].equalsIgnoreCase("spawner") && strings[1].equalsIgnoreCase("create"))
             {
                 l.add("--spawndelay");
             }
         }
         else if (strings.length == 9)
         {
-            if(strings[0].equalsIgnoreCase("spawner") && strings[1].equalsIgnoreCase("create"))
+            if (strings[0].equalsIgnoreCase("spawner") && strings[1].equalsIgnoreCase("create"))
             {
                 l.add("--isAffectedByDifficulty");
                 l.add("true");
@@ -235,7 +234,7 @@ public class EssaimCommandCompleter implements TabCompleter {
         }
         else if (strings.length >= 9)
         {
-            if(strings[0].equalsIgnoreCase("spawner") && strings[1].equalsIgnoreCase("create"))
+            if (strings[0].equalsIgnoreCase("spawner") && strings[1].equalsIgnoreCase("create"))
             {
                 l.add("--command");
             }
@@ -243,7 +242,7 @@ public class EssaimCommandCompleter implements TabCompleter {
 
         /*for(String str : l)
         {
-            if(!l.toString().toLowerCase().startsWith(strings[strings.length - 1].toLowerCase()))
+            if (!l.toString().toLowerCase().startsWith(strings[strings.length - 1].toLowerCase()))
             {
                 l.remove(str);
             }

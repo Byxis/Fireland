@@ -1,13 +1,13 @@
 package fr.byxis.player.intendant;
 
-import fr.byxis.fireland.utilities.*;
-import fr.byxis.player.intendant.menu.*;
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.faction.faction.FactionInformation;
 import fr.byxis.faction.faction.FactionPlayerInformation;
-import fr.byxis.fireland.Fireland;
 import fr.byxis.faction.zone.ZoneConfigFileManager;
 import fr.byxis.faction.zone.zoneclass.FactionZoneInformation;
+import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.*;
+import fr.byxis.player.intendant.menu.*;
 import fr.byxis.player.level.LevelStorage;
 import fr.byxis.player.level.PlayerLevel;
 import fr.byxis.player.quest.QuestManager;
@@ -32,17 +32,19 @@ import static fr.byxis.player.primes.PrimeEvent.addPrime;
 public class Manager implements Listener {
 
     private final Fireland main;
-    public Manager(Fireland main) {
-        this.main = main;
+
+    public Manager(Fireland _main)
+    {
+        this.main = _main;
     }
 
     @EventHandler
     public void ClickInventoryEvent(InventoryClickEvent e)
     {
         InventoryView inv = e.getView();
-        if(e.getView().getPlayer() instanceof Player p)
+        if (e.getView().getPlayer() instanceof Player p)
         {
-            if(inv.getTitle().contains("Intendant"))
+            if (inv.getTitle().contains("Intendant"))
             {
                 /**       Click check        **/
                 InventoryUtilities.clickManager(e);
@@ -63,7 +65,7 @@ public class Manager implements Listener {
                     }
                     case NETHERITE_SWORD -> {
                         FactionFunctions ff = new FactionFunctions(main, p);
-                        if(!ff.playerFactionName(p).equalsIgnoreCase(""))
+                        if (!ff.playerFactionName(p).equalsIgnoreCase(""))
                             MenuFaction.OpenFaction(main, p, true);
                         else
                             InGameUtilities.sendPlayerError(p, "Vous n'avez pas de faction.");
@@ -88,7 +90,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if(inv.getTitle().contains("Votre faction"))
+            else if (inv.getTitle().contains("Votre faction"))
             {
                 /**       Click check        **/
                 InventoryUtilities.clickManager(e);
@@ -144,7 +146,7 @@ public class Manager implements Listener {
                         MenuFaction.OpenFaction(main, p, true);
                     }
                     case STONE -> {
-                        if(finfos.getCurrentUpgrade() >= 5)
+                        if (finfos.getCurrentUpgrade() >= 5)
                         {
                             main.bunkerManager.getBunker(finfos.getName()).Join(p);
                         }
@@ -154,7 +156,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if(inv.getTitle().contains("Membres de "))
+            else if (inv.getTitle().contains("Membres de "))
             {
                 /**       Click check        **/
                 InventoryUtilities.clickManager(e);
@@ -174,7 +176,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if(inv.getTitle().contains("Améliorations pour"))
+            else if (inv.getTitle().contains("Améliorations pour"))
             {
                 /**       Click check        **/
                 InventoryUtilities.clickManager(e);
@@ -200,9 +202,9 @@ public class Manager implements Listener {
                         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
                     }
                     case SHIELD -> {
-                        if(!finfos.hasFriendlyFirePerk())
+                        if (!finfos.hasFriendlyFirePerk())
                         {
-                            if(finfos.getCurrentUpgrade() < 2)
+                            if (finfos.getCurrentUpgrade() < 2)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                                 InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
@@ -217,9 +219,9 @@ public class Manager implements Listener {
                         return;
                     }
                     case NAME_TAG -> {
-                        if(!finfos.hasNicknameVisibilityPerk())
+                        if (!finfos.hasNicknameVisibilityPerk())
                         {
-                            if(finfos.getCurrentUpgrade() < 5)
+                            if (finfos.getCurrentUpgrade() < 5)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                                 InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 5 pour débloquer cette amélioration.");
@@ -238,9 +240,9 @@ public class Manager implements Listener {
                         return;
                     }
                     case LEATHER -> {
-                        if(!finfos.hasSkinPerk())
+                        if (!finfos.hasSkinPerk())
                         {
-                            if(finfos.getCurrentUpgrade() < 4)
+                            if (finfos.getCurrentUpgrade() < 4)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                                 InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 4 pour débloquer cette amélioration.");
@@ -259,9 +261,9 @@ public class Manager implements Listener {
                         return;
                     }
                     case FLOWER_BANNER_PATTERN -> {
-                        if(!finfos.DoShowPrefix())
+                        if (!finfos.DoShowPrefix())
                         {
-                            if(finfos.getCurrentUpgrade() < 3)
+                            if (finfos.getCurrentUpgrade() < 3)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                                 InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
@@ -280,9 +282,9 @@ public class Manager implements Listener {
                         return;
                     }
                     case GRASS_BLOCK -> {
-                        if(!finfos.hasCapturePerk())
+                        if (!finfos.hasCapturePerk())
                         {
-                            if(finfos.getCurrentUpgrade() < 2)
+                            if (finfos.getCurrentUpgrade() < 2)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                                 InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
@@ -301,9 +303,9 @@ public class Manager implements Listener {
                         return;
                     }
                     case BEACON -> {
-                        if(!finfos.hasZoneTpPerk())
+                        if (!finfos.hasZoneTpPerk())
                         {
-                            if(finfos.getCurrentUpgrade() < 6)
+                            if (finfos.getCurrentUpgrade() < 6)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                                 InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 6 pour débloquer cette amélioration.");
@@ -322,13 +324,13 @@ public class Manager implements Listener {
                         return;
                     }
                 }
-                if(itemclicked.getType() == color && PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.command.faction.color") && !itemclicked.getItemMeta().getDisplayName().contains("Améliorer la faction au rang")
+                if (itemclicked.getType() == color && PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.command.faction.color") && !itemclicked.getItemMeta().getDisplayName().contains("Améliorer la faction au rang")
                         && !itemclicked.getItemMeta().getDisplayName().contains("Retour au menu Faction") && pInfos.getRole() == 2)
                 {
                     MenuColor.OpenColorMenu(main, p, finfos);
                 }
             }
-            else if(inv.getTitle().contains("Changement de couleur"))
+            else if (inv.getTitle().contains("Changement de couleur"))
             {
                 /**       Click check        **/
                 InventoryUtilities.clickManager(e);
@@ -340,12 +342,11 @@ public class Manager implements Listener {
 
                 /**       Click check        **/
 
-
-                if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
+                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
                 {
                     MenuPerks.OpenPerks(main, p);
                 }
-                else if(itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE)
+                else if (itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE)
                 {
                     FactionFunctions ff = new FactionFunctions(main, p);
                     FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
@@ -354,7 +355,7 @@ public class Manager implements Listener {
                     MenuColor.OpenColorMenu(main, p, finfos);
                 }
             }
-            else if(inv.getTitle().contains("Zones"))
+            else if (inv.getTitle().contains("Zones"))
             {
 
                 /**       Click check        **/
@@ -367,7 +368,7 @@ public class Manager implements Listener {
 
                 /**       Click check        **/
 
-                if(itemclicked.getType().toString().endsWith("_BANNER"))
+                if (itemclicked.getType().toString().endsWith("_BANNER"))
                 {
                     FactionFunctions ff = new FactionFunctions(main, p);
 
@@ -375,32 +376,32 @@ public class Manager implements Listener {
                     FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
                     List<FactionZoneInformation> list = main.zoneManager.GetFactionData(finfos.getName());
                     FactionZoneInformation zoneinfo = null;
-                    for(FactionZoneInformation fz : list)
+                    for (FactionZoneInformation fz : list)
                     {
-                        if(itemclicked.getItemMeta().getDisplayName().contains(fz.getFormattedName()))
+                        if (itemclicked.getItemMeta().getDisplayName().contains(fz.getFormattedName()))
                         {
                             zoneinfo = fz;
                             break;
                         }
                     }
-                    if(zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk() && !main.hashMapManager.isTeleporting(p.getUniqueId()))
+                    if (zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk() && !main.hashMapManager.isTeleporting(p.getUniqueId()))
                     {
                         ZoneConfigFileManager configManager = new ZoneConfigFileManager(main);
                         configManager.notSafeSetup();
-                        Location loc = new Location(Bukkit.getWorld("world"), configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".teleportation.x"),
-                                configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".teleportation.y"),
-                                configManager.config.getDouble("zone."+zoneinfo.getZoneName()+".teleportation.z"));
+                        Location loc = new Location(Bukkit.getWorld("world"), configManager.config.getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.x"),
+                                configManager.config.getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.y"),
+                                configManager.config.getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.z"));
 
                         InGameUtilities.teleportPlayer(p, loc, 15, "gun.hub.helico", 3600);
                     }
                 }
 
-                if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour au menu Faction"))
+                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour au menu Faction"))
                 {
                     MenuFaction.OpenFaction(main, p, true);
                 }
             }
-            else if(inv.getTitle().contains("Boosters"))
+            else if (inv.getTitle().contains("Boosters"))
             {
                 /**       Click check        **/
 
@@ -413,37 +414,36 @@ public class Manager implements Listener {
 
                 /**       Click check        **/
 
-
-                if(itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
+                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
                 {
                     OpenIntendant(main, p);
                 }
-                else if(itemclicked.getType() == Material.FIREWORK_ROCKET)
+                else if (itemclicked.getType() == Material.FIREWORK_ROCKET)
                 {
                     ItemMeta meta = itemclicked.getItemMeta();
                     int duration = 1;
-                    if(meta.getDisplayName().contains("3h"))
+                    if (meta.getDisplayName().contains("3h"))
                     {
                         duration = 3;
                     }
-                    else if(meta.getDisplayName().contains("5h"))
+                    else if (meta.getDisplayName().contains("5h"))
                     {
                         duration = 5;
                     }
                     int level = 1;
-                    if(meta.getDisplayName().contains("Lvl. 2"))
+                    if (meta.getDisplayName().contains("Lvl. 2"))
                     {
                         level = 2;
                     }
-                    else if(meta.getDisplayName().contains("Lvl. 3"))
+                    else if (meta.getDisplayName().contains("Lvl. 3"))
                     {
                         level = 3;
                     }
-                    PermissionUtilities.commandExecutor(p, "booster create "+level+" "+duration, "fireland.command.booster");
+                    PermissionUtilities.commandExecutor(p, "booster create " + level + " " + duration, "fireland.command.booster");
                     MenuBooster.OpenBoosters(main,p);
                 }
             }
-            else if(inv.getTitle().contains("Quêtes quotidiennes"))
+            else if (inv.getTitle().contains("Quêtes quotidiennes"))
             {
                 /**       Click check        **/
 
@@ -467,7 +467,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if(inv.getTitle().equalsIgnoreCase("§4Primes"))
+            else if (inv.getTitle().equalsIgnoreCase("§4Primes"))
             {
                 /**       Click check        **/
 
@@ -493,7 +493,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if(inv.getTitle().equalsIgnoreCase("§4Primes: Sélectionner un joueur"))
+            else if (inv.getTitle().equalsIgnoreCase("§4Primes: Sélectionner un joueur"))
             {
                 /**       Click check        **/
 
@@ -516,7 +516,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if(inv.getTitle().equalsIgnoreCase("§4Primes: Ajouter un montant"))
+            else if (inv.getTitle().equalsIgnoreCase("§4Primes: Ajouter un montant"))
             {
                 /**       Click check        **/
 
@@ -536,9 +536,9 @@ public class Manager implements Listener {
                         MenuPrime.OpenPrimePlayer(main, p, 1);
                     }
                     case RAW_GOLD -> {
-                        if(itemclicked.getItemMeta().hasCustomModelData() && itemclicked.getItemMeta().getCustomModelData() == 1)
+                        if (itemclicked.getItemMeta().hasCustomModelData() && itemclicked.getItemMeta().getCustomModelData() == 1)
                         {
-                            if(money-1000 > 0)
+                            if (money - 1000 > 0)
                             {
                                 MenuPrime.OpenPrimeMoney(main, p, player, money -1000 );
                             }
@@ -550,13 +550,13 @@ public class Manager implements Listener {
                         }
                         else
                         {
-                            MenuPrime.OpenPrimeMoney(main, p, player, money +1000 );
+                            MenuPrime.OpenPrimeMoney(main, p, player, money + 1000 );
                         }
                     }
                     case GOLD_INGOT -> {
-                        if(itemclicked.getItemMeta().hasCustomModelData() && itemclicked.getItemMeta().getCustomModelData() == 1)
+                        if (itemclicked.getItemMeta().hasCustomModelData() && itemclicked.getItemMeta().getCustomModelData() == 1)
                         {
-                            if(money-100 > 0)
+                            if (money - 100 > 0)
                             {
                                 MenuPrime.OpenPrimeMoney(main, p, player, money -100 );
                             }
@@ -568,13 +568,13 @@ public class Manager implements Listener {
                         }
                         else
                         {
-                            MenuPrime.OpenPrimeMoney(main, p, player, money +100 );
+                            MenuPrime.OpenPrimeMoney(main, p, player, money + 100 );
                         }
                     }
                     case GOLD_NUGGET -> {
-                        if(itemclicked.getItemMeta().hasCustomModelData() && itemclicked.getItemMeta().getCustomModelData() == 1)
+                        if (itemclicked.getItemMeta().hasCustomModelData() && itemclicked.getItemMeta().getCustomModelData() == 1)
                         {
-                            if(money-10 > 0)
+                            if (money - 10 > 0)
                             {
                                 MenuPrime.OpenPrimeMoney(main, p, player, money -10 );
                             }
@@ -586,22 +586,22 @@ public class Manager implements Listener {
                         }
                         else
                         {
-                            MenuPrime.OpenPrimeMoney(main, p, player, money +10 );
+                            MenuPrime.OpenPrimeMoney(main, p, player, money + 10 );
                         }
                     }
                     case STRUCTURE_VOID,BARRIER ->
                     {
-                        if(Fireland.eco.getBalance(p) > money)
+                        if (Fireland.eco.getBalance(p) > money)
                         {
-                            if(money > 0)
+                            if (money > 0)
                             {
                                 Fireland.eco.withdrawPlayer(p, money);
                                 addPrime(BasicUtilities.getUuid(player), money);
-                                if(Bukkit.getPlayer(player) != null && Bukkit.getPlayer(player).isOnline())
+                                if (Bukkit.getPlayer(player) != null && Bukkit.getPlayer(player).isOnline())
                                 {
-                                    InGameUtilities.sendPlayerError(Bukkit.getPlayer(player), "Une prime de "+money+"$ vous a été attribué.");
+                                    InGameUtilities.sendPlayerError(Bukkit.getPlayer(player), "Une prime de " + money + "$ vous a été attribué.");
                                 }
-                                InGameUtilities.sendPlayerSucces(p, "Une prime de "+money+"$ a été attribué à "+player+".");
+                                InGameUtilities.sendPlayerSucces(p, "Une prime de " + money + "$ a été attribué à " + player + ".");
                             }
                             else
                             {
@@ -611,7 +611,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if(inv.getTitle().equalsIgnoreCase("§4Primes disponibles"))
+            else if (inv.getTitle().equalsIgnoreCase("§4Primes disponibles"))
             {
                 /**       Click check        **/
 
@@ -631,7 +631,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if(inv.getTitle().equalsIgnoreCase("Calendrier des Essaims"))
+            else if (inv.getTitle().equalsIgnoreCase("Calendrier des Essaims"))
             {
                 /**       Click check        **/
 
@@ -651,7 +651,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if(inv.getTitle().contains("Choisir sa nation"))
+            else if (inv.getTitle().contains("Choisir sa nation"))
             {
                 /**       Click check        **/
                 InventoryUtilities.clickManager(e);
@@ -663,47 +663,46 @@ public class Manager implements Listener {
 
                 /**       Click check        **/
 
-
-                if(itemclicked.getType().name().contains("_BANNER"))
+                if (itemclicked.getType().name().contains("_BANNER"))
                 {
                     getPlayerLevel(p.getUniqueId()).setCanChange(false);
-                    if(itemclicked.getItemMeta().getDisplayName().contains("Bannis"))
+                    if (itemclicked.getItemMeta().getDisplayName().contains("Bannis"))
                     {
                         getPlayerLevel(p.getUniqueId()).setNation(LevelStorage.Nation.Bannis);
                         InGameUtilities.sendPlayerError(p, "Vous avez rejoint la nation des Bannis.");
                         InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
-                        for(Player player : Bukkit.getOnlinePlayers())
+                        for (Player player : Bukkit.getOnlinePlayers())
                         {
-                            if(!player.getName().equalsIgnoreCase(p.getName()))
-                                player.sendMessage("§cLe joueur "+p.getName()+" a rejoint la nation des Bannis.");
+                            if (!player.getName().equalsIgnoreCase(p.getName()))
+                                player.sendMessage("§cLe joueur " + p.getName() + " a rejoint la nation des Bannis.");
                         }
                     }
-                    else if(itemclicked.getItemMeta().getDisplayName().contains("Neutre"))
+                    else if (itemclicked.getItemMeta().getDisplayName().contains("Neutre"))
                     {
                         getPlayerLevel(p.getUniqueId()).setNation(LevelStorage.Nation.Neutre);
                         InGameUtilities.sendPlayerInformation(p, "Vous avez rejoint la nation des Neutres.");
                         InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
-                        for(Player player : Bukkit.getOnlinePlayers())
+                        for (Player player : Bukkit.getOnlinePlayers())
                         {
-                            if(!player.getName().equalsIgnoreCase(p.getName()))
-                                player.sendMessage("§7Le joueur "+p.getName()+" a rejoint la nation des Neutres.");
+                            if (!player.getName().equalsIgnoreCase(p.getName()))
+                                player.sendMessage("§7Le joueur " + p.getName() + " a rejoint la nation des Neutres.");
                         }
                     }
-                    else if(itemclicked.getItemMeta().getDisplayName().contains("Etat"))
+                    else if (itemclicked.getItemMeta().getDisplayName().contains("Etat"))
                     {
                         getPlayerLevel(p.getUniqueId()).setNation(LevelStorage.Nation.Etat);
                         InGameUtilities.sendPlayerSucces(p, "Vous avez rejoint la nation de l'Etat.");
                         InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
-                        for(Player player : Bukkit.getOnlinePlayers())
+                        for (Player player : Bukkit.getOnlinePlayers())
                         {
-                            if(!player.getName().equalsIgnoreCase(p.getName()))
-                                player.sendMessage("§aLe joueur "+p.getName()+" a rejoint la nation de l'Etat.");
+                            if (!player.getName().equalsIgnoreCase(p.getName()))
+                                player.sendMessage("§aLe joueur " + p.getName() + " a rejoint la nation de l'Etat.");
                         }
                     }
                     p.closeInventory();
                 }
             }
-            else if(inv.getTitle().contains("Votre niveau : "))
+            else if (inv.getTitle().contains("Votre niveau : "))
             {
                 /**       Click check        **/
 
@@ -727,7 +726,7 @@ public class Manager implements Listener {
                     }
                     case WHITE_BANNER , BLACK_BANNER-> {
                         PlayerLevel pl = getPlayerLevel(p.getUniqueId());
-                        InGameUtilities.sendInteractivePlayerMessage(p, "§cPour changer de nation, cliquez sur ce message. Vous devez payer "+pl.GetJetonPriceNationChange()+ "§f\u26C1§c et "+pl.GetMoneyPriceNationChange()+"§f$", "/level changeNation8484", "§cCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
+                        InGameUtilities.sendInteractivePlayerMessage(p, "§cPour changer de nation, cliquez sur ce message. Vous devez payer " + pl.GetJetonPriceNationChange() + "§f\u26C1§c et " + pl.GetMoneyPriceNationChange() + "§f$", "/level changeNation8484", "§cCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
                         p.closeInventory();
                     }
                 }

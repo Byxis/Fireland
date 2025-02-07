@@ -121,7 +121,7 @@ public class Fireland extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new WorldGeneration(), this);
         getServer().getPluginManager().registerEvents(new Menu(this), this);
         getServer().getPluginManager().registerEvents(new DoorPass(this), this);
-        getServer().getPluginManager().registerEvents(new shop(this), this);
+        getServer().getPluginManager().registerEvents(new Shop(this), this);
         getServer().getPluginManager().registerEvents(new UtilitaryMerchantHandler(this), this);
         getServer().getPluginManager().registerEvents(new Bank(this), this);
         getServer().getPluginManager().registerEvents(new PreventCrafting(), this);

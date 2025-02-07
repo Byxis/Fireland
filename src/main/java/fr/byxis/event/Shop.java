@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class shop implements Listener, CommandExecutor, TabCompleter {
+public class Shop implements Listener, CommandExecutor, TabCompleter {
     Inventory revolver1 = Bukkit.createInventory(null, 54, "Marchand de Revolver (1/2)");
     Inventory revolver2 = Bukkit.createInventory(null, 54, "Marchand de Revolver (2/2)");
     Inventory smg1 = Bukkit.createInventory(null, 54, "Marchand de SMG (1/2)");
@@ -49,7 +49,7 @@ public class shop implements Listener, CommandExecutor, TabCompleter {
     
     private Fireland main;
     
-    public @Deprecated shop(Fireland main) {
+    public @Deprecated Shop(Fireland main) {
         this.main = main;
     }
 

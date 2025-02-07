@@ -1,6 +1,7 @@
 package fr.byxis.event;
 
 import fr.byxis.fireland.Fireland;
+import net.royawesome.jlibnoise.MathHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -17,19 +18,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.spigotmc.event.entity.EntityDismountEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class stairs implements Listener
+public class Stairs implements Listener
 {
     
     private final Fireland main;
 
-    public stairs(Fireland main)
+    public Stairs(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
 
     @SuppressWarnings("deprecation")
@@ -38,7 +39,7 @@ public class stairs implements Listener
     {
         Player p = e.getPlayer();
         Block block = e.getClickedBlock();
-        if(block == null)
+        if (block == null)
         {
             return;
         }
@@ -48,19 +49,19 @@ public class stairs implements Listener
         {
             org.bukkit.block.data.type.Stairs stairs = (org.bukkit.block.data.type.Stairs) block.getBlockData();
             
-            if(stairs.getHalf() == Half.TOP || p.getVehicle() instanceof ArmorStand)
+            if (stairs.getHalf() == Half.TOP || p.getVehicle() instanceof ArmorStand)
             {
                 return;
             }
             
             Location loc = block.getLocation();
             loc.setX(loc.getX() + 0.5);
-            loc.setY(loc.getY() -0.31);
+            loc.setY(loc.getY() - 0.31);
             loc.setZ(loc.getZ() + 0.5);
             
             int face = 0;
             
-            if(stairs.getFacing() == BlockFace.NORTH)
+            if (stairs.getFacing() == BlockFace.NORTH)
             {
                 face = 2;
             }
@@ -73,25 +74,25 @@ public class stairs implements Listener
                 face = -1;
             }
             
-            loc.setYaw((face *90)-180);
+            loc.setYaw((face * 90) - 180);
             Location locUp = block.getLocation();
             locUp.setY(locUp.getY() + 1);
             
             
-            if((p.getLocation().distance(loc) > 1.5 && (p.getLocation().getY() > loc.getX() || p.getLocation().getY() > loc.getX() + 1)) )
+            if ((p.getLocation().distance(loc) > 1.5 && (p.getLocation().getY() > loc.getX() || p.getLocation().getY() > loc.getX() + 1)))
             {
                 return;
             }
             
-            for(Entity near : getEntitiesAroundPoint(loc, 2)) 
+            for (Entity near : getEntitiesAroundPoint(loc, 2))
             {
-                if(near instanceof ArmorStand && near.getLocation() == loc)
+                if (near instanceof ArmorStand && near.getLocation() == loc)
                 {
                     return;
                 }
             }
             
-            if(!(new Location(locUp.getWorld(), locUp.getX(), locUp.getY(), locUp.getZ()).getBlock().isPassable()))
+            if (!(new Location(locUp.getWorld(), locUp.getX(), locUp.getY(), locUp.getZ()).getBlock().isPassable()))
             {
                 return;
             }
@@ -110,19 +111,15 @@ public class stairs implements Listener
             
             new BukkitRunnable() 
             {
-
                 @Override
                 public void run() {
-                    if(chair.getPassengers().isEmpty())
+                    if (chair.getPassengers().isEmpty())
                     {
                         chair.remove();
                         this.cancel();
                     }
-                    
                 }
-                
-            }.runTaskTimer(main, 1 , 20);
-            
+            }.runTaskTimer(main, 1, 20);
         }
     }
     
@@ -132,21 +129,22 @@ public class stairs implements Listener
 
         // To find chunks we use chunk coordinates (not block coordinates!
         // )
-        /*
-	    int smallX = MathHelper.floor((location.getX() - radius) / 16.0D);
-	    int bigX = MathHelper.floor((location.getX() + radius) / 16.0D);
-	    int smallZ = MathHelper.floor((location.getZ() - radius) / 16.0D);
-	    int bigZ = MathHelper.floor((location.getZ() + radius) / 16.0D);
+        int smallX = MathHelper.floor((location.getX() - radius) / 16.0D);
+        int bigX = MathHelper.floor((location.getX() + radius) / 16.0D);
+        int smallZ = MathHelper.floor((location.getZ() - radius) / 16.0D);
+        int bigZ = MathHelper.floor((location.getZ() + radius) / 16.0D);
 
-	    for (int x = smallX; x <= bigX; x++) {
-	        for (int z = smallZ; z <= bigZ; z++) {
-				assert world != null;
-				if (world.isChunkLoaded(x, z)) {
-	                entities.addAll(Arrays.asList(world.getChunkAt(x, z).getEntities())); // Add all entities from this chunk to the list
-	            }
-	        }
-	    }
-		*/
+        for (int x = smallX; x <= bigX; x++) 
+        {
+            for (int z = smallZ; z <= bigZ; z++) 
+            {
+                assert world != null;
+                if (world.isChunkLoaded(x, z)) 
+                {
+                    entities.addAll(Arrays.asList(world.getChunkAt(x, z).getEntities())); // Add all entities from this chunk to the list
+                }
+            }
+        }
         // Remove the entities that are within the box above but not actually in the sphere we defined with the radius and location
         // This code below could probably be replaced in Java 8 with a stream -> filter
         // Create an iterator so we can loop through the list while removing entries
@@ -155,15 +153,4 @@ public class stairs implements Listener
         entities.removeIf(entity -> entity.getLocation().distanceSquared(location) > radius * radius);
         return entities;
     }
-    
-    public void playerLeaveArrow(EntityDismountEvent  e)
-    {
-        //Entity passenger = ((Entity) e).getPassenger();
-        Entity vehicle = e.getDismounted();
-        if(vehicle instanceof ArmorStand)
-        {
-            vehicle.remove();
-        }
-    }
-    
 }

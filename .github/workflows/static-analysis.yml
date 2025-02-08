@@ -1,0 +1,35 @@
+name: Static Analysis (SpotBugs & PMD)
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  static-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 20
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '20'
+
+    - name: Install Maven dependencies
+      run: mvn install -DskipTests
+
+    - name: Run SpotBugs
+      run: mvn org.codehaus.mojo:findbugs-maven-plugin:3.0.5:findbugs -DskipTests
+
+    - name: Run PMD
+      run: mvn pmd:pmd -DskipTests
+
+    - name: Display SpotBugs Report
+      run: cat target/spotbugsXml.xml
+
+    - name: Display PMD Report
+      run: cat target/site/pmd.html

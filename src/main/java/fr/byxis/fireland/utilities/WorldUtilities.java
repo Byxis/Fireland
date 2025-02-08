@@ -33,7 +33,7 @@ public class WorldUtilities {
     public static double getCosAngleFromTwoVector2(Vector2 a, Vector2 b)
     {
         double produitScalaire = (a.getX() * b.getX()) + (a.getY() * b.getY());
-        double autre = Math.sqrt(Math.pow(a.getX(), 2) + Math.pow(a.getY(), 2)) * Math.sqrt(Math.pow(b.x, 2) + Math.pow(b.y, 2));
+        double autre = Math.sqrt(Math.pow(a.getX(), 2) + Math.pow(a.getY(), 2)) * Math.sqrt(Math.pow(b.getX(), 2) + Math.pow(b.getY(), 2));
         return  produitScalaire / autre;
     }
 

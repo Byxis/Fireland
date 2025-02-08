@@ -15,13 +15,13 @@ public class Join implements Listener
     
     private final Fireland main;
 
-    public Join(Fireland main)
+    public Join(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
 
     @EventHandler
-    public void PlayerJoin(PlayerJoinEvent e)
+    public void playerJoin(PlayerJoinEvent e)
     {
         Player player = e.getPlayer();
         main.getConfig().set("door." + player.getUniqueId(), false);

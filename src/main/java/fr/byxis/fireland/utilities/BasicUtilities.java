@@ -84,10 +84,10 @@ public class BasicUtilities {
         String url = "https://api.mojang.com/users/profiles/minecraft/" + name;
         try {
             @SuppressWarnings("deprecation")
-            String UUIDJson = IOUtils.toString(new URL(url));
-            if (UUIDJson.isEmpty()) return null;
-            JSONObject UUIDObject = (JSONObject) JSONValue.parseWithException(UUIDJson);
-            String[] uuid = UUIDObject.get("id").toString().split("");
+            String uuidJson = IOUtils.toString(new URL(url));
+            if (uuidJson.isEmpty()) return null;
+            JSONObject uuidObject = (JSONObject) JSONValue.parseWithException(uuidJson);
+            String[] uuid = uuidObject.get("id").toString().split("");
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < uuid.length; i++)
             {
@@ -106,15 +106,15 @@ public class BasicUtilities {
     }
 
     public static int generateInt(int borneInf, int borneSup)
-{
+    {
         Random random = new Random();
         int nb;
-        nb = borneInf + random.nextInt(borneSup-borneInf);
+        nb = borneInf + random.nextInt(borneSup - borneInf);
         return nb;
     }
 
     public static List<String> listMaker(String str1, String str2, String str3, String str4)
-{
+    {
         List<String> lore = new ArrayList<String>();
         if (str1 != "") lore.add(str1);
         if (str2 != "") lore.add(str2);
@@ -123,7 +123,7 @@ public class BasicUtilities {
         return lore;
     }
 
-    public static String GetStringColor(Material mat)
+    public static String getStringColor(Material mat)
     {
         switch (mat)
         {

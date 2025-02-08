@@ -10,31 +10,31 @@ public class WorldUtilities {
         {
             if (x > 0)
             {
-                return new Vector2(1000,0);
+                return new Vector2(1000, 0);
             }
             else
             {
-                return new Vector2(-1000,0);
+                return new Vector2(-1000, 0);
             }
         }
         else
         {
             if (y > 0)
             {
-                return new Vector2(0,1000);
+                return new Vector2(0, 1000);
             }
             else
             {
-                return new Vector2(0,-1000);
+                return new Vector2(0, -1000);
             }
         }
     }
 
     public static double getCosAngleFromTwoVector2(Vector2 a, Vector2 b)
     {
-        double produitScalaire = (a.x * b.x) + (a.y * b.y);
-        double autre = Math.sqrt(Math.pow(a.x, 2) + Math.pow(a.y, 2)) * Math.sqrt(Math.pow(b.x, 2) + Math.pow(b.y, 2));
-        return  produitScalaire/autre;
+        double produitScalaire = (a.getX() * b.getX()) + (a.getY() * b.getY());
+        double autre = Math.sqrt(Math.pow(a.getX(), 2) + Math.pow(a.getY(), 2)) * Math.sqrt(Math.pow(b.x, 2) + Math.pow(b.y, 2));
+        return  produitScalaire / autre;
     }
 
     public static int getWorldBorderDistance(Location loc, Location loc2)
@@ -45,15 +45,15 @@ public class WorldUtilities {
         loc2.setY(0);
         double distance = loc.distance(loc2);
         double value = 0;
-        if (primary.x == 0)
+        if (primary.getX() == 0)
         {
-            value = primary.y;
+            value = primary.getY();
         }
         else
         {
-            value = primary.x;
+            value = primary.getX();
         }
-        double calcul = 1000 - distance *getCosAngleFromTwoVector2(primary, player);
+        double calcul = 1000 - distance * getCosAngleFromTwoVector2(primary, player);
         if (calcul < 0)
         {
             calcul *= -1;

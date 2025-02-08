@@ -14,18 +14,18 @@ public class AmbientSound implements Listener, CommandExecutor
 
     private final Fireland main;
 
-    public AmbientSound(Fireland main)
+    public AmbientSound(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(sender instanceof Player)
+        if (sender instanceof Player)
         {
             Player p = (Player) sender;
-            ConfigManager config = main.cfgm;
-            if(config.getPlayerDB().getBoolean("ambientsound." + p.getUniqueId()))
+            ConfigManager config = main.getCfgm();
+            if (config.getPlayerDB().getBoolean("ambientsound." + p.getUniqueId()))
             {
                 config.getPlayerDB().set("ambientsound." + p.getUniqueId(), false);
                 p.sendMessage("§8Les sons d'ambiance ont été désactivés !");
@@ -42,15 +42,15 @@ public class AmbientSound implements Listener, CommandExecutor
     
     public void playSound()
     {
-        Integer random = (int) (Math.random() *10);
+        Integer random = (int) (Math.random() * 10);
         World world = main.getServer().getWorld("world");
         long time = world.getTime();
         
-        if((random < 1 && (time > 23000) || (time > 0 && time < 12500)) || (random <= 2 && (time > 12500 && time < 23000)))
+        if ((random < 1 && (time > 23000) || (time > 0 && time < 12500)) || (random <= 2 && (time > 12500 && time < 23000)))
         {
             for (Player p : main.getServer().getOnlinePlayers())
             {
-                if(main.cfgm.getPlayerDB().getBoolean("ambientsound." + p.getUniqueId()))
+                if (main.getCfgm().getPlayerDB().getBoolean("ambientsound." + p.getUniqueId()))
                 {
                     p.playSound(p.getLocation(), "minecraft:ambient.cave", 1, 1);
                 }

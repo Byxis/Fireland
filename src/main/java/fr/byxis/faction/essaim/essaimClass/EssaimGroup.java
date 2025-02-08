@@ -14,15 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EssaimGroup {
-    private String name;
+    private final String name;
     private Player leader;
-    private List<Player> members;
+    private final List<Player> members;
     private int adaptiveDifficulty;
     private int difficulty;
     private Timestamp startTime;
 
-    public EssaimGroup(String name, Player firstPlayer) {
-        this.name = name;
+    public EssaimGroup(String _name, Player firstPlayer) {
+        this.name = _name;
         this.leader = firstPlayer;
         this.members = new ArrayList<Player>();
         this.startTime = null;
@@ -58,13 +58,21 @@ public class EssaimGroup {
 
     public boolean kickPlayer(String kicker, String kicked) {
         // Only allow the leader to kick players
-        if (!kicker.equals(leader)) {
+        if (!leader.getName().equalsIgnoreCase(kicker))
+        {
             return false;
         }
-
-        // Remove player from group and return success/failure flag based on whether or not they were in the group.
-        return members.remove(kicked);
+        for (Player p : members)
+        {
+            if (p.getName().equalsIgnoreCase(kicked))
+            {
+                members.remove(p);
+                return true;
+            }
+        }
+        return false;
     }
+
 
     public void leaveGroup(Player leaver) {
         // If it's not the leader leaving then remove them from list of players.
@@ -124,7 +132,7 @@ public class EssaimGroup {
     }
     public boolean isEmpty()
     {
-        return members.size() == 0;
+        return members.isEmpty();
     }
 
     public List<Player> getMembers()
@@ -171,7 +179,7 @@ public class EssaimGroup {
 
     public int getRewardJetons()
     {
-        int jetons = EssaimManager.activeEssaims.get(this.name).getJetons();
+        int jetons = EssaimManager.getActiveEssaims().get(this.name).getJetons();
         if (difficulty == 3)
             return jetons + 5;
         else if (difficulty == 0)

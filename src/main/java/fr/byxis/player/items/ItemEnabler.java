@@ -19,22 +19,22 @@ public class ItemEnabler
     private final Fireland main;
     private SporeDamage sporeDamage;
 
-    public ItemEnabler(Fireland main)
+    public ItemEnabler(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
 
         //Enable
-        Toxic();
-        BackPack();
-        Lamp();
-        Parachute();
-        Water();
-        Boussole();
-        Notes();
-        main.getServer().getPluginManager().registerEvents(new Serum(), main);
+        toxic();
+        backPack();
+        lamp();
+        parachute();
+        water();
+        boussole();
+        notes();
+        _main.getServer().getPluginManager().registerEvents(new Serum(), _main);
     }
 
-    private void Toxic()
+    private void toxic()
     {
         //Infection
         main.getCommand("cure").setExecutor(new InfectedPlayer(main));
@@ -46,35 +46,35 @@ public class ItemEnabler
         sporeDamage = new SporeDamage(main);
     }
 
-    private void BackPack()
+    private void backPack()
     {
         main.getCommand("backpack").setExecutor(new BackPack(main));
         main.getServer().getPluginManager().registerEvents(new BackPack(main), main);
     }
 
-    private void Lamp()
+    private void lamp()
     {
         main.getServer().getPluginManager().registerEvents(new Lamp(main), main);
     }
 
-    private void Parachute()
+    private void parachute()
     {
         main.getServer().getPluginManager().registerEvents(new Parachute(main), main);
     }
 
-    private void Water()
+    private void water()
     {
         main.getServer().getPluginManager().registerEvents(new BottleFilled(main), main);
         main.getCommand("thirst").setExecutor(new Thirst(main));
         main.getServer().getPluginManager().registerEvents(new Thirst(main), main);
     }
 
-    private void Boussole()
+    private void boussole()
     {
         main.getServer().getPluginManager().registerEvents(new Compass(main), main);
     }
 
-    private void Notes()
+    private void notes()
     {
         OpenNotes openNotes = new OpenNotes(main);
         main.getServer().getPluginManager().registerEvents(openNotes, main);

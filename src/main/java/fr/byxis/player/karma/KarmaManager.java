@@ -36,7 +36,7 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
 
     public String getRang(UUID _uuid)
     {
-        double rangDouble = main.hashMapManager.getRangMap().get(_uuid).getRang();
+        double rangDouble = main.getHashMapManager().getRangMap().get(_uuid).getRang();
         String rangStr = "";
         if (rangDouble == 100)
         {
@@ -73,47 +73,47 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
     public void badAction(UUID _uuid, double _amount)
     {
         updatePlayer(_uuid);
-        double rang = main.hashMapManager.getRangMap().get(_uuid).getRang();
+        double rang = main.getHashMapManager().getRangMap().get(_uuid).getRang();
         if ((rang - _amount) < 0)
         {
-            main.hashMapManager.getRangMap().get(_uuid).setRang(0);
+            main.getHashMapManager().getRangMap().get(_uuid).setRang(0);
         }
         else if (rang - _amount > 100)
         {
-            main.hashMapManager.getRangMap().get(_uuid).setRang(100);
+            main.getHashMapManager().getRangMap().get(_uuid).setRang(100);
         }
         else
         {
-            main.hashMapManager.getRangMap().get(_uuid).setRang(rang-_amount);
+            main.getHashMapManager().getRangMap().get(_uuid).setRang(rang - _amount);
         }
-        passageNouveauRang(Bukkit.getPlayer(_uuid), rang, rang-_amount);
+        passageNouveauRang(Bukkit.getPlayer(_uuid), rang, rang - _amount);
     }
 
     public void goodAction(UUID _uuid, double _amount, boolean... b)
     {
         updatePlayer(_uuid);
-        double gain = main.cfgm.getKarmaDB().getDouble("max." + _uuid);
+        double gain = main.getCfgm().getKarmaDB().getDouble("max." + _uuid);
         if (b != null || 15 - gain > 0)
         {
             if (_amount > 15 - gain)
             {
-                _amount = 15-gain;
+                _amount = 15 - gain;
             }
-            double rang = main.hashMapManager.getRangMap().get(_uuid).getRang();
+            double rang = main.getHashMapManager().getRangMap().get(_uuid).getRang();
             if (rang + _amount > 100)
             {
-                main.hashMapManager.getRangMap().get(_uuid).setRang(100);
-                main.hashMapManager.getRangMap().get(_uuid).setMax(gain + _amount);
+                main.getHashMapManager().getRangMap().get(_uuid).setRang(100);
+                main.getHashMapManager().getRangMap().get(_uuid).setMax(gain + _amount);
             }
             else if (rang + _amount < 0)
             {
-                main.hashMapManager.getRangMap().get(_uuid).setRang(0);
-                main.hashMapManager.getRangMap().get(_uuid).setMax(gain + _amount);
+                main.getHashMapManager().getRangMap().get(_uuid).setRang(0);
+                main.getHashMapManager().getRangMap().get(_uuid).setMax(gain + _amount);
             }
             else
             {
-                main.hashMapManager.getRangMap().get(_uuid).setRang(rang + _amount);
-                main.hashMapManager.getRangMap().get(_uuid).setMax(gain + _amount);
+                main.getHashMapManager().getRangMap().get(_uuid).setRang(rang + _amount);
+                main.getHashMapManager().getRangMap().get(_uuid).setMax(gain + _amount);
             }
             passageNouveauRang(Bukkit.getPlayer(_uuid), rang, rang + _amount);
         }
@@ -122,22 +122,22 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
     public void setKarma(UUID _uuid, double _amount)
     {
         updatePlayer(_uuid);
-        passageNouveauRang(Bukkit.getPlayer(_uuid), main.hashMapManager.getRangMap().get(_uuid).getRang(), _amount);
-        main.hashMapManager.getRangMap().get(_uuid).setRang(_amount);
+        passageNouveauRang(Bukkit.getPlayer(_uuid), main.getHashMapManager().getRangMap().get(_uuid).getRang(), _amount);
+        main.getHashMapManager().getRangMap().get(_uuid).setRang(_amount);
     }
 
     public void updatePlayer(UUID _uuid)
     {
-        FileConfiguration karma = main.cfgm.getKarmaDB();
+        FileConfiguration karma = main.getCfgm().getKarmaDB();
         if (!karma.contains(_uuid.toString()))
         {
             karma.set(_uuid.toString(), 62D);
             karma.set("max." + _uuid, 0D);
-            main.cfgm.saveKarmaDB();
+            main.getCfgm().saveKarmaDB();
         }
-        if (!main.hashMapManager.getRangMap().containsKey(_uuid))
+        if (!main.getHashMapManager().getRangMap().containsKey(_uuid))
         {
-            main.hashMapManager.getRangMap().put(_uuid, new PlayerKarmaClass(main.cfgm.getKarmaDB().getDouble(_uuid.toString()), main.cfgm.getKarmaDB().getDouble("max." + _uuid)));
+            main.getHashMapManager().getRangMap().put(_uuid, new PlayerKarmaClass(main.getCfgm().getKarmaDB().getDouble(_uuid.toString()), main.getCfgm().getKarmaDB().getDouble("max." + _uuid)));
         }
     }
 
@@ -208,7 +208,7 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
 
     public double getKarma(UUID _uuid)
     {
-        return Math.round(main.hashMapManager.getRangMap().get(_uuid).getRang() *100)/100D;
+        return Math.round(main.getHashMapManager().getRangMap().get(_uuid).getRang() * 100) / 100D;
     }
 
     @EventHandler
@@ -234,7 +234,7 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
     }
 
     @EventHandler
-    public void PlayerFirstJoin(PlayerJoinEvent e)
+    public void playerFirstJoin(PlayerJoinEvent e)
     {
         updatePlayer(e.getPlayer().getUniqueId());
     }

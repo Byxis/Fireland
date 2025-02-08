@@ -23,22 +23,22 @@ import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class WorldGuardEnterZoneEvent implements Listener {
 
-    private DataZone data;
-    private FactionFunctions ff;
+    private final DataZone data;
+    private final FactionFunctions ff;
     private final Fireland main;
 
-    public WorldGuardEnterZoneEvent(Fireland main, DataZone data) {
-        this.main = main;
-        this.data = data;
-        this.ff = new FactionFunctions(main, null);
+    public WorldGuardEnterZoneEvent(Fireland _main, DataZone _data) {
+        this.main = _main;
+        this.data = _data;
+        this.ff = new FactionFunctions(_main, null);
     }
 
     @EventHandler
-    public void ZoneEnter(RegionEnterEvent e) {
+    public void zoneEnter(RegionEnterEvent e) {
         ZoneClass captureZone = null;
         ZoneClass capturedZone = null;
         Player p = e.getPlayer();
-        for (ZoneClass zone : data.zones) {
+        for (ZoneClass zone : data.getZones()) {
             if (e.getRegion().getId().contains("zonecapture-" + zone.getName())) {
                 captureZone = zone;
                 break;
@@ -82,18 +82,17 @@ public class WorldGuardEnterZoneEvent implements Listener {
         if (isTimeToCapture() && captureZone.isClaimable())
 
             if (!data.isCapturing(captureZone.getName(), info.getName()) && captureZone.isClaimable() && isTimeToCapture())
-        {
-            data.AddCapturing(captureZone.getName(), info.getName(), p);
-        }
-
+            {
+                data.addCapturing(captureZone.getName(), info.getName(), p);
+            }
     }
 
     @EventHandler
-    public void ZoneLeft(RegionLeftEvent e) {
+    public void zoneLeft(RegionLeftEvent e) {
         ZoneClass captureZone = null;
         ZoneClass capturedZone = null;
         Player p = e.getPlayer();
-        for (ZoneClass zone : data.zones) {
+        for (ZoneClass zone : data.getZones()) {
             if (e.getRegion().getId().contains("zonecapture-" + zone.getName())) {
                 captureZone = zone;
                 break;
@@ -122,11 +121,11 @@ public class WorldGuardEnterZoneEvent implements Listener {
         if (info == null || !info.hasCapturePerk()) {
             return;
         }
-        data.RemoveCapturing(captureZone.getName(), info.getName(), p);
+        data.removeCapturing(captureZone.getName(), info.getName(), p);
     }
 
     @EventHandler
-    public void OnDisconnect(PlayerQuitEvent e)
+    public void onDisconnect(PlayerQuitEvent e)
     {
         Player p = e.getPlayer();
         FactionInformation info = ff.getFactionInfo(ff.playerFactionName(p));
@@ -134,9 +133,9 @@ public class WorldGuardEnterZoneEvent implements Listener {
         {
             return;
         }
-        for (ZoneClass zone : data.zones)
+        for (ZoneClass zone : data.getZones())
         {
-            data.RemoveCapturing(zone.getName(), info.getName(), p);
+            data.removeCapturing(zone.getName(), info.getName(), p);
         }
         data.remPlayerToZoneEnter(p);
     }
@@ -150,9 +149,9 @@ public class WorldGuardEnterZoneEvent implements Listener {
         {
             return;
         }
-        for (ZoneClass zone : data.zones)
+        for (ZoneClass zone : data.getZones())
         {
-            data.RemoveCapturing(zone.getName(), info.getName(), p);
+            data.removeCapturing(zone.getName(), info.getName(), p);
         }
         data.remPlayerToZoneEnter(p);
     }

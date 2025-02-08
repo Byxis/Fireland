@@ -21,7 +21,7 @@ public class PacketFunctions {
     }
 
     public static void sendWorldBorderWarningDistancePacket(Player player, double intensity) {
-        int warningDistance = (int) (intensity *Integer.MAX_VALUE);
+        int warningDistance = (int) (intensity * Integer.MAX_VALUE);
         PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.SET_BORDER_WARNING_DISTANCE);
         packet.getIntegers().write(0, warningDistance);
         try {
@@ -32,7 +32,7 @@ public class PacketFunctions {
     }
 
     public static void sendWorldBorderWarningDistancePacket(Player player, double intensity, double distance) {
-        int warningDistance = (int) (intensity *distance);
+        int warningDistance = (int) (intensity * distance);
         PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.SET_BORDER_WARNING_DISTANCE);
         packet.getIntegers().write(0, warningDistance);
         try {
@@ -61,7 +61,7 @@ public class PacketFunctions {
         packet.getBlockData().write(0, wrappedDoorData);
         packet.getIntegers().write(0, doorBlock.getX()).write(1, doorBlock.getY()).write(2, doorBlock.getZ());
         try {
-            main.protocolManager.sendServerPacket(p, packet);
+            main.getProtocolManager().sendServerPacket(p, packet);
         } catch (Exception e) {
             e.printStackTrace();
         }

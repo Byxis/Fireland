@@ -9,16 +9,16 @@ import java.io.IOException;
 
 public class QuestConfig {
 
-    private Fireland plugin;
-    public QuestConfig(Fireland plugin) {
-        this.plugin = plugin;
+    private final Fireland plugin;
+    public QuestConfig(Fireland _plugin) {
+        this.plugin = _plugin;
         this.name = "quest";
         setup();
     }
 
-    public FileConfiguration config;
-    public File file;
-    private String name;
+    private FileConfiguration config;
+    private File file;
+    private final String name;
 
     public void setup() {
         file = new File(plugin.getDataFolder(), name + ".yml");
@@ -46,7 +46,7 @@ public class QuestConfig {
         {
             config.save(file);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             System.err.println("/!\\ Could not save " + name + ".yml");
         }

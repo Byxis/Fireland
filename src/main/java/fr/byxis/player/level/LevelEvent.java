@@ -23,38 +23,38 @@ public class LevelEvent implements Listener {
     {
         if (e.getKiller() != null && e.getKiller() instanceof Player p)
         {
-            switch(e.getMob().getMobType())
+            switch (e.getMob().getMobType())
             {
                 case "Infecte" ->
                 {
                     addPlayerXp(p.getUniqueId(), 3, LevelStorage.Nation.Etat);
-                    AddPlayerZombieKill(p);
+                    addPlayerZombieKill(p);
                 }
                 case "Exploseur", "Blinde" ->
                 {
                     addPlayerXp(p.getUniqueId(), 10, LevelStorage.Nation.Etat);
-                    AddPlayerZombieKill(p);
+                    addPlayerZombieKill(p);
                 }
                 case "Hurleur", "Chien Infecte" ->
                 {
                     addPlayerXp(p.getUniqueId(), 5, LevelStorage.Nation.Etat);
-                    AddPlayerZombieKill(p);
+                    addPlayerZombieKill(p);
                 }
                 case "Vautour" ->
                 {
                     addPlayerXp(p.getUniqueId(), 20, LevelStorage.Nation.Etat);
-                    AddPlayerZombieKill(p);
+                    addPlayerZombieKill(p);
                 }
                 case "Malabar" ->
                 {
                     addPlayerXp(p.getUniqueId(), 500, LevelStorage.Nation.Etat);
-                    AddPlayerZombieKill(p);
+                    addPlayerZombieKill(p);
                 }
 
                 case "Chimere" ->
                 {
                     addPlayerXp(p.getUniqueId(), 1000, LevelStorage.Nation.Etat);
-                    AddPlayerZombieKill(p);
+                    addPlayerZombieKill(p);
                 }
             }
         }
@@ -70,10 +70,10 @@ public class LevelEvent implements Listener {
                 EntityDamageByEntityEvent nEvent = (EntityDamageByEntityEvent) e.getEntity().getLastDamageCause();
                 if (nEvent.getDamager() instanceof Player killer)
                 {
-                    if (!LevelStorage.HasPlayerAlreadyKilled(killer, e.getEntity()))
+                    if (!LevelStorage.hasPlayerAlreadyKilled(killer, e.getEntity()))
                     {
                         addPlayerXp(killer.getUniqueId(), 180, LevelStorage.Nation.Bannis);
-                        LevelStorage.AddPlayerKill(killer, e.getEntity());
+                        LevelStorage.addPlayerKill(killer, e.getEntity());
                     }
                 }
 

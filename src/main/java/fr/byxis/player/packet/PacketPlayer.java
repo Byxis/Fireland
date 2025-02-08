@@ -12,11 +12,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 public class PacketPlayer implements CommandExecutor {
-    private Fireland main;
-    private PacketFunctions pf;
-    public PacketPlayer(Fireland main) {
-        this.main = main;
-        this.pf = new PacketFunctions(main);
+    private final Fireland main;
+    private final PacketFunctions pf;
+    public PacketPlayer(Fireland _main) {
+        this.main = _main;
+        this.pf = new PacketFunctions(_main);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class PacketPlayer implements CommandExecutor {
                 if (strings.length < 2)
                 {
                     InGameUtilities.sendPlayerInformation(p, "Packet envoyé.");
-                    PlayTestBorderPacket(p);
+                    playTestBorderPacket(p);
                     return true;
                 }
                 else
@@ -39,7 +39,7 @@ public class PacketPlayer implements CommandExecutor {
                         if (players.getName().equalsIgnoreCase(strings[1]))
                         {
                             InGameUtilities.sendPlayerInformation(p, "Packet envoyé à " + players.getName() + ".");
-                            PlayTestBorderPacket(players);
+                            playTestBorderPacket(players);
                             return true;
                         }
                     }
@@ -51,7 +51,7 @@ public class PacketPlayer implements CommandExecutor {
             {
                 InGameUtilities.sendPlayerInformation(p, "Packet envoyé. Porte ouverte");
                 //noinspection removal
-                PlayTestOpenDoorPacket(p, p.getTargetBlock(50).getLocation());
+                playTestOpenDoorPacket(p, p.getTargetBlock(50).getLocation());
             }
             else if (strings[0].equalsIgnoreCase("spyglass"))
             {
@@ -65,7 +65,7 @@ public class PacketPlayer implements CommandExecutor {
         return false;
     }
 
-    private void PlayTestBorderPacket(Player p)
+    private void playTestBorderPacket(Player p)
     {
         pf.sendWorldBorderWarningDistancePacket(p, 1);
         new BukkitRunnable()
@@ -77,7 +77,7 @@ public class PacketPlayer implements CommandExecutor {
         }.runTaskLater(main, 20);
     }
 
-    private void PlayTestOpenDoorPacket(Player p, Location loc)
+    private void playTestOpenDoorPacket(Player p, Location loc)
     {
         pf.openDoor(p, loc, true);
         new BukkitRunnable()

@@ -6,17 +6,17 @@ import java.util.ArrayList;
 
 public class ActiveMobSpawning {
 
-    private ArrayList<ActiveMob> activeMobs;
+    private final ArrayList<ActiveMob> activeMobs;
     private final Integer max;
     private Integer remaining;
     private final String essaim;
 
-    public ActiveMobSpawning(String essaim, Integer max)
+    public ActiveMobSpawning(String _essaim, Integer _max)
     {
         this.activeMobs = new ArrayList<>();
-        this.max = max;
-        this.remaining = max-1;
-        this.essaim = essaim;
+        this.max = _max;
+        this.remaining = _max - 1;
+        this.essaim = _essaim;
     }
 
     public ArrayList<ActiveMob> getActiveMobs() {
@@ -39,7 +39,7 @@ public class ActiveMobSpawning {
 
     public boolean isSpawnerFinished()
     {
-        return this.remaining <= 0 && this.activeMobs.size() == 0;
+        return this.remaining <= 0 && this.activeMobs.isEmpty();
     }
 
     public Integer getMax() {

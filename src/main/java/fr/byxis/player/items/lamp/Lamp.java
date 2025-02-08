@@ -30,9 +30,9 @@ public class Lamp implements Listener
     private final HashMap<UUID, Double> delay;
     private final Fireland main;
 
-    public Lamp(Fireland main)
+    public Lamp(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
         delay = new HashMap<UUID, Double>();
         loop();
     }
@@ -95,7 +95,7 @@ public class Lamp implements Listener
     {
         int period = 20;
         new BukkitRunnable()
-{
+        {
             @Override
             public void run() {
                 for (Player p : Bukkit.getOnlinePlayers())
@@ -143,7 +143,7 @@ public class Lamp implements Listener
                 || e.getCurrentItem().getType() == Material.RABBIT_HIDE
                 || e.getCurrentItem().getType() == Material.RED_DYE))
         {
-            cursor.setAmount(cursor.getAmount()-1);
+            cursor.setAmount(cursor.getAmount() - 1);
             setLoreDurability(item, 100);
             e.setCancelled(true);
         }

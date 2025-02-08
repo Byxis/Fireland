@@ -10,21 +10,21 @@ public class PlayerLeaveFactionEvent extends Event {
     private final UUID player;
     private final String faction;
     private final boolean isKicked;
-    private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList HANDLERS = new HandlerList();
 
-    public PlayerLeaveFactionEvent(UUID p, String faction, boolean isKicked)
+    public PlayerLeaveFactionEvent(UUID _uuid, String _faction, boolean _isKicked)
     {
-        this.player = p;
-        this.faction = faction;
-        this.isKicked = isKicked;
+        this.player = _uuid;
+        this.faction = _faction;
+        this.isKicked = _isKicked;
     }
     @Override
     public HandlerList getHandlers() {
-        return handlers;
+        return HANDLERS;
     }
 
     public static HandlerList getHandlerList() {
-        return handlers;
+        return HANDLERS;
     }
 
     public UUID getPlayerUuid() {

@@ -25,54 +25,54 @@ public class EssaimClass {
     private boolean isClosed;
 
 
-    public EssaimClass(String name, EssaimConfigManager configManager)
+    public EssaimClass(String _name, EssaimConfigManager configManager)
     {
-        this.name = name;
-        this.day = configManager.getConfig().getInt(name + ".day");
-        this.hour = configManager.getConfig().getInt(name + ".hour");
-        this.hub = new Location(Bukkit.getWorld(configManager.getConfig().getString(name + ".hub.position.world")), //hub
-                configManager.getConfig().getInt(name + ".hub.position.x"),
-                configManager.getConfig().getInt(name + ".hub.position.y"),
-                configManager.getConfig().getInt(name + ".hub.position.z")
+        this.name = _name;
+        this.day = configManager.getConfig().getInt(_name + ".day");
+        this.hour = configManager.getConfig().getInt(_name + ".hour");
+        this.hub = new Location(Bukkit.getWorld(configManager.getConfig().getString(_name + ".hub.position.world")), //hub
+                configManager.getConfig().getInt(_name + ".hub.position.x"),
+                configManager.getConfig().getInt(_name + ".hub.position.y"),
+                configManager.getConfig().getInt(_name + ".hub.position.z")
         );
-        this.start = new Location(Bukkit.getWorld(configManager.getConfig().getString(name + ".start.position.world")),//start
-                configManager.getConfig().getInt(name + ".start.position.x"),
-                configManager.getConfig().getInt(name + ".start.position.y"),
-                configManager.getConfig().getInt(name + ".start.position.z")
+        this.start = new Location(Bukkit.getWorld(configManager.getConfig().getString(_name + ".start.position.world")), //start
+                configManager.getConfig().getInt(_name + ".start.position.x"),
+                configManager.getConfig().getInt(_name + ".start.position.y"),
+                configManager.getConfig().getInt(_name + ".start.position.z")
         );
-        this.reset = new Location(Bukkit.getWorld(configManager.getConfig().getString(name + ".reset.position.world")),//reset
-                configManager.getConfig().getInt(name + ".reset.position.x"),
-                configManager.getConfig().getInt(name + ".reset.position.y"),
-                configManager.getConfig().getInt(name + ".reset.position.z")
+        this.reset = new Location(Bukkit.getWorld(configManager.getConfig().getString(_name + ".reset.position.world")), //reset
+                configManager.getConfig().getInt(_name + ".reset.position.x"),
+                configManager.getConfig().getInt(_name + ".reset.position.y"),
+                configManager.getConfig().getInt(_name + ".reset.position.z")
         );
-        this.entry = new Location(Bukkit.getWorld(configManager.getConfig().getString(name + ".entry.position.world")),//entry
-                configManager.getConfig().getInt(name + ".entry.position.x"),
-                configManager.getConfig().getInt(name + ".entry.position.y"),
-                configManager.getConfig().getInt(name + ".entry.position.z")
+        this.entry = new Location(Bukkit.getWorld(configManager.getConfig().getString(_name + ".entry.position.world")), //entry
+                configManager.getConfig().getInt(_name + ".entry.position.x"),
+                configManager.getConfig().getInt(_name + ".entry.position.y"),
+                configManager.getConfig().getInt(_name + ".entry.position.z")
         );
-        this.solo = new Location(Bukkit.getWorld(configManager.getConfig().getString(name + ".solo.position.world")),//entry
-                configManager.getConfig().getInt(name + ".solo.position.x"),
-                configManager.getConfig().getInt(name + ".solo.position.y"),
-                configManager.getConfig().getInt(name + ".solo.position.z")
+        this.solo = new Location(Bukkit.getWorld(configManager.getConfig().getString(_name + ".solo.position.world")), //entry
+                configManager.getConfig().getInt(_name + ".solo.position.x"),
+                configManager.getConfig().getInt(_name + ".solo.position.y"),
+                configManager.getConfig().getInt(_name + ".solo.position.z")
         );
-        if (configManager.getConfig().contains(name + ".difficulty.1"))
+        if (configManager.getConfig().contains(_name + ".difficulty.1"))
         {
-            this.difficulty1 = new Location(Bukkit.getWorld(configManager.getConfig().getString(name + ".solo.position.world")),//entry
-                    configManager.getConfig().getInt(name + ".difficulty.1.position.x"),
-                    configManager.getConfig().getInt(name + ".difficulty.1.position.y"),
-                    configManager.getConfig().getInt(name + ".difficulty.1.position.z")
+            this.difficulty1 = new Location(Bukkit.getWorld(configManager.getConfig().getString(_name + ".solo.position.world")), //entry
+                    configManager.getConfig().getInt(_name + ".difficulty.1.position.x"),
+                    configManager.getConfig().getInt(_name + ".difficulty.1.position.y"),
+                    configManager.getConfig().getInt(_name + ".difficulty.1.position.z")
             );
         }
         else
         {
             this.difficulty1 = null;
         }
-        if (configManager.getConfig().contains(name + ".difficulty.1"))
+        if (configManager.getConfig().contains(_name + ".difficulty.1"))
         {
-            this.difficulty2 = new Location(Bukkit.getWorld(configManager.getConfig().getString(name + ".solo.position.world")),//entry
-                    configManager.getConfig().getInt(name + ".difficulty.2.position.x"),
-                    configManager.getConfig().getInt(name + ".difficulty.2.position.y"),
-                    configManager.getConfig().getInt(name + ".difficulty.2.position.z")
+            this.difficulty2 = new Location(Bukkit.getWorld(configManager.getConfig().getString(_name + ".solo.position.world")), //entry
+                    configManager.getConfig().getInt(_name + ".difficulty.2.position.x"),
+                    configManager.getConfig().getInt(_name + ".difficulty.2.position.y"),
+                    configManager.getConfig().getInt(_name + ".difficulty.2.position.z")
             );
         }
         else
@@ -80,12 +80,12 @@ public class EssaimClass {
             this.difficulty2 = null;
         }
 
-        if (configManager.getConfig().contains(name + ".difficulty.1"))
+        if (configManager.getConfig().contains(_name + ".difficulty.1"))
         {
-            this.difficulty3 = new Location(Bukkit.getWorld(configManager.getConfig().getString(name + ".solo.position.world")),//entry
-                    configManager.getConfig().getInt(name + ".difficulty.3.position.x"),
-                    configManager.getConfig().getInt(name + ".difficulty.3.position.y"),
-                    configManager.getConfig().getInt(name + ".difficulty.3.position.z")
+            this.difficulty3 = new Location(Bukkit.getWorld(configManager.getConfig().getString(_name + ".solo.position.world")), //entry
+                    configManager.getConfig().getInt(_name + ".difficulty.3.position.x"),
+                    configManager.getConfig().getInt(_name + ".difficulty.3.position.y"),
+                    configManager.getConfig().getInt(_name + ".difficulty.3.position.z")
             );
         }
         else
@@ -94,7 +94,7 @@ public class EssaimClass {
         }
 
         finishDate = null;
-        this.jetons = configManager.getConfig().getInt(name + ".jetons");
+        this.jetons = configManager.getConfig().getInt(_name + ".jetons");
         this.isClosed = false;
     }
 
@@ -142,7 +142,7 @@ public class EssaimClass {
         if (isFinished())
         {
             Timestamp now = new Timestamp(System.currentTimeMillis());
-            Timestamp close = new Timestamp(finishDate.getTime() + 8 *60 *1000);
+            Timestamp close = new Timestamp(finishDate.getTime() + 8 * 60 * 1000);
             return now.after(close);
         }
         return false;

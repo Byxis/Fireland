@@ -56,12 +56,12 @@ public class AdvancementsManager {
         DIE_MONEY_LOOSE
     };
 
-    private AdvancementsConfig m_config;
-    private Fireland m_main;
+    private final AdvancementsConfig m_config;
+    private final Fireland m_main;
 
-    private ArrayListMultimap<Success, AdvancementsClass> m_success;
+    private final ArrayListMultimap<Success, AdvancementsClass> m_success;
 
-    private HashMap<String,Integer> m_changementList;
+    private final HashMap<String, Integer> m_changementList;
 
     public AdvancementsManager(Fireland _main)
     {
@@ -69,15 +69,15 @@ public class AdvancementsManager {
         m_config = new AdvancementsConfig(_main);
         m_success = ArrayListMultimap.create();
         m_changementList = new HashMap<>();
-        LoadSuccess();
+        loadSuccess();
     }
 
-    public void LoadSuccess()
+    public void loadSuccess()
     {
         for (String success : m_config.getConfig().getConfigurationSection("success").getKeys(false))
         {
             Success type = Success.valueOf(m_config.getConfig().getString("success." + success + ".type"));
-            switch(type)
+            switch (type)
             {
                 case KILL -> m_success.put(type, new KillAdvancements(this, success));
                 case PLAY_TIME -> m_success.put(type, new PlayTimeAdvancements(this, success));
@@ -94,9 +94,9 @@ public class AdvancementsManager {
         }
     }
 
-    public void UpdateSucess(Success _sucess, Player p, Object... params)
+    public void updateSucess(Success _sucess, Player p, Object... params)
     {
-        switch(_sucess)
+        switch (_sucess)
         {
             case KILL ->
             {
@@ -217,7 +217,7 @@ public class AdvancementsManager {
         {
             return m_changementList.get(path);
         }
-        return m_main.cfgm.getPlayerDB().getInt(path);
+        return m_main.getCfgm().getPlayerDB().getInt(path);
     }
 
     public void addSuccessInt(String path, int value)

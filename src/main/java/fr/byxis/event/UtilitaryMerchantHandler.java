@@ -12,16 +12,16 @@ public class UtilitaryMerchantHandler implements Listener
 {
     
     
-    private Fireland main;
+    private final Fireland main;
 
-    public UtilitaryMerchantHandler(Fireland main)
+    public UtilitaryMerchantHandler(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
 
     @EventHandler
-    public void EntitySpawn(EntitySpawnEvent e) {
-        if(e.getEntity() instanceof Villager && e.getEntity().getName() == "Marchand Utilitaire") {
+    public void entitySpawn(EntitySpawnEvent e) {
+        if (e.getEntity() instanceof Villager && e.getEntity().getName() == "Marchand Utilitaire") {
             
             e.getEntity().setSilent(true);
             

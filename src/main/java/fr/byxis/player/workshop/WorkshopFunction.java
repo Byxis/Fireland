@@ -26,14 +26,14 @@ public class WorkshopFunction
 {
 
     final private Fireland main;
-    public Player sender;
+    private final Player sender;
 
-    public WorkshopFunction(Fireland main, Player sender)
+    public WorkshopFunction(Fireland _main, Player _sender)
     {
         //Récupération du main, pour pouvoir avoir envoyer des requêtes à la base de données
-        this.main = main;
+        this.main = _main;
         //Récupération de la personne qui envoie la commande, pour lui envoyer les messages d'erreurs
-        this.sender = sender;
+        this.sender = _sender;
     }
 
     public int getInvPageMax(InventoryView _title)
@@ -134,7 +134,8 @@ public class WorkshopFunction
             preparedStatementBis.setString(5, _command);
 
             preparedStatementBis.executeUpdate();
-        } catch(SQLException e)
+        }
+        catch (SQLException e)
         {
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème. Il peut s'agir du fait qu'un item à déjà été créé.  Erreur : #W009");
             e.printStackTrace();
@@ -151,12 +152,12 @@ public class WorkshopFunction
             preparedStatement1.setString(2, _recipeName);
 
             final ResultSet resultSet = preparedStatement1.executeQuery();
-            int crafted_time = 0;
+            int craftedTime = 0;
             //On vérifie s'il y a un résultat à la requête
             if (resultSet.next()) {
-                crafted_time = resultSet.getInt(1);
+                craftedTime = resultSet.getInt(1);
             }
-            return crafted_time;
+            return craftedTime;
         } catch (SQLException e) {
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W003");
             e.printStackTrace();
@@ -321,7 +322,7 @@ public class WorkshopFunction
 
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability, items.custom_model_data FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND player_workshop.player_uuid = ? ORDER BY type, scrap DESC, gunpowder ASC");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability, items.custom_model_data FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND player_workshop.player_uuid = ? ORDER BY type, scrap DESC, gunpowder");
             preparedStatement1.setString(1, _uuid);
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
@@ -407,12 +408,12 @@ public class WorkshopFunction
         return items;
     }
 
-    public boolean hasPlan(Player p, String recipe_name)
+    public boolean hasPlan(Player p, String recipeName)
     {
         ArrayList<ItemStack> plans = getPlans(p);
         for (ItemStack item : plans)
         {
-            if (item.getItemMeta().getDisplayName().contains(recipe_name))
+            if (item.getItemMeta().getDisplayName().contains(recipeName))
             {
                 return true;
             }
@@ -434,7 +435,7 @@ public class WorkshopFunction
                 }
                 else
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + (_currentPage-1) + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + (_currentPage - 1) + "/" + _pageMax + "]", (short) 1));
                 }
             }
             else if (i + 45 == 53)
@@ -454,8 +455,8 @@ public class WorkshopFunction
             }
 
         }
-        int spot = 19-(_currentPage * 14) + 14;
-        for (int i = (_currentPage * 14)-14; i < _items.size() && i < _currentPage * 14; i++)
+        int spot = 19 - (_currentPage * 14) + 14;
+        for (int i = (_currentPage * 14) - 14; i < _items.size() && i < _currentPage * 14; i++)
         {
             if (spot + i == 26)
             {
@@ -466,16 +467,16 @@ public class WorkshopFunction
             if (item.isKnown())
             {
                 lore.add("§8Type : §d " + item.getType() + " §a(Plan connu)");
-                lore.add("§8Nécessite : §6 " + _craftableItems[0] + "§8/§6 " + item.getScrap() + "§8férailles,");
+                lore.add("§8Nécessite : §6 " + _craftableItems[0] + "§8/§6 " + item.getScrap() + "§8ferrailles,");
                 lore.add("§6 " + _craftableItems[1] + "§8/§6 " + item.getGunPowder() + "§8 poudre à canon.");
             }
             else
             {
                 lore.add("§8Type : §d " + item.getType() + "§8, Nécessite : §c " + item.getRecipeName());
-                lore.add("§6 " + _craftableItems[0] + "§8/§6 " + item.getScrap() + "§8férailles, §6");
+                lore.add("§6 " + _craftableItems[0] + "§8/§6 " + item.getScrap() + "§8ferrailles, §6");
                 lore.add("§6 " + _craftableItems[1] + "§8/§6 " + item.getGunPowder() + "§8 poudre à canon.");
             }
-            _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.getMat(), "§r§7 " + item.getItemName(), item.getDurability(), lore),item.getCustomModelData()));
+            _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.getMat(), "§r§7 " + item.getItemName(), item.getDurability(), lore), item.getCustomModelData()));
         }
     }
 
@@ -490,7 +491,7 @@ public class WorkshopFunction
                 {
                     if (item.getAmount() > toRemove)
                     {
-                        item.setAmount(item.getAmount()-toRemove);
+                        item.setAmount(item.getAmount() - toRemove);
                         return;
                     }
                     else
@@ -509,7 +510,7 @@ public class WorkshopFunction
         int maxPage = 1;
         ArrayList<WorkshopItemClass> items = getAllCraftableItems(p, p.getUniqueId().toString());
         int nbrItems = items.size();
-        while(nbrItems > 14)
+        while (nbrItems > 14)
         {
             nbrItems -= 14;
             maxPage++;
@@ -562,8 +563,8 @@ public class WorkshopFunction
         }
     }
 
-    public void saveNewItem(Player p, String _type, int _scrap, int poudre_canon, String _command)
-    {//ws newrecipe a:NomRecette Type scrap canon a:Itemname a:materiel a:durability commande
+    public void saveNewItem(Player p, String _type, int _scrap, int _gunPowder, String _command)
+    { //ws newrecipe a:NomRecette Type scrap canon a:Itemname a:material a:durability commande
         if (p.getItemInHand().getType() != Material.AIR)
         {
             ItemStack item = p.getItemInHand();
@@ -572,7 +573,7 @@ public class WorkshopFunction
             String[] words = name.split(" ");
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < words.length; i++)
-{
+            {
                 String temp = words[i];
                 temp = temp.replaceAll("[^a-zA-Z0-9-]", " ");
                 if (!temp.equals(words[i]))
@@ -600,7 +601,7 @@ public class WorkshopFunction
             }
             name = sb.toString().trim();
 //ws newrecipe nom type scrap gp nomitem mat dura    cmd
-            PermissionUtilities.commandExecutor(p, "ws newrecipe Plan_de_fabrication_de_ " + name + " " + _type + " " + _scrap + " " + poudre_canon + " " + name + " " + item.getType() + " " + item.getItemMeta().getCustomModelData() + " " + _command, "fireland.workshop.a:newrecipe");
+            PermissionUtilities.commandExecutor(p, "ws newrecipe Plan_de_fabrication_de_ " + name + " " + _type + " " + _scrap + " " + _gunPowder + " " + name + " " + item.getType() + " " + item.getItemMeta().getCustomModelData() + " " + _command, "fireland.workshop.a:newrecipe");
         }
     }
 
@@ -615,7 +616,7 @@ public class WorkshopFunction
             final ResultSet resultSet = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 final PreparedStatement preparedStatementbis = connection.prepareStatement("INSERT INTO player_workshop(player_uuid, recipe_name, crafted_time, know)\n" +
                         "VALUES (?,?,0,0)");
                 preparedStatementbis.setString(1, _uuid);
@@ -638,9 +639,9 @@ public class WorkshopFunction
             final PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO player_crafting(player_uuid, item, creation_date, finish_date, is_breakable) VALUES(?,?,?,?,?)");
             final long time = System.currentTimeMillis();
             Timestamp currentTime = new Timestamp(time);
-            long timeAdded = GetTimeFromType(item.getType());
+            long timeAdded = getTimeFromType(item.getType());
 
-            timeAdded *= (1-reduction);
+            timeAdded *= (1 - reduction);
 
             Timestamp finishTime = new Timestamp(time + timeAdded);
             preparedStatement1.setString(1, _uuid);
@@ -658,28 +659,28 @@ public class WorkshopFunction
         return false;
     }
 
-    public int GetTimeFromType(String _type)
+    public int getTimeFromType(String _type)
     {
         int time = 0;
         if (_type.equals("A"))
         {
-            time = 24 *60 *60 *1000;
+            time = 24 * 60 * 60 * 1000;
         }
         else if (_type.equals("B"))
         {
-            time = 3 *60 *60 *1000;
+            time = 3 * 60 * 60 * 1000;
         }
         else if (_type.equals("C"))
         {
-            time = 60 *60 *1000;
+            time = 60 * 60 * 1000;
         }
         else if (_type.equals("D"))
         {
-            time = 30 *60 *1000;
+            time = 30 * 60 * 1000;
         }
         if (_type.equals("E"))
         {
-            time = 5 *60 *1000;
+            time = 5 * 60 * 1000;
         }
         return time;
     }
@@ -697,7 +698,7 @@ public class WorkshopFunction
                 }
                 else
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + (_currentPage-1) + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + (_currentPage - 1) + "/" + _pageMax + "]", (short) 1));
                 }
             }
             else if (i + 45 == 53)
@@ -717,8 +718,8 @@ public class WorkshopFunction
             }
 
         }
-        int spot = 19-(_currentPage * 14) + 14;
-        for (int i = (_currentPage * 14)-14; i < _items.size() && i < _currentPage * 14; i++)
+        int spot = 19 - (_currentPage * 14) + 14;
+        for (int i = (_currentPage * 14) - 14; i < _items.size() && i < _currentPage * 14; i++)
         {
             if (spot + i == 26)
             {
@@ -726,18 +727,18 @@ public class WorkshopFunction
             }
             WorkshopCraftingItemClass item = _items.get(i);
             List<String> lore = new ArrayList<>();
-            if (item.finishDate.before(new Timestamp(System.currentTimeMillis())))
+            if (item.getFinishDate().before(new Timestamp(System.currentTimeMillis())))
             {
-                lore.add("§8Type : §d " + item.type + "§8, §a§lvotre item est prêt §r§8!");
+                lore.add("§8Type : §d " + item.getType() + "§8, §a§lvotre item est prêt §r§8!");
             }
             else
             {
-                lore.add("§8Type : §d " + item.type + "§8, reste §c" + BasicUtilities.getStringTime(item.finishDate.getTime() - System.currentTimeMillis()));
+                lore.add("§8Type : §d " + item.getType() + "§8, reste §c" + BasicUtilities.getStringTime(item.getFinishDate().getTime() - System.currentTimeMillis()));
             }
 
-            lore.add("§8Date de fin de création : " + item.finishDate);
-            lore.add("§8Date de création : " + item.creationDate);
-            _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.mat, "§r§7 " + item.itemName, item.dura, lore), item.customModelData));
+            lore.add("§8Date de fin de création : " + item.getFinishDate());
+            lore.add("§8Date de création : " + item.getCreationDate());
+            _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.getMat(), "§r§7 " + item.getItemName(), item.getDura(), lore), item.getCustomModelData()));
         }
     }
 
@@ -747,7 +748,7 @@ public class WorkshopFunction
         int maxPage = 1;
         int nbrItems = getNbrOfCraftingItem(p.getUniqueId().toString());
         ArrayList<WorkshopItemClass> items = getAllCraftableItems(p, p.getUniqueId().toString());
-        while(nbrItems > 14)
+        while (nbrItems > 14)
         {
             nbrItems -= 14;
             maxPage++;
@@ -814,12 +815,12 @@ public class WorkshopFunction
         try {
 
             final Connection connection = firelandConnection.getConnection();
-
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("" +
+            final PreparedStatement preparedStatement1 = connection.prepareStatement(
                     "DELETE FROM player_crafting" +
                     " WHERE player_uuid = ?" +
-                    " AND creation_date = '" + _itm.creationDate + "';");
+                    " AND creation_date = ?;");
             preparedStatement1.setString(1, _uuid);
+            preparedStatement1.setTimestamp(2, _itm.getCreationDate());
             preparedStatement1.executeUpdate();
         } catch (SQLException e) {
             //Une erreur est survenue (Problème de connexion à la BD)
@@ -834,14 +835,14 @@ public class WorkshopFunction
         try {
 
             final Connection connection = firelandConnection.getConnection();
-
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("" +
+            final PreparedStatement preparedStatement1 = connection.prepareStatement(
                     "UPDATE player_crafting" +
                     " SET is_breakable = ?" +
                     " WHERE player_uuid = ?" +
-                    " AND creation_date = '" + _itm.creationDate + "';");
+                    " AND creation_date = ?;");
             preparedStatement1.setBoolean(1, false);
             preparedStatement1.setString(2, _uuid);
+            preparedStatement1.setTimestamp(3, _itm.getCreationDate());
             preparedStatement1.executeUpdate();
         } catch (SQLException e) {
             //Une erreur est survenue (Problème de connexion à la BD)
@@ -863,7 +864,7 @@ public class WorkshopFunction
                     " WHERE player_uuid = ?" +
                     " AND creation_date = ?;");
             preparedStatement.setString(1, _uuid);
-            preparedStatement.setTimestamp(2, _itm.creationDate);
+            preparedStatement.setTimestamp(2, _itm.getCreationDate());
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next())
             {
@@ -875,7 +876,7 @@ public class WorkshopFunction
                 Timestamp t = new Timestamp(rs.getTimestamp(1).getTime());
                 init.setTimestamp(1, t);
                 init.setString(2, _uuid);
-                init.setTimestamp(3, _itm.creationDate);
+                init.setTimestamp(3, _itm.getCreationDate());
                 init.executeUpdate();
 
                 final PreparedStatement preparedStatement1 = connection.prepareStatement("" +
@@ -883,10 +884,10 @@ public class WorkshopFunction
                         " SET finish_date = ?" +
                         " WHERE player_uuid = ?" +
                         " AND creation_date = ?;");
-                Timestamp t1 = new Timestamp(rs.getTimestamp(1).getTime() - 1000 *60 *30);
+                Timestamp t1 = new Timestamp(rs.getTimestamp(1).getTime() - 1000 * 60 * 30);
                 preparedStatement1.setTimestamp(1, t1);
                 preparedStatement1.setString(2, _uuid);
-                preparedStatement1.setTimestamp(3, _itm.creationDate);
+                preparedStatement1.setTimestamp(3, _itm.getCreationDate());
                 preparedStatement1.executeUpdate();
             }
 
@@ -910,7 +911,7 @@ public class WorkshopFunction
                     " WHERE player_uuid = ?" +
                     " AND creation_date = ?;");
             preparedStatement1.setString(1, _uuid);
-            preparedStatement1.setTimestamp(2, _itm.creationDate);
+            preparedStatement1.setTimestamp(2, _itm.getCreationDate());
             ResultSet rs = preparedStatement1.executeQuery();
             if (rs.next())
             {
@@ -952,7 +953,7 @@ public class WorkshopFunction
     public void openWorkshop(Player p)
     {
         InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.AMBIENT, 1, 1);
-        Inventory craftMenu = Bukkit.createInventory(null, 9 *3, "Plan de travail");
+        Inventory craftMenu = Bukkit.createInventory(null, 9 * 3, "Plan de travail");
         craftMenu.setItem(11, InventoryUtilities.setItemMeta(Material.ANVIL, "§6Atelier", (short) 1));
         craftMenu.setItem(13, InventoryUtilities.setItemMeta(Material.NETHERITE_SCRAP, "§aRecyclage", (short) 1));
         craftMenu.setItem(15, InventoryUtilities.setItemMeta(Material.CHEST, "§6Création", (short) 1));

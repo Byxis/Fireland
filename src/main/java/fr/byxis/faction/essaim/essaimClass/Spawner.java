@@ -14,17 +14,17 @@ public class Spawner {
     private final double spawnDelay;
     private final boolean isAffectedByDifficulty;
 
-    public Spawner(String name, String essaim, Location loc, String mob, int amount, double activationDelay, double spawnDelay, String command, Boolean isAffecteByDifficulty)
+    public Spawner(String _name, String _essaim, Location _loc, String _mob, int _amount, double _activationDelay, double _spawnDelay, String _command, Boolean _isAffecteByDifficulty)
     {
-        this.name = name;
-        this.essaim = essaim;
-        this.loc = loc;
-        this.mob = mob;
-        this.activationDelay = activationDelay;
-        this.spawnDelay = spawnDelay;
-        this.command = command;
-        this.amount = amount;
-        this.isAffectedByDifficulty = isAffecteByDifficulty;
+        this.name = _name;
+        this.essaim = _essaim;
+        this.loc = _loc;
+        this.mob = _mob;
+        this.activationDelay = _activationDelay;
+        this.spawnDelay = _spawnDelay;
+        this.command = _command;
+        this.amount = _amount;
+        this.isAffectedByDifficulty = _isAffecteByDifficulty;
     }
 
     public int getAmount() {

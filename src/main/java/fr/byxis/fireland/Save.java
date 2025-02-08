@@ -7,24 +7,24 @@ import fr.byxis.player.quest.QuestManager;
 
 public class Save {
 
-    public static void SaveAll(Fireland main)
+    public static void saveAll(Fireland main)
     {
         QuestManager.saveProgress();
-        SaveEvent.SaveAllPlayerDatas();
-        EssaimFunctions.SaveEssaim();
-        PrimeEvent.SavePrime();
+        SaveEvent.saveAllPlayerDatas();
+        EssaimFunctions.saveEssaim();
+        PrimeEvent.savePrime();
 
     }
 
-    public static void ReloadAll(Fireland main)
+    public static void reloadAll(Fireland main)
     {
         if (QuestManager.config != null)
         {
             QuestManager.config.reload();
         }
-        if (EssaimFunctions.configManager != null)
+        if (EssaimFunctions.getConfigManager() != null)
         {
-            EssaimFunctions.configManager.reload();
+            EssaimFunctions.getConfigManager().reload();
         }
         if (PrimeEvent.config != null)
         {

@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 public class Compass implements @NotNull Listener
 {
 
-    private Fireland main;
+    private final Fireland main;
 
     public Compass(Fireland _main)
     {
@@ -27,7 +27,7 @@ public class Compass implements @NotNull Listener
     }
 
     @EventHandler
-    public void PlayerInteraction(PlayerInteractEvent e)
+    public void playerInteraction(PlayerInteractEvent e)
     {
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
@@ -62,10 +62,10 @@ public class Compass implements @NotNull Listener
     @EventHandler
     public void firstPlayerJoin(PlayerJoinEvent e)
     {
-        if (!main.cfgm.getPlayerDB().contains("hasplayedbefore." + e.getPlayer().getUniqueId()))
+        if (!main.getCfgm().getPlayerDB().contains("hasplayedbefore." + e.getPlayer().getUniqueId()))
         {
-            main.cfgm.getPlayerDB().set("hasplayedbefore." + e.getPlayer().getUniqueId(), true);
-            main.cfgm.savePlayerDB();
+            main.getCfgm().getPlayerDB().set("hasplayedbefore." + e.getPlayer().getUniqueId(), true);
+            main.getCfgm().savePlayerDB();
             e.getPlayer().teleport(new Location(Bukkit.getWorld("tutorial"), 0.5, -51, -0.5));
             new BukkitRunnable() {
                 @Override

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class InteractionManager implements Listener {
 
-    ArrayList<Material> m_forbiddenMats;
+    private final ArrayList<Material> m_forbiddenMats;
 
     public InteractionManager()
     {
@@ -56,7 +56,7 @@ public class InteractionManager implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler
     public void removeInteraction(PlayerInteractEvent e) {
-        if(e.getClickedBlock() == null || e.isCancelled() || e.getPlayer().getGameMode() == GameMode.CREATIVE)
+        if (e.getClickedBlock() == null || e.isCancelled() || e.getPlayer().getGameMode() == GameMode.CREATIVE)
         {
             return;
         }
@@ -66,7 +66,7 @@ public class InteractionManager implements Listener {
             return;
         }
 
-        if(e.getAction() == Action.RIGHT_CLICK_BLOCK)
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
             Block blk = e.getClickedBlock();
             if ((blk.getType().name().startsWith("POTTED_") || blk.getType() == Material.FLOWER_POT) && !(e.getPlayer().getGameMode() == GameMode.CREATIVE)) {
@@ -80,16 +80,16 @@ public class InteractionManager implements Listener {
     @EventHandler
     public void playSoundInteraction(PlayerInteractEvent e)
     {
-        if(e.getClickedBlock() == null || e.isCancelled() || e.getAction() != Action.RIGHT_CLICK_BLOCK)
+        if (e.getClickedBlock() == null || e.isCancelled() || e.getAction() != Action.RIGHT_CLICK_BLOCK)
         {
             return;
         }
         Location loc = e.getPlayer().getLocation();
-        switch(e.getClickedBlock().getType())
+        switch (e.getClickedBlock().getType())
         {
             case PURPUR_STAIRS -> InGameUtilities.playWorldSound(loc, Sound.BLOCK_IRON_DOOR_OPEN, SoundCategory.PLAYERS, 0.5f, 1);
-            case DEAD_FIRE_CORAL,DEAD_HORN_CORAL->  InGameUtilities.playWorldSound(loc, Sound.BLOCK_CHEST_OPEN, SoundCategory.PLAYERS, 0.5f, 0.8f);
-            case DEAD_BUBBLE_CORAL,DEAD_BUBBLE_CORAL_FAN ->  InGameUtilities.playWorldSound(loc, "gun.hud.bag_open", SoundCategory.PLAYERS, 0.5f, 1f);
+            case DEAD_FIRE_CORAL, DEAD_HORN_CORAL ->  InGameUtilities.playWorldSound(loc, Sound.BLOCK_CHEST_OPEN, SoundCategory.PLAYERS, 0.5f, 0.8f);
+            case DEAD_BUBBLE_CORAL, DEAD_BUBBLE_CORAL_FAN ->  InGameUtilities.playWorldSound(loc, "gun.hud.bag_open", SoundCategory.PLAYERS, 0.5f, 1f);
             case DEAD_HORN_CORAL_FAN -> InGameUtilities.playWorldSound(loc, Sound.BLOCK_GILDED_BLACKSTONE_HIT, SoundCategory.PLAYERS, 0.5f, 1f);
             case PURPLE_CANDLE -> InGameUtilities.playWorldSound(loc, "gun.hud.scraps", SoundCategory.PLAYERS, 0.5f, 2f);
             case PINK_CANDLE -> InGameUtilities.playWorldSound(loc, "gun.unload.barrettm107", SoundCategory.PLAYERS, 0.5f, 2f);

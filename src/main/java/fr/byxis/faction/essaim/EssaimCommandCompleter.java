@@ -18,10 +18,10 @@ public class EssaimCommandCompleter implements TabCompleter {
 
     private static Fireland main;
 
-    public EssaimCommandCompleter(Fireland main)
-        {
-            this.main = main;
-        }
+    public EssaimCommandCompleter(Fireland _main)
+    {
+        this.main = _main;
+    }
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
@@ -48,7 +48,6 @@ public class EssaimCommandCompleter implements TabCompleter {
             i1.add("unfinish");
             i1.add("info");
 
-
             l.addAll(ListUtilities.tabList(strings[0], "", i1));
 
         }
@@ -56,12 +55,12 @@ public class EssaimCommandCompleter implements TabCompleter {
         {
             if (strings[0].equalsIgnoreCase("create") ||
                     strings[0].equalsIgnoreCase("open") ||
-                    strings[0].equalsIgnoreCase("close")||
-                    strings[0].equalsIgnoreCase("finish")||
-                    strings[0].equalsIgnoreCase("unfinish")||
+                    strings[0].equalsIgnoreCase("close") ||
+                    strings[0].equalsIgnoreCase("finish") ||
+                    strings[0].equalsIgnoreCase("unfinish") ||
                     strings[0].equalsIgnoreCase("reset"))
             {
-                l.addAll(ListUtilities.tabList(strings[1], "--name", main.essaimManager.existingEssaims.keySet()));
+                l.addAll(ListUtilities.tabList(strings[1], "--name", main.getEssaimManager().getExistingEssaims().keySet()));
             }
             else if (strings[0].equalsIgnoreCase("set"))
             {
@@ -98,7 +97,7 @@ public class EssaimCommandCompleter implements TabCompleter {
             }
             else if (strings[0].equalsIgnoreCase("info"))
             {
-                l.addAll(ListUtilities.tabList(strings[1], "--name", main.essaimManager.existingEssaims.keySet()));
+                l.addAll(ListUtilities.tabList(strings[1], "--name", main.getEssaimManager().getExistingEssaims().keySet()));
             }
         }
         else if (strings.length == 3)
@@ -122,11 +121,11 @@ public class EssaimCommandCompleter implements TabCompleter {
             else if (strings[0].equalsIgnoreCase("spawner"))
             {
                 if (strings[1].equalsIgnoreCase("create") ||
-                    strings[1].equalsIgnoreCase("activate") ||
-                        strings[1].equalsIgnoreCase("remove")||
+                        strings[1].equalsIgnoreCase("activate") ||
+                        strings[1].equalsIgnoreCase("remove") ||
                         strings[1].equalsIgnoreCase("list"))
                 {
-                    l.addAll(ListUtilities.tabList(strings[2], "--essaim", main.essaimManager.existingEssaims.keySet()));
+                    l.addAll(ListUtilities.tabList(strings[2], "--essaim", main.getEssaimManager().getExistingEssaims().keySet()));
                 }
             }
         }
@@ -164,7 +163,7 @@ public class EssaimCommandCompleter implements TabCompleter {
                         strings[1].equalsIgnoreCase("activate") ||
                         strings[1].equalsIgnoreCase("remove"))
                 {
-                    l.addAll(ListUtilities.tabList(strings[3], "--name", main.essaimManager.existingEssaims.get(strings[2]).keySet()));
+                    l.addAll(ListUtilities.tabList(strings[3], "--name", main.getEssaimManager().getExistingEssaims().get(strings[2]).keySet()));
                 }
             }
         }
@@ -206,7 +205,7 @@ public class EssaimCommandCompleter implements TabCompleter {
             }
             else if (strings[0].equalsIgnoreCase("set"))
             {
-                l.addAll(ListUtilities.tabList(strings[5], "--essaim", main.essaimManager.existingEssaims.keySet()));
+                l.addAll(ListUtilities.tabList(strings[5], "--essaim", main.getEssaimManager().getExistingEssaims().keySet()));
             }
         }
         else if (strings.length == 7)

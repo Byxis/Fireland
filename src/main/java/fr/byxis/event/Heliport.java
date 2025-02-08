@@ -22,13 +22,13 @@ import java.util.ArrayList;
 public class Heliport implements Listener, CommandExecutor
 {
     
-    boolean mouvement = false;
+    private boolean mouvement = false;
     
-    private Fireland main;
+    private final Fireland main;
 
-    public Heliport(Fireland main)
+    public Heliport(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
 
     private void setItems(Inventory inv) {
@@ -117,17 +117,16 @@ public class Heliport implements Listener, CommandExecutor
         inv.setItem(51, blueGlass);
         inv.setItem(52, blueGlass);
         inv.setItem(53, blueGlass);
-        return;
     }
     
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
         
-        if(sender instanceof Player) {
+        if (sender instanceof Player) {
             Player player = (Player) sender;
-            if(cmd.getName().equalsIgnoreCase("map")) {
+            if (cmd.getName().equalsIgnoreCase("map")) {
                 
-                Inventory inv = Bukkit.createInventory(null, 54,"Héliport");
+                Inventory inv = Bukkit.createInventory(null, 54, "Héliport");
                 
                 setItems(inv);
                 
@@ -145,30 +144,33 @@ public class Heliport implements Listener, CommandExecutor
         ItemStack current = e.getCurrentItem();
         Location loc = new Location(Bukkit.getWorld("world"), -444.5, 81, -439.5);
         
-        if(current == null) return;
+        if (current == null) return;
         
-        if(e.getView().getTitle().equalsIgnoreCase("Heliport")) {
+        if (e.getView().getTitle().equalsIgnoreCase("Heliport")) {
             e.setCancelled(true);
-            if(current.getType().equals(Material.GREEN_STAINED_GLASS_PANE) && current.getItemMeta().getDisplayName().equalsIgnoreCase("§lCentre-Ville")) {
+            if (current.getType().equals(Material.GREEN_STAINED_GLASS_PANE) && current.getItemMeta().getDisplayName().equalsIgnoreCase("§lCentre-Ville")) {
                 player.closeInventory();
                 player.sendMessage("§8La téléportation commence, veuillez ne pas bougez.");
                 new BukkitRunnable() {
                     
-                    Integer i = 10;
+                    private int i = 10;
                     
                     @Override
                     public void run() {
-                        if (mouvement) {
+                        if (mouvement)
+                        {
                             player.sendMessage("§cTéléportation annulée !");
                             i = 50;
                             mouvement = false;
                             cancel();
-                            }
-                        if(i == 10 || i == 5 ) {
+                        }
+                        if (i == 10 || i == 5)
+                        {
                             player.sendMessage("§8Téléportation dans " + i + " secondes !");
                         }
                         
-                        if(i == 0) {
+                        if (i == 0)
+                        {
                             player.sendMessage("§8Téléportation...");
                             player.teleport(loc);
                             cancel();

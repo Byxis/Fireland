@@ -4,19 +4,19 @@ import org.bukkit.Material;
 
 public class WorkshopItemClass
 {
-    private String recipeName;
-    private String itemName;
-    private String type;
-    private int scrap;
-    private int gunPowder;
-    private int customModelData;
-    private Material mat;
-    private short durability;
-    private String command;
-    private boolean know;
+    private final String recipeName;
+    private final String itemName;
+    private final String type;
+    private final int scrap;
+    private final int gunPowder;
+    private final int customModelData;
+    private final Material mat;
+    private final short durability;
+    private final String command;
+    private final boolean know;
 
 
-    public WorkshopItemClass(String _recipeName, String _itemName, String _type, int _scrap, int _gunpowder, Material _mat, short _durability, String _command, boolean _know, int customModelData)
+    public WorkshopItemClass(String _recipeName, String _itemName, String _type, int _scrap, int _gunpowder, Material _mat, short _durability, String _command, boolean _know, int _customModelData)
     {
         this.recipeName = _recipeName;
         this.itemName = _itemName;
@@ -27,7 +27,7 @@ public class WorkshopItemClass
         this.durability = _durability;
         this.command = _command;
         this.know = _know;
-        this.customModelData = customModelData;
+        this.customModelData = _customModelData;
     }
 
 

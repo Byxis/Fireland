@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static fr.byxis.player.intendant.menu.MenuChoixNation.OpenChoixNation;
+import static fr.byxis.player.intendant.menu.MenuChoixNation.openChoixNation;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class IntendantCommand implements CommandExecutor {
@@ -27,7 +27,7 @@ public class IntendantCommand implements CommandExecutor {
         {
             if (p.hasPermission("fireland.admin.intendant"))
             {
-                MenuIntendant.OpenIntendant(main, p);
+                MenuIntendant.openIntendant(main, p);
             }
         }
         else if (strings.length == 1)
@@ -46,11 +46,11 @@ public class IntendantCommand implements CommandExecutor {
             {
                 if (getPlayerLevel(p.getUniqueId()).canChange())
                 {
-                    OpenChoixNation(main, p);
+                    openChoixNation(main, p);
                 }
                 else
                 {
-                    MenuIntendant.OpenIntendant(main, p);
+                    MenuIntendant.openIntendant(main, p);
                 }
             }
         }

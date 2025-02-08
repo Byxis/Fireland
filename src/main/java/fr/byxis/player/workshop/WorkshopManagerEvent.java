@@ -205,24 +205,24 @@ public class WorkshopManagerEvent implements Listener
                 if (p.getInventory().firstEmpty() == -1) return;
                 for (WorkshopCraftingItemClass item : items)
                 {
-                    if (itemclicked.getItemMeta().getDisplayName().replaceAll("§7", "").equalsIgnoreCase(item.itemName) && itemclicked.getItemMeta().getLore().get(2).contains(item.creationDate.toString()))
+                    if (itemclicked.getItemMeta().getDisplayName().replaceAll("§7", "").equalsIgnoreCase(item.getItemName()) && itemclicked.getItemMeta().getLore().get(2).contains(item.getCreationDate().toString()))
                     {
-                        if (item.finishDate.before(time))
+                        if (item.getFinishDate().before(time))
                         {
                             if (!wf.isBreakable(item, p.getUniqueId().toString()))
                             {
                                 InGameUtilities.playPlayerSound(p, "block.anvil.use", SoundCategory.AMBIENT, 1, 1);
                                 wf.removeFromQueue(item, p.getUniqueId().toString());
-                                if (item.command.contains("wm give"))
+                                if (item.getCommand().contains("wm give"))
                                 {
-                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()));
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.getCommand().replaceAll("Player", ((Player) e.getView().getPlayer()).getName()));
                                 }
                                 else
                                 {
-                                    PermissionUtilities.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "*");
+                                    PermissionUtilities.commandExecutor(p, item.getCommand().replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "*");
                                 }
                                 wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
-                                wf.craftItemNbr(item.planName, p.getUniqueId().toString(), 1);
+                                wf.craftItemNbr(item.getPlanName(), p.getUniqueId().toString(), 1);
                             }
                             else
                             {
@@ -237,22 +237,22 @@ public class WorkshopManagerEvent implements Listener
                                 {
                                     InGameUtilities.playPlayerSound(p, "block.anvil.use", SoundCategory.AMBIENT, 1, 1);
                                     wf.removeFromQueue(item, p.getUniqueId().toString());
-                                    if (item.command.contains("wm give"))
+                                    if (item.getCommand().contains("wm give"))
                                     {
-                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()));
+                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.getCommand().replaceAll("Player", ((Player) e.getView().getPlayer()).getName()));
                                     }
                                     else
                                     {
-                                        PermissionUtilities.commandExecutor(p, item.command.replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "*");
+                                        PermissionUtilities.commandExecutor(p, item.getCommand().replaceAll("Player", ((Player) e.getView().getPlayer()).getName()), "*");
                                     }
                                     wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
-                                    wf.craftItemNbr(item.planName, p.getUniqueId().toString(), 1);
+                                    wf.craftItemNbr(item.getPlanName(), p.getUniqueId().toString(), 1);
                                 }
                             }
                         }
                         else
                         {
-                            String desc = "Accélération de craft, nom d'arme : " + item.itemName + ", date création :" + item.creationDate.toString();
+                            String desc = "Accélération de craft, nom d'arme : " + item.getItemName() + ", date création :" + item.getCreationDate().toString();
                             if (JetonManager.payJetons(p, 1, desc, true, false))
                             {
                                 InGameUtilities.sendPlayerSucces(p, "Vous avez accéléré le temps de craft de 30min !");
@@ -300,7 +300,7 @@ public class WorkshopManagerEvent implements Listener
                     Player p = (Player) e.getView().getPlayer();
                     e.setCancelled(true);
                     RecyclerFunction rf = new RecyclerFunction(main);
-                    rf.Recycle(e.getView(), p);
+                    rf.recycle(e.getView(), p);
                 }
             }
         }
@@ -313,7 +313,7 @@ public class WorkshopManagerEvent implements Listener
         {
             Player p = (Player) e.getPlayer();
             RecyclerFunction rf = new RecyclerFunction(main);
-            rf.GiveBackItem(e.getView(), p);
+            rf.giveBackItem(e.getView(), p);
         }
     }
 }

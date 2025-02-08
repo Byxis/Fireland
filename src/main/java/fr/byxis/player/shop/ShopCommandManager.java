@@ -54,7 +54,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     String name = player.getItemInHand().getItemMeta().getDisplayName();
                         /*name = name.replaceAll("[?.{1}]", "");
                         name = name.replaceAll("[^a-zA-Z0-9]", " ");*/
-                    name = name.replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7","");
+                    name = name.replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "");
 
                     name = name.replaceAll("_", " ");
 
@@ -67,7 +67,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                             if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
                                 sbb.append(words[i]);
                                 break;
-                            }//«
+                            } //«
                             else {
                                 sbb.append(words[i]).append(" ");
                             }
@@ -127,7 +127,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
         ArrayList<String> l = new ArrayList<>();
         if (strings.length == 1 && commandSender.hasPermission("fireland.shop.admin"))
         {
-            ShopFunction sf = new ShopFunction(main , null);
+            ShopFunction sf = new ShopFunction(main, null);
             l = sf.getAllShop();
             l.add("newitem");
         }
@@ -145,7 +145,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
             }
             else if (strings.length == 4)
             {
-                ShopFunction sf = new ShopFunction(main , null);
+                ShopFunction sf = new ShopFunction(main, null);
                 l = sf.getAllShop();
             }
             else if (strings.length == 5)

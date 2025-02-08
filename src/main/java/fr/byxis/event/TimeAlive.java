@@ -11,9 +11,9 @@ public class TimeAlive implements Listener
     
     private final Fireland main;
 
-    public TimeAlive(Fireland main)
+    public TimeAlive(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
     
     @EventHandler
@@ -21,8 +21,8 @@ public class TimeAlive implements Listener
     {
         Player p = e.getPlayer();
         
-        main.cfgm.getPlayerDB().set("playtime." + p.getUniqueId(), 0);
-        main.cfgm.savePlayerDB();
+        main.getCfgm().getPlayerDB().set("playtime." + p.getUniqueId(), 0);
+        main.getCfgm().savePlayerDB();
     }
 
 }

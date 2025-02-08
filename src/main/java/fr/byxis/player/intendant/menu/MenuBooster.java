@@ -16,15 +16,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class MenuBooster {
 
-    public static void OpenBoosters(Fireland main, Player p)
+    public static void openBoosters(Fireland main, Player p)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         Inventory boosterInv = Bukkit.createInventory(null, 54, "§8Boosters");
-        SetBoostersItem(main, boosterInv, p);
+        setBoostersItem(main, boosterInv, p);
         p.openInventory(boosterInv);
     }
 
-    private static void SetBoostersItem(Fireland main,Inventory inv, Player p)
+    private static void setBoostersItem(Fireland main, Inventory inv, Player p)
     {
         for (int i = 0; i < 9; i++)
         {
@@ -32,18 +32,18 @@ public class MenuBooster {
         }
         JetonsCommandManager jeton = new JetonsCommandManager(main);
 
-        if (main.hashMapManager.getBooster() != null)
+        if (main.getHashMapManager().getBooster() != null)
         {
-            BoosterClass booster = main.hashMapManager.getBooster();
-            inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, BasicUtilities.listMaker("§8Créé par " + ((Player) Bukkit.getPlayer(booster.getUuid())).getName(), "§8Expiration dans " + BasicUtilities.getStringTime(booster.getFinished().getTime()-System.currentTimeMillis()), "", "")));
+            BoosterClass booster = main.getHashMapManager().getBooster();
+            inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.LIME_WOOL, "§a§lUn Booster est actif !", (short) 0, BasicUtilities.listMaker("§8Créé par " + ((Player) Bukkit.getPlayer(booster.getUuid())).getName(), "§8Expiration dans " + BasicUtilities.getStringTime(booster.getFinished().getTime() - System.currentTimeMillis()), "", "")));
         }
         else
         {
             inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.RED_WOOL, "§cAucun Booster n'est actif.", (short) 0, BasicUtilities.listMaker("", "", "", "")));
         }
-        ItemStack head = InventoryUtilities.GetHead(p.getUniqueId(), "§d " + p.getName());
+        ItemStack head = InventoryUtilities.getHead(p.getUniqueId(), "§d " + p.getName());
         ItemMeta meta = head.getItemMeta();
-        meta.setLore(BasicUtilities.listMaker("§8Jetons : §b " + jeton.getJetonsPlayer(p.getUniqueId()) + " §f\u26c1" , "", "", ""));
+        meta.setLore(BasicUtilities.listMaker("§8Jetons : §b " + jeton.getJetonsPlayer(p.getUniqueId()) + " §f\u26c1", "", "", ""));
         head.setItemMeta(meta);
         inv.setItem(8, head);
 
@@ -51,17 +51,17 @@ public class MenuBooster {
         inv.setItem(13, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 2", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 2$ sur les zombies", "§8Donne 7.5% plus d'argent lors du kill", "§8Donne 7.5% plus de loot dans les coffres.", "§8Donne 50% plus d'xp.")));
         inv.setItem(15, InventoryUtilities.setItemMetaLore(Material.PAPER, "§eBooster - Lvl. 3", (short) 0, BasicUtilities.listMaker("§8Permet de gagner 0 à 3$ sur les zombies", "§8Donne 10% plus d'argent lors du kill", "§8Donne 10% plus de loot dans les coffres.", "§8Donne 75% plus d'xp.")));
 
-        inv.setItem(20, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b100 §f\u26c1","", "")));
-        inv.setItem(29, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b300 §f\u26c1","", "")));
-        inv.setItem(38, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b500 §f\u26c1","", "")));
+        inv.setItem(20, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus", "§8Coût : §b100 §f\u26c1", "", "")));
+        inv.setItem(29, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus", "§8Coût : §b300 §f\u26c1", "", "")));
+        inv.setItem(38, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 1 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus", "§8Coût : §b500 §f\u26c1", "", "")));
 
-        inv.setItem(22, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b200 §f\u26c1","", "")));
-        inv.setItem(31, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b600 §f\u26c1","", "")));
-        inv.setItem(40, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b1000 §f\u26c1","", "")));
+        inv.setItem(22, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus", "§8Coût : §b200 §f\u26c1", "", "")));
+        inv.setItem(31, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus", "§8Coût : §b600 §f\u26c1", "", "")));
+        inv.setItem(40, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 2 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus", "§8Coût : §b1000 §f\u26c1", "", "")));
 
-        inv.setItem(24, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b300 §f\u26c1","", "")));
-        inv.setItem(33, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b900 §f\u26c1","", "")));
-        inv.setItem(42, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus","§8Coût : §b1500 §f\u26c1","", "")));
+        inv.setItem(24, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 1h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus", "§8Coût : §b300 §f\u26c1", "", "")));
+        inv.setItem(33, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 3h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus", "§8Coût : §b900 §f\u26c1", "", "")));
+        inv.setItem(42, InventoryUtilities.setItemMetaLore(Material.FIREWORK_ROCKET, "§eBooster - Lvl. 3 - 5h", (short) 0, BasicUtilities.listMaker("§8Avantages: voir ci-dessus", "§8Coût : §b1500 §f\u26c1", "", "")));
 
         inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
     }

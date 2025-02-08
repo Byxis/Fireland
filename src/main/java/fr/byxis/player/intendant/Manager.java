@@ -23,9 +23,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-import static fr.byxis.player.intendant.menu.MenuEssaim.OpenEssaimMenu;
-import static fr.byxis.player.intendant.menu.MenuIntendant.OpenIntendant;
-import static fr.byxis.player.intendant.menu.MenuLevel.OpenLevelMenu;
+import static fr.byxis.player.intendant.menu.MenuEssaim.openEssaimMenu;
+import static fr.byxis.player.intendant.menu.MenuIntendant.openIntendant;
+import static fr.byxis.player.intendant.menu.MenuLevel.openLevelMenu;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 import static fr.byxis.player.primes.PrimeEvent.addPrime;
 
@@ -39,7 +39,7 @@ public class Manager implements Listener {
     }
 
     @EventHandler
-    public void ClickInventoryEvent(InventoryClickEvent e)
+    public void clickInventoryEvent(InventoryClickEvent e)
     {
         InventoryView inv = e.getView();
         if (e.getView().getPlayer() instanceof Player p)
@@ -57,7 +57,7 @@ public class Manager implements Listener {
                 /**       Click check        **/
 
 
-                switch(itemclicked.getType())
+                switch (itemclicked.getType())
                 {
                     case EMERALD -> {
                         PermissionUtilities.commandExecutor(p, "ah", "crazyauctions.access");
@@ -66,27 +66,27 @@ public class Manager implements Listener {
                     case NETHERITE_SWORD -> {
                         FactionFunctions ff = new FactionFunctions(main, p);
                         if (!ff.playerFactionName(p).equalsIgnoreCase(""))
-                            MenuFaction.OpenFaction(main, p, true);
+                            MenuFaction.openFaction(main, p, true);
                         else
                             InGameUtilities.sendPlayerError(p, "Vous n'avez pas de faction.");
                     }
                     case FIREWORK_ROCKET -> {
-                        MenuBooster.OpenBoosters(main,p);
+                        MenuBooster.openBoosters(main, p);
                     }
                     case BELL -> {
-                        MenuQuest.OpenQuestMenu(main, p);
+                        MenuQuest.openQuestMenu(main, p);
                     }
                     case NETHER_STAR -> {
                         //TODO: Succès
                     }
                     case WHITE_BANNER, BLACK_BANNER -> {
-                        OpenLevelMenu(main, p, 0);
+                        openLevelMenu(main, p, 0);
                     }
                     case DEAD_FIRE_CORAL -> {
-                        OpenEssaimMenu(main, p);
+                        openEssaimMenu(main, p);
                     }
                     case PLAYER_HEAD -> {
-                        MenuPrime.OpenPrime(main, p);
+                        MenuPrime.openPrime(main, p);
                     }
                 }
             }
@@ -104,17 +104,17 @@ public class Manager implements Listener {
 
 
                 FactionFunctions ff = new FactionFunctions(main, p);
-                FactionPlayerInformation infos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
+                FactionPlayerInformation infos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
                 FactionInformation finfos = ff.getFactionInfo(infos.getFactionName());
                 switch (itemclicked.getType()) {
                     case RED_STAINED_GLASS_PANE -> {
-                        OpenIntendant(main, p);
+                        openIntendant(main, p);
                     }
                     case ANVIL -> {
-                        MenuPerks.OpenPerks(main, p);
+                        MenuPerks.openPerks(main, p);
                     }
                     case PLAYER_HEAD -> {
-                        MenuPlayerList.OpenPlayerList(main, p);
+                        MenuPlayerList.openPlayerList(main, p);
                     }
                     case BARRIER -> {
                         PermissionUtilities.commandExecutor(p, "faction leave", "fireland.command.faction.leave");
@@ -122,10 +122,10 @@ public class Manager implements Listener {
                         p.closeInventory();
                     }
                     case ENDER_CHEST -> {
-                        if (ff.GetAmeliorationsUpgrades(finfos.getCurrentUpgrade())[2] != 0) {
+                        if (ff.getAmeliorationsUpgrades(finfos.getCurrentUpgrade())[2] != 0) {
 
                             InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-                            p.openInventory(ff.LoadStorage(infos.getFactionName(), finfos.getCurrentUpgrade()));
+                            p.openInventory(ff.loadStorage(infos.getFactionName(), finfos.getCurrentUpgrade()));
                         } else {
                             InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                         }
@@ -143,16 +143,16 @@ public class Manager implements Listener {
                                 PermissionUtilities.commandExecutor(p, "faction deposit 100", "fireland.command.faction.deposit");
                             }
                         }
-                        MenuFaction.OpenFaction(main, p, true);
+                        MenuFaction.openFaction(main, p, true);
                     }
                     case STONE -> {
                         if (finfos.getCurrentUpgrade() >= 5)
                         {
-                            main.bunkerManager.getBunker(finfos.getName()).Join(p);
+                            main.getBunkerManager().getBunker(finfos.getName()).join(p);
                         }
                     }
                     case GRASS_BLOCK -> {
-                        MenuZone.OpenZone(main, p);
+                        MenuZone.openZone(main, p);
                     }
                 }
             }
@@ -169,10 +169,10 @@ public class Manager implements Listener {
                 /**       Click check        **/
 
 
-                switch(itemclicked.getType())
+                switch (itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE -> {
-                        MenuFaction.OpenFaction(main, p, true);
+                        MenuFaction.openFaction(main, p, true);
                     }
                 }
             }
@@ -190,13 +190,13 @@ public class Manager implements Listener {
 
 
                 FactionFunctions ff = new FactionFunctions(main, p);
-                FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
+                FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
                 FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
                 final Material color = BlockUtilities.getGlassPaneColor(finfos.getColorcode());
 
-                switch(itemclicked.getType())
+                switch (itemclicked.getType())
                 {
-                    case RED_STAINED_GLASS_PANE -> MenuFaction.OpenFaction(main, p, true);
+                    case RED_STAINED_GLASS_PANE -> MenuFaction.openFaction(main, p, true);
                     case LIME_STAINED_GLASS_PANE -> {
                         PermissionUtilities.commandExecutor(p, "faction upgrade", "fireland.command.faction.upgrade");
                         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
@@ -212,7 +212,7 @@ public class Manager implements Listener {
                             else
                             {
                                 PermissionUtilities.commandExecutor(p, "faction perk friendly_fire", "fireland.command.faction.perk");
-                                MenuPerks.OpenPerks(main, p);
+                                MenuPerks.openPerks(main, p);
                             }
 
                         }
@@ -229,7 +229,7 @@ public class Manager implements Listener {
                             else
                             {
                                 PermissionUtilities.commandExecutor(p, "faction perk show_nickname", "fireland.command.faction.perk");
-                                MenuPerks.OpenPerks(main, p);
+                                MenuPerks.openPerks(main, p);
                             }
 
                         }
@@ -250,7 +250,7 @@ public class Manager implements Listener {
                             else
                             {
                                 PermissionUtilities.commandExecutor(p, "faction perk has_skin", "fireland.command.faction.perk");
-                                MenuPerks.OpenPerks(main, p);
+                                MenuPerks.openPerks(main, p);
                             }
 
                         }
@@ -261,7 +261,7 @@ public class Manager implements Listener {
                         return;
                     }
                     case FLOWER_BANNER_PATTERN -> {
-                        if (!finfos.DoShowPrefix())
+                        if (!finfos.doShowPrefix())
                         {
                             if (finfos.getCurrentUpgrade() < 3)
                             {
@@ -271,7 +271,7 @@ public class Manager implements Listener {
                             else
                             {
                                 PermissionUtilities.commandExecutor(p, "faction perk show_prefix", "fireland.command.faction.perk");
-                                MenuPerks.OpenPerks(main, p);
+                                MenuPerks.openPerks(main, p);
                             }
 
                         }
@@ -292,7 +292,7 @@ public class Manager implements Listener {
                             else
                             {
                                 PermissionUtilities.commandExecutor(p, "faction perk capture_perk", "fireland.command.faction.perk");
-                                MenuPerks.OpenPerks(main, p);
+                                MenuPerks.openPerks(main, p);
                             }
 
                         }
@@ -313,7 +313,7 @@ public class Manager implements Listener {
                             else
                             {
                                 PermissionUtilities.commandExecutor(p, "faction perk zone_tp", "fireland.command.faction.perk");
-                                MenuPerks.OpenPerks(main, p);
+                                MenuPerks.openPerks(main, p);
                             }
 
                         }
@@ -327,7 +327,7 @@ public class Manager implements Listener {
                 if (itemclicked.getType() == color && PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.command.faction.color") && !itemclicked.getItemMeta().getDisplayName().contains("Améliorer la faction au rang")
                         && !itemclicked.getItemMeta().getDisplayName().contains("Retour au menu Faction") && pInfos.getRole() == 2)
                 {
-                    MenuColor.OpenColorMenu(main, p, finfos);
+                    MenuColor.openColorMenu(main, p, finfos);
                 }
             }
             else if (inv.getTitle().contains("Changement de couleur"))
@@ -344,15 +344,15 @@ public class Manager implements Listener {
 
                 if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
                 {
-                    MenuPerks.OpenPerks(main, p);
+                    MenuPerks.openPerks(main, p);
                 }
                 else if (itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE)
                 {
                     FactionFunctions ff = new FactionFunctions(main, p);
-                    FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
+                    FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
                     FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
-                    ff.SetColorCode(pInfos.getFactionName(), BasicUtilities.GetStringColor(itemclicked.getType()));
-                    MenuColor.OpenColorMenu(main, p, finfos);
+                    ff.setColorCode(pInfos.getFactionName(), BasicUtilities.getStringColor(itemclicked.getType()));
+                    MenuColor.openColorMenu(main, p, finfos);
                 }
             }
             else if (inv.getTitle().contains("Zones"))
@@ -372,9 +372,9 @@ public class Manager implements Listener {
                 {
                     FactionFunctions ff = new FactionFunctions(main, p);
 
-                    FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
+                    FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
                     FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
-                    List<FactionZoneInformation> list = main.zoneManager.GetFactionData(finfos.getName());
+                    List<FactionZoneInformation> list = main.getZoneManager().getFactionData(finfos.getName());
                     FactionZoneInformation zoneinfo = null;
                     for (FactionZoneInformation fz : list)
                     {
@@ -384,13 +384,13 @@ public class Manager implements Listener {
                             break;
                         }
                     }
-                    if (zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk() && !main.hashMapManager.isTeleporting(p.getUniqueId()))
+                    if (zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk() && !main.getHashMapManager().isTeleporting(p.getUniqueId()))
                     {
                         ZoneConfigFileManager configManager = new ZoneConfigFileManager(main);
                         configManager.notSafeSetup();
-                        Location loc = new Location(Bukkit.getWorld("world"), configManager.config.getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.x"),
-                                configManager.config.getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.y"),
-                                configManager.config.getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.z"));
+                        Location loc = new Location(Bukkit.getWorld("world"), configManager.getConfig().getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.x"),
+                                configManager.getConfig().getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.y"),
+                                configManager.getConfig().getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.z"));
 
                         InGameUtilities.teleportPlayer(p, loc, 15, "gun.hub.helico", 3600);
                     }
@@ -398,7 +398,7 @@ public class Manager implements Listener {
 
                 if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour au menu Faction"))
                 {
-                    MenuFaction.OpenFaction(main, p, true);
+                    MenuFaction.openFaction(main, p, true);
                 }
             }
             else if (inv.getTitle().contains("Boosters"))
@@ -416,7 +416,7 @@ public class Manager implements Listener {
 
                 if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
                 {
-                    OpenIntendant(main, p);
+                    openIntendant(main, p);
                 }
                 else if (itemclicked.getType() == Material.FIREWORK_ROCKET)
                 {
@@ -440,7 +440,7 @@ public class Manager implements Listener {
                         level = 3;
                     }
                     PermissionUtilities.commandExecutor(p, "booster create " + level + " " + duration, "fireland.command.booster");
-                    MenuBooster.OpenBoosters(main,p);
+                    MenuBooster.openBoosters(main, p);
                 }
             }
             else if (inv.getTitle().contains("Quêtes quotidiennes"))
@@ -456,14 +456,14 @@ public class Manager implements Listener {
                 /**       Click check        **/
 
 
-                switch(itemclicked.getType())
+                switch (itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE -> {
-                        OpenIntendant(main, p);
+                        openIntendant(main, p);
                     }
                     case STRUCTURE_VOID -> {
                         QuestManager.claimRewards(p);
-                        MenuQuest.OpenQuestMenu(main, p);
+                        MenuQuest.openQuestMenu(main, p);
                     }
                 }
             }
@@ -480,16 +480,16 @@ public class Manager implements Listener {
                 /**       Click check        **/
 
 
-                switch(itemclicked.getType())
+                switch (itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE -> {
-                        OpenIntendant(main, p);
+                        openIntendant(main, p);
                     }
                     case PLAYER_HEAD -> {
-                        MenuPrime.OpenPrimePlayer(main, p, 1);
+                        MenuPrime.openPrimePlayer(main, p, 1);
                     }
                     case CHEST -> {
-                        MenuPrime.OpenPrimeList(main, p);
+                        MenuPrime.openPrimeList(main, p);
                     }
                 }
             }
@@ -506,13 +506,13 @@ public class Manager implements Listener {
                 /**       Click check        **/
 
 
-                switch(itemclicked.getType())
+                switch (itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE -> {
-                        MenuPrime.OpenPrime(main, p);
+                        MenuPrime.openPrime(main, p);
                     }
                     case PLAYER_HEAD -> {
-                        MenuPrime.OpenPrimeMoney(main, p, ChatColor.stripColor(itemclicked.getItemMeta().getDisplayName()), 0 );
+                        MenuPrime.openPrimeMoney(main, p, ChatColor.stripColor(itemclicked.getItemMeta().getDisplayName()), 0);
                     }
                 }
             }
@@ -530,27 +530,27 @@ public class Manager implements Listener {
                 String player = ChatColor.stripColor(e.getClickedInventory().getItem(13).getItemMeta().getDisplayName());
                 int money = Integer.parseInt(ChatColor.stripColor(e.getClickedInventory().getItem(13).getItemMeta().getLore().get(0).split(" ")[1]));
 
-                switch(itemclicked.getType())
+                switch (itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE -> {
-                        MenuPrime.OpenPrimePlayer(main, p, 1);
+                        MenuPrime.openPrimePlayer(main, p, 1);
                     }
                     case RAW_GOLD -> {
                         if (itemclicked.getItemMeta().hasCustomModelData() && itemclicked.getItemMeta().getCustomModelData() == 1)
                         {
                             if (money - 1000 > 0)
                             {
-                                MenuPrime.OpenPrimeMoney(main, p, player, money -1000 );
+                                MenuPrime.openPrimeMoney(main, p, player, money - 1000);
                             }
                             else
                             {
 
-                                MenuPrime.OpenPrimeMoney(main, p, player, 0 );
+                                MenuPrime.openPrimeMoney(main, p, player, 0);
                             }
                         }
                         else
                         {
-                            MenuPrime.OpenPrimeMoney(main, p, player, money + 1000 );
+                            MenuPrime.openPrimeMoney(main, p, player, money + 1000);
                         }
                     }
                     case GOLD_INGOT -> {
@@ -558,17 +558,17 @@ public class Manager implements Listener {
                         {
                             if (money - 100 > 0)
                             {
-                                MenuPrime.OpenPrimeMoney(main, p, player, money -100 );
+                                MenuPrime.openPrimeMoney(main, p, player, money - 100);
                             }
                             else
                             {
 
-                                MenuPrime.OpenPrimeMoney(main, p, player, 0 );
+                                MenuPrime.openPrimeMoney(main, p, player, 0);
                             }
                         }
                         else
                         {
-                            MenuPrime.OpenPrimeMoney(main, p, player, money + 100 );
+                            MenuPrime.openPrimeMoney(main, p, player, money + 100);
                         }
                     }
                     case GOLD_NUGGET -> {
@@ -576,26 +576,26 @@ public class Manager implements Listener {
                         {
                             if (money - 10 > 0)
                             {
-                                MenuPrime.OpenPrimeMoney(main, p, player, money -10 );
+                                MenuPrime.openPrimeMoney(main, p, player, money - 10);
                             }
                             else
                             {
 
-                                MenuPrime.OpenPrimeMoney(main, p, player, 0 );
+                                MenuPrime.openPrimeMoney(main, p, player, 0);
                             }
                         }
                         else
                         {
-                            MenuPrime.OpenPrimeMoney(main, p, player, money + 10 );
+                            MenuPrime.openPrimeMoney(main, p, player, money + 10);
                         }
                     }
-                    case STRUCTURE_VOID,BARRIER ->
+                    case STRUCTURE_VOID, BARRIER ->
                     {
-                        if (Fireland.eco.getBalance(p) > money)
+                        if (Fireland.getEco().getBalance(p) > money)
                         {
                             if (money > 0)
                             {
-                                Fireland.eco.withdrawPlayer(p, money);
+                                Fireland.getEco().withdrawPlayer(p, money);
                                 addPrime(BasicUtilities.getUuid(player), money);
                                 if (Bukkit.getPlayer(player) != null && Bukkit.getPlayer(player).isOnline())
                                 {
@@ -624,10 +624,10 @@ public class Manager implements Listener {
                 /**       Click check        **/
 
 
-                switch(itemclicked.getType())
+                switch (itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE -> {
-                        MenuPrime.OpenPrime(main, p);
+                        MenuPrime.openPrime(main, p);
                     }
                 }
             }
@@ -644,10 +644,10 @@ public class Manager implements Listener {
                 /**       Click check        **/
 
 
-                switch(itemclicked.getType())
+                switch (itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE -> {
-                        OpenIntendant(main, p);
+                        openIntendant(main, p);
                     }
                 }
             }
@@ -715,18 +715,18 @@ public class Manager implements Listener {
                 /**       Click check        **/
 
 
-                switch(itemclicked.getType())
+                switch (itemclicked.getType())
                 {
                     case RED_STAINED_GLASS_PANE, LIME_STAINED_GLASS_PANE -> {
-                        OpenLevelMenu(main, p, getPageNumber(itemclicked)-1);
+                        openLevelMenu(main, p, getPageNumber(itemclicked) - 1);
                     }
-                    case DIAMOND_BLOCK, DIAMOND-> {
-                        getPlayerLevel(p.getUniqueId()).ClaimRewards(main, Integer.parseInt(itemclicked.getItemMeta().getDisplayName().split(" ")[1]));
-                        OpenLevelMenu(main, p, Integer.parseInt(itemclicked.getItemMeta().getDisplayName().split(" ")[1])/44);
+                    case DIAMOND_BLOCK, DIAMOND -> {
+                        getPlayerLevel(p.getUniqueId()).claimRewards(main, Integer.parseInt(itemclicked.getItemMeta().getDisplayName().split(" ")[1]));
+                        openLevelMenu(main, p, Integer.parseInt(itemclicked.getItemMeta().getDisplayName().split(" ")[1]) / 44);
                     }
-                    case WHITE_BANNER , BLACK_BANNER-> {
+                    case WHITE_BANNER, BLACK_BANNER -> {
                         PlayerLevel pl = getPlayerLevel(p.getUniqueId());
-                        InGameUtilities.sendInteractivePlayerMessage(p, "§cPour changer de nation, cliquez sur ce message. Vous devez payer " + pl.GetJetonPriceNationChange() + "§f\u26C1§c et " + pl.GetMoneyPriceNationChange() + "§f$", "/level changeNation8484", "§cCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
+                        InGameUtilities.sendInteractivePlayerMessage(p, "§cPour changer de nation, cliquez sur ce message. Vous devez payer " + pl.getJetonPriceNationChange() + "§f\u26C1§c et " + pl.getMoneyPriceNationChange() + "§f$", "/level changeNation8484", "§cCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
                         p.closeInventory();
                     }
                 }

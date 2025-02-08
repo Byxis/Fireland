@@ -10,38 +10,39 @@ public class ConfigManager {
     
     private final Fireland plugin = Fireland.getPlugin(Fireland.class);
     
-    public FileConfiguration enderchestcfg;
-    public File playerEnderchestFile;
-    
-    public FileConfiguration playerDBcfg;
-    public File playerDBFile;
+    private FileConfiguration enderchestcfg;
+    private File playerEnderchestFile;
 
-    public FileConfiguration factionDBcfg;
-    public File factionDBFile;
+    private FileConfiguration playerDBcfg;
+    private File playerDBFile;
 
-    public FileConfiguration jetonsDBcfg;
-    public File jetonsDBFile;
+    private FileConfiguration factionDBcfg;
+    private File factionDBFile;
 
-    public FileConfiguration karmaDBcfg;
-    public File karmaDBFile;
+
+    private FileConfiguration jetonsDBcfg;
+    private File jetonsDBFile;
+
+    private FileConfiguration karmaDBcfg;
+    private File karmaDBFile;
     
     public void setup() 
     {
-        if(!plugin.getDataFolder().exists()) 
+        if (!plugin.getDataFolder().exists()) 
         {
             plugin.getDataFolder().mkdir();
         }
         
         //----------------------------- player enderchest ----------------------------------
         playerEnderchestFile = new File(plugin.getDataFolder(), "playerEnderchest.yml");
-        if(!playerEnderchestFile.exists())
+        if (!playerEnderchestFile.exists())
         {
             try 
             {
                 playerEnderchestFile.createNewFile();
                 plugin.getLogger().info("playerEnderchest.yml has been created !");
             }
-            catch(IOException e)
+            catch (IOException e)
             {
                 System.err.println("/!\\ Could not create playerEnderchest.yml");
             }
@@ -53,14 +54,14 @@ public class ConfigManager {
         
         //----------------------------- player DB ----------------------------------
         playerDBFile = new File(plugin.getDataFolder(), "playerdb.yml");
-        if(!playerDBFile.exists())
+        if (!playerDBFile.exists())
         {
             try 
             {
                 playerDBFile.createNewFile();
                 plugin.getLogger().info("playerdb.yml has been created !");
             }
-            catch(IOException e)
+            catch (IOException e)
             {
                 System.err.println("/!\\ Could not create playerdb.yml");
             }
@@ -72,14 +73,14 @@ public class ConfigManager {
         
         //----------------------------- Faction DB ----------------------------------
         factionDBFile = new File(plugin.getDataFolder(), "factiondb.yml");
-        if(!factionDBFile.exists())
+        if (!factionDBFile.exists())
         {
             try 
             {
                 factionDBFile.createNewFile();
                 plugin.getLogger().info("factiondb.yml has been created !");
             }
-            catch(IOException e)
+            catch (IOException e)
             {
                 System.err.println("/!\\ Could not create factiondb.yml");
             }
@@ -91,14 +92,14 @@ public class ConfigManager {
 
         //----------------------------- jetons DB ----------------------------------
         jetonsDBFile = new File(plugin.getDataFolder(), "jetonsdb.yml");
-        if(!jetonsDBFile.exists())
+        if (!jetonsDBFile.exists())
         {
             try
             {
                 jetonsDBFile.createNewFile();
                 plugin.getLogger().info("jetonsdb.yml has been created !");
             }
-            catch(IOException e)
+            catch (IOException e)
             {
                 System.err.println("/!\\ Could not create jetonsdb.yml");
             }
@@ -110,14 +111,14 @@ public class ConfigManager {
 
         //----------------------------- karma DB ----------------------------------
         karmaDBFile = new File(plugin.getDataFolder(), "karmadb.yml");
-        if(!karmaDBFile.exists())
+        if (!karmaDBFile.exists())
         {
             try
             {
                 karmaDBFile.createNewFile();
                 plugin.getLogger().info("karmadb.yml has been created !");
             }
-            catch(IOException e)
+            catch (IOException e)
             {
                 System.err.println("/!\\ Could not create karmadb.yml");
             }
@@ -139,7 +140,7 @@ public class ConfigManager {
         {
             enderchestcfg.save(playerEnderchestFile);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             System.err.println("/!\\ Could not save playerEnderchest.yml");
         }
@@ -162,7 +163,7 @@ public class ConfigManager {
         {
             playerDBcfg.save(playerDBFile);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             System.err.println("/!\\ Could not save playerdb.yml");
         }
@@ -185,7 +186,7 @@ public class ConfigManager {
         {
             factionDBcfg.save(factionDBFile);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             System.err.println("/!\\ Could not save factiondb.yml");
         }
@@ -208,7 +209,7 @@ public class ConfigManager {
         {
             jetonsDBcfg.save(jetonsDBFile);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             System.err.println("/!\\ Could not save jetonsdb.yml");
         }
@@ -231,7 +232,7 @@ public class ConfigManager {
         {
             karmaDBcfg.save(karmaDBFile);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             System.err.println("/!\\ Could not save karmadb.yml");
         }
@@ -241,5 +242,10 @@ public class ConfigManager {
     {
         karmaDBcfg = YamlConfiguration.loadConfiguration(karmaDBFile);
         plugin.getLogger().info("karmadb.yml has been reloaded !");
+    }
+
+    public FileConfiguration getJetonsDBcfg()
+    {
+        return jetonsDBcfg;
     }
 }

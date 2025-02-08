@@ -11,7 +11,7 @@ public class WorldGeneration implements Listener
 
     @EventHandler
     public void onBlockGrow(BlockSpreadEvent  e) {
-        if(e.getNewState().getType().equals(Material.VINE)) {
+        if (e.getNewState().getType().equals(Material.VINE)) {
             e.setCancelled(true);
             return;
         }
@@ -20,7 +20,7 @@ public class WorldGeneration implements Listener
     @EventHandler
     public void onCoralDead(BlockFadeEvent e)
     {
-        if(e.getBlock().getType().toString().contains("CORAL"))
+        if (e.getBlock().getType().toString().contains("CORAL"))
         {
             e.setCancelled(true);
         }

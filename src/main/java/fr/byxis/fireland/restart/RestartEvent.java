@@ -11,11 +11,11 @@ public class RestartEvent implements Listener
     @EventHandler
     public void playerJoin(PlayerJoinEvent e)
     {
-        if (RestartManager.IsServerRestartingSoon())
+        if (RestartManager.isServerRestartingSoon())
         {
-            RestartManager.AddPlayerBar(e.getPlayer());
+            RestartManager.addPlayerBar(e.getPlayer());
         }
-        else if (RestartManager.IsRestartingNow())
+        else if (RestartManager.isRestartingNow())
         {
             e.getPlayer().kickPlayer("§cLe serveur est en train de redémarrer.");
         }

@@ -11,23 +11,23 @@ import fr.byxis.player.scoreboard.PlayerScoreboardManager;
 
 public class PlayerAddonsEnabler {
 
-    private Fireland main;
-    public ItemEnabler item;
-    public QuestManager questManager;
-    public LevelStorage levelStorage;
+    private final Fireland main;
+    private final ItemEnabler item;
+    private final QuestManager questManager;
+    private final LevelStorage levelStorage;
 
-    public PlayerAddonsEnabler(Fireland main)
+    public PlayerAddonsEnabler(Fireland _main)
     {
-        this.main = main;
-        item = new ItemEnabler(main);
-        questManager = new QuestManager(main);
-        levelStorage = new LevelStorage(main);
-        RankCustomMessage rankCustomMessage = new RankCustomMessage(main);
-        main.getServer().getPluginManager().registerEvents(new PrimeEvent(main), main);
-        main.getServer().getPluginManager().registerEvents(rankCustomMessage, main);
-        main.getCommand("rank").setExecutor(rankCustomMessage);
-        main.getCommand("rank").setTabCompleter(rankCustomMessage);
-        main.getServer().getPluginManager().registerEvents(new PvPManager(main), main);
-        main.getServer().getPluginManager().registerEvents(new PlayerScoreboardManager(main), main);
+        this.main = _main;
+        item = new ItemEnabler(_main);
+        questManager = new QuestManager(_main);
+        levelStorage = new LevelStorage(_main);
+        RankCustomMessage rankCustomMessage = new RankCustomMessage(_main);
+        _main.getServer().getPluginManager().registerEvents(new PrimeEvent(_main), _main);
+        _main.getServer().getPluginManager().registerEvents(rankCustomMessage, _main);
+        _main.getCommand("rank").setExecutor(rankCustomMessage);
+        _main.getCommand("rank").setTabCompleter(rankCustomMessage);
+        _main.getServer().getPluginManager().registerEvents(new PvPManager(_main), _main);
+        _main.getServer().getPluginManager().registerEvents(new PlayerScoreboardManager(_main), _main);
     }
 }

@@ -24,15 +24,15 @@ import static fr.byxis.player.level.LevelStorage.addPlayerXp;
 public class CaptureZone {
 
     private static Fireland main;
-    private DataZone data;
+    private final DataZone data;
     private final int captureRefreshRate = 2;
     private final float boosterCapture = 1.5f;
-    int i = 0;
+    private int i = 0;
 
-    public CaptureZone(Fireland main, DataZone data)
+    public CaptureZone(Fireland _main, DataZone _data)
     {
-        CaptureZone.main = main;
-        this.data = data;
+        this.main = _main;
+        this.data = _data;
     }
 
     public static void changeAnimationStep(int step, ZoneClass zone, String color)
@@ -44,9 +44,9 @@ public class CaptureZone {
                 for (int j = 0; j < 4; j++)
                 {
                     updateGlassWoolBlocks(zone, i, j, color);
-                    updateGlassWoolBlocks(zone, - i, j, color);
-                    updateGlassWoolBlocks(zone, - i, - j, color);
-                    updateGlassWoolBlocks(zone, i, - j, color);
+                    updateGlassWoolBlocks(zone, -i, j, color);
+                    updateGlassWoolBlocks(zone, -i, -j, color);
+                    updateGlassWoolBlocks(zone, i, -j, color);
                 }
             }
             updateBannerBlocks(zone, color);
@@ -66,57 +66,57 @@ public class CaptureZone {
         }
         else if (step == 3)
         {
-            updateGlassWoolBlocks(zone, - 1, 2, color);
-            updateGlassWoolBlocks(zone, - 2, 3, color);
-            updateGlassWoolBlocks(zone, - 1, 3, color);
+            updateGlassWoolBlocks(zone, -1, 2, color);
+            updateGlassWoolBlocks(zone, -2, 3, color);
+            updateGlassWoolBlocks(zone, -1, 3, color);
             updateGlassWoolBlocks(zone, 0, 3, color);
         }
         else if (step == 4)
         {
-            updateGlassWoolBlocks(zone, - 1, 1, color);
-            updateGlassWoolBlocks(zone, - 2, 1, color);
-            updateGlassWoolBlocks(zone, - 2, 2, color);
-            updateGlassWoolBlocks(zone, - 3, 2, color);
+            updateGlassWoolBlocks(zone, -1, 1, color);
+            updateGlassWoolBlocks(zone, -2, 1, color);
+            updateGlassWoolBlocks(zone, -2, 2, color);
+            updateGlassWoolBlocks(zone, -3, 2, color);
         }
         else if (step == 5)
         {
-            updateGlassWoolBlocks(zone, - 3, 0, color);
-            updateGlassWoolBlocks(zone, - 3, 1, color);
-            updateGlassWoolBlocks(zone, - 2, 0, color);
-            updateGlassWoolBlocks(zone, - 1, 0, color);
-            updateGlassWoolBlocks(zone, - 3, - 1, color);
+            updateGlassWoolBlocks(zone, -3, 0, color);
+            updateGlassWoolBlocks(zone, -3, 1, color);
+            updateGlassWoolBlocks(zone, -2, 0, color);
+            updateGlassWoolBlocks(zone, -1, 0, color);
+            updateGlassWoolBlocks(zone, -3, -1, color);
         }
         else if (step == 6)
         {
-            updateGlassWoolBlocks(zone, - 1, - 1, color);
-            updateGlassWoolBlocks(zone, - 2, - 1, color);
-            updateGlassWoolBlocks(zone, - 2, - 2, color);
-            updateGlassWoolBlocks(zone, - 3, - 2, color);
+            updateGlassWoolBlocks(zone, -1, -1, color);
+            updateGlassWoolBlocks(zone, -2, -1, color);
+            updateGlassWoolBlocks(zone, -2, -2, color);
+            updateGlassWoolBlocks(zone, -3, -2, color);
         }
         else if (step == 7)
         {
-            updateGlassWoolBlocks(zone, 0, - 1, color);
-            updateGlassWoolBlocks(zone, 0, - 2, color);
-            updateGlassWoolBlocks(zone, - 1, - 2, color);
-            updateGlassWoolBlocks(zone, - 1, - 3, color);
-            updateGlassWoolBlocks(zone, - 2, - 3, color);
+            updateGlassWoolBlocks(zone, 0, -1, color);
+            updateGlassWoolBlocks(zone, 0, -2, color);
+            updateGlassWoolBlocks(zone, -1, -2, color);
+            updateGlassWoolBlocks(zone, -1, -3, color);
+            updateGlassWoolBlocks(zone, -2, -3, color);
         }
         else if (step == 8)
         {
-            updateGlassWoolBlocks(zone, 1, - 1, color);
-            updateGlassWoolBlocks(zone, 1, - 2, color);
-            updateGlassWoolBlocks(zone, 1, - 3, color);
-            updateGlassWoolBlocks(zone, 0, - 3, color);
-            updateGlassWoolBlocks(zone, 2, - 3, color);
-            updateGlassWoolBlocks(zone, 2, - 2, color);
+            updateGlassWoolBlocks(zone, 1, -1, color);
+            updateGlassWoolBlocks(zone, 1, -2, color);
+            updateGlassWoolBlocks(zone, 1, -3, color);
+            updateGlassWoolBlocks(zone, 0, -3, color);
+            updateGlassWoolBlocks(zone, 2, -3, color);
+            updateGlassWoolBlocks(zone, 2, -2, color);
         }
         else if (step == 9)
         {
             updateGlassWoolBlocks(zone, 1, 0, color);
             updateGlassWoolBlocks(zone, 2, 0, color);
-            updateGlassWoolBlocks(zone, 2, - 1, color);
-            updateGlassWoolBlocks(zone, 3, - 1, color);
-            updateGlassWoolBlocks(zone, 3, - 2, color);
+            updateGlassWoolBlocks(zone, 2, -1, color);
+            updateGlassWoolBlocks(zone, 3, -1, color);
+            updateGlassWoolBlocks(zone, 3, -2, color);
         }
         else if (step == 10)
         {
@@ -169,39 +169,39 @@ public class CaptureZone {
         }
     }
 
-    public void Loop()
+    public void loop()
     {
         new BukkitRunnable()
-{
+        {
             @Override
             public void run() {
-                if (data.zones.isEmpty())
+                if (data.getZones().isEmpty())
                 {
                     return;
                 }
 
-                for (ZoneClass zone : data.zones)
+                for (ZoneClass zone : data.getZones())
                 {
-                    if (data.zoneInCapture.containsKey(zone.getName()) &&
-                            !data.zoneInCapture.get(zone.getName()).isEmpty() &&
+                    if (data.getZoneInCapture().containsKey(zone.getName()) &&
+                            !data.getZoneInCapture().get(zone.getName()).isEmpty() &&
                             (!zone.isClaimed() || (zone.isClaimed() && zone.isClaimable()))
                     )
                     {
                         HashMap<FactionCapturingClass, Integer> capture = new HashMap<>();
 
-                        Iterator<FactionCapturingClass> iterator = data.zoneInCapture.get(zone.getName()).iterator();
+                        Iterator<FactionCapturingClass> iterator = data.getZoneInCapture().get(zone.getName()).iterator();
                         while (iterator.hasNext()) {
                             FactionCapturingClass factionCapturing = iterator.next();
                             capture.put(factionCapturing, factionCapturing.getPlayerList().size());
-                            if (factionCapturing.getPlayerList().size() < 1)
+                            if (factionCapturing.getPlayerList().isEmpty())
                             {
                                 if (zone.getClaimer() == null || !zone.getClaimer().equalsIgnoreCase(factionCapturing.getName()))
                                 {
-                                    addProgressionTime(zone, factionCapturing, -2 *captureRefreshRate *boosterCapture);
+                                    addProgressionTime(zone, factionCapturing, -2 * captureRefreshRate * boosterCapture);
                                     //Décapture automatique
                                 }
                             }
-                            if (factionCapturing.getProgression() <= 0 && factionCapturing.getPlayerList().size() < 1)
+                            if (factionCapturing.getProgression() <= 0 && factionCapturing.getPlayerList().isEmpty())
                             {
                                 iterator.remove(); // Suppression de l'élément via l'itérateur
                             }
@@ -213,7 +213,7 @@ public class CaptureZone {
                         List<FactionCapturingClass> factionInMinority = new ArrayList<>();
                         for (FactionCapturingClass factionCapturingClass : capture.keySet())
                         {
-                            if (factionCapturingClass.getPlayerList().size() >= 1)
+                            if (!factionCapturingClass.getPlayerList().isEmpty())
                             {
                                 if (capture.get(factionCapturingClass) > max)
                                 {
@@ -263,18 +263,18 @@ public class CaptureZone {
                             {
                                 if (factionToUncapture.getName().equalsIgnoreCase(factionCapturing.getName()))
                                 {
-                                    addProgressionTime(zone, factionToUncapture, 2 *captureRefreshRate *boosterCapture);
+                                    addProgressionTime(zone, factionToUncapture, 2 * captureRefreshRate * boosterCapture);
                                     //Si tu proteges ta faction, ça capture
                                 }
                                 else
                                 {
-                                    addProgressionTime(zone, factionToUncapture, -2 *captureRefreshRate *boosterCapture);
+                                    addProgressionTime(zone, factionToUncapture, -2 * captureRefreshRate * boosterCapture);
                                     //Si tu décaptures une faction, ça décapture
                                 }
                             }
                             else
                             {
-                                addProgressionTime(zone, factionCapturing, boosterCapture *captureRefreshRate);
+                                addProgressionTime(zone, factionCapturing, boosterCapture * captureRefreshRate);
                                 //Si t'es tout seul, tu captures
                             }
                         }
@@ -285,7 +285,7 @@ public class CaptureZone {
                                 if (zone.getClaimer() == null || (zone.getClaimer() != null && !factionMonority.getName().equalsIgnoreCase(zone.getClaimer())))
                                 {
                                     //Si t'es minoritaire, tu décaptures
-                                    addProgressionTime(zone, factionCapturing, -2 *captureRefreshRate);
+                                    addProgressionTime(zone, factionCapturing, -2 * captureRefreshRate);
                                 }
                             }
                         }
@@ -293,7 +293,7 @@ public class CaptureZone {
                 }
                 i++;
             }
-        }.runTaskTimer(main, 20, 20 *captureRefreshRate);
+        }.runTaskTimer(main, 20, 20 * captureRefreshRate);
     }
 
     private void addProgressionTime(ZoneClass zone, FactionCapturingClass faction, double seconds)
@@ -366,15 +366,15 @@ public class CaptureZone {
         }
         if (prog >= 100)
         {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "summon firework_rocket " + (zone.getLocation().getX()) + " " + (zone.getLocation().getY() + 2) + " " + (zone.getLocation().getZ()-1) + " {LifeTime:30,FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:1,Flicker:1,Trail:1,Colors:[I;11743532],FadeColors:[I;15435844]}],Flight:2}}}}");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "summon firework_rocket " + (zone.getLocation().getX()) + " " + (zone.getLocation().getY() + 2) + " " + (zone.getLocation().getZ() - 1) + " {LifeTime:30,FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:1,Flicker:1,Trail:1,Colors:[I;11743532],FadeColors:[I;15435844]}],Flight:2}}}}");
             zone.removeAllBar();
-            for (ZoneClass zoneClass : data.zones)
+            for (ZoneClass zoneClass : data.getZones())
             {
                 if (zoneClass.getName().equalsIgnoreCase(zone.getName()))
                 {
                     if (zone.isClaimed())
                     {
-                        data.SaveTiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
+                        data.saveTiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
                         zoneClass.unclaim();
                     }
                     changeAnimationStep(-1, zone, color);
@@ -382,7 +382,7 @@ public class CaptureZone {
                     break;
                 }
             }
-            data.SaveAll();
+            data.saveAll();
             for (Player p : Bukkit.getOnlinePlayers())
             {
                 if (faction.getPlayerList().contains(p))
@@ -393,7 +393,7 @@ public class CaptureZone {
                 InGameUtilities.sendPlayerInformation(p, "La faction " + color + faction.getName() + "§R§7 a capturé la zone " + zone.getFormattedName() + " !");
             }
 
-            data.zoneInCapture.get(zone.getName()).clear();
+            data.getZoneInCapture().get(zone.getName()).clear();
         }
         if (prog < 0)
         {
@@ -401,10 +401,10 @@ public class CaptureZone {
             {
                 changeAnimationStep(-1, zone, "§r");
                 zone.unclaim();
-                data.RemoveSavedClaiming(zone.getName(), null);
-                data.SaveTiming(faction.getName(), zone.getClaimedAt(), zone.getName());
+                data.removeSavedClaiming(zone.getName(), null);
+                data.saveTiming(faction.getName(), zone.getClaimedAt(), zone.getName());
             }
-            data.zoneInCapture.get(zone.getName()).remove(faction);
+            data.getZoneInCapture().get(zone.getName()).remove(faction);
         }
     }
 

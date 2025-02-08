@@ -27,16 +27,16 @@ import static fr.byxis.fireland.utilities.ListUtilities.tabList;
 
 public class RankCustomMessage implements Listener, CommandExecutor, TabCompleter {
 
-    private Fireland main;
-    private RankConfig config;
+    private final Fireland main;
+    private final RankConfig config;
 
-    public RankCustomMessage(Fireland main) {
-        this.main = main;
-        config = new RankConfig(main);
+    public RankCustomMessage(Fireland _main) {
+        this.main = _main;
+        config = new RankConfig(_main);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void PlayerDeath(PlayerDeathEvent e)
+    public void playerDeath(PlayerDeathEvent e)
     {
         Entity ent = e.getEntity();
         EntityDamageEvent ede = ent.getLastDamageCause();
@@ -56,7 +56,7 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
             if (p.hasPermission("fireland.message." + grade)) {
                 if (e.getEntity().getLastDamageCause().getEntity() != null) {
                     e.setDeathMessage(config.getConfig().getString(grade + ".PLAYERKILL").replace("player", e.getPlayer().getName()).replace("killer", p.getLastDamageCause().getEntity().getName()));
-                } else if (main.cfgm.getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state") && e.getEntity().getKiller() == null) {
+                } else if (main.getCfgm().getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state") && e.getEntity().getKiller() == null) {
                     e.setDeathMessage(config.getConfig().getString(grade + ".INFECTION").replace("player", e.getPlayer().getName()));
                 }
                 e.setDeathMessage(config.getConfig().getString(grade + "." + dc).replace("player", e.getPlayer().getName()));

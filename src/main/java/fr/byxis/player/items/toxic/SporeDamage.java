@@ -20,9 +20,9 @@ public class SporeDamage {
     private final Fireland main;
     private final HashMap<UUID, Boolean> isAffectedByToxicity;
 
-    public SporeDamage(Fireland main)
+    public SporeDamage(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
         this.isAffectedByToxicity = new HashMap<>();
         loop();
     }
@@ -30,7 +30,7 @@ public class SporeDamage {
     public void loop()
     {
         new BukkitRunnable()
-{
+        {
             @Override
             public void run() {
                 for (Player p : Bukkit.getOnlinePlayers())

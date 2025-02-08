@@ -21,7 +21,7 @@ public class WGUtilities {
 
     public static boolean isWithinRegion(Location loc, String region)
     {
-        BlockVector3 v = BlockVector3.at(loc.getX(), loc.getY(),loc.getZ());
+        BlockVector3 v = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
         RegionManager manager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(new BukkitWorld(loc.getWorld()));
         ApplicableRegionSet set = manager.getApplicableRegions(v);
         for (ProtectedRegion each : set)

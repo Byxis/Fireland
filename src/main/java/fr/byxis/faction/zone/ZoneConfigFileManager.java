@@ -16,8 +16,8 @@ public class ZoneConfigFileManager {
         this.plugin = main;
     }
 
-    public FileConfiguration config;
-    public File file;
+    private FileConfiguration config;
+    private File file;
 
     public void setup() {
         file = new File(plugin.getDataFolder(), "zone-capture.yml");
@@ -41,7 +41,7 @@ public class ZoneConfigFileManager {
     public void notSafeSetup()
     {
         this.file = new File(plugin.getDataFolder(), "zone-capture.yml");
-       this.config = YamlConfiguration.loadConfiguration(file);
+        this.config = YamlConfiguration.loadConfiguration(file);
     }
 
     public void save()
@@ -50,7 +50,7 @@ public class ZoneConfigFileManager {
         {
             config.save(file);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             System.err.println("/!\\ Could not save zone-capture.yml");
         }

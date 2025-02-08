@@ -28,12 +28,12 @@ public class FactionFunctions {
     final private Fireland main;
     private Player sender;
 
-    public FactionFunctions(Fireland main, Player sender)
+    public FactionFunctions(Fireland _main, Player _sender)
     {
         //Récupération du main, pour pouvoir avoir envoyer des requêtes à la base de données
-        this.main = main;
+        this.main = _main;
         //Récupération de la personne qui envoie la commande, pour lui envoyer les messages d'erreurs
-        this.sender = sender;
+        this.sender = _sender;
     }
 
     public void factionInformationSender(Player p, FactionInformation infos, ArrayList<FactionPlayerInformation> players)
@@ -85,7 +85,7 @@ public class FactionFunctions {
         p.sendMessage(mod.toString());
         p.sendMessage("§8Membres:");
         p.sendMessage(members.toString());
-        p.sendMessage("§8" + ("-".repeat(ChatColor.stripColor(title).split("").length-5)));
+        p.sendMessage("§8" + ("-".repeat(ChatColor.stripColor(title).split("").length - 5)));
     }
     
     public ArrayList<FactionPlayerInformation> getPlayersFromFaction(String factionName)
@@ -105,7 +105,7 @@ public class FactionFunctions {
             final ResultSet resultSet = preparedStatement1.executeQuery();
             ArrayList<FactionPlayerInformation> ar = new ArrayList<>();
             FactionPlayerInformation player;
-            while(resultSet.next())
+            while (resultSet.next())
             {
                 player = new FactionPlayerInformation(resultSet.getString(1), factionName, (resultSet.getInt(2)), UUID.fromString(resultSet.getString(3)), resultSet.getTimestamp(4));
                 ar.add(player);
@@ -120,7 +120,7 @@ public class FactionFunctions {
         return null;
     }
     
-    public void InitInviteFaction(Player p, Player invited, String factionName) {
+    public void initInviteFaction(Player p, Player invited, String factionName) {
         /*
 		 * Initialise l'invitation à une faction avec quelques vérifications :
 		 * 	- le joueur invité n'a pas deja été invité précédemment
@@ -147,7 +147,7 @@ public class FactionFunctions {
                 //On regarde si la date obtenue dans la base de donnée est après la date actuelle
                 final long time = System.currentTimeMillis();
                 Timestamp currentTime = new Timestamp(time);
-                if(resultSet.getTimestamp(1).after(currentTime))
+                if (resultSet.getTimestamp(1).after(currentTime))
                 {
                     //si oui, alors le joueur ne peut pas etre inviter à nouveau
                     p.sendMessage("§cCe joueur a déjà été récemment invité dans cette faction !");
@@ -161,7 +161,7 @@ public class FactionFunctions {
                     preparedStatement2.executeUpdate();
                     inviteFaction(connection, factionName, uuid);
                     sendFactionPlayer(factionName, invited.getName() + " vient d'être invité dans la faction !");
-                    InGameUtilities.sendInteractivePlayerMessage(invited, "Vous avez été invité dans la faction " + GetColorCode(factionName) + factionName + "§r§7 ! Cliquez ici pour la rejoindre .",
+                    InGameUtilities.sendInteractivePlayerMessage(invited, "Vous avez été invité dans la faction " + getColorCode(factionName) + factionName + "§r§7 ! Cliquez ici pour la rejoindre .",
                             "/faction join " + factionName, "§aCliquez ici pour rejoindre la faction", ClickEvent.Action.RUN_COMMAND);
                 }
 
@@ -171,7 +171,7 @@ public class FactionFunctions {
             {
                 inviteFaction(connection, factionName, uuid);
                 InGameUtilities.sendPlayerInformation(p, invited.getName() + " vient d'être invité dans la faction !");
-                InGameUtilities.sendInteractivePlayerMessage(invited, "Vous avez été invité dans la faction " + GetColorCode(factionName) + factionName + "§r§7 ! Cliquez ici pour la rejoindre .",
+                InGameUtilities.sendInteractivePlayerMessage(invited, "Vous avez été invité dans la faction " + getColorCode(factionName) + factionName + "§r§7 ! Cliquez ici pour la rejoindre .",
                         "/faction join " + factionName, "§aCliquez ici pour rejoindre la faction", ClickEvent.Action.RUN_COMMAND);
             }
         } catch (SQLException e) {
@@ -304,7 +304,7 @@ public class FactionFunctions {
                 preparedStatement2.executeUpdate();
                 PlayerJoinFactionEvent event = new PlayerJoinFactionEvent(p, factionName);
                 Bukkit.getPluginManager().callEvent(event);
-                InGameUtilities.sendPlayerInformation(p, "Vous avez rejoint la faction " + GetColorCode(factionName) + factionName + "§7.");
+                InGameUtilities.sendPlayerInformation(p, "Vous avez rejoint la faction " + getColorCode(factionName) + factionName + "§7.");
             }
             //S'il y a un résultat dans la table, le joueur appartient donc déjà à une faction.
             else
@@ -335,7 +335,7 @@ public class FactionFunctions {
             else
             {
                 final Connection connection = firelandConnection.getConnection();
-                FactionInformation infos = getFactionInfo(GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName()).getFactionName());
+                FactionInformation infos = getFactionInfo(getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName()).getFactionName());
 
                 final PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM player_faction WHERE player_faction.player_faction=? AND player_uuid = ?");
                 preparedStatement1.setString(1, infos.getName());
@@ -343,9 +343,9 @@ public class FactionFunctions {
                 //On exécute la requete SQL
                 preparedStatement1.executeUpdate();
                 p.sendMessage("§cVous avez quitté la faction " + infos.getColorcode() + infos.getName() + "§7.");
-                if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
+                if (main.getHashMapManager().getFactionMap().containsKey(p.getUniqueId()))
                 {
-                    main.hashMapManager.removeFactionMap(p.getUniqueId());
+                    main.getHashMapManager().removeFactionMap(p.getUniqueId());
                 }
             }
         } catch (SQLException e) {
@@ -371,7 +371,7 @@ public class FactionFunctions {
         try {
             //Initialisation de la connexion a la bd et de la première requete SQL
             final Connection connection = firelandConnection.getConnection();
-            final PreparedStatement verificationFactionWithName = connection.prepareStatement("SELECT name FROM faction WHERE name = ?");//AND leader_uuid = ?
+            final PreparedStatement verificationFactionWithName = connection.prepareStatement("SELECT name FROM faction WHERE name = ?"); //AND leader_uuid = ?
             verificationFactionWithName.setString(1, name);
 
             //Réalisation de la requête SQL
@@ -389,7 +389,7 @@ public class FactionFunctions {
                 final PreparedStatement verificationPlayerInFaction = connection.prepareStatement("SELECT player_uuid FROM player_faction WHERE player_uuid = ?");
                 verificationPlayerInFaction.setString(1, uuid.toString());
                 final ResultSet resultSet2 = verificationPlayerInFaction.executeQuery();
-                if(resultSet2.next())
+                if (resultSet2.next())
                 {
                     //La requête a trouvé que le joueur a une faction
                     p.sendMessage("§cVous êtes déjà dans une faction !");
@@ -474,7 +474,7 @@ public class FactionFunctions {
 
             final ResultSet resultFactionName = getFactionName.executeQuery();
             //Check si le joueur est chef d'une faction
-            if(resultFactionName.next())
+            if (resultFactionName.next())
             {
                 //Preparations des requetes pour supprimer
                 String[] queries = {
@@ -493,12 +493,12 @@ public class FactionFunctions {
                     statement.executeUpdate();
                 }
 
-                if(main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()))
+                if (main.getHashMapManager().getFactionMap().containsKey(p.getUniqueId()))
                 {
-                    main.hashMapManager.removeFactionMap(p.getUniqueId());
+                    main.getHashMapManager().removeFactionMap(p.getUniqueId());
                 }
                 BunkerClass bk = new BunkerClass(resultFactionName.getString(1), main);
-                bk.Destroy();
+                bk.destroy();
                 InGameUtilities.sendPlayerError(p, "Vous avez supprimé la faction " + resultFactionName.getString(1) + ".");
             }
             else
@@ -578,7 +578,7 @@ public class FactionFunctions {
                 int currentNbrOfPlayers = result2.getInt(1);
                 int currentMoney = result.getInt(2);
                 Timestamp createdAt = result.getTimestamp(3);
-                int[] amelioration = GetAmeliorationsUpgrades(currentUpgrade);
+                int[] amelioration = getAmeliorationsUpgrades(currentUpgrade);
 
                 UUID leader = UUID.fromString(result.getString(4));
 
@@ -622,7 +622,7 @@ public class FactionFunctions {
                 int currentNbrOfPlayers = result2.getInt(1);
                 int currentMoney = result.getInt(2);
                 Timestamp createdAt = result.getTimestamp(3);
-                int[] amelioration = GetAmeliorationsUpgrades(currentUpgrade);
+                int[] amelioration = getAmeliorationsUpgrades(currentUpgrade);
 
                 UUID leader = UUID.fromString(result.getString(4));
 
@@ -649,7 +649,7 @@ public class FactionFunctions {
         return (infos.getCurrentNbrOfPlayers() >= infos.getMaxNbrOfPlayers());
     }
 
-    public FactionPlayerInformation GetInformationOfPlayerInAFaction(UUID playerUuid, String playerName)
+    public FactionPlayerInformation getInformationOfPlayerInAFaction(UUID playerUuid, String playerName)
     {
         /*
 		 * Renvoie l'objet de type FactionPlayerInformation, qui permet d'obtenir facilement le nom, le nom de faction et le role dans la faction
@@ -715,7 +715,7 @@ public class FactionFunctions {
                 preparedStatement2.setInt(1, upgrade);
                 //On exécute la requete SQL
                 preparedStatement2.executeUpdate();
-                InGameUtilities.sendPlayerInformation(sender,"Votre faction a été amélioré au rang §d " + upgrade + "§7.");
+                InGameUtilities.sendPlayerInformation(sender, "Votre faction a été amélioré au rang §d " + upgrade + "§7.");
             }
             else
             {
@@ -727,7 +727,7 @@ public class FactionFunctions {
         }
     }
 
-    public void ChangePlayerRank(UUID playerUuid, String factionName, int amount)
+    public void changePlayerRank(UUID playerUuid, String factionName, int amount)
         /*
 		 * Augmente le rang d'un joueur dans une faction
 		 *
@@ -800,7 +800,7 @@ public class FactionFunctions {
             }
             else
             {
-                if(sender != null)sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F018");
+                if (sender != null)sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F018");
                 return false;
             }
         } catch (SQLException e) {
@@ -826,11 +826,11 @@ public class FactionFunctions {
             //On prépare la requete de modification :
             final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET money=? WHERE name = ?");
             //On modifie l'attribut money qui correspond au rang de la faction, on ajoute 1
-            double money = GetFactionMoney(factionName);
-            if(money != -1)
+            double money = getFactionMoney(factionName);
+            if (money != -1)
             {
                 preparedStatement2.setString(2, factionName);
-                preparedStatement2.setDouble(1, money-amount);
+                preparedStatement2.setDouble(1, money - amount);
                 //On exécute la requete SQL
                 preparedStatement2.executeUpdate();
                 return true;
@@ -877,14 +877,14 @@ public class FactionFunctions {
                 statement.executeUpdate();
             }
 
-            sender.sendMessage("§cVotre faction a été renommée. Elle s'appelle désormais " + GetColorCode(_newName) + _newName + " §c!");
+            sender.sendMessage("§cVotre faction a été renommée. Elle s'appelle désormais " + getColorCode(_newName) + _newName + " §c!");
         } catch (SQLException e) {
             e.printStackTrace();
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F015");
         }
     }
 
-    public double GetFactionMoney(String factionName) {
+    public double getFactionMoney(String factionName) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
         try {
@@ -894,7 +894,7 @@ public class FactionFunctions {
             preparedStatement1.setString(1, factionName);
             //Réalisation de la requête SQL
             final ResultSet resultSet = preparedStatement1.executeQuery();
-            if(resultSet.next())
+            if (resultSet.next())
             {
                 return resultSet.getDouble(1);
             }
@@ -924,9 +924,9 @@ public class FactionFunctions {
             preparedStatement1.setString(2, victim.toString());
             //On exécute la requete SQL
             preparedStatement1.executeUpdate();
-            if(main.hashMapManager.getFactionMap().containsKey(victim))
+            if (main.getHashMapManager().getFactionMap().containsKey(victim))
             {
-                main.hashMapManager.removeFactionMap(victim);
+                main.getHashMapManager().removeFactionMap(victim);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -934,7 +934,7 @@ public class FactionFunctions {
         }
     }
 
-    public void AddPerk(String _factionName, String _perk)
+    public void addPerk(String _factionName, String _perk)
     {
         /*
 		 * Renomme une faction.
@@ -948,16 +948,19 @@ public class FactionFunctions {
             //On prépare la requête SQL
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT " + _perk + " FROM faction WHERE name = ?");
-            preparedStatement2.setString(1, _factionName);
+            final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT ? FROM faction WHERE name = ?");
+            preparedStatement2.setString(1, _perk);
+            preparedStatement2.setString(2, _factionName);
+
             //On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
-            if(rs.next())
+            if (rs.next())
             {
-                if(!rs.getBoolean(1))
+                if (!rs.getBoolean(1))
                 {
-                    final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction SET " + _perk + "=1 WHERE name = ?");
-                    preparedStatement.setString(1, _factionName);
+                    final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction SET ?=1 WHERE name = ?");
+                    preparedStatement.setString(1, _perk);
+                    preparedStatement.setString(2, _factionName);
                     //On exécute la requete SQL
                     preparedStatement.executeUpdate();
 
@@ -971,7 +974,7 @@ public class FactionFunctions {
         }
     }
 
-    public boolean HasPerk(String _factionName, String _perk)
+    public boolean hasPerk(String _factionName, String _perk)
     {
         /*
 		 * Renomme une faction.
@@ -985,13 +988,14 @@ public class FactionFunctions {
             //On prépare la requête SQL
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT " + _perk + " FROM faction WHERE name = ? ");
-            preparedStatement2.setString(1, _factionName);
+            final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT ? FROM faction WHERE name = ? ");
+            preparedStatement2.setString(1, _perk);
+            preparedStatement2.setString(2, _factionName);
             //On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
-            if(rs.next())
+            if (rs.next())
             {
-                if(rs.getBoolean(1))
+                if (rs.getBoolean(1))
                 {
                     return true;
                 }
@@ -1003,7 +1007,7 @@ public class FactionFunctions {
         return false;
     }
 
-    public void SetItemStorage(String faction, int index, ItemStack item)
+    public void setItemStorage(String faction, int index, ItemStack item)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
@@ -1022,7 +1026,7 @@ public class FactionFunctions {
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #F025");
         }
     }
-    public void UpdateItemStorage(String faction, int index, ItemStack item)
+    public void updateItemStorage(String faction, int index, ItemStack item)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
@@ -1042,7 +1046,7 @@ public class FactionFunctions {
         }
     }
 
-    public boolean IndexStorageUsed(String faction, int index)
+    public boolean indexStorageUsed(String faction, int index)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
@@ -1055,7 +1059,7 @@ public class FactionFunctions {
             preparedStatement2.setInt(2, index);
             //On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
-            if(rs.next())
+            if (rs.next())
             {
                 return true;
             }
@@ -1066,7 +1070,7 @@ public class FactionFunctions {
         return false;
     }
 
-    public void RemoveItemStorage(String faction, int index)
+    public void removeItemStorage(String faction, int index)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
@@ -1085,36 +1089,36 @@ public class FactionFunctions {
         }
     }
 
-    public void SaveItemFactionStorage(String faction, int index, ItemStack item)
+    public void saveItemFactionStorage(String faction, int index, ItemStack item)
     {
-        if(item != null)
+        if (item != null)
         {
-            if(IndexStorageUsed(faction, index))
+            if (indexStorageUsed(faction, index))
             {
-                UpdateItemStorage(faction, index, item);
+                updateItemStorage(faction, index, item);
             }
             else
             {
-                SetItemStorage(faction, index, item);
+                setItemStorage(faction, index, item);
             }
         }
         else
         {
-            RemoveItemStorage(faction, index);
+            removeItemStorage(faction, index);
         }
     }
 
-    public void SaveAllItemsFactionStorage(String faction, Inventory inv)
+    public void saveAllItemsFactionStorage(String faction, Inventory inv)
     {
-        for(int i = 0;i<inv.getSize();i++)
+        for (int i = 0; i < inv.getSize(); i++)
         {
-            SaveItemFactionStorage(faction, i, inv.getItem(i));
+            saveItemFactionStorage(faction, i, inv.getItem(i));
         }
     }
 
     public Inventory loadAllItems(String factionName, int rang)
     {
-        Inventory inv = Bukkit.createInventory(null, GetAmeliorationsUpgrades(rang)[2], "§8Stockage de: §6 " + factionName);
+        Inventory inv = Bukkit.createInventory(null, getAmeliorationsUpgrades(rang)[2], "§8Stockage de: §6 " + factionName);
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         inv.setItem(0, null);
         try {
@@ -1125,7 +1129,7 @@ public class FactionFunctions {
             preparedStatement2.setString(1, factionName);
             //On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
-            while(rs.next())
+            while (rs.next())
             {
                 inv.setItem(rs.getInt(1), parse(main, rs.getString(2)));
             }
@@ -1139,16 +1143,16 @@ public class FactionFunctions {
         return ItemSerializer.deserialize(_main, input);
     }
 
-    public Inventory LoadStorage(String factionName, int rang)
+    public Inventory loadStorage(String factionName, int rang)
     {
-        if(!main.hashMapManager.getStorageFactionMap().containsKey(factionName))
+        if (!main.getHashMapManager().getStorageFactionMap().containsKey(factionName))
         {
-            main.hashMapManager.addStorageFactionMap(factionName, loadAllItems(factionName, rang));
+            main.getHashMapManager().addStorageFactionMap(factionName, loadAllItems(factionName, rang));
         }
-        return main.hashMapManager.getStorageFactionMap().get(factionName);
+        return main.getHashMapManager().getStorageFactionMap().get(factionName);
     }
 
-    public String GetColorCode(String factionName)
+    public String getColorCode(String factionName)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
@@ -1159,7 +1163,7 @@ public class FactionFunctions {
             preparedStatement2.setString(1, factionName);
             //On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
-            if(rs.next())
+            if (rs.next())
             {
                 return rs.getString(1);
             }
@@ -1169,7 +1173,7 @@ public class FactionFunctions {
         return "";
     }
 
-    public void SetColorCode(String factionName, String colorCode)
+    public void setColorCode(String factionName, String colorCode)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
@@ -1181,20 +1185,20 @@ public class FactionFunctions {
             preparedStatement2.setString(2, factionName);
             //On exécute la requete SQL
             preparedStatement2.execute();
-            if(getFactionInfo(factionName).DoShowPrefix())
+            if (getFactionInfo(factionName).doShowPrefix())
             {
-                for(Player p : Bukkit.getOnlinePlayers())
+                for (Player p : Bukkit.getOnlinePlayers())
                 {
                     String name = playerFactionName(p);
-                    if(name.equalsIgnoreCase(factionName))
+                    if (name.equalsIgnoreCase(factionName))
                     {
-                        if(main.hashMapManager.getFactionPrefixMap().containsKey(p.getUniqueId()))
+                        if (main.getHashMapManager().getFactionPrefixMap().containsKey(p.getUniqueId()))
                         {
-                            main.hashMapManager.getFactionPrefixMap().replace(p.getUniqueId(), colorCode + factionName + " > §r");
+                            main.getHashMapManager().getFactionPrefixMap().replace(p.getUniqueId(), colorCode + factionName + " > §r");
                         }
                         else
                         {
-                            main.hashMapManager.addFactionPrefixMap(p.getUniqueId(), colorCode + factionName + " > §r");
+                            main.getHashMapManager().addFactionPrefixMap(p.getUniqueId(), colorCode + factionName + " > §r");
                         }
                     }
                 }
@@ -1206,13 +1210,13 @@ public class FactionFunctions {
 
 
 
-    public int[] GetAmeliorationsUpgrades(int rang)
+    public int[] getAmeliorationsUpgrades(int rang)
     {
         int[] amelioration = new int[3];
         //0 : Nombre de joueurs max
         //1 : Nombre de thunes max
         //2 : Nombre de slots max
-        if(rang == 0)
+        if (rang == 0)
         {
             amelioration[0] = 3;
             amelioration[1] = 2000;
@@ -1277,10 +1281,10 @@ public class FactionFunctions {
 
     public void sendFactionPlayer(String factionName, String msg)
     {
-        for(Player p : Bukkit.getOnlinePlayers())
+        for (Player p : Bukkit.getOnlinePlayers())
         {
             String name = playerFactionName(p);
-            if(name.equalsIgnoreCase(factionName))
+            if (name.equalsIgnoreCase(factionName))
             {
                 InGameUtilities.sendPlayerInformation(p, msg);
             }
@@ -1298,7 +1302,7 @@ public class FactionFunctions {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT faction.color_code, faction.name FROM faction ORDER BY faction.upgrade DESC, faction.name, faction.created_at;");
             //On exécute la requete SQL
             ResultSet rs = preparedStatement.executeQuery();
-            while(rs.next())
+            while (rs.next())
             {
                 faction.add(new String[]{rs.getString(1), rs.getString(2)});
             }
@@ -1314,7 +1318,7 @@ public class FactionFunctions {
         int pageSize = 5;
         p.sendMessage("§8------------- §7Factions §8-------------");
         ComponentBuilder message = new ComponentBuilder();
-        for(int i = page *pageSize; i < pageSize *(page + 1) && i < factions.size(); i++)
+        for (int i = page * pageSize; i < pageSize * (page + 1) && i < factions.size(); i++)
         {
             message.append("§8" + (i + 1) + ". " + factions.get(i)[0] + factions.get(i)[1])
                     .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§aVoir les informations de la faction " + factions.get(i)[1]).create()))
@@ -1322,11 +1326,11 @@ public class FactionFunctions {
             p.spigot().sendMessage(message.create());
             message = new ComponentBuilder();
         }
-        if(page > 0)
+        if (page > 0)
         {
             message.append("§2[<]")
                     .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page précédente").create()))
-                    .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/faction list " + (page-1)));
+                    .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/faction list " + (page - 1)));
         }
         else
         {
@@ -1337,7 +1341,7 @@ public class FactionFunctions {
         message.append("§8 ----------------------------- ")
                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
-        if(page *pageSize + pageSize < factions.size())
+        if (page * pageSize + pageSize < factions.size())
         {
             message.append("§4[>]")
                     .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page suivante").create()))

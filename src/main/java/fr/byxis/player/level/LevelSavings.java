@@ -9,9 +9,9 @@ import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class LevelSavings {
 
-    private UUID m_uuid;
-    private ArrayList<UUID> m_victims;
-    private int m_kills;
+    private final UUID m_uuid;
+    private final ArrayList<UUID> m_victims;
+    private final int m_kills;
     private int m_zombieKills;
 
     public LevelSavings(UUID _uuid, Fireland main)
@@ -19,15 +19,15 @@ public class LevelSavings {
         m_uuid = _uuid;
 
         m_victims = new ArrayList<>();
-        if (main.cfgm.getPlayerDB().contains("levelmap.uuid." + _uuid + ".victims"))
+        if (main.getCfgm().getPlayerDB().contains("levelmap.uuid." + _uuid + ".victims"))
         {
-            for (String uuid : main.cfgm.getPlayerDB().getConfigurationSection("levelmap.uuid." + _uuid + ".victims").getKeys(false))
+            for (String uuid : main.getCfgm().getPlayerDB().getConfigurationSection("levelmap.uuid." + _uuid + ".victims").getKeys(false))
             {
                 m_victims.add(UUID.fromString(uuid));
             }
         }
-        m_kills = main.cfgm.getPlayerDB().getInt("levelmap.uuid." + _uuid + ".kills");
-        m_zombieKills = main.cfgm.getPlayerDB().getInt("levelmap.uuid." + _uuid + ".zombieKills");
+        m_kills = main.getCfgm().getPlayerDB().getInt("levelmap.uuid." + _uuid + ".kills");
+        m_zombieKills = main.getCfgm().getPlayerDB().getInt("levelmap.uuid." + _uuid + ".zombieKills");
     }
 
     public ArrayList<UUID> getVictims() {
@@ -73,8 +73,7 @@ public class LevelSavings {
         int old = getCurrentMaxKills();
         m_zombieKills += _amount;
         if (getCurrentMaxKills() > old
-                &&
-           getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Bannis)
+                && getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Bannis)
                 && getCurrentMaxKills() != -1
         )
         {
@@ -115,8 +114,7 @@ public class LevelSavings {
         int old = getCurrentMaxZombieKills();
         m_zombieKills += _amount;
         if (getCurrentMaxZombieKills() > old
-                &&
-           getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Etat)
+                && getPlayerLevel(m_uuid).getNation().equals(LevelStorage.Nation.Etat)
                 && getCurrentMaxZombieKills() != -1
         )
         {
@@ -126,16 +124,16 @@ public class LevelSavings {
 
 
 
-    public void SaveAll(Fireland _main)
+    public void saveAll(Fireland _main)
     {
         if (m_uuid != null)
         {
             for (UUID uuid : m_victims)
             {
-                _main.cfgm.getPlayerDB().set("levelmap.uuid." + m_uuid + ".victims " + uuid, 1);
+                _main.getCfgm().getPlayerDB().set("levelmap.uuid." + m_uuid + ".victims " + uuid, 1);
             }
-            _main.cfgm.getPlayerDB().set("levelmap.uuid." + m_uuid + ".kills", m_kills);
-            _main.cfgm.getPlayerDB().set("levelmap.uuid." + m_uuid + ".zombieKills", m_zombieKills);
+            _main.getCfgm().getPlayerDB().set("levelmap.uuid." + m_uuid + ".kills", m_kills);
+            _main.getCfgm().getPlayerDB().set("levelmap.uuid." + m_uuid + ".zombieKills", m_zombieKills);
         }
     }
 }

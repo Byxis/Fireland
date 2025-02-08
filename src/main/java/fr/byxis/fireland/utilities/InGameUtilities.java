@@ -13,26 +13,54 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.fusesource.jansi.Ansi;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class InGameUtilities implements Listener {
 
 
     private static Fireland main;
 
-    public static HashMap<UUID, Boolean> playerMoving = new HashMap<UUID, Boolean>();
-    public static HashMap<UUID, Date> playerCooldown = new HashMap<UUID, Date>();
+    private static final Map<UUID, Boolean> PLAYER_MOVING = new ConcurrentHashMap<>();
+    private static final Map<UUID, Date> PLAYER_COOLDOWN = new ConcurrentHashMap<>();
 
     public InGameUtilities(Fireland fireland) {
         main = fireland;
     }
 
+    public static void setPlayerMoving(UUID playerId, boolean isMoving)
+    {
+        PLAYER_MOVING.put(playerId, isMoving);
+    }
+
+    public static boolean isPlayerMoving(UUID playerId)
+    {
+        return PLAYER_MOVING.getOrDefault(playerId, false);
+    }
+
+    public static void setPlayerCooldown(UUID playerId, Date time)
+    {
+        PLAYER_COOLDOWN.put(playerId, time);
+    }
+
+    public static void removePlayerCooldown(UUID playerId)
+    {
+        PLAYER_COOLDOWN.remove(playerId);
+    }
+
+    public static boolean hasPlayerCooldown(UUID playerId)
+    {
+        return PLAYER_COOLDOWN.containsKey(playerId) && PLAYER_COOLDOWN.get(playerId).after(new Date());
+    }
+
+    public static long getPlayerCooldown(UUID playerId)
+    {
+        return PLAYER_COOLDOWN.getOrDefault(playerId, null).getTime();
+    }
+
     public static void teleportPlayer(Player player, Location loc, int duration, String sound)
     {
-        main.hashMapManager.addTeleporting(player.getUniqueId());
+        main.getHashMapManager().addTeleporting(player.getUniqueId());
         player.playSound(player.getLocation(), "minecraft:" + sound, (float) 0.1, (float) 1);
 
         new BukkitRunnable() {
@@ -41,25 +69,25 @@ public class InGameUtilities implements Listener {
             @Override
             public void run() {
                 i++;
-                if (getPlayerMoving(player))
+                if (isPlayerMoving(player.getUniqueId()))
                 {
-                    sendPlayerError(player,"Téléportation annulée !");
+                    sendPlayerError(player, "Téléportation annulée !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound " + player.getName() + " * minecraft:" + sound);
-                    main.hashMapManager.removeTeleporting(player.getUniqueId());
+                    main.getHashMapManager().removeTeleporting(player.getUniqueId());
                     cancel();
                 }
                 else
                 {
                     if ((i % 5 == 0 && i != duration) || i == duration - 3 || i == duration - 2 || i == duration - 1)
                     {
-                        sendPlayerInformation(player,"Téléportation dans " + (duration-i) + " secondes");
+                        sendPlayerInformation(player, "Téléportation dans " + (duration - i) + " secondes");
                     }
                     if (i == duration)
                     {
-                        sendPlayerInformation(player,"Téléportation...");
+                        sendPlayerInformation(player, "Téléportation...");
                         player.teleport(loc);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
-                        main.hashMapManager.removeTeleporting(player.getUniqueId());
+                        main.getHashMapManager().removeTeleporting(player.getUniqueId());
                         cancel();
                     }
                 }
@@ -69,12 +97,12 @@ public class InGameUtilities implements Listener {
     }
     public static void teleportPlayer(Player player, Location loc, int duration, String sound, int cooldown)
     {
-        if (playerCooldown.containsKey(player.getUniqueId()) && playerCooldown.get(player.getUniqueId()).after(new Date()))
+        if (hasPlayerCooldown(player.getUniqueId()))
         {
-            InGameUtilities.sendPlayerError(player, "Vous êtes en cooldown. Vous pourrez vous téléporter dans " + BasicUtilities.getStringTime(new Date().getTime() - playerCooldown.get(player).getTime()));
+            InGameUtilities.sendPlayerError(player, "Vous êtes en cooldown. Vous pourrez vous téléporter dans " + BasicUtilities.getStringTime(new Date().getTime() - getPlayerCooldown(player.getUniqueId())));
             return;
         }
-        playerCooldown.remove(player.getUniqueId());
+        PLAYER_COOLDOWN.remove(player.getUniqueId());
         player.playSound(player.getLocation(), "minecraft:" + sound, (float) 0.1, (float) 1);
 
         new BukkitRunnable() {
@@ -83,54 +111,33 @@ public class InGameUtilities implements Listener {
             @Override
             public void run() {
                 i++;
-                if (getPlayerMoving(player))
+                if (isPlayerMoving(player.getUniqueId()))
                 {
-                    sendPlayerError(player,"Téléportation annulée !");
+                    sendPlayerError(player, "Téléportation annulée !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound " + player.getName() + " * minecraft:" + sound);
-                    main.hashMapManager.removeTeleporting(player.getUniqueId());
+                    main.getHashMapManager().removeTeleporting(player.getUniqueId());
                     cancel();
                 }
                 else
                 {
                     if ((i % 5 == 0 && i != duration) || i == duration - 3 || i == duration - 2 || i == duration - 1)
                     {
-                        sendPlayerInformation(player,"Téléportation dans " + (duration-i) + " secondes");
+                        sendPlayerInformation(player, "Téléportation dans " + (duration - i) + " secondes");
                     }
                     if (i == duration)
                     {
-                        sendPlayerInformation(player,"Téléportation...");
+                        sendPlayerInformation(player, "Téléportation...");
                         player.teleport(loc);
-                        playerCooldown.put(player.getUniqueId(), new Date(System.currentTimeMillis() + cooldown* 1000L));
-                        main.hashMapManager.addTeleporting(player.getUniqueId());
+                        PLAYER_COOLDOWN.put(player.getUniqueId(), new Date(System.currentTimeMillis() + cooldown * 1000L));
+                        main.getHashMapManager().addTeleporting(player.getUniqueId());
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
-                        main.hashMapManager.removeTeleporting(player.getUniqueId());
+                        main.getHashMapManager().removeTeleporting(player.getUniqueId());
                         cancel();
                     }
                 }
 
             }
         }.runTaskTimer(main, 0L, 20L);
-    }
-
-    public static Boolean getPlayerMoving(Player player)
-    {
-        if (!playerMoving.containsKey(player.getUniqueId()))
-        {
-            return false;
-        }
-        return playerMoving.get(player.getUniqueId());
-    }
-
-    public static void setPlayerMoving(Player player, Boolean moving)
-    {
-        if (!playerMoving.containsKey(player.getUniqueId()))
-        {
-            playerMoving.put(player.getUniqueId(), moving);
-        }
-        else
-        {
-            playerMoving.replace(player.getUniqueId(), moving);
-        }
     }
 
     public static void playWorldSound(Location loc, String sound, SoundCategory category, float vol, float pitch)
@@ -263,17 +270,19 @@ public class InGameUtilities implements Listener {
 
     public static void debugp(Object txt)
     {
-        if (Bukkit.getPlayer("Byxis_") != null && Bukkit.getPlayer("Byxis_").isOnline())
+        Player p = Bukkit.getPlayer("Byxis_");
+        if (p != null && p.isOnline())
         {
-            Bukkit.getPlayer("Byxis_").sendMessage("§c§lFireland§8§l >> §a " + txt);
+            p.sendMessage("§c§lFireland§8§l >> §a " + txt);
         }
     }
 
     public static void debugp(int code, Object txt)
     {
-        if (Bukkit.getPlayer("Byxis_") != null && Bukkit.getPlayer("Byxis_").isOnline())
+        Player p = Bukkit.getPlayer("Byxis_");
+        if (p != null && p.isOnline())
         {
-            Bukkit.getPlayer("Byxis_").sendMessage("§c[FBUG-§l " + code + "§r§c] >> §a " + txt);
+            p.sendMessage("§c[FBUG-§l " + code + "§r§c] >> §a " + txt);
         }
     }
 
@@ -315,16 +324,16 @@ public class InGameUtilities implements Listener {
     }
 
     @EventHandler
-    public void PlayerMove(PlayerMoveEvent e)
+    public void playerMove(PlayerMoveEvent e)
     {
-        setPlayerMoving(e.getPlayer(), e.hasChangedPosition());
+        setPlayerMoving(e.getPlayer().getUniqueId(), e.hasChangedPosition());
 
         new BukkitRunnable()
         {
             @Override
             public void run()
             {
-                setPlayerMoving(e.getPlayer(), false);
+                setPlayerMoving(e.getPlayer().getUniqueId(), false);
             }
         }.runTaskLater(main, 20L);
     }

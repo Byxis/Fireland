@@ -22,12 +22,12 @@ public class HashMapManager {
     private BoosterClass booster;
     private static Fireland main;
 
-    public HashMapManager(Fireland main) {
-        HashMapManager.main = main;
-        Init();
+    public HashMapManager(Fireland _main) {
+        HashMapManager.main = _main;
+        init();
     }
 
-    public void Init()
+    public void init()
     {
         this.factionMap = new HashMap<>();
         this.storageMap = new HashMap<>();
@@ -41,11 +41,11 @@ public class HashMapManager {
         purify = new HashMap<>();
     }
 
-    public HashMap<UUID,String> getFactionMap()
+    public HashMap<UUID, String> getFactionMap()
     {
         return factionMap;
     }
-    public void setFactionMap(HashMap<UUID,String> h)
+    public void setFactionMap(HashMap<UUID, String> h)
     {
         this.factionMap = h;
     }
@@ -59,17 +59,17 @@ public class HashMapManager {
         this.factionMap.remove(uuid);
     }
 
-    public HashMap<UUID,Inventory> getStorageMap()
+    public HashMap<UUID, Inventory> getStorageMap()
     {
         return storageMap;
     }
 
-    public void setStorageMap(HashMap<UUID,Inventory> h)
+    public void setStorageMap(HashMap<UUID, Inventory> h)
     {
         this.storageMap = h;
     }
 
-    public void addStorageMap(UUID uuid,Inventory i)
+    public void addStorageMap(UUID uuid, Inventory i)
     {
         this.storageMap.put(uuid, i);
     }
@@ -99,8 +99,8 @@ public class HashMapManager {
         return rangMap;
     }
 
-    public void setRangMap(HashMap<UUID, PlayerKarmaClass> rangMap) {
-        this.rangMap = rangMap;
+    public void setRangMap(HashMap<UUID, PlayerKarmaClass> _rangMap) {
+        this.rangMap = _rangMap;
     }
 
     public HashMap<String, Inventory> getStorageFactionMap() {
@@ -108,7 +108,7 @@ public class HashMapManager {
     }
 
     public void addStorageFactionMap(String name, Inventory i) {
-        this.storageFactionMap.put(name,i);
+        this.storageFactionMap.put(name, i);
     }
 
     public void removeStorageFactionMap(String name) {
@@ -135,8 +135,8 @@ public class HashMapManager {
         return booster;
     }
 
-    public void setBooster(BoosterClass booster) {
-        this.booster = booster;
+    public void setBooster(BoosterClass _booster) {
+        this.booster = _booster;
     }
 
     public static boolean canPurify(Player p)
@@ -199,13 +199,13 @@ public class HashMapManager {
 
     private void loadBooster()
     {
-        if (main.cfgm.getPlayerDB().contains("booster.player"))
+        if (main.getCfgm().getPlayerDB().contains("booster.player"))
         {
             booster = new BoosterClass(
-                    new Date(main.cfgm.getPlayerDB().getLong("booster.started")),
-                    new Date(main.cfgm.getPlayerDB().getLong("booster.finished")),
-                    UUID.fromString(main.cfgm.getPlayerDB().getString("booster.player")),
-                    main.cfgm.getPlayerDB().getInt("booster.level"));
+                    new Date(main.getCfgm().getPlayerDB().getLong("booster.started")),
+                    new Date(main.getCfgm().getPlayerDB().getLong("booster.finished")),
+                    UUID.fromString(main.getCfgm().getPlayerDB().getString("booster.player")),
+                    main.getCfgm().getPlayerDB().getInt("booster.level"));
         }
     }
 
@@ -213,16 +213,16 @@ public class HashMapManager {
     {
         if (booster != null && booster.getFinished().after(new java.util.Date()))
         {
-            main.cfgm.getPlayerDB().set("booster.started", booster.getStarted().getTime());
-            main.cfgm.getPlayerDB().set("booster.finished", booster.getFinished().getTime());
-            main.cfgm.getPlayerDB().set("booster.player", booster.getUuid().toString());
-            main.cfgm.getPlayerDB().set("booster.level", booster.getLevel());
-            main.cfgm.savePlayerDB();
+            main.getCfgm().getPlayerDB().set("booster.started", booster.getStarted().getTime());
+            main.getCfgm().getPlayerDB().set("booster.finished", booster.getFinished().getTime());
+            main.getCfgm().getPlayerDB().set("booster.player", booster.getUuid().toString());
+            main.getCfgm().getPlayerDB().set("booster.level", booster.getLevel());
+            main.getCfgm().savePlayerDB();
         }
         else
         {
-            main.cfgm.getPlayerDB().set("booster", null);
-            main.cfgm.savePlayerDB();
+            main.getCfgm().getPlayerDB().set("booster", null);
+            main.getCfgm().savePlayerDB();
         }
     }
 }

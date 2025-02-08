@@ -18,10 +18,11 @@ public class RestartCommand implements @Nullable CommandExecutor
             {
                 commandSender.sendMessage("§cUtilisation : /frestart <minutes/stop>");
             }
-            try{
-                int amount = Integer.parseInt(strings[0]) *60;
+            try
+            {
+                int amount = Integer.parseInt(strings[0]) * 60;
                 commandSender.sendMessage("§4Vous avez planifié un redémarrage.");
-                RestartManager.StartRestart(amount);
+                RestartManager.startRestart(amount);
                 return true;
             }
             catch (Exception e)
@@ -29,7 +30,7 @@ public class RestartCommand implements @Nullable CommandExecutor
                 if (strings[0].equalsIgnoreCase("stop"))
                 {
                     commandSender.sendMessage("§4Vous avez annulé le redémarrage planifié.");
-                    RestartManager.StopRestart();
+                    RestartManager.stopRestart();
                     return true;
                 }
             }

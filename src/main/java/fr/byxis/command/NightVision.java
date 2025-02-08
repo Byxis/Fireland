@@ -12,7 +12,7 @@ public class NightVision implements CommandExecutor
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
-        if(sender instanceof Player && sender.hasPermission("fireland.command.n"))
+        if (sender instanceof Player && sender.hasPermission("fireland.command.n"))
         {
             Player p = (Player) sender;
             if (p.hasPotionEffect(PotionEffectType.NIGHT_VISION)) 

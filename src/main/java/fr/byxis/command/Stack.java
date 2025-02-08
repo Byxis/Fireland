@@ -12,7 +12,7 @@ public class Stack implements CommandExecutor
     @SuppressWarnings({ "deprecation"})
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
-        if(sender instanceof Player)
+        if (sender instanceof Player)
         {
             Player p = (Player) sender;
             
@@ -49,22 +49,26 @@ public class Stack implements CommandExecutor
      
                         // Same type?
                         // Blocks store their color in the damage value
-                        if (item2.getType() == item.getType() && ((/*!ItemType.usesDamageValue(item.getType()) &&*/ ignoreDamaged)|| item.getDurability() == item2.getDurability()) && 
-                        ((item.getItemMeta() == null && item2.getItemMeta() == null)
-                        || (item.getItemMeta() != null &&
-                        item.getItemMeta().equals(item2.getItemMeta())))) {
-                            if (item2.getAmount() > needed) {
+                        if (item2.getType() == item.getType() && ((/*!ItemType.usesDamageValue(item.getType()) &&*/ ignoreDamaged)
+                                || item.getDurability() == item2.getDurability())
+                                && ((item.getItemMeta() == null && item2.getItemMeta() == null)
+                                || (item.getItemMeta() != null
+                                && item.getItemMeta().equals(item2.getItemMeta()))))
+                        {
+                            if (item2.getAmount() > needed)
+                            {
                                 
                                 item.setAmount(max);
                                 item2.setAmount(item2.getAmount() - needed);
                                 break;
                             // This stack will
-                            } else {
+                            }
+                            else
+                            {
                                 items[j] = null;
                                 item.setAmount(item.getAmount() + item2.getAmount());
                                 needed = max - item.getAmount();
                             }
-     
                             affected++;
                         }
                     }

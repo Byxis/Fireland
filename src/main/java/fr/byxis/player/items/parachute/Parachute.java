@@ -20,27 +20,25 @@ import java.util.UUID;
 
 public class Parachute implements Listener
 {
-    
-    public boolean parachute = false;
 
     private final HashMap<UUID, Boolean> parachuting;
     
     private final Fireland main;
 
-    public Parachute(Fireland main)
+    public Parachute(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
         parachuting = new HashMap<UUID, Boolean>();
         loop();
     }
     
     @EventHandler
     public void rightClickEvent(PlayerInteractEvent e) {
-        if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if(e.getItem() != null && e.getPlayer().getLocation().add(0,-1,0).getBlock().getType() == Material.AIR && e.getPlayer().getLocation().add(0,-2,0).getBlock().getType() == Material.AIR) {
-                if(e.getItem().getType() == Material.POPPY)
+        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (e.getItem() != null && e.getPlayer().getLocation().add(0, -1, 0).getBlock().getType() == Material.AIR && e.getPlayer().getLocation().add(0, -2, 0).getBlock().getType() == Material.AIR) {
+                if (e.getItem().getType() == Material.POPPY)
                 {
-                    if(e.getPlayer().getWorld().getName().equalsIgnoreCase("essaim"))
+                    if (e.getPlayer().getWorld().getName().equalsIgnoreCase("essaim"))
                     {
                         InGameUtilities.sendPlayerError(e.getPlayer(), "Le parachute a été désactivé dans les essaims !");
                         return;
@@ -52,7 +50,7 @@ public class Parachute implements Listener
                 }
                 else if (e.getItem().getType() == Material.DANDELION)
                 {
-                    if(e.getPlayer().getWorld().getName().equalsIgnoreCase("essaim"))
+                    if (e.getPlayer().getWorld().getName().equalsIgnoreCase("essaim"))
                     {
                         InGameUtilities.sendPlayerError(e.getPlayer(), "Le parachute a été désactivé dans les essaims !");
                         return;
@@ -66,37 +64,37 @@ public class Parachute implements Listener
 
     private void setParachuting(Player p, Boolean b)
     {
-        if(parachuting.containsKey(p.getUniqueId()))
+        if (parachuting.containsKey(p.getUniqueId()))
         {
-            parachuting.replace(p.getUniqueId(),b);
+            parachuting.replace(p.getUniqueId(), b);
         }
         else
         {
-            parachuting.put(p.getUniqueId(),b);
+            parachuting.put(p.getUniqueId(), b);
         }
     }
     private void loop()
     {
         new BukkitRunnable()
-{
+        {
             @Override
             public void run() {
-                for(Player p : Bukkit.getOnlinePlayers())
+                for (Player p : Bukkit.getOnlinePlayers())
                 {
-                    if(parachuting.containsKey(p.getUniqueId()))
+                    if (parachuting.containsKey(p.getUniqueId()))
                     {
-                        if(parachuting.get(p.getUniqueId()))
+                        if (parachuting.get(p.getUniqueId()))
                         {
                             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 6, 0, false, false), true);
                             setParachuting(p, false);
                         }
                         else
                         {
-                            for(ItemStack item : p.getInventory().getContents())
+                            for (ItemStack item : p.getInventory().getContents())
                             {
-                                if(item != null)
+                                if (item != null)
                                 {
-                                    if(item.getType() == Material.DANDELION)
+                                    if (item.getType() == Material.DANDELION)
                                     {
                                         item.setType(Material.POPPY);
                                     }

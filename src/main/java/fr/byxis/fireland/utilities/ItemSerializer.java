@@ -31,7 +31,7 @@ import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
  */
 public class ItemSerializer {
     public static String serialize(ItemStack item)
-{
+    {
         StringBuilder builder = new StringBuilder();
         builder.append(item.getType().toString());
         if (item.getDurability() != 0) builder.append(":" + item.getDurability());
@@ -109,7 +109,7 @@ public class ItemSerializer {
 
 
     public static ItemStack deserialize(Fireland _main, String serializedItem)
-{
+    {
         String[] strings = serializedItem.split(" ");
         Map<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();
         String[] args;
@@ -150,8 +150,9 @@ public class ItemSerializer {
             {
                 setOwner(item, args[1]);
                 continue;
-            }if(args[0].equalsIgnoreCase("custommodeldata"))
-{
+            }
+            if (args[0].equalsIgnoreCase("custommodeldata"))
+            {
                 setCustomData(item, Integer.parseInt(args[1]));
                 continue;
             }
@@ -210,38 +211,41 @@ public class ItemSerializer {
 
 
     private static String getOwner(ItemStack item)
-{
+    {
         if (!(item.getItemMeta() instanceof SkullMeta)) return null;
-        return ((SkullMeta)item.getItemMeta()).getOwner();
+        return ((SkullMeta) item.getItemMeta()).getOwner();
     }
     private static void setOwner(ItemStack item, String owner)
-{
-        try{
+    {
+        try
+        {
             SkullMeta meta = (SkullMeta) item.getItemMeta();
             meta.setOwner(owner);
             item.setItemMeta(meta);
-        }catch(Exception exception)
-{
+
+        }
+        catch (Exception exception)
+        {
             return;
         }
     }
 
     private static int getCustomData(ItemStack item)
-{
+    {
         if (!item.hasItemMeta()) return 0;
         if (!item.getItemMeta().hasCustomModelData()) return 0;
         return item.getItemMeta().getCustomModelData();
     }
 
     private static void setCustomData(ItemStack item, int i)
-{
+    {
         ItemMeta meta = item.getItemMeta();
         meta.setCustomModelData(i);
         item.setItemMeta(meta);
     }
 
     private static void setCustomPersistentData(Fireland _main, ItemStack item, String data)
-{
+    {
         YamlConfiguration yaml = new YamlConfiguration();
         try {
             yaml.loadFromString(data);
@@ -277,20 +281,20 @@ public class ItemSerializer {
     }
 
     private static String getName(ItemStack item)
-{
+    {
         if (!item.hasItemMeta()) return null;
         if (!item.getItemMeta().hasDisplayName()) return null;
         return item.getItemMeta().getDisplayName().replace(" ", "_").replace(ChatColor.COLOR_CHAR, '&');
     }
     private static void setName(ItemStack item, String name)
-{
+    {
         name = name.replace("_", " ");
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(name);
         item.setItemMeta(meta);
     }
     private static String getLore(ItemStack item)
-{
+    {
         if (!item.hasItemMeta()) return null;
         if (!item.getItemMeta().hasLore()) return null;
         StringBuilder builder = new StringBuilder();
@@ -302,20 +306,21 @@ public class ItemSerializer {
         return builder.toString();
     }
     private static void setLore(ItemStack item, String lore)
-{
+    {
         lore = lore.replace("_", " ");
         ItemMeta meta = item.getItemMeta();
         meta.setLore(Arrays.asList(lore.split("\\|")));
         item.setItemMeta(meta);
     }
     private static Color getArmorColor(ItemStack item)
-{
+    {
         if (!(item.getItemMeta() instanceof LeatherArmorMeta)) return null;
-        return ((LeatherArmorMeta)item.getItemMeta()).getColor();
+        return ((LeatherArmorMeta) item.getItemMeta()).getColor();
     }
     private static void setArmorColor(ItemStack item, String str)
-{
-        try{
+    {
+        try
+        {
             String[] colors = str.split("\\|");
             int red = Integer.parseInt(colors[0]);
             int green = Integer.parseInt(colors[1]);
@@ -323,17 +328,20 @@ public class ItemSerializer {
             LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
             meta.setColor(Color.fromRGB(red, green, blue));
             item.setItemMeta(meta);
-        }catch(Exception exception)
-{
+        }
+        catch (Exception exception)
+        {
             return;
         }
     }
     private static boolean isNumber(String str)
-{
-        try{
+    {
+        try
+        {
             Integer.parseInt(str);
-        }catch(NumberFormatException exception)
-{
+        }
+        catch (NumberFormatException exception)
+        {
             return false;
         }
         return true;

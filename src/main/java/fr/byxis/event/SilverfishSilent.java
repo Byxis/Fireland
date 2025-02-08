@@ -11,7 +11,7 @@ public class SilverfishSilent implements Listener
     @EventHandler
     public void entitySpawn(EntitySpawnEvent e)
     {
-        if(e.getEntity() instanceof Silverfish)
+        if (e.getEntity() instanceof Silverfish)
         {
             e.getEntity().setSilent(true);
         }

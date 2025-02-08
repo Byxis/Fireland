@@ -25,36 +25,36 @@ public class BunkerCommand implements CommandExecutor {
         {
             if (p.hasPermission("fireland.bunker.mod") && strings.length >= 2 && strings[0].equalsIgnoreCase("join"))
             {
-                BunkerClass bunker = main.bunkerManager.getBunker(strings[1]);
-                if (!main.bunkerManager.getLoadedBunker().containsKey(strings[1]))
+                BunkerClass bunker = main.getBunkerManager().getBunker(strings[1]);
+                if (!main.getBunkerManager().getLoadedBunker().containsKey(strings[1]))
                 {
-                    bunker.Join(p);
+                    bunker.join(p);
                     InGameUtilities.sendPlayerInformation(p, "Vous avez forcé l'entrée dans le bunker.");
                     return true;
                 }
             }
             else if (p.hasPermission("fireland.bunker.mod") && strings.length >= 2 && strings[0].equalsIgnoreCase("info"))
             {
-                BunkerClass bk = main.bunkerManager.getBunker(strings[1]);
-                p.sendMessage("§8Bunker de la faction §7 " + bk.GetName() + " §d(Niv. " + bk.GetBunkerLevel() + ")");
+                BunkerClass bk = main.getBunkerManager().getBunker(strings[1]);
+                p.sendMessage("§8Bunker de la faction §7 " + bk.getName() + " §d(Niv. " + bk.getBunkerLevel() + ")");
                 StringBuilder sb = new StringBuilder("§8Joueurs dedans : §7");
-                for (Player pl : bk.GetPlayerInside())
+                for (Player pl : bk.getPlayerInside())
                 {
                     sb.append(pl.getName()).append(" ");
                 }
                 p.sendMessage(sb.toString());
-                p.sendMessage("§8Location : x§7 " + bk.GetBunkerLocation().getBlockX() + "§8 y§7 " + bk.GetBunkerLocation().getBlockZ() + "§8 z§7 " + bk.GetBunkerLocation().getBlockZ());
+                p.sendMessage("§8Location : x§7 " + bk.getBunkerLocation().getBlockX() + "§8 y§7 " + bk.getBunkerLocation().getBlockZ() + "§8 z§7 " + bk.getBunkerLocation().getBlockZ());
                 return true;
             }
             else if (p.hasPermission("fireland.bunker.mod") && strings.length == 1 && strings[0].equalsIgnoreCase("info"))
             {
                 StringBuilder sb = new StringBuilder("§8Bunkers chargés : §7");
-                for (BunkerClass bk : main.bunkerManager.getLoadedBunker().values())
+                for (BunkerClass bk : main.getBunkerManager().getLoadedBunker().values())
                 {
-                    sb.append(bk.GetName()).append(" ");
+                    sb.append(bk.getName()).append(" ");
                 }
                 sb.append("§b");
-                for (String str : main.bunkerManager.getLoadedBunker().keySet())
+                for (String str : main.getBunkerManager().getLoadedBunker().keySet())
                 {
                     sb.append(str).append(" ");
                 }
@@ -63,13 +63,13 @@ public class BunkerCommand implements CommandExecutor {
             }
             else if (strings[0].equalsIgnoreCase("join"))
             {
-                for (BunkerClass bk : main.bunkerManager.getLoadedBunker().values())
+                for (BunkerClass bk : main.getBunkerManager().getLoadedBunker().values())
                 {
-                    if (bk.IsInvited(p) || p.hasPermission("fireland.bunker.mod"))
+                    if (bk.isInvited(p) || p.hasPermission("fireland.bunker.mod"))
                     {
                         if (isWithinRegion(p, "safe-zone_") || p.hasPermission("fireland.bunker.mod"))
                         {
-                            bk.Join(p);
+                            bk.join(p);
                         }
                         else
                         {

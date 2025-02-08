@@ -12,13 +12,13 @@ public class FactionPlayerInformation {
     private final UUID uuid;
     private final Timestamp joinDate;
     
-    public FactionPlayerInformation(String name, String factionName, int role, UUID uuid, Timestamp joinDate)
+    public FactionPlayerInformation(String _name, String _factionName, int _role, UUID _uuid, Timestamp _joinDate)
     {
-        this.name = name;
-        this.uuid = uuid;
-        this.role = role;
-        this.factionName = factionName;
-        this.joinDate = joinDate;
+        this.name = _name;
+        this.uuid = _uuid;
+        this.role = _role;
+        this.factionName = _factionName;
+        this.joinDate = _joinDate;
     }
 
     public String getName()
@@ -34,7 +34,8 @@ public class FactionPlayerInformation {
         return role;
     }
     public UUID getUuid()
-    {return this.uuid;
+    {
+        return this.uuid;
     }
 
     public Timestamp getJoinDate() {

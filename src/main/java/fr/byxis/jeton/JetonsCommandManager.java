@@ -22,14 +22,14 @@ public class JetonsCommandManager extends JetonManager implements Listener, Comm
 
     private final Fireland main;
 
-    public JetonsCommandManager(Fireland main)
+    public JetonsCommandManager(Fireland _main)
     {
-        super(main);
-        this.main = main;
+        super(_main);
+        this.main = _main;
     }
 
     @EventHandler
-    public void PlayerFirstJoin(PlayerJoinEvent e)
+    public void playerFirstJoin(PlayerJoinEvent e)
     {
         if (!e.getPlayer().hasPlayedBefore())
         {

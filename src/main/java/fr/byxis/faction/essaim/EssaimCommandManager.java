@@ -32,24 +32,24 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             return false;
         }
         else if (sender.hasPermission("fireland.essaim.admin") && args[0].equalsIgnoreCase("spawner")) {
-            SpawnerCommand(sender, msg, args);
+            spawnerCommand(sender, msg, args);
         }
         else if (sender.hasPermission("fireland.command.essaim") &&
                 (args[0].equalsIgnoreCase("create") ||
                         args[0].equalsIgnoreCase("open") ||
                         args[0].equalsIgnoreCase("close") ||
-                        args[0].equalsIgnoreCase("remove")||
-                        args[0].equalsIgnoreCase("set")||
-                        args[0].equalsIgnoreCase("join")||
-                        args[0].equalsIgnoreCase("finish")||
-                        args[0].equalsIgnoreCase("info")||
+                        args[0].equalsIgnoreCase("remove") ||
+                        args[0].equalsIgnoreCase("set") ||
+                        args[0].equalsIgnoreCase("join") ||
+                        args[0].equalsIgnoreCase("finish") ||
+                        args[0].equalsIgnoreCase("info") ||
                         args[0].equalsIgnoreCase("unfinish"))) {
-            GeneralCommand(sender, msg, args);
+            generalCommand(sender, msg, args);
         }
         else if (sender.hasPermission("fireland.essaim.setblock")
                 && args[0].equalsIgnoreCase("setblock")
                 && args.length ==  5)
-{
+        {
             EssaimFunctions.setBlock(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Material.getMaterial(args[4].toUpperCase()));
             if (sender instanceof Player p)
             {
@@ -63,7 +63,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
         return false;
     }
 
-    private void SpawnerCommand(CommandSender sender, String msg, String[] args) {
+    private void spawnerCommand(CommandSender sender, String msg, String[] args) {
         if (args.length < 2) {
             InGameUtilities.sendPlayerError((Player) sender, "Mauvaise formulation de la commande !");
         }
@@ -73,12 +73,12 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             }
         } else if (args.length == 4) {
             if (args[1].equalsIgnoreCase("remove")) {
-                if (!main.essaimManager.existingEssaims.containsKey(args[2])) {
+                if (!main.getEssaimManager().getExistingEssaims().containsKey(args[2])) {
                     if (sender instanceof Player p)
                     {
                         InGameUtilities.sendPlayerError(p, "L'essaim " + args[2] + " n'existe pas !");
                     }
-                } else if (!main.essaimManager.existingEssaims.get(args[2]).containsKey(args[3])) {
+                } else if (!main.getEssaimManager().getExistingEssaims().get(args[2]).containsKey(args[3])) {
                     if (sender instanceof Player p)
                     {
                         InGameUtilities.sendPlayerError(p, "Le spawner " + args[3] + " n'existe pas!");
@@ -91,18 +91,18 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
                     }
                 }
             } else if (args[1].equalsIgnoreCase("activate")) {
-                if (!main.essaimManager.existingEssaims.containsKey(args[2])) {
+                if (!main.getEssaimManager().getExistingEssaims().containsKey(args[2])) {
                     if (sender instanceof Player p)
                     {
                         InGameUtilities.sendPlayerError(p, "L'essaim " + args[2] + " n'existe pas !");
                     }
-                } else if (!main.essaimManager.existingEssaims.get(args[2]).containsKey(args[3])) {
+                } else if (!main.getEssaimManager().getExistingEssaims().get(args[2]).containsKey(args[3])) {
                     if (sender instanceof Player p)
                     {
                         InGameUtilities.sendPlayerError(p, "Le spawner " + args[3] + " n'existe pas !");
                     }
                 } else {
-                    if (main.essaimManager.EnableSpawner(main.essaimManager.existingEssaims.get(args[2]).get(args[3]))) {
+                    if (main.getEssaimManager().enableSpawner(main.getEssaimManager().getExistingEssaims().get(args[2]).get(args[3]))) {
                         if (sender instanceof Player p)
                         {
                             InGameUtilities.sendPlayerInformation(p, "Le spawner " + args[3] + " activé avec succès !");
@@ -127,7 +127,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
                 sb.append(args[i]).append(" ");
             }
             String command = sb.toString().trim();
-            EssaimFunctions.createNewSpawner(args[2], args[3], args[4], Integer.parseInt(args[5]),Integer.parseInt(args[6]),Integer.parseInt(args[7]), command, p.getLocation(), Boolean.valueOf(args[8]));
+            EssaimFunctions.createNewSpawner(args[2], args[3], args[4], Integer.parseInt(args[5]), Integer.parseInt(args[6]), Integer.parseInt(args[7]), command, p.getLocation(), Boolean.valueOf(args[8]));
 
             InGameUtilities.sendPlayerInformation(p, "Spawner " + args[3] + " créé avec succès!");
 
@@ -139,14 +139,14 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
         }
     }
 
-    private void GeneralCommand(CommandSender sender, String msg, String[] args) {
+    private void generalCommand(CommandSender sender, String msg, String[] args) {
         if (args.length == 5 && args[0].equalsIgnoreCase("create") && sender.hasPermission("fireland.essaim.admin")) {
             if (sender instanceof Player p)
             {
                 Location loc = p.getLocation();
-                loc.setX((double) Math.round(loc.getX() * 10) /10);
-                loc.setY((double) Math.round(loc.getY() * 10) /10);
-                loc.setZ((double) Math.round(loc.getZ() * 10) /10);
+                loc.setX((double) Math.round(loc.getX() * 10) / 10);
+                loc.setY((double) Math.round(loc.getY() * 10) / 10);
+                loc.setZ((double) Math.round(loc.getZ() * 10) / 10);
                 EssaimFunctions.createNewEssaim(args[1], args[2], getDate(args[3]), Integer.parseInt(args[4]), loc);
                 InGameUtilities.sendPlayerInformation(p, "Essaim " + args[1] + " créé avec succès !");
             }
@@ -158,14 +158,16 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             {
                 InGameUtilities.sendPlayerInformation(p, "L'essaim " + TextUtilities.convertStorableToClean(args[1]) + " a été fini !");
             }
-        }else if (args.length == 2 && args[0].equalsIgnoreCase("unfinish") && sender.hasPermission("fireland.essaim.admin"))
+        }
+        else if (args.length == 2 && args[0].equalsIgnoreCase("unfinish") && sender.hasPermission("fireland.essaim.admin"))
         {
             EssaimFunctions.unfinishEssaim(args[1]);
             if (sender instanceof Player p)
             {
                 InGameUtilities.sendPlayerError(p, "L'essaim " + TextUtilities.convertStorableToClean(args[1]) + " n'est plus fini !");
             }
-        }else if (args.length == 2 && args[0].equalsIgnoreCase("remove") && sender.hasPermission("fireland.essaim.admin")) {
+        }
+        else if (args.length == 2 && args[0].equalsIgnoreCase("remove") && sender.hasPermission("fireland.essaim.admin")) {
             EssaimFunctions.deleteEssaim(args[1]);
             if (sender instanceof Player p)
             {
@@ -175,7 +177,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             //open;
             if (sender instanceof Player p)
             {
-                if (main.essaimManager.EnableEssaim(args[1]))
+                if (main.getEssaimManager().enableEssaim(args[1]))
                 {
                     InGameUtilities.sendPlayerInformation(p, "L'essaim " + TextUtilities.convertStorableToClean(args[1]) + " a été ouvert avec succès !");
                 }
@@ -188,7 +190,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
             //close
             if (sender instanceof Player p)
             {
-                if (EssaimManager.DisableEssaim(args[1]))
+                if (EssaimManager.disableEssaim(args[1]))
                 {
                     InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " a été fermé !");
                 }
@@ -202,7 +204,7 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
         else if (args.length == 2 && args[0].equalsIgnoreCase("reset") && sender.hasPermission("fireland.essaim.admin")) {
             //close
             if (sender instanceof Player p) {
-                if (main.essaimManager.resetEssaim(args[1])) {
+                if (main.getEssaimManager().resetEssaim(args[1])) {
                     InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " a été reset !");
                 } else {
                     InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " est déjà reset !");
@@ -212,9 +214,9 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
         else if (args.length == 2 && args[0].equalsIgnoreCase("info") && sender.hasPermission("fireland.essaim.admin")) {
             if (sender instanceof Player p)
             {
-                if (EssaimManager.groups.containsKey(args[1]))
+                if (EssaimManager.getGroups().containsKey(args[1]))
                 {
-                    EssaimGroup grp = EssaimManager.groups.get(args[1]);
+                    EssaimGroup grp = EssaimManager.getGroups().get(args[1]);
                     p.sendMessage("§8Info de l'essaim §f " + args[1] + " §8 -");
                     StringBuilder members = new StringBuilder("§8Joueur(s) :");
                     for (int i = 0; i < grp.getMembers().size() - 2; i++)
@@ -230,11 +232,11 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
                     }
                     if (grp.getMembers().get(grp.getMembers().size() - 1).getName().equalsIgnoreCase(grp.getLeader().getName()))
                     {
-                        members.append("§6").append(grp.getMembers().get(grp.getMembers().size()-1).getName()).append("§7.");
+                        members.append("§6").append(grp.getMembers().get(grp.getMembers().size() - 1).getName()).append("§7.");
                     }
                     else
                     {
-                        members.append("§f").append(grp.getMembers().get(grp.getMembers().size()-1).getName()).append("§7.");
+                        members.append("§f").append(grp.getMembers().get(grp.getMembers().size() - 1).getName()).append("§7.");
                     }
                     p.sendMessage(members.toString());
                     p.sendMessage("§8Difficulté : §f " + grp.getDifficulty());
@@ -248,16 +250,16 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
         }
         else if (args.length == 3 && args[0].equalsIgnoreCase("join")) {
             //close
-            if (sender instanceof Player p && args[2].equalsIgnoreCase("Wowowowowowowowowowow1234567890") && !main.hashMapManager.isTeleporting(p.getUniqueId()))
+            if (sender instanceof Player p && args[2].equalsIgnoreCase("Wowowowowowowowowowow1234567890") && !main.getHashMapManager().isTeleporting(p.getUniqueId()))
             {
-                if (!EssaimManager.groups.get(args[1]).getMembers().contains(p))
+                if (!EssaimManager.getGroups().get(args[1]).getMembers().contains(p))
                 {
                     if (!PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.essaim.access." + args[1]))
                     {
                         InGameUtilities.sendPlayerError(p, "Vous n'avez pas complété la quête requise ou n'avez pas l'extension DLC.");
                         return;
                     }
-                    EssaimFunctions.teleportJoinEssaim(p, EssaimManager.activeEssaims.get(args[1]).getHub(), "gun.hub.helico",10, args[1]);
+                    EssaimFunctions.teleportJoinEssaim(p, EssaimManager.getActiveEssaims().get(args[1]).getHub(), "gun.hub.helico", 10, args[1]);
                 }
                 else
                 {

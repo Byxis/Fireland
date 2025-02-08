@@ -10,25 +10,23 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class VillagerInteraction implements Listener
 {
-    
-    private final Fireland main;
 
-    public VillagerInteraction(Fireland main)
+    public VillagerInteraction()
     {
-        this.main = main;
+
     }
 
     @EventHandler
-    public void OnInteractionWithVillager(PlayerInteractEntityEvent e)
+    public void onInteractionWithVillager(PlayerInteractEntityEvent e)
     {
         Player p = e .getPlayer();
         
-        if(!(e.getRightClicked() instanceof Villager) || e.getRightClicked().getCustomName() == null)
+        if (!(e.getRightClicked() instanceof Villager) || e.getRightClicked().getCustomName() == null)
         {
             return;
         }
         
-        if(e.getRightClicked().getCustomName().contains("Utilitaire"))
+        if (e.getRightClicked().getCustomName().contains("Utilitaire"))
         {
             PermissionUtilities.commandExecutor(p, "shop utilitaire", "fireland.command.shop");
         }

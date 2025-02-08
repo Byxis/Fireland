@@ -18,7 +18,7 @@ public class ZoneClass {
     private final Location location;
 
     private final int price;
-    private final int daily_gain;
+    private final int dailyGain;
     private final int finalDollarsGain;
     private final int finalJetonsGain;
     private final double captureTime;
@@ -31,21 +31,21 @@ public class ZoneClass {
     private boolean claimed;
     private String claimer;
     private Timestamp claimedAt;
-    private BossBar bar;
+    private final BossBar bar;
     private String barColor;
 
-    public ZoneClass(String name, Location loc, int price, int daily_gain, int finalDollarsGain, int finalJetonsGain, double privationDuration, double autoRelease, double captureTime, boolean claimable)
+    public ZoneClass(String _name, Location _loc, int _price, int _dailyGain, int _finalDollarsGain, int _finalJetonsGain, double _privationDuration, double _autoRelease, double _captureTime, boolean _claimable)
     {
-        this.name = name;
-        this.location = loc;
-        this.price = price;
-        this.daily_gain = daily_gain;
-        this.finalDollarsGain = finalDollarsGain;
-        this.finalJetonsGain = finalJetonsGain;
-        this.privationDuration = privationDuration;
-        this.autoRelease = autoRelease;
-        this.captureTime = captureTime;
-        this.claimable = claimable;
+        this.name = _name;
+        this.location = _loc;
+        this.price = _price;
+        this.dailyGain = _dailyGain;
+        this.finalDollarsGain = _finalDollarsGain;
+        this.finalJetonsGain = _finalJetonsGain;
+        this.privationDuration = _privationDuration;
+        this.autoRelease = _autoRelease;
+        this.captureTime = _captureTime;
+        this.claimable = _claimable;
         bar = Bukkit.createBossBar("Capture de la zone " + getFormattedName() + " disponible", BarColor.WHITE, BarStyle.SEGMENTED_10);
         bar.setProgress(0);
         setColor("§f");
@@ -68,8 +68,8 @@ public class ZoneClass {
         return price;
     }
 
-    public int getDaily_gain() {
-        return daily_gain;
+    public int getDailyGain() {
+        return dailyGain;
     }
 
     public int getFinalDollarsGain() {
@@ -88,17 +88,17 @@ public class ZoneClass {
         return autoRelease;
     }
 
-    public void setClaimed(String name, Timestamp date)
+    public void setClaimed(String _name, Timestamp date)
     {
         this.claimed = true;
-        this.claimer = name;
+        this.claimer = _name;
         this.claimedAt = date;
         this.claimable = false;
     }
 
-    public void setClaimer(String name)
+    public void setClaimer(String _name)
     {
-        this.claimer = name;
+        this.claimer = _name;
     }
 
     public void unclaim()
@@ -167,7 +167,7 @@ public class ZoneClass {
     {
         if (prog != 0)
         {
-            bar.setProgress( prog /100);
+            bar.setProgress(prog / 100);
             bar.setTitle(barColor + "Capture par " + faction + " - " + prog + "%");
         }
         else

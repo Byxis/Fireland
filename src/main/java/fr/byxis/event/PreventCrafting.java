@@ -8,9 +8,9 @@ public class PreventCrafting implements Listener
 {
     
     @EventHandler
-    public void OnCraft(CraftItemEvent e)
+    public void onCraft(CraftItemEvent e)
     {
-        if(!e.getWhoClicked().isOp())
+        if (!e.getWhoClicked().isOp())
         {
             e.setCancelled(true);
         }

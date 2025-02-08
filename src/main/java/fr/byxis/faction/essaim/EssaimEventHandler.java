@@ -28,7 +28,7 @@ import static fr.byxis.faction.essaim.EssaimFunctions.leaveGroup;
 
 public class EssaimEventHandler implements Listener {
 
-    private Fireland main;
+    private final Fireland main;
 
     public EssaimEventHandler(Fireland _main)
     {
@@ -39,13 +39,13 @@ public class EssaimEventHandler implements Listener {
     public void mobKilled(MythicMobDeathEvent e)
     {
 
-        MobDisappearingHandler(e.getMob());
+        mobDisappearingHandler(e.getMob());
     }
 
     @EventHandler
     public void mobDispawn(MythicMobDespawnEvent e)
     {
-        MobDisappearingHandler(e.getMob());
+        mobDisappearingHandler(e.getMob());
     }
 
     @EventHandler
@@ -53,33 +53,33 @@ public class EssaimEventHandler implements Listener {
     {
         if (e.isCancelled())
         {
-            MobDisappearingHandler(e.getMob());
+            mobDisappearingHandler(e.getMob());
         }
     }
 
-    private void MobDisappearingHandler(ActiveMob mob)
+    private void mobDisappearingHandler(ActiveMob mob)
     {
         if (mob.getLocation().getWorld().getName().equals("essaim"))
         {
-            for (String spawner : main.essaimManager.activeSpawners.keySet())
+            for (String spawner : main.getEssaimManager().getActiveSpawners().keySet())
             {
-                if (main.essaimManager.activeSpawners.get(spawner).getActiveMobs().contains(mob))
+                if (main.getEssaimManager().getActiveSpawners().get(spawner).getActiveMobs().contains(mob))
                 {
-                    main.essaimManager.activeSpawners.get(spawner).removeActiveMob(mob);
-                    if (main.essaimManager.activeSpawners.get(spawner).isSpawnerFinished())
+                    main.getEssaimManager().getActiveSpawners().get(spawner).removeActiveMob(mob);
+                    if (main.getEssaimManager().getActiveSpawners().get(spawner).isSpawnerFinished())
                     {
-                        for (String essaim : main.essaimManager.existingEssaims.keySet())
+                        for (String essaim : main.getEssaimManager().getExistingEssaims().keySet())
                         {
-                            if (main.essaimManager.existingEssaims.get(essaim).containsKey(spawner))
+                            if (main.getEssaimManager().getExistingEssaims().get(essaim).containsKey(spawner))
                             {
-                                if (!main.essaimManager.existingEssaims.get(essaim).get(spawner).getCommand().equalsIgnoreCase(""))
+                                if (!main.getEssaimManager().getExistingEssaims().get(essaim).get(spawner).getCommand().equalsIgnoreCase(""))
                                 {
-                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), main.essaimManager.existingEssaims.get(essaim).get(spawner).getCommand());
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), main.getEssaimManager().getExistingEssaims().get(essaim).get(spawner).getCommand());
                                 }
                                 break;
                             }
                         }
-                        main.essaimManager.activeSpawners.remove(spawner);
+                        main.getEssaimManager().getActiveSpawners().remove(spawner);
                     }
                     break;
                 }
@@ -113,63 +113,10 @@ public class EssaimEventHandler implements Listener {
     }
 
     @EventHandler
-    public void ClickInventoryEvent(InventoryClickEvent e) {
+    public void clickInventoryEvent(InventoryClickEvent e) {
         InventoryView inv = e.getView();
         if (e.getView().getPlayer() instanceof Player p) {
             if (inv.getTitle().contains("Essaim :")) {
-                /**       Click check        **/
-
-                ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
-                    return;
-                }
-               InventoryUtilities.clickManager(e);
-
-                /**       Click check        **/
-
-                StringBuilder sb = new StringBuilder();
-                String[] str = (ChatColor.stripColor(e.getView().getTitle())).split(" ");
-                for (int i = 2; i < str.length - 1; i++)
-                {
-                    sb.append((str[i]).toLowerCase()).append("-");
-                }
-
-                sb.append(str[str.length-1].toLowerCase());
-                String essaim = sb.toString();
-                if (EssaimManager.activeEssaims.get(essaim).isFinished())
-                {
-                    switch (itemclicked.getType()) {
-                        case RED_STAINED_GLASS_PANE -> {
-                            InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-                            EssaimFunctions.leaveFinishedEssaim(essaim, p, false);
-                        }
-                    }
-                }
-                else
-                {
-                    switch (itemclicked.getType()) {
-                        case LIME_STAINED_GLASS_PANE -> {
-                            if (EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
-                                EssaimFunctions.openStartingMenu(essaim, p);
-                            } else {
-                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
-                            }
-                        }
-                        case RED_STAINED_GLASS_PANE -> leaveGroup(essaim, p);
-                        case YELLOW_STAINED_GLASS_PANE -> {
-                            if (EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
-                                EssaimFunctions.openInvitation(essaim, p);
-                                InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-                            } else {
-                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
-                            }
-                        }
-                    }
-                }
-
-            }else if (inv.getTitle().contains("Invitation :")) {
                 /**       Click check        **/
 
                 ItemStack itemclicked = e.getCurrentItem();
@@ -186,7 +133,61 @@ public class EssaimEventHandler implements Listener {
                 {
                     sb.append((str[i]).toLowerCase()).append("-");
                 }
-                sb.append(str[str.length-1].toLowerCase());
+
+                sb.append(str[str.length - 1].toLowerCase());
+                String essaim = sb.toString();
+                if (EssaimManager.getActiveEssaims().get(essaim).isFinished())
+                {
+                    switch (itemclicked.getType()) {
+                        case RED_STAINED_GLASS_PANE -> {
+                            InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
+                            EssaimFunctions.leaveFinishedEssaim(essaim, p, false);
+                        }
+                    }
+                }
+                else
+                {
+                    switch (itemclicked.getType()) {
+                        case LIME_STAINED_GLASS_PANE -> {
+                            if (EssaimManager.getGroups().get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
+                                EssaimFunctions.openStartingMenu(essaim, p);
+                            } else {
+                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                                InGameUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
+                            }
+                        }
+                        case RED_STAINED_GLASS_PANE -> leaveGroup(essaim, p);
+                        case YELLOW_STAINED_GLASS_PANE -> {
+                            if (EssaimManager.getGroups().get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
+                                EssaimFunctions.openInvitation(essaim, p);
+                                InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
+                            } else {
+                                InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
+                                InGameUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
+                            }
+                        }
+                    }
+                }
+
+            }
+            else if (inv.getTitle().contains("Invitation :")) {
+                /**       Click check        **/
+
+                ItemStack itemclicked = e.getCurrentItem();
+                if (itemclicked == null) {
+                    return;
+                }
+                InventoryUtilities.clickManager(e);
+
+                /**       Click check        **/
+
+                StringBuilder sb = new StringBuilder();
+                String[] str = (ChatColor.stripColor(e.getView().getTitle())).split(" ");
+                for (int i = 2; i < str.length - 1; i++)
+                {
+                    sb.append((str[i]).toLowerCase()).append("-");
+                }
+                sb.append(str[str.length - 1].toLowerCase());
                 String essaim = sb.toString();
                 switch (itemclicked.getType())
                 {
@@ -194,7 +195,7 @@ public class EssaimEventHandler implements Listener {
                         if (itemclicked.hasItemMeta() && itemclicked.getItemMeta().hasDisplayName())
                         {
                             String name = ChatColor.stripColor(itemclicked.getItemMeta().getDisplayName());
-                            EssaimFunctions.inviteGroup(essaim,Bukkit.getPlayer(name));
+                            EssaimFunctions.inviteGroup(essaim, Bukkit.getPlayer(name));
 
                             InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
                         }
@@ -222,16 +223,16 @@ public class EssaimEventHandler implements Listener {
                     sb.append((str[i]).toLowerCase()).append("-");
                 }
 
-                sb.append(str[str.length-1].toLowerCase());
+                sb.append(str[str.length - 1].toLowerCase());
                 String essaim = sb.toString();
-                if (!EssaimManager.activeEssaims.get(essaim).isFinished())
+                if (!EssaimManager.getActiveEssaims().get(essaim).isFinished())
                 {
-                    if (EssaimManager.groups.get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
-                        switch(itemclicked.getType())
+                    if (EssaimManager.getGroups().get(essaim).getLeader().getName().equalsIgnoreCase(p.getName())) {
+                        switch (itemclicked.getType())
                         {
                             case PLAYER_HEAD -> launchEssaimStart(essaim, p, 1);
                             case SKELETON_SKULL -> launchEssaimStart(essaim, p, 2);
-                            case WITHER_SKELETON_SKULL -> InGameUtilities.sendPlayerError(p, "Cette difficulté n'est pas encore disponible.");//launchEssaimStart(essaim, p, 3);
+                            case WITHER_SKELETON_SKULL -> InGameUtilities.sendPlayerError(p, "Cette difficulté n'est pas encore disponible."); //launchEssaimStart(essaim, p, 3);
                         }
                     }
                 }
@@ -243,20 +244,20 @@ public class EssaimEventHandler implements Listener {
     public void playerDeath(PlayerDeathEvent e)
     {
         String current = null;
-        if (!main.essaimManager.existingEssaims.isEmpty())
+        if (!main.getEssaimManager().getExistingEssaims().isEmpty())
         {
-            for (String essaim : main.essaimManager.existingEssaims.keySet())
+            for (String essaim : main.getEssaimManager().getExistingEssaims().keySet())
             {
-                if (!EssaimManager.groups.isEmpty() && EssaimManager.groups.containsKey(essaim))
+                if (!EssaimManager.getGroups().isEmpty() && EssaimManager.getGroups().containsKey(essaim))
                 {
-                    if (!EssaimManager.groups.get(essaim).getMembers().isEmpty())
+                    if (!EssaimManager.getGroups().get(essaim).getMembers().isEmpty())
                     {
-                        for (Player member : EssaimManager.groups.get(essaim).getMembers())
+                        for (Player member : EssaimManager.getGroups().get(essaim).getMembers())
                         {
                             if (member.getName().equalsIgnoreCase(e.getPlayer().getName()))
                             {
                                 current = essaim;
-                                if (EssaimManager.groups.get(essaim).shouldKeepInventory() && EssaimManager.groups.get(essaim).hasStarted())
+                                if (EssaimManager.getGroups().get(essaim).shouldKeepInventory() && EssaimManager.getGroups().get(essaim).hasStarted())
                                 {
                                     e.setKeepInventory(true);
                                     e.getDrops().clear();
@@ -278,7 +279,7 @@ public class EssaimEventHandler implements Listener {
         }
         if (current != null)
         {
-            EssaimManager.groups.get(current).loose(e.getPlayer());
+            EssaimManager.getGroups().get(current).loose(e.getPlayer());
         }
     }
 
@@ -286,24 +287,24 @@ public class EssaimEventHandler implements Listener {
     public void playerLeft(PlayerQuitEvent e)
     {
         String current = null;
-        if (!main.essaimManager.existingEssaims.isEmpty())
+        if (!main.getEssaimManager().getExistingEssaims().isEmpty())
         {
-            for (String essaim : main.essaimManager.existingEssaims.keySet())
+            for (String essaim : main.getEssaimManager().getExistingEssaims().keySet())
             {
-                if (!EssaimManager.groups.isEmpty() && EssaimManager.groups.containsKey(essaim))
+                if (!EssaimManager.getGroups().isEmpty() && EssaimManager.getGroups().containsKey(essaim))
                 {
-                    if (!EssaimManager.groups.get(essaim).getMembers().isEmpty())
+                    if (!EssaimManager.getGroups().get(essaim).getMembers().isEmpty())
                     {
-                        for (Player member : EssaimManager.groups.get(essaim).getMembers())
+                        for (Player member : EssaimManager.getGroups().get(essaim).getMembers())
                         {
                             if (member.getName().equalsIgnoreCase(e.getPlayer().getName()))
                             {
-                                if ((member.getGameMode() != GameMode.CREATIVE || member.getGameMode() != GameMode.SPECTATOR) && EssaimManager.groups.get(essaim).hasStarted())
+                                if ((member.getGameMode() != GameMode.CREATIVE || member.getGameMode() != GameMode.SPECTATOR) && EssaimManager.getGroups().get(essaim).hasStarted())
                                 {
                                     member.setInvulnerable(false);
                                     member.setHealth(0);
                                 }
-                                else if ((member.getGameMode() != GameMode.CREATIVE || member.getGameMode() != GameMode.SPECTATOR) && EssaimManager.groups.get(essaim).hasStarted())
+                                else if ((member.getGameMode() != GameMode.CREATIVE || member.getGameMode() != GameMode.SPECTATOR) && EssaimManager.getGroups().get(essaim).hasStarted())
                                 {
                                     leaveGroup(essaim, member);
                                 }
@@ -321,19 +322,19 @@ public class EssaimEventHandler implements Listener {
     public void playerJoin(PlayerJoinEvent e)
     {
         String current = null;
-        if (!main.essaimManager.existingEssaims.isEmpty())
+        if (!main.getEssaimManager().getExistingEssaims().isEmpty())
         {
-            for (String essaim : main.essaimManager.existingEssaims.keySet())
+            for (String essaim : main.getEssaimManager().getExistingEssaims().keySet())
             {
-                if (!EssaimManager.groups.isEmpty() && EssaimManager.groups.containsKey(essaim))
+                if (!EssaimManager.getGroups().isEmpty() && EssaimManager.getGroups().containsKey(essaim))
                 {
-                    if (!EssaimManager.groups.get(essaim).getMembers().isEmpty())
+                    if (!EssaimManager.getGroups().get(essaim).getMembers().isEmpty())
                     {
-                        for (Player member : EssaimManager.groups.get(essaim).getMembers())
+                        for (Player member : EssaimManager.getGroups().get(essaim).getMembers())
                         {
                             if (member.getName().equalsIgnoreCase(e.getPlayer().getName()))
                             {
-                                EssaimManager.groups.get(essaim).leaveGroup(e.getPlayer());
+                                EssaimManager.getGroups().get(essaim).leaveGroup(e.getPlayer());
                             }
                         }
                     }
@@ -349,19 +350,19 @@ public class EssaimEventHandler implements Listener {
         if (!e.getFrom().getName().equalsIgnoreCase("essaim"))
             return;
         String current = null;
-        if (!main.essaimManager.existingEssaims.isEmpty())
+        if (!main.getEssaimManager().getExistingEssaims().isEmpty())
         {
-            for (String essaim : main.essaimManager.existingEssaims.keySet())
+            for (String essaim : main.getEssaimManager().getExistingEssaims().keySet())
             {
-                if (!EssaimManager.groups.isEmpty() && EssaimManager.groups.containsKey(essaim))
+                if (!EssaimManager.getGroups().isEmpty() && EssaimManager.getGroups().containsKey(essaim))
                 {
-                    if (!EssaimManager.groups.get(essaim).getMembers().isEmpty())
+                    if (!EssaimManager.getGroups().get(essaim).getMembers().isEmpty())
                     {
-                        for (Player member : EssaimManager.groups.get(essaim).getMembers())
+                        for (Player member : EssaimManager.getGroups().get(essaim).getMembers())
                         {
                             if (member.getName().equalsIgnoreCase(e.getPlayer().getName()))
                             {
-                                EssaimManager.groups.get(essaim).leaveGroup(e.getPlayer());
+                                EssaimManager.getGroups().get(essaim).leaveGroup(e.getPlayer());
                             }
                         }
                     }
@@ -372,11 +373,11 @@ public class EssaimEventHandler implements Listener {
     }
 
     @EventHandler
-    public void PlayerInteractBlock(PlayerInteractEvent e)
+    public void playerInteractBlock(PlayerInteractEvent e)
     {
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock() != null)
         {
-            if (e.getClickedBlock().getType() == Material.IRON_DOOR && e.getItem()!= null && e.getItem().getType() == Material.ECHO_SHARD) {
+            if (e.getClickedBlock().getType() == Material.IRON_DOOR && e.getItem() != null && e.getItem().getType() == Material.ECHO_SHARD) {
                 if (e.getItem().getItemMeta().hasCustomModelData())
                 {
                     String name = "";
@@ -427,9 +428,9 @@ public class EssaimEventHandler implements Listener {
                     if (!name.equals(""))
                     {
                         Location loc = new Location(Bukkit.getWorld("essaim"),
-                                EssaimManager.configManager.getConfig().getInt(name + ".key.position.x"),
-                                EssaimManager.configManager.getConfig().getInt(name + ".key.position.y"),
-                                EssaimManager.configManager.getConfig().getInt(name + ".key.position.z")
+                                EssaimManager.getConfigManager().getConfig().getInt(name + ".key.position.x"),
+                                EssaimManager.getConfigManager().getConfig().getInt(name + ".key.position.y"),
+                                EssaimManager.getConfigManager().getConfig().getInt(name + ".key.position.z")
                         );
                         openDoor(e, loc);
                     }
@@ -450,7 +451,7 @@ public class EssaimEventHandler implements Listener {
             if (e.getPlayer().getGameMode() != GameMode.CREATIVE)
             {
                 InGameUtilities.playWorldSound(loc, Sound.ITEM_SHIELD_BREAK, SoundCategory.BLOCKS, 1, 1);
-                e.getItem().setAmount(e.getItem().getAmount()-1);
+                e.getItem().setAmount(e.getItem().getAmount() - 1);
             }
         }
     }
@@ -460,14 +461,14 @@ public class EssaimEventHandler implements Listener {
     {
         if (!e.getWorld().getName().equalsIgnoreCase("world"))
             return;
-        EssaimFunctions.SaveEssaim();
+        EssaimFunctions.saveEssaim();
     }
 
     private void launchEssaimStart(String essaim, Player p, int difficulty)
     {
         EssaimFunctions.startEssaim(essaim, difficulty);
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        for (Player member : EssaimManager.groups.get(essaim).getMembers()) {
+        for (Player member : EssaimManager.getGroups().get(essaim).getMembers()) {
             member.closeInventory();
             InGameUtilities.sendPlayerInformation(member, "§aL'expédition a démarrée !");
         }

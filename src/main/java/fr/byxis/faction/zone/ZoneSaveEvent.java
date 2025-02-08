@@ -6,18 +6,18 @@ import org.bukkit.event.world.WorldSaveEvent;
 
 public class ZoneSaveEvent implements Listener {
 
-    private DataZone data;
-    public ZoneSaveEvent(DataZone data) {
-        this.data = data;
+    private final DataZone data;
+    public ZoneSaveEvent(DataZone _data) {
+        this.data = _data;
 
     }
 
     @EventHandler
-    public void SaveEvent(WorldSaveEvent e)
+    public void saveEvent(WorldSaveEvent e)
     {
         if (!e.getWorld().getName().equalsIgnoreCase("world"))
             return;
-        data.SaveAll();
+        data.saveAll();
     }
 
 }

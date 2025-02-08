@@ -20,48 +20,48 @@ public class JetonManager {
     private static Fireland main;
     private static JetonSql jt;
 
-    public JetonManager(Fireland main)
+    public JetonManager(Fireland _main)
     {
-        jt = new JetonSql(main, null);
-        JetonManager.main = main;
+        jt = new JetonSql(_main, null);
+        JetonManager.main = _main;
     }
 
     public static void updatePlayer(UUID _uuid)
     {
-        FileConfiguration jetonDB = main.cfgm.getJetonsDB();
+        FileConfiguration jetonDB = main.getCfgm().getJetonsDB();
         if (!jetonDB.contains(_uuid.toString()))
         {
             jetonDB.set(_uuid.toString(), 0);
-            main.cfgm.saveJetonsDB();
+            main.getCfgm().saveJetonsDB();
         }
     }
 
     public static int getJetonsPlayer(UUID _uuid)
     {
-        FileConfiguration jetonDB = main.cfgm.getJetonsDB();
+        FileConfiguration jetonDB = main.getCfgm().getJetonsDB();
         return jetonDB.getInt(_uuid.toString());
     }
 
     public static void setJetonsPlayer(UUID _uuid, int amount)
     {
-        FileConfiguration jetonDB = main.cfgm.getJetonsDB();
+        FileConfiguration jetonDB = main.getCfgm().getJetonsDB();
         jetonDB.set(_uuid.toString(), amount);
-        main.cfgm.saveJetonsDB();
+        main.getCfgm().saveJetonsDB();
     }
 
     public static void addJetonsPlayer(UUID _uuid, int amount)
     {
-        main.cfgm.jetonsDBcfg.set(_uuid.toString(), main.cfgm.jetonsDBcfg.getInt(_uuid.toString()) + amount);
-        main.cfgm.saveJetonsDB();
+        main.getCfgm().getJetonsDBcfg().set(_uuid.toString(), main.getCfgm().getJetonsDBcfg().getInt(_uuid.toString()) + amount);
+        main.getCfgm().saveJetonsDB();
     }
 
     public static void removeJetonsPlayer(UUID _uuid, int amount)
     {
-        FileConfiguration jetonDB = main.cfgm.getJetonsDB();
-        int jt = jetonDB.getInt(_uuid.toString());
-        jt -= amount;
-        jetonDB.set(_uuid.toString(), jt);
-        main.cfgm.saveJetonsDB();
+        FileConfiguration jetonDB = main.getCfgm().getJetonsDB();
+        int jeton = jetonDB.getInt(_uuid.toString());
+        jeton -= amount;
+        jetonDB.set(_uuid.toString(), jeton);
+        main.getCfgm().saveJetonsDB();
     }
 
     public static boolean payJetons(Player _p, int _amount, String _desc, boolean _update, boolean _doLog)
@@ -73,12 +73,12 @@ public class JetonManager {
             if (facture != -1)
             {
                 removeJetonsPlayer(_p.getUniqueId(), _amount);
-                InGameUtilities.sendPlayerInformation(_p, "Vous avez payé §b " + _amount + "\u26c1§r§7. " +
-                        "(Facture n°" + facture + ").");
+                InGameUtilities.sendPlayerInformation(_p, "Vous avez payï¿½ ï¿½b " + _amount + "\u26c1ï¿½rï¿½7. " +
+                        "(Facture nï¿½" + facture + ").");
                 return  true;
             }
-            InGameUtilities.sendPlayerError(_p, "Une erreur est survenue pendant la création de la facture. " +
-                    "Vous n'avez pas été débité. Merci de contacter le staff pour résoudre ce problème.");
+            InGameUtilities.sendPlayerError(_p, "Une erreur est survenue pendant la crï¿½ation de la facture. " +
+                    "Vous n'avez pas ï¿½tï¿½ dï¿½bitï¿½. Merci de contacter le staff pour rï¿½soudre ce problï¿½me.");
         }
         else if (_doLog)
         {
@@ -103,49 +103,49 @@ public class JetonManager {
             if (rs.next())
             {
                 ArrayList<String[]> list = new ArrayList<>();
-                while(rs.next())
-                    list.add(new String[]{rs.getString(1), String.valueOf(rs.getInt(2)),rs.getString(3)});
+                while (rs.next())
+                    list.add(new String[]{rs.getString(1), String.valueOf(rs.getInt(2)), rs.getString(3)});
 
                 if (consulter.getName().equals(buyer.getName()))
-                    consulter.sendMessage( "§8------------- §7Vos factures §8-------------");
-                //"§8 [<] ---------------------------------- [>] "
+                    consulter.sendMessage("ï¿½8------------- ï¿½7Vos factures ï¿½8-------------");
+                //"ï¿½8 [<] ---------------------------------- [>] "
                 else
-                    consulter.sendMessage( "§8----------- §7Facture de " + buyer.getName() + " §8-----------");;
+                    consulter.sendMessage("ï¿½8----------- ï¿½7Facture de " + buyer.getName() + " ï¿½8-----------");
 
                 for (int i = page * pageSize; i < page * pageSize + pageSize && i < list.size(); i++)
                 {
                     String number = list.get(i)[0];
                     String price = list.get(i)[1];
                     String desc = list.get(i)[2];
-                    consulter.sendMessage("§aFacture n°§d " + number + "§a - §+" + desc + " §a(§b " + price + "\u26c1§a)");
+                    consulter.sendMessage("ï¿½aFacture nï¿½ï¿½d " + number + "ï¿½a - ï¿½+" + desc + " ï¿½a(ï¿½b " + price + "\u26c1ï¿½a)");
                 }
                 ComponentBuilder message = new ComponentBuilder();
                 if (buyer.getName().equals(consulter.getName()))
                 {
                     if (page > 0)
                     {
-                        message.append("§2[<]")
-                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page précédente").create()))
-                                .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/facture " + (page-1)));
+                        message.append("ï¿½2[<]")
+                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("ï¿½2Page prï¿½cï¿½dente").create()))
+                                .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/facture " + (page - 1)));
                     }
                     else
                     {
-                        message.append("§7[<]")
+                        message.append("ï¿½7[<]")
                                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     }
-                    message.append("§8 ---------------------------------- ")
+                    message.append("ï¿½8 ---------------------------------- ")
                             .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                             .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     if (page * pageSize + pageSize < list.size())
                     {
-                        message.append("§4[>]")
-                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page suivante").create()))
+                        message.append("ï¿½4[>]")
+                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("ï¿½2Page suivante").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/facture " + (page + 1)));
                     }
                     else
                     {
-                        message.append("§7[>]")
+                        message.append("ï¿½7[>]")
                                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     }
@@ -156,28 +156,28 @@ public class JetonManager {
                 {
                     if (page > 0)
                     {
-                        message.append("§2[<]")
-                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page précédente").create()))
-                                .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/facture " + buyer.getName() + " " + (page-1)));
+                        message.append("ï¿½2[<]")
+                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("ï¿½2Page prï¿½cï¿½dente").create()))
+                                .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/facture " + buyer.getName() + " " + (page - 1)));
                     }
                     else
                     {
-                        message.append("§7[<]")
+                        message.append("ï¿½7[<]")
                                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     }
-                    message.append("§8 ---------------------------------- ")
+                    message.append("ï¿½8 ---------------------------------- ")
                             .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                             .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     if (page * pageSize + pageSize < list.size())
                     {
-                        message.append("§4[>]")
-                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page suivante").create()))
+                        message.append("ï¿½4[>]")
+                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("ï¿½2Page suivante").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/facture " + buyer.getName() + " " + (page + 1)));
                     }
                     else
                     {
-                        message.append("§7[>]")
+                        message.append("ï¿½7[>]")
                                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     }
@@ -193,8 +193,8 @@ public class JetonManager {
                     InGameUtilities.sendPlayerError(consulter, "Le joueur " + buyer.getName() + " n'a aucune facture.");
             }
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            InGameUtilities.sendPlayerError(consulter,"Une erreur est survenue.");
+            //Une erreur est survenue (Problï¿½me de connexion ï¿½ la BD)
+            InGameUtilities.sendPlayerError(consulter, "Une erreur est survenue.");
             e.printStackTrace();
         }
     }

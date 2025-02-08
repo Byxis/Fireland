@@ -10,7 +10,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static fr.byxis.fireland.Save.SaveAll;
+import static fr.byxis.fireland.Save.saveAll;
 
 public class RestartManager {
 
@@ -33,21 +33,21 @@ public class RestartManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (IsServerRestartingSoon())
+                if (isServerRestartingSoon())
                 {
                     m_timeRemaining -= 1;
-                    ActualiseBar();
+                    actualiseBar();
                 }
-                else if (IsRestartingNow())
+                else if (isRestartingNow())
                 {
-                    Restart(m_main);
+                    restart(m_main);
                     cancel();
                 }
             }
         }.runTaskTimer(m_main, 0, 20);
     }
 
-    public static void StopRestart()
+    public static void stopRestart()
     {
         m_timeRemaining = -1;
         m_timeTotal = -1;
@@ -58,34 +58,34 @@ public class RestartManager {
         }
     }
 
-    public static void StartRestart(int _time)
+    public static void startRestart(int _time)
     {
         m_timeRemaining = _time;
         m_timeTotal = _time;
         for (Player p : Bukkit.getOnlinePlayers())
         {
-            InGameUtilities.sendPlayerError(p, "§lLe serveur va redémarrer dans " + BasicUtilities.getStringTime(_time *1000L));
+            InGameUtilities.sendPlayerError(p, "§lLe serveur va redémarrer dans " + BasicUtilities.getStringTime(_time * 1000L));
             m_bar.addPlayer(p);
         }
     }
 
-    public static void Restart(Fireland _main)
+    public static void restart(Fireland _main)
     {
         for (Player p : Bukkit.getOnlinePlayers())
         {
             p.kickPlayer("§cLe serveur redémarre.");
         }
-        SaveAll(_main);
+        saveAll(_main);
         new BukkitRunnable() {
             @Override
             public void run() {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
             }
-        }.runTaskLater(_main, 15 *20);
+        }.runTaskLater(_main, 15 * 20);
 
     }
 
-    public void ActualiseBar()
+    public void actualiseBar()
     {
         if (m_timeRemaining > 15)
         {
@@ -97,7 +97,7 @@ public class RestartManager {
                 }
             }
             m_bar.setProgress(m_timeRemaining / m_timeTotal);
-            m_bar.setTitle("§a§lRedémarrage du serveur dans " + BasicUtilities.getStringTime((long) (m_timeRemaining *1000L)));
+            m_bar.setTitle("§a§lRedémarrage du serveur dans " + BasicUtilities.getStringTime((long) (m_timeRemaining * 1000L)));
         }
         else if (m_timeRemaining > 0)
         {
@@ -110,7 +110,7 @@ public class RestartManager {
             }
             m_bar.setColor(BarColor.RED);
             m_bar.setProgress(m_timeRemaining / m_timeTotal);
-            m_bar.setTitle("§c§lRedémarrage du serveur dans " + BasicUtilities.getStringTime((long) (m_timeRemaining *1000L)));
+            m_bar.setTitle("§c§lRedémarrage du serveur dans " + BasicUtilities.getStringTime((long) (m_timeRemaining * 1000L)));
         }
         else if (m_timeRemaining == 0)
         {
@@ -120,17 +120,17 @@ public class RestartManager {
     }
 
 
-    public static boolean IsServerRestartingSoon()
+    public static boolean isServerRestartingSoon()
     {
         return m_timeRemaining > 0;
     }
 
-    public static boolean IsRestartingNow()
+    public static boolean isRestartingNow()
     {
         return m_timeRemaining == 0;
     }
 
-    public static void AddPlayerBar(Player p)
+    public static void addPlayerBar(Player p)
     {
         m_bar.addPlayer(p);
     }

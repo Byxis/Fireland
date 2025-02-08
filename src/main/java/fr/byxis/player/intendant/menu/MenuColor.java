@@ -13,16 +13,16 @@ import org.bukkit.inventory.Inventory;
 
 public class MenuColor {
 
-    public static void OpenColorMenu(Fireland main, Player p, FactionInformation infos)
+    public static void openColorMenu(Fireland main, Player p, FactionInformation infos)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         FactionFunctions ff = new FactionFunctions(main, p);
-        Inventory faction = Bukkit.createInventory(null, 54, ff.GetColorCode(infos.getName()) + "Changement de couleur");
-        SetItemColorMenu(main, faction, p, infos);
+        Inventory faction = Bukkit.createInventory(null, 54, ff.getColorCode(infos.getName()) + "Changement de couleur");
+        setItemColorMenu(main, faction, p, infos);
         p.openInventory(faction);
     }
 
-    private static void SetItemColorMenu(Fireland main, Inventory inv, Player p, FactionInformation infos)
+    private static void setItemColorMenu(Fireland main, Inventory inv, Player p, FactionInformation infos)
     {
         for (int i = 0; i < 9; i++)
         {

@@ -14,15 +14,15 @@ import java.util.List;
 
 public class MenuChoixNation {
 
-    public static void OpenChoixNation(Fireland main, Player p)
+    public static void openChoixNation(Fireland main, Player p)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         Inventory inv = Bukkit.createInventory(null, 36, "§8Choisir sa nation");
-        SetChoixNationItems(main, inv, p);
+        setChoixNationItems(main, inv, p);
         p.openInventory(inv);
     }
 
-    private static void SetChoixNationItems(Fireland main, Inventory inv, Player p)
+    private static void setChoixNationItems(Fireland main, Inventory inv, Player p)
     {
         List<String> lore = new ArrayList<>();
         lore.add("§8Bonus d'xp sur les captures de zone.");
@@ -50,7 +50,7 @@ public class MenuChoixNation {
         lore = new ArrayList<>();
         lore.add("§cVotre choix n'est pas définitif, mais il");
         lore.add("§cvous sera coûteux de changer plus tard");
-        inv.setItem(31, InventoryUtilities.setItemMetaLore(Material.BOOK, "§7Veuillez cliquer sur la nation à rejoindre", (short)0, lore));
+        inv.setItem(31, InventoryUtilities.setItemMetaLore(Material.BOOK, "§7Veuillez cliquer sur la nation à rejoindre", (short) 0, lore));
     }
 
 }

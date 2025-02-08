@@ -11,11 +11,13 @@ public class CobwebDamage implements Listener
     
     public static void damagePlayerInCobweb(Player p)
     {
-        if(p.getLocation().getBlock().getType() == Material.COBWEB
-        ||p.getLocation().add(0,1,0).getBlock().getType() == Material.COBWEB)
+        if (p.getLocation().getBlock().getType() == Material.COBWEB
+                || p.getLocation().add(0, 1, 0).getBlock().getType() == Material.COBWEB)
         {
             p.damage(0.5D);
-            InGameUtilities.playWorldSound(p.getLocation(), "entity.player.hurt_sweet_berry_bush", SoundCategory.PLAYERS, 1, 1);
+            InGameUtilities.playWorldSound(p.getLocation(),
+                    "entity.player.hurt_sweet_berry_bush",
+                    SoundCategory.PLAYERS, 1, 1);
         }
     }
 }

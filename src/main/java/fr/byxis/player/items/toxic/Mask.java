@@ -60,7 +60,7 @@ public class Mask implements Listener
         {
 
 
-            InGameUtilities.playWorldSound(e.getPlayer().getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, SoundCategory.PLAYERS,1, 1);
+            InGameUtilities.playWorldSound(e.getPlayer().getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, SoundCategory.PLAYERS, 1, 1);
             e.getPlayer().getInventory().setHelmet(e.getPlayer().getItemInHand());
             e.getPlayer().getItemInHand().setAmount(0);
             if (item != null)
@@ -75,7 +75,7 @@ public class Mask implements Listener
                         e.getPlayer().getCooldown(e.getPlayer().getInventory().getItemInHand().getType()) <= 0)))
         {
 
-            InGameUtilities.playWorldSound(e.getPlayer().getLocation(), "gun.nvgoggle.on", SoundCategory.PLAYERS,1, 1);;
+            InGameUtilities.playWorldSound(e.getPlayer().getLocation(), "gun.nvgoggle.on", SoundCategory.PLAYERS, 1, 1);;
             e.getPlayer().getInventory().setHelmet(e.getPlayer().getItemInHand());
             e.getPlayer().getItemInHand().setAmount(0);
             if (item != null)

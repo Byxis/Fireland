@@ -13,8 +13,8 @@ import org.bukkit.inventory.ItemStack;
 public class ShopEventManager implements Listener {
 
     private final Fireland main;
-    public ShopEventManager(Fireland main) {
-        this.main = main;
+    public ShopEventManager(Fireland _main) {
+        this.main = _main;
     }
 
     @EventHandler

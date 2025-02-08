@@ -9,7 +9,7 @@ import java.sql.*;
 public class JetonSql
 {
 
-    private Fireland main;
+    private final Fireland main;
 
     public JetonSql(Fireland m, Player p)
     {

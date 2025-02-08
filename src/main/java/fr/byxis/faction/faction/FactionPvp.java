@@ -27,9 +27,9 @@ public class FactionPvp implements Listener {
             if (p.getName().equalsIgnoreCase(d.getName()))
                 return;
 
-            if (main.hashMapManager.getFactionMap().containsKey(p.getUniqueId()) && main.hashMapManager.getFactionMap().containsKey(d.getUniqueId()))
+            if (main.getHashMapManager().getFactionMap().containsKey(p.getUniqueId()) && main.getHashMapManager().getFactionMap().containsKey(d.getUniqueId()))
             {
-                if (main.hashMapManager.getFactionMap().get(p.getUniqueId()).equals(main.hashMapManager.getFactionMap().get(d.getUniqueId())))
+                if (main.getHashMapManager().getFactionMap().get(p.getUniqueId()).equals(main.getHashMapManager().getFactionMap().get(d.getUniqueId())))
                 {
                     event.setCancelled(true);
                 }

@@ -51,7 +51,7 @@ public class ItemDurability
         String lore = ChatColor.stripColor(item.getLore().get(1));
         String[] parts = lore.split(" ");
         String dura = parts[2].split("%")[0];
-        return (float) Math.round(Double.parseDouble(dura) * 10) /10;
+        return (float) Math.round(Double.parseDouble(dura) * 10) / 10;
     }
 
     private static float removeDurability(ItemStack item, float amount)
@@ -63,6 +63,6 @@ public class ItemDurability
         String lore = ChatColor.stripColor(item.getLore().get(1));
         String[] parts = lore.split(" ");
         String dura = parts[2].split("%")[0];
-        return (float) Math.round((Double.parseDouble(dura)-amount)* 10) /10;
+        return (float) Math.round((Double.parseDouble(dura) - amount) * 10) / 10;
     }
 }

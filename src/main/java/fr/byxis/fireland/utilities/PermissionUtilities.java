@@ -8,7 +8,6 @@ import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.types.PermissionNode;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
@@ -16,31 +15,30 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 public class PermissionUtilities {
 
     private static Fireland main;
-    private static final LuckPerms m_api = LuckPermsProvider.get();;
+    private static final LuckPerms API = LuckPermsProvider.get();;
 
-    public PermissionUtilities(Fireland main)
+    public PermissionUtilities(Fireland _main)
     {
-        PermissionUtilities.main = main;
+        PermissionUtilities.main = _main;
     }
 
     public static void addPermission(Player p, String permission) {
 
-        User user = m_api.getPlayerAdapter(Player.class).getUser(p);
+        User user = API.getPlayerAdapter(Player.class).getUser(p);
         // Add the permission
         user.data().add(Node.builder(permission).build());
 
         // Now we need to save changes.
-        m_api.getUserManager().saveUser(user);
+        API.getUserManager().saveUser(user);
     }
 
     public static boolean hasPermission(Player p, String permission)
     {
-        User user = m_api.getPlayerAdapter(Player.class).getUser(p);
+        User user = API.getPlayerAdapter(Player.class).getUser(p);
         return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
     }
     public static boolean hasPermission(UUID playerUUID, String permission) {
@@ -54,19 +52,19 @@ public class PermissionUtilities {
 
     public static void addTempPermission(Player p, String permission, Date finished)
     {
-        User user = m_api.getPlayerAdapter(Player.class).getUser(p);
+        User user = API.getPlayerAdapter(Player.class).getUser(p);
         // Add the permission
         Date current = new Date(System.currentTimeMillis());
-        long secondes = (finished.getTime()-current.getTime())/1000;
+        long secondes = (finished.getTime() - current.getTime()) / 1000;
         user.data().add(Node.builder(permission).expiry(Duration.ofSeconds(secondes)).build());
 
         // Now we need to save changes.
-        m_api.getUserManager().saveUser(user);
+        API.getUserManager().saveUser(user);
     }
 
     public static void removePermission(Player p, String permission) {
 
-        User user = m_api.getUserManager().getUser(p.getUniqueId());
+        User user = API.getUserManager().getUser(p.getUniqueId());
         if (user != null) {
             PermissionNode node = PermissionNode.builder(permission)
                     .withContext(DefaultContextKeys.SERVER_KEY, "fireland")
@@ -75,7 +73,7 @@ public class PermissionUtilities {
             node = PermissionNode.builder(permission)
                     .build();
             user.data().remove(node);
-            m_api.getUserManager().saveUser(user);
+            API.getUserManager().saveUser(user);
         }
         PermissionAttachment attachment = p.addAttachment(main);
         attachment.unsetPermission(permission);
@@ -105,7 +103,7 @@ public class PermissionUtilities {
             permissions.setPermission(perm, true);
             Bukkit.dispatchCommand(p, cmd);
         }
-        catch(Exception e1)
+        catch (Exception e1)
         {
             e1.printStackTrace();
         }

@@ -125,7 +125,7 @@ public class InventoryUtilities {
         return item;
     }
 
-    public static ItemStack GetHead(UUID uuid, String displayName)
+    public static ItemStack getHead(UUID uuid, String displayName)
     {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta headMeta = (SkullMeta) head.getItemMeta();
@@ -135,7 +135,7 @@ public class InventoryUtilities {
         return head;
     }
 
-    public static ItemStack GetHead(UUID uuid, String displayName, List<String> lore)
+    public static ItemStack getHead(UUID uuid, String displayName, List<String> lore)
     {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta headMeta = (SkullMeta) head.getItemMeta();
@@ -157,7 +157,7 @@ public class InventoryUtilities {
     public static ItemStack getBannisBanner(String name, List<String> lore)
     {
         ItemStack i = new ItemStack(Material.BLACK_BANNER, 1);
-        BannerMeta m = (BannerMeta)i.getItemMeta();
+        BannerMeta m = (BannerMeta) i.getItemMeta();
         m.setDisplayName(name);
         m.setLore(lore);
 
@@ -180,7 +180,7 @@ public class InventoryUtilities {
     public static ItemStack getBannisBanner(String name)
     {
         ItemStack i = new ItemStack(Material.BLACK_BANNER, 1);
-        BannerMeta m = (BannerMeta)i.getItemMeta();
+        BannerMeta m = (BannerMeta) i.getItemMeta();
         m.setDisplayName(name);
 
         List<Pattern> patterns = new ArrayList<Pattern>();
@@ -202,7 +202,7 @@ public class InventoryUtilities {
     public static ItemStack getEtatBanner(String name, List<String> lore)
     {
         ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
-        BannerMeta m = (BannerMeta)i.getItemMeta();
+        BannerMeta m = (BannerMeta) i.getItemMeta();
         m.setDisplayName(name);
         m.setLore(lore);
 
@@ -225,7 +225,7 @@ public class InventoryUtilities {
     public static ItemStack getEtatBanner(String name)
     {
         ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
-        BannerMeta m = (BannerMeta)i.getItemMeta();
+        BannerMeta m = (BannerMeta) i.getItemMeta();
         m.setDisplayName(name);
 
         List<Pattern> patterns = new ArrayList<Pattern>();
@@ -247,7 +247,7 @@ public class InventoryUtilities {
     public static ItemStack getNeutreBanner(String name, List<String> lore)
     {
         ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
-        BannerMeta m = (BannerMeta)i.getItemMeta();
+        BannerMeta m = (BannerMeta) i.getItemMeta();
         m.setDisplayName(name);
         m.setLore(lore);
         i.setItemMeta(m);
@@ -257,7 +257,7 @@ public class InventoryUtilities {
     public static ItemStack getNeutreBanner(String name)
     {
         ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
-        BannerMeta m = (BannerMeta)i.getItemMeta();
+        BannerMeta m = (BannerMeta) i.getItemMeta();
         m.setDisplayName(name);
         i.setItemMeta(m);
         return i;

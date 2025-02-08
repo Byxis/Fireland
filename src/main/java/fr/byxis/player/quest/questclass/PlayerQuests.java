@@ -11,9 +11,9 @@ public class PlayerQuests {
     private ProgressQuest fourth;
     private boolean isClaimed;
 
-    public PlayerQuests(UUID uuid)
+    public PlayerQuests(UUID _uuid)
     {
-        this.uuid = uuid;
+        this.uuid = _uuid;
         isClaimed = false;
         first = null;
         second = null;
@@ -67,14 +67,14 @@ public class PlayerQuests {
         return i;
     }
 
-    public void setFirst(ProgressQuest first)
+    public void setFirst(ProgressQuest _first)
     {
-        this.first = first;
+        this.first = _first;
     }
 
     public ProgressQuest getQuest(int i)
     {
-        return switch(i)
+        return switch (i)
         {
             default -> first;
             case 2 -> second;
@@ -87,27 +87,27 @@ public class PlayerQuests {
         return first;
     }
 
-    public void setSecond(ProgressQuest second)
+    public void setSecond(ProgressQuest _second)
     {
-        this.second = second;
+        this.second = _second;
     }
     public ProgressQuest getSecond()
     {
         return second;
     }
 
-    public void setThird(ProgressQuest third)
+    public void setThird(ProgressQuest _third)
     {
-        this.third = third;
+        this.third = _third;
     }
     public ProgressQuest getThird()
     {
         return third;
     }
 
-    public void setFourth(ProgressQuest fourth)
+    public void setFourth(ProgressQuest _fourth)
     {
-        this.fourth = fourth;
+        this.fourth = _fourth;
     }
     public ProgressQuest getFourth()
     {
@@ -118,7 +118,7 @@ public class PlayerQuests {
     public UUID getUuid() {
         return uuid;
     }
-    public boolean isQuestFinished(int i )
+    public boolean isQuestFinished(int i)
     {
         return getQuest(i).getProgress() == -1;
     }

@@ -20,14 +20,14 @@ import static fr.byxis.jeton.JetonManager.addJetonsPlayer;
 
 public class PlayerLevel {
 
-    private UUID m_uuid;
+    private final UUID m_uuid;
     private int m_level;
     private int m_xp;
     private int m_rang;
     private boolean m_canChange;
     private LevelStorage.Nation m_nation;
 
-    private HashMap<Integer, Boolean> m_rewardsClaimed;
+    private final HashMap<Integer, Boolean> m_rewardsClaimed;
 
     public PlayerLevel(Fireland main, UUID uuid)
     {
@@ -94,8 +94,8 @@ public class PlayerLevel {
     public void addXp(Fireland _main, int _xp)
     {
         double booster = 1;
-        if (_main.hashMapManager.getBooster() != null)
-            booster = 1 + 0.25 *_main.hashMapManager.getBooster().getLevel();
+        if (_main.getHashMapManager().getBooster() != null)
+            booster = 1 + 0.25 * _main.getHashMapManager().getBooster().getLevel();
         addXp((int) Math.ceil((_xp * booster)));
     }
 
@@ -103,7 +103,7 @@ public class PlayerLevel {
     {
         m_xp += _xp;
         int oldLevel = m_level;
-        while(m_xp >= getRemainingXp() && getRemainingXp() != -1)
+        while (m_xp >= getRemainingXp() && getRemainingXp() != -1)
         {
             m_xp -= getRemainingXp();
             addLevel(1);
@@ -118,7 +118,7 @@ public class PlayerLevel {
     {
         m_xp = _xp;
         int oldLevel = m_level;
-        while(m_xp >= getRemainingXp() && getRemainingXp() != -1)
+        while (m_xp >= getRemainingXp() && getRemainingXp() != -1)
         {
             m_xp -= getRemainingXp();
             addLevel(1);
@@ -130,26 +130,26 @@ public class PlayerLevel {
         }
 
         for (int i = oldLevel; i <= m_level; i++)
-            GivePlayerMission(i);
+            givePlayerMission(i);
     }
 
     public int getRemainingXp()
     {
         if (m_level < 25)
-            return 20 *(m_level + 1);
+            return 20 * (m_level + 1);
         else if (m_level < 50)
-            return 25 *(m_level + 1-24) + 20 *24;
+            return 25 * (m_level + 1 - 24) + 20 * 24;
         else if (m_level < 75)
-            return 30 *(m_level + 1-49) + 25 *24 + 20 *25;
+            return 30 * (m_level + 1 - 49) + 25 * 24 + 20 * 25;
         else if (m_level < 100)
-            return 40 *(m_level + 1-74) + 30 *24 + 25 *25 + 20 *25;
+            return 40 * (m_level + 1 - 74) + 30 * 24 + 25 * 25 + 20 * 25;
         else
             return -1;
     }
 
     public int getLevelCap()
     {
-        return m_level/25;
+        return m_level / 25;
     }
 
     public int getRang()
@@ -167,7 +167,7 @@ public class PlayerLevel {
 
     public String getStringRank()
     {
-        return switch(m_nation)
+        return switch (m_nation)
         {
             case Null -> "";
             case Neutre -> "Libre";
@@ -190,7 +190,7 @@ public class PlayerLevel {
         };
     }
 
-    public void Save(Fireland main)
+    public void save(Fireland main)
     {
         DbConnection connectionDb = main.getDatabaseManager().getFirelandConnection();
         try {
@@ -274,7 +274,7 @@ public class PlayerLevel {
 
     public double getReduction()
     {
-        return 0.05 *getRang();
+        return 0.05 * getRang();
     }
 
     public void addRang(int _rang)
@@ -305,7 +305,7 @@ public class PlayerLevel {
         p.sendTitle("", "§7Passage au " + type + " " + amount);
     }
 
-    public boolean HasClaimedReward(Fireland _main, int _lvl)
+    public boolean hasClaimedReward(Fireland _main, int _lvl)
     {
         if (!m_rewardsClaimed.containsKey(_lvl))
         {
@@ -332,7 +332,7 @@ public class PlayerLevel {
         return m_rewardsClaimed.get(_lvl);
     }
 
-    private void SetClaimedRewards(Fireland _main, int _lvl)
+    private void setClaimedRewards(Fireland _main, int _lvl)
     {
         m_rewardsClaimed.put(_lvl, true);
         DbConnection connectionDb = _main.getDatabaseManager().getFirelandConnection();
@@ -348,14 +348,14 @@ public class PlayerLevel {
         }
     }
 
-    public void ClaimRewards(Fireland _main, int _lvl)
+    public void claimRewards(Fireland _main, int _lvl)
     {
         Player p = Bukkit.getPlayer(m_uuid);
-        if (!HasClaimedReward(_main, _lvl))
+        if (!hasClaimedReward(_main, _lvl))
         {
-            int jetons = GetRewardsJetons(_lvl);
-            int money = GetRewardsMoney(_lvl);
-            String item = GetRewardsItems(_lvl);
+            int jetons = getRewardsJetons(_lvl);
+            int money = getRewardsMoney(_lvl);
+            String item = getRewardsItems(_lvl);
             if (jetons > 0)
                 InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré " + jetons + "§f\u26c1§a et " + money + "§f$§a.");
             else
@@ -363,8 +363,8 @@ public class PlayerLevel {
             if (!item.isEmpty())
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.replace("Player", p.getName()));
             addJetonsPlayer(m_uuid, jetons);
-            Fireland.eco.depositPlayer(p, money);
-            SetClaimedRewards(_main, _lvl);
+            Fireland.getEco().depositPlayer(p, money);
+            setClaimedRewards(_main, _lvl);
         }
         else
         {
@@ -373,9 +373,9 @@ public class PlayerLevel {
     }
 
 
-    public int GetRewardsJetons(int lvl)
+    public int getRewardsJetons(int lvl)
     {
-        return switch(lvl)
+        return switch (lvl)
         {
             default -> 0;
             case 25 -> 10;
@@ -385,14 +385,14 @@ public class PlayerLevel {
         };
     }
 
-    public int GetRewardsMoney(int lvl)
+    public int getRewardsMoney(int lvl)
     {
-        return lvl *10;
+        return lvl * 10;
     }
 
-    public String GetRewardsItems(int lvl)
+    public String getRewardsItems(int lvl)
     {
-        return switch(lvl)
+        return switch (lvl)
         {
             default -> "";
             case 5 -> "wm give Player colt";
@@ -409,10 +409,10 @@ public class PlayerLevel {
         };
     }
 
-    public void GivePlayerMission(int _level)
+    public void givePlayerMission(int _level)
     {
         ArrayList<Integer> questIds = new ArrayList<Integer>();
-        switch(_level)
+        switch (_level)
         {
             //case 1 -> questIds.add(1);
         };
@@ -434,9 +434,9 @@ public class PlayerLevel {
         }
     }
 
-    public int GetJetonPriceNationChange()
+    public int getJetonPriceNationChange()
     {
-        return switch(getRang())
+        return switch (getRang())
         {
             case 0 -> 5;
             case 1 -> 10;
@@ -446,9 +446,9 @@ public class PlayerLevel {
         };
     }
 
-    public int GetMoneyPriceNationChange()
+    public int getMoneyPriceNationChange()
     {
-        return switch(getRang())
+        return switch (getRang())
         {
             case 0 -> 1000;
             case 1 -> 3000;

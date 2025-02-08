@@ -92,23 +92,23 @@ public class SideBoardManager {
 
     private String getMoneyText(Player p)
     {
-        return "§8Monnaie : §6 " + Math.round(Fireland.eco.getBalance(p)) + "§r$" +
+        return "§8Monnaie : §6 " + Math.round(Fireland.getEco().getBalance(p)) + "§r$" +
                 "  §8| §b " + JetonManager.getJetonsPlayer(p.getUniqueId()) + "§r\u26c1";
     }
 
     private String getBankText(Player p)
     {
-        return "§8Banque : §6 " + Math.round(m_main.cfgm.getEnderchest().getDouble("bank." + p.getUniqueId() + ".money")) + "§r$";
+        return "§8Banque : §6 " + Math.round(m_main.getCfgm().getEnderchest().getDouble("bank." + p.getUniqueId() + ".money")) + "§r$";
     }
 
     private String getStateText(Player p)
     {
         String state = "";
-        if (m_main.cfgm.getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state"))
+        if (m_main.getCfgm().getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state"))
         {
             state += "§2infecté";
         }
-        if (m_main.cfgm.getPlayerDB().getDouble("thirst." + p.getUniqueId()) <= 10)
+        if (m_main.getCfgm().getPlayerDB().getDouble("thirst." + p.getUniqueId()) <= 10)
         {
             if (!state.isEmpty())
             {
@@ -135,14 +135,14 @@ public class SideBoardManager {
     {
         if (!HashMapManager.getDiscretionMap().containsKey(p.getUniqueId()))
         {
-            m_main.hashMapManager.addDiscretionMap(p.getUniqueId());
+            m_main.getHashMapManager().addDiscretionMap(p.getUniqueId());
         }
 
         double numDiscretion = HashMapManager.getDiscretionMap().get(p.getUniqueId()).getScore();
         String shotColor = "§7";
 
         String prime = "";
-        if (PrimeEvent.config.getConfig().contains(p.getUniqueId().toString()))
+        if (PrimeEvent.getConfig().getConfig().contains(p.getUniqueId().toString()))
         {
             prime = " §c(Recherché)";
         }

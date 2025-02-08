@@ -26,7 +26,7 @@ public class WorkshopManager implements CommandExecutor
         if (cmd.getName().equalsIgnoreCase("workshop") && args.length >= 1)
         {
             if (args[0].equalsIgnoreCase("newrecipe") && args.length >= 6 && sender.hasPermission("fireland.command.workshop.admin"))
-            {//ws newrecipe a:NomRecette Type scrap canon a:Itemname a:materiel a:durability commande
+            { //ws newrecipe a:NomRecette Type scrap canon a:Itemname a:materiel a:durability commande
                 StringBuilder sb = new StringBuilder();
                 for (int i = 8; i < args.length; i++)
                 {
@@ -103,7 +103,7 @@ public class WorkshopManager implements CommandExecutor
             {
                 Player p = (Player) sender;
                 RecyclerFunction rf = new RecyclerFunction(main);
-                rf.OpenRecyclingGui(p);
+                rf.openRecyclingGui(p);
             }
         }
         else if (cmd.getName().equalsIgnoreCase("workshop"))

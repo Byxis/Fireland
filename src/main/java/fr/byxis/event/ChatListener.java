@@ -32,14 +32,14 @@ public class ChatListener implements Listener
 
         if (e.getPlayer().hasPermission("fireland.chat.admin"))
         {
-            if(e.getMessage().contains("@everyone"))
+            if (e.getMessage().contains("@everyone"))
             {
                 e.setMessage(e.getMessage().replaceAll("@everyone", "everyone"));
             }
-            if(e.getMessage().contains("everyone"))
+            if (e.getMessage().contains("everyone"))
             {
                 e.setMessage(e.getMessage().replaceAll("everyone", ChatColor.GOLD + "@" + ChatColor.RESET + "" + ChatColor.BOLD + "" + ChatColor.YELLOW + "everyone " + ChatColor.RESET));
-                for(Player on : Bukkit.getServer().getOnlinePlayers())
+                for (Player on : Bukkit.getServer().getOnlinePlayers())
                 {
                     on.playNote(on.getLocation(), Instrument.PIANO, Note.natural(1, Tone.A));
                 }

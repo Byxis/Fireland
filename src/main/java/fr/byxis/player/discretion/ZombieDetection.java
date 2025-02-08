@@ -21,38 +21,38 @@ public class ZombieDetection implements Listener {
     
     private final Fireland main;
     
-    public ZombieDetection(Fireland main) {
-        this.main = main;
+    public ZombieDetection(Fireland _main) {
+        this.main = _main;
     }
 
     @EventHandler
-    public void PlayerJoin(PlayerJoinEvent e)
+    public void playerJoin(PlayerJoinEvent e)
     {
-        main.hashMapManager.addDiscretionMap(e.getPlayer().getUniqueId());
+        main.getHashMapManager().addDiscretionMap(e.getPlayer().getUniqueId());
     }
     @EventHandler
-    public void PlayerQuit(PlayerQuitEvent e)
+    public void playerQuit(PlayerQuitEvent e)
     {
-        main.hashMapManager.removeDiscretionMap(e.getPlayer().getUniqueId());
+        main.getHashMapManager().removeDiscretionMap(e.getPlayer().getUniqueId());
     }
 
     @EventHandler
-    public void EntityTarget(EntityTargetEvent e)
+    public void entityTarget(EntityTargetEvent e)
     {
         Entity entity = e.getEntity();
         Entity target = e.getTarget();
-        if((entity instanceof Zombie || entity instanceof Stray ||entity instanceof Husk) && target instanceof Player)
+        if ((entity instanceof Zombie || entity instanceof Stray || entity instanceof Husk) && target instanceof Player)
         {
             Player player = (Player) target;
-            if(!main.hashMapManager.getDiscretionMap().containsKey(player.getUniqueId()))
+            if (!main.getHashMapManager().getDiscretionMap().containsKey(player.getUniqueId()))
             {
-                main.hashMapManager.addDiscretionMap(player.getUniqueId());
+                main.getHashMapManager().addDiscretionMap(player.getUniqueId());
             }
-            //float score = main.cfgm.getPlayerDB().getInt("discretion."+player.getUniqueId()+".score");
-            double score = main.hashMapManager.getDiscretionMap().get(player.getUniqueId()).getScore();
+            //float score = main.getCfgm().getPlayerDB().getInt("discretion."+player.getUniqueId()+".score");
+            double score = main.getHashMapManager().getDiscretionMap().get(player.getUniqueId()).getScore();
 
-            double calcul = 0.008 *Math.pow((120-score), 2);
-            if(player.getLocation().distance(entity.getLocation()) >= calcul || HashMapManager.getDiscretionMap().get(player.getUniqueId()).isShooting())
+            double calcul = 0.008 * Math.pow((120 - score), 2);
+            if (player.getLocation().distance(entity.getLocation()) >= calcul || HashMapManager.getDiscretionMap().get(player.getUniqueId()).isShooting())
             {
                 e.setCancelled(true);
             }
@@ -62,19 +62,19 @@ public class ZombieDetection implements Listener {
     @EventHandler
     public void playerEat(final PlayerItemConsumeEvent e)
     {
-        //main.cfgm.getPlayerDB().set("discretion."+e.getPlayer().getUniqueId()+".eat", true);
-        //main.cfgm.savePlayerDB();
-        main.hashMapManager.getDiscretionMap().get(e.getPlayer().getUniqueId()).setEating(true);
+        //main.getCfgm().getPlayerDB().set("discretion."+e.getPlayer().getUniqueId()+".eat", true);
+        //main.getCfgm().savePlayerDB();
+        main.getHashMapManager().getDiscretionMap().get(e.getPlayer().getUniqueId()).setEating(true);
         new BukkitRunnable() 
         {
 
             @Override
             public void run() {
-                //main.cfgm.getPlayerDB().set("discretion."+e.getPlayer().getUniqueId()+".eat", false);
-                //main.cfgm.savePlayerDB();
-                if(main.hashMapManager.getDiscretionMap().containsKey(e.getPlayer().getUniqueId()))
+                //main.getCfgm().getPlayerDB().set("discretion."+e.getPlayer().getUniqueId()+".eat", false);
+                //main.getCfgm().savePlayerDB();
+                if (main.getHashMapManager().getDiscretionMap().containsKey(e.getPlayer().getUniqueId()))
                 {
-                    main.hashMapManager.getDiscretionMap().get(e.getPlayer().getUniqueId()).setEating(false);
+                    main.getHashMapManager().getDiscretionMap().get(e.getPlayer().getUniqueId()).setEating(false);
                 }
                 
             }
@@ -86,7 +86,7 @@ public class ZombieDetection implements Listener {
     public void playerEquip(PlayerArmorChangeEvent e)
     {
         Player p = e.getPlayer();
-        if(HashMapManager.getDiscretionMap().containsKey(p.getUniqueId()))
+        if (HashMapManager.getDiscretionMap().containsKey(p.getUniqueId()))
             HashMapManager.getDiscretionMap().get(p.getUniqueId()).setUsingCamo(isCamo(p));
         else
         {
@@ -97,7 +97,7 @@ public class ZombieDetection implements Listener {
 
     @EventHandler
     public void playerMouvement(PlayerMoveEvent e) {
-        if(!(e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockZ() != e.getTo().getBlockZ() || e.getFrom().getBlockY() != e.getTo().getBlockY()) ||!main.hashMapManager.getDiscretionMap().containsKey(e.getPlayer().getUniqueId())||main.hashMapManager.getDiscretionMap().get(e.getPlayer().getUniqueId()).isListeningMovements())
+        if (!(e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockZ() != e.getTo().getBlockZ() || e.getFrom().getBlockY() != e.getTo().getBlockY()) || !main.getHashMapManager().getDiscretionMap().containsKey(e.getPlayer().getUniqueId()) || main.getHashMapManager().getDiscretionMap().get(e.getPlayer().getUniqueId()).isListeningMovements())
         {
             return;
         }
@@ -105,17 +105,17 @@ public class ZombieDetection implements Listener {
         final Location to = new Location(e.getTo().getWorld(), e.getTo().getX(), e.getTo().getY(), e.getTo().getZ());
 
         final Player p = e.getPlayer();
-        if(from.getX() != to.getX() || from.getZ() != to.getZ())
+        if (from.getX() != to.getX() || from.getZ() != to.getZ())
         {
-            main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).setMoving(true);
-            main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).setListeningMovements(true);
+            main.getHashMapManager().getDiscretionMap().get(p.getUniqueId()).setMoving(true);
+            main.getHashMapManager().getDiscretionMap().get(p.getUniqueId()).setListeningMovements(true);
             new BukkitRunnable()
             {
 
                 @Override
                 public void run() {
-                    main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).setListeningMovements(false);
-                    main.hashMapManager.getDiscretionMap().get(p.getUniqueId()).setMoving(false);
+                    main.getHashMapManager().getDiscretionMap().get(p.getUniqueId()).setListeningMovements(false);
+                    main.getHashMapManager().getDiscretionMap().get(p.getUniqueId()).setMoving(false);
                 }
 
             }.runTaskLater(main, 10);
@@ -124,32 +124,32 @@ public class ZombieDetection implements Listener {
 
     public boolean isCamo(Player p)
     {
-        if(!(p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.GOLDEN_HELMET) )
+        if (!(p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.GOLDEN_HELMET))
         {
             return false;
         }
         ItemStack helmet = p.getInventory().getHelmet();
-        if(!(p.getInventory().getChestplate() != null && p.getInventory().getChestplate().getType() == Material.GOLDEN_CHESTPLATE))
+        if (!(p.getInventory().getChestplate() != null && p.getInventory().getChestplate().getType() == Material.GOLDEN_CHESTPLATE))
         {
             return false;
         }
         ItemStack chestplate = p.getInventory().getChestplate();
-        if(!(p.getInventory().getLeggings() != null && p.getInventory().getLeggings().getType() == Material.GOLDEN_LEGGINGS))
+        if (!(p.getInventory().getLeggings() != null && p.getInventory().getLeggings().getType() == Material.GOLDEN_LEGGINGS))
         {
             return false;
         }
         ItemStack leggings = p.getInventory().getLeggings();
-        if(!(p.getInventory().getBoots() != null && p.getInventory().getBoots().getType() == Material.GOLDEN_BOOTS))
+        if (!(p.getInventory().getBoots() != null && p.getInventory().getBoots().getType() == Material.GOLDEN_BOOTS))
         {
             return false;
         }
         ItemStack boots = p.getInventory().getBoots();
-        if((!helmet.getItemMeta().hasCustomModelData() || helmet.getItemMeta().getCustomModelData() == 0) &&
+        if ((!helmet.getItemMeta().hasCustomModelData() || helmet.getItemMeta().getCustomModelData() == 0) &&
                 (!chestplate.getItemMeta().hasCustomModelData() || chestplate.getItemMeta().getCustomModelData() == 0) &&
                 (!leggings.getItemMeta().hasCustomModelData() || leggings.getItemMeta().getCustomModelData() == 0) &&
                 (!boots.getItemMeta().hasCustomModelData() || boots.getItemMeta().getCustomModelData() == 0))
         {
-            if(new Location(Bukkit.getWorld("world"), -456, 34, -417).getBlock().getType() == Material.OAK_LEAVES)
+            if (new Location(Bukkit.getWorld("world"), -456, 34, -417).getBlock().getType() == Material.OAK_LEAVES)
             {
                 return true;
             }
@@ -159,7 +159,7 @@ public class ZombieDetection implements Listener {
                 leggings.getItemMeta().getCustomModelData() == 1 &&
                 boots.getItemMeta().getCustomModelData() == 1)
         {
-            if(new Location(Bukkit.getWorld("world"), -456, 34, -417).getBlock().getType() == Material.SNOW_BLOCK)
+            if (new Location(Bukkit.getWorld("world"), -456, 34, -417).getBlock().getType() == Material.SNOW_BLOCK)
             {
                 return true;
             }
@@ -178,7 +178,7 @@ public class ZombieDetection implements Listener {
         
         final Player p = e.getPlayer();
         
-        final FileConfiguration config = main.cfgm.getPlayerDB();
+        final FileConfiguration config = main.getCfgm().getPlayerDB();
         
         
         // jump
@@ -194,7 +194,7 @@ public class ZombieDetection implements Listener {
 					if(p.getLocation().getY() == to.getY())
 					{
 						config.set("discretion."+e.getPlayer().getUniqueId()+".jump", false);
-			        	main.cfgm.savePlayerDB();
+			        	main.getCfgm().savePlayerDB();
 					}
 					
 				}
@@ -214,7 +214,7 @@ public class ZombieDetection implements Listener {
 					if(p.getLocation().getX() == to.getX() || p.getLocation().getY() == to.getY())
 					{
 						config.set("discretion."+e.getPlayer().getUniqueId()+".move", false);
-			        	main.cfgm.savePlayerDB();
+			        	main.getCfgm().savePlayerDB();
 					}
 					
 				}
@@ -228,7 +228,7 @@ public class ZombieDetection implements Listener {
                 	if(e.getPlayer().getLocation().equals(to))
                 	{
                 		config.set("mouvement."+e.getPlayer().getUniqueId(), false);
-                    	main.cfgm.savePlayerDB();
+                    	main.getCfgm().savePlayerDB();
                 	}
                     cancel();
                 }
@@ -242,24 +242,24 @@ public class ZombieDetection implements Listener {
                 	if(e.getPlayer().getLocation().equals(to))
                 	{
                 		config.set("mouvement."+e.getPlayer().getUniqueId(), false);
-                    	main.cfgm.savePlayerDB();
+                    	main.getCfgm().savePlayerDB();
                 	}
 					if(p.getLocation().getX() == to.getX() || p.getLocation().getY() == to.getY())
 					{
 						config.set("discretion."+e.getPlayer().getUniqueId()+".move", false);
-						main.cfgm.savePlayerDB();
+						main.getCfgm().savePlayerDB();
 					}
 					if(p.getLocation().getY() == to.getY())
 					{
 						config.set("discretion."+e.getPlayer().getUniqueId()+".jump", false);
-						main.cfgm.savePlayerDB();
+						main.getCfgm().savePlayerDB();
 					}
                     cancel();
                 }
             }).runTaskLater(main, 10L);
 
 
-		main.cfgm.savePlayerDB();
+		main.getCfgm().savePlayerDB();
     }*/
 
     /*
@@ -270,14 +270,14 @@ public class ZombieDetection implements Listener {
 
 		final Player p = e.getPlayer();
 
-		final FileConfiguration config = main.cfgm.getPlayerDB();
+		final FileConfiguration config = main.getCfgm().getPlayerDB();
 
 
 		// jump
 		if(from.getY() != to.getY())
 		{
 			config.set("discretion."+e.getPlayer().getUniqueId()+".jump", true);
-			main.cfgm.savePlayerDB();
+			main.getCfgm().savePlayerDB();
 
 			new BukkitRunnable()
 			{
@@ -287,7 +287,7 @@ public class ZombieDetection implements Listener {
 					if(p.getLocation().getY() == to.getY())
 					{
 						config.set("discretion."+e.getPlayer().getUniqueId()+".jump", false);
-						main.cfgm.savePlayerDB();
+						main.getCfgm().savePlayerDB();
 					}
 
 				}
@@ -299,7 +299,7 @@ public class ZombieDetection implements Listener {
 		if(from.getX() != to.getX() || from.getY() != to.getY())
 		{
 			config.set("discretion."+e.getPlayer().getUniqueId()+".move", true);
-			main.cfgm.savePlayerDB();
+			main.getCfgm().savePlayerDB();
 
 			new BukkitRunnable()
 			{
@@ -309,7 +309,7 @@ public class ZombieDetection implements Listener {
 					if(p.getLocation().getX() == to.getX() || p.getLocation().getY() == to.getY())
 					{
 						config.set("discretion."+e.getPlayer().getUniqueId()+".move", false);
-						main.cfgm.savePlayerDB();
+						main.getCfgm().savePlayerDB();
 					}
 
 				}
@@ -319,13 +319,13 @@ public class ZombieDetection implements Listener {
 
 		if (!to.equals(from)) {
 			config.set("mouvement."+e.getPlayer().getUniqueId(), true);
-			main.cfgm.savePlayerDB();
+			main.getCfgm().savePlayerDB();
 			(new BukkitRunnable() {
 				public void run() {
 					if(e.getPlayer().getLocation().equals(to))
 					{
 						config.set("mouvement."+e.getPlayer().getUniqueId(), false);
-						main.cfgm.savePlayerDB();
+						main.getCfgm().savePlayerDB();
 					}
 					cancel();
 				}

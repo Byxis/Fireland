@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import static fr.byxis.fireland.Fireland.getEco;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class PlayerDeath implements Listener
@@ -21,9 +22,9 @@ public class PlayerDeath implements Listener
 
     private final Fireland main;
 
-    public PlayerDeath(Fireland main)
+    public PlayerDeath(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
     
     public static double round(double value, int places) {
@@ -35,10 +36,10 @@ public class PlayerDeath implements Listener
     }
 
     @EventHandler
-    public void PlayerRespawn(PlayerRespawnEvent e)
+    public void playerRespawn(PlayerRespawnEvent e)
     {
         PlayerLevel pl = getPlayerLevel(e.getPlayer().getUniqueId());
-        if(pl.getNation().equals(LevelStorage.Nation.Bannis))
+        if (pl.getNation().equals(LevelStorage.Nation.Bannis))
         {
             Location loc = new Location(Bukkit.getWorld("world"), 341.5, 72, -209.5);
             e.setRespawnLocation(loc);
@@ -46,26 +47,26 @@ public class PlayerDeath implements Listener
     }
     
     @EventHandler
-    public void PlayerDeath(PlayerDeathEvent e)
+    public void playerDeath(PlayerDeathEvent e)
     {
         Player killed = e.getEntity();
 
-        if(e.getEntity().getLastDamageCause() == null || !(e.getEntity().getLastDamageCause().getEntity() instanceof Player killer))
+        if (e.getEntity().getLastDamageCause() == null || !(e.getEntity().getLastDamageCause().getEntity() instanceof Player killer))
             return;
         
-        double money = main.eco.getBalance(killed);
-        double pay = money/2;
-        if(main.hashMapManager.getBooster() != null)
+        double money = getEco().getBalance(killed);
+        double pay = money / 2;
+        if (main.getHashMapManager().getBooster() != null)
         {
-            pay = money/(2 *(1-main.hashMapManager.getBooster().getBoosterLootPercent()/100));
+            pay = money / (2 * (1 - main.getHashMapManager().getBooster().getBoosterLootPercent() / 100));
         }
         pay = round(pay, 1);
         killed.sendMessage("§cVous avez perdu " + pay + "$ !");
-        main.eco.withdrawPlayer(killed, pay);
-        if(e.getEntity().getKiller() != null && !killed.getName().equalsIgnoreCase(killer.getName()))
+        getEco().withdrawPlayer(killed, pay);
+        if (e.getEntity().getKiller() != null && !killed.getName().equalsIgnoreCase(killer.getName()))
         {
             killer.sendMessage("§7Vous avez gagné §c " + pay + "$§7 en tuant §c " + killed.getName() + "§7 !");
-            main.eco.depositPlayer(killer, pay);
+            getEco().depositPlayer(killer, pay);
         }
     }
     

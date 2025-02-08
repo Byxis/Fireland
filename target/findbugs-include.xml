@@ -1,0 +1,16 @@
+<FindBugsFilter>
+    <!-- Exclure les warnings mineurs -->
+    <Match>
+        <Bug category="STYLE" />
+    </Match>
+
+    <!-- Exclure les variables non utilisées -->
+    <Match>
+        <Bug code="URF_UNREAD_FIELD" />
+    </Match>
+
+    <!-- Inclure les bugs critiques liés aux flux -->
+    <Match>
+        <Bug category="CORRECTNESS" />
+    </Match>
+</FindBugsFilter>

@@ -29,13 +29,13 @@ public class PlayerManager implements Listener
 
     private Fireland main;
 
-    public PlayerManager(Fireland main)
+    public PlayerManager(Fireland _main)
     {
-        this.main = main;
+        this.main = _main;
     }
 
     @EventHandler
-    private void onRightClick(PlayerInteractAtEntityEvent e)
+    public void onRightClick(PlayerInteractAtEntityEvent e)
     {
         if (e.getRightClicked() instanceof Player interacted && !e.getRightClicked().getName().contains("CIT-"))
         {
@@ -46,40 +46,37 @@ public class PlayerManager implements Listener
     }
 
     @EventHandler
-    private void playerDestroyItemframe(EntityDamageByEntityEvent e)
+    public void playerDestroyItemframe(EntityDamageByEntityEvent e)
     {
         if (e.getEntity() instanceof ItemFrame)
         {
-            if (e.getDamager() instanceof Player p)
+            if (e.getDamager() instanceof Player p && p.getGameMode() != GameMode.CREATIVE)
             {
-                if (p.getGameMode() != GameMode.CREATIVE)
-                {
-                    e.setCancelled(true);
-                }
+                e.setCancelled(true);
             }
         }
     }
 
     @EventHandler
-    private void PlayerKillZombie(EntityDeathEvent e)
+    private void playerKillZombie(EntityDeathEvent e)
     {
-        if (e.getEntity().getKiller() != null && main.hashMapManager.getBooster() != null)
+        if (e.getEntity().getKiller() != null && main.getHashMapManager().getBooster() != null)
         {
             Player killer = e.getEntity().getKiller();
-            int money = BasicUtilities.generateInt((int) main.hashMapManager.getBooster().getMoneyMin(), (int) main.hashMapManager.getBooster().getMoneyMax() + 1);
+            int money = BasicUtilities.generateInt((int) main.getHashMapManager().getBooster().getMoneyMin(), (int) main.getHashMapManager().getBooster().getMoneyMax() + 1);
             if (money > 0)
             {
-                main.eco.depositPlayer(killer, money);
-                killer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous avez gagné " + money + "$ grâce au boost de " + ((Player) Bukkit.getOfflinePlayer(main.hashMapManager.getBooster().getUuid())).getName() + "."));
+                Fireland.getEco().depositPlayer(killer, money);
+                killer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous avez gagné " + money + "$ grâce au boost de " + ((Player) Bukkit.getOfflinePlayer(main.getHashMapManager().getBooster().getUuid())).getName() + "."));
 
             }
-         }
+        }
     }
 
     @EventHandler
     private void playerQuit(PlayerQuitEvent e)
     {
-        main.hashMapManager.removeTeleporting(e.getPlayer().getUniqueId());
+        main.getHashMapManager().removeTeleporting(e.getPlayer().getUniqueId());
     }
 
     @EventHandler

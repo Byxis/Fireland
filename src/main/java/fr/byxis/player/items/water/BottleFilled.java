@@ -122,7 +122,7 @@ public class BottleFilled implements Listener
                     setPurify(p, true);
                     InGameUtilities.sendPlayerInformation(p, "Vous pouvez re-purifier une bouteille d'eau.");
                 }
-            }.runTaskLater(main, minutes *60 *20);
+            }.runTaskLater(main, minutes * 60 * 20);
         }
         else
         {

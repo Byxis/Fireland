@@ -26,12 +26,12 @@ import java.util.List;
 
 public class OpenNotes implements @NotNull Listener, CommandExecutor {
 
-    private Fireland main;
+    private final Fireland main;
     private NotesConfig config;
 
-    public OpenNotes(Fireland main) {
-        this.main = main;
-        config = new NotesConfig(main, true);
+    public OpenNotes(Fireland _main) {
+        this.main = _main;
+        config = new NotesConfig(_main, true);
     }
 
     public static List<String> usingSubstringMethod(String text, int n)

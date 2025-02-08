@@ -17,22 +17,22 @@ import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class PrimeEvent implements Listener {
 
-    public static PrimesConfig config;
+    private static PrimesConfig config;
     private final Fireland main;
 
-    private static final long day = 14;
+    private static final long DAY = 14;
 
 
-    public PrimeEvent(Fireland main)
+    public PrimeEvent(Fireland _main)
     {
-        config = new PrimesConfig(main);
-        this.main = main;
+        config = new PrimesConfig(_main);
+        this.main = _main;
     }
     public static long getPrimeMaxDay()
     {
-        return day;
+        return DAY;
     }
-    public static void SavePrime()
+    public static void savePrime()
     {
         if (config.getConfig().contains(""))
         {
@@ -124,7 +124,7 @@ public class PrimeEvent implements Listener {
     {
         if (!e.getWorld().getName().equalsIgnoreCase("world"))
             return;
-        SavePrime();
+        savePrime();
     }
 
     @EventHandler
@@ -141,7 +141,7 @@ public class PrimeEvent implements Listener {
 
             if (prime > 0 && !(ff.playerFactionName(p).equalsIgnoreCase(ff.playerFactionName(killer))))
             {
-                Fireland.eco.depositPlayer(killer, prime);
+                Fireland.getEco().depositPlayer(killer, prime);
                 setPrime(p, 0);
                 for (Player player : Bukkit.getOnlinePlayers())
                 {
@@ -160,6 +160,11 @@ public class PrimeEvent implements Listener {
                 }
             }
         }
+    }
+
+    public static PrimesConfig getConfig()
+    {
+        return config;
     }
 
     public static void addPrime(Player p, int value)

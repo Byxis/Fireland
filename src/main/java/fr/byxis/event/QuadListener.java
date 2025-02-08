@@ -16,54 +16,48 @@ import org.bukkit.potion.PotionEffectType;
 
 public class QuadListener implements Listener
 {
-    
-    @SuppressWarnings("unused")
-    private Fireland main;
 
-    public QuadListener(Fireland main)
+    public QuadListener()
     {
-        this.main = main;
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler
     public void spawnQuad(PlayerInteractEvent e)
     {
-        if(e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.DEAD_TUBE_CORAL)
+        if (e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.DEAD_TUBE_CORAL)
         {
-            SpawnQuad(e.getPlayer());
-            e.getPlayer().getItemInHand().setAmount(e.getPlayer().getItemInHand().getAmount()-1);
+            spawnQuad(e.getPlayer());
+            e.getPlayer().getItemInHand().setAmount(e.getPlayer().getItemInHand().getAmount() - 1);
         }
     }
-    
-    @SuppressWarnings("deprecation")
-    private void SpawnQuad(Player p)
+
+    private void spawnQuad(Player p)
     {
         boolean block = true;
         Location init = p.getLocation();
         
-        if(!(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()).getBlock().isPassable()) && block)
+        if (!(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()).getBlock().isPassable()) && block)
         {
             block = false;
         }
-        if(!(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()-1).getBlock().isPassable()) && block)
+        if (!(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ() - 1).getBlock().isPassable()) && block)
         {
             block = false;
         }
-        if(!(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ() + 1).getBlock().isPassable()) && block)
+        if (!(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ() + 1).getBlock().isPassable()) && block)
         {
             block = false;
         }
-        if(!(new Location(init.getWorld(), init.getX() + 1, init.getY(), init.getZ()).getBlock().isPassable()) && block)
+        if (!(new Location(init.getWorld(), init.getX() + 1, init.getY(), init.getZ()).getBlock().isPassable()) && block)
         {
             block = false;
         }
-        if(!(new Location(init.getWorld(), init.getX()-1, init.getY(), init.getZ()).getBlock().isPassable()) && block)
+        if (!(new Location(init.getWorld(), init.getX() - 1, init.getY(), init.getZ()).getBlock().isPassable()) && block)
         {
             block = false;
         }
         
-        if(block)
+        if (block)
         {
             Location loc = p.getLocation();
             loc.setYaw(0);

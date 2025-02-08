@@ -12,23 +12,23 @@ public class FactionCapturingClass {
     private String name;
     private final List<Player> playerList;
     private double progression;
-    private String color;
-    private Material material;
+    private final String color;
+    private final Material material;
 
-    public FactionCapturingClass(String name, List<Player> playerList, int progression, String... color)
+    public FactionCapturingClass(String _name, List<Player> _playerList, int _progression, String... _color)
     {
-        this.name = name;
-        this.playerList = playerList;
-        this.progression = progression;
-        if (color != null)
+        this.name = _name;
+        this.playerList = _playerList;
+        this.progression = _progression;
+        if (_color != null)
         {
-            this.color = Arrays.toString(color);
+            this.color = Arrays.toString(_color);
         }
         else
         {
             this.color = "§7";
         }
-        this.material = BlockUtilities.getGlassPaneColor(Arrays.toString(color));
+        this.material = BlockUtilities.getGlassPaneColor(Arrays.toString(_color));
     }
 
 
@@ -36,9 +36,9 @@ public class FactionCapturingClass {
         return name;
     }
 
-    public void changeName(String name)
+    public void changeName(String _name)
     {
-        this.name = name;
+        this.name = _name;
     }
 
     public List<Player> getPlayerList() {
@@ -58,17 +58,17 @@ public class FactionCapturingClass {
     }
 
     public void addProgression(int totalProgressionNeeded, double seconds) {
-        int TotalTime = totalProgressionNeeded *60;
-        this.progression += (seconds/TotalTime) *100;
+        int totalTime = totalProgressionNeeded * 60;
+        this.progression += (seconds / totalTime) * 100;
     }
 
-    public void setProgression(int progression) {
-        this.progression = progression;
+    public void setProgression(int _progression) {
+        this.progression = _progression;
     }
 
     public double getNextProgression(int totalProgressionNeeded, double seconds) {
-        int TotalTime = totalProgressionNeeded *60;
-        return this.progression + (seconds/TotalTime) *100;
+        int totalTime = totalProgressionNeeded * 60;
+        return this.progression + (seconds / totalTime) * 100;
     }
 
     public String getFormattedName()

@@ -1,16 +1,13 @@
 package fr.byxis.player.quest.questclass;
 
-import io.lumine.mythic.api.mobs.MythicMob;
-import org.bukkit.entity.Entity;
+public class KillQuestClass extends QuestClass {
+    private final String killed;
+    private final int amount;
 
-public class KillQuestClass extends QuestClass{
-    private String killed;
-    private int amount;
-
-    public KillQuestClass(int questId, String title, String description, double reward, double jetons, String objective, String killed, int amount) {
+    public KillQuestClass(int questId, String title, String description, double reward, double jetons, String objective, String _killed, int _amount) {
         super(questId, title, description, reward, jetons, objective);
-        this.killed = killed;
-        this.amount = amount;
+        this.killed = _killed;
+        this.amount = _amount;
     }
 
     public int getAmount() {

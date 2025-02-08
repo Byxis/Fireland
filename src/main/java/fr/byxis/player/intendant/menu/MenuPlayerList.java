@@ -16,20 +16,20 @@ import java.util.ArrayList;
 
 public class MenuPlayerList {
 
-    public static void OpenPlayerList(Fireland main, Player p)
+    public static void openPlayerList(Fireland main, Player p)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         FactionFunctions ff = new FactionFunctions(main, p);
-        FactionPlayerInformation infos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
-        Inventory PlayerList = Bukkit.createInventory(null, 54, "§8Membres de " + ff.GetColorCode(infos.getFactionName()) + infos.getFactionName());
-        SetPlayerListItems(main, PlayerList, p);
-        p.openInventory(PlayerList);
+        FactionPlayerInformation infos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
+        Inventory playerList = Bukkit.createInventory(null, 54, "§8Membres de " + ff.getColorCode(infos.getFactionName()) + infos.getFactionName());
+        setPlayerListItems(main, playerList, p);
+        p.openInventory(playerList);
     }
 
-    private static void SetPlayerListItems(Fireland main, Inventory inventory, Player p)
+    private static void setPlayerListItems(Fireland main, Inventory inventory, Player p)
     {
         FactionFunctions ff = new FactionFunctions(main, p);
-        FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
+        FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
         if (pInfos != null)
         {
             ArrayList<FactionPlayerInformation> infos = ff.getPlayersFromFaction(pInfos.getFactionName());
@@ -66,17 +66,17 @@ public class MenuPlayerList {
                 }
                 if (info.getRole() == 2)
                 {
-                    inventory.setItem(0, InventoryUtilities.GetHead(info.getUuid(), connectionInformation + "§cLeader: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you));
+                    inventory.setItem(0, InventoryUtilities.getHead(info.getUuid(), connectionInformation + "§cLeader: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you));
                 }
                 if (info.getRole() == 1)
                 {
 
-                    inventory.setItem(member, InventoryUtilities.GetHead(info.getUuid(), connectionInformation + "§eModérateur: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you + nouveau));
+                    inventory.setItem(member, InventoryUtilities.getHead(info.getUuid(), connectionInformation + "§eModérateur: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you + nouveau));
                     member++;
                 }
                 if (info.getRole() == 0)
                 {
-                    inventory.setItem(member, InventoryUtilities.GetHead(info.getUuid(), connectionInformation + "§aMembre: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you + nouveau));
+                    inventory.setItem(member, InventoryUtilities.getHead(info.getUuid(), connectionInformation + "§aMembre: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you + nouveau));
                     member++;
                 }
                 you = "";

@@ -34,11 +34,11 @@ public class BunkerManager {
 
     }
 
-    public BunkerClass FindBunkerEnteredByPlayer(String player)
+    public BunkerClass findBunkerEnteredByPlayer(String player)
     {
         for (BunkerClass bunker : m_loadedBunker.values())
         {
-            for (Player p : bunker.m_playerInsideOldLocation.keySet())
+            for (Player p : bunker.getPlayerInside())
             {
                 if (p.getName().equals(player))
                 {
@@ -65,17 +65,17 @@ public class BunkerManager {
         if (!m_loadedBunker.containsKey(name))
         {
             BunkerClass bunker = new BunkerClass(name, m_main);
-            AddLoadedBunker(bunker);
+            addLoadedBunker(bunker);
         }
     }
 
-    public void AddLoadedBunker(BunkerClass bk)
+    public void addLoadedBunker(BunkerClass bk)
     {
-        if (!m_loadedBunker.containsKey(bk.GetName()))
-            m_loadedBunker.put(bk.GetName(), bk);
+        if (!m_loadedBunker.containsKey(bk.getName()))
+            m_loadedBunker.put(bk.getName(), bk);
     }
 
-    public HashMap<Material, String[]> GetBunkerSkins()
+    public HashMap<Material, String[]> getBunkerSkins()
     {
         return m_skinList;
     }

@@ -9,44 +9,44 @@ public class FactionZoneInformation {
     private Timestamp claimedAt;
     private long totalDuration;
 
-    public FactionZoneInformation(String factionName, String zoneName, Timestamp claimedAt, long totalDuration)
+    public FactionZoneInformation(String _factionName, String _zoneName, Timestamp _claimedAt, long _totalDuration)
     {
-        this.factionName = factionName;
-        this.zoneName = zoneName;
-        this.claimedAt = claimedAt;
-        this.totalDuration = totalDuration;
+        this.factionName = _factionName;
+        this.zoneName = _zoneName;
+        this.claimedAt = _claimedAt;
+        this.totalDuration = _totalDuration;
     }
 
     public String getFactionName() {
         return factionName;
     }
 
-    public void setFactionName(String factionName) {
-        this.factionName = factionName;
+    public void setFactionName(String _factionName) {
+        this.factionName = _factionName;
     }
 
     public String getZoneName() {
         return zoneName;
     }
 
-    public void setZoneName(String zoneName) {
-        this.zoneName = zoneName;
+    public void setZoneName(String _zoneName) {
+        this.zoneName = _zoneName;
     }
 
     public Timestamp getClaimedAt() {
         return claimedAt;
     }
 
-    public void setClaimedAt(Timestamp claimedAt) {
-        this.claimedAt = claimedAt;
+    public void setClaimedAt(Timestamp _claimedAt) {
+        this.claimedAt = _claimedAt;
     }
 
     public long getTotalDuration() {
         return totalDuration;
     }
 
-    public void setTotalDuration(long totalDuration) {
-        this.totalDuration = totalDuration;
+    public void setTotalDuration(long _totalDuration) {
+        this.totalDuration = _totalDuration;
     }
 
     public String getFormattedName()

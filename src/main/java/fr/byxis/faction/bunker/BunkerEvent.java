@@ -23,7 +23,7 @@ import static fr.byxis.fireland.utilities.BasicUtilities.getUuid;
 import static fr.byxis.player.intendant.menu.MenuBunker.*;
 
 public class BunkerEvent implements Listener {
-    private Fireland main;
+    private final Fireland main;
 
     public BunkerEvent(Fireland _main)
     {
@@ -31,39 +31,41 @@ public class BunkerEvent implements Listener {
     }
 
     @EventHandler
-    public void PlayerInteraction(PlayerInteractEvent e)
+    public void playerInteraction(PlayerInteractEvent e)
     {
-        if ((!e.getPlayer().getWorld().getName().equalsIgnoreCase("bunker")) || e.getClickedBlock() == null || e.getAction() == Action.LEFT_CLICK_BLOCK)
+        if ((!e.getPlayer().getWorld().getName().equalsIgnoreCase("bunker"))
+                || e.getClickedBlock() == null
+                || e.getAction() == Action.LEFT_CLICK_BLOCK)
             return;
 
-        switch(e.getClickedBlock().getType())
+        switch (e.getClickedBlock().getType())
         {
-            case DEAD_HORN_CORAL_WALL_FAN -> OpenBunker(main , e.getPlayer());
+            case DEAD_HORN_CORAL_WALL_FAN -> openBunker(main, e.getPlayer());
             case SMOKER ->
             {
                 e.setCancelled(true);
-                OpenBunkerFood(main , e.getPlayer());
+                openBunkerFood(main, e.getPlayer());
             }
             case SMITHING_TABLE ->
             {
                 e.setCancelled(true);
-                OpenBunkerMechanic(main , e.getPlayer());
+                openBunkerMechanic(main, e.getPlayer());
             }
             case BREWING_STAND ->
             {
                 e.setCancelled(true);
-                OpenBunkerAlchemy(main , e.getPlayer());
+                openBunkerAlchemy(main, e.getPlayer());
             }
             case CHEST ->
             {
                 e.setCancelled(true);
-                OpenBunkerChest(main , e.getPlayer());
+                openBunkerChest(main, e.getPlayer());
             }
         }
     }
 
     @EventHandler
-    public void PlayerClick(InventoryClickEvent e)
+    public void playerClick(InventoryClickEvent e)
     {
         if (!e.getView().getPlayer().getWorld().getName().equalsIgnoreCase("bunker"))
             return;
@@ -84,50 +86,50 @@ public class BunkerEvent implements Listener {
 
             if (e.getCurrentItem().getType() == Material.BARRIER)
             {
-                BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
+                BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
                 if (bk != null)
-                    bk.Leave(p);
+                    bk.leave(p);
                 else
                     p.teleport(new Location(Bukkit.getWorld("world"), -447.5, 65, -447.5));
             }
             else if (e.getCurrentItem().getType() == Material.MAP)
             {
-                OpenInviteBunker(main, p, 1);
+                openInviteBunker(main, p, 1);
             }
             else if (e.getCurrentItem().getType() == Material.RABBIT_HIDE)
             {
                 FactionFunctions ff = new FactionFunctions(main, p);
-                FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
+                FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
                 FactionInformation infos = ff.getFactionInfo(pInfos.getFactionName());
 
                 if (infos != null && pInfos != null && pInfos.getRole() == 2)
                 {
-                    OpenBunkerSkin(main, p);
+                    openBunkerSkin(main, p);
                 }
             }
             else if (e.getCurrentItem().getType() == Material.ANVIL)
             {
-                BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
+                BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
                 FactionFunctions ff = new FactionFunctions(main, p);
-                FactionPlayerInformation pInfos = ff.GetInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
+                FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
                 FactionInformation infos = ff.getFactionInfo(pInfos.getFactionName());
 
                 if (infos != null && pInfos != null && pInfos.getRole() == 2)
                 {
-                    if (bk.GetAmeliorationFactionLevel() <= infos.getCurrentUpgrade())
+                    if (bk.getAmeliorationFactionLevel() <= infos.getCurrentUpgrade())
                     {
-                        if (infos.getCurrentMoney() >= bk.GetAmeliorationPriceMoney())
+                        if (infos.getCurrentMoney() >= bk.getAmeliorationPriceMoney())
                         {
-                            if (JetonManager.getJetonsPlayer(p.getUniqueId()) >= bk.GetAmeliorationPriceJetons())
+                            if (JetonManager.getJetonsPlayer(p.getUniqueId()) >= bk.getAmeliorationPriceJetons())
                             {
-                                if (bk.GetAmeliorationPriceJetons() > 0)
+                                if (bk.getAmeliorationPriceJetons() > 0)
                                 {
-                                    JetonManager.payJetons(p, bk.GetAmeliorationPriceJetons(),
-                                            "Achat de l'amélioration de bunker" + (bk.GetBunkerLevel() + 1), false, true);
+                                    JetonManager.payJetons(p, bk.getAmeliorationPriceJetons(),
+                                            "Achat de l'amélioration de bunker" + (bk.getBunkerLevel() + 1), false, true);
                                 }
                                 ff.sendFactionPlayer(infos.getName(), "Le bunker de votre faction a été amélioré !");
-                                ff.take(infos.getName(), bk.GetAmeliorationPriceMoney());
-                                bk.Upgrade();
+                                ff.take(infos.getName(), bk.getAmeliorationPriceMoney());
+                                bk.upgrade();
                             }
                             else
                             {
@@ -141,7 +143,7 @@ public class BunkerEvent implements Listener {
                     }
                     else
                     {
-                        InGameUtilities.sendPlayerError(p, "Le niveau de la faction est trop bas pour améliorer le bunker, cela nécessite le niveau " + bk.GetAmeliorationFactionLevel() + ".");
+                        InGameUtilities.sendPlayerError(p, "Le niveau de la faction est trop bas pour améliorer le bunker, cela nécessite le niveau " + bk.getAmeliorationFactionLevel() + ".");
                     }
                 }
             }
@@ -161,15 +163,15 @@ public class BunkerEvent implements Listener {
             if (e.getCurrentItem().getType() == Material.PLAYER_HEAD)
             {
                 String name = e.getCurrentItem().getItemMeta().getDisplayName();
-                BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
+                BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
                 Player invitee = Bukkit.getPlayer(getUuid(ChatColor.stripColor(name.split(" ")[1])));
                 if (invitee != null && bk != null && invitee.isOnline())
                 {
-                    if (!bk.IsInvited(invitee))
+                    if (!bk.isInvited(invitee))
                     {
                         InGameUtilities.sendPlayerSucces(p, "Le joueur " + invitee.getName() + " a bien été invité !");
-                        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez été invité par " + p.getName() + " dans le bunker de " + bk.GetName() + ", pour rejoindre, cliquez sur ce message ou tapez §d/bunker join " + bk.GetName() + "§r§7 tout en étant dans une safe zone.", "/bunker join " + bk.GetName(), "§dCliquez ici pour vous téléporter", ClickEvent.Action.RUN_COMMAND);
-                        bk.Invite(p, invitee);
+                        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez été invité par " + p.getName() + " dans le bunker de " + bk.getName() + ", pour rejoindre, cliquez sur ce message ou tapez §d/bunker join " + bk.getName() + "§r§7 tout en étant dans une safe zone.", "/bunker join " + bk.getName(), "§dCliquez ici pour vous téléporter", ClickEvent.Action.RUN_COMMAND);
+                        bk.invite(p, invitee);
                     }
                     else
                     {
@@ -180,7 +182,7 @@ public class BunkerEvent implements Listener {
             else if (e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE)
             {
                 e.setCancelled(true);
-                OpenBunker(main, p);
+                openBunker(main, p);
             }
         }
         else if (e.getView().getTitle().contains("Nourriture du bunker"))
@@ -197,11 +199,11 @@ public class BunkerEvent implements Listener {
 
             if (e.getCurrentItem().getType() == Material.COOKED_BEEF)
             {
-                BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
+                BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
                 if (bk != null)
                 {
-                    bk.ClaimFood(p);
-                    OpenBunkerFood(main , p);
+                    bk.claimFood(p);
+                    openBunkerFood(main, p);
                 }
             }
         }
@@ -217,25 +219,25 @@ public class BunkerEvent implements Listener {
 
             /**       Click check        **/
 
-            BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
+            BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
             if (bk != null)
             {
-                switch(e.getCurrentItem().getType())
+                switch (e.getCurrentItem().getType())
                 {
                     case NETHERITE_SCRAP ->
                     {
-                        bk.ClaimScrap(p);
-                        OpenBunkerMechanic(main , p);
+                        bk.claimScrap(p);
+                        openBunkerMechanic(main, p);
                     }
                     case GUNPOWDER ->
                     {
-                        bk.ClaimPowder(p);
-                        OpenBunkerMechanic(main , p);
+                        bk.claimPowder(p);
+                        openBunkerMechanic(main, p);
                     }
                     case IRON_INGOT ->
                     {
-                        bk.ClaimRepairKit(p);
-                        OpenBunkerMechanic(main , p);
+                        bk.claimRepairKit(p);
+                        openBunkerMechanic(main, p);
                     }
                     case RED_STAINED_GLASS_PANE ->  p.closeInventory();
                 }
@@ -253,27 +255,27 @@ public class BunkerEvent implements Listener {
 
             /**       Click check        **/
 
-            BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
+            BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
             if (bk != null)
             {
-                switch(e.getCurrentItem().getType())
+                switch (e.getCurrentItem().getType())
                 {
                     case HONEYCOMB ->
                     {
-                        bk.ClaimMeds(p);
-                        OpenBunkerAlchemy(main , p);
+                        bk.claimMeds(p);
+                        openBunkerAlchemy(main, p);
                     }
                     case WHEAT_SEEDS ->
                     {
                         if (e.getCurrentItem().getItemMeta().getCustomModelData() == 104)
                         {
-                            bk.ClaimAntiDouleur(p);
-                            OpenBunkerAlchemy(main , p);
+                            bk.claimAntiDouleur(p);
+                            openBunkerAlchemy(main, p);
                         }
                         else
                         {
-                            bk.ClaimSerum(p);
-                            OpenBunkerAlchemy(main , p);
+                            bk.claimSerum(p);
+                            openBunkerAlchemy(main, p);
                         }
                     }
                     case RED_STAINED_GLASS_PANE ->  p.closeInventory();
@@ -292,10 +294,10 @@ public class BunkerEvent implements Listener {
 
             /**       Click check        **/
 
-            BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
+            BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
             if (bk != null)
             {
-                switch(e.getCurrentItem().getType())
+                switch (e.getCurrentItem().getType())
                 {
                     case RED_STAINED_GLASS_PANE ->
                     {
@@ -306,7 +308,7 @@ public class BunkerEvent implements Listener {
                         String name = e.getCurrentItem().getItemMeta().getDisplayName();
                         name = ChatColor.stripColor(name);
                         String[] names = name.split(" ");
-                        bk.GetStorage().OpenStorage(p, Integer.parseInt(names[1])-1);
+                        bk.getStorage().openStorage(p, Integer.parseInt(names[1]) - 1);
                     }
                     case BARRIER -> InGameUtilities.playPlayerSound(p, Sound.ITEM_SHIELD_BREAK, SoundCategory.AMBIENT, 1, 0);
                 }
@@ -324,17 +326,17 @@ public class BunkerEvent implements Listener {
 
             /**       Click check        **/
 
-            BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
+            BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
             if (bk != null)
             {
                 if (e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE) {
-                    OpenBunker(main, p);
+                    openBunker(main, p);
                 }
-                else if (main.bunkerManager.GetBunkerSkins().containsKey(e.getCurrentItem().getType()))
+                else if (main.getBunkerManager().getBunkerSkins().containsKey(e.getCurrentItem().getType()))
                 {
-                    if (p.hasPermission("fireland.bunker.skin." + main.bunkerManager.GetBunkerSkins().get(e.getCurrentItem().getType())[1]))
+                    if (p.hasPermission("fireland.bunker.skin." + main.getBunkerManager().getBunkerSkins().get(e.getCurrentItem().getType())[1]))
                     {
-                        bk.ChangeSkin(p, main.bunkerManager.GetBunkerSkins().get(e.getCurrentItem().getType())[1]);
+                        bk.changeSkin(p, main.getBunkerManager().getBunkerSkins().get(e.getCurrentItem().getType())[1]);
                     }
                 }
             }
@@ -350,7 +352,7 @@ public class BunkerEvent implements Listener {
             if (e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE)
             {
                 e.setCancelled(true);
-                OpenBunkerChest(main, p);
+                openBunkerChest(main, p);
             }
             else if (e.getCurrentItem().getType() == Material.WHITE_STAINED_GLASS_PANE)
             {
@@ -360,13 +362,13 @@ public class BunkerEvent implements Listener {
     }
 
     @EventHandler
-    public void PlayerLeave(PlayerQuitEvent e)
+    public void playerLeave(PlayerQuitEvent e)
     {
         Player p = e.getPlayer();
-        BunkerClass bk = main.bunkerManager.FindBunkerEnteredByPlayer(p.getName());
+        BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
         if (bk != null)
         {
-            bk.Leave(p);
+            bk.leave(p);
         }
     }
 

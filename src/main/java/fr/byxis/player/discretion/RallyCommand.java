@@ -24,7 +24,7 @@ public record RallyCommand(fr.byxis.fireland.Fireland main) implements CommandEx
         }
     }
 
-    private static String secretCode = "UWUMichiriNek0LUV3R#FreeTheCat";
+    private static final String SECRET_CODE = "UWUMichiriNek0LUV3R#FreeTheCat";
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
@@ -34,18 +34,9 @@ public record RallyCommand(fr.byxis.fireland.Fireland main) implements CommandEx
             if (p.hasPermission("fireland.command.rally.admin")) {
                 p.sendMessage("§cUtilisation : /rally <joueur> [distance]");
             }
-        } else if (args.length == 1) {
-
-            Player victim = null;
-
-            for(Player p : Bukkit.getOnlinePlayers())
-            {
-                if(p.getName().equalsIgnoreCase(args[0]))
-                {
-                    victim = p;
-                    break;
-                }
-            }
+        } else if (args.length == 1)
+        {
+            final Player victim = Bukkit.getPlayer(args[1]);
 
             if (victim != null) {
 
@@ -56,36 +47,39 @@ public record RallyCommand(fr.byxis.fireland.Fireland main) implements CommandEx
                     setHasShotted(victim);
                 }
             }
-            else if (args[0].equals(secretCode))
+            else if (args[0].equals(SECRET_CODE))
             {
                 Player p = (Player) sender;
-                rallyEntities(p, ChangeDistanceIfHasSilencer(100, p));
+                rallyEntities(p, changeDistanceIfHasSilencer(100, p));
                 setHasShotted(p);
             }
             else if (sender instanceof Player)
-{
+            {
 
-                final Player Sender = (Player) sender;
+                final Player finalSender = (Player) sender;
 
-                int distance = ChangeDistanceIfHasSilencer(Integer.parseInt(args[1]),Sender);
+                int distance = changeDistanceIfHasSilencer(Integer.parseInt(args[1]), finalSender);
 
-                if (main.cfgm.getPlayerDB().getBoolean("safezone." + Sender.getUniqueId() + ".state")) {
+                if (main.getCfgm().getPlayerDB().getBoolean("safezone." + finalSender.getUniqueId() + ".state")) {
                     return false;
                 }
-                if (victim.hasPermission("fireland.command.rally.admin")) {
+                if (victim != null && victim.hasPermission("fireland.command.rally.admin")) {
                     rallyEntities(victim, distance);
                     setHasShotted(victim);
                 }
             }
         } else if (args.length == 2) {
-            if(args[0].equals(secretCode) && isParsable(args[1]))
+            if (args[0].equals(SECRET_CODE) && isParsable(args[1]))
             {
                 Player p = (Player) sender;
-                rallyEntities(p, Integer.parseInt(args[1]));
-                setHasShotted(p);
+                if (p != null)
+                {
+                    rallyEntities(p, Integer.parseInt(args[1]));
+                    setHasShotted(p);
+                }
             }
             final Player victim = Bukkit.getPlayer(args[1]);
-            if (victim != null && args[0].equals(secretCode)) {
+            if (victim != null && args[0].equals(SECRET_CODE)) {
                 rallyEntities(victim, 100);
                 setHasShotted(victim);
             }
@@ -93,7 +87,7 @@ public record RallyCommand(fr.byxis.fireland.Fireland main) implements CommandEx
         return false;
     }
 
-    public int ChangeDistanceIfHasSilencer(int distance, Player victim) {
+    public int changeDistanceIfHasSilencer(int distance, Player victim) {
         try {
             if (victim.getItemInHand().getItemMeta() != null) {
                 if (victim.getItemInHand().getItemMeta().hasLore() && victim.getItemInHand().getType() != Material.AIR) {
@@ -134,7 +128,7 @@ public record RallyCommand(fr.byxis.fireland.Fireland main) implements CommandEx
             if (entity instanceof Zombie || entity instanceof Stray || entity instanceof WitherSkeleton)
             {
                 Monster mob = (Monster) entity;
-                if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish ||mob.getTarget().getLocation().distance(mob.getLocation()) > victim.getLocation().distance(mob.getLocation())) {
+                if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish || mob.getTarget().getLocation().distance(mob.getLocation()) > victim.getLocation().distance(mob.getLocation())) {
                     mob.setTarget(victim);
                     if (victim.getLocation().distance(mob.getLocation()) > 60D && Math.random() <= 0.1) {
                         victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
@@ -149,10 +143,10 @@ public record RallyCommand(fr.byxis.fireland.Fireland main) implements CommandEx
                     victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
                 }
             }
-            else if (entity instanceof IronGolem )
+            else if (entity instanceof IronGolem)
             {
                 ((IronGolem) entity).setTarget(victim);
-                if (victim.getLocation().distance(entity.getLocation()) > 60D && Math.random() <= 0.1 && (((IronGolem) entity).getTarget() == null ||(((IronGolem) entity).getTarget().getLocation().distance(entity.getLocation()) > victim.getLocation().distance(entity.getLocation())))) {
+                if (victim.getLocation().distance(entity.getLocation()) > 60D && Math.random() <= 0.1 && (((IronGolem) entity).getTarget() == null || (((IronGolem) entity).getTarget().getLocation().distance(entity.getLocation()) > victim.getLocation().distance(entity.getLocation())))) {
                     victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
                 }
             }
@@ -161,7 +155,7 @@ public record RallyCommand(fr.byxis.fireland.Fireland main) implements CommandEx
 
     private void setHasShotted(Player victim)
     {
-        main.hashMapManager.getDiscretionMap().get(victim.getUniqueId()).setShooting(10);
+        main.getHashMapManager().getDiscretionMap().get(victim.getUniqueId()).setShooting(10);
     }
 
 }

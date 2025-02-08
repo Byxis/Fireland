@@ -19,7 +19,7 @@ import static fr.byxis.fireland.utilities.ListUtilities.tabList;
 import static fr.byxis.jeton.JetonManager.sendPlayerFacture;
 
 public class FactureCommand implements @Nullable CommandExecutor, @Nullable TabCompleter {
-    private Fireland m_main;
+    private final Fireland m_main;
     public FactureCommand(Fireland fireland) {
         m_main = fireland;
     }

@@ -128,8 +128,8 @@ public class BackPack implements Listener, CommandExecutor {
             if (e.getClickedInventory().getType() != InventoryType.PLAYER ||
                     (
                         e.getView().getTopInventory().getType() != InventoryType.PLAYER
-                        &&e.getView().getTopInventory().getType() != InventoryType.CRAFTING
-                        &&e.getView().getTopInventory().getType() != InventoryType.CREATIVE
+                        && e.getView().getTopInventory().getType() != InventoryType.CRAFTING
+                        && e.getView().getTopInventory().getType() != InventoryType.CREATIVE
                     )
             )
             {
@@ -185,8 +185,8 @@ public class BackPack implements Listener, CommandExecutor {
                 return;
             }
             if (e.getInventory().getType() != InventoryType.PLAYER || (e.getView().getTopInventory().getType() != InventoryType.PLAYER
-                    &&e.getView().getTopInventory().getType() != InventoryType.CRAFTING
-                    &&e.getView().getTopInventory().getType() != InventoryType.CREATIVE)
+                    && e.getView().getTopInventory().getType() != InventoryType.CRAFTING
+                    && e.getView().getTopInventory().getType() != InventoryType.CREATIVE)
             )
             {
                 if (!e.getView().getTitle().contains("Coffre") || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
@@ -197,27 +197,25 @@ public class BackPack implements Listener, CommandExecutor {
         }
     }
 
-    public void giveItem(Player p, int level)
-    {
+    public void giveItem(Player p, int level) {
         BackPackClass bp = new BackPackClass(level);
         ItemStack backpack = new ItemStack(Material.LEATHER, 1);
 
         ItemMeta meta = backpack.getItemMeta();
         meta.setCustomModelData(level);
-        String name = "";
-        switch(level)
-        {
-            case 1 -> name = "§cPochette";
-            case 2 -> name = "§cSacoche";
-            case 3 -> name = "§cSac à dos";
-            case 4 -> name = "§cSac de sport";
-            case 5 -> name = "§cSac de randonnée";
-            case 6 -> name = "§cSac à dos militaire";
-            default -> name = "§cA venir";
-        }
+
+        String name = switch (level) {
+            case 1 -> "§cPochette";
+            case 2 -> "§cSacoche";
+            case 3 -> "§cSac à dos";
+            case 4 -> "§cSac de sport";
+            case 5 -> "§cSac de randonnée";
+            case 6 -> "§cSac à dos militaire";
+            default -> "§cA venir";
+        };
         meta.setDisplayName(name);
 
-        ArrayList<String> lore = new ArrayList<String>();
+        ArrayList<String> lore = new ArrayList<>();
         lore.add("§8Faites clic droit avec pour l'ouvrir");
         lore.add("§8Vous ne pouvez pas le stocker");
         meta.setLore(lore);
@@ -227,4 +225,5 @@ public class BackPack implements Listener, CommandExecutor {
         bp.createBackPack(backpack);
         p.getInventory().addItem(backpack);
     }
+
 }

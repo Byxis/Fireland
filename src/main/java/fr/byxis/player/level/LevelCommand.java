@@ -36,11 +36,11 @@ public class LevelCommand implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("changeNation8484"))
                 {
                     pl = getPlayerLevel(p.getUniqueId());
-                    if (JetonManager.getJetonsPlayer(p.getUniqueId()) > pl.GetJetonPriceNationChange() && Fireland.eco.has(p, pl.GetMoneyPriceNationChange()))
+                    if (JetonManager.getJetonsPlayer(p.getUniqueId()) > pl.getJetonPriceNationChange() && Fireland.getEco().has(p, pl.getMoneyPriceNationChange()))
                     {
                         InGameUtilities.sendPlayerSucces(p, "Vous avez acheté un changement de nation. Pour changer, votre nation, allez voir l'intendant");
-                        JetonManager.payJetons(p, pl.GetJetonPriceNationChange(), "Changement de Nation", false, true);
-                        Fireland.eco.withdrawPlayer(p, pl.GetMoneyPriceNationChange());
+                        JetonManager.payJetons(p, pl.getJetonPriceNationChange(), "Changement de Nation", false, true);
+                        Fireland.getEco().withdrawPlayer(p, pl.getMoneyPriceNationChange());
                         pl.setCanChange(true);
                         return true;
                     }
@@ -74,7 +74,8 @@ public class LevelCommand implements CommandExecutor {
                 {
                     if (args[1].equalsIgnoreCase("level"))
                     {
-                        try{
+                        try
+                        {
                             int amount = Integer.parseInt(args[2]);
                             pl.setLevel(amount);
                             InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
@@ -87,7 +88,8 @@ public class LevelCommand implements CommandExecutor {
                     }
                     else if (args[1].equalsIgnoreCase("canchange"))
                     {
-                        try{
+                        try
+                        {
                             boolean amount = Boolean.parseBoolean(args[2]);
                             pl.setCanChange(amount);
                             InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
@@ -100,7 +102,8 @@ public class LevelCommand implements CommandExecutor {
                     }
                     else if (args[1].equalsIgnoreCase("rang"))
                     {
-                        try{
+                        try
+                        {
                             int amount = Integer.parseInt(args[2]);
                             pl.setRang(amount);
                             InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
@@ -113,7 +116,8 @@ public class LevelCommand implements CommandExecutor {
                     }
                     else if (args[1].equalsIgnoreCase("xp"))
                     {
-                        try{
+                        try
+                        {
                             int amount = Integer.parseInt(args[2]);
                             pl.setXp(amount);
                             InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
@@ -126,7 +130,8 @@ public class LevelCommand implements CommandExecutor {
                     }
                     else if (args[1].equalsIgnoreCase("nation"))
                     {
-                        try{
+                        try
+                        {
                             LevelStorage.Nation nation = LevelStorage.Nation.valueOf(args[2]);
                             pl.setNation(nation);
                             InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
@@ -142,7 +147,8 @@ public class LevelCommand implements CommandExecutor {
                 {
                     if (args[1].equalsIgnoreCase("level"))
                     {
-                        try{
+                        try
+                        {
                             int amount = Integer.parseInt(args[2]);
                             pl.addLevel(amount);
                             InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
@@ -155,7 +161,8 @@ public class LevelCommand implements CommandExecutor {
                     }
                     else if (args[1].equalsIgnoreCase("xp"))
                     {
-                        try{
+                        try
+                        {
                             int amount = Integer.parseInt(args[2]);
                             pl.addXp(amount);
                             InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
@@ -171,7 +178,8 @@ public class LevelCommand implements CommandExecutor {
                 {
                     if (args[1].equalsIgnoreCase("level"))
                     {
-                        try{
+                        try
+                        {
                             int amount = Integer.parseInt(args[2]);
                             pl.addLevel(-amount);
                             InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
@@ -184,7 +192,8 @@ public class LevelCommand implements CommandExecutor {
                     }
                     else if (args[1].equalsIgnoreCase("xp"))
                     {
-                        try{
+                        try
+                        {
                             int amount = Integer.parseInt(args[2]);
                             pl.addXp(-amount);
                             InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
@@ -211,7 +220,8 @@ public class LevelCommand implements CommandExecutor {
             {
                 if (args[1].equalsIgnoreCase("level"))
                 {
-                    try{
+                    try
+                    {
                         int amount = Integer.parseInt(args[2]);
                         pl.setLevel(amount);
                         return true;
@@ -223,7 +233,8 @@ public class LevelCommand implements CommandExecutor {
                 }
                 else if (args[1].equalsIgnoreCase("xp"))
                 {
-                    try{
+                    try
+                    {
                         int amount = Integer.parseInt(args[2]);
                         pl.setXp(amount);
                         return true;
@@ -235,7 +246,8 @@ public class LevelCommand implements CommandExecutor {
                 }
                 else if (args[1].equalsIgnoreCase("rang"))
                 {
-                    try{
+                    try
+                    {
                         int amount = Integer.parseInt(args[2]);
                         pl.setRang(amount);
                         return true;
@@ -247,7 +259,8 @@ public class LevelCommand implements CommandExecutor {
                 }
                 else if (args[1].equalsIgnoreCase("nation"))
                 {
-                    try{
+                    try
+                    {
                         LevelStorage.Nation nation = LevelStorage.Nation.valueOf(args[2]);
                         pl.setNation(nation);
                         return true;
@@ -262,7 +275,8 @@ public class LevelCommand implements CommandExecutor {
             {
                 if (args[1].equalsIgnoreCase("level"))
                 {
-                    try{
+                    try
+                    {
                         int amount = Integer.parseInt(args[2]);
                         pl.addLevel(amount);
                         return true;
@@ -274,7 +288,8 @@ public class LevelCommand implements CommandExecutor {
                 }
                 else if (args[1].equalsIgnoreCase("xp"))
                 {
-                    try{
+                    try
+                    {
                         int amount = Integer.parseInt(args[2]);
                         pl.addXp(m_main, amount);
                         return true;
@@ -286,7 +301,8 @@ public class LevelCommand implements CommandExecutor {
                 }
                 else if (args[1].equalsIgnoreCase("rang"))
                 {
-                    try{
+                    try
+                    {
                         int amount = Integer.parseInt(args[2]);
                         pl.addRang(amount);
                         return true;
@@ -301,7 +317,8 @@ public class LevelCommand implements CommandExecutor {
             {
                 if (args[1].equalsIgnoreCase("level"))
                 {
-                    try{
+                    try
+                    {
                         int amount = Integer.parseInt(args[2]);
                         pl.addLevel(-amount);
                         return true;
@@ -313,7 +330,8 @@ public class LevelCommand implements CommandExecutor {
                 }
                 else if (args[1].equalsIgnoreCase("xp"))
                 {
-                    try{
+                    try
+                    {
                         int amount = Integer.parseInt(args[2]);
                         pl.addXp(m_main, -amount);
                         return true;
@@ -325,7 +343,8 @@ public class LevelCommand implements CommandExecutor {
                 }
                 else if (args[1].equalsIgnoreCase("rang"))
                 {
-                    try{
+                    try
+                    {
                         int amount = Integer.parseInt(args[2]);
                         pl.addRang(-amount);
                         return true;

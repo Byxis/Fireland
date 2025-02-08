@@ -35,13 +35,17 @@
         <module name="ConstantName"/>
         <module name="LocalFinalVariableName"/>
         <module name="LocalVariableName"/>
-        <module name="MemberName"/>
+        <module name="MemberName">
+            <property name="format" value="^m_[a-z][a-zA-Z0-9]*$|^[a-z][a-zA-Z0-9]*$"/>
+        </module>
         <module name="MethodName"/>
         <module name="PackageName"/>
         <module name="ParameterName">
             <property name="format" value="^_?[a-z][a-zA-Z0-9]*$"/>
         </module>
-        <module name="StaticVariableName"/>
+        <module name="StaticVariableName">
+            <property name="format" value="^m_[a-z][a-zA-Z0-9]*$|^[a-z][a-zA-Z0-9]*$"/>
+        </module>
         <module name="TypeName"/>
 
         <!-- Checks for whitespace -->

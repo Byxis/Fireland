@@ -21,16 +21,16 @@ public class ZombieManager implements Listener
     }
 
     @EventHandler
-    private void zombieSpawnEvent(CreatureSpawnEvent e)
+    public void zombieSpawnEvent(CreatureSpawnEvent e)
     {
         if (e.getEntityType() == EntityType.ZOMBIE_VILLAGER)
         {
-            e.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,99999999, 50, true, false));
+            e.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999999, 50, true, false));
         }
     }
 
     @EventHandler
-    private void zombieDamageEvent(EntityDamageEvent e)
+    public void zombieDamageEvent(EntityDamageEvent e)
     {
         if (e.getEntityType() == EntityType.ZOMBIE_VILLAGER)
         {
@@ -43,13 +43,13 @@ public class ZombieManager implements Listener
             {
                 if (((LivingEntity) e.getEntity()).hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE))
                 {
-                    ((LivingEntity)e.getEntity()).removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+                    ((LivingEntity) e.getEntity()).removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            ((LivingEntity)e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,99999999, 50, true, false));
+                            ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999999, 50, true, false));
                         }
-                    }.runTaskLater(main, 20 *5);
+                    }.runTaskLater(main, 20 * 5);
                 }
 
             }
@@ -59,5 +59,4 @@ public class ZombieManager implements Listener
             }
         }
     }
-
 }

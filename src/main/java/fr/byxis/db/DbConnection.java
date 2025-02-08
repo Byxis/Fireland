@@ -40,23 +40,17 @@ public class DbConnection {
     
     public void close() throws SQLException
     {
-        if (this.m_connection != null)
+        if (this.m_connection != null && !this.m_connection.isClosed())
         {
-            if (!this.m_connection.isClosed())
-            {
-                this.m_connection.close();
-            }
+            this.m_connection.close();
         }
     }
     
     public Connection getConnection() throws SQLException
     {
-        if (this.m_connection != null)
+        if (this.m_connection != null && !this.m_connection.isClosed())
         {
-            if (!this.m_connection.isClosed())
-            {
-                return this.m_connection;
-            }
+            return this.m_connection;
         }
         connect();
         return this.m_connection;

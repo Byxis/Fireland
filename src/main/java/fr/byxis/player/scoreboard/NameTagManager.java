@@ -20,12 +20,12 @@ import static fr.byxis.player.scoreboard.PlayerScoreboardManager.getMainScoreboa
 public class NameTagManager implements Listener {
 
     private static Fireland m_main;
-    private HashMap<String, Team> m_factionTeams;
-    private FactionFunctions ff;
+    private final HashMap<String, Team> m_factionTeams;
+    private final FactionFunctions m_ff;
     public NameTagManager(Fireland fireland) {
         m_main = fireland;
         m_factionTeams = new HashMap<>();
-        ff = new FactionFunctions(fireland, null);
+        m_ff = new FactionFunctions(fireland, null);
         m_factionTeams.put("", createFactionTeam("server"));
 
         for (Player p : Bukkit.getOnlinePlayers())
@@ -36,8 +36,8 @@ public class NameTagManager implements Listener {
 
     public void actualizeTeam(Player p)
     {
-        String factionName = ff.playerFactionName(p);
-        if (!ff.HasPerk(factionName, "show_nickname"))
+        String factionName = m_ff.playerFactionName(p);
+        if (!m_ff.hasPerk(factionName, "show_nickname"))
         {
             factionName = "";
         }
@@ -80,14 +80,14 @@ public class NameTagManager implements Listener {
             team = getMainScoreboard().registerNewTeam(name);
             team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
             team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-            team.setColor(getStringColor(ff.getFactionInfo(name).getColorcode()));
+            team.setColor(getStringColor(m_ff.getFactionInfo(name).getColorcode()));
         }
         else
         {
             team = getMainScoreboard().getTeam(name);
             team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
             team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-            team.setColor(getStringColor(ff.getFactionInfo(name).getColorcode()));
+            team.setColor(getStringColor(m_ff.getFactionInfo(name).getColorcode()));
         }
         return team;
     }
@@ -112,7 +112,7 @@ public class NameTagManager implements Listener {
     }
 
     @EventHandler
-    public void FactionBuyPerk(FactionBuyPerkEvent e)
+    public void factionBuyPerk(FactionBuyPerkEvent e)
     {
         if (e.getPerk().equalsIgnoreCase("show_nickname"))
         {

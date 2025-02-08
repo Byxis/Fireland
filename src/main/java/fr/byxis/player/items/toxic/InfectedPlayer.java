@@ -31,25 +31,25 @@ public class InfectedPlayer implements Listener, CommandExecutor
 
     private static FileConfiguration config = null;
 
-    public InfectedPlayer(Fireland main)
+    public InfectedPlayer(Fireland _main)
     {
-        InfectedPlayer.main = main;
-        config = main.cfgm.getPlayerDB();
+        InfectedPlayer.main = _main;
+        config = _main.getCfgm().getPlayerDB();
     }
     
     @EventHandler
     public void playerDeath(PlayerDeathEvent e) {
         Player p = e.getEntity().getPlayer();
         assert p != null;
-        if(isInfected(p) && !(e.getEntity().getLastDamageCause().getEntity() instanceof Player))
+        if (isInfected(p) && !(e.getEntity().getLastDamageCause().getEntity() instanceof Player))
         {
             e.setDeathMessage(p.getName() + " est mort due à son infection !");
         }
-        if(isInfected(p))
+        if (isInfected(p))
         {
             int level = getLevelInfection(p);
             MythicMob mob = null;
-            if(level == 0)
+            if (level == 0)
             {
                 mob = MythicBukkit.inst().getMobManager().getMythicMob("Infecte").orElse(null);
 
@@ -58,7 +58,7 @@ public class InfectedPlayer implements Listener, CommandExecutor
             {
                 mob = MythicBukkit.inst().getMobManager().getMythicMob("Malabar").orElse(null);
             }
-            if(mob != null)
+            if (mob != null)
                 mob.spawn(BukkitAdapter.adapt(p.getLocation()), 1);
             setInfection(p, false);
         }
@@ -73,11 +73,10 @@ public class InfectedPlayer implements Listener, CommandExecutor
 
         boolean random = Math.random() < 0.2;
         
-        if(damaged instanceof Player p) {
-            if(damager instanceof Zombie || damager instanceof Stray) {
-                if(random && !p.isInvulnerable() /*&& config.getInt("safezone."+p.getName()+".time") > 0*/)
-{
-
+        if (damaged instanceof Player p) {
+            if (damager instanceof Zombie || damager instanceof Stray) {
+                if (random && !p.isInvulnerable() /*&& config.getInt("safezone."+p.getName()+".time") > 0*/)
+                {
                     if (!isInfected(p))
                     {
                         setInfection(p, true);
@@ -94,25 +93,25 @@ public class InfectedPlayer implements Listener, CommandExecutor
     @EventHandler
     public void playerSoin(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        if(e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)
+        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
-        if(p.getItemInHand().getType() == Material.WHEAT_SEEDS && p.getItemInHand().getItemMeta().hasCustomModelData() && p.getItemInHand().getItemMeta().getCustomModelData() == 102) {
+        if (p.getItemInHand().getType() == Material.WHEAT_SEEDS && p.getItemInHand().getItemMeta().hasCustomModelData() && p.getItemInHand().getItemMeta().getCustomModelData() == 102) {
 
             
-            if(isInfected(p)) {
+            if (isInfected(p)) {
                 setInfection(p, false);
                 InGameUtilities.playWorldSound(p.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
                 
                 p.sendMessage("§8Vous avez soigné votre infection !");
-                if(!p.getGameMode().equals(GameMode.CREATIVE)) {
-                    p.getItemInHand().setAmount(p.getItemInHand().getAmount() -1);
+                if (!p.getGameMode().equals(GameMode.CREATIVE)) {
+                    p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
                 }
             }
         }
         else if (p.getItemInHand().getType() == Material.IRON_INGOT && p.getCooldown(Material.IRON_INGOT) <= 0)
         {
             PermissionUtilities.commandExecutor(p, "wm repair " + p.getName() + " INVENTORY", "*");
-            p.getItemInHand().setAmount(p.getItemInHand().getAmount() -1);
+            p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
             InGameUtilities.playWorldSound(p.getLocation(), Sound.BLOCK_ANVIL_DESTROY, SoundCategory.PLAYERS, 1, 2f);
             p.setCooldown(Material.IRON_INGOT, 20);
         }
@@ -123,22 +122,22 @@ public class InfectedPlayer implements Listener, CommandExecutor
     public void friendInteraction(PlayerInteractEntityEvent e)
     {
         Player p = e.getPlayer();
-        if(p.getItemInHand().getType() == Material.WHEAT_SEEDS && p.getItemInHand().getItemMeta().hasCustomModelData() && p.getItemInHand().getItemMeta().getCustomModelData() == 102) {
+        if (p.getItemInHand().getType() == Material.WHEAT_SEEDS && p.getItemInHand().getItemMeta().hasCustomModelData() && p.getItemInHand().getItemMeta().getCustomModelData() == 102) {
 
             
-            if(!(e.getRightClicked() instanceof Player friend) || isInfected(p))
+            if (!(e.getRightClicked() instanceof Player friend) || isInfected(p))
             {
                 return;
             }
-            if(isInfected(friend)) {
+            if (isInfected(friend)) {
                 setInfection(friend, false);
 
                 InGameUtilities.playWorldSound(friend.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
                 
                 p.sendMessage("§8Vous avez soigné l'infection de " + friend.getName() + "!");
                 friend.sendMessage("§8 " + p.getName() + " a soigné votre infection !");
-                if(!p.getGameMode().equals(GameMode.CREATIVE)) {
-                    p.getItemInHand().setAmount(p.getItemInHand().getAmount() -1);
+                if (!p.getGameMode().equals(GameMode.CREATIVE)) {
+                    p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
                 }
             }
         }
@@ -146,9 +145,9 @@ public class InfectedPlayer implements Listener, CommandExecutor
 
     public static void setInfection(Player p, boolean state, int... level)
     {
-        if(!state)
+        if (!state)
         {
-            if(level != null)
+            if (level != null)
             {
                 config.set("infected." + p.getUniqueId() + ".level", level);
             }
@@ -159,7 +158,7 @@ public class InfectedPlayer implements Listener, CommandExecutor
             config.set("infected." + p.getUniqueId() + ".time", 0);
         }
         config.set("infected." + p.getUniqueId() + ".state", state);
-        main.cfgm.savePlayerDB();
+        main.getCfgm().savePlayerDB();
     }
 
     public static boolean isInfected(Player p)
@@ -174,7 +173,7 @@ public class InfectedPlayer implements Listener, CommandExecutor
 
     public static int getLevelInfection(Player p)
     {
-        if(config.contains("infected." + p.getUniqueId() + ".level"))
+        if (config.contains("infected." + p.getUniqueId() + ".level"))
             return config.getInt("infected." + p.getUniqueId() + ".level");
         return 0;
     }
@@ -182,11 +181,10 @@ public class InfectedPlayer implements Listener, CommandExecutor
     @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
-        if(sender instanceof Player) {
-            if(cmd.getName().equalsIgnoreCase("infect")) {
+        if (sender instanceof Player) {
+            if (cmd.getName().equalsIgnoreCase("infect")) {
                 Player p = (Player) sender;
-                FileConfiguration config = main.cfgm.getPlayerDB();
-                if(args.length == 0) {
+                if (args.length == 0) {
                     p.sendMessage("§8Vous avez été infecté !");
                     p.playSound(p.getLocation(), "minecraft:entity.infected.bite", 1, 1);
                     setInfection(p, false);
@@ -201,15 +199,16 @@ public class InfectedPlayer implements Listener, CommandExecutor
                     victim.playSound(victim.getLocation(), "minecraft:entity.infected.bite", 1, 1);
                     setInfection(victim, false);
                     
-                }else {
+                }
+                else
+                {
                     p.sendMessage("§cMauvaise formulation de la commande ! (/infect [player]");
                 }
             }
             else if (cmd.getName().equalsIgnoreCase("cure"))
             {
                 Player p = (Player) sender;
-                FileConfiguration config = main.cfgm.getPlayerDB();
-                if(args.length == 0) {
+                if (args.length == 0) {
                     p.sendMessage("§8Vous avez soigné votre infection !");
                     setInfection(p, false);
                     return true;
@@ -220,7 +219,9 @@ public class InfectedPlayer implements Listener, CommandExecutor
                     p.sendMessage("§8 " + victim.getName() + " été soigné !");
                     victim.sendMessage("§8Vous avez été soigné !");
                     setInfection(victim, false);
-                }else {
+                }
+                else
+                {
                     p.sendMessage("§cMauvaise formulation de la commande ! (/cure [player]");
                 }
             }

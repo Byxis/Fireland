@@ -12,7 +12,7 @@ import java.util.List;
 
 public class BoosterCommandCompleter implements TabCompleter {
 
-    private Fireland main;
+    private final Fireland main;
 
     public BoosterCommandCompleter(Fireland _main)
     {

@@ -44,15 +44,6 @@ public class WorldUtilities {
         loc.setY(0);
         loc2.setY(0);
         double distance = loc.distance(loc2);
-        double value = 0;
-        if (primary.getX() == 0)
-        {
-            value = primary.getY();
-        }
-        else
-        {
-            value = primary.getX();
-        }
         double calcul = 1000 - distance * getCosAngleFromTwoVector2(primary, player);
         if (calcul < 0)
         {

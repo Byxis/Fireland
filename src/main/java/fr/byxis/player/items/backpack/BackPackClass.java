@@ -7,7 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;

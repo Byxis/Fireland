@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="9.3">
-<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\WGUtilities.java">
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\QuadListener.java">
 </file>
-<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\Manager.java">
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\VillagerInteraction.java">
 </file>
-<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuZone.java">
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\booster\BoosterManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuQuest.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\backpack\BackPackClass.java">
 </file>
 </checkstyle>

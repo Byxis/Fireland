@@ -1,6 +1,5 @@
 package fr.byxis.event;
 
-import fr.byxis.fireland.Fireland;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;

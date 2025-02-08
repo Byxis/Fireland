@@ -129,7 +129,7 @@ public class MenuPrime {
             inv.setItem(i + 9 * 5, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
         int i = 0;
-        for (String sUuid : PrimeEvent.config.getConfig().getConfigurationSection("").getKeys(false))
+        for (String sUuid : PrimeEvent.getConfig().getConfig().getConfigurationSection("").getKeys(false))
         {
             UUID uuid = UUID.fromString(sUuid);
             ItemStack item = InventoryUtilities.getHead(uuid, "§r " + Bukkit.getOfflinePlayer(uuid).getName());

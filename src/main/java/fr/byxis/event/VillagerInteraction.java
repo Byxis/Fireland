@@ -1,6 +1,5 @@
 package fr.byxis.event;
 
-import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;

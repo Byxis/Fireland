@@ -18,17 +18,17 @@ public class Save {
 
     public static void reloadAll(Fireland main)
     {
-        if (QuestManager.config != null)
+        if (QuestManager.getConfig() != null)
         {
-            QuestManager.config.reload();
+            QuestManager.getConfig().reload();
         }
         if (EssaimFunctions.getConfigManager() != null)
         {
             EssaimFunctions.getConfigManager().reload();
         }
-        if (PrimeEvent.config != null)
+        if (PrimeEvent.getConfig() != null)
         {
-            PrimeEvent.config.reload();
+            PrimeEvent.getConfig().reload();
         }
     }
 }

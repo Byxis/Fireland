@@ -163,7 +163,7 @@ public class Menu implements Listener, CommandExecutor
             @Override
             public void run() {
                 i++;
-                if (InGameUtilities.getPlayerMoving(player))
+                if (InGameUtilities.isPlayerMoving(player.getUniqueId()))
                 {
                     InGameUtilities.sendPlayerError(player, "Téléportation annulée !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound " + player.getName() + " * minecraft:" + sound);

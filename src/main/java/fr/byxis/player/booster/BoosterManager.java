@@ -5,7 +5,6 @@ import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.jeton.JetonManager;
-import fr.byxis.jeton.JetonsCommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;

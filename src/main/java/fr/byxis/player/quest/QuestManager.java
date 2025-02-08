@@ -17,6 +17,7 @@ import java.util.UUID;
 public class QuestManager {
 
     private static Fireland main = null;
+
     private static QuestConfig config = null;
 
     private static HashMap<Integer, QuestClass> availableQuests;
@@ -428,5 +429,10 @@ public class QuestManager {
             if (quest != null)
                 availableQuests.put(Integer.parseInt(i), quest);
         }
+    }
+
+    public static QuestConfig getConfig()
+    {
+        return config;
     }
 }

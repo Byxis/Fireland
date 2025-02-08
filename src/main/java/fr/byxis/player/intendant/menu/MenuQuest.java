@@ -1,6 +1,5 @@
 package fr.byxis.player.intendant.menu;
 
-import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;

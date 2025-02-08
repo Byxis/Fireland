@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import static fr.byxis.fireland.Fireland.getEco;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class FactionManager implements Listener, CommandExecutor

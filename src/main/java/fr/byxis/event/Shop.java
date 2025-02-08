@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static fr.byxis.fireland.Fireland.getEco;
+
 public class Shop implements Listener, CommandExecutor, TabCompleter {
 
     //! Probably my worst code ever, but this is like a trophee
@@ -1229,7 +1231,7 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
         sell = sell + 0;
         if (type.isLeftClick()) 
         {
-            if (getEco().hasAccount(p)) 
+            if (getEco().hasAccount(p))
             {
                 money = getEco().getBalance(p);
             }

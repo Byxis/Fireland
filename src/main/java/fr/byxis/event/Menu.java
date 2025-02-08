@@ -20,6 +20,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
+import static fr.byxis.fireland.Fireland.getEco;
+
 public class Menu implements Listener, CommandExecutor
 {
     private final Fireland main;
@@ -134,7 +136,7 @@ public class Menu implements Listener, CommandExecutor
         {
             InGameUtilities.teleportPlayer(player, loc, 0, "");
         }
-        else if (Fireland.eco.hasAccount(player) && !main.getHashMapManager().isTeleporting(player.getUniqueId()))
+        else if (getEco().hasAccount(player) && !main.getHashMapManager().isTeleporting(player.getUniqueId()))
         {
             if (getEco().getBalance(player) >= price) {
                 player.closeInventory();
@@ -180,7 +182,7 @@ public class Menu implements Listener, CommandExecutor
                         player.teleport(loc);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
                         player.sendMessage("§7Vous avez payé " + price + "$");
-                        _getEco().withdrawPlayer(player, price);
+                        getEco().withdrawPlayer(player, price);
                         _main.getHashMapManager().removeTeleporting(player.getUniqueId());
                         cancel();
                     }

@@ -23,7 +23,7 @@ jobs:
       run: mvn install -DskipTests
 
     - name: Run SpotBugs
-      run: mvn org.codehaus.mojo:findbugs-maven-plugin:3.0.5:findbugs -DskipTests
+      run: mvn spotbugs:spotbugs -DskipTests
 
     - name: Run PMD
       run: mvn pmd:pmd -DskipTests

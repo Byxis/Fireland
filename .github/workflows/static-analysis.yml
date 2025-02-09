@@ -32,4 +32,4 @@ jobs:
       run: cat target/spotbugsXml.xml
 
     - name: Display PMD Report
-      run: cat target/site/pmd.html
+      run: cat target/reports/pmd.html

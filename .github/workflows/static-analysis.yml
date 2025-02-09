@@ -20,7 +20,7 @@ jobs:
         java-version: '20'
 
     - name: Install Maven dependencies
-      run: mvn install -DskipTests
+      run: mvn install -DskipTests -B -ntp
 
     - name: Run SpotBugs
       run: mvn spotbugs:spotbugs -DskipTests

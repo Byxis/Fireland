@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 
 public class CobwebDamage implements Listener
 {
-    
     public static void damagePlayerInCobweb(Player p)
     {
         if (p.getLocation().getBlock().getType() == Material.COBWEB

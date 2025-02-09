@@ -23,7 +23,8 @@ public class HashMapManager {
     private static Fireland main;
 
     public HashMapManager(Fireland _main) {
-        HashMapManager.main = _main;
+        if (HashMapManager.main == null)
+            HashMapManager.main = _main;
         init();
     }
 
@@ -31,14 +32,18 @@ public class HashMapManager {
     {
         this.factionMap = new HashMap<>();
         this.storageMap = new HashMap<>();
-        discretionMap = new HashMap<>();
         this.rangMap = new HashMap<>();
         this.storageFactionMap = new HashMap<>();
         this.factionPrefixMap = new HashMap<>();
+        this.isTeleporting = new HashMap<>();
+
+        if (HashMapManager.discretionMap == null)
+            HashMapManager.discretionMap = new HashMap<>();
+        if (HashMapManager.purify == null)
+            HashMapManager.purify = new HashMap<>();
+
         this.booster = null;
         loadBooster();
-        this.isTeleporting = new HashMap<>();
-        purify = new HashMap<>();
     }
 
     public HashMap<UUID, String> getFactionMap()

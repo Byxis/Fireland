@@ -25,7 +25,8 @@ public class PrimeEvent implements Listener {
 
     public PrimeEvent(Fireland _main)
     {
-        config = new PrimesConfig(_main);
+        if (PrimeEvent.config == null)
+            config = new PrimesConfig(_main);
         this.main = _main;
     }
     public static long getPrimeMaxDay()

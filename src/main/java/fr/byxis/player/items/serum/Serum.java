@@ -1,5 +1,6 @@
 package fr.byxis.player.items.serum;
 
+import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -11,8 +12,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.Random;
 
 import static fr.byxis.player.items.toxic.InfectedPlayer.setInfection;
 
@@ -65,8 +64,7 @@ public class Serum implements Listener
 
     void addSerum(Player p)
     {
-        Random rand = new Random();
-        int intRandom = rand.nextInt(3);
+        int intRandom = BasicUtilities.generateInt(0, 3);
         if (intRandom == 2)
         {
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 120, 4, true));

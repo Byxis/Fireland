@@ -20,7 +20,10 @@ public class EssaimCommandCompleter implements TabCompleter {
 
     public EssaimCommandCompleter(Fireland _main)
     {
-        this.main = _main;
+        if (main == null)
+        {
+            EssaimCommandCompleter.main = _main;
+        }
     }
 
     @Override

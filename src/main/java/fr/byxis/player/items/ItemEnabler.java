@@ -48,8 +48,8 @@ public class ItemEnabler
 
     private void backPack()
     {
-        main.getCommand("backpack").setExecutor(new BackPack(main));
-        main.getServer().getPluginManager().registerEvents(new BackPack(main), main);
+        main.getCommand("backpack").setExecutor(new BackPack());
+        main.getServer().getPluginManager().registerEvents(new BackPack(), main);
     }
 
     private void lamp()

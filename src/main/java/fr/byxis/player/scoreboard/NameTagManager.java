@@ -19,11 +19,9 @@ import static fr.byxis.player.scoreboard.PlayerScoreboardManager.getMainScoreboa
 
 public class NameTagManager implements Listener {
 
-    private static Fireland m_main;
     private final HashMap<String, Team> m_factionTeams;
     private final FactionFunctions m_ff;
     public NameTagManager(Fireland fireland) {
-        m_main = fireland;
         m_factionTeams = new HashMap<>();
         m_ff = new FactionFunctions(fireland, null);
         m_factionTeams.put("", createFactionTeam("server"));

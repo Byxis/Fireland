@@ -35,16 +35,32 @@ public class EssaimManager {
     private static HashMap<String, EssaimClass> activeEssaims;
     private static HashMap<String, EssaimGroup> groups;
 
-    public EssaimManager(Fireland _main)
-    {
-        EssaimManager.main = _main;
-        configManager = new EssaimConfigManager(_main);
-        configManager.setup();
-        essaimFunctions = new EssaimFunctions(_main, configManager);
+    public EssaimManager(Fireland _main) {
+        if (main == null) {
+            main = _main;
+        }
+
+        if (configManager == null) {
+            configManager = new EssaimConfigManager(_main);
+            configManager.setup();
+        }
+
+        if (essaimFunctions == null) {
+            essaimFunctions = new EssaimFunctions(_main, configManager);
+        }
+
+        if (activeEssaims == null) {
+            activeEssaims = new HashMap<>();
+        }
+
+        if (groups == null) {
+            groups = new HashMap<>();
+        }
+
+        // Initialisation des champs d'instance
         existingEssaims = new HashMap<>();
         activeSpawners = new HashMap<>();
-        activeEssaims = new HashMap<>();
-        groups = new HashMap<>();
+
         setupExistingSpawners();
         _main.getServer().getPluginManager().registerEvents(new EssaimEventHandler(_main), _main);
         loop();

@@ -14,7 +14,10 @@ public class BunkerManager {
 
     public BunkerManager(Fireland _main)
     {
-        BunkerManager.m_main = _main;
+        if (m_main == null)
+        {
+            BunkerManager.m_main = _main;
+        }
         m_loadedBunker = new HashMap<>();
         m_skinList = new HashMap<>();
         m_skinList.put(Material.STONE, new String[]{"§7Par défaut", "default"});

@@ -1,6 +1,5 @@
 package fr.byxis.player.items.backpack;
 
-import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -24,13 +23,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 
 public class BackPack implements Listener, CommandExecutor {
-
-    private static Fireland main;
-
-    public BackPack(Fireland _main)
-    {
-        main = _main;
-    }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {

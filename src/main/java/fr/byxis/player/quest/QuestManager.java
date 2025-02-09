@@ -25,9 +25,12 @@ public class QuestManager {
 
     public QuestManager(Fireland _main)
     {
-        QuestManager.main = _main;
-        playerQuest = new HashMap<UUID, PlayerQuests>();
-        config = (new QuestConfig(_main));
+        if (QuestManager.main == null)
+            QuestManager.main = _main;
+        if (QuestManager.playerQuest == null)
+            QuestManager.playerQuest = new HashMap<>();
+        if (QuestManager.config == null)
+            QuestManager.config = new QuestConfig(_main);
         questSeek();
         init();
         _main.getServer().getPluginManager().registerEvents(new QuestEventHandler(_main), _main);

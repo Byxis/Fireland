@@ -18,8 +18,12 @@ import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 public class SaveEvent implements Listener {
 
     private static Fireland main;
+
     public SaveEvent(Fireland _main) {
-        SaveEvent.main = _main;
+        if (main == null)
+        {
+            SaveEvent.main = _main;
+        }
     }
 
     private static void saveEnderchest(Inventory inv, UUID uuid)

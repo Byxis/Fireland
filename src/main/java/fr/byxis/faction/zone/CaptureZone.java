@@ -31,7 +31,8 @@ public class CaptureZone {
 
     public CaptureZone(Fireland _main, DataZone _data)
     {
-        this.main = _main;
+        if (CaptureZone.main == null)
+            CaptureZone.main = _main;
         this.data = _data;
     }
 

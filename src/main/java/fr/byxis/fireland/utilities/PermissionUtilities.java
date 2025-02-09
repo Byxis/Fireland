@@ -23,7 +23,8 @@ public class PermissionUtilities {
 
     public PermissionUtilities(Fireland _main)
     {
-        PermissionUtilities.main = _main;
+        if (PermissionUtilities.main == null)
+            PermissionUtilities.main = _main;
     }
 
     public static void addPermission(Player p, String permission) {

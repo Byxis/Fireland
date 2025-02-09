@@ -14,6 +14,8 @@ import java.util.UUID;
 
 public class BasicUtilities {
 
+    private static final Random RANDOM = new Random();
+
     public static String getStringTime(long durationInMillis)
     {
         long second = 1000;
@@ -51,39 +53,11 @@ public class BasicUtilities {
         }
 
         return sb.toString();
-        /*long second = (durationInMillis / 1000) % 60;
-        long minute = (durationInMillis / (1000 * 60)) % 60;
-        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
-        long day = (durationInMillis / (1000 * 60 * 60*24)%30);
-        long month = (durationInMillis / (1000L * 60 * 60*24*30)%364);
-        long year = (durationInMillis / (1000L * 60 * 60*24*30*364));
-        if (year > 0)
-        {
-            return String.format("%2dan(s), %2dmois, %2djour(s).", year, month, day);
-        }
-        if (month > 0)
-        {
-            return String.format("%2dmois, %2djour(s), %2dheure(s)", month, day, hour);
-        }
-        if (day > 0)
-        {
-            return String.format("%2djour(s), %2dheure(s), %2dminute(s)", day, hour, minute);
-        }
-        else if (hour > 0)
-        {
-            return String.format("%2dheure(s), %2dminute(s) et %2dseconde(s).", year, hour, minute);
-        }
-        else if (minute > 0)
-        {
-            return String.format("%2dminute(s) et %2dseconde(s).", minute, second);
-        }
-        return String.format("%2dseconde(s).", second);*/
     }
 
     public static UUID getUuid(String name) {
         String url = "https://api.mojang.com/users/profiles/minecraft/" + name;
         try {
-            @SuppressWarnings("deprecation")
             String uuidJson = IOUtils.toString(new URL(url));
             if (uuidJson.isEmpty()) return null;
             JSONObject uuidObject = (JSONObject) JSONValue.parseWithException(uuidJson);
@@ -107,19 +81,16 @@ public class BasicUtilities {
 
     public static int generateInt(int borneInf, int borneSup)
     {
-        Random random = new Random();
-        int nb;
-        nb = borneInf + random.nextInt(borneSup - borneInf);
-        return nb;
+        return borneInf + RANDOM.nextInt(borneSup - borneInf);
     }
 
     public static List<String> listMaker(String str1, String str2, String str3, String str4)
     {
-        List<String> lore = new ArrayList<String>();
-        if (str1 != "") lore.add(str1);
-        if (str2 != "") lore.add(str2);
-        if (str3 != "") lore.add(str3);
-        if (str4 != "") lore.add(str4);
+        List<String> lore = new ArrayList<>();
+        if (!str1.isEmpty()) lore.add(str1);
+        if (!str2.isEmpty()) lore.add(str2);
+        if (!str3.isEmpty()) lore.add(str3);
+        if (!str4.isEmpty()) lore.add(str4);
         return lore;
     }
 

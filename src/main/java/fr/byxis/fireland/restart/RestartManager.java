@@ -14,8 +14,8 @@ import static fr.byxis.fireland.Save.saveAll;
 
 public class RestartManager {
 
-    private static double m_timeRemaining;
-    private static double m_timeTotal;
+    private static double m_timeRemaining = -1;
+    private static double m_timeTotal = -1;
 
     private static BossBar m_bar;
     private final Fireland m_main;
@@ -25,8 +25,6 @@ public class RestartManager {
         m_main = _main;
         m_main.getServer().getPluginManager().registerEvents(new RestartEvent(), m_main);
         m_main.getCommand("frestart").setExecutor(new RestartCommand());
-        m_timeRemaining = -1;
-        m_timeTotal = -1;
         m_bar = Bukkit.createBossBar("§a§lRedémarrage du serveur", BarColor.GREEN, BarStyle.SOLID);
         m_bar.setProgress(1);
 

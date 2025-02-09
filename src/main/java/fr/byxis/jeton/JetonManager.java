@@ -22,8 +22,10 @@ public class JetonManager {
 
     public JetonManager(Fireland _main)
     {
-        jt = new JetonSql(_main, null);
-        JetonManager.main = _main;
+        if (JetonManager.jt == null)
+            JetonManager.jt = new JetonSql(_main);
+        if (JetonManager.main == null)
+            JetonManager.main = _main;
     }
 
     public static void updatePlayer(UUID _uuid)

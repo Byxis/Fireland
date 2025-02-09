@@ -19,12 +19,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class FallDamage implements Listener
 {
     private static FileConfiguration config = null;
-    private final Fireland main;
 
     public FallDamage(Fireland _main)
     {
-        this.main = _main;
-        config = _main.getCfgm().getPlayerDB();
+        if (config == null)
+            config = _main.getCfgm().getPlayerDB();
     }
 
 

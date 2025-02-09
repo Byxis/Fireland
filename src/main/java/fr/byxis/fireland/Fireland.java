@@ -39,7 +39,6 @@ import fr.byxis.player.items.water.Thirst;
 import fr.byxis.player.packet.PacketPlayer;
 import fr.byxis.player.shop.ShopCommandManager;
 import fr.byxis.player.shop.ShopEventManager;
-import fr.byxis.player.workshop.WorkshopFunction;
 import fr.byxis.player.workshop.WorkshopManager;
 import fr.byxis.player.workshop.WorkshopManagerEvent;
 import fr.byxis.player.workshop.WorkshopManagerTabCompleter;
@@ -180,11 +179,9 @@ public class Fireland extends JavaPlugin {
         permissionUtilities = new PermissionUtilities(this);
         playerAddonsEnabler = new PlayerAddonsEnabler(this);
         final AmbientSound ambientSoundClass;
-        final CobwebDamage cobwebDamageClass;
 
         final Thirst thirst = null;
         ambientSoundClass = new AmbientSound(this);
-        cobwebDamageClass = new CobwebDamage();
 
         changeItemsStackSize();
 
@@ -412,11 +409,8 @@ public class Fireland extends JavaPlugin {
 
             }
         }.runTaskTimer(this, 0, 100);
-
-        WorkshopFunction wf = new WorkshopFunction(this, null);
         new BukkitRunnable()
         {
-            @SuppressWarnings("deprecation")
             @Override
             public void run() {
                 for (Player p : getServer().getOnlinePlayers())
@@ -472,7 +466,6 @@ public class Fireland extends JavaPlugin {
                     else
                     {
                         sendWorldBorderWarningDistancePacket(p, 0);
-                        //ATELIER
                     }
                 }
                 for (DiscretionClass dc : HashMapManager.getDiscretionMap().values())

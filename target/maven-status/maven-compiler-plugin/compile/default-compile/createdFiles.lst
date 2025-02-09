@@ -75,7 +75,6 @@ fr\byxis\player\advancements\UseBoosterAdvancements.class
 fr\byxis\player\discretion\ZombieDetection$2.class
 fr\byxis\faction\essaim\essaimClass\ActiveMobSpawning.class
 fr\byxis\fireland\utilities\ListUtilities.class
-fr\byxis\event\NVGoogles.class
 fr\byxis\player\discretion\ZombieDetection.class
 fr\byxis\fireland\utilities\WGUtilities.class
 fr\byxis\player\pvpmanager\PvPManager.class
@@ -120,7 +119,6 @@ fr\byxis\player\advancements\CraftBreakAdvancements.class
 fr\byxis\player\items\compass\Compass$1.class
 fr\byxis\player\workshop\recycler\RecyclerFunction.class
 fr\byxis\faction\faction\events\PlayerLeaveFactionEvent.class
-fr\byxis\player\items\backpack\BackPackClass$BackpackInventoryHolder.class
 fr\byxis\player\scoreboard\ScoreboardPlayer.class
 fr\byxis\command\NightVision.class
 fr\byxis\db\DbConnection.class
@@ -221,7 +219,6 @@ fr\byxis\faction\faction\FactionManager.class
 fr\byxis\player\intendant\IntendantCommand.class
 fr\byxis\player\quest\questclass\PlayerQuests.class
 fr\byxis\player\level\LevelSavings.class
-fr\byxis\event\ModifiedInteractionItemstackSize.class
 fr\byxis\event\SilverfishSilent.class
 fr\byxis\fireland\utilities\PermissionUtilities.class
 fr\byxis\player\items\serum\Serum.class

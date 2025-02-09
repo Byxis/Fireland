@@ -28,6 +28,9 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Set;
@@ -216,7 +219,35 @@ public class BunkerClass {
         }
     }
 
-    boolean loadFileAndPaste(String fileName)
+    public boolean loadFileAndPaste(String fileName) {
+        Path filePath = m_main.getDataFolder().toPath().resolve("bunker/" + fileName);
+        if (Files.exists(filePath)) {
+            ClipboardFormat format = ClipboardFormats.findByFile(filePath.toFile());
+            try (InputStream inputStream = Files.newInputStream(filePath);
+                ClipboardReader reader = format.getReader(inputStream))
+            {
+                Clipboard clipboard = reader.read();
+
+                try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(m_location.getWorld()), -1)) {
+                    Operation operation = new ClipboardHolder(clipboard)
+                            .createPaste(editSession)
+                            .to(BlockVector3.at(m_location.getX(), m_location.getY(), m_location.getZ()))
+                            .ignoreAirBlocks(false)
+                            .build();
+                    Operations.complete(operation);
+                    return true;
+                }
+            }
+            catch (IOException | WorldEditException e)
+            {
+                System.err.println(e.getMessage());
+            }
+        }
+        return false;
+    }
+
+    /*
+    boolean loadFileAndPaste2(String fileName)
     {
         File file = new File(m_main.getDataFolder(), "bunker/" + fileName);
         if (file.exists())
@@ -239,7 +270,7 @@ public class BunkerClass {
             }
         }
         return false;
-    }
+    }*/
 
     Location getLocationFromNumber(int _number)
     {

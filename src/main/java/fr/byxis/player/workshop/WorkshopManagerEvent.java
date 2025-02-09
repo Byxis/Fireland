@@ -23,8 +23,8 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Random;
 
+import static fr.byxis.fireland.utilities.BasicUtilities.generateInt;
 import static fr.byxis.player.level.LevelStorage.addPlayerXp;
 
 public class WorkshopManagerEvent implements Listener
@@ -35,14 +35,6 @@ public class WorkshopManagerEvent implements Listener
     public WorkshopManagerEvent(Fireland _main)
     {
         this.main = _main;
-    }
-
-    int generateInt(final int borneInf, final int borneSup)
-    {
-        Random random = new Random();
-        int nb;
-        nb = borneInf + random.nextInt(borneSup - borneInf);
-        return nb;
     }
 
     @EventHandler

@@ -24,9 +24,12 @@ public class LevelStorage {
 
     public LevelStorage(Fireland main)
     {
-        m_main = main;
-        m_levelMap = new HashMap<>();
-        m_levelSavingsMap = new HashMap<>();
+        if (m_main == null)
+            m_main = main;
+        if (m_levelMap == null)
+            m_levelMap = new HashMap<>();
+        if (m_levelSavingsMap == null)
+            m_levelSavingsMap = new HashMap<>();
         loadPlayerKillMap();
         main.getServer().getPluginManager().registerEvents(new LevelEvent(main), main);
         main.getCommand("level").setExecutor(new LevelCommand(main));

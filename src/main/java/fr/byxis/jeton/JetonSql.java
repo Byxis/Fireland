@@ -2,7 +2,6 @@ package fr.byxis.jeton;
 
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
-import org.bukkit.entity.Player;
 
 import java.sql.*;
 
@@ -11,7 +10,7 @@ public class JetonSql
 
     private final Fireland main;
 
-    public JetonSql(Fireland m, Player p)
+    public JetonSql(Fireland m)
     {
         this.main = m;
     }

@@ -25,7 +25,8 @@ public class InGameUtilities implements Listener {
     private static final Map<UUID, Date> PLAYER_COOLDOWN = new ConcurrentHashMap<>();
 
     public InGameUtilities(Fireland fireland) {
-        main = fireland;
+        if (InGameUtilities.main == null)
+            InGameUtilities.main = fireland;
     }
 
     public static void setPlayerMoving(UUID playerId, boolean isMoving)
@@ -102,7 +103,7 @@ public class InGameUtilities implements Listener {
             InGameUtilities.sendPlayerError(player, "Vous êtes en cooldown. Vous pourrez vous téléporter dans " + BasicUtilities.getStringTime(new Date().getTime() - getPlayerCooldown(player.getUniqueId())));
             return;
         }
-        PLAYER_COOLDOWN.remove(player.getUniqueId());
+        InGameUtilities.removePlayerCooldown(player.getUniqueId());
         player.playSound(player.getLocation(), "minecraft:" + sound, (float) 0.1, (float) 1);
 
         new BukkitRunnable() {

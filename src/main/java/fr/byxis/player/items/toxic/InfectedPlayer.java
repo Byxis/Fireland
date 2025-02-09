@@ -33,8 +33,10 @@ public class InfectedPlayer implements Listener, CommandExecutor
 
     public InfectedPlayer(Fireland _main)
     {
-        InfectedPlayer.main = _main;
-        config = _main.getCfgm().getPlayerDB();
+        if (InfectedPlayer.main == null)
+            InfectedPlayer.main = _main;
+        if (InfectedPlayer.config == null)
+            InfectedPlayer.config = _main.getCfgm().getPlayerDB();
     }
     
     @EventHandler

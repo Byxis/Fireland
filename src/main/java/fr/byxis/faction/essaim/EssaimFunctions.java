@@ -33,9 +33,18 @@ public class EssaimFunctions {
     private static FactionFunctions ff;
 
     public EssaimFunctions(Fireland _main, EssaimConfigManager _configManager) {
-        EssaimFunctions.main = _main;
-        EssaimFunctions.configManager = _configManager;
-        EssaimFunctions.ff = new FactionFunctions(_main, null);
+        if (EssaimFunctions.main == null)
+        {
+            EssaimFunctions.main = _main;
+        }
+        if (EssaimFunctions.configManager == null)
+        {
+            EssaimFunctions.configManager = _configManager;
+        }
+        if (EssaimFunctions.ff == null)
+        {
+            EssaimFunctions.ff = new FactionFunctions(_main, null);
+        }
     }
 
     public static void createNewSpawner(String essaim, String name, String mob, int amount, int activationDelay, int spawnDelay, String command, Location location, boolean isAffectedByDifficulty) {

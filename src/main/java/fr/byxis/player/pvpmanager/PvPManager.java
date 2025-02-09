@@ -30,7 +30,8 @@ public class PvPManager implements Listener {
     public PvPManager(Fireland _main)
     {
         this.main = _main;
-        pvpTimer = new HashMap<>();
+        if (PvPManager.pvpTimer == null)
+            pvpTimer = new HashMap<>();
         loop();
     }
 

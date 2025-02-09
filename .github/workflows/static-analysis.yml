@@ -29,7 +29,11 @@ jobs:
       run: mvn pmd:pmd -DskipTests
 
     - name: Display SpotBugs Report
-      run: cat target/spotbugsXml.xml
+      run: |
+        echo "SpotBugs Report:"
+        xmllint --format target/spotbugsXml.xml --xpath '//BugInstance' | grep -E 'type|message'
 
     - name: Display PMD Report
-      run: cat target/reports/pmd.html
+      run: |
+        echo "PMD Report:"
+        grep -E 'violation|error' target/pmd.xml

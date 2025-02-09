@@ -335,8 +335,9 @@ public class DataZone {
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e)
+        {
+            System.err.println(e.getMessage());
         }
     }
 
@@ -352,8 +353,9 @@ public class DataZone {
             if (rs.next()) {
                 return rs.getTimestamp(1);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e)
+        {
+            System.err.println(e.getMessage());
         }
         return null;
     }
@@ -369,8 +371,10 @@ public class DataZone {
             insert.setString(2, zone.getName());
             insert.setString(3, zone.getClaimer());
             insert.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        }
+        catch (SQLException e)
+        {
+            System.err.println(e.getMessage());
         }
     }
 

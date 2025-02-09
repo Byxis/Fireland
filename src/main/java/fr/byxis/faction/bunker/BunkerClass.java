@@ -25,8 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -223,8 +221,7 @@ public class BunkerClass {
         Path filePath = m_main.getDataFolder().toPath().resolve("bunker/" + fileName);
         if (Files.exists(filePath)) {
             ClipboardFormat format = ClipboardFormats.findByFile(filePath.toFile());
-            try (InputStream inputStream = Files.newInputStream(filePath);
-                ClipboardReader reader = format.getReader(inputStream))
+            try (InputStream inputStream = Files.newInputStream(filePath); ClipboardReader reader = format.getReader(inputStream))
             {
                 Clipboard clipboard = reader.read();
 

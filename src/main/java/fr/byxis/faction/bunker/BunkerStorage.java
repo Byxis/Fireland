@@ -23,9 +23,9 @@ import java.util.List;
 
 public class BunkerStorage {
 
-    HashMap<Integer, ItemStack> m_items;
+    private final HashMap<Integer, ItemStack> m_items;
 
-    private String m_name;
+    private final String m_name;
 
     private Inventory m_storage0;
     private Inventory m_storage1;
@@ -44,10 +44,10 @@ public class BunkerStorage {
         m_main = _main;
         m_name = _name;
         m_items = new HashMap<Integer, ItemStack>();
-        LoadAllItems();
+        loadAllItems();
     }
 
-    public void UpdateItemStorage(int index, ItemStack item)
+    public void updateItemStorage(int index, ItemStack item)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
 
@@ -66,7 +66,7 @@ public class BunkerStorage {
         }
     }
 
-    public void SetItemStorage(int index, ItemStack item)
+    public void setItemStorage(int index, ItemStack item)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
 
@@ -85,7 +85,7 @@ public class BunkerStorage {
         }
     }
 
-    public boolean IndexStorageUsed(int index)
+    public boolean indexStorageUsed(int index)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
 
@@ -98,7 +98,7 @@ public class BunkerStorage {
             preparedStatement2.setInt(2, index);
             //On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
-            if(rs.next())
+            if (rs.next())
             {
                 return true;
             }
@@ -108,7 +108,7 @@ public class BunkerStorage {
         return false;
     }
 
-    public void RemoveItemStorage(int index)
+    public void removeItemStorage(int index)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
 
@@ -126,190 +126,190 @@ public class BunkerStorage {
         }
     }
 
-    public void SaveItemFactionStorage(int index, ItemStack item)
+    public void saveItemFactionStorage(int index, ItemStack item)
     {
-        if(item != null)
+        if (item != null)
         {
-            if(IndexStorageUsed(index))
+            if (indexStorageUsed(index))
             {
-                UpdateItemStorage(index, item);
+                updateItemStorage(index, item);
             }
             else
             {
-                SetItemStorage(index, item);
+                setItemStorage(index, item);
             }
         }
         else
         {
-            RemoveItemStorage(index);
+            removeItemStorage(index);
         }
     }
 
-    public void SaveAllItems()
+    public void saveAllItems()
     {
-        ActualiseItems();
-        for(int i = 0; i < getMaxSpaceStorage(); i++)
+        actualiseItems();
+        for (int i = 0; i < getMaxSpaceStorage(); i++)
         {
-            SaveItemFactionStorage(i, m_items.get(i));
+            saveItemFactionStorage(i, m_items.get(i));
         }
     }
 
-    public void ActualiseItems()
+    public void actualiseItems()
     {
         int number = 0;
-        if(m_storage0 != null)
+        if (m_storage0 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage0.getItem(i) != null)
+                if (m_storage0.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage0.getItem(i));
+                    m_items.put(i + 27 * number, m_storage0.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 * number);
                 }
             }
         }
         number++;
-        if(m_storage1 != null)
+        if (m_storage1 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage1.getItem(i) != null)
+                if (m_storage1.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage1.getItem(i));
+                    m_items.put(i + 27 * number, m_storage1.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 * number);
                 }
             }
         }
         number++;
-        if(m_storage2 != null)
+        if (m_storage2 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage2.getItem(i) != null)
+                if (m_storage2.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage2.getItem(i));
+                    m_items.put(i + 27 * number, m_storage2.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 * number);
                 }
             }
         }
         number++;
-        if(m_storage3 != null)
+        if (m_storage3 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage3.getItem(i) != null)
+                if (m_storage3.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage3.getItem(i));
+                    m_items.put(i + 27 * number, m_storage3.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 * number);
                 }
             }
         }
         number++;
-        if(m_storage4 != null)
+        if (m_storage4 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage4.getItem(i) != null)
+                if (m_storage4.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage4.getItem(i));
+                    m_items.put(i + 27 * number, m_storage4.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 * number);
                 }
             }
         }
         number++;
-        if(m_storage5 != null)
+        if (m_storage5 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage5.getItem(i) != null)
+                if (m_storage5.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage5.getItem(i));
+                    m_items.put(i + 27 * number, m_storage5.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 * number);
                 }
             }
         }
         number++;
-        if(m_storage6 != null)
+        if (m_storage6 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage6.getItem(i) != null)
+                if (m_storage6.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage6.getItem(i));
+                    m_items.put(i + 27 * number, m_storage6.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 * number);
                 }
             }
         }
         number++;
-        if(m_storage7 != null)
+        if (m_storage7 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage7.getItem(i) != null)
+                if (m_storage7.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage7.getItem(i));
+                    m_items.put(i + 27 * number, m_storage7.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 * number);
                 }
             }
         }
         number++;
-        if(m_storage8 != null)
+        if (m_storage8 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage8.getItem(i) != null)
+                if (m_storage8.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage8.getItem(i));
+                    m_items.put(i + 27 * number, m_storage8.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 * number);
                 }
             }
         }
         number++;
-        if(m_storage9 != null)
+        if (m_storage9 != null)
         {
-            for(int i = 0; i < 27; i++)
+            for (int i = 0; i < 27; i++)
             {
-                if(m_storage9.getItem(i) != null)
+                if (m_storage9.getItem(i) != null)
                 {
-                    m_items.put(i+27*number, m_storage9.getItem(i));
+                    m_items.put(i + 27 * number, m_storage9.getItem(i));
                 }
                 else
                 {
-                    m_items.remove(i+27*number);
+                    m_items.remove(i + 27 * number);
                 }
             }
         }
 
     }
 
-    public void LoadAllItems()
+    public void loadAllItems()
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try {
@@ -320,7 +320,7 @@ public class BunkerStorage {
             preparedStatement2.setString(1, m_name);
             //On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
-            while(rs.next())
+            while (rs.next())
             {
                 m_items.put(rs.getInt(1), ItemSerializer.deserialize(m_main, rs.getString(2)));
             }
@@ -329,125 +329,125 @@ public class BunkerStorage {
         }
     }
 
-    public List<ItemStack> GetItemsOfStorageNumber(int _number)
+    public List<ItemStack> getItemsOfStorageNumber(int _number)
     {
         List<ItemStack> items = new ArrayList<>();
-        for(int i = (27 * _number); i<27+(27*_number); i++)
+        for (int i = (27 * _number); i < 27 + (27 * _number); i++)
         {
             items.add(m_items.getOrDefault(i, null));
         }
         return items;
     }
 
-    public void SetItemsOnInventoryStorage(Inventory inv, int _number)
+    public void setItemsOnInventoryStorage(Inventory inv, int _number)
     {
         int i = 0;
-        for(ItemStack item : GetItemsOfStorageNumber(_number))
+        for (ItemStack item : getItemsOfStorageNumber(_number))
         {
-            if(item != null)
+            if (item != null)
                 inv.setItem(i, item);
             i++;
         }
 
-        for(int j = 0; j < 9; j++)
+        for (int j = 0; j < 9; j++)
         {
-            inv.setItem(j+27, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
+            inv.setItem(j + 27, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        inv.setItem(8+27, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cQuitter", (short) 1));
+        inv.setItem(8 + 27, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cQuitter", (short) 1));
     }
 
-    public void OpenStorage(Player _p, int _storage)
+    public void openStorage(Player _p, int _storage)
     {
         InGameUtilities.playPlayerSound(_p, Sound.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 1, 0);
-        switch(_storage)
+        switch (_storage)
         {
             case 0 ->
             {
-                if(m_storage0 == null)
+                if (m_storage0 == null)
                 {
                     m_storage0 = Bukkit.createInventory(null, 36, "§8Stockage 1 du bunker");
-                    SetItemsOnInventoryStorage(m_storage0, 0);
+                    setItemsOnInventoryStorage(m_storage0, 0);
                 }
                 _p.openInventory(m_storage0);
             }
             case 1 ->
             {
-                if(m_storage1 == null)
+                if (m_storage1 == null)
                 {
                     m_storage1 = Bukkit.createInventory(null, 36, "§8Stockage 2 du bunker");
-                    SetItemsOnInventoryStorage(m_storage1, 1);
+                    setItemsOnInventoryStorage(m_storage1, 1);
                 }
                 _p.openInventory(m_storage1);
             }
             case 2 ->
             {
-                if(m_storage2 == null)
+                if (m_storage2 == null)
                 {
                     m_storage2 = Bukkit.createInventory(null, 36, "§8Stockage 3 du bunker");
-                    SetItemsOnInventoryStorage(m_storage2, 2);
+                    setItemsOnInventoryStorage(m_storage2, 2);
                 }
                 _p.openInventory(m_storage2);
             }
             case 3 ->
             {
-                if(m_storage3 == null)
+                if (m_storage3 == null)
                 {
                     m_storage3 = Bukkit.createInventory(null, 36, "§8Stockage 4 du bunker");
-                    SetItemsOnInventoryStorage(m_storage3, 3);
+                    setItemsOnInventoryStorage(m_storage3, 3);
                 }
                 _p.openInventory(m_storage3);
             }
             case 4 ->
             {
-                if(m_storage4 == null)
+                if (m_storage4 == null)
                 {
                     m_storage4 = Bukkit.createInventory(null, 36, "§8Stockage 5 du bunker");
-                    SetItemsOnInventoryStorage(m_storage4, 4);
+                    setItemsOnInventoryStorage(m_storage4, 4);
                 }
                 _p.openInventory(m_storage4);
             }
             case 5 ->
             {
-                if(m_storage5 == null)
+                if (m_storage5 == null)
                 {
                     m_storage5 = Bukkit.createInventory(null, 36, "§8Stockage 6 du bunker");
-                    SetItemsOnInventoryStorage(m_storage5, 5);
+                    setItemsOnInventoryStorage(m_storage5, 5);
                 }
                 _p.openInventory(m_storage5);
             }
             case 6 ->
             {
-                if(m_storage6 == null)
+                if (m_storage6 == null)
                 {
                     m_storage6 = Bukkit.createInventory(null, 36, "§8Stockage 7 du bunker");
-                    SetItemsOnInventoryStorage(m_storage6, 6);
+                    setItemsOnInventoryStorage(m_storage6, 6);
                 }
                 _p.openInventory(m_storage6);
             }
             case 7 ->
             {
-                if(m_storage7 == null)
+                if (m_storage7 == null)
                 {
                     m_storage7 = Bukkit.createInventory(null, 36, "§8Stockage 8 du bunker");
-                    SetItemsOnInventoryStorage(m_storage7, 7);
+                    setItemsOnInventoryStorage(m_storage7, 7);
                 }
                 _p.openInventory(m_storage7);
             }
             case 8 ->
             {
-                if(m_storage8 == null)
+                if (m_storage8 == null)
                 {
                     m_storage8 = Bukkit.createInventory(null, 36, "§8Stockage 9 du bunker");
-                    SetItemsOnInventoryStorage(m_storage8, 8);
+                    setItemsOnInventoryStorage(m_storage8, 8);
                 }
                 _p.openInventory(m_storage8);
             }
             case 9 ->
             {
-                if(m_storage9 == null)
+                if (m_storage9 == null)
                 {
                     m_storage9 = Bukkit.createInventory(null, 36, "§8Stockage 10 du bunker");
-                    SetItemsOnInventoryStorage(m_storage9, 9);
+                    setItemsOnInventoryStorage(m_storage9, 9);
                 }
                 _p.openInventory(m_storage9);
             }
@@ -456,16 +456,16 @@ public class BunkerStorage {
 
     private int getMaxSpaceStorage()
     {
-        BunkerClass bk = m_main.bunkerManager.getBunker(m_name);
-        return 27 * switch(bk.GetBunkerLevel())
+        BunkerClass bk = m_main.getBunkerManager().getBunker(m_name);
+        return 27 * switch (bk.getBunkerLevel())
         {
             default -> 10;
-            case 0, 1, 2-> 1;
-            case 3-> 2;
-            case 4-> 3;
-            case 5, 6, 7-> 4;
-            case 8-> 6;
-            case 9-> 8;
+            case 0, 1, 2 -> 1;
+            case 3 -> 2;
+            case 4 -> 3;
+            case 5, 6, 7 -> 4;
+            case 8 -> 6;
+            case 9 -> 8;
         };
     }
 }

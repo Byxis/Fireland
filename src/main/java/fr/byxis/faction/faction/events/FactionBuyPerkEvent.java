@@ -2,14 +2,13 @@ package fr.byxis.faction.faction.events;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
 
 public class FactionBuyPerkEvent  extends Event {
 
-    private String faction;
-    private String perk;
+    private final String faction;
+    private final String perk;
 
-    private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList HANDLERS = new HandlerList();
 
     public FactionBuyPerkEvent(String _faction, String _perk)
     {
@@ -18,11 +17,11 @@ public class FactionBuyPerkEvent  extends Event {
     }
     @Override
     public HandlerList getHandlers() {
-        return handlers;
+        return HANDLERS;
     }
 
     public static HandlerList getHandlerList() {
-        return handlers;
+        return HANDLERS;
     }
 
     public String getFaction()

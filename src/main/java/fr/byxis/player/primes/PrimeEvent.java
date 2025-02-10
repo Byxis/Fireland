@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.world.WorldSaveEvent;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -18,36 +17,29 @@ import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class PrimeEvent implements Listener {
 
-    public static PrimesConfig config;
+    private static PrimesConfig config;
     private final Fireland main;
 
-    private static final long day = 14;
+    private static final long DAY = 14;
 
 
-    public PrimeEvent(Fireland main)
+    public PrimeEvent(Fireland _main)
     {
-        config = new PrimesConfig(main);
-        this.main = main;
+        if (PrimeEvent.config == null)
+            config = new PrimesConfig(_main);
+        this.main = _main;
     }
     public static long getPrimeMaxDay()
     {
-        return day;
+        return DAY;
     }
-    @EventHandler
-    public void worldSave(WorldSaveEvent e)
+    public static void savePrime()
     {
-        if(!e.getWorld().getName().equalsIgnoreCase("world"))
-            return;
-        SavePrime();
-    }
-
-    public static void SavePrime()
-    {
-        if(config.getConfig().contains(""))
+        if (config.getConfig().contains(""))
         {
-            for(String uuid : config.getConfig().getConfigurationSection("").getKeys(false))
+            for (String uuid : config.getConfig().getConfigurationSection("").getKeys(false))
             {
-                if(new Timestamp(getPrimeDate(uuid).getTime() + getPrimeMaxDay() * 24 * 60 * 60 * 1000).before(new Timestamp(System.currentTimeMillis())))
+                if (new Timestamp(getPrimeDate(uuid).getTime() + getPrimeMaxDay() * 24 * 60 * 60 * 1000).before(new Timestamp(System.currentTimeMillis())))
                 {
                     setPrime(uuid, 0);
                 }
@@ -55,119 +47,134 @@ public class PrimeEvent implements Listener {
         }
     }
 
-    @EventHandler
-    public void playerKill(PlayerDeathEvent e)
-    {
-        if(e.getPlayer().getLastDamageCause().getEntity() != null)
-        {
-            Player p = e.getPlayer();
-            if(!(p.getLastDamageCause().getEntity() instanceof Player killer))
-                return;
-            int prime = getPrime(p);
-            debugp(5, "player : "+p.getName()+", killer : "+killer.getName()+", prime : "+prime);
-
-            FactionFunctions ff = new FactionFunctions(main, null);
-
-
-            if(prime > 0 && !(ff.playerFactionName(p).equalsIgnoreCase(ff.playerFactionName(killer))))
-            {
-                main.eco.depositPlayer(killer, prime);
-                setPrime(p, 0);
-                for(Player player : Bukkit.getOnlinePlayers())
-                {
-                    if(!player.getName().equals(killer.getName()) && !player.getName().equals(p.getName()))
-                    {
-                        InGameUtilities.sendPlayerInformation(player, "Le joueur "+killer.getName()+" a gagné §6"+prime+"$§7 de prime en tuant "+p.getName()+".");
-                    }
-                    else if(player.getName().equals(killer.getName()))
-                    {
-                        InGameUtilities.sendPlayerSucces(player, "Vous avez gagné §6"+prime+"$§7 de prime en tuant "+p.getName()+".");
-                    }
-                    else if(player.getName().equals(p.getName()))
-                    {
-                        InGameUtilities.sendPlayerError(player, killer.getName()+" a gagné §6"+prime+"$§c de prime en vous tuant.");
-                    }
-                }
-            }
-        }
-    }
-
     public static int getPrime(Player p)
     {
-        if(config.getConfig().contains(p.getUniqueId()+".value"))
+        if (config.getConfig().contains(p.getUniqueId() + ".value"))
         {
-            return config.getConfig().getInt(p.getUniqueId()+".value");
+            return config.getConfig().getInt(p.getUniqueId() + ".value");
         }
         return 0;
     }
 
     public static int getPrime(UUID uuid)
     {
-        if(config.getConfig().contains(uuid.toString()+".value"))
+        if (config.getConfig().contains(uuid.toString() + ".value"))
         {
-            return config.getConfig().getInt(uuid.toString()+".value");
+            return config.getConfig().getInt(uuid.toString() + ".value");
         }
         return 0;
     }
+
     public static int getPrime(String uuid)
     {
-        if(config.getConfig().contains(uuid+".value"))
+        if (config.getConfig().contains(uuid + ".value"))
         {
-            return config.getConfig().getInt(uuid+".value");
+            return config.getConfig().getInt(uuid + ".value");
         }
         return 0;
     }
+
     public static Timestamp getPrimeDate(String uuid)
     {
-        if(config.getConfig().contains(uuid +".date"))
+        if (config.getConfig().contains(uuid + ".date"))
         {
-            return Timestamp.valueOf(config.getConfig().getString(uuid.toString()+".date"));
+            return Timestamp.valueOf(config.getConfig().getString(uuid.toString() + ".date"));
         }
         return null;
     }
 
     private static void setPrime(Player p, int value)
     {
-        if(value == 0)
+        if (value == 0)
         {
             config.getConfig().set(p.getUniqueId().toString(), null);
             return;
         }
-        config.getConfig().set(p.getUniqueId() +".value", value);
-        config.getConfig().set(p.getUniqueId() +".date", new Timestamp(System.currentTimeMillis()).toString());
+        config.getConfig().set(p.getUniqueId() + ".value", value);
+        config.getConfig().set(p.getUniqueId() + ".date", new Timestamp(System.currentTimeMillis()).toString());
         config.save();
     }
+
     private static void setPrime(UUID uuid, int value)
     {
-        if(value == 0)
+        if (value == 0)
         {
             config.getConfig().set(uuid.toString(), null);
             return;
         }
-        config.getConfig().set(uuid+".value", value);
-        config.getConfig().set(uuid+".date", new Timestamp(System.currentTimeMillis()).toString());
+        config.getConfig().set(uuid + ".value", value);
+        config.getConfig().set(uuid + ".date", new Timestamp(System.currentTimeMillis()).toString());
         config.save();
     }
+
     private static void setPrime(String uuid, int value)
     {
-        if(value == 0)
+        if (value == 0)
         {
             config.getConfig().set(uuid, null);
             config.save();
             return;
         }
-        config.getConfig().set(uuid+".value", value);
-        config.getConfig().set(uuid+".date", new Timestamp(System.currentTimeMillis()).toString());
+        config.getConfig().set(uuid + ".value", value);
+        config.getConfig().set(uuid + ".date", new Timestamp(System.currentTimeMillis()).toString());
         config.save();
+    }
+
+    @EventHandler
+    public void worldSave(WorldSaveEvent e)
+    {
+        if (!e.getWorld().getName().equalsIgnoreCase("world"))
+            return;
+        savePrime();
+    }
+
+    @EventHandler
+    public void playerKill(PlayerDeathEvent e)
+    {
+        if (e.getPlayer().getLastDamageCause().getEntity() != null)
+        {
+            Player p = e.getPlayer();
+            Player killer = e.getPlayer().getKiller();
+            int prime = getPrime(p);
+            debugp(5, "player : " + p.getName() + ", killer : " + killer.getName() + ", prime : " + prime);
+
+            FactionFunctions ff = new FactionFunctions(main, null);
+
+            if (prime > 0 && !(ff.playerFactionName(p).equalsIgnoreCase(ff.playerFactionName(killer))))
+            {
+                Fireland.getEco().depositPlayer(killer, prime);
+                setPrime(p, 0);
+                for (Player player : Bukkit.getOnlinePlayers())
+                {
+                    if (!player.getName().equals(killer.getName()) && !player.getName().equals(p.getName()))
+                    {
+                        InGameUtilities.sendPlayerInformation(player, "Le joueur " + killer.getName() + " a gagné §6" + prime + "$§7 de prime en tuant " + p.getName() + ".");
+                    }
+                    else if (player.getName().equals(killer.getName()))
+                    {
+                        InGameUtilities.sendPlayerSucces(player, "Vous avez gagné §6" + prime + "$§7 de prime en tuant " + p.getName() + ".");
+                    }
+                    else if (player.getName().equals(p.getName()))
+                    {
+                        InGameUtilities.sendPlayerError(player, killer.getName() + " a gagné §6" + prime + "$§c de prime en vous tuant.");
+                    }
+                }
+            }
+        }
+    }
+
+    public static PrimesConfig getConfig()
+    {
+        return config;
     }
 
     public static void addPrime(Player p, int value)
     {
-        setPrime(p, getPrime(p)+value);
+        setPrime(p, getPrime(p) + value);
     }
 
     public static void addPrime(UUID uuid, int value)
     {
-        setPrime(uuid, getPrime(uuid)+value);
+        setPrime(uuid, getPrime(uuid) + value);
     }
 }

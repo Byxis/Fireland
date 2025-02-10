@@ -9,13 +9,13 @@ public class TextUtilities {
         text = ChatColor.stripColor(text);
         String[] nameList = text.split(split);
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < nameList.length; i++)
+        for (int i = 0; i < nameList.length; i++)
         {
-            if(nameList[i].startsWith("("))
+            if (nameList[i].startsWith("("))
             {
                 break;
             }
-            else if(i != 0)
+            else if (i != 0)
             {
                 sb.append("-");
             }

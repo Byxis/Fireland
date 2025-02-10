@@ -14,39 +14,39 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
 
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.fireland.utilities.InGameUtilities.getStringColor;
 import static fr.byxis.player.scoreboard.PlayerScoreboardManager.getMainScoreboard;
 
 public class NameTagManager implements Listener {
 
-    private static Fireland m_main;
-    private HashMap<String, Team> m_factionTeams;
-    private FactionFunctions ff;
+    private final HashMap<String, Team> m_factionTeams;
+    private final FactionFunctions m_ff;
     public NameTagManager(Fireland fireland) {
-        m_main = fireland;
         m_factionTeams = new HashMap<>();
-        ff = new FactionFunctions(fireland, null);
+        m_ff = new FactionFunctions(fireland, null);
         m_factionTeams.put("", createFactionTeam("server"));
 
-        for(Player p : Bukkit.getOnlinePlayers()) actualizeTeam(p);
+        for (Player p : Bukkit.getOnlinePlayers())
+        {
+            actualizeTeam(p);
+        }
     }
 
     public void actualizeTeam(Player p)
     {
-        String factionName = ff.playerFactionName(p);
-        if(!ff.HasPerk(factionName, "show_nickname"))
+        String factionName = m_ff.playerFactionName(p);
+        if (!m_ff.hasPerk(factionName, "show_nickname"))
         {
             factionName = "";
         }
-        for(Team team : m_factionTeams.values())
+        for (Team team : m_factionTeams.values())
         {
-            if(team.hasPlayer(p))
+            if (team.hasPlayer(p))
             {
                 team.removePlayer(p);
             }
         }
-        if(!m_factionTeams.containsKey(factionName))
+        if (!m_factionTeams.containsKey(factionName))
         {
             m_factionTeams.put(factionName, createFactionTeam(factionName));
         }
@@ -57,9 +57,9 @@ public class NameTagManager implements Listener {
     private Team createFactionTeam(String name)
     {
         Team team = null;
-        if(name.isEmpty() || name.equals("server"))
+        if (name.isEmpty() || name.equals("server"))
         {
-            if(getMainScoreboard().getTeam("server") == null)
+            if (getMainScoreboard().getTeam("server") == null)
             {
                 team = getMainScoreboard().registerNewTeam("server");
                 team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
@@ -73,19 +73,19 @@ public class NameTagManager implements Listener {
             }
             return team;
         }
-        if(getMainScoreboard().getTeam(name) == null)
+        if (getMainScoreboard().getTeam(name) == null)
         {
             team = getMainScoreboard().registerNewTeam(name);
             team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
             team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-            team.setColor(getStringColor(ff.getFactionInfo(name).getColorcode()));
+            team.setColor(getStringColor(m_ff.getFactionInfo(name).getColorcode()));
         }
         else
         {
             team = getMainScoreboard().getTeam(name);
             team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
             team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-            team.setColor(getStringColor(ff.getFactionInfo(name).getColorcode()));
+            team.setColor(getStringColor(m_ff.getFactionInfo(name).getColorcode()));
         }
         return team;
     }
@@ -99,7 +99,7 @@ public class NameTagManager implements Listener {
     @EventHandler
     public void playerLeaveFaction(PlayerLeaveFactionEvent e)
     {
-        if(Bukkit.getPlayer(e.getPlayerUuid()) != null)
+        if (Bukkit.getPlayer(e.getPlayerUuid()) != null)
             actualizeTeam(Bukkit.getPlayer(e.getPlayerUuid()));
     }
 
@@ -110,11 +110,11 @@ public class NameTagManager implements Listener {
     }
 
     @EventHandler
-    public void FactionBuyPerk(FactionBuyPerkEvent e)
+    public void factionBuyPerk(FactionBuyPerkEvent e)
     {
-        if(e.getPerk().equalsIgnoreCase("show_nickname"))
+        if (e.getPerk().equalsIgnoreCase("show_nickname"))
         {
-            for(Player p : Bukkit.getOnlinePlayers())
+            for (Player p : Bukkit.getOnlinePlayers())
             {
                 actualizeTeam(p);
             }

@@ -1,0 +1,24 @@
+<ruleset name="Custom PMD Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+                             http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>Règles personnalisées pour la qualité du code</description>
+
+    <!-- Règles générales -->
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="SystemPrintln"/>
+    </rule>
+
+    <!-- Vérifications de complexité -->
+    <rule ref="category/java/design.xml">
+        <exclude name="AvoidDeeplyNestedIfStmts"/>
+    </rule>
+
+    <!-- Optimisations -->
+    <rule ref="category/java/performance.xml"/>
+
+    <!-- Security -->
+    <rule ref="category/java/security.xml"/>
+</ruleset>

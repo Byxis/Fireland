@@ -9,30 +9,30 @@ import java.io.IOException;
 
 public class AdvancementsConfig {
 
-    private Fireland plugin;
-    public AdvancementsConfig(Fireland plugin) {
-        this.plugin = plugin;
+    private final Fireland main;
+    public AdvancementsConfig(Fireland _main) {
+        this.main = _main;
         this.name = "success";
         setup();
     }
 
-    public FileConfiguration config;
-    public File file;
-    private String name;
+    private FileConfiguration config;
+    private File file;
+    private final String name;
 
     public void setup() {
-        file = new File(plugin.getDataFolder(), name+".yml");
+        file = new File(main.getDataFolder(), name + ".yml");
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                plugin.getLogger().info(name+".yml has been created !");
+                main.getLogger().info(name + ".yml has been created !");
             } catch (IOException e) {
-                System.err.println("/!\\ Could not create "+name+".yml");
+                System.err.println("/!\\ Could not create " + name + ".yml");
             }
         }
 
         config = YamlConfiguration.loadConfiguration(file);
-        plugin.getLogger().info(name+".yml has been loaded !");
+        main.getLogger().info(name + ".yml has been loaded !");
     }
 
     public FileConfiguration getConfig()
@@ -46,15 +46,15 @@ public class AdvancementsConfig {
         {
             config.save(file);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
-            System.err.println("/!\\ Could not save "+name+".yml");
+            System.err.println("/!\\ Could not save " + name + ".yml");
         }
     }
 
     public void reload()
     {
         config = YamlConfiguration.loadConfiguration(file);
-        plugin.getLogger().info(name+".yml has been reloaded !");
+        main.getLogger().info(name + ".yml has been reloaded !");
     }
 }

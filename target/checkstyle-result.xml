@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\DiscordCommand.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\FirelandCommand.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\NightVision.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\Rename.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\SpeedFly.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\Stack.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DatabaseManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DbConnection.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DbCredentials.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\AmbientSound.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Bank.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\ChatListener.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\CobwebDamage.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\DoorPass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\EntitySpawn.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Heliport.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\InteractionManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Join.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Menu.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\PacketListener.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\PlayerManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\PreventCrafting.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\QuadListener.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\SaveEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Shop.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\SilverfishSilent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Stairs.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\TimeAlive.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\UtilitaryMerchantHandler.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\VillagerInteraction.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\WorldGeneration.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\WorldGuardEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\ZombieManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\bunker\BunkerClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\bunker\BunkerCommand.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\bunker\BunkerEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\bunker\BunkerManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\bunker\BunkerStorage.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\essaimClass\ActiveMobSpawning.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\essaimClass\EssaimClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\essaimClass\EssaimGroup.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\essaimClass\Spawner.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimCommandCompleter.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimCommandManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimConfigManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimEventHandler.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimFunctions.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\events\FactionBuyPerkEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\events\PlayerJoinFactionEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\events\PlayerLeaveFactionEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionFunctions.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionInformation.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionManagerTabCompleter.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionPlayerInformation.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionPvp.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\CaptureZone.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\DataZone.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\WorldGuardEnterZoneEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\zoneclass\FactionCapturingClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\zoneclass\FactionZoneInformation.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\zoneclass\ZoneClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneConfigFileManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneSaveEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\ConfigManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\Fireland.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\HashMapManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\restart\RestartCommand.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\restart\RestartEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\restart\RestartManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\Save.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\BasicUtilities.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\BlockUtilities.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\InGameUtilities.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\InventoryUtilities.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\ItemSerializer.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\ListUtilities.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\PermissionUtilities.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\TextUtilities.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\Vector2.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\WGUtilities.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\WorldUtilities.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\FactureCommand.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\JetonManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\JetonsCommandManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\JetonSql.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\advancements\AdvancementsClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\advancements\AdvancementsConfig.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\advancements\AdvancementsManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\booster\BoosterClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\booster\BoosterCommandCompleter.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\booster\BoosterManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\discretion\DiscretionClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\discretion\RallyCommand.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\discretion\ZombieDetection.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\IntendantCommand.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\Manager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuBooster.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuBunker.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuChoixNation.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuColor.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuEssaim.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuFaction.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuIntendant.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuLevel.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuPerks.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuPlayerList.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuPrime.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuQuest.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuZone.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\backpack\BackPack.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\backpack\BackPackClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\compass\Compass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\ItemDurability.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\ItemEnabler.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\lamp\Lamp.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\morphine\FallDamage.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\notes\NotesConfig.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\notes\OpenNotes.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\parachute\Parachute.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\serum\Serum.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\toxic\InfectedPlayer.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\toxic\Mask.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\toxic\SporeDamage.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\water\BottleFilled.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\water\Thirst.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\karma\KarmaManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\karma\PlayerKarmaClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelCommand.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelSavings.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelStorage.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelTabCompleter.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\PlayerLevel.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\packet\PacketFunctions.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\packet\PacketPlayer.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\PlayerAddonsEnabler.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\PlayerDeath.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\primes\PrimeEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\primes\PrimesConfig.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\pvpmanager\PvPManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\BuyQuestClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\CraftQuestClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\EnterRegionQuestClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\InteractQuestClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\InteractSpecificQuestClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\KillQuestClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\PlayerQuests.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\ProgressQuest.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\QuestClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\SellQuestClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\QuestConfig.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\QuestEventHandler.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\QuestManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\rank\RankConfig.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\rank\RankCustomMessage.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\NameTagManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\PlayerScoreboardManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\ScoreboardPlayer.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\SideBoardManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopCommandManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopEventManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopFunction.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopItemClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\recycler\RecyclerFunction.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopCraftingItemClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopFunction.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopItemClass.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopManager.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopManagerEvent.java">
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopManagerTabCompleter.java">
+</file>
+</checkstyle>

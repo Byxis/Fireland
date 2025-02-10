@@ -1,15 +1,14 @@
 package fr.byxis.faction.zone;
 
 import fr.byxis.db.DbConnection;
+import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.faction.faction.FactionInformation;
 import fr.byxis.faction.faction.FactionPlayerInformation;
-import fr.byxis.fireland.utilities.InGameUtilities;
-import fr.byxis.jeton.JetonManager;
-import fr.byxis.jeton.jetonsCommandManager;
-import fr.byxis.faction.faction.FactionFunctions;
-import fr.byxis.fireland.Fireland;
 import fr.byxis.faction.zone.zoneclass.FactionCapturingClass;
 import fr.byxis.faction.zone.zoneclass.ZoneClass;
+import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.jeton.JetonManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -20,50 +19,49 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class DataZone {
 
-    public final ZoneConfigFileManager configManager;
-    public List<ZoneClass> zones;
-    public HashMap<String, List<FactionCapturingClass>> zoneInCapture;
-    public HashMap<String, List<Player>> m_zoneEnter;
-    public HashMap<String, Boolean> m_zoneEnterBool;
+    private final ZoneConfigFileManager configManager;
+    private final List<ZoneClass> zones;
+    private final HashMap<String, List<FactionCapturingClass>> zoneInCapture;
+    private final HashMap<String, List<Player>> m_zoneEnter;
+    private final HashMap<String, Boolean> m_zoneEnterBool;
     private final Fireland main;
 
-    public DataZone(Fireland main) {
-        this.main = main;
-        this.configManager = new ZoneConfigFileManager(main);
+    public DataZone(Fireland _main) {
+        this.main = _main;
+        this.configManager = new ZoneConfigFileManager(_main);
         this.zones = new ArrayList<>();
         this.zoneInCapture = new HashMap<>();
         m_zoneEnter = new HashMap<>();
         m_zoneEnterBool = new HashMap<>();
-        InitZones();
+        initZones();
     }
 
-    private void InitZones() {
+    private void initZones() {
         configManager.setup();
         for (String zone : configManager.getConfig().getConfigurationSection("zone").getKeys(false)) {
-            Location loc = new Location(Bukkit.getWorld(configManager.config.getString("zone." + zone + ".world")),
-                    configManager.config.getDouble("zone." + zone + ".x"),
-                    configManager.config.getDouble("zone." + zone + ".y"),
-                    configManager.config.getDouble("zone." + zone + ".z"));
+            Location loc = new Location(Bukkit.getWorld(configManager.getConfig().getString("zone." + zone + ".world")),
+                    configManager.getConfig().getDouble("zone." + zone + ".x"),
+                    configManager.getConfig().getDouble("zone." + zone + ".y"),
+                    configManager.getConfig().getDouble("zone." + zone + ".z"));
             ZoneClass zoneClass = new ZoneClass(zone, loc,
-                    configManager.config.getInt("zone." + zone + ".teleportation-price"),
-                    configManager.config.getInt("zone." + zone + ".daily-gain"),
-                    configManager.config.getInt("zone." + zone + ".final-gain.dollars"),
-                    configManager.config.getInt("zone." + zone + ".final-gain.jetons"),
-                    configManager.config.getDouble("zone." + zone + ".privation-duration"),
-                    configManager.config.getDouble("zone." + zone + ".auto-release"),
-                    configManager.config.getDouble("zone." + zone + ".capture-time"), true);
+                    configManager.getConfig().getInt("zone." + zone + ".teleportation-price"),
+                    configManager.getConfig().getInt("zone." + zone + ".daily-gain"),
+                    configManager.getConfig().getInt("zone." + zone + ".final-gain.dollars"),
+                    configManager.getConfig().getInt("zone." + zone + ".final-gain.jetons"),
+                    configManager.getConfig().getDouble("zone." + zone + ".privation-duration"),
+                    configManager.getConfig().getDouble("zone." + zone + ".auto-release"),
+                    configManager.getConfig().getDouble("zone." + zone + ".capture-time"), true);
             zones.add(zoneClass);
         }
-        ActualizeClaiming();
-        SaveAll();
+        actualizeClaiming();
+        saveAll();
     }
 
-    public void SaveAll() {
+    public void saveAll() {
         for (ZoneClass zone : zones) {
             if (zone.isClaimed()) {
                 final long time = zone.getClaimedAt().getTime();
@@ -72,41 +70,41 @@ public class DataZone {
                 if (today.after(releaseDate)) {
                     zoneInCapture.get(zone.getName()).clear();
                     rewardFaction(zone, zone.getClaimer(), true);
-                    RemoveSavedClaiming(zone.getName(), zone.getClaimer());
+                    removeSavedClaiming(zone.getName(), zone.getClaimer());
 
-                    SaveTiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
+                    saveTiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
                     zone.unclaim();
 
                     CaptureZone.changeAnimationStep(-1, zone, "§r");
                     return;
                 } else {
-                    Timestamp rewardedAt = GetRewardNumber(zone);
+                    Timestamp rewardedAt = getRewardNumber(zone);
                     if (rewardedAt != null && rewardedAt.getDay() != today.getDay()) {
                         rewardFaction(zone, zone.getClaimer(), false);
-                        SetRewardNumber(zone, today);
+                        setRewardNumber(zone, today);
                     }
-                    SaveClaiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
+                    saveClaiming(zone.getClaimer(), zone.getClaimedAt(), zone.getName());
                     FactionFunctions ff = new FactionFunctions(main, null);
-                    FactionInformation info =ff.getFactionInfo(zone.getClaimer());
-                    if(info != null)
+                    FactionInformation info = ff.getFactionInfo(zone.getClaimer());
+                    if (info != null)
                         CaptureZone.changeAnimationStep(-1, zone, ff.getFactionInfo(zone.getClaimer()).getColorcode());
                     else
                     {
-                        System.err.println("Erreur lors de la récupération de la faction "+zone.getClaimer());
-                        RemoveSavedClaiming(zone.getName(), null);
+                        System.err.println("Erreur lors de la récupération de la faction " + zone.getClaimer());
+                        removeSavedClaiming(zone.getName(), null);
                         CaptureZone.changeAnimationStep(-1, zone, "§r");
                     }
                 }
             } else {
 
-                RemoveSavedClaiming(zone.getName(), null);
+                removeSavedClaiming(zone.getName(), null);
                 CaptureZone.changeAnimationStep(-1, zone, "§r");
             }
         }
-        ActualizeClaiming();
+        actualizeClaiming();
     }
 
-    private void SaveClaiming(String factionName, Timestamp claimedAt, String zone) {
+    private void saveClaiming(String factionName, Timestamp claimedAt, String zone) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
         try {
@@ -135,7 +133,7 @@ public class DataZone {
         }
     }
 
-    public void SaveTiming(String factionName, Timestamp claimedAt, String zone) {
+    public void saveTiming(String factionName, Timestamp claimedAt, String zone) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
         try {
@@ -165,7 +163,7 @@ public class DataZone {
         }
     }
 
-    void RemoveSavedClaiming(String zone, String faction) {
+    void removeSavedClaiming(String zone, String faction) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
         try {
@@ -205,7 +203,7 @@ public class DataZone {
         }
     }
 
-    public void AddCapturing(String zone, String factionName, Player p) {
+    public void addCapturing(String zone, String factionName, Player p) {
         InGameUtilities.playPlayerSound(p.getPlayer(), "entity.player.levelup", SoundCategory.AMBIENT, 1, 0);
         if (zoneInCapture.containsKey(zone)) {
             boolean founded = false;
@@ -269,12 +267,12 @@ public class DataZone {
         return false;
     }
 
-    public void RemoveCapturing(String zone, String factionName, Player p) {
+    public void removeCapturing(String zone, String factionName, Player p) {
         if (zoneInCapture.containsKey(zone)) {
             for (FactionCapturingClass factionCapturing : zoneInCapture.get(zone)) {
                 if (factionCapturing.getName().equalsIgnoreCase(factionName)) {
                     factionCapturing.removePlayerList(p);
-                    if (factionCapturing.getProgression() <= 0 && factionCapturing.getPlayerList().size() < 1) {
+                    if (factionCapturing.getProgression() <= 0 && factionCapturing.getPlayerList().isEmpty()) {
                         zoneInCapture.get(zone).remove(factionCapturing);
                     }
                     break;
@@ -293,11 +291,11 @@ public class DataZone {
                 }
             }
         } else {
-            ff.deposit(factionName, zone.getDaily_gain());
+            ff.deposit(factionName, zone.getDailyGain());
         }
     }
 
-    private void ActualizeClaiming() {
+    private void actualizeClaiming() {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
@@ -337,12 +335,13 @@ public class DataZone {
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e)
+        {
+            System.err.println(e.getMessage());
         }
     }
 
-    private Timestamp GetRewardNumber(ZoneClass zone) {
+    private Timestamp getRewardNumber(ZoneClass zone) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
         try {
@@ -354,13 +353,14 @@ public class DataZone {
             if (rs.next()) {
                 return rs.getTimestamp(1);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e)
+        {
+            System.err.println(e.getMessage());
         }
         return null;
     }
 
-    private void SetRewardNumber(ZoneClass zone, Timestamp time) {
+    private void setRewardNumber(ZoneClass zone, Timestamp time) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
         try {
@@ -371,8 +371,10 @@ public class DataZone {
             insert.setString(2, zone.getName());
             insert.setString(3, zone.getClaimer());
             insert.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        }
+        catch (SQLException e)
+        {
+            System.err.println(e.getMessage());
         }
     }
 
@@ -424,6 +426,21 @@ public class DataZone {
         if (m_zoneEnterBool.containsKey(zone))
             return m_zoneEnterBool.get(zone);
         return false;
+    }
+
+    public ZoneConfigFileManager getConfigManager()
+    {
+        return configManager;
+    }
+
+    public List<ZoneClass> getZones()
+    {
+        return zones;
+    }
+
+    public HashMap<String, List<FactionCapturingClass>> getZoneInCapture()
+    {
+        return zoneInCapture;
     }
 }
 

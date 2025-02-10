@@ -9,13 +9,13 @@ public class QuestClass {
     private final double jetons;
     private final String objective;
 
-    public QuestClass(int questId, String title, String description, double reward, double jetons, String objective) {
-        this.questId = questId;
-        this.title = title;
-        this.desc = description;
-        this.reward = reward;
-        this.jetons = jetons;
-        this.objective = objective;
+    public QuestClass(int _questId, String _title, String _description, double _reward, double _jetons, String _objective) {
+        this.questId = _questId;
+        this.title = _title;
+        this.desc = _description;
+        this.reward = _reward;
+        this.jetons = _jetons;
+        this.objective = _objective;
     }
 
     public double getReward() {

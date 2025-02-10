@@ -26,16 +26,16 @@ public class DiscretionClass {
         return score;
     }
 
-    public void setScore(double score) {
-        this.score = score;
+    public void setScore(double _score) {
+        this.score = _score;
     }
 
     public boolean isEating() {
         return eating;
     }
 
-    public void setEating(boolean eating) {
-        this.eating = eating;
+    public void setEating(boolean _eating) {
+        this.eating = _eating;
     }
 
     public boolean isShooting() {
@@ -43,19 +43,19 @@ public class DiscretionClass {
     }
     public void reduceTimeShooting()
     {
-        if(!isShooting())
+        if (!isShooting())
             return;
         shooting -= 1;
-        if(shooting < 0)
+        if (shooting < 0)
             shooting = 0;
     }
 
-    public void setShooting(int shooting) {
-        this.shooting = shooting;
+    public void setShooting(int _shooting) {
+        this.shooting = _shooting;
     }
 
-    public void setMoving(boolean moving) {
-        this.moving = moving;
+    public void setMoving(boolean _moving) {
+        this.moving = _moving;
     }
 
     public boolean isMoving() {

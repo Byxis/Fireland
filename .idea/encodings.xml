@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/db/DbConnection.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/faction/bunker/BunkerClass.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/faction/essaim/EssaimCommandManager.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/faction/essaim/EssaimEventHandler.java" charset="windows-1252" />
@@ -11,8 +12,10 @@
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/fireland/Fireland.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/fireland/utilities/ItemSerializer.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/player/intendant/Manager.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/player/intendant/menu/MenuLevel.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/player/level/PlayerLevel.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/player/scoreboard/scoreboardPlayer.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/player/scoreboard/ScoreboardPlayer.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/player/workshop/WorkshopManagerEvent.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/fr/byxis/player/workshop/recycler/RecyclerFunction.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="windows-1252" />
     <file url="PROJECT" charset="windows-1252" />

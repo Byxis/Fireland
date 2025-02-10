@@ -24,9 +24,12 @@ public class LevelStorage {
 
     public LevelStorage(Fireland main)
     {
-        m_main = main;
-        m_levelMap = new HashMap<>();
-        m_levelSavingsMap = new HashMap<>();
+        if (m_main == null)
+            m_main = main;
+        if (m_levelMap == null)
+            m_levelMap = new HashMap<>();
+        if (m_levelSavingsMap == null)
+            m_levelSavingsMap = new HashMap<>();
         loadPlayerKillMap();
         main.getServer().getPluginManager().registerEvents(new LevelEvent(main), main);
         main.getCommand("level").setExecutor(new LevelCommand(main));
@@ -35,112 +38,111 @@ public class LevelStorage {
 
     public static PlayerLevel getPlayerLevel(UUID _uuid)
     {
-        if(!m_levelMap.containsKey(_uuid))
+        if (!m_levelMap.containsKey(_uuid))
             m_levelMap.put(_uuid, new PlayerLevel(m_main, _uuid));
         return m_levelMap.get(_uuid);
     }
 
     public static void addPlayerXp(UUID _uuid, int _xp, Nation _nation)
     {
-        if(!m_levelMap.containsKey(_uuid))
+        if (!m_levelMap.containsKey(_uuid))
             m_levelMap.put(_uuid, new PlayerLevel(m_main, _uuid));
         PlayerLevel pl = m_levelMap.get(_uuid);
-        if(pl.getNation().equals(_nation))
+        if (pl.getNation().equals(_nation))
         {
-            pl.addXp(m_main, (int) (_xp*1.5f));
+            pl.addXp(m_main, (int) (_xp * 1.5f));
         }
         else
         {
-            pl.addXp(m_main, (int) (_xp*0.5f));
+            pl.addXp(m_main, (int) (_xp * 0.5f));
         }
     }
 
-    public static void SaveLevels()
+    public static void saveLevels()
     {
-        if(m_levelMap.isEmpty()) return;
+        if (m_levelMap.isEmpty()) return;
         List<UUID> uuidList = new ArrayList<UUID>();
-        for(PlayerLevel pl : m_levelMap.values())
+        for (PlayerLevel pl : m_levelMap.values())
         {
-            pl.Save(m_main);
-            if(!Bukkit.getOfflinePlayer(pl.getUuid()).isOnline())
+            pl.save(m_main);
+            if (!Bukkit.getOfflinePlayer(pl.getUuid()).isOnline())
                 uuidList.add(pl.getUuid());
         }
-        for(UUID uuid : uuidList)
+        for (UUID uuid : uuidList)
         {
             m_levelMap.remove(uuid);
         }
     }
 
-    private void loadPlayerKillMap()
+    public static void savePlayerKillMap()
     {
-        if(m_main.cfgm.getPlayerDB().contains("levelmap.date"))
+        for (LevelSavings ls : m_levelSavingsMap.values())
         {
-            Date date = (Date) m_main.cfgm.getPlayerDB().get("levelmap.date");
-            boolean isNew = date.getDate() != (new Date()).getDate();
-
-            if(m_main.cfgm.getPlayerDB().contains("levelmap.uuid"))
-            {
-                for(String uuid : m_main.cfgm.getPlayerDB()
-                        .getConfigurationSection("levelmap.uuid").getKeys(false))
-                {
-                    if(uuid != null && !uuid.equalsIgnoreCase(""))
-                    {
-                        if(isNew)
-                            m_main.cfgm.getPlayerDB().set("levelmap.uuid."+uuid+".victims", null);
-
-                        if(m_main.cfgm.getPlayerDB().contains("levelmap.uuid."+uuid))
-                        {
-                            m_levelSavingsMap.put(UUID.fromString(uuid), new LevelSavings(UUID.fromString(uuid), m_main));
-                        }
-                    }
-
-                }
-                return;
-            }
+            ls.saveAll(m_main);
         }
-        m_main.cfgm.getPlayerDB().set("levelmap.date", new Date());
+        m_main.getCfgm().savePlayerDB();
     }
 
-    public static void SavePlayerKillMap()
+    public static void addPlayerKill(Player killer, Player victim)
     {
-        for(LevelSavings ls : m_levelSavingsMap.values())
-        {
-            ls.SaveAll(m_main);
-        }
-        m_main.cfgm.savePlayerDB();
-    }
-
-    public static void AddPlayerKill(Player killer, Player victim)
-    {
-        if(!m_levelSavingsMap.containsKey(killer.getUniqueId()))
+        if (!m_levelSavingsMap.containsKey(killer.getUniqueId()))
             m_levelSavingsMap.put(killer.getUniqueId(), new LevelSavings(killer.getUniqueId(), m_main));
 
-        if(!m_levelSavingsMap.get(killer.getUniqueId()).getVictims().contains(victim.getUniqueId()))
+        if (!m_levelSavingsMap.get(killer.getUniqueId()).getVictims().contains(victim.getUniqueId()))
         {
             m_levelSavingsMap.get(killer.getUniqueId()).addVictim(victim.getUniqueId());
             m_levelSavingsMap.get(killer.getUniqueId()).addKills(1);
         }
     }
 
-    public static LevelSavings GetPlayerLevelSavings(UUID p)
+    public static LevelSavings getPlayerLevelSavings(UUID p)
     {
-        if(!m_levelSavingsMap.containsKey(p))
+        if (!m_levelSavingsMap.containsKey(p))
             m_levelSavingsMap.put(p, new LevelSavings(p, m_main));
         return m_levelSavingsMap.get(p);
     }
 
-    public static void AddPlayerZombieKill(Player killer)
+    public static void addPlayerZombieKill(Player killer)
     {
-        if(!m_levelSavingsMap.containsKey(killer.getUniqueId()))
+        if (!m_levelSavingsMap.containsKey(killer.getUniqueId()))
             m_levelSavingsMap.put(killer.getUniqueId(), new LevelSavings(killer.getUniqueId(), m_main));
         m_levelSavingsMap.get(killer.getUniqueId()).addZombieKills(1);
     }
 
-    public static boolean HasPlayerAlreadyKilled(Player killer, Player victim)
+    public static boolean hasPlayerAlreadyKilled(Player killer, Player victim)
     {
-        if(!m_levelSavingsMap.containsKey(killer.getUniqueId()))
+        if (!m_levelSavingsMap.containsKey(killer.getUniqueId()))
             m_levelSavingsMap.put(killer.getUniqueId(), new LevelSavings(killer.getUniqueId(), m_main));
 
         return m_levelSavingsMap.get(killer.getUniqueId()).getVictims().contains(victim.getUniqueId());
+    }
+
+    private void loadPlayerKillMap()
+    {
+        if (m_main.getCfgm().getPlayerDB().contains("levelmap.date"))
+        {
+            Date date = (Date) m_main.getCfgm().getPlayerDB().get("levelmap.date");
+            boolean isNew = date.getDate() != (new Date()).getDate();
+
+            if (m_main.getCfgm().getPlayerDB().contains("levelmap.uuid"))
+            {
+                for (String uuid : m_main.getCfgm().getPlayerDB()
+                        .getConfigurationSection("levelmap.uuid").getKeys(false))
+                {
+                    if (uuid != null && !uuid.equalsIgnoreCase(""))
+                    {
+                        if (isNew)
+                            m_main.getCfgm().getPlayerDB().set("levelmap.uuid." + uuid + ".victims", null);
+
+                        if (m_main.getCfgm().getPlayerDB().contains("levelmap.uuid." + uuid))
+                        {
+                            m_levelSavingsMap.put(UUID.fromString(uuid), new LevelSavings(UUID.fromString(uuid), m_main));
+                        }
+                    }
+                }
+                return;
+            }
+        }
+        m_main.getCfgm().getPlayerDB().set("levelmap.date", new Date());
     }
 }

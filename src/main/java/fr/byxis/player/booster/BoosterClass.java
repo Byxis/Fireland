@@ -13,13 +13,13 @@ public class BoosterClass {
     private final double boosterLootPercent;
     private final int level;
 
-    public BoosterClass(Date started, Date finished, UUID uuid, int level)
+    public BoosterClass(Date _started, Date _finished, UUID _uuid, int _level)
     {
-        this.started = started;
-        this.finished = finished;
-        this.uuid = uuid;
-        this.level = level;
-        switch(level)
+        this.started = _started;
+        this.finished = _finished;
+        this.uuid = _uuid;
+        this.level = _level;
+        switch (_level)
         {
             default:
                 this.moneyMin = -4;

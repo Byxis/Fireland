@@ -7,7 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -18,41 +17,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BackPackClass {
-    private int maxInventorySize;
-    private NamespacedKey backpackKey;
-    private Gson gson = new Gson();
-    private Type itemListType = new TypeToken<List<String>>(){}.getType();
+    private final int maxInventorySize;
+    private final NamespacedKey backpackKey;
+    private final Gson gson = new Gson();
+    private final Type itemListType = new TypeToken<List<String>>() { } .getType();
 
     public BackPackClass(int level) {
         this.backpackKey = new NamespacedKey("fireland", "backpack");
 
-
-
-        if(level == 1 || level >8)
+        if (level == 1 || level > 8)
         {
             this.maxInventorySize = 5;
         }
-        else if(level == 2)
+        else if (level == 2)
         {
             this.maxInventorySize = 7;
         }
-        else if(level <= 3)
+        else if (level <= 3)
         {
             this.maxInventorySize = 9;
         }
         else
         {
-            this.maxInventorySize = (level-2)*9;
+            this.maxInventorySize = (level - 2) * 9;
         }
     }
     public boolean isBackPackEmpty(ItemStack item)
     {
         Inventory inventory = loadBackPack(item);
-        if(!inventory.isEmpty())
+        if (!inventory.isEmpty())
         {
-            for(ItemStack itemStack : inventory.getContents())
+            for (ItemStack itemStack : inventory.getContents())
             {
-                if(itemStack != null && itemStack.getType() != Material.WHITE_STAINED_GLASS_PANE)
+                if (itemStack != null && itemStack.getType() != Material.WHITE_STAINED_GLASS_PANE)
                     return false;
             }
         }
@@ -61,7 +58,7 @@ public class BackPackClass {
     }
     public Inventory loadBackPack(ItemStack item) {
         PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
-        if(!item.getItemMeta().hasCustomModelData())
+        if (!item.getItemMeta().hasCustomModelData())
             return createEmptyInventory(1);
         Inventory inventory = createEmptyInventory(item.getItemMeta().getCustomModelData());
 
@@ -86,14 +83,14 @@ public class BackPackClass {
         ItemMeta meta = glass.getItemMeta();
         meta.setDisplayName(" ");
         glass.setItemMeta(meta);
-        if(this.maxInventorySize == 5)
+        if (this.maxInventorySize == 5)
         {
             inventory.setItem(0, glass);
             inventory.setItem(1, glass);
             inventory.setItem(7, glass);
             inventory.setItem(8, glass);
         }
-        if(this.maxInventorySize == 7)
+        if (this.maxInventorySize == 7)
         {
             inventory.setItem(0, glass);
             inventory.setItem(8, glass);
@@ -132,30 +129,17 @@ public class BackPackClass {
     }
 
     private Inventory createEmptyInventory(int level) {
-        String name = null;
-        switch(level)
-        {
-            case 1 -> name = "§cPochette";
-            case 2 -> name = "§cSacoche";
-            case 3 -> name = "§cSac à dos";
-            case 4 -> name = "§cSac de sport";
-            case 5 -> name = "§cSac de randonnée";
-            case 6 -> name = "§cSac à dos militaire";
-            default -> name = "§cA venir";
-        }
-        if(level > 3)
-        {
-            return Bukkit.createInventory(new BackpackInventoryHolder(), (level-2)*9, name);
-        }
-        return Bukkit.createInventory(new BackpackInventoryHolder(), 9, name);
+        String name = switch (level) {
+            case 1 -> "§cPochette";
+            case 2 -> "§cSacoche";
+            case 3 -> "§cSac à dos";
+            case 4 -> "§cSac de sport";
+            case 5 -> "§cSac de randonnée";
+            case 6 -> "§cSac à dos militaire";
+            default -> "§cA venir";
+        };
+
+        int size = (level > 3) ? (level - 2) * 9 : 9;
+        return Bukkit.createInventory(null, size, name);
     }
-
-    private static class BackpackInventoryHolder implements InventoryHolder {
-        @Override
-        public Inventory getInventory() {
-            return null;
-        }
-    }
-
-
 }

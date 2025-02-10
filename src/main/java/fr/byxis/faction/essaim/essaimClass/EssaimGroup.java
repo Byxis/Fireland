@@ -2,7 +2,6 @@ package fr.byxis.faction.essaim.essaimClass;
 
 import fr.byxis.faction.essaim.EssaimFunctions;
 import fr.byxis.faction.essaim.EssaimManager;
-import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -15,15 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EssaimGroup {
-    private String name;
+    private final String name;
     private Player leader;
-    private List<Player> members;
+    private final List<Player> members;
     private int adaptiveDifficulty;
     private int difficulty;
     private Timestamp startTime;
 
-    public EssaimGroup(String name, Player firstPlayer) {
-        this.name = name;
+    public EssaimGroup(String _name, Player firstPlayer) {
+        this.name = _name;
         this.leader = firstPlayer;
         this.members = new ArrayList<Player>();
         this.startTime = null;
@@ -41,17 +40,17 @@ public class EssaimGroup {
         }
 
         // Invite player to group
-        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez été invité dans l'essaim " + TextUtilities.convertStorableToClean(name) + " par "+leader.getName()+". Cliquez sur ce message pour rejoindre.", "/essaim join "+name+" Wowowowowowowowowowow1234567890", "§aCliquez ici pour rejoindre l'essaim", ClickEvent.Action.RUN_COMMAND);
+        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez été invité dans l'essaim " + TextUtilities.convertStorableToClean(name) + " par " + leader.getName() + ". Cliquez sur ce message pour rejoindre.", "/essaim join " + name + " Wowowowowowowowowowow1234567890", "§aCliquez ici pour rejoindre l'essaim", ClickEvent.Action.RUN_COMMAND);
         return true;
     }
 
     public void joinGroup(Player joiner)
     {
-        if(members.isEmpty())
+        if (members.isEmpty())
         {
             leader = joiner;
         }
-        if(!members.contains(joiner))
+        if (!members.contains(joiner))
         {
             members.add(joiner);
         }
@@ -59,17 +58,26 @@ public class EssaimGroup {
 
     public boolean kickPlayer(String kicker, String kicked) {
         // Only allow the leader to kick players
-        if (!kicker.equals(leader)) {
+        if (!leader.getName().equalsIgnoreCase(kicker))
+        {
             return false;
         }
-
-        // Remove player from group and return success/failure flag based on whether or not they were in the group.
-        return members.remove(kicked);
+        for (Player p : members)
+        {
+            if (p.getName().equalsIgnoreCase(kicked))
+            {
+                members.remove(p);
+                return true;
+            }
+        }
+        return false;
     }
+
 
     public void leaveGroup(Player leaver) {
         // If it's not the leader leaving then remove them from list of players.
-        if(leaver.getName().equalsIgnoreCase(leader.getName())){
+        if (leaver.getName().equalsIgnoreCase(leader.getName()))
+        {
             disband();
         }
         else
@@ -85,8 +93,9 @@ public class EssaimGroup {
 
     public void loose(Player leaver) {
         members.remove(leaver);
-        if(leaver.getName().equalsIgnoreCase(leader.getName())){
-            if(!members.isEmpty())
+        if (leaver.getName().equalsIgnoreCase(leader.getName()))
+        {
+            if (!members.isEmpty())
             {
                 leader = getMembers().get(0);
             }
@@ -95,7 +104,7 @@ public class EssaimGroup {
                 EssaimFunctions.looseEssaim(name, leader);
             }
         }
-        for(Player member : members)
+        for (Player member : members)
         {
             InGameUtilities.playPlayerSound(member, Sound.ENTITY_WITHER_HURT, SoundCategory.PLAYERS, 1, 0);
             InGameUtilities.sendPlayerInformation(member, "§cLe joueur " + leaver.getName() + " a quitté l'expédition.");
@@ -104,10 +113,11 @@ public class EssaimGroup {
 
     public void finish(Player leaver) {
         members.remove(leaver);
-        if(leaver.getName().equalsIgnoreCase(leader.getName())){
+        if (leaver.getName().equalsIgnoreCase(leader.getName()))
+        {
             disband();
         }
-        else if(members.size() == 1)
+        else if (members.size() == 1)
         {
             leader = getMembers().get(0);
         }
@@ -115,20 +125,14 @@ public class EssaimGroup {
 
     public void disband() {
         // Clear all players from list
-        for(int i=members.size()-1;i>=0;i--){
+        for (int i = members.size() - 1; i >= 0; i--)
+        {
             members.remove(i);
         }
     }
     public boolean isEmpty()
     {
-        if(members.size() == 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return members.isEmpty();
     }
 
     public List<Player> getMembers()
@@ -139,7 +143,7 @@ public class EssaimGroup {
     public List<String> getMembersName()
     {
         List<String> list = new ArrayList<>();
-        for(Player p : members)
+        for (Player p : members)
         {
             list.add(p.getName());
         }
@@ -175,10 +179,10 @@ public class EssaimGroup {
 
     public int getRewardJetons()
     {
-        int jetons = EssaimManager.activeEssaims.get(this.name).getJetons();
-        if(difficulty == 3)
-            return jetons+ 5;
-        else if(difficulty == 0)
+        int jetons = EssaimManager.getActiveEssaims().get(this.name).getJetons();
+        if (difficulty == 3)
+            return jetons + 5;
+        else if (difficulty == 0)
             return 0;
         return jetons;
     }

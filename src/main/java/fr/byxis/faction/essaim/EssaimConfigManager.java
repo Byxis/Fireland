@@ -9,27 +9,27 @@ import java.io.IOException;
 
 public class EssaimConfigManager {
 
-    private Fireland plugin;
-    public EssaimConfigManager(Fireland plugin) {
-        this.plugin = plugin;
+    private final Fireland main;
+    public EssaimConfigManager(Fireland _main) {
+        this.main = _main;
     }
 
-    public FileConfiguration config;
-    public File file;
+    private FileConfiguration config;
+    private File file;
 
     public void setup() {
-        file = new File(plugin.getDataFolder(), "essaim.yml");
+        file = new File(main.getDataFolder(), "essaim.yml");
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                plugin.getLogger().info("essaim.yml has been created !");
+                main.getLogger().info("essaim.yml has been created !");
             } catch (IOException e) {
                 System.err.println("/!\\ Could not create essaim.yml");
             }
         }
 
         config = YamlConfiguration.loadConfiguration(file);
-        plugin.getLogger().info("essaim.yml has been loaded !");
+        main.getLogger().info("essaim.yml has been loaded !");
     }
 
     public FileConfiguration getConfig()
@@ -43,7 +43,7 @@ public class EssaimConfigManager {
         {
             config.save(file);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             System.err.println("/!\\ Could not save essaim.yml");
         }
@@ -52,6 +52,6 @@ public class EssaimConfigManager {
     public void reload()
     {
         config = YamlConfiguration.loadConfiguration(file);
-        plugin.getLogger().info("essaim.yml has been reloaded !");
+        main.getLogger().info("essaim.yml has been reloaded !");
     }
 }

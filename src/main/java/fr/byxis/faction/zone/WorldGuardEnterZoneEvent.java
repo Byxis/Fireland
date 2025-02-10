@@ -1,12 +1,12 @@
 package fr.byxis.faction.zone;
 
-import fr.byxis.faction.faction.FactionInformation;
-import fr.byxis.fireland.utilities.InGameUtilities;
-import fr.byxis.faction.zone.zoneclass.ZoneClass;
 import de.netzkronehd.wgregionevents.events.RegionEnterEvent;
 import de.netzkronehd.wgregionevents.events.RegionLeftEvent;
 import fr.byxis.faction.faction.FactionFunctions;
+import fr.byxis.faction.faction.FactionInformation;
+import fr.byxis.faction.zone.zoneclass.ZoneClass;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.player.level.PlayerLevel;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -23,27 +23,27 @@ import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class WorldGuardEnterZoneEvent implements Listener {
 
-    private DataZone data;
-    private FactionFunctions ff;
+    private final DataZone data;
+    private final FactionFunctions ff;
     private final Fireland main;
 
-    public WorldGuardEnterZoneEvent(Fireland main, DataZone data) {
-        this.main = main;
-        this.data = data;
-        this.ff = new FactionFunctions(main, null);
+    public WorldGuardEnterZoneEvent(Fireland _main, DataZone _data) {
+        this.main = _main;
+        this.data = _data;
+        this.ff = new FactionFunctions(_main, null);
     }
 
     @EventHandler
-    public void ZoneEnter(RegionEnterEvent e) {
+    public void zoneEnter(RegionEnterEvent e) {
         ZoneClass captureZone = null;
         ZoneClass capturedZone = null;
         Player p = e.getPlayer();
-        for (ZoneClass zone : data.zones) {
-            if (e.getRegion().getId().contains("zonecapture-"+zone.getName())) {
+        for (ZoneClass zone : data.getZones()) {
+            if (e.getRegion().getId().contains("zonecapture-" + zone.getName())) {
                 captureZone = zone;
                 break;
             }
-            else if (e.getRegion().getId().contains("zoneenter-"+zone.getName())) {
+            else if (e.getRegion().getId().contains("zoneenter-" + zone.getName())) {
                 capturedZone = zone;
                 data.addPlayerToZoneEnter(zone.getName(), p);
                 break;
@@ -51,13 +51,13 @@ public class WorldGuardEnterZoneEvent implements Listener {
         }
         if (captureZone == null) {
             if (capturedZone != null && capturedZone.isClaimed()) {
-                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans la zone "+capturedZone.getFormattedName()+" contrôlée par " + ff.getFactionInfo(capturedZone.getClaimer()).getColorcode()+capturedZone.getClaimer()));
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans la zone " + capturedZone.getFormattedName() + " contrôlée par " + ff.getFactionInfo(capturedZone.getClaimer()).getColorcode() + capturedZone.getClaimer()));
                 InGameUtilities.playPlayerSound(p, "gun.hud.enter_area", SoundCategory.AMBIENT, 1, 1);
             }
-            else if(capturedZone != null)
+            else if (capturedZone != null)
             {
                 capturedZone.addBar(p);
-                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans la zone "+capturedZone.getFormattedName()));
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans la zone " + capturedZone.getFormattedName()));
                 InGameUtilities.playPlayerSound(p, "gun.hud.enter_area", SoundCategory.AMBIENT, 1, 1);
             }
             return;
@@ -67,38 +67,37 @@ public class WorldGuardEnterZoneEvent implements Listener {
         if (info == null || !info.hasCapturePerk()) {
             return;
         }
-        if(captureZone.isClaimed() && !captureZone.isClaimable())
+        if (captureZone.isClaimed() && !captureZone.isClaimable())
         {
             return;
         }
 
         PlayerLevel pl = getPlayerLevel(p.getUniqueId());
-        if(pl.getLevel() < 10)
+        if (pl.getLevel() < 10)
         {
             InGameUtilities.sendPlayerError(p, "Vous devez atteindre le niveau 10 pour capturer une zone.");
             return;
         }
 
-        if(isTimeToCapture() && captureZone.isClaimable())
+        if (isTimeToCapture() && captureZone.isClaimable())
 
-        if(!data.isCapturing(captureZone.getName(), info.getName()) && captureZone.isClaimable() && isTimeToCapture())
-        {
-            data.AddCapturing(captureZone.getName(), info.getName(), p);
-        }
-
+            if (!data.isCapturing(captureZone.getName(), info.getName()) && captureZone.isClaimable() && isTimeToCapture())
+            {
+                data.addCapturing(captureZone.getName(), info.getName(), p);
+            }
     }
 
     @EventHandler
-    public void ZoneLeft(RegionLeftEvent e) {
+    public void zoneLeft(RegionLeftEvent e) {
         ZoneClass captureZone = null;
         ZoneClass capturedZone = null;
         Player p = e.getPlayer();
-        for (ZoneClass zone : data.zones) {
-            if (e.getRegion().getId().contains("zonecapture-"+zone.getName())) {
+        for (ZoneClass zone : data.getZones()) {
+            if (e.getRegion().getId().contains("zonecapture-" + zone.getName())) {
                 captureZone = zone;
                 break;
             }
-            else if (e.getRegion().getId().contains("zoneenter-"+zone.getName())) {
+            else if (e.getRegion().getId().contains("zoneenter-" + zone.getName())) {
                 capturedZone = zone;
                 data.remPlayerToZoneEnter(zone.getName(), p);
                 break;
@@ -106,13 +105,13 @@ public class WorldGuardEnterZoneEvent implements Listener {
         }
         if (captureZone == null) {
             if (capturedZone != null && capturedZone.isClaimed()) {
-                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§cVous quittez dans la zone "+capturedZone.getFormattedName()+" contrôlée par " + ff.getFactionInfo(capturedZone.getClaimer()).getColorcode()+capturedZone.getClaimer()));
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§cVous quittez dans la zone " + capturedZone.getFormattedName() + " contrôlée par " + ff.getFactionInfo(capturedZone.getClaimer()).getColorcode() + capturedZone.getClaimer()));
                 InGameUtilities.playPlayerSound(p, "gun.hud.leaving_area", SoundCategory.AMBIENT, 1, 1);
             }
-            else if(capturedZone != null)
+            else if (capturedZone != null)
             {
                 capturedZone.removeBar(p);
-                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous quittez dans la zone "+capturedZone.getFormattedName()));
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous quittez dans la zone " + capturedZone.getFormattedName()));
                 InGameUtilities.playPlayerSound(p, "gun.hud.leaving_area", SoundCategory.AMBIENT, 1, 1);
             }
             return;
@@ -122,11 +121,11 @@ public class WorldGuardEnterZoneEvent implements Listener {
         if (info == null || !info.hasCapturePerk()) {
             return;
         }
-        data.RemoveCapturing(captureZone.getName(), info.getName(), p);
+        data.removeCapturing(captureZone.getName(), info.getName(), p);
     }
 
     @EventHandler
-    public void OnDisconnect(PlayerQuitEvent e)
+    public void onDisconnect(PlayerQuitEvent e)
     {
         Player p = e.getPlayer();
         FactionInformation info = ff.getFactionInfo(ff.playerFactionName(p));
@@ -134,9 +133,9 @@ public class WorldGuardEnterZoneEvent implements Listener {
         {
             return;
         }
-        for(ZoneClass zone : data.zones)
+        for (ZoneClass zone : data.getZones())
         {
-            data.RemoveCapturing(zone.getName(), info.getName(), p);
+            data.removeCapturing(zone.getName(), info.getName(), p);
         }
         data.remPlayerToZoneEnter(p);
     }
@@ -150,9 +149,9 @@ public class WorldGuardEnterZoneEvent implements Listener {
         {
             return;
         }
-        for(ZoneClass zone : data.zones)
+        for (ZoneClass zone : data.getZones())
         {
-            data.RemoveCapturing(zone.getName(), info.getName(), p);
+            data.removeCapturing(zone.getName(), info.getName(), p);
         }
         data.remPlayerToZoneEnter(p);
     }

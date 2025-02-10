@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 https://pmd.github.io/schema/report_2_0_0.xsd" version="7.7.0" timestamp="2025-02-09T13:06:24.745">
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\Stack.java">
+<violation beginline="52" endline="52" begincolumn="67" endcolumn="131" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.command" class="Stack" method="onCommand" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\AmbientSound.java">
+<violation beginline="49" endline="49" begincolumn="13" endcolumn="73" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="AmbientSound" method="playSound" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="49" endline="49" begincolumn="93" endcolumn="123" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="AmbientSound" method="playSound" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Bank.java">
+<violation beginline="185" endline="185" begincolumn="61" endcolumn="84" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="Bank" method="itemClickEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="595" endline="595" begincolumn="17" endcolumn="29" rule="UnusedPrivateMethod" ruleset="Best Practices" package="fr.byxis.event" class="Bank" method="getBankMoney" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
+Avoid unused private methods such as 'getBankMoney(OfflinePlayer)'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\DoorPass.java">
+<violation beginline="36" endline="36" begincolumn="46" endcolumn="50" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.event" class="DoorPass" method="openDoor" variable="door" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'door'.
+</violation>
+<violation beginline="61" endline="61" begincolumn="14" endcolumn="112" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="DoorPass" method="getDoorLocation" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="65" endline="65" begincolumn="14" endcolumn="112" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="DoorPass" method="getDoorLocation" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="69" endline="69" begincolumn="14" endcolumn="112" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="DoorPass" method="getDoorLocation" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="73" endline="73" begincolumn="14" endcolumn="112" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="DoorPass" method="getDoorLocation" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="243" endline="267" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.event" class="DoorPass" method="playerInteract" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="281" endline="281" begincolumn="39" endcolumn="68" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="DoorPass" method="initOpenDoor" variable="doubleDoor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="297" endline="297" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="DoorPass" method="initOpenDoor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Heliport.java">
+<violation beginline="182" endline="182" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Heliport" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="204" endline="204" begincolumn="13" endcolumn="20" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Heliport" method="playerMouvement" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\InteractionManager.java">
+<violation beginline="74" endline="74" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="InteractionManager" method="removeInteraction" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Join.java">
+<violation beginline="46" endline="46" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Join" method="addOnDb" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Menu.java">
+<violation beginline="110" endline="129" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.event" class="Menu" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="133" endline="133" begincolumn="58" endcolumn="65" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.event" class="Menu" method="teleportPlayer" variable="current" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'current'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\PlayerManager.java">
+<violation beginline="53" endline="56" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.event" class="PlayerManager" method="playerDestroyItemframe" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="61" endline="61" begincolumn="18" endcolumn="34" rule="UnusedPrivateMethod" ruleset="Best Practices" package="fr.byxis.event" class="PlayerManager" method="playerKillZombie" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
+Avoid unused private methods such as 'playerKillZombie(EntityDeathEvent)'.
+</violation>
+<violation beginline="77" endline="77" begincolumn="18" endcolumn="28" rule="UnusedPrivateMethod" ruleset="Best Practices" package="fr.byxis.event" class="PlayerManager" method="playerQuit" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
+Avoid unused private methods such as 'playerQuit(PlayerQuitEvent)'.
+</violation>
+<violation beginline="83" endline="83" begincolumn="18" endcolumn="30" rule="UnusedPrivateMethod" ruleset="Best Practices" package="fr.byxis.event" class="PlayerManager" method="playerPickup" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
+Avoid unused private methods such as 'playerPickup(EntityPickupItemEvent)'.
+</violation>
+<violation beginline="87" endline="91" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.event" class="PlayerManager" method="playerPickup" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\QuadListener.java">
+<violation beginline="38" endline="38" begincolumn="14" endcolumn="108" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="QuadListener" method="spawnQuad" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="42" endline="42" begincolumn="14" endcolumn="112" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="QuadListener" method="spawnQuad" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="46" endline="46" begincolumn="14" endcolumn="112" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="QuadListener" method="spawnQuad" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="50" endline="50" begincolumn="14" endcolumn="112" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="QuadListener" method="spawnQuad" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="54" endline="54" begincolumn="14" endcolumn="112" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="QuadListener" method="spawnQuad" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\SaveEvent.java">
+<violation beginline="25" endline="25" begincolumn="13" endcolumn="22" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.event" class="SaveEvent" method="SaveEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'SaveEvent': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Shop.java">
+<violation beginline="96" endline="96" begincolumn="21" endcolumn="32" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="getReduction" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="101" endline="101" begincolumn="21" endcolumn="32" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="getReduction" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="129" endline="197" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.event" class="Shop" method="onCommand" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="213" endline="213" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="223" endline="223" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="233" endline="233" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="243" endline="243" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="253" endline="253" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="263" endline="263" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="273" endline="273" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="288" endline="288" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="298" endline="298" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="308" endline="308" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="318" endline="318" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="onClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="1468" endline="1468" begincolumn="13" endcolumn="20" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="setItems" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="1478" endline="1478" begincolumn="13" endcolumn="20" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="Shop" method="setItems" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\Stairs.java">
+<violation beginline="82" endline="82" begincolumn="17" endcolumn="138" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="Stairs" method="playerInteract" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="95" endline="95" begincolumn="18" endcolumn="116" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.event" class="Stairs" method="playerInteract" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\WorldGeneration.java">
+<violation beginline="16" endline="16" begincolumn="13" endcolumn="20" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.event" class="WorldGeneration" method="onBlockGrow" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\bunker\BunkerClass.java">
+<violation beginline="50" endline="50" begincolumn="23" endcolumn="30" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.faction.bunker" class="BunkerClass" variable="padding" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'padding'.
+</violation>
+<violation beginline="351" endline="351" begincolumn="33" endcolumn="130" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.bunker" class="BunkerClass" method="getFoodAmount" variable="foodAmount" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="406" endline="406" begincolumn="33" endcolumn="131" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.bunker" class="BunkerClass" method="getScrapAmount" variable="itemAmount" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="461" endline="461" begincolumn="33" endcolumn="132" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.bunker" class="BunkerClass" method="getPowderAmount" variable="itemAmount" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="515" endline="515" begincolumn="33" endcolumn="135" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.bunker" class="BunkerClass" method="getRepairKitAmount" variable="itemAmount" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="569" endline="569" begincolumn="33" endcolumn="130" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.bunker" class="BunkerClass" method="getMedsAmount" variable="itemAmount" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="622" endline="622" begincolumn="33" endcolumn="137" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.bunker" class="BunkerClass" method="getAntiDouleurAmount" variable="itemAmount" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="676" endline="676" begincolumn="33" endcolumn="131" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.bunker" class="BunkerClass" method="getSerumAmount" variable="itemAmount" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\bunker\BunkerEvent.java">
+<violation beginline="337" endline="340" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.bunker" class="BunkerEvent" method="playerClick" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\bunker\BunkerManager.java">
+<violation beginline="19" endline="19" begincolumn="13" endcolumn="26" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.bunker" class="BunkerManager" method="BunkerManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'BunkerManager': 'm_main' is already in scope because it is declared in an enclosing type
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\bunker\BunkerStorage.java">
+<violation beginline="335" endline="335" begincolumn="22" endcolumn="36" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.bunker" class="BunkerStorage" method="getItemsOfStorageNumber" variable="i" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimCommandCompleter.java">
+<violation beginline="25" endline="25" begincolumn="13" endcolumn="35" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimCommandCompleter" method="EssaimCommandCompleter" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimCommandCompleter': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="126" endline="132" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimCommandCompleter" method="onTabComplete" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="165" endline="170" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimCommandCompleter" method="onTabComplete" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="196" endline="199" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimCommandCompleter" method="onTabComplete" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="239" endline="242" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimCommandCompleter" method="onTabComplete" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimCommandManager.java">
+<violation beginline="66" endline="66" begincolumn="62" endcolumn="65" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.faction.essaim" class="EssaimCommandManager" method="spawnerCommand" variable="msg" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'msg'.
+</violation>
+<violation beginline="142" endline="142" begincolumn="62" endcolumn="65" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.faction.essaim" class="EssaimCommandManager" method="generalCommand" variable="msg" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'msg'.
+</violation>
+<violation beginline="271" endline="279" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimCommandManager" method="generalCommand" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimEventHandler.java">
+<violation beginline="131" endline="131" begincolumn="32" endcolumn="78" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="clickInventoryEvent" variable="str" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="134" endline="134" begincolumn="31" endcolumn="39" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="clickInventoryEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="185" endline="185" begincolumn="32" endcolumn="78" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="clickInventoryEvent" variable="str" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="188" endline="188" begincolumn="31" endcolumn="39" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="clickInventoryEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="220" endline="220" begincolumn="32" endcolumn="78" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="clickInventoryEvent" variable="str" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="223" endline="223" begincolumn="31" endcolumn="39" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="clickInventoryEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="230" endline="237" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="clickInventoryEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="253" endline="274" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="playerDeath" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="289" endline="289" begincolumn="16" endcolumn="23" rule="UnusedLocalVariable" ruleset="Best Practices" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="playerLeft" variable="current" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'current'.
+</violation>
+<violation beginline="296" endline="314" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="playerLeft" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="324" endline="324" begincolumn="16" endcolumn="23" rule="UnusedLocalVariable" ruleset="Best Practices" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="playerJoin" variable="current" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'current'.
+</violation>
+<violation beginline="331" endline="340" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="playerJoin" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="352" endline="352" begincolumn="16" endcolumn="23" rule="UnusedLocalVariable" ruleset="Best Practices" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="playerChangeWorld" variable="current" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'current'.
+</violation>
+<violation beginline="359" endline="368" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="playerChangeWorld" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="380" endline="438" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="playerInteractBlock" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="381" endline="437" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.essaim" class="EssaimEventHandler" method="playerInteractBlock" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimFunctions.java">
+<violation beginline="36" endline="36" begincolumn="13" endcolumn="28" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="EssaimFunctions" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimFunctions': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="38" endline="38" begincolumn="13" endcolumn="28" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="EssaimFunctions" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimFunctions': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="40" endline="40" begincolumn="13" endcolumn="28" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="EssaimFunctions" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimFunctions': 'configManager' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="42" endline="42" begincolumn="13" endcolumn="28" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="EssaimFunctions" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimFunctions': 'configManager' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="44" endline="44" begincolumn="13" endcolumn="28" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="EssaimFunctions" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimFunctions': 'ff' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="46" endline="46" begincolumn="13" endcolumn="28" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="EssaimFunctions" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimFunctions': 'ff' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="258" endline="258" begincolumn="33" endcolumn="48" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="joinGroup" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimFunctions': 'openInvitation' is already in scope
+</violation>
+<violation beginline="262" endline="262" begincolumn="33" endcolumn="48" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="joinGroup" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimFunctions': 'openMenu' is already in scope
+</violation>
+<violation beginline="298" endline="298" begincolumn="59" endcolumn="60" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="setItemMenu" variable="p" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'p'.
+</violation>
+<violation beginline="638" endline="638" begincolumn="63" endcolumn="64" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="setStartingMenu" variable="p" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'p'.
+</violation>
+<violation beginline="638" endline="638" begincolumn="73" endcolumn="79" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.faction.essaim" class="EssaimFunctions" method="setStartingMenu" variable="essaim" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'essaim'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimManager.java">
+<violation beginline="117" endline="117" begincolumn="49" endcolumn="62" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimManager" method="getEntityNumber" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimManager': 'getGroups' is already in scope
+</violation>
+<violation beginline="119" endline="119" begincolumn="53" endcolumn="66" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.essaim" class="EssaimManager" method="getEntityNumber" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'EssaimManager': 'getGroups' is already in scope
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionEvent.java">
+<violation beginline="22" endline="22" begincolumn="13" endcolumn="20" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.faction.faction" class="FactionEvent" method="FactionEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionFunctions.java">
+<violation beginline="88" endline="88" begincolumn="30" endcolumn="92" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.faction" class="FactionFunctions" method="factionInformationSender" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="110" endline="110" begincolumn="92" endcolumn="113" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.faction" class="FactionFunctions" method="getPlayersFromFaction" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="649" endline="649" begincolumn="16" endcolumn="78" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.faction" class="FactionFunctions" method="factionHasMaxPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="959" endline="969" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.faction" class="FactionFunctions" method="addPerk" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="998" endline="1001" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.faction" class="FactionFunctions" method="hasPerk" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionManager.java">
+<violation beginline="372" endline="372" begincolumn="22" endcolumn="48" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.faction" class="FactionManager" method="onCommand" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="423" endline="423" begincolumn="26" endcolumn="52" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.faction" class="FactionManager" method="onCommand" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="707" endline="707" begincolumn="18" endcolumn="40" rule="UnusedPrivateMethod" ruleset="Best Practices" package="fr.byxis.faction.faction" class="FactionManager" method="thingsToDoWhileLeaving" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
+Avoid unused private methods such as 'thingsToDoWhileLeaving(PlayerLeaveFactionEvent)'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\faction\FactionPvp.java">
+<violation beginline="32" endline="35" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.faction" class="FactionPvp" method="onDamage" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\CaptureZone.java">
+<violation beginline="30" endline="30" begincolumn="17" endcolumn="18" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.faction.zone" class="CaptureZone" variable="i" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'i'.
+</violation>
+<violation beginline="34" endline="34" begincolumn="13" endcolumn="24" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.zone" class="CaptureZone" method="CaptureZone" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'CaptureZone': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="35" endline="35" begincolumn="13" endcolumn="24" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.faction.zone" class="CaptureZone" method="CaptureZone" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'CaptureZone': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="199" endline="203" begincolumn="33" endcolumn="34" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.zone" method="run" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="254" endline="257" begincolumn="33" endcolumn="34" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.zone" method="run" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="370" endline="370" begincolumn="91" endcolumn="118" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.zone" class="CaptureZone" method="addProgressionTime" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\DataZone.java">
+<violation beginline="146" endline="146" begincolumn="25" endcolumn="68" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.zone" class="DataZone" method="saveTiming" variable="diff" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="147" endline="147" begincolumn="13" endcolumn="14" rule="UnnecessarySemicolon" ruleset="Code Style" package="fr.byxis.faction.zone" class="DataZone" method="saveTiming" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessarysemicolon" priority="3">
+Unnecessary semicolon
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\WorldGuardEnterZoneEvent.java">
+<violation beginline="28" endline="28" begincolumn="28" endcolumn="32" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.faction.zone" class="WorldGuardEnterZoneEvent" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'main'.
+</violation>
+<violation beginline="84" endline="87" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.faction.zone" class="WorldGuardEnterZoneEvent" method="zoneEnter" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\zoneclass\FactionCapturingClass.java">
+<violation beginline="15" endline="15" begincolumn="26" endcolumn="31" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.faction.zone.zoneclass" class="FactionCapturingClass" variable="color" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'color'.
+</violation>
+<violation beginline="16" endline="16" begincolumn="28" endcolumn="36" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.faction.zone.zoneclass" class="FactionCapturingClass" variable="material" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'material'.
+</violation>
+<violation beginline="62" endline="62" begincolumn="29" endcolumn="50" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.zone.zoneclass" class="FactionCapturingClass" method="addProgression" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="71" endline="71" begincolumn="35" endcolumn="56" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.faction.zone.zoneclass" class="FactionCapturingClass" method="getNextProgression" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\Fireland.java">
+<violation beginline="69" endline="69" begincolumn="21" endcolumn="26" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.fireland" class="Fireland" variable="night" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'night'.
+</violation>
+<violation beginline="85" endline="85" begincolumn="33" endcolumn="52" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.fireland" class="Fireland" variable="permissionUtilities" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'permissionUtilities'.
+</violation>
+<violation beginline="86" endline="86" begincolumn="33" endcolumn="52" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.fireland" class="Fireland" variable="playerAddonsEnabler" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'playerAddonsEnabler'.
+</violation>
+<violation beginline="87" endline="87" begincolumn="28" endcolumn="42" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.fireland" class="Fireland" variable="restartManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'restartManager'.
+</violation>
+<violation beginline="183" endline="183" begincolumn="22" endcolumn="28" rule="UnusedLocalVariable" ruleset="Best Practices" package="fr.byxis.fireland" class="Fireland" method="onEnable" variable="thirst" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'thirst'.
+</violation>
+<violation beginline="400" endline="404" begincolumn="33" endcolumn="34" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.fireland" method="run" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="448" endline="448" begincolumn="93" endcolumn="107" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.fireland" method="run" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="597" endline="597" begincolumn="103" endcolumn="137" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland" class="Fireland" method="setupEconomy" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'net.milkbowl.vault.economy': 'Economy' is already in scope because it is imported in this file
+</violation>
+<violation beginline="602" endline="602" begincolumn="16" endcolumn="29" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.fireland" class="Fireland" method="setupEconomy" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\HashMapManager.java">
+<violation beginline="26" endline="26" begincolumn="13" endcolumn="27" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland" class="HashMapManager" method="HashMapManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'HashMapManager': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="27" endline="27" begincolumn="13" endcolumn="27" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland" class="HashMapManager" method="HashMapManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'HashMapManager': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="40" endline="40" begincolumn="13" endcolumn="27" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland" class="HashMapManager" method="init" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'HashMapManager': 'discretionMap' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="41" endline="41" begincolumn="13" endcolumn="27" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland" class="HashMapManager" method="init" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'HashMapManager': 'discretionMap' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="42" endline="42" begincolumn="13" endcolumn="27" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland" class="HashMapManager" method="init" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'HashMapManager': 'purify' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="43" endline="43" begincolumn="13" endcolumn="27" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland" class="HashMapManager" method="init" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'HashMapManager': 'purify' is already in scope because it is declared in an enclosing type
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\InGameUtilities.java">
+<violation beginline="28" endline="28" begincolumn="13" endcolumn="28" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland.utilities" class="InGameUtilities" method="InGameUtilities" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'InGameUtilities': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="29" endline="29" begincolumn="13" endcolumn="28" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland.utilities" class="InGameUtilities" method="InGameUtilities" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'InGameUtilities': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="103" endline="103" begincolumn="13" endcolumn="28" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland.utilities" class="InGameUtilities" method="teleportPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'InGameUtilities': 'sendPlayerError' is already in scope
+</violation>
+<violation beginline="106" endline="106" begincolumn="9" endcolumn="24" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland.utilities" class="InGameUtilities" method="teleportPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'InGameUtilities': 'removePlayerCooldown' is already in scope
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\ItemSerializer.java">
+<violation beginline="229" endline="229" begincolumn="13" endcolumn="20" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.fireland.utilities" class="ItemSerializer" method="setOwner" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+<violation beginline="275" endline="277" begincolumn="19" endcolumn="18" rule="EmptyCatchBlock" ruleset="Error Prone" package="fr.byxis.fireland.utilities" class="ItemSerializer" method="getCustomPDC" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_errorprone.html#emptycatchblock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="334" endline="334" begincolumn="13" endcolumn="20" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.fireland.utilities" class="ItemSerializer" method="setArmorColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\PermissionUtilities.java">
+<violation beginline="22" endline="22" begincolumn="66" endcolumn="67" rule="UnnecessarySemicolon" ruleset="Code Style" package="fr.byxis.fireland.utilities" class="PermissionUtilities" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessarysemicolon" priority="3">
+Unnecessary semicolon
+</violation>
+<violation beginline="26" endline="26" begincolumn="13" endcolumn="32" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland.utilities" class="PermissionUtilities" method="PermissionUtilities" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'PermissionUtilities': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="27" endline="27" begincolumn="13" endcolumn="32" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.fireland.utilities" class="PermissionUtilities" method="PermissionUtilities" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'PermissionUtilities': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\WorldUtilities.java">
+<violation beginline="52" endline="52" begincolumn="22" endcolumn="30" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.fireland.utilities" class="WorldUtilities" method="getWorldBorderDistance" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\FactureCommand.java">
+<violation beginline="22" endline="22" begincolumn="28" endcolumn="34" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.jeton" class="FactureCommand" variable="m_main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'm_main'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\JetonManager.java">
+<violation beginline="25" endline="25" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.jeton" class="JetonManager" method="JetonManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'JetonManager': 'jt' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="26" endline="26" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.jeton" class="JetonManager" method="JetonManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'JetonManager': 'jt' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="27" endline="27" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.jeton" class="JetonManager" method="JetonManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'JetonManager': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="28" endline="28" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.jeton" class="JetonManager" method="JetonManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'JetonManager': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\jeton\JetonsCommandManager.java">
+<violation beginline="23" endline="23" begincolumn="28" endcolumn="32" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.jeton" class="JetonsCommandManager" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'main'.
+</violation>
+<violation beginline="68" endline="68" begincolumn="25" endcolumn="31" rule="UnusedLocalVariable" ruleset="Best Practices" package="fr.byxis.jeton" class="JetonsCommandManager" method="onCommand" variable="amount" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'amount'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\PlayerAddonsEnabler.java">
+<violation beginline="14" endline="14" begincolumn="28" endcolumn="32" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.player" class="PlayerAddonsEnabler" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'main'.
+</violation>
+<violation beginline="15" endline="15" begincolumn="31" endcolumn="35" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.player" class="PlayerAddonsEnabler" variable="item" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'item'.
+</violation>
+<violation beginline="16" endline="16" begincolumn="32" endcolumn="44" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.player" class="PlayerAddonsEnabler" variable="questManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'questManager'.
+</violation>
+<violation beginline="17" endline="17" begincolumn="32" endcolumn="44" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.player" class="PlayerAddonsEnabler" variable="levelStorage" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'levelStorage'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\advancements\AdvancementsManager.java">
+<violation beginline="57" endline="57" begincolumn="6" endcolumn="7" rule="UnnecessarySemicolon" ruleset="Code Style" package="fr.byxis.player.advancements" class="AdvancementsManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessarysemicolon" priority="3">
+Unnecessary semicolon
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\booster\BoosterCommandCompleter.java">
+<violation beginline="15" endline="15" begincolumn="28" endcolumn="32" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.player.booster" class="BoosterCommandCompleter" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'main'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\booster\BoosterManager.java">
+<violation beginline="69" endline="69" begincolumn="59" endcolumn="74" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.booster" class="BoosterManager" method="onCommand" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\discretion\RallyCommand.java">
+<violation beginline="93" endline="101" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.discretion" class="RallyCommand" method="changeDistanceIfHasSilencer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="94" endline="100" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.discretion" class="RallyCommand" method="changeDistanceIfHasSilencer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="104" endline="106" begincolumn="11" endcolumn="10" rule="EmptyCatchBlock" ruleset="Error Prone" package="fr.byxis.player.discretion" class="RallyCommand" method="changeDistanceIfHasSilencer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_errorprone.html#emptycatchblock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="115" endline="119" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.discretion" class="RallyCommand" method="nearbyEntities" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="116" endline="118" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.discretion" class="RallyCommand" method="nearbyEntities" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\discretion\ZombieDetection.java">
+<violation beginline="54" endline="54" begincolumn="46" endcolumn="59" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.discretion" class="ZombieDetection" method="entityTarget" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="162" endline="165" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.discretion" class="ZombieDetection" method="isCamo" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\Manager.java">
+<violation beginline="1" endline="748" begincolumn="1" endcolumn="3" rule="TooManyStaticImports" ruleset="Code Style" package="fr.byxis.player.intendant" class="Manager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#toomanystaticimports" priority="3">
+Too many static imports may lead to messy code
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuBunker.java">
+<violation beginline="61" endline="61" begincolumn="50" endcolumn="54" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuBunker" method="setInviteBunker" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'main'.
+</violation>
+<violation beginline="61" endline="61" begincolumn="85" endcolumn="89" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuBunker" method="setInviteBunker" variable="page" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'page'.
+</violation>
+<violation beginline="262" endline="262" begincolumn="53" endcolumn="57" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuBunker" method="setBunkerChestItem" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'main'.
+</violation>
+<violation beginline="262" endline="262" begincolumn="81" endcolumn="82" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuBunker" method="setBunkerChestItem" variable="p" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'p'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuChoixNation.java">
+<violation beginline="25" endline="25" begincolumn="54" endcolumn="58" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuChoixNation" method="setChoixNationItems" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'main'.
+</violation>
+<violation beginline="25" endline="25" begincolumn="82" endcolumn="83" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuChoixNation" method="setChoixNationItems" variable="p" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'p'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuColor.java">
+<violation beginline="25" endline="25" begincolumn="51" endcolumn="55" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuColor" method="setItemColorMenu" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'main'.
+</violation>
+<violation beginline="25" endline="25" begincolumn="79" endcolumn="80" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuColor" method="setItemColorMenu" variable="p" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'p'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuEssaim.java">
+<violation beginline="24" endline="24" begincolumn="80" endcolumn="81" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuEssaim" method="setItemEssaimMenu" variable="p" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'p'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuLevel.java">
+<violation beginline="154" endline="154" begincolumn="102" endcolumn="108" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.intendant.menu" class="MenuLevel" method="setLevelItems" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuPlayerList.java">
+<violation beginline="49" endline="49" begincolumn="72" endcolumn="91" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.intendant.menu" class="MenuPlayerList" method="setPlayerListItems" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'java.time': 'LocalDate' is already in scope because it is imported in this file
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuPrime.java">
+<violation beginline="33" endline="33" begincolumn="47" endcolumn="51" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuPrime" method="setPrimeItem" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'main'.
+</violation>
+<violation beginline="33" endline="33" begincolumn="75" endcolumn="76" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuPrime" method="setPrimeItem" variable="p" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'p'.
+</violation>
+<violation beginline="53" endline="53" begincolumn="53" endcolumn="57" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuPrime" method="setPrimePlayerItem" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'main'.
+</violation>
+<violation beginline="53" endline="53" begincolumn="88" endcolumn="92" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuPrime" method="setPrimePlayerItem" variable="page" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'page'.
+</violation>
+<violation beginline="85" endline="85" begincolumn="52" endcolumn="56" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuPrime" method="setPrimeMoneyItem" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'main'.
+</violation>
+<violation beginline="125" endline="125" begincolumn="51" endcolumn="55" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuPrime" method="setPrimeListItem" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'main'.
+</violation>
+<violation beginline="125" endline="125" begincolumn="79" endcolumn="80" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.intendant.menu" class="MenuPrime" method="setPrimeListItem" variable="p" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'p'.
+</violation>
+<violation beginline="132" endline="132" begincolumn="29" endcolumn="39" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.intendant.menu" class="MenuPrime" method="setPrimeListItem" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'PrimeEvent': 'getConfig' is already in scope
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\ItemEnabler.java">
+<violation beginline="20" endline="20" begincolumn="25" endcolumn="36" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.player.items" class="ItemEnabler" variable="sporeDamage" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'sporeDamage'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\backpack\BackPack.java">
+<violation beginline="31" endline="37" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.backpack" class="BackPack" method="onCommand" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="128" endline="132" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.backpack" class="BackPack" method="inventoryManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="155" endline="164" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.backpack" class="BackPack" method="inventoryManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="184" endline="187" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.backpack" class="BackPack" method="playerDrag" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\compass\Compass.java">
+<violation beginline="34" endline="58" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.compass" class="Compass" method="playerInteraction" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="35" endline="57" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.compass" class="Compass" method="playerInteraction" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\lamp\Lamp.java">
+<violation beginline="65" endline="90" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.lamp" class="Lamp" method="rightClickEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="67" endline="89" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.lamp" class="Lamp" method="rightClickEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="115" endline="124" begincolumn="29" endcolumn="30" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.lamp" method="run" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="117" endline="123" begincolumn="33" endcolumn="34" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.lamp" method="run" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\morphine\FallDamage.java">
+<violation beginline="68" endline="76" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.morphine" class="FallDamage" method="playerSoin" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\notes\OpenNotes.java">
+<violation beginline="132" endline="156" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.notes" class="OpenNotes" method="onCommand" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\parachute\Parachute.java">
+<violation beginline="38" endline="60" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.parachute" class="Parachute" method="rightClickEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="97" endline="100" begincolumn="37" endcolumn="38" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.parachute" method="run" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\toxic\InfectedPlayer.java">
+<violation beginline="36" endline="36" begincolumn="13" endcolumn="27" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.items.toxic" class="InfectedPlayer" method="InfectedPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'InfectedPlayer': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="37" endline="37" begincolumn="13" endcolumn="27" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.items.toxic" class="InfectedPlayer" method="InfectedPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'InfectedPlayer': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="38" endline="38" begincolumn="13" endcolumn="27" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.items.toxic" class="InfectedPlayer" method="InfectedPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'InfectedPlayer': 'config' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="39" endline="39" begincolumn="13" endcolumn="27" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.items.toxic" class="InfectedPlayer" method="InfectedPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'InfectedPlayer': 'config' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="79" endline="90" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.toxic" class="InfectedPlayer" method="playerHit" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="80" endline="89" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.toxic" class="InfectedPlayer" method="playerHit" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="82" endline="88" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.toxic" class="InfectedPlayer" method="playerHit" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\toxic\Mask.java">
+<violation beginline="78" endline="78" begincolumn="121" endcolumn="122" rule="UnnecessarySemicolon" ruleset="Code Style" package="fr.byxis.player.items.toxic" class="Mask" method="playerPutMask" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessarysemicolon" priority="3">
+Unnecessary semicolon
+</violation>
+<violation beginline="94" endline="103" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.toxic" class="Mask" method="playerDamage" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="96" endline="102" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.toxic" class="Mask" method="playerDamage" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\toxic\SporeDamage.java">
+<violation beginline="86" endline="86" begincolumn="13" endcolumn="115" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.items.toxic" class="SporeDamage" method="isAffected" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\water\BottleFilled.java">
+<violation beginline="74" endline="75" begincolumn="21" endcolumn="44" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.water" class="BottleFilled" method="playerFillBottle" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\water\Thirst.java">
+<violation beginline="37" endline="95" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.water" class="Thirst" method="onCommand" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="120" endline="122" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.items.water" class="Thirst" method="onPlayerRegainHealth" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="135" endline="135" begincolumn="13" endcolumn="81" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.items.water" class="Thirst" method="playerDrink" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\karma\KarmaManager.java">
+<violation beginline="247" endline="253" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.karma" class="KarmaManager" method="playerKillZombie" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="249" endline="252" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.karma" class="KarmaManager" method="playerKillZombie" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="282" endline="282" begincolumn="25" endcolumn="31" rule="UnusedLocalVariable" ruleset="Best Practices" package="fr.byxis.player.karma" class="KarmaManager" method="onCommand" variable="amount" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'amount'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelEvent.java">
+<violation beginline="16" endline="16" begincolumn="28" endcolumn="34" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.player.level" class="LevelEvent" variable="m_main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'm_main'.
+</violation>
+<violation beginline="68" endline="80" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.level" class="LevelEvent" method="playerKillPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="73" endline="77" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.level" class="LevelEvent" method="playerKillPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="73" endline="73" begincolumn="26" endcolumn="38" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.level" class="LevelEvent" method="playerKillPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'LevelStorage': 'hasPlayerAlreadyKilled' is already in scope
+</violation>
+<violation beginline="76" endline="76" begincolumn="25" endcolumn="37" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.level" class="LevelEvent" method="playerKillPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'LevelStorage': 'addPlayerKill' is already in scope
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelStorage.java">
+<violation beginline="125" endline="125" begincolumn="47" endcolumn="59" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.level" class="LevelStorage" method="loadPlayerKillMap" variable="isNew" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\PlayerLevel.java">
+<violation beginline="99" endline="99" begincolumn="31" endcolumn="46" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.level" class="PlayerLevel" method="addXp" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="224" endline="225" begincolumn="13" endcolumn="30" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.level" class="PlayerLevel" method="hasAccesstoShop" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="229" endline="230" begincolumn="13" endcolumn="30" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.level" class="PlayerLevel" method="hasAccesstoShop" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="234" endline="235" begincolumn="13" endcolumn="30" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.level" class="PlayerLevel" method="hasAccesstoShop" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="415" endline="418" begincolumn="9" endcolumn="10" rule="EmptyControlStatement" ruleset="Code Style" package="fr.byxis.player.level" class="PlayerLevel" method="givePlayerMission" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#emptycontrolstatement" priority="3">
+Empty switch statement
+</violation>
+<violation beginline="418" endline="418" begincolumn="10" endcolumn="11" rule="UnnecessarySemicolon" ruleset="Code Style" package="fr.byxis.player.level" class="PlayerLevel" method="givePlayerMission" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessarysemicolon" priority="3">
+Unnecessary semicolon
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\packet\PacketPlayer.java">
+<violation beginline="56" endline="59" begincolumn="18" endcolumn="14" rule="EmptyControlStatement" ruleset="Code Style" package="fr.byxis.player.packet" class="PacketPlayer" method="onCommand" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#emptycontrolstatement" priority="3">
+Empty if statement
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\primes\PrimeEvent.java">
+<violation beginline="28" endline="28" begincolumn="13" endcolumn="23" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.primes" class="PrimeEvent" method="PrimeEvent" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'PrimeEvent': 'config' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="143" endline="143" begincolumn="31" endcolumn="103" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.primes" class="PrimeEvent" method="playerKill" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\pvpmanager\PvPManager.java">
+<violation beginline="33" endline="33" begincolumn="13" endcolumn="23" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.pvpmanager" class="PvPManager" method="PvPManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'PvPManager': 'pvpTimer' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="90" endline="93" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.pvpmanager" class="PvPManager" method="playerHit" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\QuestEventHandler.java">
+<violation beginline="22" endline="22" begincolumn="28" endcolumn="32" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.player.quest" class="QuestEventHandler" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'main'.
+</violation>
+<violation beginline="32" endline="32" begincolumn="14" endcolumn="26" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestEventHandler" method="playerJoin" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'QuestManager': 'getPlayerQuest' is already in scope
+</violation>
+<violation beginline="32" endline="32" begincolumn="89" endcolumn="101" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestEventHandler" method="playerJoin" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'QuestManager': 'getPlayerQuest' is already in scope
+</violation>
+<violation beginline="38" endline="38" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestEventHandler" method="playerJoin" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'QuestManager': 'fillQuests' is already in scope
+</violation>
+<violation beginline="47" endline="47" begincolumn="9" endcolumn="21" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestEventHandler" method="save" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'QuestManager': 'saveProgress' is already in scope
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\QuestManager.java">
+<violation beginline="28" endline="28" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestManager" method="QuestManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'QuestManager': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="29" endline="29" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestManager" method="QuestManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'QuestManager': 'main' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="30" endline="30" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestManager" method="QuestManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'QuestManager': 'playerQuest' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="31" endline="31" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestManager" method="QuestManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'QuestManager': 'playerQuest' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="32" endline="32" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestManager" method="QuestManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'QuestManager': 'config' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="33" endline="33" begincolumn="13" endcolumn="25" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestManager" method="QuestManager" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary qualifier 'QuestManager': 'config' is already in scope because it is declared in an enclosing type
+</violation>
+<violation beginline="77" endline="87" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.quest" class="QuestManager" method="fillQuests" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="79" endline="86" begincolumn="21" endcolumn="22" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.quest" class="QuestManager" method="fillQuests" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="81" endline="85" begincolumn="25" endcolumn="26" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.quest" class="QuestManager" method="fillQuests" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="100" endline="100" begincolumn="16" endcolumn="51" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.quest" class="QuestManager" method="isNewDay" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="131" endline="138" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.quest" class="QuestManager" method="actualiseKillProgress" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="158" endline="161" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.quest" class="QuestManager" method="actualiseRegionProgress" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="172" endline="179" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.quest" class="QuestManager" method="actualiseInteractProgress" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="190" endline="195" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.quest" class="QuestManager" method="actualiseInteractSpecificProgress" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="206" endline="213" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.quest" class="QuestManager" method="actualiseCraftProgress" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="224" endline="231" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.quest" class="QuestManager" method="actualiseBuyProgress" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="242" endline="249" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.quest" class="QuestManager" method="actualiseSellProgress" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\ScoreboardPlayer.java">
+<violation beginline="47" endline="47" begincolumn="20" endcolumn="38" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.scoreboard" class="ScoreboardPlayer" method="getTimeString" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="47" endline="47" begincolumn="21" endcolumn="32" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.scoreboard" class="ScoreboardPlayer" method="getTimeString" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="53" endline="53" begincolumn="20" endcolumn="31" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.scoreboard" class="ScoreboardPlayer" method="getTimeString" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopEventManager.java">
+<violation beginline="52" endline="55" begincolumn="25" endcolumn="26" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.shop" class="ShopEventManager" method="clicEventOnInv" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopFunction.java">
+<violation beginline="505" endline="505" begincolumn="53" endcolumn="59" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.shop" class="ShopFunction" method="sellItem" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopFunction.java">
+<violation beginline="291" endline="291" begincolumn="17" endcolumn="37" rule="UnusedPrivateMethod" ruleset="Best Practices" package="fr.byxis.player.workshop" class="WorkshopFunction" method="getNbrOfShowingItems" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
+Avoid unused private methods such as 'getNbrOfShowingItems(String, int, int)'.
+</violation>
+<violation beginline="291" endline="291" begincolumn="45" endcolumn="50" rule="UnusedFormalParameter" ruleset="Best Practices" package="fr.byxis.player.workshop" class="WorkshopFunction" method="getNbrOfShowingItems" variable="_uuid" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as '_uuid'.
+</violation>
+<violation beginline="359" endline="363" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.workshop" class="WorkshopFunction" method="getACraftableItem" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="402" endline="405" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.workshop" class="WorkshopFunction" method="getPlans" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="490" endline="502" begincolumn="17" endcolumn="18" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.workshop" class="WorkshopFunction" method="removeItemsOnInventoryOfPlayer" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="750" endline="750" begincolumn="38" endcolumn="43" rule="UnusedLocalVariable" ruleset="Best Practices" package="fr.byxis.player.workshop" class="WorkshopFunction" method="openCraftingMenu" variable="items" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'items'.
+</violation>
+<violation beginline="1027" endline="1027" begincolumn="17" endcolumn="24" rule="UnnecessaryReturn" ruleset="Code Style" package="fr.byxis.player.workshop" class="WorkshopFunction" method="getPlan" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Unnecessary return statement
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopManagerEvent.java">
+<violation beginline="43" endline="43" begincolumn="113" endcolumn="175" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.workshop" class="WorkshopManagerEvent" method="playerUseRecipe" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="45" endline="85" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.workshop" class="WorkshopManagerEvent" method="playerUseRecipe" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="122" endline="127" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.workshop" class="WorkshopManagerEvent" method="playerOpenCraftMenuFromAtelier" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="147" endline="147" begincolumn="21" endcolumn="25" rule="UnusedLocalVariable" ruleset="Best Practices" package="fr.byxis.player.workshop" class="WorkshopManagerEvent" method="playerInteractionOnInv" variable="page" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'page'.
+</violation>
+<violation beginline="283" endline="297" begincolumn="13" endcolumn="14" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.workshop" class="WorkshopManagerEvent" method="playerInteractionOnInv" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopManagerTabCompleter.java">
+<violation beginline="18" endline="18" begincolumn="28" endcolumn="32" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.player.workshop" class="WorkshopManagerTabCompleter" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'main'.
+</violation>
+</file>
+<file name="C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\recycler\RecyclerFunction.java">
+<violation beginline="20" endline="20" begincolumn="28" endcolumn="32" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.byxis.player.workshop.recycler" class="RecyclerFunction" variable="main" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'main'.
+</violation>
+<violation beginline="159" endline="159" begincolumn="32" endcolumn="58" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.workshop.recycler" class="RecyclerFunction" method="recycle" variable="scrapNbr" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="160" endline="160" begincolumn="29" endcolumn="59" rule="UselessParentheses" ruleset="Code Style" package="fr.byxis.player.workshop.recycler" class="RecyclerFunction" method="recycle" variable="gbNbr" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="165" endline="165" begincolumn="25" endcolumn="72" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.workshop.recycler" class="RecyclerFunction" method="recycle" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+<violation beginline="171" endline="171" begincolumn="21" endcolumn="68" rule="CollapsibleIfStatements" ruleset="Design" package="fr.byxis.player.workshop.recycler" class="RecyclerFunction" method="recycle" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.7.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+This if statement could be combined with its parent
+</violation>
+</file>
+</pmd>

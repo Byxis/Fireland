@@ -1,43 +1,39 @@
 package fr.byxis.db;
 
 public class DbCredentials {
-	
-	private final String host;
-	
-	private final String user;
-	
-	private final String pass;
-	
-	private final String dbName;
-	
-	private final int port;
-	
-	public DbCredentials (String host, String user, String pass,  String dbName, int port)
-	{
-		this.host = host;
-		this.user = user;
-		this.pass = pass;
-		this.dbName = dbName;
-		this.port = port;
-	}
-	
-	public String toURL()
-	{
 
-		return "jdbc:mysql://" + host +
-				":" + port +
-				"/" +
-				dbName;
-	}
-	
-	public String getUser()
-	{
-		return user;
-	}
-	
-	public String getPass()
-	{
-		return pass;
-	}
+    private final String m_host;
+    private final String m_user;
+    private final String m_pass;
+    private final String m_dbName;
+    private final int m_port;
+
+    public DbCredentials(String _host, String _user, String _pass, String _dbName, int _port)
+    {
+        this.m_host = _host;
+        this.m_user = _user;
+        this.m_pass = _pass;
+        this.m_dbName = _dbName;
+        this.m_port = _port;
+    }
+    
+    public String toURL()
+    {
+
+        return "jdbc:mysql://" + m_host +
+                ":" + m_port +
+                "/" +
+                m_dbName;
+    }
+    
+    public String getUser()
+    {
+        return m_user;
+    }
+    
+    public String getPass()
+    {
+        return m_pass;
+    }
 
 }

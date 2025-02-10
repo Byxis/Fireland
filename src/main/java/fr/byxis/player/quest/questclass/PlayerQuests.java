@@ -1,10 +1,6 @@
 package fr.byxis.player.quest.questclass;
 
-import org.bukkit.entity.Player;
-
 import java.util.UUID;
-
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class PlayerQuests {
 
@@ -15,9 +11,9 @@ public class PlayerQuests {
     private ProgressQuest fourth;
     private boolean isClaimed;
 
-    public PlayerQuests(UUID uuid)
+    public PlayerQuests(UUID _uuid)
     {
-        this.uuid = uuid;
+        this.uuid = _uuid;
         isClaimed = false;
         first = null;
         second = null;
@@ -27,19 +23,19 @@ public class PlayerQuests {
 
     public void set(ProgressQuest progress)
     {
-        if(first == null)
+        if (first == null)
         {
             first = progress;
         }
-        else if(second == null)
+        else if (second == null)
         {
             second = progress;
         }
-        else if(third == null)
+        else if (third == null)
         {
             third = progress;
         }
-        else if( fourth == null)
+        else if (fourth == null)
         {
             fourth = progress;
         }
@@ -52,33 +48,33 @@ public class PlayerQuests {
     public int numberOfQuests()
     {
         int i = 0;
-        if(first != null)
+        if (first != null)
         {
             i++;
         }
-        if(second != null)
+        if (second != null)
         {
             i++;
         }
-        if(third != null)
+        if (third != null)
         {
             i++;
         }
-        if( fourth != null)
+        if (fourth != null)
         {
             i++;
         }
         return i;
     }
 
-    public void setFirst(ProgressQuest first)
+    public void setFirst(ProgressQuest _first)
     {
-        this.first = first;
+        this.first = _first;
     }
 
     public ProgressQuest getQuest(int i)
     {
-        return switch(i)
+        return switch (i)
         {
             default -> first;
             case 2 -> second;
@@ -91,27 +87,27 @@ public class PlayerQuests {
         return first;
     }
 
-    public void setSecond(ProgressQuest second)
+    public void setSecond(ProgressQuest _second)
     {
-        this.second = second;
+        this.second = _second;
     }
     public ProgressQuest getSecond()
     {
         return second;
     }
 
-    public void setThird(ProgressQuest third)
+    public void setThird(ProgressQuest _third)
     {
-        this.third = third;
+        this.third = _third;
     }
     public ProgressQuest getThird()
     {
         return third;
     }
 
-    public void setFourth(ProgressQuest fourth)
+    public void setFourth(ProgressQuest _fourth)
     {
-        this.fourth = fourth;
+        this.fourth = _fourth;
     }
     public ProgressQuest getFourth()
     {
@@ -122,14 +118,14 @@ public class PlayerQuests {
     public UUID getUuid() {
         return uuid;
     }
-    public boolean isQuestFinished(int i )
+    public boolean isQuestFinished(int i)
     {
         return getQuest(i).getProgress() == -1;
     }
 
     public boolean hasFinished()
     {
-        if(first == null ||second == null || third == null || fourth == null)
+        if (first == null || second == null || third == null || fourth == null)
         {
             return false;
         }

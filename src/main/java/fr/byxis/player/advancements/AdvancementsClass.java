@@ -1,37 +1,35 @@
 package fr.byxis.player.advancements;
 
-import fr.byxis.fireland.Fireland;
 import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.api.mobs.entities.MythicEntityType;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
 public class AdvancementsClass {
 
-    public final AdvancementsManager m_manager;
-    public String m_id;
-    private String m_title;
-    private String m_desc;
-    private AdvancementsManager.Success m_type;
-    private Material m_material;
-    private int m_money;
-    private int m_jetons;
-    private String m_permission;
+    private final AdvancementsManager m_manager;
+    private final String m_id;
+    private final String m_title;
+    private final String m_desc;
+    private final AdvancementsManager.Success m_type;
+    private final Material m_material;
+    private final int m_money;
+    private final int m_jetons;
+    private final String m_permission;
 
-    public AdvancementsClass(AdvancementsManager m_manager, String _id) {
-        this.m_manager = m_manager;
+    public AdvancementsClass(AdvancementsManager _manager, String _id) {
+        this.m_manager = _manager;
         m_id = _id;
 
-        m_title = m_manager.getConfig().getString("success."+m_id+".title");
-        m_desc = m_manager.getConfig().getString("success."+m_id+".desc");
-        m_type = AdvancementsManager.Success.valueOf(m_manager.getConfig().getString("success."+m_id+".type"));
-        m_material = Material.getMaterial(m_manager.getConfig().getString("success."+m_id+".item"));
-        m_money = m_manager.getConfig().getInt("success."+m_id+".reward.money");
-        m_jetons = m_manager.getConfig().getInt("success."+m_id+".reward.jetons");
-        m_permission = m_manager.getConfig().getString("success."+m_id+".reward.permission");
+        m_title = _manager.getConfig().getString("success." + m_id + ".title");
+        m_desc = _manager.getConfig().getString("success." + m_id + ".desc");
+        m_type = AdvancementsManager.Success.valueOf(_manager.getConfig().getString("success." + m_id + ".type"));
+        m_material = Material.getMaterial(_manager.getConfig().getString("success." + m_id + ".item"));
+        m_money = _manager.getConfig().getInt("success." + m_id + ".reward.money");
+        m_jetons = _manager.getConfig().getInt("success." + m_id + ".reward.jetons");
+        m_permission = _manager.getConfig().getString("success." + m_id + ".reward.permission");
     }
 
     public String getTitle() {
@@ -68,38 +66,43 @@ public class AdvancementsClass {
 
     public String getPath(Player p)
     {
-        return "success."+p.getUniqueId()+"."+m_id;
+        return "success." + p.getUniqueId() + "." + m_id;
     }
 
-    public void ShowSuccess(Player p)
+    public void showSuccess(Player p)
     {
 
+    }
+
+    public AdvancementsManager getManager()
+    {
+        return m_manager;
     }
 }
 
 class KillAdvancements extends AdvancementsClass
 {
-    public MythicEntityType m_mobType;
-    public int m_amount;
+    private final MythicEntityType m_mobType;
+    private final int m_amount;
     public KillAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_mobType = MythicEntityType.get(_manager.getConfig().getString("success."+m_id+".objective.type"));
-        m_amount = _manager.getConfig().getInt("success."+m_id+".objective.amount");
+        m_mobType = MythicEntityType.get(_manager.getConfig().getString("success." + getId() + ".objective.type"));
+        m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
 
     public void updatePlayer(Player p, MythicMob mob, int amount)
     {
-        if(mob.getEntityType() == m_mobType)
+        if (mob.getEntityType() == m_mobType)
         {
-            int current = m_manager.getSuccessInt(getPath(p));
-            if(current+amount >= m_amount)
+            int current = getManager().getSuccessInt(getPath(p));
+            if (current + amount >= m_amount)
             {
-                m_manager.finishSuccess(getPath(p));
-                ShowSuccess(p);
+                getManager().finishSuccess(getPath(p));
+                showSuccess(p);
             }
             else
             {
-                m_manager.addSuccessInt(getPath(p), amount);
+                getManager().addSuccessInt(getPath(p), amount);
             }
         }
     }
@@ -107,193 +110,193 @@ class KillAdvancements extends AdvancementsClass
 
 class PlayTimeAdvancements extends AdvancementsClass
 {
-    public int m_amount;
+    private final int m_amount;
     public PlayTimeAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_amount = _manager.getConfig().getInt("success."+m_id+".objective.amount");
+        m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
 
     public void updatePlayer(Player p, int amount)
     {
-        if(amount >= m_amount)
+        if (amount >= m_amount)
         {
-            m_manager.finishSuccess(getPath(p));
-            ShowSuccess(p);
+            getManager().finishSuccess(getPath(p));
+            showSuccess(p);
         }
     }
 }
 
 class LearnRecipeAdvancements extends AdvancementsClass
 {
-    public int m_amount;
+    private final int m_amount;
     public LearnRecipeAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_amount = _manager.getConfig().getInt("success."+m_id+".objective.amount");
+        m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
 
     public void updatePlayer(Player p, int amount)
     {
-        int current = m_manager.getSuccessInt(getPath(p));
-        if(current+amount >= m_amount)
+        int current = getManager().getSuccessInt(getPath(p));
+        if (current + amount >= m_amount)
         {
-            m_manager.finishSuccess(getPath(p));
-            ShowSuccess(p);
+            getManager().finishSuccess(getPath(p));
+            showSuccess(p);
         }
         else
         {
-            m_manager.addSuccessInt(getPath(p), amount);
+            getManager().addSuccessInt(getPath(p), amount);
         }
     }
 }
 
 class CraftAdvancements extends AdvancementsClass
 {
-    public int m_amount;
+    private final int m_amount;
     public CraftAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_amount = _manager.getConfig().getInt("success."+m_id+".objective.amount");
+        m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
 
     public void updatePlayer(Player p, int amount)
     {
-        int current = m_manager.getSuccessInt(getPath(p));
-        if(current+amount >= m_amount)
+        int current = getManager().getSuccessInt(getPath(p));
+        if (current + amount >= m_amount)
         {
-            m_manager.finishSuccess(getPath(p));
-            ShowSuccess(p);
+            getManager().finishSuccess(getPath(p));
+            showSuccess(p);
         }
         else
         {
-            m_manager.addSuccessInt(getPath(p), amount);
+            getManager().addSuccessInt(getPath(p), amount);
         }
     }
 }
 
 class CraftSuccessAdvancements extends AdvancementsClass
 {
-    public int m_amount;
+    private final int m_amount;
     public CraftSuccessAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_amount = _manager.getConfig().getInt("success."+m_id+".objective.amount");
+        m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
 
     public void updatePlayer(Player p, int amount)
     {
-        int current = m_manager.getSuccessInt(getPath(p));
-        if(current+amount >= m_amount)
+        int current = getManager().getSuccessInt(getPath(p));
+        if (current + amount >= m_amount)
         {
-            m_manager.finishSuccess(getPath(p));
-            ShowSuccess(p);
+            getManager().finishSuccess(getPath(p));
+            showSuccess(p);
         }
         else
         {
-            m_manager.addSuccessInt(getPath(p), amount);
+            getManager().addSuccessInt(getPath(p), amount);
         }
     }
 }
 
 class CraftBreakAdvancements extends AdvancementsClass
 {
-    public int m_amount;
+    private final int m_amount;
     public CraftBreakAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_amount = _manager.getConfig().getInt("success."+m_id+".objective.amount");
+        m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
 
     public void updatePlayer(Player p, int amount)
     {
-        int current = m_manager.getSuccessInt(getPath(p));
-        if(current+amount >= m_amount)
+        int current = getManager().getSuccessInt(getPath(p));
+        if (current + amount >= m_amount)
         {
-            m_manager.finishSuccess(getPath(p));
-            ShowSuccess(p);
+            getManager().finishSuccess(getPath(p));
+            showSuccess(p);
         }
         else
         {
-            m_manager.addSuccessInt(getPath(p), amount);
+            getManager().addSuccessInt(getPath(p), amount);
         }
     }
 }
 
 class GradeChangeAdvancements extends AdvancementsClass
 {
-    public String m_grade;
+    private final String m_grade;
     public GradeChangeAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_grade = _manager.getConfig().getString("success."+m_id+".objective.grade");
+        m_grade = _manager.getConfig().getString("success." + getId() + ".objective.grade");
     }
 
     public void updatePlayer(Player p, String grade)
     {
-        if(grade.equalsIgnoreCase(m_grade))
+        if (grade.equalsIgnoreCase(m_grade))
         {
-            m_manager.finishSuccess(getPath(p));
-            ShowSuccess(p);
+            getManager().finishSuccess(getPath(p));
+            showSuccess(p);
         }
     }
 }
 
 class RankChangeAdvancements extends AdvancementsClass
 {
-    public String m_rank;
+    private final String m_rank;
     public RankChangeAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_rank = _manager.getConfig().getString("success."+m_id+".objective.rank");
+        m_rank = _manager.getConfig().getString("success." + getId() + ".objective.rank");
     }
 
     public void updatePlayer(Player p, String rank)
     {
-        if(rank.equalsIgnoreCase(m_rank))
+        if (rank.equalsIgnoreCase(m_rank))
         {
-            m_manager.finishSuccess(getPath(p));
-            ShowSuccess(p);
+            getManager().finishSuccess(getPath(p));
+            showSuccess(p);
         }
     }
 }
 
 class SkinEquipAdvancements extends AdvancementsClass
 {
-    public String m_skin;
+    private final String m_skin;
     public SkinEquipAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_skin = _manager.getConfig().getString("success."+m_id+".objective.skin");
+        m_skin = _manager.getConfig().getString("success." + getId() + ".objective.skin");
     }
 
     public void updatePlayer(Player p, String skin)
     {
-        if(skin.equalsIgnoreCase(m_skin) || Objects.equals(m_skin, ""))
+        if (skin.equalsIgnoreCase(m_skin) || Objects.equals(m_skin, ""))
         {
-            m_manager.finishSuccess(getPath(p));
-            ShowSuccess(p);
+            getManager().finishSuccess(getPath(p));
+            showSuccess(p);
         }
     }
 }
 
 class UseBoosterAdvancements extends AdvancementsClass
 {
-    public int m_duration;
-    public int m_level;
-    public int m_amount;
+    private final int m_duration;
+    private final int m_level;
+    private final int m_amount;
     public UseBoosterAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_duration = _manager.getConfig().getInt("success."+m_id+".objective.duration");
-        m_level = _manager.getConfig().getInt("success."+m_id+".objective.level");
-        m_amount = _manager.getConfig().getInt("success."+m_id+".objective.amount");
+        m_duration = _manager.getConfig().getInt("success." + getId() + ".objective.duration");
+        m_level = _manager.getConfig().getInt("success." + getId() + ".objective.level");
+        m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
 
     public void updatePlayer(Player p, int duration, int level, int amount)
     {
-        if((m_level == level && duration == -1)||(m_level == -1 && duration == m_duration) || (m_level == level && duration == m_duration))
+        if ((m_level == level && duration == -1) || (m_level == -1 && duration == m_duration) || (m_level == level && duration == m_duration))
         {
-            int current = m_manager.getSuccessInt(getPath(p));
-            if(current+amount >= m_amount)
+            int current = getManager().getSuccessInt(getPath(p));
+            if (current + amount >= m_amount)
             {
-                m_manager.finishSuccess(getPath(p));
-                ShowSuccess(p);
+                getManager().finishSuccess(getPath(p));
+                showSuccess(p);
             }
             else
             {
-                m_manager.addSuccessInt(getPath(p), amount);
+                getManager().addSuccessInt(getPath(p), amount);
             }
         }
     }
@@ -301,18 +304,18 @@ class UseBoosterAdvancements extends AdvancementsClass
 
 class PossessJetonsAdvancements extends AdvancementsClass
 {
-    public int m_amount;
+    private final int m_amount;
     public PossessJetonsAdvancements(AdvancementsManager _manager, String _id) {
         super(_manager, _id);
-        m_amount = _manager.getConfig().getInt("success."+m_id+".objective.amount");
+        m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
 
     public void updatePlayer(Player p, int amount)
     {
-        if(amount >= m_amount)
+        if (amount >= m_amount)
         {
-            m_manager.finishSuccess(getPath(p));
-            ShowSuccess(p);
+            getManager().finishSuccess(getPath(p));
+            showSuccess(p);
         }
     }
 }

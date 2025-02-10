@@ -1,7 +1,5 @@
 package fr.byxis.player.items.notes;
 
-import com.sk89q.worldguard.bukkit.event.block.BreakBlockEvent;
-import com.sk89q.worldguard.bukkit.event.block.PlaceBlockEvent;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Material;
@@ -26,22 +24,50 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
-
 public class OpenNotes implements @NotNull Listener, CommandExecutor {
 
-    private Fireland main;
+    private final Fireland main;
     private NotesConfig config;
 
-    public OpenNotes(Fireland main) {
-        this.main = main;
-        config = new NotesConfig(main, true);
+    public OpenNotes(Fireland _main) {
+        this.main = _main;
+        config = new NotesConfig(_main, true);
+    }
+
+    public static List<String> usingSubstringMethod(String text, int n)
+    {
+        if (text == null || text.equalsIgnoreCase(""))
+            return Collections.singletonList("§4* Le texte n'est pas lisible *");
+        List<String> results = new ArrayList<>();
+        int length = text.length();
+
+        for (int i = 0; i < length; i += n)
+        {
+            results.add(text.substring(i, Math.min(length, i + n)));
+        }
+
+        return results;
+    }
+
+    public static List<String> usingSubstringMethod(String text, int n, String color)
+    {
+        if (text == null || text.equalsIgnoreCase(""))
+            return Collections.singletonList("§4* Le texte n'est pas lisible *");
+        List<String> results = new ArrayList<>();
+        int length = text.length();
+
+        for (int i = 0; i < length; i += n)
+        {
+            results.add(color + text.substring(i, Math.min(length, i + n)));
+        }
+
+        return results;
     }
 
     @EventHandler
     public void interactNote(PlayerInteractEvent e)
     {
-        if(e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.SMALL_AMETHYST_BUD)
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.SMALL_AMETHYST_BUD)
         {
             ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
             BookMeta meta = (BookMeta) book.getItemMeta();
@@ -50,7 +76,7 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
             int x = e.getClickedBlock().getLocation().getBlockX();
             int y = e.getClickedBlock().getLocation().getBlockY();
             int z = e.getClickedBlock().getLocation().getBlockZ();
-            String text = config.getConfig().getString(x+"."+y+"."+z+".content");
+            String text = config.getConfig().getString(x + "." + y + "." + z + ".content");
 
             meta.setPages(usingSubstringMethod(text, 266));
 
@@ -63,12 +89,12 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
     @EventHandler
     public void placeBlock(BlockPlaceEvent e)
     {
-        if(e.getBlockPlaced().getType() == Material.SMALL_AMETHYST_BUD)
+        if (e.getBlockPlaced().getType() == Material.SMALL_AMETHYST_BUD)
         {
             int x = e.getBlockPlaced().getLocation().getBlockX();
             int y = e.getBlockPlaced().getLocation().getBlockY();
             int z = e.getBlockPlaced().getLocation().getBlockZ();
-            config.getConfig().set(x+"."+y+"."+z+".content", "");
+            config.getConfig().set(x + "." + y + "." + z + ".content", "");
             config.save();
             InGameUtilities.sendPlayerSucces(e.getPlayer(), "Une nouvelle note a été crée. Pour modifier son contenu, faites /fnote <text> en pointant sur la note");
         }
@@ -77,67 +103,44 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
     @EventHandler
     public void breakBlock(BlockBreakEvent e)
     {
-        if(e.getBlock().getType() == Material.SMALL_AMETHYST_BUD) {
+        if (e.getBlock().getType() == Material.SMALL_AMETHYST_BUD)
+        {
             int x = e.getBlock().getLocation().getBlockX();
             int y = e.getBlock().getLocation().getBlockY();
             int z = e.getBlock().getLocation().getBlockZ();
-            if( config.getConfig().get(x+"."+y+"."+z+".content") != null)
+            if (config.getConfig().get(x + "." + y + "." + z + ".content") != null)
             {
-                config.getConfig().set(x+"."+y+"."+z, null);
+                config.getConfig().set(x + "." + y + "." + z, null);
             }
-            if(config.getConfig().get(x+"."+y+"."+z) == null)
+            if (config.getConfig().get(x + "." + y + "." + z) == null)
             {
-                config.getConfig().set(x+"."+y, null);
+                config.getConfig().set(x + "." + y, null);
             }
-            if(config.getConfig().get(x+"."+y) == null)
+            if (config.getConfig().get(x + "." + y) == null)
             {
-                config.getConfig().set(""+x, null);
+                config.getConfig().set("" + x, null);
             }
             config.save();
         }
     }
 
-    public static List<String> usingSubstringMethod(String text, int n) {
-        if(text == null  || text.equalsIgnoreCase("")) return Collections.singletonList("§4* Le texte n'est pas lisible *");
-        List<String> results = new ArrayList<>();
-        int length = text.length();
-
-        for (int i = 0; i < length; i += n) {
-            results.add(text.substring(i, Math.min(length, i + n)));
-        }
-
-        return results;
-    }
-
-    public static List<String> usingSubstringMethod(String text, int n, String color) {
-        if(text == null  || text.equalsIgnoreCase("")) return Collections.singletonList("§4* Le texte n'est pas lisible *");
-        List<String> results = new ArrayList<>();
-        int length = text.length();
-
-        for (int i = 0; i < length; i += n) {
-            results.add(color+text.substring(i, Math.min(length, i + n)));
-        }
-
-        return results;
-    }
-
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
 
-        if(commandSender instanceof Player p)
+        if (commandSender instanceof Player p)
         {
-            if(p.hasPermission("fireland.command.notes"))
+            if (p.hasPermission("fireland.command.notes"))
             {
                 Block block = p.getTargetBlockExact(10);
-                if(block != null && block.getType() == Material.SMALL_AMETHYST_BUD)
+                if (block != null && block.getType() == Material.SMALL_AMETHYST_BUD)
                 {
                     int x = block.getLocation().getBlockX();
                     int y = block.getLocation().getBlockY();
                     int z = block.getLocation().getBlockZ();
                     StringBuilder content = new StringBuilder(strings[0]);
-                    for(int i  =0; i < strings.length; i++)
+                    for (int i = 0; i < strings.length; i++)
                     {
-                        if(i != 0)
+                        if (i != 0)
                         {
                             content.append(" ");
                             content.append(strings[i]);
@@ -145,9 +148,9 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
 
                     }
 
-                    config.getConfig().set(x+"."+y+"."+z+".content", content.toString());
+                    config.getConfig().set(x + "." + y + "." + z + ".content", content.toString());
                     config.save();
-                    InGameUtilities.sendPlayerSucces(p, "Vous avez modifié la note, il est écrit : "+content.toString());
+                    InGameUtilities.sendPlayerSucces(p, "Vous avez modifié la note, il est écrit : " + content.toString());
                     config = new NotesConfig(main, false);
                 }
             }

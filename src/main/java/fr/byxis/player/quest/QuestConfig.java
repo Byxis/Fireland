@@ -9,30 +9,30 @@ import java.io.IOException;
 
 public class QuestConfig {
 
-    private Fireland plugin;
-    public QuestConfig(Fireland plugin) {
-        this.plugin = plugin;
+    private final Fireland plugin;
+    public QuestConfig(Fireland _plugin) {
+        this.plugin = _plugin;
         this.name = "quest";
         setup();
     }
 
-    public FileConfiguration config;
-    public File file;
-    private String name;
+    private FileConfiguration config;
+    private File file;
+    private final String name;
 
     public void setup() {
-        file = new File(plugin.getDataFolder(), name+".yml");
+        file = new File(plugin.getDataFolder(), name + ".yml");
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                plugin.getLogger().info(name+".yml has been created !");
+                plugin.getLogger().info(name + ".yml has been created !");
             } catch (IOException e) {
-                System.err.println("/!\\ Could not create "+name+".yml");
+                System.err.println("/!\\ Could not create " + name + ".yml");
             }
         }
 
         config = YamlConfiguration.loadConfiguration(file);
-        plugin.getLogger().info(name+".yml has been loaded !");
+        plugin.getLogger().info(name + ".yml has been loaded !");
     }
 
     public FileConfiguration getConfig()
@@ -46,15 +46,15 @@ public class QuestConfig {
         {
             config.save(file);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
-            System.err.println("/!\\ Could not save "+name+".yml");
+            System.err.println("/!\\ Could not save " + name + ".yml");
         }
     }
 
     public void reload()
     {
         config = YamlConfiguration.loadConfiguration(file);
-        plugin.getLogger().info(name+".yml has been reloaded !");
+        plugin.getLogger().info(name + ".yml has been reloaded !");
     }
 }

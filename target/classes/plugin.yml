@@ -39,7 +39,7 @@ commands:
     permission: fireland.command.bank
   rename:
     description: Permet de renommer les items dans la main
-    permission: fireland.command.rename
+    permission: fireland.command.Rename
   stack:
     description: Permet de stack les items
     permission: fireland.command.stack

@@ -4,32 +4,36 @@ import fr.byxis.db.DbConnection;
 import fr.byxis.faction.zone.zoneclass.FactionZoneInformation;
 import fr.byxis.fireland.Fireland;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ZoneManager {
 
-    public final DataZone data;
-    private final CaptureZone captureZone;
-    private Fireland main;
+    private final DataZone data;
 
-    public ZoneManager(Fireland main)
+    private final CaptureZone captureZone;
+    private final Fireland main;
+
+    public ZoneManager(Fireland _main)
     {
-        this.main = main;
-        this.data = new DataZone(main);
-        this.captureZone = new CaptureZone(main, data);
+        this.main = _main;
+        this.data = new DataZone(_main);
+        this.captureZone = new CaptureZone(_main, data);
     }
 
-    public void RegisterEvents()
+    public void registerEvents()
     {
         main.getServer().getPluginManager().registerEvents(new ZoneSaveEvent(data), main);
-        main.getServer().getPluginManager().registerEvents(new WorldGuardEnterZoneEvent(main,data), main);
-        main.getServer().getPluginManager().registerEvents(new ZoneEvent(main,data), main);
-        captureZone.Loop();
+        main.getServer().getPluginManager().registerEvents(new WorldGuardEnterZoneEvent(main, data), main);
+        main.getServer().getPluginManager().registerEvents(new ZoneEvent(main, data), main);
+        captureZone.loop();
     }
 
-    public List<FactionZoneInformation> GetFactionData(String name)
+    public List<FactionZoneInformation> getFactionData(String name)
     {
         List<FactionZoneInformation> list = new ArrayList<>();
 
@@ -49,7 +53,7 @@ public class ZoneManager {
             isInDb.setString(1, name);
             ResultSet rs = isInDb.executeQuery();
             int i = 0;
-            while(rs.next())
+            while (rs.next())
             {
                 i++;
                 FactionZoneInformation factionZoneInformation = new FactionZoneInformation(name, rs.getString(1), rs.getTimestamp(2), System.currentTimeMillis() - rs.getTimestamp(2).getTime());
@@ -66,24 +70,24 @@ public class ZoneManager {
 
             isInDb.setString(1, name);
             rs = isInDb.executeQuery();
-            while(rs.next())
+            while (rs.next())
             {
                 FactionZoneInformation factionZoneInformation = new FactionZoneInformation(name, rs.getString(1), null, rs.getLong(2));
                 boolean inside = false;
                 int j = 0;
                 for (FactionZoneInformation zone : list)
                 {
-                    if(j > i)
+                    if (j > i)
                     {
                         break;
                     }
-                    if(zone.getZoneName().equals(factionZoneInformation.getZoneName()))
+                    if (zone.getZoneName().equals(factionZoneInformation.getZoneName()))
                     {
                         inside = true;
                         zone.setTotalDuration(zone.getTotalDuration() + factionZoneInformation.getTotalDuration());
                     }
                 }
-                if(!inside)
+                if (!inside)
                 {
                     list.add(factionZoneInformation);
                 }
@@ -93,5 +97,10 @@ public class ZoneManager {
         }
 
         return list;
+    }
+
+    public DataZone getData()
+    {
+        return data;
     }
 }

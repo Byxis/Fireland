@@ -3,14 +3,10 @@ package fr.byxis.player.scoreboard;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.HashMapManager;
 import fr.byxis.jeton.JetonManager;
-import fr.byxis.player.karma.PlayerKarmaClass;
 import fr.byxis.player.primes.PrimeEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class SideBoardManager {
@@ -38,7 +34,7 @@ public class SideBoardManager {
 
         Objective obj;
 
-        if(_playerBoard.getObjective("fireland") == null)
+        if (_playerBoard.getObjective("fireland") == null)
             obj = _playerBoard.registerNewObjective("fireland", "dummy");
         else
             obj = _playerBoard.getObjective("fireland");
@@ -96,79 +92,79 @@ public class SideBoardManager {
 
     private String getMoneyText(Player p)
     {
-        return "§8Monnaie : §6"+Math.round(Fireland.eco.getBalance(p))+"§r$"+
-                "  §8| §b "+ JetonManager.getJetonsPlayer(p.getUniqueId()) + "§r\u26c1";
+        return "§8Monnaie : §6 " + Math.round(Fireland.getEco().getBalance(p)) + "§r$" +
+                "  §8| §b " + JetonManager.getJetonsPlayer(p.getUniqueId()) + "§r\u26c1";
     }
 
     private String getBankText(Player p)
     {
-        return "§8Banque : §6"+Math.round(m_main.cfgm.getEnderchest().getDouble("bank."+p.getUniqueId()+".money"))+"§r$";
+        return "§8Banque : §6 " + Math.round(m_main.getCfgm().getEnderchest().getDouble("bank." + p.getUniqueId() + ".money")) + "§r$";
     }
 
     private String getStateText(Player p)
     {
         String state = "";
-        if(m_main.cfgm.getPlayerDB().getBoolean("infected."+p.getUniqueId()+".state"))
+        if (m_main.getCfgm().getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state"))
         {
             state += "§2infecté";
         }
-        if(m_main.cfgm.getPlayerDB().getDouble("thirst."+p.getUniqueId()) <= 10)
+        if (m_main.getCfgm().getPlayerDB().getDouble("thirst." + p.getUniqueId()) <= 10)
         {
-            if(!state.isEmpty())
+            if (!state.isEmpty())
             {
                 state += "§7, ";
             }
             state += "§3assoiffé";
         }
-        if(p.getFoodLevel() <= 6)
+        if (p.getFoodLevel() <= 6)
         {
-            if(!state.isEmpty())
+            if (!state.isEmpty())
             {
                 state += "§7, ";
             }
             state += "§caffamé";
         }
-        if(state.isEmpty())
+        if (state.isEmpty())
         {
             state = "§7sain";
         }
-        return "§8État : "+state;
+        return "§8État : " + state;
     }
 
     private String getDiscretionText(Player p)
     {
-        if(!HashMapManager.getDiscretionMap().containsKey(p.getUniqueId()))
+        if (!HashMapManager.getDiscretionMap().containsKey(p.getUniqueId()))
         {
-            m_main.hashMapManager.addDiscretionMap(p.getUniqueId());
+            m_main.getHashMapManager().addDiscretionMap(p.getUniqueId());
         }
 
         double numDiscretion = HashMapManager.getDiscretionMap().get(p.getUniqueId()).getScore();
         String shotColor = "§7";
 
         String prime = "";
-        if(PrimeEvent.config.getConfig().contains(p.getUniqueId().toString()))
+        if (PrimeEvent.getConfig().getConfig().contains(p.getUniqueId().toString()))
         {
             prime = " §c(Recherché)";
         }
 
-        if(HashMapManager.getDiscretionMap().get(p.getUniqueId()).isShooting())
+        if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isShooting())
         {
             shotColor = "§4";
         }
-        else if(HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingCamo())
+        else if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingCamo())
         {
             shotColor = "§2";
         }
-        else if(HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingLights())
+        else if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingLights())
         {
             shotColor = "§e";
         }
 
-        return "§8Discretion : "+shotColor+numDiscretion+"% "+prime;
+        return "§8Discretion : " + shotColor + numDiscretion + "% " + prime;
     }
 
     private String getRankText(Player p)
     {
-        return "§8Niveau : §7"+getPlayerLevel(p.getUniqueId()).getStringRank() +" §8(Niv. "+getPlayerLevel(p.getUniqueId()).getLevel()+")";
+        return "§8Niveau : §7 " + getPlayerLevel(p.getUniqueId()).getStringRank() + " §8(Niv. " + getPlayerLevel(p.getUniqueId()).getLevel() + ")";
     }
 }

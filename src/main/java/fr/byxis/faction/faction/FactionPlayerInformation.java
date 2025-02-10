@@ -5,39 +5,40 @@ import java.util.UUID;
 
 public class FactionPlayerInformation {
 
-	private final String name;
-	private final String factionName;
-	private final int role;
+    private final String name;
+    private final String factionName;
+    private final int role;
 
-	private final UUID uuid;
-	private final Timestamp joinDate;
-	
-	public FactionPlayerInformation(String name, String factionName, int role, UUID uuid, Timestamp joinDate)
-	{
-		this.name = name;
-		this.uuid = uuid;
-		this.role = role;
-		this.factionName = factionName;
-		this.joinDate = joinDate;
-	}
+    private final UUID uuid;
+    private final Timestamp joinDate;
+    
+    public FactionPlayerInformation(String _name, String _factionName, int _role, UUID _uuid, Timestamp _joinDate)
+    {
+        this.name = _name;
+        this.uuid = _uuid;
+        this.role = _role;
+        this.factionName = _factionName;
+        this.joinDate = _joinDate;
+    }
 
-	public String getName()
-	{
-		return name;
-	}
-	public String getFactionName()
-	{
-		return factionName;
-	}
-	public int getRole()
-	{
-		return role;
-	}
-	public UUID getUuid()
-	{return this.uuid;
-	}
+    public String getName()
+    {
+        return name;
+    }
+    public String getFactionName()
+    {
+        return factionName;
+    }
+    public int getRole()
+    {
+        return role;
+    }
+    public UUID getUuid()
+    {
+        return this.uuid;
+    }
 
-	public Timestamp getJoinDate() {
-		return joinDate;
-	}
+    public Timestamp getJoinDate() {
+        return joinDate;
+    }
 }

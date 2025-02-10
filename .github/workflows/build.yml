@@ -13,7 +13,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up JDK 11
+    - name: Set up JDK 20
       uses: actions/setup-java@v2
       with:
         java-version: '20'
@@ -23,7 +23,7 @@ jobs:
       run: mvn package
 
     - name: Upload JAR
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: application-jar
         path: target/*.jar

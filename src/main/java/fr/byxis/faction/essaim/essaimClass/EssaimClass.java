@@ -23,6 +23,9 @@ public class EssaimClass {
     private final int jetons;
     private Timestamp finishDate;
     private boolean isClosed;
+    private boolean isEvent;
+    private final int delayBetwenEvent;
+
 
 
     public EssaimClass(String _name, EssaimConfigManager configManager)
@@ -91,6 +94,23 @@ public class EssaimClass {
         else
         {
             this.difficulty3 = null;
+        }
+
+        if (configManager.getConfig().contains(_name + ".event.isevent"))
+        {
+            this.isEvent = configManager.getConfig().getBoolean(_name + ".event.isevent");
+        }
+        else
+        {
+            this.isEvent = false;
+        }
+        if (configManager.getConfig().contains(_name + ".event.delay"))
+        {
+            this.delayBetwenEvent = configManager.getConfig().getInt(_name + ".event.delay");
+        }
+        else
+        {
+            this.delayBetwenEvent = 6 * 30;
         }
 
         finishDate = null;
@@ -182,5 +202,15 @@ public class EssaimClass {
 
     public Location getDifficulty3() {
         return difficulty3;
+    }
+
+    public boolean isEvenBased()
+    {
+        return isEvent;
+    }
+
+    public int getDelayBetwenEvent()
+    {
+        return delayBetwenEvent;
     }
 }

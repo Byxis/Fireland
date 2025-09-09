@@ -196,7 +196,8 @@ public class EssaimCommandManager implements @Nullable CommandExecutor {
                 }
                 else
                 {
-                    InGameUtilities.sendPlayerError(p, "Essaim " + args[1] + " est déjà fermé !");
+                    EssaimManager.forceDisableEssaim(args[1]);
+                    InGameUtilities.sendPlayerError(p, "Vous avez forcé la fermeture de l'essaim évènementiel " + args[1] + " !");
                 }
             }
 

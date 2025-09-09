@@ -1,5 +1,6 @@
 package fr.byxis.faction.essaim;
 
+import fr.byxis.db.DbConnection;
 import fr.byxis.faction.essaim.essaimClass.EssaimClass;
 import fr.byxis.faction.essaim.essaimClass.EssaimGroup;
 import fr.byxis.faction.faction.FactionFunctions;
@@ -19,7 +20,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import static fr.byxis.faction.essaim.EssaimManager.disableEssaim;
 import static fr.byxis.fireland.restart.RestartManager.isServerRestartingSoon;
@@ -243,6 +248,15 @@ public class EssaimFunctions {
         {
             if (!EssaimManager.getGroups().get(essaim).getMembers().contains(p))
             {
+                if (EssaimManager.getActiveEssaims().containsKey(essaim))
+                {
+                    EssaimClass essaimClass = EssaimManager.getActiveEssaims().get(essaim);
+                    if (essaimClass.isEvenBased() && hasFinishedEvent(p, essaimClass))
+                    {
+                        InGameUtilities.sendPlayerError(p, "Vous avez déjà fini cet événement, revenez une prochaine fois !");
+                        return false;
+                    }
+                }
                 if (ff.getFactionInfo(ff.playerFactionName(p)).getName().equalsIgnoreCase(ff.getFactionInfo(ff.playerFactionName(EssaimManager.getGroups().get(essaim).getLeader())).getName()))
                 {
                     if (PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.essaim.access." + essaim))
@@ -331,6 +345,15 @@ public class EssaimFunctions {
     {
         if (isServerRestartingSoon())
             InGameUtilities.sendPlayerError(p, "Le serveur redémarre bientôt, lancer un essaim est fortement déconseillé.");
+        if (EssaimManager.getActiveEssaims().containsKey(essaim))
+        {
+            EssaimClass essaimClass = EssaimManager.getActiveEssaims().get(essaim);
+            if (essaimClass.isEvenBased() && hasFinishedEvent(p, essaimClass))
+            {
+                InGameUtilities.sendPlayerError(p, "Vous avez déjà fini cet événement, revenez une prochaine fois !");
+                return;
+            }
+        }
         main.getEssaimManager().resetEssaim(essaim);
         if (!EssaimManager.getGroups().containsKey(essaim)) {
             EssaimManager.getGroups().put(essaim, new EssaimGroup(essaim, p));
@@ -515,11 +538,14 @@ public class EssaimFunctions {
     {
         if (EssaimManager.getActiveEssaims().containsKey(essaimName))
         {
-            EssaimManager.getActiveEssaims().get(essaimName).setFinish();
+            EssaimClass essaim = EssaimManager.getActiveEssaims().get(essaimName);
+            essaim.setFinish();
+
             for (Player player : EssaimManager.getGroups().get(essaimName).getMembers())
             {
                 InGameUtilities.sendPlayerInformation(player, "Vous avez terminé l'expédition ! L'essaim se fermera automatiquement dans quelques minutes.");
             }
+            addPlayersLog(EssaimManager.getGroups().get(essaimName).getMembers(), essaimName);
         }
 
     }
@@ -594,7 +620,6 @@ public class EssaimFunctions {
                 InGameUtilities.playPlayerSound(player, "gun.hud.boss_killed", SoundCategory.AMBIENT, 1, 1);
             }
             disableEssaim(essaimName);
-            EssaimManager.getActiveEssaims().remove(essaimName);
             EssaimManager.getGroups().remove(essaimName);
         }
         else
@@ -657,5 +682,55 @@ public class EssaimFunctions {
     public static EssaimConfigManager getConfigManager()
     {
         return configManager;
+    }
+
+    public static void addPlayerLog(Player p, String essaim)
+    {
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+        try {
+            final Connection connection = firelandConnection.getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO player_essaim_log " +
+                            "VALUE (?,?,?)");
+            preparedStatement.setString(1, p.getUniqueId().toString());
+            preparedStatement.setString(2, essaim);
+            preparedStatement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean hasFinishedEvent(Player p, EssaimClass essaim)
+    {
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+        try {
+            final Connection connection = firelandConnection.getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT date FROM player_essaim_log " +
+                            "WHERE uuid = ? AND essaim = ?");
+            preparedStatement.setString(1, p.getUniqueId().toString());
+            preparedStatement.setString(2, essaim.getName());
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next())
+            {
+
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime last = rs.getTimestamp(1).toLocalDateTime();
+                LocalDateTime nextAvailable = last.plusDays(essaim.getDelayBetwenEvent());
+                return nextAvailable.isBefore(now);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void addPlayersLog(List<Player> players, String essaim)
+    {
+        for (Player p : players)
+        {
+            addPlayerLog(p, essaim);
+        }
     }
 }

@@ -68,6 +68,24 @@ public class EssaimManager {
 
     public static boolean disableEssaim(String name)
     {
+
+        if (groups.containsKey(name))
+        {
+            if (!activeEssaims.get(name).isEvenBased())
+            {
+                return false;
+            }
+            activeEssaims.get(name).setClosed(true);
+            configManager.getConfig().set(name + ".closed", true);
+            configManager.save();
+        }
+        activeEssaims.remove(name);
+
+        return true;
+    }
+
+    public static boolean forceDisableEssaim(String name)
+    {
         if (groups.containsKey(name))
         {
             activeEssaims.get(name).setClosed(true);

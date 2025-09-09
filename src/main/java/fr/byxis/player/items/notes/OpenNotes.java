@@ -37,7 +37,7 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
     public static List<String> usingSubstringMethod(String text, int n)
     {
         if (text == null || text.equalsIgnoreCase(""))
-            return Collections.singletonList("§4* Le texte n'est pas lisible *");
+            return Collections.singletonList("Â§4* Le texte n'est pas lisible *");
         List<String> results = new ArrayList<>();
         int length = text.length();
 
@@ -52,7 +52,7 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
     public static List<String> usingSubstringMethod(String text, int n, String color)
     {
         if (text == null || text.equalsIgnoreCase(""))
-            return Collections.singletonList("§4* Le texte n'est pas lisible *");
+            return Collections.singletonList("Â§4* Le texte n'est pas lisible *");
         List<String> results = new ArrayList<>();
         int length = text.length();
 
@@ -96,7 +96,7 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
             int z = e.getBlockPlaced().getLocation().getBlockZ();
             config.getConfig().set(x + "." + y + "." + z + ".content", "");
             config.save();
-            InGameUtilities.sendPlayerSucces(e.getPlayer(), "Une nouvelle note a été crée. Pour modifier son contenu, faites /fnote <text> en pointant sur la note");
+            InGameUtilities.sendPlayerSucces(e.getPlayer(), "Une nouvelle note a Ã©tÃ© crÃ©e. Pour modifier son contenu, faites /fnote <text> en pointant sur la note");
         }
     }
 
@@ -150,7 +150,7 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
 
                     config.getConfig().set(x + "." + y + "." + z + ".content", content.toString());
                     config.save();
-                    InGameUtilities.sendPlayerSucces(p, "Vous avez modifié la note, il est écrit : " + content.toString());
+                    InGameUtilities.sendPlayerSucces(p, "Vous avez modifiÃ© la note, il est Ã©crit : " + content.toString());
                     config = new NotesConfig(main, false);
                 }
             }

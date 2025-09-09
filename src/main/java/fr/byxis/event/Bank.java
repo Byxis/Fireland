@@ -60,14 +60,14 @@ public class Bank implements Listener, CommandExecutor
                     {
                         if (args[1].equalsIgnoreCase("money"))
                         {
-                            player.sendMessage("§aVous avez maintenant " + args[2] + " dans votre banque !");
+                            player.sendMessage("Â§aVous avez maintenant " + args[2] + " dans votre banque !");
                             main.getCfgm().getEnderchest().set("bank." + player.getUniqueId() + ".money", Integer.parseInt(args[2]));
                             main.getCfgm().saveEnderchest();
                             return true;
                         }
                         else if (args[1].equalsIgnoreCase("upgrade"))
                         {
-                            player.sendMessage("§aVous avez maintenant l'amélioration " + args[2] + " !");
+                            player.sendMessage("Â§Vous avez maintenant l'amÃ©lioration " + args[2] + " !");
                             main.getCfgm().getEnderchest().set("bank." + player.getUniqueId() + ".upgrade", Integer.parseInt(args[2]));
                             main.getCfgm().saveEnderchest();
                             return true;
@@ -78,7 +78,7 @@ public class Bank implements Listener, CommandExecutor
                         if (args[1].equalsIgnoreCase("money"))
                         {
                             Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[3]));
-                            player.sendMessage("§aLe joueur " + args[3] + " à maintenant " + args[2] + " dans sa banque !");
+                            player.sendMessage("Â§aLe joueur " + args[3] + " Ã  maintenant " + args[2] + " dans sa banque !");
                             main.getCfgm().getEnderchest().set("bank." + victim.getUniqueId() + ".money", Integer.parseInt(args[2]));
                             main.getCfgm().saveEnderchest();
                             return true;
@@ -86,7 +86,7 @@ public class Bank implements Listener, CommandExecutor
                         else if (args[1].equalsIgnoreCase("upgrade"))
                         {
                             Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[3]));
-                            player.sendMessage("§aLe joueur " + args[3] + " à maintenant l'amélioration " + args[2] + " !");
+                            player.sendMessage("Â§Le joueur " + args[3] + " Ã  maintenant l'amÃ©lioration " + args[2] + " !");
                             main.getCfgm().getEnderchest().set("bank." + victim.getUniqueId() + ".upgrade", Integer.parseInt(args[2]));
                             main.getCfgm().saveEnderchest();
                             return true;
@@ -94,7 +94,7 @@ public class Bank implements Listener, CommandExecutor
                     }
                     else
                     {
-                        player.sendMessage("§cUsage : /bank set <upgrade/money> [player]");
+                        player.sendMessage("Â§cUsage : /bank set <upgrade/money> [player]");
                     }
                 }
                 
@@ -105,14 +105,14 @@ public class Bank implements Listener, CommandExecutor
 					{
 						if(!args[2].equalsIgnoreCase("") && !args[3].equalsIgnoreCase(""))
 						{//bank set money int player
-							player.sendMessage("§aLe joueur "+args[3]+" à maintenant "+args[2]+" dans sa banque !");
+							player.sendMessage("Â§aLe joueur "+args[3]+" Ã  maintenant "+args[2]+" dans sa banque !");
 							main.getConfig().set("bank."+args[3]+".money", args[2]);
 							main.saveConfig();
 							return true;
 						}
 						else if (!args[3].equalsIgnoreCase(""))
 						{
-							player.sendMessage("§aVous avez maintenant "+args[2]+" dans votre banque !");
+							player.sendMessage("Â§aVous avez maintenant "+args[2]+" dans votre banque !");
 							main.getConfig().set("bank."+player.getUniqueId()+".money", args[2]);
 							main.saveConfig();
 							return true;
@@ -122,14 +122,14 @@ public class Bank implements Listener, CommandExecutor
 					{
 						if(!args[2].equalsIgnoreCase("") && !(args[3] != ""))
 						{//bank set upgrade int player
-							player.sendMessage("§aLe joueur "+args[3]+" à maintenant l'amélioration "+args[2]+" !");
+							player.sendMessage("Â§aLe joueur "+args[3]+" Â§ maintenant l'amÃ©lioration "+args[2]+" !");
 							main.getConfig().set("bank."+args[3]+".upgrade", args[2]);
 							main.saveConfig();
 							return true;
 						}
 						else if (!args[3].equalsIgnoreCase(""))
 						{
-							player.sendMessage("§aVous avez maintenant l'amélioration "+args[2]+" !");
+							player.sendMessage("Â§aVous avez maintenant l'amÃ©lioration "+args[2]+" !");
 							main.getConfig().set("bank."+player.getUniqueId()+".upgrade", args[2]);
 							main.saveConfig();
 							return true;
@@ -231,7 +231,7 @@ public class Bank implements Listener, CommandExecutor
                 {
                     getEco().withdrawPlayer(player, price);
                     main.getCfgm().getEnderchest().set("bank." + player.getUniqueId() + ".upgrade", getBankUpgrade(player) + 1);
-                    player.sendMessage("§aVous avez payé §6 " + price + "$ §a pour améliorer votre banque au niveau §d" + (main.getCfgm().getEnderchest().getInt("bank." + player.getUniqueId() + ".upgrade") + 1) + "§a !");
+                    player.sendMessage("Â§aVous avez payÃ© Â§6" + price + "$Â§a pour amÃ©liorer votre banque au niveau Â§d" + (main.getCfgm().getEnderchest().getInt("bank." + player.getUniqueId() + ".upgrade") + 1) + "Â§a !");
                     InGameUtilities.playPlayerSound(player, "block.anvil.use", SoundCategory.AMBIENT, 1, 1);
                     InGameUtilities.playPlayerSound(player, "entity.player.levelup", SoundCategory.AMBIENT, 1, 1);
                     main.getCfgm().saveEnderchest();
@@ -239,12 +239,12 @@ public class Bank implements Listener, CommandExecutor
                 }
                 else
                 {
-                    player.sendMessage("§cVous n'avez pas assez d'argent.");
+                    player.sendMessage("Â§cVous n'avez pas assez d'argent.");
                 }
             }
         }
         /*
-		else if (e.getView().getTitle().contains("§8Stockage de "))
+		else if (e.getView().getTitle().contains("Â§8Stockage de "))
 		{
 			main.getHashMapManager().replaceStorageMap(player.getUniqueId(), e.getInventory());
 			//saveEnderchest(e.getInventory().getContents(),player);
@@ -255,7 +255,7 @@ public class Bank implements Listener, CommandExecutor
         int slot = getMaxSlots(owner);
         if (!main.getHashMapManager().getStorageMap().containsKey(owner.getUniqueId()))
         {
-            Inventory ec = Bukkit.createInventory(null, ((slot - 1) % 54) + 1, "§8Stockage de " + owner.getName());
+            Inventory ec = Bukkit.createInventory(null, ((slot - 1) % 54) + 1, "Â§8Stockage de " + owner.getName());
             int i = 0;
             for (ItemStack item : loadEnderchest(owner))
             {
@@ -272,7 +272,7 @@ public class Bank implements Listener, CommandExecutor
         {
             if (slot != main.getHashMapManager().getStorageMap().get(owner.getUniqueId()).getSize())
             {
-                Inventory ec = Bukkit.createInventory(null, ((slot - 1) % 54) + 1, "§8Stockage de " + owner.getName());
+                Inventory ec = Bukkit.createInventory(null, ((slot - 1) % 54) + 1, "Â§8Stockage de " + owner.getName());
                 int i = 0;
                 for (ItemStack item : main.getHashMapManager().getStorageMap().get(owner.getUniqueId()))
                 {
@@ -296,7 +296,7 @@ public class Bank implements Listener, CommandExecutor
         int slot = getMaxSlots(owner);
         if (!main.getHashMapManager().getStorageMap().containsKey(owner.getUniqueId()))
         {
-            Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de " + owner.getName());
+            Inventory ec = Bukkit.createInventory(null, slot, "Â§8Stockage de " + owner.getName());
             int i = 0;
             for (ItemStack item : loadEnderchest(owner))
             {
@@ -313,7 +313,7 @@ public class Bank implements Listener, CommandExecutor
         {
             if (slot != main.getHashMapManager().getStorageMap().get(owner.getUniqueId()).getSize())
             {
-                Inventory ec = Bukkit.createInventory(null, slot, "§8Stockage de " + owner.getName());
+                Inventory ec = Bukkit.createInventory(null, slot, "Â§8Stockage de " + owner.getName());
                 int i = 0;
                 for (ItemStack item : main.getHashMapManager().getStorageMap().get(owner.getUniqueId()))
                 {
@@ -337,7 +337,7 @@ public class Bank implements Listener, CommandExecutor
     public void closeInventory(InventoryCloseEvent e)
     {
         Player player = (Player) e.getPlayer();
-        if (e.getView().getTitle().equalsIgnoreCase("§8Stockage de " + player.getName())) 
+        if (e.getView().getTitle().equalsIgnoreCase("Â§8Stockage de " + player.getName()))
         {
             InGameUtilities.playPlayerSound(player, "entity.villager.yes", SoundCategory.AMBIENT, 1, 1);
             //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound minecraft:entity.villager.yes ambient "+player.getName()+" ~ ~ ~ 1");
@@ -350,7 +350,7 @@ public class Bank implements Listener, CommandExecutor
         int money = main.getCfgm().getEnderchest().getInt("bank." + player.getUniqueId() + ".money");
         int maxMoney = getMaxMoney(player);
         
-        Inventory bank = Bukkit.createInventory(null, 27, "§8Votre argent : §6 " + money + "$ / " + maxMoney + "$");
+        Inventory bank = Bukkit.createInventory(null, 27, "Â§8Votre argent : Â§6" + money + "$ / " + maxMoney + "$");
         setItemsMenuBank(bank, player);
         player.openInventory(bank);
     }
@@ -473,12 +473,12 @@ public class Bank implements Listener, CommandExecutor
     private void setItemsMenuBank(Inventory _inv, Player _p)
     {
         _inv.setItem(11, setItemMetaLore(
-                Material.GOLD_INGOT, "§aArgent -",
+                Material.GOLD_INGOT, "Â§aArgent -",
                 (short) 0,
-                listMaker("§8Faites un §dclic gauche §8pour ajouter §6100$",
-                        "§8à votre compte en banque",
-                        "§8Faites un §dclic droit §8pour retirer §6100$",
-                        "§8de votre compte en banque"
+                listMaker("Â§8Faites un Â§dclic gauche Â§8pour ajouter Â§6100$",
+                        "Â§8Ã  votre compte en banque",
+                        "Â§8Faites un Â§dclic droit Â§8pour retirer Â§6100$",
+                        "Â§8de votre compte en banque"
                 )
              )
         );
@@ -486,13 +486,13 @@ public class Bank implements Listener, CommandExecutor
         {
             _inv.setItem(13, setItemMetaLore(
                     Material.ANVIL,
-                    "§aAmélioration - Prix : §6 " + getMaxMoney(_p) + "$",
+                    "Â§aAmÃ©lioration - Prix : Â§6" + getMaxMoney(_p) + "$",
                     (short) 0,
                     listMaker(
-                            "§8Vous avez actuellement l'amélioration n°§d " + getBankUpgrade(_p) + " ",
-                            "§8Pour l'améliorer au niveau suivant :",
-                            "§8- Maximum de la banque : §6 " + getMaxMoney(_p, 1) + "$",
-                            "§8- Maximum du stockage : §6 " + getMaxSlots(_p, 1) + " slots"
+                            "Â§8Vous avez actuellement l'amÃ©lioration nÂ°Â§d " + getBankUpgrade(_p) + " ",
+                            "Â§8Pour l'amÃ©liorer au niveau suivant:",
+                            "Â§8- Maximum de la banque: Â§6" + getMaxMoney(_p, 1) + "$",
+                            "Â§8- Maximum du stockage: Â§6" + getMaxSlots(_p, 1) + " slots"
                     )
                 )
 
@@ -502,20 +502,20 @@ public class Bank implements Listener, CommandExecutor
         {
             _inv.setItem(13, setItemMetaLore(
                     Material.BOOK,
-                    "§aAmélioration -",
+                    "Â§aAmÃ©lioration -",
                     (short) 0,
-                    listMaker("§8Vous avez atteint le maximum d'amélioration !", "", "", "")));
+                    listMaker("Â§8Vous avez atteint le maximum d'amÃ©lioration !", "", "", "")));
         }
         int slots = getMaxSlots(_p);
         _inv.setItem(15, setItemMetaLore(
                 Material.ENDER_CHEST,
-                "§aStockage personnel - ",
+                "Â§aStockage personnel - ",
                 (short) 0,
                 listMaker(
-                        "§8Faites un §dclic gauche§8 pour ouvrir votre stockage",
-                        "§8Vous disposez actuellement de §6 " + slots + "§8 slots de stockage !",
-                        "§8L'amélioration suivant vous permettra de passer §6",
-                        "§8à §6" + (slots + 9) + "§8 slots !"
+                        "Â§8Faites un Â§dclic gaucheÂ§8 pour ouvrir votre stockage",
+                        "Â§8Vous disposez actuellement de Â§6" + slots + "Â§8 slots de stockage !",
+                        "Â§8L'amÃ©lioration suivant vous permettra de passer Â§6",
+                        "Â§8Ã  Â§6" + (slots + 9) + "Â§8 slots !"
                 )
             )
         );

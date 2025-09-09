@@ -27,7 +27,7 @@ public class Serum implements Listener
 
             InGameUtilities.playWorldSound(p.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
 
-            p.sendMessage("§cVous avez utilisé un serum du berserker !");
+            p.sendMessage("Â§cVous avez utilisÃ© un serum du berserker !");
             addSerum(p);
             if (!p.getGameMode().equals(GameMode.CREATIVE))
             {
@@ -50,8 +50,8 @@ public class Serum implements Listener
             }
             InGameUtilities.playWorldSound(friend.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
 
-            p.sendMessage("§cVous avez utilisé un serum du berserker sur " + friend.getName() + "!");
-            friend.sendMessage("§c " + p.getName() + " a utilisé un serum du berserker sur vous !");
+            p.sendMessage("Â§cVous avez utilisÃ© un serum du berserker sur " + friend.getName() + "!");
+            friend.sendMessage("Â§c" + p.getName() + " a utilisÃ© un serum du berserker sur vous !");
 
             addSerum(friend);
 

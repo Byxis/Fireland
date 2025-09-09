@@ -6,14 +6,14 @@
 
     <groupId>fr.byxis</groupId>
     <artifactId>Fireland</artifactId>
-    <version>4.0</version>
+    <version>5.0</version>
     <packaging>jar</packaging>
 
     <name>Fireland</name>
 
     <properties>
         <java.version>1.8</java.version>
-        <project.build.sourceEncoding>windows-1252</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
@@ -25,6 +25,7 @@
                 <configuration>
                     <source>20</source>
                     <target>20</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -155,12 +156,30 @@
     </repositories>
 
     <dependencies>
+        <!--  DATABASE  -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
+        </dependency>
+        <!--  DATABASE  -->
+
+        <!--  GAME VERSION  -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.19.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!--  GAME VERSION  -->
+
+
+        <!--  PLUGINS DEPENDANCY  -->
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
@@ -198,6 +217,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>fr.skytasul</groupId>
+            <artifactId>beautyquests-core</artifactId>
+            <version>0.21-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--  PLUGINS DEPENDANCY  -->
+
+        <!--  OTHER DEPENDANCY  -->
+        <dependency>
             <groupId>org.fusesource.jansi</groupId>
             <artifactId>jansi</artifactId>
             <version>2.4.0</version>
@@ -208,16 +236,11 @@
             <version>2.14.0</version>
         </dependency>
         <dependency>
-            <groupId>fr.skytasul</groupId>
-            <artifactId>beautyquests-core</artifactId>
-            <version>0.21-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api</artifactId>
             <version>2.12.2</version>
             <scope>provided</scope>
         </dependency>
+        <!--  OTHER DEPENDANCY  -->
     </dependencies>
 </project>

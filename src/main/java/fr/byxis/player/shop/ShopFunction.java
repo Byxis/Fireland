@@ -51,7 +51,7 @@ public class ShopFunction {
                     " WHERE item_shop.shop = ?;");
             preparedStatement1.setString(1, _shop.replaceAll(" ", "_"));
             final ResultSet rs = preparedStatement1.executeQuery();
-            //On vérifie s'il y a un résultat à la requête
+            //On vÃ©rifie s'il y a un rÃ©sultat Ã  la requÃªte
             while (rs.next()) {
                 ShopItemClass item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8));
                 if (item.isShow())
@@ -61,8 +61,8 @@ public class ShopFunction {
             }
             return items;
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #S001");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #S001");
             e.printStackTrace();
         }
         return items;
@@ -83,14 +83,14 @@ public class ShopFunction {
             preparedStatement1.setString(1, _shop);
             preparedStatement1.setString(2, _itemName);
             final ResultSet rs = preparedStatement1.executeQuery();
-            //On vérifie s'il y a un résultat à la requête
+            //On vÃ©rifie s'il y a un rÃ©sultat Ã  la requÃªte
             if (rs.next()) {
                 item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8));
             }
             return item;
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #S002");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #S002");
             e.printStackTrace();
         }
         return null;
@@ -105,22 +105,22 @@ public class ShopFunction {
             {
                 if (_currentPage == 1)
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + _currentPage + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "Â§a[" + _currentPage + "/" + _pageMax + "]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + (_currentPage - 1) + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "Â§a[" + (_currentPage - 1) + "/" + _pageMax + "]", (short) 1));
                 }
             }
             else if (i + 45 == 53)
             {
                 if (_currentPage == _pageMax)
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c[" + _currentPage + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§c[" + _currentPage + "/" + _pageMax + "]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c[" + (_currentPage + 1) + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§c[" + (_currentPage + 1) + "/" + _pageMax + "]", (short) 1));
                 }
             }
             else
@@ -130,14 +130,14 @@ public class ShopFunction {
 
         }
         ArrayList<String> l = new ArrayList<>();
-        l.add("§8Pour acheter un item, faites un");
-        l.add("§6clic gauche§8 dessus, pour le");
-        l.add("§8vendre, faites un §6clic droit§8.");
+        l.add("Â§8Pour acheter un item, faites un");
+        l.add("Â§6clic gaucheÂ§8 dessus, pour le");
+        l.add("Â§8vendre, faites un Â§6clic droitÂ§8.");
         if (isSkinShop)
         {
-            l.add("§c§lPlus d'infos sur discord §6(/discord)");
+            l.add("Â§cÂ§lPlus d'infos sur discord Â§6(/discord)");
         }
-        _inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "§r- Informations -", (short) 1, l));
+        _inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "Â§r- Informations -", (short) 1, l));
         int spot = 19 - (_currentPage * 14) + 14;
         for (int i = (_currentPage * 14) - 14; i < _items.size() && i < _currentPage * 14; i++)
         {
@@ -149,22 +149,22 @@ public class ShopFunction {
             List<String> lore = new ArrayList<>();
             if (!isSkinShop)
             {
-                lore.add("§8Achat: §6 " + getPriceText(item, p, false, _shop));
-                lore.add("§8Vente: §6 " + getSellText(item, p, false));
+                lore.add("Â§8Achat: Â§6" + getPriceText(item, p, false, _shop));
+                lore.add("Â§8Vente: Â§6" + getSellText(item, p, false));
             }
             else
             {
                 if (PermissionUtilities.hasPermission(p, item.getCommand()))
                 {
-                    lore.add("§aPossédé");
+                    lore.add("Â§aPossÃ©dÃ©");
                 }
                 else
                 {
-                    lore.add("§8Achat: §6 " + getPriceText(item, p, true, _shop));
+                    lore.add("Â§8Achat: Â§6" + getPriceText(item, p, true, _shop));
                 }
             }
             _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(
-                    InventoryUtilities.setItemMetaLore(item.getMat(), "§r§7 " + item.getItemName(),
+                    InventoryUtilities.setItemMetaLore(item.getMat(), "Â§rÂ§7" + item.getItemName(),
                             item.getDura(), lore), item.getCustomModelData()));
         }
     }
@@ -173,7 +173,7 @@ public class ShopFunction {
     {
         if (isSkinShop)
         {
-            return "§b " + item.getPrice() + " \u26c1";
+            return "Â§b " + item.getPrice() + " ?";
         }
         else
         {
@@ -181,12 +181,12 @@ public class ShopFunction {
             if (pl.getReduction() > 0 && pl.hasAccessToReductions(_shop))
             {
                 double price = priceReduction(p.getUniqueId(), item.getPrice(), _shop);
-                return "§6§m " + item.getPrice() + "$§r §d " + price + "$ §8(-" + Math.round(pl.getReduction() * 100) + "%)";
+                return "Â§6Â§m " + item.getPrice() + "$Â§r Â§d" + price + "$ Â§8(-" + Math.round(pl.getReduction() * 100) + "%)";
             }
             else if (pl.getReduction() > 0 && pl.hasAccessToAugmentation(_shop))
             {
                 double price = priceReduction(p.getUniqueId(), item.getPrice(), _shop);
-                return "§6§m " + item.getPrice() + "$§r §c " + price + "$ §8(+" + Math.round(pl.getReduction() * 100) + "%)";
+                return "Â§6Â§m " + item.getPrice() + "$Â§r Â§c" + price + "$ Â§8(+" + Math.round(pl.getReduction() * 100) + "%)";
             }
             return item.getPrice() + "$";
         }
@@ -299,8 +299,8 @@ public class ShopFunction {
     public void buyItem(ItemStack _itemClicked, Player _p, String _shop, boolean isSkinShop)
     {
         String name = _itemClicked.getItemMeta().getDisplayName();
-        //name = name.replaceAll("[§.{1}]", "");
-        name = name.replaceAll("§7", "");
+        //name = name.replaceAll("[Â§.{1}]", "");
+        name = name.replaceAll("Â§7", "");
         ShopItemClass item = getAnItemOnShop(_shop.replaceAll(" ", "_"), name);
         if (item != null)
         {
@@ -308,13 +308,13 @@ public class ShopFunction {
             {
                 if (_p.hasPermission(item.getCommand()))
                 {
-                    InGameUtilities.sendPlayerError(_p, "Vous avez déjà ce skin !");
+                    InGameUtilities.sendPlayerError(_p, "Vous avez dÃ©jÃ  ce skin !");
                 }
                 else if (JetonManager.payJetons(_p, item.getPrice(),
                         "Achat du skin " + item.getItemName(), false, true))
                 {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + _p.getName() + " permission set " + item.getCommand() + " true");
-                    InGameUtilities.sendPlayerInformation(_p, "Vous avez acheté le skin " + item.getItemName() + " ! Merci pour votre achat !");
+                    InGameUtilities.sendPlayerInformation(_p, "Vous avez achetÃ© le skin " + item.getItemName() + " ! Merci pour votre achat !");
                     InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                 }
             }
@@ -337,15 +337,15 @@ public class ShopFunction {
                     String command = item.getCommand().replaceAll("Player", _p.getName());
                     if (command.contains("mcgive"))
                     {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give " + _p.getName() + " minecraft:" + item.getMat().name().toLowerCase() + "{display:{Name:'[{\"text\":\"§r" + "§r " + item.getItemName() + "\"}]'}} 1");
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give " + _p.getName() + " minecraft:" + item.getMat().name().toLowerCase() + "{display:{Name:'[{\"text\":\"Â§r" + "Â§r " + item.getItemName() + "\"}]'}} 1");
                         getEco().withdrawPlayer(_p, prix);
-                        _p.sendMessage("§aVous avez acheté : " + item.getItemName() + "§r§a pour §c " + prix + "$ §a!");
+                        _p.sendMessage("Â§aVous avez achetÃ© : " + item.getItemName() + "Â§rÂ§a pour Â§c" + prix + "$ Â§a!");
                     }
                     else if (command.contains("minecraft:give"))
                     {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.getCommand().replaceAll("Player", _p.getName()));
                         getEco().withdrawPlayer(_p, prix);
-                        _p.sendMessage("§aVous avez acheté : " + item.getItemName() + "§r§a pour §c " + prix + "$ §a!");
+                        _p.sendMessage("Â§aVous avez achetÃ© : " + item.getItemName() + "Â§rÂ§a pour Â§c" + prix + "$ Â§a!");
                     }
                     else
                     {
@@ -358,7 +358,7 @@ public class ShopFunction {
                             PermissionUtilities.commandExecutor(_p, command, "frere_c_quoi_la_perm");
                         }
                         getEco().withdrawPlayer(_p, prix);
-                        _p.sendMessage("§aVous avez acheté : " + item.getItemName() + "§r§a pour §6 " + prix + "$ §a!");
+                        _p.sendMessage("Â§aVous avez achetÃ© : " + item.getItemName() + "Â§rÂ§a pour Â§6" + prix + "$ Â§a!");
                         InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                     }
                 }
@@ -367,18 +367,18 @@ public class ShopFunction {
                     String command = item.getCommand().replaceAll("Player", _p.getName());
                     if (command.contains("mcgive"))
                     {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give " + _p.getName() + " minecraft:" + item.getMat().name().toLowerCase() + "{display:{Name:'[{\"text\":\"§r" + "§r " + item.getItemName() + "\"}]'}} 1");
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give " + _p.getName() + " minecraft:" + item.getMat().name().toLowerCase() + "{display:{Name:'[{\"text\":\"Â§r" + "Â§r " + item.getItemName() + "\"}]'}} 1");
                     }
                     else
                     {
                         PermissionUtilities.commandExecutor(_p, command, "crackshot.give.all");
                     }
-                    _p.sendMessage("§aVous avez acheté : " + item.getItemName() + "§r§a pour §c " + prix + "$ §a!");
+                    _p.sendMessage("Â§aVous avez achetÃ© : " + item.getItemName() + "Â§rÂ§a pour Â§c" + prix + "$ Â§a!");
                     InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                 }
                 else
                 {
-                    _p.sendMessage("§cVous n'avez pas assez d'argent.");
+                    _p.sendMessage("Â§cVous n'avez pas assez d'argent.");
                 }
             }
         }
@@ -387,7 +387,7 @@ public class ShopFunction {
     public void sellItem(ItemStack _itemClicked, Player _p, String _shop, boolean _isShiftClicked)
     {
         String name = _itemClicked.getItemMeta().getDisplayName();
-        name = name.replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "");
+        name = name.replaceAll("Â§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "");
 
         String[] words = name.split(" ");
         StringBuilder sbb = new StringBuilder();
@@ -395,7 +395,7 @@ public class ShopFunction {
             if (i + 1 != words.length)
             {
 
-                if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                if (words[i + 1].contains("Â«") || words[i + 1].contains("Â»")) {
                     sbb.append(words[i]);
                     break;
                 }
@@ -421,12 +421,12 @@ public class ShopFunction {
                 {
                     if (itemInv != null)
                     {
-                        words = itemInv.getItemMeta().getDisplayName().replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "").split(" ");
+                        words = itemInv.getItemMeta().getDisplayName().replaceAll("Â§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "").split(" ");
                         sbb = new StringBuilder();
                         for (int i = 0; i < words.length; i++) {
                             if (i + 1 != words.length)
                             {
-                                if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                                if (words[i + 1].contains("Â«") || words[i + 1].contains("Â»")) {
                                     sbb.append(words[i]);
                                     break;
                                 }
@@ -458,7 +458,7 @@ public class ShopFunction {
                 }
                 actualiseSellProgress(_p, (int) (nbr * sell));
                 getEco().depositPlayer(_p, nbr * sell);
-                _p.sendMessage("§aVous avez vendu " + nbr + " §7 " + item.getItemName() + " pour un total de §6 " + nbr * sell + "$§a !");
+                _p.sendMessage("Â§aVous avez vendu " + nbr + " Â§7" + item.getItemName() + " pour un total de Â§6" + nbr * sell + "$Â§a !");
             }
             else
             {
@@ -470,13 +470,13 @@ public class ShopFunction {
                         String itemName;
                         if (itemInv.hasItemMeta())
                         {
-                            words = itemInv.getItemMeta().getDisplayName().replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "").split(" ");
+                            words = itemInv.getItemMeta().getDisplayName().replaceAll("Â§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "").split(" ");
                             sbb = new StringBuilder();
                             for (int i = 0; i < words.length; i++) {
                                 if (i + 1 != words.length)
                                 {
 
-                                    if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                                    if (words[i + 1].contains("Â«") || words[i + 1].contains("Â»")) {
                                         sbb.append(words[i]);
                                         break;
                                     }
@@ -503,12 +503,12 @@ public class ShopFunction {
                 {
                     getEco().depositPlayer(_p, sell);
                     actualiseSellProgress(_p, (int) (sell));
-                    _p.sendMessage("§aVous avez vendu un §7 " + item.getItemName() + "§a pour " + sell + "$ !");
+                    _p.sendMessage("Â§aVous avez vendu un Â§7" + item.getItemName() + "Â§a pour " + sell + "$ !");
                     InGameUtilities.playPlayerSound(_p, "gun.hud.money_pickup", SoundCategory.AMBIENT, 1, 1);
                 }
                 else
                 {
-                    _p.sendMessage("§cVous devez avoir l'item sur vous.");
+                    _p.sendMessage("Â§cVous devez avoir l'item sur vous.");
                 }
             }
 
@@ -541,10 +541,10 @@ public class ShopFunction {
                     " WHERE items.item_name = ?");
             preparedStatement1.setString(1, _name);
             final ResultSet rs = preparedStatement1.executeQuery();
-            //On vérifie s'il y a un résultat à la requête
+            //On vÃ©rifie s'il y a un rÃ©sultat Ã  la requÃªte
             if (!rs.next())
             {
-                sender.sendMessage("§aNouvel item créé :" + _item.name());
+                sender.sendMessage("Â§aNouvel item crÃ©Ã© :" + _item.name());
                 final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO items(item_name, item, durability, command, custom_model_data)" +
                         " VALUES(?,?,?,?,?)");
                 preparedStatement2.setString(1, _name);
@@ -554,7 +554,7 @@ public class ShopFunction {
                 preparedStatement2.setInt(5, _custommodeldata);
                 preparedStatement2.executeUpdate();
             }
-            sender.sendMessage("§aItem " + _item.name() + " ajouté au shop " + _shop);
+            sender.sendMessage("Â§aItem " + _item.name() + " ajoutÃ© au shop " + _shop);
             final PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO item_shop(item_name, shop, price, sell)" +
                     " VALUES(?,?,?,?)");
             preparedStatement3.setString(1, _name);
@@ -564,8 +564,8 @@ public class ShopFunction {
             preparedStatement3.executeUpdate();
 
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #S003");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #S003");
             e.printStackTrace();
         }
     }
@@ -586,8 +586,8 @@ public class ShopFunction {
             }
 
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #S003");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #S003");
             e.printStackTrace();
         }
         return l;

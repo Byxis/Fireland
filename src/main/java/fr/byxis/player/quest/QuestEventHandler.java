@@ -33,7 +33,7 @@ public class QuestEventHandler implements @NotNull Listener {
         {
             if (e.getPlayer().hasPlayedBefore())
             {
-                InGameUtilities.sendPlayerSucces(e.getPlayer(), "De nouvelles quêtes quotidiennes sont disponibles !");
+                InGameUtilities.sendPlayerSucces(e.getPlayer(), "De nouvelles quÃªtes quotidiennes sont disponibles !");
             }
             QuestManager.fillQuests(e.getPlayer());
         }

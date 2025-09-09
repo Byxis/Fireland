@@ -138,7 +138,7 @@ public class EssaimManager {
             configManager.save();
             activeEssaims.put(name, essaimClass);
         } catch (Exception e) {
-            main.getLogger().severe("Un problème est survenu lors de l'activation de l'essaim " + name);
+            main.getLogger().severe("Un problÃ¨me est survenu lors de l'activation de l'essaim " + name);
             return false;
         }
 
@@ -268,7 +268,7 @@ public class EssaimManager {
                         LocalDateTime today = LocalDateTime.now();
                         if (isEssaimOpened(essaim))
                         {
-                            debug(7, "Essaim déjà ouvert " + essaim);
+                            debug(7, "Essaim dÃ©jÃ  ouvert " + essaim);
                             continue;
                         }
                         if (configManager.getConfig().getInt(essaim + ".hour") == today.getHour() &&
@@ -279,10 +279,10 @@ public class EssaimManager {
                             enableEssaim(essaim);
                             for (Player p : Bukkit.getOnlinePlayers())
                             {
-                                InGameUtilities.sendPlayerInformation(p, "L'essaim " + activeEssaims.get(essaim).getFormattedName() + " est désormais ouvert. Allez vite le pacifier avant que la menace se répande !");
+                                InGameUtilities.sendPlayerInformation(p, "L'essaim " + activeEssaims.get(essaim).getFormattedName() + " est dÃ©sormais ouvert. Allez vite le pacifier avant que la menace se rÃ©pande !");
                             }
                         }
-                        debug(7, "L'essaim " + essaim + " est : " + activeEssaims.containsKey(essaim));
+                        debug(7, "L'essaim " + essaim + " est :" + activeEssaims.containsKey(essaim));
                     }
                 }
                 for (EssaimClass essaimClass : activeEssaims.values())
@@ -295,7 +295,7 @@ public class EssaimManager {
                     {
                         for (Player player : groups.get(essaimClass.getName()).getMembers())
                         {
-                            InGameUtilities.sendPlayerInformation(player, "Vous allez être expulsé de l'essaim dans " + (8 - new Timestamp(System.currentTimeMillis() - essaimClass.getFinishDate().getTime()).getMinutes()) + " minutes.");
+                            InGameUtilities.sendPlayerInformation(player, "Vous allez Ãªtre expulsÃ© de l'essaim dans " + (8 - new Timestamp(System.currentTimeMillis() - essaimClass.getFinishDate().getTime()).getMinutes()) + " minutes.");
                         }
                     }
                 }

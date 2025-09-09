@@ -60,7 +60,7 @@ public class Thirst implements Listener, CommandExecutor
                         return true;
                     }
                     if (Float.parseFloat(args[0]) < 0 || Float.parseFloat(args[0]) > 100) {
-                        p.sendMessage("§cLa valeur entrée doit être comprise entre 0 et 100 !");
+                        p.sendMessage("Â§cLa valeur entrÃ©e doit Ãªtre comprise entre 0 et 100 !");
                         return true;
                     }
                     else
@@ -90,7 +90,7 @@ public class Thirst implements Listener, CommandExecutor
                 }
                 else
                 {
-                    p.sendMessage("§cMauvaise formulation de la commande ! (/thirst [player] [nombre]");
+                    p.sendMessage("Â§cMauvaise formulation de la commande ! (/thirst [player] [nombre]");
                 }
             }
         }

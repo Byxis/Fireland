@@ -29,32 +29,31 @@ public class Compass implements @NotNull Listener
     @EventHandler
     public void playerInteraction(PlayerInteractEvent e)
     {
-        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
+        if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem() != null)
         {
-            if (e.getItem() != null) {
-                if (e.getItem().getType() == Material.COMPASS && e.getPlayer().getCooldown(Material.COMPASS) <= 0) {
-                    e.getPlayer().setCooldown(Material.COMPASS, 200);
-                    InGameUtilities.sendPlayerInformation(e.getPlayer(),
-                            "X:" + e.getPlayer().getLocation().getBlockX() + "   Y:" + e.getPlayer().getLocation().getBlockY() + "   Z:" +
-                                    e.getPlayer().getLocation().getBlockZ());
-                    FactionFunctions ff = new FactionFunctions(main, e.getPlayer());
-                    String faction = ff.playerFactionName(e.getPlayer());
-                    if (!faction.equals(""))
+            if (e.getItem().getType() == Material.COMPASS && e.getPlayer().getCooldown(Material.COMPASS) <= 0) {
+                e.getPlayer().setCooldown(Material.COMPASS, 200);
+                InGameUtilities.sendPlayerInformation(e.getPlayer(),
+                        "X:" + e.getPlayer().getLocation().getBlockX() + "   Y:" + e.getPlayer().getLocation().getBlockY() + "   Z:" +
+                                e.getPlayer().getLocation().getBlockZ());
+                FactionFunctions ff = new FactionFunctions(main, e.getPlayer());
+                String faction = ff.playerFactionName(e.getPlayer());
+
+                if (!faction.isEmpty())
+                {
+                    for (FactionPlayerInformation p : ff.getPlayersFromFaction(faction))
                     {
-                        for (FactionPlayerInformation p : ff.getPlayersFromFaction(faction))
+                        Player bukkitPlayer = Bukkit.getPlayer(p.getUuid());
+                        if (bukkitPlayer != null && bukkitPlayer.isOnline() && bukkitPlayer.getUniqueId() != e.getPlayer().getUniqueId())
                         {
-                            Player bukkitPlayer = Bukkit.getPlayer(p.getUuid());
-                            if (bukkitPlayer != null && bukkitPlayer.isOnline() && bukkitPlayer.getUniqueId() != e.getPlayer().getUniqueId())
-                            {
-                                InGameUtilities.sendPlayerInformation(bukkitPlayer,
-                                        e.getPlayer().getName() + " se trouve aux coordonnées :   X:" + e.getPlayer().getLocation().getBlockX()
-                                                + "   Y:" + e.getPlayer().getLocation().getBlockY()
-                                                + "   Z:" + e.getPlayer().getLocation().getBlockZ());
-                            }
+                            InGameUtilities.sendPlayerInformation(bukkitPlayer,
+                                    e.getPlayer().getName() + " se trouve aux coordonnÃ©es :   X:" + e.getPlayer().getLocation().getBlockX()
+                                            + "   Y:" + e.getPlayer().getLocation().getBlockY()
+                                            + "   Z:" + e.getPlayer().getLocation().getBlockZ());
                         }
                     }
-
                 }
+
             }
         }
     }

@@ -27,8 +27,8 @@ public class LevelCommand implements CommandExecutor {
             if (args.length == 0)
             {
                 pl = getPlayerLevel(p.getUniqueId());
-                InGameUtilities.sendPlayerInformation(p, "Votre niveau : " + pl.getLevel() + " (" + pl.getXp() + "/" + pl.getRemainingXp() + ")");
-                InGameUtilities.sendPlayerInformation(p, "Votre rang : " + pl.getStringRank() + " (" + pl.getNation().name() + ")");
+                InGameUtilities.sendPlayerInformation(p, "Votre niveau :" + pl.getLevel() + " (" + pl.getXp() + "/" + pl.getRemainingXp() + ")");
+                InGameUtilities.sendPlayerInformation(p, "Votre rang: " + pl.getStringRank() + " (" + pl.getNation().name() + ")");
                 return true;
             }
             else if (args.length == 1)
@@ -38,13 +38,13 @@ public class LevelCommand implements CommandExecutor {
                     pl = getPlayerLevel(p.getUniqueId());
                     if (JetonManager.getJetonsPlayer(p.getUniqueId()) > pl.getJetonPriceNationChange() && Fireland.getEco().has(p, pl.getMoneyPriceNationChange()))
                     {
-                        InGameUtilities.sendPlayerSucces(p, "Vous avez acheté un changement de nation. Pour changer, votre nation, allez voir l'intendant");
+                        InGameUtilities.sendPlayerSucces(p, "Vous avez achetÃ© un changement de nation. Pour changer, votre nation, allez voir l'intendant");
                         JetonManager.payJetons(p, pl.getJetonPriceNationChange(), "Changement de Nation", false, true);
                         Fireland.getEco().withdrawPlayer(p, pl.getMoneyPriceNationChange());
                         pl.setCanChange(true);
                         return true;
                     }
-                    InGameUtilities.sendPlayerError(p, "Vous n'avez pas les fonds nécessaire.");
+                    InGameUtilities.sendPlayerError(p, "Vous n'avez pas les fonds nÃ©cessaire.");
                     return false;
                 }
                 if (BasicUtilities.getUuid(args[0]) == null)
@@ -53,15 +53,15 @@ public class LevelCommand implements CommandExecutor {
                     return false;
                 }
                 pl = getPlayerLevel(BasicUtilities.getUuid(args[0]));
-                InGameUtilities.sendPlayerInformation(p, "Niveau de " + args[0] + " : " + pl.getLevel() + " (" + pl.getXp() + "/" + pl.getRemainingXp() + ")");
-                InGameUtilities.sendPlayerInformation(p, "Rang de " + args[0] + " : " + pl.getStringRank() + " (" + pl.getNation().name() + ")");
+                InGameUtilities.sendPlayerInformation(p, "Niveau de " + args[0] + ": " + pl.getLevel() + " (" + pl.getXp() + "/" + pl.getRemainingXp() + ")");
+                InGameUtilities.sendPlayerInformation(p, "Rang de " + args[0] + ": " + pl.getStringRank() + " (" + pl.getNation().name() + ")");
                 return true;
             }
             else if (p.hasPermission("fireland.admin.level"))
             {
                 if (args.length != 4)
                 {
-                    InGameUtilities.sendPlayerError(p, "Utilisation : /level <set/add/remove> <level/xp/nation/rang/canchange> <amount/nation/true/false> <player>");
+                    InGameUtilities.sendPlayerError(p, "Utilisation: /level <set/add/remove> <level/xp/nation/rang/canchange> <amount/nation/true/false> <player>");
                     return false;
                 }
                 if (BasicUtilities.getUuid(args[3]) == null)
@@ -78,7 +78,7 @@ public class LevelCommand implements CommandExecutor {
                         {
                             int amount = Integer.parseInt(args[2]);
                             pl.setLevel(amount);
-                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis Ã  jour avec succÃ¨s");
                             return true;
                         }
                         catch (Exception ignored)
@@ -92,7 +92,7 @@ public class LevelCommand implements CommandExecutor {
                         {
                             boolean amount = Boolean.parseBoolean(args[2]);
                             pl.setCanChange(amount);
-                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis Ã  jour avec succÃ¨s");
                             return true;
                         }
                         catch (Exception ignored)
@@ -106,7 +106,7 @@ public class LevelCommand implements CommandExecutor {
                         {
                             int amount = Integer.parseInt(args[2]);
                             pl.setRang(amount);
-                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis Ã  jour avec succÃ¨s");
                             return true;
                         }
                         catch (Exception ignored)
@@ -120,7 +120,7 @@ public class LevelCommand implements CommandExecutor {
                         {
                             int amount = Integer.parseInt(args[2]);
                             pl.setXp(amount);
-                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis Ã  jour avec succÃ¨s");
                             return true;
                         }
                         catch (Exception ignored)
@@ -134,7 +134,7 @@ public class LevelCommand implements CommandExecutor {
                         {
                             LevelStorage.Nation nation = LevelStorage.Nation.valueOf(args[2]);
                             pl.setNation(nation);
-                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis Ã  jour avec succÃ¨s");
                             return true;
                         }
                         catch (Exception ignored)
@@ -151,7 +151,7 @@ public class LevelCommand implements CommandExecutor {
                         {
                             int amount = Integer.parseInt(args[2]);
                             pl.addLevel(amount);
-                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis Ã  jour avec succÃ¨s");
                             return true;
                         }
                         catch (Exception ignored)
@@ -165,7 +165,7 @@ public class LevelCommand implements CommandExecutor {
                         {
                             int amount = Integer.parseInt(args[2]);
                             pl.addXp(amount);
-                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis Ã  jour avec succÃ¨s");
                             return true;
                         }
                         catch (Exception ignored)
@@ -182,7 +182,7 @@ public class LevelCommand implements CommandExecutor {
                         {
                             int amount = Integer.parseInt(args[2]);
                             pl.addLevel(-amount);
-                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis Ã  jour avec succÃ¨s");
                             return true;
                         }
                         catch (Exception ignored)
@@ -196,7 +196,7 @@ public class LevelCommand implements CommandExecutor {
                         {
                             int amount = Integer.parseInt(args[2]);
                             pl.addXp(-amount);
-                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis à jour avec succès");
+                            InGameUtilities.sendPlayerSucces(p, "Joueurs " + args[3] + " mis Ã  jour avec succÃ¨s");
                             return true;
                         }
                         catch (Exception ignored)
@@ -205,7 +205,7 @@ public class LevelCommand implements CommandExecutor {
                         }
                     }
                 }
-                InGameUtilities.sendPlayerError(p, "Utilisation : /level <set/add/remove> <level/xp/nation> <amount/nation> <player>");
+                InGameUtilities.sendPlayerError(p, "Utilisation: /level <set/add/remove> <level/xp/nation> <amount/nation> <player>");
                 return false;
             }
         }

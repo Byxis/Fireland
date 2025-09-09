@@ -45,7 +45,7 @@ public class InfectedPlayer implements Listener, CommandExecutor
         assert p != null;
         if (isInfected(p) && !(e.getEntity().getLastDamageCause().getEntity() instanceof Player))
         {
-            e.setDeathMessage(p.getName() + " est mort due à son infection !");
+            e.setDeathMessage(p.getName() + " est mort due Ã  son infection !");
         }
         if (isInfected(p))
         {
@@ -73,21 +73,34 @@ public class InfectedPlayer implements Listener, CommandExecutor
         Entity damaged = e.getEntity();
         Entity damager = e.getDamager();
 
-        boolean random = Math.random() < 0.2;
+        boolean randomZombie = Math.random() < 0.2;
+        boolean randomPlayer = Math.random() <= 0.5;
         
         if (damaged instanceof Player p) {
             if (damager instanceof Zombie || damager instanceof Stray) {
-                if (random && !p.isInvulnerable() /*&& config.getInt("safezone."+p.getName()+".time") > 0*/)
+                if (randomZombie && !p.isInvulnerable())
                 {
-                    if (!isInfected(p))
-                    {
-                        setInfection(p, true);
-                        p.sendMessage("§8Vous avez été infecté ! Trouvez vite une seringue avant l'infection ne vous tue");
-                        p.sendTitle("§8Vous avez été infecté !", "");
-                        p.playSound(p.getLocation(), "minecraft:entity.infected.bite", 1, 1);
-                    }
+                    tryApplyInfection(p);
                 }
             }
+            else if (damager instanceof Player damagerPlayer && isInfected(damagerPlayer))
+            {
+                if (randomPlayer && !p.isInvulnerable() && damagerPlayer.getItemInHand().getType() == Material.AIR)
+                {
+                    tryApplyInfection(p);
+                }
+            }
+        }
+    }
+
+    private void tryApplyInfection(Player p)
+    {
+        if (!isInfected(p))
+        {
+            setInfection(p, true);
+            p.sendMessage("Â§8Vous avez Ã©tÃ© infectÃ© ! Trouvez vite une seringue avant l'infection ne vous tue");
+            p.sendTitle("Â§8Vous avez Ã©tÃ© infectÃ© !", "");
+            p.playSound(p.getLocation(), "minecraft:entity.infected.bite", 1, 1);
         }
     }
     
@@ -104,7 +117,7 @@ public class InfectedPlayer implements Listener, CommandExecutor
                 setInfection(p, false);
                 InGameUtilities.playWorldSound(p.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
                 
-                p.sendMessage("§8Vous avez soigné votre infection !");
+                p.sendMessage("Â§8Vous avez soignÃ© votre infection !");
                 if (!p.getGameMode().equals(GameMode.CREATIVE)) {
                     p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
                 }
@@ -136,8 +149,8 @@ public class InfectedPlayer implements Listener, CommandExecutor
 
                 InGameUtilities.playWorldSound(friend.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
                 
-                p.sendMessage("§8Vous avez soigné l'infection de " + friend.getName() + "!");
-                friend.sendMessage("§8 " + p.getName() + " a soigné votre infection !");
+                p.sendMessage("Â§8Vous avez soignÃ© l'infection de " + friend.getName() + "!");
+                friend.sendMessage("Â§8" + p.getName() + " a soignÃ© votre infection !");
                 if (!p.getGameMode().equals(GameMode.CREATIVE)) {
                     p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
                 }
@@ -187,7 +200,7 @@ public class InfectedPlayer implements Listener, CommandExecutor
             if (cmd.getName().equalsIgnoreCase("infect")) {
                 Player p = (Player) sender;
                 if (args.length == 0) {
-                    p.sendMessage("§8Vous avez été infecté !");
+                    p.sendMessage("Â§8Vous avez Ã©tÃ© infectÃ© !");
                     p.playSound(p.getLocation(), "minecraft:entity.infected.bite", 1, 1);
                     setInfection(p, false);
                     return true;
@@ -195,36 +208,36 @@ public class InfectedPlayer implements Listener, CommandExecutor
                 else if (args.length == 1)
                 {
                     Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[0]));
-                    p.sendMessage("§8 " + victim.getName() + " été infecté !");
-                    victim.sendMessage("§8Vous avez été infecté !");
-                    victim.sendTitle("§8Vous avez été infecté !", "");
+                    p.sendMessage("Â§8" + victim.getName() + " Ã©tÃ© infectÃ© !");
+                    victim.sendMessage("Â§8Vous avez Ã©tÃ© infectÃ© !");
+                    victim.sendTitle("Â§8Vous avez Ã©tÃ© infectÃ© !", "");
                     victim.playSound(victim.getLocation(), "minecraft:entity.infected.bite", 1, 1);
                     setInfection(victim, false);
                     
                 }
                 else
                 {
-                    p.sendMessage("§cMauvaise formulation de la commande ! (/infect [player]");
+                    p.sendMessage("Â§cMauvaise formulation de la commande ! (/infect [player]");
                 }
             }
             else if (cmd.getName().equalsIgnoreCase("cure"))
             {
                 Player p = (Player) sender;
                 if (args.length == 0) {
-                    p.sendMessage("§8Vous avez soigné votre infection !");
+                    p.sendMessage("Â§8Vous avez soignÃ© votre infection !");
                     setInfection(p, false);
                     return true;
                 }
                 else if (args.length == 1)
                 {
                     Player victim = (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[0]));
-                    p.sendMessage("§8 " + victim.getName() + " été soigné !");
-                    victim.sendMessage("§8Vous avez été soigné !");
+                    p.sendMessage("Â§8" + victim.getName() + " Ã©tÃ© soignÃ© !");
+                    victim.sendMessage("Â§8Vous avez Ã©tÃ© soignÃ© !");
                     setInfection(victim, false);
                 }
                 else
                 {
-                    p.sendMessage("§cMauvaise formulation de la commande ! (/cure [player]");
+                    p.sendMessage("Â§cMauvaise formulation de la commande ! (/cure [player]");
                 }
             }
         }

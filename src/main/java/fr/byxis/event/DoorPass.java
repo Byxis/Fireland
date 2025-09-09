@@ -162,7 +162,7 @@ public class DoorPass implements Listener
             {
                 if (!pl.hasAccesstoShop("passv"))
                 {
-                    e.getPlayer().sendMessage("§cVous devez être niveau " + pl.getLevelAccesstoShop("passv") + " afin de débloquer cette zone.");
+                    e.getPlayer().sendMessage("Â§cVous devez Ãªtre niveau " + pl.getLevelAccesstoShop("passv") + " afin de dÃ©bloquer cette zone.");
                 }
                 else if (p.getItemInHand().getType() == Material.MUSIC_DISC_CAT)
                 {
@@ -171,18 +171,18 @@ public class DoorPass implements Listener
                 else if (p.getItemInHand().getType() == Material.MUSIC_DISC_13 || p.getItemInHand().getType() == Material.MUSIC_DISC_WAIT || p.getItemInHand().getType() == Material.MUSIC_DISC_BLOCKS)
                 {
                     e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
-                    e.getPlayer().sendMessage("§cPass invalide !");
+                    e.getPlayer().sendMessage("Â§cPass invalide !");
                 }
                 else
                 {
-                    e.getPlayer().sendMessage("§8Cette porte nécessite un pass vert !");
+                    e.getPlayer().sendMessage("Â§8Cette porte nÃ©cessite un pass vert !");
                 }
             }
             else if (e.getClickedBlock().getType() == Material.DEAD_BRAIN_CORAL_WALL_FAN)
             {
                 if (!pl.hasAccesstoShop("passb"))
                 {
-                    e.getPlayer().sendMessage("§cVous devez être niveau " + pl.getLevelAccesstoShop("passb") + " afin de débloquer cette zone.");
+                    e.getPlayer().sendMessage("Â§cVous devez Ãªtre niveau " + pl.getLevelAccesstoShop("passb") + " afin de dÃ©bloquer cette zone.");
                 }
                 else if (p.getItemInHand().getType() == Material.MUSIC_DISC_WAIT)
                 {
@@ -191,18 +191,18 @@ public class DoorPass implements Listener
                 else if (p.getItemInHand().getType() == Material.MUSIC_DISC_13 || p.getItemInHand().getType() == Material.MUSIC_DISC_CAT || p.getItemInHand().getType() == Material.MUSIC_DISC_BLOCKS)
                 {
                     e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
-                    e.getPlayer().sendMessage("§cPass invalide !");
+                    e.getPlayer().sendMessage("Â§cPass invalide !");
                 }
                 else
                 {
-                    e.getPlayer().sendMessage("§8Cette porte nécessite un pass bleu !");
+                    e.getPlayer().sendMessage("Â§8Cette porte nÃ©cessite un pass bleu !");
                 }
             }
             else if (e.getClickedBlock().getType() == Material.DEAD_BUBBLE_CORAL_WALL_FAN)
             {
                 if (!pl.hasAccesstoShop("passj"))
                 {
-                    e.getPlayer().sendMessage("§cVous devez être niveau " + pl.getLevelAccesstoShop("passj") + " afin de débloquer cette zone.");
+                    e.getPlayer().sendMessage("Â§cVous devez Ãªtre niveau " + pl.getLevelAccesstoShop("passj") + " afin de dÃ©bloquer cette zone.");
                 }
                 else if (p.getItemInHand().getType() == Material.MUSIC_DISC_13)
                 {
@@ -211,18 +211,18 @@ public class DoorPass implements Listener
                 else if (p.getItemInHand().getType() == Material.MUSIC_DISC_WAIT || p.getItemInHand().getType() == Material.MUSIC_DISC_CAT || p.getItemInHand().getType() == Material.MUSIC_DISC_BLOCKS)
                 {
                     e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
-                    e.getPlayer().sendMessage("§cPass invalide !");
+                    e.getPlayer().sendMessage("Â§cPass invalide !");
                 }
                 else
                 {
-                    e.getPlayer().sendMessage("§8Cette porte nécessite un pass jaune !");
+                    e.getPlayer().sendMessage("Â§8Cette porte nÃ©cessite un pass jaune !");
                 }
             }
             else if (e.getClickedBlock().getType() == Material.DEAD_FIRE_CORAL_WALL_FAN)
             {
                 if (!pl.hasAccesstoShop("passr"))
                 {
-                    e.getPlayer().sendMessage("§cVous devez être niveau " + pl.getLevelAccesstoShop("passr") + " afin de débloquer cette zone.");
+                    e.getPlayer().sendMessage("Â§cVous devez Ãªtre niveau " + pl.getLevelAccesstoShop("passr") + " afin de dÃ©bloquer cette zone.");
                 }
                 else if (p.getItemInHand().getType() == Material.MUSIC_DISC_BLOCKS)
                 {
@@ -231,11 +231,11 @@ public class DoorPass implements Listener
                 else if (p.getItemInHand().getType() == Material.MUSIC_DISC_13 || p.getItemInHand().getType() == Material.MUSIC_DISC_WAIT || p.getItemInHand().getType() == Material.MUSIC_DISC_CAT)
                 {
                     e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
-                    e.getPlayer().sendMessage("§cPass invalide !");
+                    e.getPlayer().sendMessage("Â§cPass invalide !");
                 }
                 else
                 {
-                    e.getPlayer().sendMessage("§8Cette porte nécessite un pass rouge !");
+                    e.getPlayer().sendMessage("Â§8Cette porte nÃ©cessite un pass rouge !");
                 }
             }
             else if (e.getClickedBlock().getType() == Material.DEAD_HORN_CORAL_WALL_FAN)
@@ -248,12 +248,12 @@ public class DoorPass implements Listener
                         if (PvPManager.isOnTimer(p))
                         {
                             e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
-                            InGameUtilities.sendPlayerError(p, "L'accès à cette zone vous a été refusé car vous êtes en combat.");
+                            InGameUtilities.sendPlayerError(p, "L'accÃ¨s Ã  cette zone vous a Ã©tÃ© refusÃ© car vous Ãªtes en combat.");
                         }
                         else if (main.getCfgm().getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state"))
                         {
                             e.getPlayer().getWorld().playSound(p.getLocation(), "minecraft:gun.hud.carddeny", 0.1f, 1);
-                            InGameUtilities.sendPlayerError(p, "L'accès à cette zone vous a été refusé car vous êtes infecté.");
+                            InGameUtilities.sendPlayerError(p, "L'accÃ¨s Ã  cette zone vous a Ã©tÃ© refusÃ© car vous Ãªtes infectÃ©.");
                         }
                         else
                         {
@@ -262,7 +262,7 @@ public class DoorPass implements Listener
                     }
                     else
                     {
-                        e.getPlayer().sendMessage("§8Veuillez placer votre main");
+                        e.getPlayer().sendMessage("Â§8Veuillez placer votre main");
                     }
                 }
             }

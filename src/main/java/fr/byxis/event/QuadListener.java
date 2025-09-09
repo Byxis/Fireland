@@ -76,7 +76,7 @@ public class QuadListener implements Listener
         }
         else
         {
-            p.sendMessage("§cIl n'y a pas assez d'espace ici !");
+            p.sendMessage("Â§cIl n'y a pas assez d'espace ici !");
         }
     }
 }

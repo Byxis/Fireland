@@ -41,7 +41,8 @@ public class PlayerManager implements Listener
         {
             Player player = e.getPlayer();
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§a " + interacted.getName() + ": §c " + Math.round(interacted.getHealth()) + "\u2764"));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Â§a" + interacted.getName() +
+                    ": Â§c6" + Math.round(interacted.getHealth()) + "â¤"));
         }
     }
 
@@ -67,7 +68,7 @@ public class PlayerManager implements Listener
             if (money > 0)
             {
                 Fireland.getEco().depositPlayer(killer, money);
-                killer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous avez gagné " + money + "$ grâce au boost de " + ((Player) Bukkit.getOfflinePlayer(main.getHashMapManager().getBooster().getUuid())).getName() + "."));
+                killer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Â§7Vous avez gagnÃ© " + money + "$ grÃ¢ce au boost de " + ((Player) Bukkit.getOfflinePlayer(main.getHashMapManager().getBooster().getUuid())).getName() + "."));
 
             }
         }

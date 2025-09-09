@@ -66,8 +66,8 @@ public class SporeDamage {
                     if (Math.random() < 0.1)
                     {
                         setInfection(p, true);
-                        p.sendMessage("§8Vous avez été infecté par les spores ! Trouvez vite une seringue avant l'infection ne vous tue");
-                        p.sendTitle("§8Vous avez été infecté !", "");
+                        p.sendMessage("Â§8Vous avez Ã©tÃ© infectÃ© par les spores ! Trouvez vite une seringue avant l'infection ne vous tue");
+                        p.sendTitle("Â§8Vous avez Ã©tÃ© infectÃ© !", "");
                         p.playSound(p.getLocation(), "minecraft:entity.infected.bite", 1, 1);
                     }
                 }

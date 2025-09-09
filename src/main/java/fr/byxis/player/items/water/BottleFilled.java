@@ -100,7 +100,7 @@ public class BottleFilled implements Listener
         {
             givePotion(p, Color.fromRGB(150, 180, 255));
 
-            InGameUtilities.sendPlayerInformation(p, "Votre expérience en survie vous a permit de purifier une bouteille d'eau.");
+            InGameUtilities.sendPlayerInformation(p, "Votre expÃ©rience en survie vous a permit de purifier une bouteille d'eau.");
             setPurify(p, false);
             int minutes;
             if (p.hasPermission("fireland.thirst.3"))

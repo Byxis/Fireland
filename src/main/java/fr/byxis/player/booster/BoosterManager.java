@@ -33,13 +33,13 @@ public class BoosterManager implements CommandExecutor, Listener {
         {
             if (main.getHashMapManager().getBooster() == null)
             {
-                InGameUtilities.sendPlayerInformation((Player) commandSender, "Aucun booster n'est actif pour le moment. Pour en créer un, rendez-vous à l'intendant.");
+                InGameUtilities.sendPlayerInformation((Player) commandSender, "Aucun booster n'est actif pour le moment. Pour en crÃ©er un, rendez-vous Ã  l'intendant.");
             }
             else
             {
                 BoosterClass booster = main.getHashMapManager().getBooster();
                 Player creator = (Player) Bukkit.getOfflinePlayer(booster.getUuid());
-                InGameUtilities.sendPlayerInformation((Player) commandSender, "Un booster de niveau §d§l " + booster.getLevel() + "§r§7 est actif ! Il a été créé par §6 " + creator.getName() + "§7 et se finit dans " + BasicUtilities.getStringTime(booster.getFinished().getTime() - System.currentTimeMillis()));
+                InGameUtilities.sendPlayerInformation((Player) commandSender, "Un booster de niveau Â§dÂ§l " + booster.getLevel() + "Â§rÂ§7 est actif ! Il a Ã©tÃ© crÃ©Ã© par Â§6" + creator.getName() + "Â§7 et se finit dans " + BasicUtilities.getStringTime(booster.getFinished().getTime() - System.currentTimeMillis()));
             }
         }
         else if (strings[0].equalsIgnoreCase("create") && commandSender.hasPermission("fireland.command.booster"))
@@ -63,7 +63,7 @@ public class BoosterManager implements CommandExecutor, Listener {
             }
             else
             {
-                InGameUtilities.sendPlayerError((Player) commandSender, "Erreur : un boost est actuellement en cours");
+                InGameUtilities.sendPlayerError((Player) commandSender, "Erreur: un boost est actuellement en cours");
             }
         }
         else if (strings[0].equalsIgnoreCase("delete") && (commandSender).hasPermission("fireland.admin.booster"))
@@ -75,7 +75,7 @@ public class BoosterManager implements CommandExecutor, Listener {
             else if (main.getHashMapManager().getBooster() != null)
             {
                 Player p = (Player) commandSender;
-                InGameUtilities.sendPlayerInformation(p, "Le boost de " + ((Player) Bukkit.getOfflinePlayer(main.getHashMapManager().getBooster().getUuid())).getName() + " a été supprimé.");
+                InGameUtilities.sendPlayerInformation(p, "Le boost de " + ((Player) Bukkit.getOfflinePlayer(main.getHashMapManager().getBooster().getUuid())).getName() + " a Ã©tÃ© supprimÃ©.");
                 main.getHashMapManager().setBooster(null);
             }
         }
@@ -83,14 +83,14 @@ public class BoosterManager implements CommandExecutor, Listener {
     }
 
     private void addBooster(@NotNull String[] strings, Player p) {
-        InGameUtilities.sendPlayerInformation(p, "Vous avez acheté un Booster de niveau §d " + Integer.parseInt(strings[1]) + "§r§7 pour " + Integer.parseInt(strings[2]) + " heures !");
+        InGameUtilities.sendPlayerInformation(p, "Vous avez achetÃ© un Booster de niveau Â§d" + Integer.parseInt(strings[1]) + "Â§rÂ§7 pour " + Integer.parseInt(strings[2]) + " heures !");
 
         main.getHashMapManager().setBooster(new BoosterClass(new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() + 1000 * 3600 * Long.parseLong(strings[2])), p.getUniqueId(), Integer.parseInt(strings[1])));
         for (Player players : Bukkit.getOnlinePlayers())
         {
             if (!p.getName().equalsIgnoreCase(players.getName()))
             {
-                InGameUtilities.sendPlayerInformation(players, "§6§l " + p.getName() + "§r§7 a déclencher un booster de niveau §d " + Integer.parseInt(strings[1]) + "§r§7 pour " + Integer.parseInt(strings[2]) + " heures ! Vous recevrez plus de loot grâce à lui !");
+                InGameUtilities.sendPlayerInformation(players, "Â§6Â§l " + p.getName() + "Â§rÂ§7 a dÃ©clencher un booster de niveau Â§d" + Integer.parseInt(strings[1]) + "Â§rÂ§7 pour " + Integer.parseInt(strings[2]) + " heures ! Vous recevrez plus de loot grÃ¢ce Ã  lui !");
             }
             PermissionUtilities.addTempPermission(p, "phatloots.bonus." + main.getHashMapManager().getBooster().getBoosterLootPercent(), main.getHashMapManager().getBooster().getFinished());
         }

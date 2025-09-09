@@ -17,7 +17,7 @@ public class RestartEvent implements Listener
         }
         else if (RestartManager.isRestartingNow())
         {
-            e.getPlayer().kickPlayer("§cLe serveur est en train de redémarrer.");
+            e.getPlayer().kickPlayer("Â§cLe serveur est en train de redÃ©marrer.");
         }
     }
 

@@ -47,12 +47,12 @@ public class WorkshopManagerEvent implements Listener
                 e.setCancelled(true);
                 WorkshopFunction wf = new WorkshopFunction(main, e.getPlayer());
                 String name = e.getItem().getItemMeta().getDisplayName();
-                name = name.replaceAll("§6", "");
-                name = name.replaceAll("§e", "");
-                name = name.replaceAll("§c", "");
-                name = name.replaceAll("§9", "");
-                name = name.replaceAll("§a", "");
-                name = name.replaceAll("§l", "");
+                name = name.replaceAll("Â§6", "");
+                name = name.replaceAll("Â§e", "");
+                name = name.replaceAll("Â§c", "");
+                name = name.replaceAll("Â§9", "");
+                name = name.replaceAll("Â§a", "");
+                name = name.replaceAll("Â§l", "");
                 int crafted = wf.getTimeCrafted(name, e.getPlayer().getUniqueId().toString());
                 int max = wf.getCraftedTimeToLearn(name);
                 if (!wf.isLearned(name, e.getPlayer().getUniqueId().toString()))
@@ -71,16 +71,16 @@ public class WorkshopManagerEvent implements Listener
                         wf.learnRecipe(name, e.getPlayer().getUniqueId().toString());
                         e.getItem().setAmount(e.getItem().getAmount() - 1);
 
-                        e.getPlayer().sendMessage("§aVous avez appris le plan : " + name);
+                        e.getPlayer().sendMessage("Â§aVous avez appris le plan : " + name);
                     }
                     else
                     {
-                        e.getPlayer().sendMessage("§cVous devez construire encore " + (max - crafted) + " fois ce plan avant de pouvoir l'apprendre !");
+                        e.getPlayer().sendMessage("Â§cVous devez construire encore " + (max - crafted) + " fois ce plan avant de pouvoir l'apprendre !");
                     }
                 }
                 else
                 {
-                    e.getPlayer().sendMessage("§CVous connaissez déjà ce plan !");
+                    e.getPlayer().sendMessage("Â§CVous connaissez dÃ©jÃ  ce plan !");
                 }
             }
         }
@@ -98,20 +98,20 @@ public class WorkshopManagerEvent implements Listener
 
     public int getNbrOfMaxCrafting(Player player)
     {
-        int amountOfHeals = 0;
+        int craftLimit = 0;
         for (PermissionAttachmentInfo perm : player.getEffectivePermissions())
         {
             String permString = perm.getPermission();
             if (permString.startsWith("fireland.workshop.craftlimit."))
             {
                 String[] amount = permString.split("\\.");
-                if (Integer.parseInt(amount[3]) > amountOfHeals)
+                if (Integer.parseInt(amount[3]) > craftLimit)
                 {
-                    amountOfHeals = Integer.parseInt(amount[3]) - 1;
+                    craftLimit = Integer.parseInt(amount[3]) - 1;
                 }
             }
         }
-        return amountOfHeals;
+        return craftLimit;
     }
 
     @EventHandler
@@ -154,15 +154,14 @@ public class WorkshopManagerEvent implements Listener
             }
             else if (itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE)
             {
-
                 int max = getNbrOfMaxCrafting(p);
                 if (wf.getNbrOfItemCrafting(p.getUniqueId().toString()) > max)
                 {
-                    p.sendMessage("§cVous avez atteint votre limite de craft qui est de " + max + " !");
+                    p.sendMessage("Â§cVous avez atteint votre limite de craft qui est de " + max + " !");
                     return;
                 }
 
-                WorkshopItemClass craftable = wf.getACraftableItem(p, p.getUniqueId().toString(), craftItems[0], craftItems[1], itemclicked.getItemMeta().getDisplayName().replaceAll("§7", ""));
+                WorkshopItemClass craftable = wf.getACraftableItem(p, p.getUniqueId().toString(), craftItems[0], craftItems[1], craftItems[2], itemclicked.getItemMeta().getDisplayName().replaceAll("Â§[a-zA-Z0-9]", ""));
                 if (craftable != null)
                 {
                     int page = wf.getInvPageCurrent(e.getView());
@@ -197,7 +196,7 @@ public class WorkshopManagerEvent implements Listener
                 if (p.getInventory().firstEmpty() == -1) return;
                 for (WorkshopCraftingItemClass item : items)
                 {
-                    if (itemclicked.getItemMeta().getDisplayName().replaceAll("§7", "").equalsIgnoreCase(item.getItemName()) && itemclicked.getItemMeta().getLore().get(2).contains(item.getCreationDate().toString()))
+                    if (itemclicked.getItemMeta().getDisplayName().replaceAll("Â§7", "").equalsIgnoreCase(item.getItemName()) && itemclicked.getItemMeta().getLore().get(2).contains(item.getCreationDate().toString()))
                     {
                         if (item.getFinishDate().before(time))
                         {
@@ -222,7 +221,7 @@ public class WorkshopManagerEvent implements Listener
                                 if (rd <= 10)
                                 {
                                     InGameUtilities.playPlayerSound(p, "block.anvil.destroy", SoundCategory.AMBIENT, 1, 1);
-                                    p.sendMessage("§cPas de chance ! Votre item s'est cassé pendant la fabrication...");
+                                    p.sendMessage("Â§cPas de chance ! Votre item s'est cassÃ© pendant la fabrication...");
                                     wf.removeFromQueue(item, p.getUniqueId().toString());
                                 }
                                 else
@@ -244,17 +243,17 @@ public class WorkshopManagerEvent implements Listener
                         }
                         else
                         {
-                            String desc = "Accélération de craft, nom d'arme : " + item.getItemName() + ", date création :" + item.getCreationDate().toString();
+                            String desc = "AccÃ©lÃ©ration de craft, nom d'arme : " + item.getItemName() + ", date crÃ©ation :" + item.getCreationDate().toString();
                             if (JetonManager.payJetons(p, 1, desc, true, false))
                             {
-                                InGameUtilities.sendPlayerSucces(p, "Vous avez accéléré le temps de craft de 30min !");
+                                InGameUtilities.sendPlayerSucces(p, "Vous avez accÃ©lÃ©rÃ© le temps de craft de 30min !");
                                 wf.setUnbreakable(item, p.getUniqueId().toString());
                                 wf.removeTime(item, p.getUniqueId().toString());
                                 wf.openCraftingMenu(p, wf.getInvPageCurrent(e.getView()));
                             }
                             else
                             {
-                                p.sendMessage("§cVous ne pouvez pas encore récupérer cet item et vous n'avez pas de jetons pour accélérer le craft !");
+                                p.sendMessage("Â§cVous ne pouvez pas encore rÃ©cupÃ©rer cet item et vous n'avez pas de jetons pour accÃ©lÃ©rer le craft !");
                             }
                         }
                         break;

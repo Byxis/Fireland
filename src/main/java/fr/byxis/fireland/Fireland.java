@@ -296,7 +296,7 @@ public class Fireland extends JavaPlugin {
                         moonPhase = false;
                         if (!getServer().getOnlinePlayers().isEmpty())
                         {
-                            InGameUtilities.playEveryoneTitleExcept("", "§4§lLa lune de sang se lève !", 20, 100, 20, Bukkit.getWorld("essaim"));
+                            InGameUtilities.playEveryoneTitleExcept("", "Â§4Â§lLa lune de sang se lÃ¨ve !", 20, 100, 20, Bukkit.getWorld("essaim"));
                             InGameUtilities.playEveryoneSoundExcept("gun.hud.bloodmoon", SoundCategory.WEATHER, 1, 1, Bukkit.getWorld("essaim"));
                             InGameUtilities.playEveryoneSoundExcept("gun.hud.cryofunheard", SoundCategory.WEATHER, 1, 1, Bukkit.getWorld("essaim"));
 
@@ -308,7 +308,7 @@ public class Fireland extends JavaPlugin {
                         moonPhase = true;
                         if (!getServer().getOnlinePlayers().isEmpty())
                         {
-                            InGameUtilities.playEveryoneTitleExcept("", "§cLa nuit se lève !", 20, 100, 20, Bukkit.getWorld("essaim"));
+                            InGameUtilities.playEveryoneTitleExcept("", "Â§cLa nuit se lÃ¨ve !", 20, 100, 20, Bukkit.getWorld("essaim"));
                             InGameUtilities.playEveryoneSoundExcept("gun.hud.inception", SoundCategory.WEATHER, 1, 1, Bukkit.getWorld("essaim"));
                         }
                         night = false;
@@ -323,7 +323,7 @@ public class Fireland extends JavaPlugin {
                     if (!getServer().getOnlinePlayers().isEmpty())
                     {
                         InGameUtilities.playEveryoneSoundExcept("gun.hud.night_passed", SoundCategory.WEATHER, 1, 1, Bukkit.getWorld("essaim"));
-                        InGameUtilities.playEveryoneTitleExcept("", "§6Le soleil se lève !", 20, 100, 20, Bukkit.getWorld("essaim"));
+                        InGameUtilities.playEveryoneTitleExcept("", "Â§6Le soleil se lÃ¨ve !", 20, 100, 20, Bukkit.getWorld("essaim"));
                     }
                 }
             }
@@ -340,7 +340,7 @@ public class Fireland extends JavaPlugin {
                         float thirst = (float) playerDBConfig.getDouble("thirst." + p.getUniqueId());
 
                         if (thirst <= 0f) {
-                            p.sendMessage("§8Vous avez soif !");
+                            p.sendMessage("Â§8Vous avez soif !");
                         }
                     }
 
@@ -377,17 +377,17 @@ public class Fireland extends JavaPlugin {
                                 cfgm.savePlayerDB();
                                 if (timer >= 120)
                                 {
-                                    p.sendMessage("§8Votre infection a causé votre perte....");
+                                    p.sendMessage("Â§8Votre infection a causÃ© votre perte....");
                                     p.setHealth(0.0D);
                                 }
                                 else if (timer == 20 || timer == 40 || timer == 60 || timer == 80)
                                 {
-                                    p.sendMessage("§8Votre infection s'aggrave !");
+                                    p.sendMessage("Â§8Votre infection s'aggrave !");
                                     p.damage(3);
                                 }
                                 else if (timer == 100)
                                 {
-                                    p.sendMessage("§8Votre infection est très grave ! Cherchez vite une seringue !");
+                                    p.sendMessage("Â§8Votre infection est trÃ¨s grave ! Cherchez vite une seringue !");
                                     p.damage(3);
                                 }
                                 else if (p.getHealth() > 2)
@@ -399,7 +399,7 @@ public class Fireland extends JavaPlugin {
                             {
                                 if (timer >= 30)
                                 {
-                                    p.sendMessage("§8Votre infection a causé votre perte....");
+                                    p.sendMessage("Â§8Votre infection a causÃ© votre perte....");
                                     p.setHealth(0.0D);
                                 }
                             }
@@ -447,16 +447,16 @@ public class Fireland extends JavaPlugin {
                         {
                             cfgm.getPlayerDB().set("safezone." + p.getUniqueId() + ".time", (safezone - 1));
                             cfgm.savePlayerDB();
-                            if (safezone % 15 == 0)
+                            if (safezone % 15 == 0 && safezone != 30)
                             {
-                                p.sendTitle("", "§cIl vous reste " + safezone + " secondes d'invincibilité");
+                                p.sendTitle("", "Â§cIl vous reste " + safezone + " secondes d'invincibilitÃ©");
                             }
                         }
                         else
                         {
                             if (safezone == 0)
                             {
-                                p.sendMessage("§4Vous n'êtes plus invincible !");
+                                p.sendMessage("Â§4Vous n'Ãªtes plus invincible !");
                                 cfgm.getPlayerDB().set("safezone." + p.getUniqueId() + ".time", -1);
                                 p.setInvulnerable(false);
                                 cfgm.savePlayerDB();

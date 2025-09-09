@@ -105,9 +105,13 @@ public class EssaimEventHandler implements Listener {
 
                 EssaimFunctions.createGroup(TextUtilities.convertCleanToStorable(itemFrame.getItem().getItemMeta().getDisplayName(), " "), e.getPlayer());
             }
+            else if (!itemFrame.getItem().getItemMeta().hasDisplayName())
+            {
+                InGameUtilities.sendPlayerError(e.getPlayer(), "Cet essaim est actuellement indisponible.");
+            }
             else
             {
-                InGameUtilities.sendPlayerError(e.getPlayer(), "Vous devez être dans une faction pour entrer dans un essaim.");
+                InGameUtilities.sendPlayerError(e.getPlayer(), "Vous devez Ãªtre dans une faction pour entrer dans un essaim.");
             }
         }
     }
@@ -153,7 +157,7 @@ public class EssaimEventHandler implements Listener {
                                 EssaimFunctions.openStartingMenu(essaim, p);
                             } else {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
+                                InGameUtilities.sendPlayerError(p, "Â§cVous n'Ãªtes pas le leader du groupe.");
                             }
                         }
                         case RED_STAINED_GLASS_PANE -> leaveGroup(essaim, p);
@@ -163,7 +167,7 @@ public class EssaimEventHandler implements Listener {
                                 InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
                             } else {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "§cVous n'êtes pas le leader du groupe.");
+                                InGameUtilities.sendPlayerError(p, "Â§cVous n'Ãªtes pas le leader du groupe.");
                             }
                         }
                     }
@@ -232,7 +236,7 @@ public class EssaimEventHandler implements Listener {
                         {
                             case PLAYER_HEAD -> launchEssaimStart(essaim, p, 1);
                             case SKELETON_SKULL -> launchEssaimStart(essaim, p, 2);
-                            case WITHER_SKELETON_SKULL -> InGameUtilities.sendPlayerError(p, "Cette difficulté n'est pas encore disponible."); //launchEssaimStart(essaim, p, 3);
+                            case WITHER_SKELETON_SKULL -> InGameUtilities.sendPlayerError(p, "Cette difficultÃ© n'est pas encore disponible."); //launchEssaimStart(essaim, p, 3);
                         }
                     }
                 }
@@ -262,7 +266,7 @@ public class EssaimEventHandler implements Listener {
                                     e.setKeepInventory(true);
                                     e.getDrops().clear();
                                 }
-                                InGameUtilities.sendPlayerInformation(member, "§cVous avez échoué l'expédition !");
+                                InGameUtilities.sendPlayerInformation(member, "Â§cVous avez Ã©chouÃ© l'expÃ©dition !");
                                 break;
 
                             }
@@ -470,7 +474,7 @@ public class EssaimEventHandler implements Listener {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         for (Player member : EssaimManager.getGroups().get(essaim).getMembers()) {
             member.closeInventory();
-            InGameUtilities.sendPlayerInformation(member, "§aL'expédition a démarrée !");
+            InGameUtilities.sendPlayerInformation(member, "Â§aL'expÃ©dition a dÃ©marrÃ©e !");
         }
     }
 

@@ -44,7 +44,7 @@ public class ChatListener implements Listener
                     on.playNote(on.getLocation(), Instrument.PIANO, Note.natural(1, Tone.A));
                 }
             }
-            //e.setMessage(e.getMessage().replaceAll("&", "ง"));
+            //e.setMessage(e.getMessage().replaceAll("&", "ยง"));
         }
     }
 

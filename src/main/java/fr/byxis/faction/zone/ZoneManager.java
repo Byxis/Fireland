@@ -47,7 +47,7 @@ public class ZoneManager {
             */
 
             final Connection connection = firelandConnection.getConnection();
-            //Préparation de la commande
+            //PrÃ©paration de la commande
             PreparedStatement isInDb = connection.prepareStatement("SELECT capture_zone.zone, capture_zone.capture_time FROM capture_zone " +
                     "WHERE capture_zone.faction_name = ?;");
             isInDb.setString(1, name);

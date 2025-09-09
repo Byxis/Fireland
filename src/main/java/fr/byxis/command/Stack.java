@@ -78,7 +78,7 @@ public class Stack implements CommandExecutor
             if (affected > 0) {
                 p.getInventory().setContents(items);
             }
-            p.sendMessage("ง7Items compacted into stacks!");
+            p.sendMessage("ยง7Items compacted into stacks!");
         }
         return false;
     }

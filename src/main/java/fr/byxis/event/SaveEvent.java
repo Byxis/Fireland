@@ -103,7 +103,7 @@ public class SaveEvent implements Listener {
         {
             sb.append('"').append(str).append('"').append("  ");
         }
-        debugp(2, "Values : " + sb);
+        debugp(2, "Values :" + sb);
         for (BunkerClass bk : main.getBunkerManager().getLoadedBunker().values())
         {
             debugp(2, "Saving storage of bunker " + bk.getName());

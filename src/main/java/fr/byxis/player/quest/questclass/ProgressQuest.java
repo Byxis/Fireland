@@ -36,7 +36,7 @@ public class ProgressQuest {
         this.progress = -1;
         addPlayerXp(p.getUniqueId(), 50, LevelStorage.Nation.Null);
         QuestClass quest = QuestManager.getAvailableQuests().get(this.id);
-        sendPlayerSucces(p, "Vous avez fini une quête quotidienne. Vous avez reçu §6" + (int) quest.getReward() + "$§a et §b" + (int) quest.getJetons() + "§a jetons.");
+        sendPlayerSucces(p, "Vous avez fini une quÃªte quotidienne. Vous avez reÃ§u Â§6" + (int) quest.getReward() + "$Â§a et Â§b" + (int) quest.getJetons() + "Â§a jetons.");
         JetonManager.addJetonsPlayer(p.getUniqueId(), (int) quest.getJetons());
         getEco().depositPlayer(p, quest.getReward());
 

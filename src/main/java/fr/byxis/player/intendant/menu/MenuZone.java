@@ -24,7 +24,7 @@ public class MenuZone {
     public static void openZone(Fireland main, Player p)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory zoneInv = Bukkit.createInventory(null, 54, "§8Zones");
+        Inventory zoneInv = Bukkit.createInventory(null, 54, "Â§8Zones");
         setZoneItem(main, zoneInv, p);
         p.openInventory(zoneInv);
     }
@@ -48,19 +48,19 @@ public class MenuZone {
                 FactionInformation finfos = ff.getFactionInfo(pInfos.getFactionName());
                 if (finfos.hasZoneTpPerk())
                 {
-                    lore.add("§6Cliquez ici pour vous téléporter !");
+                    lore.add("Â§6Cliquez ici pour vous tÃ©lÃ©porter !");
                 }
-                lore.add("§8La zone sera contestable le : §a" + new Timestamp((long) (factionZoneInformation.getClaimedAt().getTime() + main.getZoneManager().getData().getConfigManager().getConfig().getDouble("zone." + factionZoneInformation.getZoneName() + ".privation-duration") * 1000 * 3600)));
-                lore.add("§8Génère §6 " + main.getZoneManager().getData().getConfigManager().getConfig().getInt("zone." + factionZoneInformation.getZoneName() + ".daily-gain") + "§r§f$§8 par jour.");
+                lore.add("Â§8La zone sera contestable le : Â§a" + new Timestamp((long) (factionZoneInformation.getClaimedAt().getTime() + main.getZoneManager().getData().getConfigManager().getConfig().getDouble("zone." + factionZoneInformation.getZoneName() + ".privation-duration") * 1000 * 3600)));
+                lore.add("Â§8GÃ©nÃ¨re Â§6" + main.getZoneManager().getData().getConfigManager().getConfig().getInt("zone." + factionZoneInformation.getZoneName() + ".daily-gain") + "Â§rÂ§f$Â§8 par jour.");
 
-                inv.setItem(i, InventoryUtilities.setItemMetaLore(BlockUtilities.getBannerColor(color), "§a" + factionZoneInformation.getFormattedName(), (short) 0, lore));
+                inv.setItem(i, InventoryUtilities.setItemMetaLore(BlockUtilities.getBannerColor(color), "Â§a" + factionZoneInformation.getFormattedName(), (short) 0, lore));
 
             }
             else
             {
-                lore.add("§8Zone non capturée");
-                lore.add("§8Total cumulé: §7 " + BasicUtilities.getStringTime(factionZoneInformation.getTotalDuration()));
-                inv.setItem(i, InventoryUtilities.setItemMetaLore(Material.LIGHT_GRAY_BANNER, "§7" + factionZoneInformation.getFormattedName(), (short) 0, lore));
+                lore.add("Â§8Zone non capturÃ©e");
+                lore.add("Â§8Total cumulÃ©: Â§7" + BasicUtilities.getStringTime(factionZoneInformation.getTotalDuration()));
+                inv.setItem(i, InventoryUtilities.setItemMetaLore(Material.LIGHT_GRAY_BANNER, "Â§7" + factionZoneInformation.getFormattedName(), (short) 0, lore));
             }
 
             if (i == 17 || i == 17 + 9 || i == 17 + 18)
@@ -70,7 +70,7 @@ public class MenuZone {
             i++;
         }
 
-        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour au menu Faction", (short) 0));
+        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cRetour au menu Faction", (short) 0));
     }
 
 }

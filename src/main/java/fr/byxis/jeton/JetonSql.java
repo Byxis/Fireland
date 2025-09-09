@@ -43,7 +43,7 @@ public class JetonSql
                 return addFactureToDb(_uuid, rs.getInt(1) + 1, _amount, _desc);
             }
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
             e.printStackTrace();
         }
         return -1;
@@ -55,8 +55,7 @@ public class JetonSql
         try {
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement2 = connection.prepareStatement("" +
-                    "INSERT INTO jeton_history(number, player_uuid, amount, date, description)" +
+            final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO jeton_history(number, player_uuid, amount, date, description)" +
                     " VALUES(?,?,?,?,?)");
             preparedStatement2.setInt(1, number);
             preparedStatement2.setString(2, _uuid);

@@ -40,7 +40,7 @@ public class EssaimGroup {
         }
 
         // Invite player to group
-        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez été invité dans l'essaim " + TextUtilities.convertStorableToClean(name) + " par " + leader.getName() + ". Cliquez sur ce message pour rejoindre.", "/essaim join " + name + " Wowowowowowowowowowow1234567890", "§aCliquez ici pour rejoindre l'essaim", ClickEvent.Action.RUN_COMMAND);
+        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez Ã©tÃ© invitÃ© dans l'essaim " + TextUtilities.convertStorableToClean(name) + " par " + leader.getName() + ". Cliquez sur ce message pour rejoindre.", "/essaim join " + name + " Wowowowowowowowowowow1234567890", "Â§aCliquez ici pour rejoindre l'essaim", ClickEvent.Action.RUN_COMMAND);
         return true;
     }
 
@@ -107,7 +107,7 @@ public class EssaimGroup {
         for (Player member : members)
         {
             InGameUtilities.playPlayerSound(member, Sound.ENTITY_WITHER_HURT, SoundCategory.PLAYERS, 1, 0);
-            InGameUtilities.sendPlayerInformation(member, "§cLe joueur " + leaver.getName() + " a quitté l'expédition.");
+            InGameUtilities.sendPlayerInformation(member, "Â§cLe joueur " + leaver.getName() + " a quittÃ© l'expÃ©dition.");
         }
     }
 

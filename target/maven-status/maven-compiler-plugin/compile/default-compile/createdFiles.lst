@@ -25,6 +25,7 @@ fr\byxis\player\shop\ShopFunction.class
 fr\byxis\faction\zone\CaptureZone$1.class
 fr\byxis\player\intendant\Manager$1.class
 fr\byxis\player\quest\QuestEventHandler.class
+fr\byxis\db\DatabaseType.class
 fr\byxis\player\advancements\PossessJetonsAdvancements.class
 fr\byxis\player\workshop\WorkshopFunction.class
 fr\byxis\faction\essaim\essaimClass\EssaimClass.class

@@ -18,13 +18,13 @@ public class SpeedFly implements CommandExecutor
             {
                 if (speed <= 10.0f)
                 {
-                    player.sendMessage("§6Votre vitesse est de " + speed + " !");
+                    player.sendMessage("Â§6Votre vitesse est de " + speed + " !");
                     player.setFlying(true);
                     player.setFlySpeed(speed * 0.1f);
                 }
                 else
                 {
-                    player.sendMessage("§6La vitesse ne peux pas être supérieur à 10 !");
+                    player.sendMessage("Â§6La vitesse ne peux pas Ãªtre supÃ©rieur Ã  10 !");
                 }
                 return true;
             }

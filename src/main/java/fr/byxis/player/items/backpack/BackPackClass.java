@@ -130,13 +130,13 @@ public class BackPackClass {
 
     private Inventory createEmptyInventory(int level) {
         String name = switch (level) {
-            case 1 -> "§cPochette";
-            case 2 -> "§cSacoche";
-            case 3 -> "§cSac à dos";
-            case 4 -> "§cSac de sport";
-            case 5 -> "§cSac de randonnée";
-            case 6 -> "§cSac à dos militaire";
-            default -> "§cA venir";
+            case 1 -> "Â§cPochette";
+            case 2 -> "Â§cSacoche";
+            case 3 -> "Â§cSac Ã  dos";
+            case 4 -> "Â§cSac de sport";
+            case 5 -> "Â§cSac de randonnÃ©e";
+            case 6 -> "Â§cSac Ã  dos militaire";
+            default -> "Â§cA venir";
         };
 
         int size = (level > 3) ? (level - 2) * 9 : 9;

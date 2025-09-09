@@ -155,7 +155,7 @@ public class DataZone {
                 final PreparedStatement ps = connection.prepareStatement("INSERT INTO faction_zone(faction_name,zone,duration) VALUES (?,?,?)");
                 ps.setString(2, zone);
                 ps.setString(1, factionName);
-                ps.setInt(3, (int) diff);
+                ps.setLong(3, diff);
                 ps.executeUpdate();
             }
         } catch (SQLException e) {

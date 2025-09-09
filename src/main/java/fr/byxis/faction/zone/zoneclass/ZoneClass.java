@@ -48,11 +48,11 @@ public class ZoneClass {
         this.claimable = _claimable;
         bar = Bukkit.createBossBar("Capture de la zone " + getFormattedName() + " disponible", BarColor.WHITE, BarStyle.SEGMENTED_10);
         bar.setProgress(0);
-        setColor("งf");
+        setColor("ยงf");
         if (!isTimeToCapture())
         {
             bar.setTitle("Zone " + getFormattedName());
-            setColor("ง7");
+            setColor("ยง7");
         }
     }
 

@@ -28,7 +28,7 @@ public class PacketPlayer implements CommandExecutor {
             {
                 if (strings.length < 2)
                 {
-                    InGameUtilities.sendPlayerInformation(p, "Packet envoyé.");
+                    InGameUtilities.sendPlayerInformation(p, "Packet envoyÃ©.");
                     playTestBorderPacket(p);
                     return true;
                 }
@@ -38,18 +38,18 @@ public class PacketPlayer implements CommandExecutor {
                     {
                         if (players.getName().equalsIgnoreCase(strings[1]))
                         {
-                            InGameUtilities.sendPlayerInformation(p, "Packet envoyé à " + players.getName() + ".");
+                            InGameUtilities.sendPlayerInformation(p, "Packet envoyÃ© Ã  " + players.getName() + ".");
                             playTestBorderPacket(players);
                             return true;
                         }
                     }
-                    InGameUtilities.sendPlayerError(p, "Personne non trouvée.");
+                    InGameUtilities.sendPlayerError(p, "Personne non trouvÃ©e.");
                     return false;
                 }
             }
             else if (strings[0].equalsIgnoreCase("opendoor"))
             {
-                InGameUtilities.sendPlayerInformation(p, "Packet envoyé. Porte ouverte");
+                InGameUtilities.sendPlayerInformation(p, "Packet envoyÃ©. Porte ouverte");
                 //noinspection removal
                 playTestOpenDoorPacket(p, p.getTargetBlock(50).getLocation());
             }

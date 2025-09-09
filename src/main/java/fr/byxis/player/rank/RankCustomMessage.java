@@ -69,7 +69,7 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
     public void playerJoin(PlayerJoinEvent e)
     {
         Player p = e.getPlayer();
-        sendEveryoneCustomText("§8[§a+§8] " + p.getName());
+        sendEveryoneCustomText("Â§8[Â§a+Â§8] " + p.getName());
         if (p.hasPermission("fireland.message.admin") && config.getConfig().getString("admin.JOIN") != null && !config.getConfig().getString("admin.JOIN").equals(""))
         {
             sendEveryoneCustomText(config.getConfig().getString("admin.JOIN").replace("player", e.getPlayer().getName()));
@@ -92,7 +92,7 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
     public void playerLeave(PlayerQuitEvent e)
     {
         Player p = e.getPlayer();
-        sendEveryoneCustomText("§8[§c-§8] " + p.getName());
+        sendEveryoneCustomText("Â§8[Â§c-Â§8] " + p.getName());
         if (p.hasPermission("fireland.message.admin") && config.getConfig().getString("admin.LEAVE") != null && !config.getConfig().getString("admin.LEAVE").equals(""))
         {
             sendEveryoneCustomText(config.getConfig().getString("admin.LEAVE").replace("player", e.getPlayer().getName()));
@@ -116,14 +116,14 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
         if (commandSender instanceof Player p && p.hasPermission("fireland.admin") && strings.length > 3)
         {
             StringBuilder sb = new StringBuilder();
-            sb.append(strings[2].replace("&", "§"));
+            sb.append(strings[2].replace("&", "Â§"));
             for (int i = 3; i < strings.length; i++)
             {
-                sb.append(" " + strings[i].replace("&", "§"));
+                sb.append(" " + strings[i].replace("&", "Â§"));
             }
             config.getConfig().set(strings[0] + "." + strings[1], sb.toString());
             config.save();
-            InGameUtilities.sendPlayerSucces(p, "Le message a été mis à jour avec succès.");
+            InGameUtilities.sendPlayerSucces(p, "Le message a Ã©tÃ© mis Ã  jour avec succÃ¨s.");
         }
         if (commandSender instanceof Player p && p.hasPermission("fireland.admin") && strings.length == 1)
         {
@@ -143,7 +143,7 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
                 }
             }
             config.save();
-            InGameUtilities.sendPlayerSucces(p, "Les messages ont été initialisés.");
+            InGameUtilities.sendPlayerSucces(p, "Les messages ont Ã©tÃ© initialisÃ©s.");
         }
         return false;
     }

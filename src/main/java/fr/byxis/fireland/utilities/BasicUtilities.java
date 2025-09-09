@@ -25,7 +25,7 @@ public class BasicUtilities {
         long month = 30 * day;
         long year = 12 * month;
 
-        String[] units = {"année", "mois", "jour", "heure", "minute", "seconde"};
+        String[] units = {"annÃ©e", "mois", "jour", "heure", "minute", "seconde"};
         long[] times = {year, month, day, hour, minute, second};
 
         StringBuilder sb = new StringBuilder();
@@ -99,46 +99,46 @@ public class BasicUtilities {
         switch (mat)
         {
             case BLACK_STAINED_GLASS_PANE -> {
-                return "§0";
+                return "Â§0";
             }
             case BLUE_STAINED_GLASS_PANE -> {
-                return "§1";
+                return "Â§1";
             }
             case GREEN_STAINED_GLASS_PANE -> {
-                return "§2";
+                return "Â§2";
             }
             case CYAN_STAINED_GLASS_PANE -> {
-                return "§3";
+                return "Â§3";
             }
             case RED_STAINED_GLASS_PANE -> {
-                return "§4";
+                return "Â§4";
             }
             case PURPLE_STAINED_GLASS_PANE -> {
-                return "§5";
+                return "Â§5";
             }
             case ORANGE_STAINED_GLASS_PANE -> {
-                return "§6";
+                return "Â§6";
             }
             case LIGHT_GRAY_STAINED_GLASS_PANE -> {
-                return "§7";
+                return "Â§7";
             }
             case GRAY_STAINED_GLASS_PANE -> {
-                return "§8";
+                return "Â§8";
             }
             case LIME_STAINED_GLASS_PANE -> {
-                return "§a";
+                return "Â§a";
             }
             case LIGHT_BLUE_STAINED_GLASS_PANE -> {
-                return "§b";
+                return "Â§b";
             }
             case MAGENTA_STAINED_GLASS_PANE -> {
-                return "§d";
+                return "Â§d";
             }
             case YELLOW_STAINED_GLASS_PANE -> {
-                return "§e";
+                return "Â§e";
             }
         }
-        return "§7";
+        return "Â§7";
 
     }
 

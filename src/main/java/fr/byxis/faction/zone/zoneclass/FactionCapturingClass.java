@@ -26,7 +26,7 @@ public class FactionCapturingClass {
         }
         else
         {
-            this.color = "ง7";
+            this.color = "ยง7";
         }
         this.material = BlockUtilities.getGlassPaneColor(Arrays.toString(_color));
     }

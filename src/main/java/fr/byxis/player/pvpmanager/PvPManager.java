@@ -97,7 +97,7 @@ public class PvPManager implements Listener {
             {
                 if (!pvpTimer.containsKey(d.getUniqueId()))
                 {
-                    InGameUtilities.sendPlayerError(d, "Vous entrez en combat pendant 30s. Ne vous déconnectez pas où vous perdrez votre stuff.");
+                    InGameUtilities.sendPlayerError(d, "Vous entrez en combat pendant 30s. Ne vous dÃ©connectez pas oÃ¹ vous perdrez votre stuff.");
                 }
                 putPvpTimer(d);
             }
@@ -105,7 +105,7 @@ public class PvPManager implements Listener {
             {
                 if (!pvpTimer.containsKey(p.getUniqueId()))
                 {
-                    InGameUtilities.sendPlayerError(p, "Vous entrez en combat pendant 30s. Ne vous déconnectez pas où vous perdrez votre stuff.");
+                    InGameUtilities.sendPlayerError(p, "Vous entrez en combat pendant 30s. Ne vous dÃ©connectez pas oÃ¹ vous perdrez votre stuff.");
                 }
                 putPvpTimer(p);
             }
@@ -119,7 +119,7 @@ public class PvPManager implements Listener {
         if (isOnTimer(e.getPlayer()))
         {
             e.getPlayer().setHealth(0);
-            InGameUtilities.sendEveryoneCustomText("§c " + e.getPlayer().getName() + " est mort par déco-combat.");
+            InGameUtilities.sendEveryoneCustomText("Â§c" + e.getPlayer().getName() + " est mort par dÃ©co-combat.");
             deleteTimer(e.getPlayer());
         }
     }
@@ -153,7 +153,7 @@ public class PvPManager implements Listener {
                     if (p != null && pvpTimer.get(p.getUniqueId()) < 0)
                     {
                         deleteTimer(p.getUniqueId());
-                        InGameUtilities.sendPlayerInformation(p, "Vous n'êtes plus en combat.");
+                        InGameUtilities.sendPlayerInformation(p, "Vous n'Ãªtes plus en combat.");
                     }
                 }
             }
@@ -161,7 +161,7 @@ public class PvPManager implements Listener {
     }
 
     private void showTimerBar(Player p) {
-        BossBar bar = Bukkit.createBossBar("§c§lEn combat pendant " + (pvpTimer.get(p.getUniqueId()) + 1) + "s", BarColor.RED, BarStyle.SOLID);
+        BossBar bar = Bukkit.createBossBar("Â§cÂ§lEn combat pendant " + (pvpTimer.get(p.getUniqueId()) + 1) + "s", BarColor.RED, BarStyle.SOLID);
         bar.setVisible(true);
         bar.setProgress((double) (pvpTimer.get(p.getUniqueId()) + 1) / 30);
         bar.addPlayer(p);

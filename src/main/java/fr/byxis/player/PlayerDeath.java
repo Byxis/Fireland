@@ -61,11 +61,11 @@ public class PlayerDeath implements Listener
             pay = money / (2 * (1 - main.getHashMapManager().getBooster().getBoosterLootPercent() / 100));
         }
         pay = round(pay, 1);
-        killed.sendMessage("§cVous avez perdu " + pay + "$ !");
+        killed.sendMessage("Â§cVous avez perdu " + pay + "$ !");
         getEco().withdrawPlayer(killed, pay);
         if (e.getEntity().getKiller() != null && !killed.getName().equalsIgnoreCase(killer.getName()))
         {
-            killer.sendMessage("§7Vous avez gagné §c " + pay + "$§7 en tuant §c " + killed.getName() + "§7 !");
+            killer.sendMessage("Â§7Vous avez gagnÃ© Â§c" + pay + "$Â§7 en tuant Â§c" + killed.getName() + "Â§7 !");
             getEco().depositPlayer(killer, pay);
         }
     }

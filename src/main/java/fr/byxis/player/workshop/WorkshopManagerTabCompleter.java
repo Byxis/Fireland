@@ -48,6 +48,7 @@ public class WorkshopManagerTabCompleter implements TabCompleter
                     }
                     else if (args.length == 3)
                     {
+                        l.add("E");
                         l.add("D");
                         l.add("C");
                         l.add("B");
@@ -58,27 +59,40 @@ public class WorkshopManagerTabCompleter implements TabCompleter
                     {
                         l.add("10");
                         l.add("20");
-                        l.add("--Nombre de scrap n�cessaire");
+                        l.add("--Nombre de scrap nécessaire");
                     }
                     else if (args.length == 5)
                     {
                         l.add("10");
                         l.add("20");
-                        l.add("--Nombre de poudre � canon n�cessaire");
-                    } //String _itemName, String _mat, int _durability
+                        l.add("--Nombre de poudre à canon nécessaire");
+                    }
                     else if (args.length == 6)
+                    {
+                        l.add("10");
+                        l.add("20");
+                        l.add("--Nombre de médicaments nécessaires");
+                    }
+                    else if (args.length == 7)
+                    {
+                        l.add("60");
+                        l.add("300");
+                        l.add("--Durée custom (-1 pour durée par défaut) en secondes");
+                    }
+                    //String _itemName, String _mat, int _durability
+                    else if (args.length == 8)
                     {
                         l.add("--Nom de l'item");
                     }
-                    else if (args.length == 7)
+                    else if (args.length == 9)
                     {
                         for (Material mat : Material.values())
                         {
                             l.add(mat.name());
                         }
-                        l.add("--Nom du mat�riaux");
+                        l.add("--Nom du matériaux");
                     }
-                    else if (args.length == 8)
+                    else if (args.length == 10)
                     {
                         l.add("1");
                         l.add("2");
@@ -93,6 +107,7 @@ public class WorkshopManagerTabCompleter implements TabCompleter
                 {
                     if (args.length == 2)
                     {
+                        l.add("E");
                         l.add("D");
                         l.add("C");
                         l.add("B");
@@ -103,13 +118,25 @@ public class WorkshopManagerTabCompleter implements TabCompleter
                     {
                         l.add("10");
                         l.add("20");
-                        l.add("--Nombre de scrap n�cessaire");
+                        l.add("--Nombre de scrap nécessaire");
                     }
                     else if (args.length == 4)
                     {
                         l.add("10");
                         l.add("20");
-                        l.add("--Nombre de poudre � canon n�cessaire");
+                        l.add("--Nombre de poudre à canon nécessaire");
+                    }
+                    else if (args.length == 5)
+                    {
+                        l.add("10");
+                        l.add("20");
+                        l.add("--Nombre de médicaments nécessaires");
+                    }
+                    else if (args.length == 6)
+                    {
+                        l.add("60");
+                        l.add("300");
+                        l.add("--Durée custom (-1 pour durée par défaut) en secondes");
                     }
                     else
                     {

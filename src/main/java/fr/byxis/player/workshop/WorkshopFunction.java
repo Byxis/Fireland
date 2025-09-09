@@ -1,5 +1,6 @@
 package fr.byxis.player.workshop;
 
+import com.google.errorprone.annotations.DoNotCall;
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
@@ -25,14 +26,19 @@ import static fr.byxis.player.quest.QuestManager.actualiseCraftProgress;
 public class WorkshopFunction
 {
 
-    final private Fireland main;
+    public static final int TIME_CRAFT_A = 24 * 60 * 60 * 1000;
+    public static final int TIME_CRAFT_B = 3 * 60 * 60 * 1000;
+    public static final int TIME_CRAFT_C = 60 * 60 * 1000;
+    public static final int TIME_CRAFT_D = 30 * 60 * 1000;
+    public static final int TIME_CRAFT_E = 5 * 60 * 1000;
+    private final Fireland main;
     private final Player sender;
 
     public WorkshopFunction(Fireland _main, Player _sender)
     {
-        //Récupération du main, pour pouvoir avoir envoyer des requêtes à la base de données
+        //RÃ©cupÃ©ration du main, pour pouvoir avoir envoyer des requÃªtes Ã  la base de donnÃ©es
         this.main = _main;
-        //Récupération de la personne qui envoie la commande, pour lui envoyer les messages d'erreurs
+        //RÃ©cupÃ©ration de la personne qui envoie la commande, pour lui envoyer les messages d'erreurs
         this.sender = _sender;
     }
 
@@ -101,24 +107,26 @@ public class WorkshopFunction
     }
 
 
-    public void createRecipe(String _name, String _command, String _type, Integer _scrap, Integer _gunpowder, String _itemName, String _mat, int _durability)
+    public void createRecipe(String _name, String _command, String _type, Integer _scrap, Integer _gunpowder, Integer _medicine, Integer _duration, String _itemName, String _mat, int _durability)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
-            //On prépare la requête SQL
-            final PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO workshop_recipes (name, type, scrap, gunpowder) VALUES (?, ?, ?, ?)");
+            //On prÃ©pare la requÃªte SQL
+            final PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO workshop_recipes (name, type, scrap, gunpowder, medicine, duration) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, _name);
             preparedStatement.setString(2, _type);
             preparedStatement.setInt(3, _scrap);
             preparedStatement.setInt(4, _gunpowder);
+            preparedStatement.setInt(5, _medicine);
+            preparedStatement.setInt(6, _duration);
 
 
-            //On execute la requête
+            //On execute la requÃªte
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W001");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W001");
             e.printStackTrace();
         }
 
@@ -137,7 +145,7 @@ public class WorkshopFunction
         }
         catch (SQLException e)
         {
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème. Il peut s'agir du fait qu'un item à déjà été créé.  Erreur : #W009");
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me. Il peut s'agir du fait qu'un item Ã  dÃ©jÃ  Ã©tÃ© crÃ©Ã©.  Erreur : #W009");
             e.printStackTrace();
         }
     }
@@ -153,49 +161,59 @@ public class WorkshopFunction
 
             final ResultSet resultSet = preparedStatement1.executeQuery();
             int craftedTime = 0;
-            //On vérifie s'il y a un résultat à la requête
+            //On vÃ©rifie s'il y a un rÃ©sultat Ã  la requÃªte
             if (resultSet.next()) {
                 craftedTime = resultSet.getInt(1);
             }
             return craftedTime;
         } catch (SQLException e) {
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W003");
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W003");
             e.printStackTrace();
 
         }
         return 0;
     }
 
-    public void craftItemNbr(String _recipeName, String _uuid, int _amount)
-    {
+    public void craftItemNbr(String _recipeName, String _uuid, int _amount) {
         actualiseCraftProgress(Bukkit.getPlayer(UUID.fromString(_uuid)), _amount);
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT player_workshop.crafted_time FROM player_workshop WHERE player_uuid = ? AND recipe_name = ?");
-            preparedStatement.setString(1, _uuid);
-            preparedStatement.setString(2, _recipeName);
 
-            //On execute la requête
-            ResultSet rs = preparedStatement.executeQuery();
+            // VÃ©rifie si le joueur a dÃ©jÃ  craftÃ© cette recette
+            final PreparedStatement selectStatement = connection.prepareStatement(
+                    "SELECT crafted_time FROM player_workshop WHERE player_uuid = ? AND recipe_name = ?"
+            );
+            selectStatement.setString(1, _uuid);
+            selectStatement.setString(2, _recipeName);
+            ResultSet rs = selectStatement.executeQuery();
 
-            if (rs.next())
-            {
-                final PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE player_workshop SET crafted_time =? WHERE player_uuid = ? AND recipe_name = ?");
-                preparedStatement4.setInt(1, rs.getInt(1) + _amount);
-                preparedStatement4.setString(2, _uuid);
-                preparedStatement4.setString(3, _recipeName);
-
-                //On execute la requête
-                preparedStatement4.executeUpdate();
+            if (rs.next()) {
+                // Si le joueur a dÃ©jÃ  craftÃ© cette recette, on met Ã  jour le nombre
+                final PreparedStatement updateStatement = connection.prepareStatement(
+                        "UPDATE player_workshop SET crafted_time = ? WHERE player_uuid = ? AND recipe_name = ?"
+                );
+                updateStatement.setInt(1, rs.getInt(1) + _amount);
+                updateStatement.setString(2, _uuid);
+                updateStatement.setString(3, _recipeName);
+                updateStatement.executeUpdate();
+            } else {
+                // Si le joueur n'a jamais craftÃ© cette recette, on insÃ¨re une nouvelle entrÃ©e
+                final PreparedStatement insertStatement = connection.prepareStatement(
+                        "INSERT INTO player_workshop (player_uuid, recipe_name, crafted_time, know) VALUES (?, ?, ?, ?)"
+                );
+                insertStatement.setString(1, _uuid);
+                insertStatement.setString(2, _recipeName);
+                insertStatement.setInt(3, _amount);
+                insertStatement.setBoolean(4, false);
+                insertStatement.executeUpdate();
             }
-
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W002");
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me. Erreur : #W002");
             e.printStackTrace();
         }
     }
+
 
     public void learnRecipe(String _recipeName, String _uuid) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
@@ -205,11 +223,11 @@ public class WorkshopFunction
             preparedStatement4.setString(1, _uuid);
             preparedStatement4.setString(2, _recipeName);
 
-            //On execute la requête
+            //On execute la requÃªte
             preparedStatement4.executeUpdate();
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W004");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W004");
             e.printStackTrace();
         }
     }
@@ -223,7 +241,7 @@ public class WorkshopFunction
 
             final ResultSet resultSet = preparedStatement1.executeQuery();
             int craftedTimeToLearn = 0;
-            //On vérifie s'il y a un résultat à la requête
+            //On vÃ©rifie s'il y a un rÃ©sultat Ã  la requÃªte
             if (resultSet.next()) {
                 if (resultSet.wasNull())
                 {
@@ -253,8 +271,8 @@ public class WorkshopFunction
             }
             return craftedTimeToLearn;
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W005");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W005");
             e.printStackTrace();
         }
         return 0;
@@ -270,19 +288,15 @@ public class WorkshopFunction
 
             final ResultSet resultSet = preparedStatement1.executeQuery();
             boolean craftedTimeToLearn = false;
-            //On vérifie s'il y a un résultat à la requête
+            //On vÃ©rifie s'il y a un rÃ©sultat Ã  la requÃªte
             if (resultSet.next()) {
                 int i = resultSet.getInt(1);
-                if (i == 0) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return i != 0;
             }
             return craftedTimeToLearn;
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W006");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W006");
             e.printStackTrace();
         }
         return false;
@@ -297,7 +311,7 @@ public class WorkshopFunction
 
             final ResultSet resultSet = preparedStatement1.executeQuery();
             int nbr = 0;
-            //On vérifie s'il y a un résultat à la requête
+            //On vÃ©rifie s'il y a un rÃ©sultat Ã  la requÃªte
             while (resultSet.next()) {
                 if ((resultSet.getInt(1) <= _scrapAmount && resultSet.getInt(2) <= _gunpowderAmount) || resultSet.getBoolean(3))
                 {
@@ -306,75 +320,160 @@ public class WorkshopFunction
             }
             return nbr;
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W007");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W007");
             e.printStackTrace();
         }
         return 0;
     }
 
-    public ArrayList<WorkshopItemClass> getAllCraftableItems(Player p, String _uuid)
-    {
+    public ArrayList<WorkshopItemClass> getAllCraftableItems(Player p, String _uuid) {
         ArrayList<WorkshopItemClass> items = new ArrayList<>();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        initPlayerRecipe(p.getUniqueId().toString());
         try {
-
             final Connection connection = firelandConnection.getConnection();
-
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability, items.custom_model_data FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND player_workshop.player_uuid = ? ORDER BY type, scrap DESC, gunpowder");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement(
+                    "SELECT " +
+                            "workshop_recipes.name, " +
+                            "items.item_name, " +
+                            "workshop_recipes.type, " +
+                            "workshop_recipes.scrap, " +
+                            "workshop_recipes.gunpowder, " +
+                            "workshop_recipes.medicine, " +
+                            "workshop_recipes.duration, " +
+                            "items.item, " +
+                            "items.durability, " +
+                            "items.command, " +
+                            "player_workshop.know, " +
+                            "items.custom_model_data " +
+                            "FROM " +
+                            "workshop_recipes " +
+                            "INNER JOIN " +
+                            "items ON workshop_recipes.name = items.recipe_name " +
+                            "LEFT JOIN " +
+                            "player_workshop ON player_workshop.recipe_name = workshop_recipes.name " +
+                            "AND player_workshop.player_uuid = ? " +
+                            "ORDER BY " +
+                            "type, scrap, gunpowder, medicine"
+            );
             preparedStatement1.setString(1, _uuid);
             final ResultSet resultSet = preparedStatement1.executeQuery();
-            //On vérifie s'il y a un résultat à la requête
+
             while (resultSet.next()) {
-                if (hasPlan(p, resultSet.getString(2)) || resultSet.getBoolean(1))
-                {
-                    WorkshopItemClass item = new WorkshopItemClass(resultSet.getString(2), resultSet.getString(7), resultSet.getString(5), resultSet.getInt(3), resultSet.getInt(4), Material.getMaterial(resultSet.getString(8)), (short) resultSet.getInt(9), resultSet.getString(6), resultSet.getBoolean(1), resultSet.getInt(10));
+                boolean know = false;
+                if (resultSet.getObject(11) != null) {
+                    know = resultSet.getBoolean(11);
+                }
+                if (hasPlan(p, resultSet.getString(1)) || know) {
+                    WorkshopItemClass item = new WorkshopItemClass(
+                            resultSet.getString(1),   // _recipeName
+                            resultSet.getString(2),   // _itemName
+                            resultSet.getString(3),   // _type
+                            resultSet.getInt(4),      // _scrap
+                            resultSet.getInt(5),      // _gunpowder
+                            resultSet.getInt(6),      // _medicine
+                            resultSet.getInt(7),      // _duration
+                            Material.getMaterial(resultSet.getString(8)), // _mat
+                            (short) resultSet.getInt(9), // _durability
+                            resultSet.getString(10),   // _command
+                            know,                      // _know
+                            resultSet.getInt(12)      // _customModelData
+                    );
                     items.add(item);
                 }
             }
             return items;
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W008");
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me. Erreur : #W008");
             e.printStackTrace();
         }
         return items;
     }
 
-    public WorkshopItemClass getACraftableItem(Player p, String _uuid, int _scrapAmount, int _gunpowderAmount, String _recipeName)
-    {
+
+
+    public WorkshopItemClass getACraftableItem(Player p, String _uuid, int _scrapAmount, int _gunpowderAmount, int _medicineAmount, String _itemName) {
         WorkshopItemClass item = null;
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = firelandConnection.getConnection();
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know, workshop_recipes.name, workshop_recipes.scrap, workshop_recipes.gunpowder, workshop_recipes.type, items.command, items.item_name, items.item, items.durability, items.custom_model_data FROM workshop_recipes INNER JOIN player_workshop, items WHERE player_workshop.recipe_name = workshop_recipes.name AND workshop_recipes.name = items.recipe_name AND items.item_name = ? AND player_workshop.player_uuid = ?");
-            preparedStatement1.setString(1, _recipeName);
-            preparedStatement1.setString(2, _uuid);
+            final PreparedStatement preparedStatement1 = connection.prepareStatement(
+                    "SELECT " +
+                            "workshop_recipes.name, " +
+                            "items.item_name, " +
+                            "workshop_recipes.type, " +
+                            "workshop_recipes.scrap, " +
+                            "workshop_recipes.gunpowder, " +
+                            "workshop_recipes.medicine, " +
+                            "workshop_recipes.duration, " +
+                            "items.item, " +
+                            "items.durability, " +
+                            "items.command, " +
+                            "player_workshop.know, " +
+                            "items.custom_model_data " +
+                            "FROM " +
+                            "workshop_recipes " +
+                            "INNER JOIN " +
+                            "items ON workshop_recipes.name = items.recipe_name " +
+                            "LEFT JOIN " +
+                            "player_workshop ON player_workshop.recipe_name = workshop_recipes.name " +
+                            "AND player_workshop.player_uuid = ? " +
+                            "WHERE " +
+                            "items.item_name = ?"
+            );
+            preparedStatement1.setString(1, _uuid);
+            preparedStatement1.setString(2, _itemName);
             final ResultSet resultSet = preparedStatement1.executeQuery();
-            //On vérifie s'il y a un résultat à la requête
 
-            if (resultSet.next())
-            {
-                if ((resultSet.getInt(3) <= _scrapAmount && resultSet.getInt(4) <= _gunpowderAmount && hasPlan(p, resultSet.getString(2))) || resultSet.getBoolean(1))
-                {
-                    item = new WorkshopItemClass(resultSet.getString(2), resultSet.getString(7), resultSet.getString(5), resultSet.getInt(3), resultSet.getInt(4), Material.getMaterial(resultSet.getString(8)), (short) resultSet.getInt(9), resultSet.getString(6), resultSet.getBoolean(1), resultSet.getInt(10));
+            if (resultSet.next()) {
+                boolean know = false;
+                if (resultSet.getObject(11) != null) {
+                    know = resultSet.getBoolean(11);
+                }
+                System.out.println(resultSet.getInt(4) <= _scrapAmount &&
+                        resultSet.getInt(5) <= _gunpowderAmount &&
+                        resultSet.getInt(6) <= _medicineAmount &&
+                        hasPlan(p, resultSet.getString(1))
+                        || know);
+                if (
+                        (resultSet.getInt(4) <= _scrapAmount &&
+                                resultSet.getInt(5) <= _gunpowderAmount &&
+                                resultSet.getInt(6) <= _medicineAmount &&
+                                hasPlan(p, resultSet.getString(1)))
+                                || know
+                ) {
+                    item = new WorkshopItemClass(
+                            resultSet.getString(1),   // _recipeName
+                            resultSet.getString(2),   // _itemName
+                            resultSet.getString(3),   // _type
+                            resultSet.getInt(4),      // _scrap
+                            resultSet.getInt(5),      // _gunpowder
+                            resultSet.getInt(6),      // _medicine
+                            resultSet.getInt(7),      // _duration
+                            Material.getMaterial(resultSet.getString(8)), // _mat
+                            (short) resultSet.getInt(9), // _durability
+                            resultSet.getString(10),  // _command
+                            know,                      // _know
+                            resultSet.getInt(12)      // _customModelData
+                    );
                     return item;
                 }
             }
             return item;
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W008");
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me. Erreur : #W008");
             e.printStackTrace();
         }
         return item;
     }
 
+
+
     public int[] getCraftItems(Player p)
     {
         int scrap = 0;
         int gunpowder = 0;
+        int medicine = 0;
         for (ItemStack s : p.getInventory().getContents())
         {
             if (s != null)
@@ -387,9 +486,13 @@ public class WorkshopFunction
                 {
                     gunpowder += s.getAmount();
                 }
+                if (s.getType() == Material.HONEYCOMB)
+                {
+                    medicine += s.getAmount();
+                }
             }
         }
-        return new int[]{scrap, gunpowder};
+        return new int[]{scrap, gunpowder, medicine};
     }
 
     public ArrayList<ItemStack> getPlans(Player p)
@@ -431,22 +534,22 @@ public class WorkshopFunction
             {
                 if (_currentPage == 1)
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + _currentPage + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "Â§a[" + _currentPage + "/" + _pageMax + "]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + (_currentPage - 1) + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "Â§a[" + (_currentPage - 1) + "/" + _pageMax + "]", (short) 1));
                 }
             }
             else if (i + 45 == 53)
             {
                 if (_currentPage == _pageMax)
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c[" + _currentPage + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§c[" + _currentPage + "/" + _pageMax + "]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c[" + (_currentPage + 1) + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§c[" + (_currentPage + 1) + "/" + _pageMax + "]", (short) 1));
                 }
             }
             else
@@ -464,19 +567,43 @@ public class WorkshopFunction
             }
             WorkshopItemClass item = _items.get(i);
             List<String> lore = new ArrayList<>();
-            if (item.isKnown())
-            {
-                lore.add("§8Type : §d " + item.getType() + " §a(Plan connu)");
-                lore.add("§8Nécessite : §6 " + _craftableItems[0] + "§8/§6 " + item.getScrap() + "§8ferrailles,");
-                lore.add("§6 " + _craftableItems[1] + "§8/§6 " + item.getGunPowder() + "§8 poudre à canon.");
+
+            String firstLine = item.isKnown()
+                    ? "Â§8Type : Â§d" + item.getType() + " Â§a(Plan connu)"
+                    : "Â§8Type : Â§d" + item.getType() + "Â§8, NÃ©cessite : Â§a" + item.getRecipeName();
+            lore.add(firstLine);
+
+            if (item.getScrap() > 0) {
+                if (_craftableItems[0] >= item.getScrap())
+                {
+                    lore.add("Â§a" + _craftableItems[0] + "Â§8/" + item.getScrap() + " ferrailles");
+                }
+                else
+                {
+                    lore.add("Â§c" + _craftableItems[0] + "Â§8/Â§c" + item.getScrap() + " Â§8ferrailles");
+                }
             }
-            else
-            {
-                lore.add("§8Type : §d " + item.getType() + "§8, Nécessite : §c " + item.getRecipeName());
-                lore.add("§6 " + _craftableItems[0] + "§8/§6 " + item.getScrap() + "§8ferrailles, §6");
-                lore.add("§6 " + _craftableItems[1] + "§8/§6 " + item.getGunPowder() + "§8 poudre à canon.");
+            if (item.getGunPowder() > 0) {
+                if (_craftableItems[1] >= item.getGunPowder())
+                {
+                    lore.add("Â§a" + _craftableItems[1] + "Â§8/" + item.getGunPowder() + " poudre Ã  canon");
+                }
+                else
+                {
+                    lore.add("Â§c" + _craftableItems[1] + "Â§8/Â§c" + item.getGunPowder() + " Â§8poudre Ã  canon");
+                }
             }
-            _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.getMat(), "§r§7 " + item.getItemName(), item.getDurability(), lore), item.getCustomModelData()));
+            if (item.getMedicine() > 0) {
+                if (_craftableItems[2] >= item.getMedicine())
+                {
+                    lore.add("Â§a" + _craftableItems[2] + "Â§8/" + item.getMedicine() + " mÃ©dicaments");
+                }
+                else
+                {
+                    lore.add("Â§c" + _craftableItems[2] + "Â§8/Â§c" + item.getMedicine() + " Â§8mÃ©dicaments");
+                }
+            }
+            _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.getMat(), "Â§rÂ§7" + item.getItemName(), item.getDurability(), lore), item.getCustomModelData()));
         }
     }
 
@@ -516,7 +643,7 @@ public class WorkshopFunction
             maxPage++;
         }
         Inventory craftMenu = Bukkit.createInventory(null, 54, "Atelier (" + page + "/" + maxPage + ")");
-        setItemsGuiInv(craftMenu, craftItems, getAllCraftableItems(p, p.getUniqueId().toString()), page, maxPage);
+        setItemsGuiInv(craftMenu, craftItems, items, page, maxPage);
         p.openInventory(craftMenu);
     }
 
@@ -531,14 +658,17 @@ public class WorkshopFunction
                 if (p.hasPermission("fireland.workshop.reduction.15"))
                 {
                     reduction = 0.15;
+                    InGameUtilities.sendPlayerBonus(p, "GrÃ¢ce Ã  votre rang, vous craftez 15% plus vite ! Merci de soutenir Fireland !");
                 }
                 else if (p.hasPermission("fireland.workshop.reduction.10"))
                 {
                     reduction = 0.10;
+                    InGameUtilities.sendPlayerBonus(p, "GrÃ¢ce Ã  votre rang, vous craftez 10% plus vite ! Merci de soutenir Fireland !");
                 }
                 else if (p.hasPermission("fireland.workshop.reduction.5"))
                 {
                     reduction = 0.05;
+                    InGameUtilities.sendPlayerBonus(p, "GrÃ¢ce Ã  votre rang, vous craftez 5% plus vite ! Merci de soutenir Fireland !");
                 }
                 if (addItemToCraft(p.getUniqueId().toString(), item, reduction))
                 {
@@ -546,30 +676,35 @@ public class WorkshopFunction
                     InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 2);
                     removeItemsOnInventoryOfPlayer(p, Material.NETHERITE_SCRAP, item.getScrap());
                     removeItemsOnInventoryOfPlayer(p, Material.GUNPOWDER, item.getGunPowder());
-                    p.sendMessage("§aVous avez craft §6 " + item.getItemName() + "§a !");
+                    removeItemsOnInventoryOfPlayer(p, Material.HONEYCOMB, item.getMedicine());
+                    System.out.println(item);
+                    System.out.println("NAME: " + item.getItemName());
+                    p.sendMessage("Â§aVous avez craft Â§6" + item.getItemName() + "Â§a !");
+
+                    craftItemNbr(item.getRecipeName(), p.getUniqueId().toString(), 1);
                 /*
                 PermissionUtilities.commandExecutor(p, item.command, "crackshot.give.all");
-                craftItemNbr(item.recipeName, p.getUniqueId().toString(), 1);*/
+                 */
                 }
 
 
                 return;
             }
-            p.sendMessage("§cVous n'avez pas le plan.");
+            p.sendMessage("Â§cVous n'avez pas le plan.");
         }
         else
         {
-            p.sendMessage("§cVous n'avez pas assez de ferraille/poudre à canon !");
+            p.sendMessage("Â§cVous n'avez pas assez de ferraille/poudre Ã  canon !");
         }
     }
 
-    public void saveNewItem(Player p, String _type, int _scrap, int _gunPowder, String _command)
-    { //ws newrecipe a:NomRecette Type scrap canon a:Itemname a:material a:durability commande
+    public void saveNewItem(Player p, String _type, int _scrap, int _gunPowder, int _medicine, int _duration, String _command)
+    { //ws newrecipe a:NomRecette Type scrap canon medicine duration a:Itemname a:material a:durability commande
         if (p.getItemInHand().getType() != Material.AIR)
         {
             ItemStack item = p.getItemInHand();
             String name = item.getItemMeta().getDisplayName();
-            name = name.replaceAll("§7", "");
+            name = name.replaceAll("Â§[a-zA-Z0-9]", "");
             String[] words = name.split(" ");
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < words.length; i++)
@@ -600,11 +735,11 @@ public class WorkshopFunction
 
             }
             name = sb.toString().trim();
-//ws newrecipe nom type scrap gp nomitem mat dura    cmd
-            PermissionUtilities.commandExecutor(p, "ws newrecipe Plan_de_fabrication_de_ " + name + " " + _type + " " + _scrap + " " + _gunPowder + " " + name + " " + item.getType() + " " + item.getItemMeta().getCustomModelData() + " " + _command, "fireland.workshop.a:newrecipe");
+            PermissionUtilities.commandExecutor(p, "ws newrecipe Plan_de_fabrication_de_" + name + " " + _type + " " + _scrap + " " + _gunPowder + " " + _medicine + " " +  _duration + " " + name + " " + item.getType() + " " + item.getItemMeta().getCustomModelData() + " " + _command, "fireland.workshop.a:newrecipe");
         }
     }
 
+    @DoNotCall
     public void initPlayerRecipe(String _uuid)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
@@ -614,7 +749,7 @@ public class WorkshopFunction
                     "WHERE workshop_recipes.name NOT IN (SELECT player_workshop.recipe_name FROM player_workshop WHERE player_workshop.player_uuid = ?);");
             preparedStatement1.setString(1, _uuid);
             final ResultSet resultSet = preparedStatement1.executeQuery();
-            //On vérifie s'il y a un résultat à la requête
+            //On vÃ©rifie s'il y a un rÃ©sultat Ã  la requÃªte
 
             while (resultSet.next()) {
                 final PreparedStatement preparedStatementbis = connection.prepareStatement("INSERT INTO player_workshop(player_uuid, recipe_name, crafted_time, know)\n" +
@@ -624,8 +759,8 @@ public class WorkshopFunction
                 preparedStatementbis.executeUpdate();
             }
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W010");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W010");
             e.printStackTrace();
         }
     }
@@ -639,9 +774,17 @@ public class WorkshopFunction
             final PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO player_crafting(player_uuid, item, creation_date, finish_date, is_breakable) VALUES(?,?,?,?,?)");
             final long time = System.currentTimeMillis();
             Timestamp currentTime = new Timestamp(time);
-            long timeAdded = getTimeFromType(item.getType());
+            long timeAdded = 0;
+            if (item.getDuration() == -1)
+            {
+                timeAdded = getTimeFromType(item.getType());
+            }
+            else
+            {
+                timeAdded = item.getDuration() * 1000L; // Conversion to seconds
+            }
 
-            timeAdded *= (1 - reduction);
+            timeAdded = (long) (timeAdded * (1 - reduction));
 
             Timestamp finishTime = new Timestamp(time + timeAdded);
             preparedStatement1.setString(1, _uuid);
@@ -652,8 +795,8 @@ public class WorkshopFunction
             preparedStatement1.executeUpdate();
             return true;
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cVous êtes en cooldown ! Veuillez espacer vos crafts d'au moins 1 seconde.");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cVous Ãªtes en cooldown ! Veuillez espacer vos crafts d'au moins 1 seconde.");
             e.printStackTrace();
         }
         return false;
@@ -661,28 +804,14 @@ public class WorkshopFunction
 
     public int getTimeFromType(String _type)
     {
-        int time = 0;
-        if (_type.equals("A"))
+        return switch (_type)
         {
-            time = 24 * 60 * 60 * 1000;
-        }
-        else if (_type.equals("B"))
-        {
-            time = 3 * 60 * 60 * 1000;
-        }
-        else if (_type.equals("C"))
-        {
-            time = 60 * 60 * 1000;
-        }
-        else if (_type.equals("D"))
-        {
-            time = 30 * 60 * 1000;
-        }
-        if (_type.equals("E"))
-        {
-            time = 5 * 60 * 1000;
-        }
-        return time;
+            case "A" -> TIME_CRAFT_A;
+            case "B" -> TIME_CRAFT_B;
+            case "C" -> TIME_CRAFT_C;
+            case "D" -> TIME_CRAFT_D;
+            default -> TIME_CRAFT_E;
+        };
     }
 
     public void setItemsCraftingInv(Inventory _inv, ArrayList<WorkshopCraftingItemClass> _items, int _currentPage, int _pageMax)
@@ -694,22 +823,22 @@ public class WorkshopFunction
             {
                 if (_currentPage == 1)
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + _currentPage + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "Â§a[" + _currentPage + "/" + _pageMax + "]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + (_currentPage - 1) + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "Â§a[" + (_currentPage - 1) + "/" + _pageMax + "]", (short) 1));
                 }
             }
             else if (i + 45 == 53)
             {
                 if (_currentPage == _pageMax)
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c[" + _currentPage + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§c[" + _currentPage + "/" + _pageMax + "]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c[" + (_currentPage + 1) + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§c[" + (_currentPage + 1) + "/" + _pageMax + "]", (short) 1));
                 }
             }
             else
@@ -729,16 +858,16 @@ public class WorkshopFunction
             List<String> lore = new ArrayList<>();
             if (item.getFinishDate().before(new Timestamp(System.currentTimeMillis())))
             {
-                lore.add("§8Type : §d " + item.getType() + "§8, §a§lvotre item est prêt §r§8!");
+                lore.add("Â§8Type : Â§d" + item.getType() + "Â§8, Â§aÂ§lvotre item est prÃªt Â§rÂ§8!");
             }
             else
             {
-                lore.add("§8Type : §d " + item.getType() + "§8, reste §c" + BasicUtilities.getStringTime(item.getFinishDate().getTime() - System.currentTimeMillis()));
+                lore.add("Â§8Type : Â§d" + item.getType() + "Â§8, reste Â§c" + BasicUtilities.getStringTime(item.getFinishDate().getTime() - System.currentTimeMillis()));
             }
 
-            lore.add("§8Date de fin de création : " + item.getFinishDate());
-            lore.add("§8Date de création : " + item.getCreationDate());
-            _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.getMat(), "§r§7 " + item.getItemName(), item.getDura(), lore), item.getCustomModelData()));
+            lore.add("Â§8Date de fin de crÃ©ation : " + item.getFinishDate());
+            lore.add("Â§8Date de crÃ©ation : " + item.getCreationDate());
+            _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(InventoryUtilities.setItemMetaLore(item.getMat(), "Â§rÂ§7" + item.getItemName(), item.getDura(), lore), item.getCustomModelData()));
         }
     }
 
@@ -747,7 +876,6 @@ public class WorkshopFunction
     {
         int maxPage = 1;
         int nbrItems = getNbrOfCraftingItem(p.getUniqueId().toString());
-        ArrayList<WorkshopItemClass> items = getAllCraftableItems(p, p.getUniqueId().toString());
         while (nbrItems > 14)
         {
             nbrItems -= 14;
@@ -773,8 +901,8 @@ public class WorkshopFunction
                 nbr = rs.getInt(1);
             }
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W012");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W012");
             e.printStackTrace();
         }
         return nbr;
@@ -795,15 +923,15 @@ public class WorkshopFunction
                     "AND player_crafting.player_uuid = ? ORDER BY workshop_recipes.type, timestamp(player_crafting.creation_date);");
             preparedStatement1.setString(1, _uuid);
             final ResultSet resultSet = preparedStatement1.executeQuery();
-            //On vérifie s'il y a un résultat à la requête
+            //On vÃ©rifie s'il y a un rÃ©sultat Ã  la requÃªte
             while (resultSet.next()) {
                 WorkshopCraftingItemClass item = new WorkshopCraftingItemClass(resultSet.getString(1), resultSet.getString(2), Material.getMaterial(resultSet.getString(3)), (short) resultSet.getInt(4), resultSet.getString(5), resultSet.getTimestamp(6), resultSet.getTimestamp(7), resultSet.getInt(8), resultSet.getString(9));
                 items.add(item);
             }
             return items;
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W013");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W013");
             e.printStackTrace();
         }
         return items;
@@ -823,8 +951,8 @@ public class WorkshopFunction
             preparedStatement1.setTimestamp(2, _itm.getCreationDate());
             preparedStatement1.executeUpdate();
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W014");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W014");
             e.printStackTrace();
         }
     }
@@ -845,8 +973,8 @@ public class WorkshopFunction
             preparedStatement1.setTimestamp(3, _itm.getCreationDate());
             preparedStatement1.executeUpdate();
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W015");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W015");
             e.printStackTrace();
         }
     }
@@ -892,8 +1020,8 @@ public class WorkshopFunction
             }
 
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W016");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W016");
             e.printStackTrace();
         }
     }
@@ -918,8 +1046,8 @@ public class WorkshopFunction
                 return rs.getBoolean(1);
             }
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W016");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W016");
             e.printStackTrace();
         }
         return false;
@@ -943,8 +1071,8 @@ public class WorkshopFunction
                 return rs.getInt(1);
             }
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W016");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W016");
             e.printStackTrace();
         }
         return 0;
@@ -954,9 +1082,9 @@ public class WorkshopFunction
     {
         InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.AMBIENT, 1, 1);
         Inventory craftMenu = Bukkit.createInventory(null, 9 * 3, "Plan de travail");
-        craftMenu.setItem(11, InventoryUtilities.setItemMeta(Material.ANVIL, "§6Atelier", (short) 1));
-        craftMenu.setItem(13, InventoryUtilities.setItemMeta(Material.NETHERITE_SCRAP, "§aRecyclage", (short) 1));
-        craftMenu.setItem(15, InventoryUtilities.setItemMeta(Material.CHEST, "§6Création", (short) 1));
+        craftMenu.setItem(11, InventoryUtilities.setItemMeta(Material.ANVIL, "Â§6Atelier", (short) 1));
+        craftMenu.setItem(13, InventoryUtilities.setItemMeta(Material.NETHERITE_SCRAP, "Â§aRecyclage", (short) 1));
+        craftMenu.setItem(15, InventoryUtilities.setItemMeta(Material.CHEST, "Â§6CrÃ©ation", (short) 1));
         p.openInventory(craftMenu);
     }
 
@@ -964,7 +1092,7 @@ public class WorkshopFunction
     {
         if (p.getInventory().firstEmpty() == -1)
         {
-            p.sendMessage("§cVous n'avez pas assez de place.");
+            p.sendMessage("Â§cVous n'avez pas assez de place.");
             return;
         }
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
@@ -980,35 +1108,35 @@ public class WorkshopFunction
                 ItemStack i;
                 if (rs.getString(2).equals("E"))
                 {
-                    i = InventoryUtilities.setItemMeta(Material.PAPER, "§r§a " + rs.getString(1), (short) 1);
+                    i = InventoryUtilities.setItemMeta(Material.PAPER, "Â§rÂ§a" + rs.getString(1), (short) 1);
                     ItemMeta itemMeta = i.getItemMeta();
                     itemMeta.setCustomModelData(1);
                     i.setItemMeta(itemMeta);
                 }
                 else if (rs.getString(2).equals("D"))
                 {
-                    i = InventoryUtilities.setItemMeta(Material.PAPER, "§r§9 " + rs.getString(1), (short) 1);
+                    i = InventoryUtilities.setItemMeta(Material.PAPER, "Â§rÂ§9" + rs.getString(1), (short) 1);
                     ItemMeta itemMeta = i.getItemMeta();
                     itemMeta.setCustomModelData(2);
                     i.setItemMeta(itemMeta);
                 }
                 else if (rs.getString(2).equals("C"))
                 {
-                    i = InventoryUtilities.setItemMeta(Material.PAPER, "§r§c " + rs.getString(1), (short) 1);
+                    i = InventoryUtilities.setItemMeta(Material.PAPER, "Â§rÂ§c" + rs.getString(1), (short) 1);
                     ItemMeta itemMeta = i.getItemMeta();
                     itemMeta.setCustomModelData(3);
                     i.setItemMeta(itemMeta);
                 }
                 else if (rs.getString(2).equals("B"))
                 {
-                    i = InventoryUtilities.setItemMeta(Material.PAPER, "§r§e " + rs.getString(1), (short) 1);
+                    i = InventoryUtilities.setItemMeta(Material.PAPER, "Â§rÂ§e" + rs.getString(1), (short) 1);
                     ItemMeta itemMeta = i.getItemMeta();
                     itemMeta.setCustomModelData(4);
                     i.setItemMeta(itemMeta);
                 }
                 else
                 {
-                    i = InventoryUtilities.setItemMeta(Material.PAPER, "§r§6§l " + rs.getString(1), (short) 1);
+                    i = InventoryUtilities.setItemMeta(Material.PAPER, "Â§rÂ§6Â§l" + rs.getString(1), (short) 1);
                     ItemMeta itemMeta = i.getItemMeta();
                     itemMeta.setCustomModelData(5);
                     i.setItemMeta(itemMeta);
@@ -1016,23 +1144,23 @@ public class WorkshopFunction
 
                 ItemMeta im = i.getItemMeta();
                 List<String> lore = new ArrayList<>();
-                lore.add("§8Ce plan vous permet d'apprendre à craft un §6item§8.");
-                lore.add("§8Gardez le pour §6craft§8, Faites clic droit avec le plan ");
-                lore.add("§8pour l'§6apprendre§8 !");
+                lore.add("Â§8Ce plan vous permet d'apprendre Ã  craft un Â§6itemÂ§8.");
+                lore.add("Â§8Gardez le pour Â§6craftÂ§8, Faites clic droit avec le plan ");
+                lore.add("Â§8pour l'Â§6apprendreÂ§8 !");
 
                 im.setLore(lore);
                 i.setItemMeta(im);
-                p.sendMessage("§aVous avez obtenu le plan de fabrication : " + rs.getString(1));
+                p.sendMessage("Â§aVous avez obtenu le plan de fabrication : " + rs.getString(1));
                 p.getInventory().addItem(i);
                 return;
             }
             else
             {
-                p.sendMessage("§cAucun plan n'a été trouvé avec comme nom d'item " + itemName);
+                p.sendMessage("Â§cAucun plan n'a Ã©tÃ© trouvÃ© avec comme nom d'item " + itemName);
             }
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W012");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W012");
             e.printStackTrace();
         }
     }
@@ -1049,8 +1177,8 @@ public class WorkshopFunction
             preparedStatement1.setString(1, _uuid);
             preparedStatement1.executeUpdate();
         } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
-            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W019");
+            //Une erreur est survenue (ProblÃ¨me de connexion Ã  la BD)
+            sender.sendMessage("Â§cUne erreur est survenue. Merci de contacter le staff pour rÃ©soudre ce problÃ¨me.  Erreur : #W019");
             e.printStackTrace();
         }
     }

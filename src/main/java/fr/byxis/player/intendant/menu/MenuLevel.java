@@ -23,7 +23,7 @@ public class MenuLevel {
     {
         PlayerLevel pl = getPlayerLevel(p.getUniqueId());
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory inv = Bukkit.createInventory(null, 54, "ß8Votre niveau : " + pl.getLevel());
+        Inventory inv = Bukkit.createInventory(null, 54, "¬ß8Votre niveau : " + pl.getLevel());
         setLevelItems(main, inv, pl, page);
         p.openInventory(inv);
     }
@@ -42,19 +42,19 @@ public class MenuLevel {
                     if (pl.hasClaimedReward(main, pos))
                     {
                         lore.clear();
-                        lore.add("ß9RÈcompense dÈj‡ rÈcupÈrÈe");
-                        inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.DIAMOND_BLOCK, "ßdNiveau " + pos, lore));
+                        lore.add("¬ß9R√©compense d√©j√† r√©cup√©r√©e");
+                        inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.DIAMOND_BLOCK, "¬ßdNiveau " + pos, lore));
                     }
                     else
                     {
-                        getLore(pl, lore, pos, "ßa", main);
-                        inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.DIAMOND_BLOCK, "ßdNiveau " + pos, lore));
+                        getLore(pl, lore, pos, "¬ßa", main);
+                        inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.DIAMOND_BLOCK, "¬ßdNiveau " + pos, lore));
                     }
                 }
                 else
                 {
-                    getLore(pl, lore, pos, "ß8", main);
-                    inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.COAL_BLOCK, "ß7Niveau " + pos, lore));
+                    getLore(pl, lore, pos, "¬ß8", main);
+                    inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.COAL_BLOCK, "¬ß7Niveau " + pos, lore));
                 }
             }
             else
@@ -64,28 +64,28 @@ public class MenuLevel {
                     if (pl.hasClaimedReward(main, pos))
                     {
                         lore.clear();
-                        lore.add("ß9RÈcompense dÈj‡ rÈcupÈrÈe");
-                        inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.DIAMOND, "ßbNiveau " + pos, lore));
+                        lore.add("¬ß9R√©compense d√©j√† r√©cup√©r√©e");
+                        inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.DIAMOND, "¬ßbNiveau " + pos, lore));
                     }
                     else
                     {
-                        getLore(pl, lore, pos, "ßa", main);
-                        inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.DIAMOND, "ßbNiveau " + pos, lore));
+                        getLore(pl, lore, pos, "¬ßa", main);
+                        inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.DIAMOND, "¬ßbNiveau " + pos, lore));
                     }
                 }
                 else
                 {
-                    getLore(pl, lore, pos, "ß8", main);
-                    inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.COAL, "ß8Niveau " + pos, lore));
+                    getLore(pl, lore, pos, "¬ß8", main);
+                    inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.COAL, "¬ß8Niveau " + pos, lore));
                 }
             }
         }
         for (int i = 45; i < 54; i++)
             inv.setItem(i, InventoryUtilities.getWhiteGlassPane());
         lore.clear();
-        lore.add("ß8Ici pour pouvez voir l'avancÈe de vos niveaux.");
-        lore.add("ß8Cliquez sur les niveaux complÈtÈs pour recevoir votre rÈcompense.");
-        inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "ßaInformations -", lore));
+        lore.add("¬ß8Ici pour pouvez voir l'avanc√©e de vos niveaux.");
+        lore.add("¬ß8Cliquez sur les niveaux compl√©t√©s pour recevoir votre r√©compense.");
+        inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "¬ßaInformations -", lore));
 
         lore.clear();
         switch (pl.getNation())
@@ -94,126 +94,126 @@ public class MenuLevel {
             case Etat -> {
                 if (pl.getRang() < 4)
                 {
-                    lore.add("ß8Votre rang : ß7" + (pl.getRang() + 1));
+                    lore.add("¬ß8Votre rang : ¬ß7" + (pl.getRang() + 1));
                     lore.add("");
-                    lore.add("ß8Mission : Tuer des zombies");
-                    lore.add("ß8Progression : ß7 " + ls.getZombieKills() + "/" + ls.getCurrentMaxZombieKills());
+                    lore.add("¬ß8Mission : Tuer des zombies");
+                    lore.add("¬ß8Progression : ¬ß7" + ls.getZombieKills() + "/" + ls.getCurrentMaxZombieKills());
                 }
                 else
                 {
-                    lore.add("ß8Votre rang : ß7" + (pl.getRang() + 1));
+                    lore.add("¬ß8Votre rang : ¬ß7" + (pl.getRang() + 1));
                     lore.add("");
-                    lore.add("ß8Aucune t‚che ‡ accomplir.");
+                    lore.add("¬ß8Aucune t√¢che √† accomplir.");
                 }
                 lore.add("");
-                lore.add("ßcßlCliquez ici pour changer de nation");
-                lore.add("ß8Prix de changement : ßd " + pl.getJetonPriceNationChange() + "ßf\u26c1 ß8et ß7 " + pl.getMoneyPriceNationChange() + "ßf$");
-                inv.setItem(46, InventoryUtilities.getEtatBanner("ß7Nation: Etat", lore));
+                lore.add("¬ßc¬ßlCliquez ici pour changer de nation");
+                lore.add("¬ß8Prix de changement : ¬ßd" + pl.getJetonPriceNationChange() + "¬ßf‚õÅ ¬ß8et ¬ß7" + pl.getMoneyPriceNationChange() + "¬ßf$");
+                inv.setItem(46, InventoryUtilities.getEtatBanner("¬ß7Nation: Etat", lore));
             }
             case Bannis -> {
                 if (pl.getRang() < 4)
                 {
-                    lore.add("ß8Votre rang : ß7" + (pl.getRang() + 1));
+                    lore.add("¬ß8Votre rang : ¬ß7" + (pl.getRang() + 1));
                     lore.add("");
-                    lore.add("ß8Mission : Tuer des joueurs");
-                    lore.add("ß8Progression : ß7 " + ls.getKills() + "/" + ls.getCurrentMaxKills());
+                    lore.add("¬ß8Mission : Tuer des joueurs");
+                    lore.add("¬ß8Progression : ¬ß7" + ls.getKills() + "/" + ls.getCurrentMaxKills());
                 }
                 else
                 {
-                    lore.add("ß8Votre rang : ß7" + (pl.getRang() + 1));
+                    lore.add("¬ß8Votre rang : ¬ß7" + (pl.getRang() + 1));
                     lore.add("");
-                    lore.add("ß8Aucune t‚che ‡ accomplir.");
+                    lore.add("¬ß8Aucune t√¢che √† accomplir.");
                 }
 
                 lore.add("");
-                lore.add("ßcßlCliquez ici pour changer de nation");
-                lore.add("ß8Prix de changement : ßd " + pl.getJetonPriceNationChange() + "ßf\u26c1 ß8et ß7 " + pl.getMoneyPriceNationChange() + "ßf$");
-                inv.setItem(46, InventoryUtilities.getBannisBanner("ßcNation: Bannis", lore));
+                lore.add("¬ßc¬ßlCliquez ici pour changer de nation");
+                lore.add("¬ß8Prix de changement : ¬ßd" + pl.getJetonPriceNationChange() + "¬ßf‚õÅ ¬ß8et ¬ß7" + pl.getMoneyPriceNationChange() + "¬ßf$");
+                inv.setItem(46, InventoryUtilities.getBannisBanner("¬ßcNation: Bannis", lore));
             }
             case Neutre -> {
-                lore.add("ß8Aucune t‚che ‡ accomplir.");
+                lore.add("¬ß8Aucune t√¢che √† accomplir.");
                 lore.add("");
-                lore.add("ßcßlCliquez ici pour changer de nation");
-                lore.add("ß8Prix de changement : ßd " + pl.getJetonPriceNationChange() + "ßf\u26c1 ß8et ß7 " + pl.getMoneyPriceNationChange() + "ßf$");
-                inv.setItem(46, InventoryUtilities.getNeutreBanner("ßfNation: Neutre", lore));
+                lore.add("¬ßc¬ßlCliquez ici pour changer de nation");
+                lore.add("¬ß8Prix de changement : ¬ßd" + pl.getJetonPriceNationChange() + "¬ßf‚õÅ ¬ß8et ¬ß7" + pl.getMoneyPriceNationChange() + "¬ßf$");
+                inv.setItem(46, InventoryUtilities.getNeutreBanner("¬ßfNation: Neutre", lore));
             }
             default -> {
                 inv.setItem(46, InventoryUtilities.getWhiteGlassPane());
             }
         }
         lore.clear();
-        lore.add("ß8ExpÈrience : ß7 " + pl.getXp() + "/" + pl.getRemainingXp());
-        lore.add("ß8Temps survÈcu : ß7 " + getTimeString(main, pl.getUuid()));
-        inv.setItem(49, InventoryUtilities.getHead(pl.getUuid(), "ßaNiveau : " + pl.getLevel(), lore));
+        lore.add("¬ß8Exp√©rience : ¬ß7" + pl.getXp() + "/" + pl.getRemainingXp());
+        lore.add("¬ß8Temps surv√©cu : ¬ß7" + getTimeString(main, pl.getUuid()));
+        inv.setItem(49, InventoryUtilities.getHead(pl.getUuid(), "¬ßaNiveau : " + pl.getLevel(), lore));
         if (page <= 0)
         {
-            inv.setItem(52, InventoryUtilities.setItemMeta(Material.GRAY_STAINED_GLASS_PANE, "ß7[1/3]"));
+            inv.setItem(52, InventoryUtilities.setItemMeta(Material.GRAY_STAINED_GLASS_PANE, "¬ß7[1/3]"));
         }
         else
         {
-            inv.setItem(52, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ß7[" + (page) + "/3]"));
+            inv.setItem(52, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "¬ß7[" + (page) + "/3]"));
 
         }
 
         if (page >= 2)
         {
-            inv.setItem(53, InventoryUtilities.setItemMeta(Material.GRAY_STAINED_GLASS_PANE, "ß7[3/3]"));
+            inv.setItem(53, InventoryUtilities.setItemMeta(Material.GRAY_STAINED_GLASS_PANE, "¬ß7[3/3]"));
         }
         else
         {
-            inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "ß7[" + (page + 2) + "/3]"));
+            inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "¬ß7[" + (page + 2) + "/3]"));
 
         }
     }
 
     private static void getLore(PlayerLevel pl, ArrayList<String> lore, int pos, String color, Fireland main) {
         lore.clear();
-        if (color.equals("ßa"))
+        if (color.equals("¬ßa"))
         {
             if (pl.hasClaimedReward(main, pos))
             {
-                lore.add("ß9Vous avez dÈj‡ rÈcupÈrÈ cette rÈcompense");
+                lore.add("¬ß9Vous avez d√©j√† r√©cup√©r√© cette r√©compense");
             }
             else
             {
-                lore.add("ßaßlCliquez pour rÈcupÈrer votre rÈcompense !");
+                lore.add("¬ßa¬ßlCliquez pour r√©cup√©rer votre r√©compense !");
             }
         }
         if (pl.getRewardsJetons(pos) > 0)
         {
             if (!pl.getRewardsItems(pos).isEmpty())
             {
-                lore.add(color + "RÈcompense : ßb " + pl.getRewardsJetons(pos) + "ßf\u26c1 " + color + ", ß7un item " + color + " et ß7 " + pl.getRewardsMoney(pos) + "ßf$");
+                lore.add(color + "R√©compense : ¬ßb" + pl.getRewardsJetons(pos) + "¬ßf‚õÅ " + color + ", ¬ß7un item " + color + " et ¬ß7" + pl.getRewardsMoney(pos) + "¬ßf$");
             }
             else
             {
-                lore.add(color + "RÈcompense : ßb " + pl.getRewardsJetons(pos) + "ßf\u26c1 " + color + " et ß7 " + pl.getRewardsMoney(pos) + "ßf$");
+                lore.add(color + "R√©compense : ¬ßb" + pl.getRewardsJetons(pos) + "¬ßf‚õÅ " + color + " et ¬ß7" + pl.getRewardsMoney(pos) + "¬ßf$");
             }
         }
         else
         {
             if (!pl.getRewardsItems(pos).isEmpty())
             {
-                lore.add(color + "RÈcompense : ß7Un item " + color + " et ß7 " + pl.getRewardsMoney(pos) + "ßf$");
+                lore.add(color + "R√©compense : ¬ß7Un item " + color + " et ¬ß7" + pl.getRewardsMoney(pos) + "¬ßf$");
             }
             else
             {
-                lore.add(color + "RÈcompense : ß7 " + pl.getRewardsMoney(pos) + "ßf$");
+                lore.add(color + "R√©compense : ¬ß7" + pl.getRewardsMoney(pos) + "¬ßf$");
             }
         }
         switch (pos)
         {
             case 0:
-                lore.add("ßaAccËs au pass vert");
+                lore.add("¬ßaAcc√®s au pass vert");
                 break;
             case 25:
-                lore.add("ß9AccËs au pass bleu");
+                lore.add("¬ß9Acc√®s au pass bleu");
                 break;
             case 50:
-                lore.add("ßeAccËs au pass jaune");
+                lore.add("¬ßeAcc√®s au pass jaune");
                 break;
             case 75:
-                lore.add("ß4AccËs au pass rouge");
+                lore.add("¬ß4Acc√®s au pass rouge");
                 break;
             default:
                 break;

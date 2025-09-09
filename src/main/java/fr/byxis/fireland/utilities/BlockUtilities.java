@@ -8,19 +8,19 @@ public class BlockUtilities {
     public static Material getGlassPaneColor(String color)
     {
         return switch (color) {
-            case "ง0" -> Material.BLACK_STAINED_GLASS_PANE;
-            case "ง1" -> Material.BLUE_STAINED_GLASS_PANE;
-            case "ง2" -> Material.GREEN_STAINED_GLASS_PANE;
-            case "ง3" -> Material.CYAN_STAINED_GLASS_PANE;
-            case "ง4" -> Material.RED_STAINED_GLASS_PANE;
-            case "ง5" -> Material.PURPLE_STAINED_GLASS_PANE;
-            case "ง6" -> Material.ORANGE_STAINED_GLASS_PANE;
-            case "ง8" -> Material.GRAY_STAINED_GLASS_PANE;
-            case "งa" -> Material.LIME_STAINED_GLASS_PANE;
-            case "งb" -> Material.LIGHT_BLUE_STAINED_GLASS_PANE;
-            case "งd" -> Material.MAGENTA_STAINED_GLASS_PANE;
-            case "งe" -> Material.YELLOW_STAINED_GLASS_PANE;
-            case "งr" -> Material.WHITE_STAINED_GLASS_PANE;
+            case "ยง0" -> Material.BLACK_STAINED_GLASS_PANE;
+            case "ยง1" -> Material.BLUE_STAINED_GLASS_PANE;
+            case "ยง2" -> Material.GREEN_STAINED_GLASS_PANE;
+            case "ยง3" -> Material.CYAN_STAINED_GLASS_PANE;
+            case "ยง4" -> Material.RED_STAINED_GLASS_PANE;
+            case "ยง5" -> Material.PURPLE_STAINED_GLASS_PANE;
+            case "ยง6" -> Material.ORANGE_STAINED_GLASS_PANE;
+            case "ยง8" -> Material.GRAY_STAINED_GLASS_PANE;
+            case "ยงa" -> Material.LIME_STAINED_GLASS_PANE;
+            case "ยงb" -> Material.LIGHT_BLUE_STAINED_GLASS_PANE;
+            case "ยงd" -> Material.MAGENTA_STAINED_GLASS_PANE;
+            case "ยงe" -> Material.YELLOW_STAINED_GLASS_PANE;
+            case "ยงr" -> Material.WHITE_STAINED_GLASS_PANE;
             default   -> Material.LIGHT_GRAY_STAINED_GLASS_PANE;
         };
     }
@@ -28,19 +28,19 @@ public class BlockUtilities {
     public static Material getGlassBlockColor(String color)
     {
         return switch (color) {
-            case "ง0" -> Material.BLACK_STAINED_GLASS;
-            case "ง1" -> Material.BLUE_STAINED_GLASS;
-            case "ง2" -> Material.GREEN_STAINED_GLASS;
-            case "ง3" -> Material.CYAN_STAINED_GLASS;
-            case "ง4" -> Material.RED_STAINED_GLASS;
-            case "ง5" -> Material.PURPLE_STAINED_GLASS;
-            case "ง6" -> Material.ORANGE_STAINED_GLASS;
-            case "ง8" -> Material.GRAY_STAINED_GLASS;
-            case "งa" -> Material.LIME_STAINED_GLASS;
-            case "งb" -> Material.LIGHT_BLUE_STAINED_GLASS;
-            case "งd" -> Material.MAGENTA_STAINED_GLASS;
-            case "งe" -> Material.YELLOW_STAINED_GLASS;
-            case "งr" -> Material.WHITE_STAINED_GLASS;
+            case "ยง0" -> Material.BLACK_STAINED_GLASS;
+            case "ยง1" -> Material.BLUE_STAINED_GLASS;
+            case "ยง2" -> Material.GREEN_STAINED_GLASS;
+            case "ยง3" -> Material.CYAN_STAINED_GLASS;
+            case "ยง4" -> Material.RED_STAINED_GLASS;
+            case "ยง5" -> Material.PURPLE_STAINED_GLASS;
+            case "ยง6" -> Material.ORANGE_STAINED_GLASS;
+            case "ยง8" -> Material.GRAY_STAINED_GLASS;
+            case "ยงa" -> Material.LIME_STAINED_GLASS;
+            case "ยงb" -> Material.LIGHT_BLUE_STAINED_GLASS;
+            case "ยงd" -> Material.MAGENTA_STAINED_GLASS;
+            case "ยงe" -> Material.YELLOW_STAINED_GLASS;
+            case "ยงr" -> Material.WHITE_STAINED_GLASS;
             default   -> Material.LIGHT_GRAY_STAINED_GLASS;
         };
     }
@@ -48,19 +48,19 @@ public class BlockUtilities {
     public static Material getWoolColor(String color)
     {
         return switch (color) {
-            case "ง0" -> Material.BLACK_WOOL;
-            case "ง1" -> Material.BLUE_WOOL;
-            case "ง2" -> Material.GREEN_WOOL;
-            case "ง3" -> Material.CYAN_WOOL;
-            case "ง4" -> Material.RED_WOOL;
-            case "ง5" -> Material.PURPLE_WOOL;
-            case "ง6" -> Material.ORANGE_WOOL;
-            case "ง8" -> Material.GRAY_WOOL;
-            case "งa" -> Material.LIME_WOOL;
-            case "งb" -> Material.LIGHT_BLUE_WOOL;
-            case "งd" -> Material.MAGENTA_WOOL;
-            case "งe" -> Material.YELLOW_WOOL;
-            case "งr" -> Material.WHITE_WOOL;
+            case "ยง0" -> Material.BLACK_WOOL;
+            case "ยง1" -> Material.BLUE_WOOL;
+            case "ยง2" -> Material.GREEN_WOOL;
+            case "ยง3" -> Material.CYAN_WOOL;
+            case "ยง4" -> Material.RED_WOOL;
+            case "ยง5" -> Material.PURPLE_WOOL;
+            case "ยง6" -> Material.ORANGE_WOOL;
+            case "ยง8" -> Material.GRAY_WOOL;
+            case "ยงa" -> Material.LIME_WOOL;
+            case "ยงb" -> Material.LIGHT_BLUE_WOOL;
+            case "ยงd" -> Material.MAGENTA_WOOL;
+            case "ยงe" -> Material.YELLOW_WOOL;
+            case "ยงr" -> Material.WHITE_WOOL;
             default   -> Material.LIGHT_GRAY_WOOL;
         };
     }
@@ -68,19 +68,19 @@ public class BlockUtilities {
     public static Material getBannerWallColor(String color)
     {
         return switch (color) {
-            case "ง0" -> Material.BLACK_WALL_BANNER;
-            case "ง1" -> Material.BLUE_WALL_BANNER;
-            case "ง2" -> Material.GREEN_WALL_BANNER;
-            case "ง3" -> Material.CYAN_WALL_BANNER;
-            case "ง4" -> Material.RED_WALL_BANNER;
-            case "ง5" -> Material.PURPLE_WALL_BANNER;
-            case "ง6" -> Material.ORANGE_WALL_BANNER;
-            case "ง8" -> Material.GRAY_WALL_BANNER;
-            case "งa" -> Material.LIME_WALL_BANNER;
-            case "งb" -> Material.LIGHT_BLUE_WALL_BANNER;
-            case "งd" -> Material.MAGENTA_WALL_BANNER;
-            case "งe" -> Material.YELLOW_WALL_BANNER;
-            case "งr" -> Material.WHITE_WALL_BANNER;
+            case "ยง0" -> Material.BLACK_WALL_BANNER;
+            case "ยง1" -> Material.BLUE_WALL_BANNER;
+            case "ยง2" -> Material.GREEN_WALL_BANNER;
+            case "ยง3" -> Material.CYAN_WALL_BANNER;
+            case "ยง4" -> Material.RED_WALL_BANNER;
+            case "ยง5" -> Material.PURPLE_WALL_BANNER;
+            case "ยง6" -> Material.ORANGE_WALL_BANNER;
+            case "ยง8" -> Material.GRAY_WALL_BANNER;
+            case "ยงa" -> Material.LIME_WALL_BANNER;
+            case "ยงb" -> Material.LIGHT_BLUE_WALL_BANNER;
+            case "ยงd" -> Material.MAGENTA_WALL_BANNER;
+            case "ยงe" -> Material.YELLOW_WALL_BANNER;
+            case "ยงr" -> Material.WHITE_WALL_BANNER;
             default   -> Material.LIGHT_GRAY_WALL_BANNER;
         };
     }
@@ -88,19 +88,19 @@ public class BlockUtilities {
     public static Material getBannerColor(String color)
     {
         return switch (color) {
-            case "ง0" -> Material.BLACK_BANNER;
-            case "ง1" -> Material.BLUE_BANNER;
-            case "ง2" -> Material.GREEN_BANNER;
-            case "ง3" -> Material.CYAN_BANNER;
-            case "ง4" -> Material.RED_BANNER;
-            case "ง5" -> Material.PURPLE_BANNER;
-            case "ง6" -> Material.ORANGE_BANNER;
-            case "ง8" -> Material.GRAY_BANNER;
-            case "งa" -> Material.LIME_BANNER;
-            case "งb" -> Material.LIGHT_BLUE_BANNER;
-            case "งd" -> Material.MAGENTA_BANNER;
-            case "งe" -> Material.YELLOW_BANNER;
-            case "งr" -> Material.WHITE_BANNER;
+            case "ยง0" -> Material.BLACK_BANNER;
+            case "ยง1" -> Material.BLUE_BANNER;
+            case "ยง2" -> Material.GREEN_BANNER;
+            case "ยง3" -> Material.CYAN_BANNER;
+            case "ยง4" -> Material.RED_BANNER;
+            case "ยง5" -> Material.PURPLE_BANNER;
+            case "ยง6" -> Material.ORANGE_BANNER;
+            case "ยง8" -> Material.GRAY_BANNER;
+            case "ยงa" -> Material.LIME_BANNER;
+            case "ยงb" -> Material.LIGHT_BLUE_BANNER;
+            case "ยงd" -> Material.MAGENTA_BANNER;
+            case "ยงe" -> Material.YELLOW_BANNER;
+            case "ยงr" -> Material.WHITE_BANNER;
             default   -> Material.LIGHT_GRAY_BANNER;
         };
     }
@@ -108,19 +108,19 @@ public class BlockUtilities {
     public static BarColor getBossBarColor(String color)
     {
         return switch (color) {
-            case "ง0" -> BarColor.PURPLE;
-            case "ง1" -> BarColor.BLUE;
-            case "ง2" -> BarColor.GREEN;
-            case "ง3" -> BarColor.BLUE;
-            case "ง4" -> BarColor.RED;
-            case "ง5" -> BarColor.PURPLE;
-            case "ง6" -> BarColor.RED;
-            case "ง8" -> BarColor.WHITE;
-            case "งa" -> BarColor.GREEN;
-            case "งb" -> BarColor.BLUE;
-            case "งd" -> BarColor.PURPLE;
-            case "งe" -> BarColor.YELLOW;
-            case "งr" -> BarColor.WHITE;
+            case "ยง0" -> BarColor.PURPLE;
+            case "ยง1" -> BarColor.BLUE;
+            case "ยง2" -> BarColor.GREEN;
+            case "ยง3" -> BarColor.BLUE;
+            case "ยง4" -> BarColor.RED;
+            case "ยง5" -> BarColor.PURPLE;
+            case "ยง6" -> BarColor.RED;
+            case "ยง8" -> BarColor.WHITE;
+            case "ยงa" -> BarColor.GREEN;
+            case "ยงb" -> BarColor.BLUE;
+            case "ยงd" -> BarColor.PURPLE;
+            case "ยงe" -> BarColor.YELLOW;
+            case "ยงr" -> BarColor.WHITE;
             default   -> BarColor.WHITE;
         };
     }

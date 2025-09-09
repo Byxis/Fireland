@@ -21,7 +21,7 @@ public class MenuPlayerList {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation infos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
-        Inventory playerList = Bukkit.createInventory(null, 54, "ß8Membres de " + ff.getColorCode(infos.getFactionName()) + infos.getFactionName());
+        Inventory playerList = Bukkit.createInventory(null, 54, "¬ß8Membres de " + ff.getColorCode(infos.getFactionName()) + infos.getFactionName());
         setPlayerListItems(main, playerList, p);
         p.openInventory(playerList);
     }
@@ -38,7 +38,7 @@ public class MenuPlayerList {
             {
                 inventory.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
-            inventory.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "ßcRetour ‡ l'intendant", (short) 0));
+            inventory.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "¬ßcRetour √† l'intendant", (short) 0));
             int member = 9;
             String you = "";
             String nouveau = "";
@@ -50,33 +50,33 @@ public class MenuPlayerList {
                 String connectionInformation = "";
                 if (Bukkit.getOfflinePlayer(info.getUuid()).isOnline())
                 {
-                    connectionInformation = "ßb\u23FA ßr";
+                    connectionInformation = "¬ßb‚è∫ ¬ßr";
                 }
                 else
                 {
-                    connectionInformation = "ß8\u2B58 ßr";
+                    connectionInformation = "¬ß8‚≠ò ¬ßr";
                 }
                 if (info.getName().equalsIgnoreCase(p.getName()))
                 {
-                    you = " ßd(Vous)";
+                    you = " ¬ßd(Vous)";
                 }
                 if (prd.getDays() <= 7)
                 {
-                    nouveau = " ß1(Nouveau)";
+                    nouveau = " ¬ß1(Nouveau)";
                 }
                 if (info.getRole() == 2)
                 {
-                    inventory.setItem(0, InventoryUtilities.getHead(info.getUuid(), connectionInformation + "ßcLeader: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you));
+                    inventory.setItem(0, InventoryUtilities.getHead(info.getUuid(), connectionInformation + "¬ßcLeader: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you));
                 }
                 if (info.getRole() == 1)
                 {
 
-                    inventory.setItem(member, InventoryUtilities.getHead(info.getUuid(), connectionInformation + "ßeModÈrateur: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you + nouveau));
+                    inventory.setItem(member, InventoryUtilities.getHead(info.getUuid(), connectionInformation + "¬ßeMod√©rateur: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you + nouveau));
                     member++;
                 }
                 if (info.getRole() == 0)
                 {
-                    inventory.setItem(member, InventoryUtilities.getHead(info.getUuid(), connectionInformation + "ßaMembre: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you + nouveau));
+                    inventory.setItem(member, InventoryUtilities.getHead(info.getUuid(), connectionInformation + "¬ßaMembre: " + Bukkit.getOfflinePlayer(info.getUuid()).getName() + you + nouveau));
                     member++;
                 }
                 you = "";

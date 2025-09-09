@@ -44,22 +44,22 @@ public class Heliport implements Listener, CommandExecutor
         
         ItemStack greenGlass = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta modifiedGreenGlass = greenGlass.getItemMeta();
-        modifiedGreenGlass.setDisplayName("Héliport");
+        modifiedGreenGlass.setDisplayName("HÃ©liport");
         greenGlass.setItemMeta(modifiedGreenGlass);
         
         ItemStack centreVille = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta modifiedCentreVille = centreVille.getItemMeta();
-        modifiedCentreVille.setDisplayName("§lCentre-Ville");
+        modifiedCentreVille.setDisplayName("Â§lCentre-Ville");
         ArrayList<String> lore = new ArrayList<String>();
-        lore.add("§eCoût de la téléportation : 250$");
+        lore.add("Â§eCoÃ»t de la tÃ©lÃ©portation : 250$");
         modifiedCentreVille.setLore(lore);
         centreVille.setItemMeta(modifiedCentreVille);
         
         ItemStack zoneNordEst = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta modifiedzoneNordEst = centreVille.getItemMeta();
-        modifiedCentreVille.setDisplayName("§lZone Nord-Est");
+        modifiedCentreVille.setDisplayName("Â§lZone Nord-Est");
         lore = new ArrayList<String>();
-        lore.add("§eCoût de la téléportation : 500$");
+        lore.add("Â§eCoÃ»t de la tÃ©lÃ©portation : 500$");
         modifiedzoneNordEst.setLore(lore);
         zoneNordEst.setItemMeta(modifiedzoneNordEst);
         
@@ -126,7 +126,7 @@ public class Heliport implements Listener, CommandExecutor
             Player player = (Player) sender;
             if (cmd.getName().equalsIgnoreCase("map")) {
                 
-                Inventory inv = Bukkit.createInventory(null, 54, "Héliport");
+                Inventory inv = Bukkit.createInventory(null, 54, "HÃ©liport");
                 
                 setItems(inv);
                 
@@ -148,9 +148,9 @@ public class Heliport implements Listener, CommandExecutor
         
         if (e.getView().getTitle().equalsIgnoreCase("Heliport")) {
             e.setCancelled(true);
-            if (current.getType().equals(Material.GREEN_STAINED_GLASS_PANE) && current.getItemMeta().getDisplayName().equalsIgnoreCase("§lCentre-Ville")) {
+            if (current.getType().equals(Material.GREEN_STAINED_GLASS_PANE) && current.getItemMeta().getDisplayName().equalsIgnoreCase("Â§lCentre-Ville")) {
                 player.closeInventory();
-                player.sendMessage("§8La téléportation commence, veuillez ne pas bougez.");
+                player.sendMessage("Â§8La tÃ©lÃ©portation commence, veuillez ne pas bougez.");
                 new BukkitRunnable() {
                     
                     private int i = 10;
@@ -159,19 +159,19 @@ public class Heliport implements Listener, CommandExecutor
                     public void run() {
                         if (mouvement)
                         {
-                            player.sendMessage("§cTéléportation annulée !");
+                            player.sendMessage("Â§cTÃ©lÃ©portation annulÃ©e !");
                             i = 50;
                             mouvement = false;
                             cancel();
                         }
                         if (i == 10 || i == 5)
                         {
-                            player.sendMessage("§8Téléportation dans " + i + " secondes !");
+                            player.sendMessage("Â§8TÃ©lÃ©portation dans " + i + " secondes !");
                         }
                         
                         if (i == 0)
                         {
-                            player.sendMessage("§8Téléportation...");
+                            player.sendMessage("Â§8TÃ©lÃ©portation...");
                             player.teleport(loc);
                             cancel();
                         }

@@ -10,6 +10,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.*;
 
 public class ZombieManager implements Listener
 {
@@ -20,43 +23,44 @@ public class ZombieManager implements Listener
         this.main = _main;
     }
 
-    @EventHandler
-    public void zombieSpawnEvent(CreatureSpawnEvent e)
-    {
-        if (e.getEntityType() == EntityType.ZOMBIE_VILLAGER)
-        {
-            e.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999999, 50, true, false));
-        }
-    }
+    private final Map<UUID, BukkitTask> resistanceTasks = new HashMap<>();
 
     @EventHandler
-    public void zombieDamageEvent(EntityDamageEvent e)
-    {
-        if (e.getEntityType() == EntityType.ZOMBIE_VILLAGER)
-        {
-            if (e.getCause() == EntityDamageEvent.DamageCause.FIRE
-                    || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK
-                    || e.getCause() == EntityDamageEvent.DamageCause.LAVA
-                    || e.getCause() == EntityDamageEvent.DamageCause.MELTING
-                    || e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR
-            )
-            {
-                if (((LivingEntity) e.getEntity()).hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE))
-                {
-                    ((LivingEntity) e.getEntity()).removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-                    new BukkitRunnable() {
+    public void zombieDamageEvent(EntityDamageEvent e) {
+        if (e.getEntityType() == EntityType.ZOMBIE_VILLAGER && e.getEntity() instanceof LivingEntity) {
+            LivingEntity zombie = (LivingEntity) e.getEntity();
+            UUID zombieId = zombie.getUniqueId();
+
+            Set<EntityDamageEvent.DamageCause> vulnerableCauses = EnumSet.of(
+                    EntityDamageEvent.DamageCause.FIRE,
+                    EntityDamageEvent.DamageCause.FIRE_TICK,
+                    EntityDamageEvent.DamageCause.LAVA,
+                    EntityDamageEvent.DamageCause.MELTING,
+                    EntityDamageEvent.DamageCause.HOT_FLOOR
+            );
+
+            if (vulnerableCauses.contains(e.getCause())) {
+                if (zombie.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
+                    zombie.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+
+                    if (resistanceTasks.containsKey(zombieId)) {
+                        resistanceTasks.get(zombieId).cancel();
+                    }
+
+                    BukkitTask task = new BukkitRunnable() {
                         @Override
                         public void run() {
-                            ((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999999, 50, true, false));
+                            zombie.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 50, true, false));
+                            resistanceTasks.remove(zombieId);
                         }
-                    }.runTaskLater(main, 20 * 5);
-                }
+                    }.runTaskLater(main, 5 * 20);
 
-            }
-            else if (((LivingEntity) e.getEntity()).hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE))
-            {
+                    resistanceTasks.put(zombieId, task);
+                }
+            } else if (zombie.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
                 e.setDamage(0);
             }
         }
     }
+
 }

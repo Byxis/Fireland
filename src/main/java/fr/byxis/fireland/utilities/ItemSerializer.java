@@ -167,7 +167,7 @@ public class ItemSerializer {
                 args = str.split(":");
                 if (args.length < 3)
                 {
-                    continue; // ou gérer l'erreur comme vous le souhaitez
+                    continue; // ou gÃ¨rer l'erreur comme vous le souhaitez
                 }
                 String key = args[1];
                 String value = args[2];
@@ -273,7 +273,7 @@ public class ItemSerializer {
                 try {
                     yaml.set(key.getKey(), data.get(key, PersistentDataType.INTEGER));
                 } catch (IllegalArgumentException e2) {
-                    // Ajoutez d'autres types si nécessaire
+                    // Ajoutez d'autres types si nÃ©cessaire
                 }
             }
         });

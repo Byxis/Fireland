@@ -25,7 +25,7 @@ public class MenuPrime {
     public static void openPrime(Fireland main, Player p)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory zoneInv = Bukkit.createInventory(null, 9 * 4, "§4Primes");
+        Inventory zoneInv = Bukkit.createInventory(null, 9 * 4, "Â§4Primes");
         setPrimeItem(main, zoneInv, p);
         p.openInventory(zoneInv);
     }
@@ -36,16 +36,16 @@ public class MenuPrime {
         {
             inv.setItem(i + 9 * 3, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        inv.setItem(12, InventoryUtilities.setItemMeta(Material.PLAYER_HEAD, "§cAjouter une prime", (short) 0));
-        inv.setItem(14, InventoryUtilities.setItemMeta(Material.CHEST, "§eConsulter les primes", (short) 0));
+        inv.setItem(12, InventoryUtilities.setItemMeta(Material.PLAYER_HEAD, "Â§cAjouter une prime", (short) 0));
+        inv.setItem(14, InventoryUtilities.setItemMeta(Material.CHEST, "Â§eConsulter les primes", (short) 0));
 
-        inv.setItem(35, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+        inv.setItem(35, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cRetour Ã  l'intendant", (short) 0));
     }
 
     public static void openPrimePlayer(Fireland main, Player p, int page)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory zoneInv = Bukkit.createInventory(null, 54, "§4Primes: Sélectionner un joueur");
+        Inventory zoneInv = Bukkit.createInventory(null, 54, "Â§4Primes: SÃ©lectionner un joueur");
         setPrimePlayerItem(main, zoneInv, p, page);
         p.openInventory(zoneInv);
     }
@@ -63,7 +63,7 @@ public class MenuPrime {
         {
             if (!player.getName().equalsIgnoreCase(p.getName()) || p.getName().equalsIgnoreCase("Byxis_"))
             {
-                inv.setItem(i, InventoryUtilities.getHead(player.getUniqueId(), "§e " + player.getName()));
+                inv.setItem(i, InventoryUtilities.getHead(player.getUniqueId(), "Â§e" + player.getName()));
                 i++;
             }
             if (i == 45)
@@ -71,13 +71,13 @@ public class MenuPrime {
                 break;
             }
         }
-        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour au menu des primes", (short) 0));
+        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cRetour au menu des primes", (short) 0));
     }
 
     public static void openPrimeMoney(Fireland main, Player p, String player, int amount)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory zoneInv = Bukkit.createInventory(null, 9 * 4, "§4Primes: Ajouter un montant");
+        Inventory zoneInv = Bukkit.createInventory(null, 9 * 4, "Â§4Primes: Ajouter un montant");
         setPrimeMoneyItem(main, zoneInv, p, player, amount);
         p.openInventory(zoneInv);
     }
@@ -88,36 +88,36 @@ public class MenuPrime {
         {
             inv.setItem(i + 9 * 3, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        inv.setItem(10, InventoryUtilities.setItemMeta(Material.RAW_GOLD, "§cEnlever 1000$", (short) 0, 1));
-        inv.setItem(11, InventoryUtilities.setItemMeta(Material.GOLD_INGOT, "§cEnlever 100$", (short) 0, 1));
-        inv.setItem(12, InventoryUtilities.setItemMeta(Material.GOLD_NUGGET, "§cEnlever 10$", (short) 0, 1));
+        inv.setItem(10, InventoryUtilities.setItemMeta(Material.RAW_GOLD, "Â§cEnlever 1000$", (short) 0, 1));
+        inv.setItem(11, InventoryUtilities.setItemMeta(Material.GOLD_INGOT, "Â§cEnlever 100$", (short) 0, 1));
+        inv.setItem(12, InventoryUtilities.setItemMeta(Material.GOLD_NUGGET, "Â§cEnlever 10$", (short) 0, 1));
         List<String> lore = new ArrayList<>();
-        lore.add("§8Montant: §6 " + amount + " $");
-        ItemStack item = InventoryUtilities.getHead(BasicUtilities.getUuid(player), "§e " + player);
+        lore.add("Â§8Montant: Â§6" + amount + " $");
+        ItemStack item = InventoryUtilities.getHead(BasicUtilities.getUuid(player), "Â§e" + player);
         ItemMeta meta = item.getItemMeta();
         meta.setLore(lore);
         item.setItemMeta(meta);
         inv.setItem(13, item);
-        inv.setItem(14, InventoryUtilities.setItemMeta(Material.GOLD_NUGGET, "§eAjouter 10$", (short) 0));
-        inv.setItem(15, InventoryUtilities.setItemMeta(Material.GOLD_INGOT, "§eAjouter 100$", (short) 0));
-        inv.setItem(16, InventoryUtilities.setItemMeta(Material.RAW_GOLD, "§eAjouter 1000$", (short) 0));
+        inv.setItem(14, InventoryUtilities.setItemMeta(Material.GOLD_NUGGET, "Â§eAjouter 10$", (short) 0));
+        inv.setItem(15, InventoryUtilities.setItemMeta(Material.GOLD_INGOT, "Â§eAjouter 100$", (short) 0));
+        inv.setItem(16, InventoryUtilities.setItemMeta(Material.RAW_GOLD, "Â§eAjouter 1000$", (short) 0));
 
         if (Fireland.getEco().getBalance(p) >= amount)
         {
-            inv.setItem(27, InventoryUtilities.setItemMeta(Material.STRUCTURE_VOID, "§aAjouter la prime", (short) 0, 1));
+            inv.setItem(27, InventoryUtilities.setItemMeta(Material.STRUCTURE_VOID, "Â§aAjouter la prime", (short) 0, 1));
         }
         else
         {
-            inv.setItem(27, InventoryUtilities.setItemMeta(Material.BARRIER, "§cVous n'avez pas assez d'argent", (short) 0, 1));
+            inv.setItem(27, InventoryUtilities.setItemMeta(Material.BARRIER, "Â§cVous n'avez pas assez d'argent", (short) 0, 1));
         }
 
-        inv.setItem(35, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cChanger de joueur", (short) 0));
+        inv.setItem(35, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cChanger de joueur", (short) 0));
     }
 
     public static void openPrimeList(Fireland main, Player p)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory zoneInv = Bukkit.createInventory(null, 54, "§4Primes disponibles");
+        Inventory zoneInv = Bukkit.createInventory(null, 54, "Â§4Primes disponibles");
         setPrimeListItem(main, zoneInv, p);
         p.openInventory(zoneInv);
     }
@@ -132,11 +132,11 @@ public class MenuPrime {
         for (String sUuid : PrimeEvent.getConfig().getConfig().getConfigurationSection("").getKeys(false))
         {
             UUID uuid = UUID.fromString(sUuid);
-            ItemStack item = InventoryUtilities.getHead(uuid, "§r " + Bukkit.getOfflinePlayer(uuid).getName());
+            ItemStack item = InventoryUtilities.getHead(uuid, "Â§r" + Bukkit.getOfflinePlayer(uuid).getName());
             ItemMeta meta = item.getItemMeta();
             ArrayList<String> lore = new ArrayList<String>();
-            lore.add("§8Valeur: §6 " + getPrime(uuid) + "$");
-            lore.add("§8Durée restante: §7 " + BasicUtilities.getStringTime(getPrimeMaxDay() * 24 * 60 * 60 * 1000 + getPrimeDate(sUuid).getTime() - System.currentTimeMillis()));
+            lore.add("Â§8Valeur: Â§6" + getPrime(uuid) + "$");
+            lore.add("Â§8DurÃ©e restante: Â§7" + BasicUtilities.getStringTime(getPrimeMaxDay() * 24 * 60 * 60 * 1000 + getPrimeDate(sUuid).getTime() - System.currentTimeMillis()));
             meta.setLore(lore);
 
             item.setItemMeta(meta);
@@ -152,7 +152,7 @@ public class MenuPrime {
             }
         }
 
-        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour au menu des primes", (short) 0));
+        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cRetour au menu des primes", (short) 0));
     }
 
 }

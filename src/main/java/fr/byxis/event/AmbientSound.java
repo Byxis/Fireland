@@ -28,12 +28,12 @@ public class AmbientSound implements Listener, CommandExecutor
             if (config.getPlayerDB().getBoolean("ambientsound." + p.getUniqueId()))
             {
                 config.getPlayerDB().set("ambientsound." + p.getUniqueId(), false);
-                p.sendMessage("§8Les sons d'ambiance ont été désactivés !");
+                p.sendMessage("Â§8Les sons d'ambiance ont Ã©tÃ© dÃ©sactivÃ©s !");
             }
             else
             {
                 config.getPlayerDB().set("ambientsound." + p.getUniqueId(), true);
-                p.sendMessage("§8Les sons d'ambiance ont été activés !");
+                p.sendMessage("Â§8Les sons d'ambiance ont Ã©tÃ© activÃ©s !");
             }
             config.savePlayerDB();
         }

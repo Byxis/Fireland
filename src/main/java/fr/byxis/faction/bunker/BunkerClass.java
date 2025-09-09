@@ -16,6 +16,7 @@ import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.player.level.LevelStorage;
 import fr.byxis.player.level.PlayerLevel;
@@ -30,6 +31,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -49,6 +51,7 @@ public class BunkerClass {
     private final Fireland m_main;
 
     private final int padding = 200;
+    private static final int DELAY_BETWEEN_SKIN_CHANGE = 7; //in days
 
     private final BunkerStorage m_storage;
 
@@ -137,7 +140,7 @@ public class BunkerClass {
         {
             for (Player p : m_invitations.get(_p))
             {
-                InGameUtilities.sendPlayerError(p, "Vous avez quitté le bunker de " + m_name + " car la personne qui vous a invité est partie.");
+                InGameUtilities.sendPlayerError(p, "Vous avez quittÃ© le bunker de " + m_name + " car la personne qui vous a invitÃ© est partie.");
                 teleportBack(p, false);
             }
             m_invitations.removeAll(_p);
@@ -147,7 +150,7 @@ public class BunkerClass {
             m_invitations.removeAll(_p);
         }
         teleportBack(_p, true);
-        InGameUtilities.sendPlayerError(_p, "Vous avez quitté le bunker de " + m_name);
+        InGameUtilities.sendPlayerError(_p, "Vous avez quittÃ© le bunker de " + m_name);
     }
 
     private void teleportBack(Player p, boolean doTpBackSpawn) {
@@ -168,7 +171,7 @@ public class BunkerClass {
         }
         for (Player players : m_playerInsideOldLocation.keySet())
         {
-            InGameUtilities.sendPlayerError(players, "Le joueur " + p.getName() + " a quitté le bunker");
+            InGameUtilities.sendPlayerError(players, "Le joueur " + p.getName() + " a quittÃ© le bunker");
         }
     }
 
@@ -400,7 +403,7 @@ public class BunkerClass {
         try {
             if (_p != null)
             {
-                InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getFoodAmount() + " steaks !");
+                InGameUtilities.sendPlayerSucces(_p, "Vous avez rÃ©cupÃ©rÃ© " + getFoodAmount() + " steaks !");
                 _p.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, getFoodAmount()));
             }
             final Connection connection = firelandConnection.getConnection();
@@ -455,7 +458,7 @@ public class BunkerClass {
         try {
             if (_p != null)
             {
-                InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getScrapAmount() + " scraps !");
+                InGameUtilities.sendPlayerSucces(_p, "Vous avez rÃ©cupÃ©rÃ© " + getScrapAmount() + " scraps !");
                 _p.getInventory().addItem(new ItemStack(Material.NETHERITE_SCRAP, getScrapAmount()));
             }
             final Connection connection = firelandConnection.getConnection();
@@ -510,7 +513,7 @@ public class BunkerClass {
         try {
             if (_p != null)
             {
-                InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getPowderAmount() + " poudre !");
+                InGameUtilities.sendPlayerSucces(_p, "Vous avez rÃ©cupÃ©rÃ© " + getPowderAmount() + " poudre !");
                 _p.getInventory().addItem(new ItemStack(Material.GUNPOWDER, getPowderAmount()));
             }
             final Connection connection = firelandConnection.getConnection();
@@ -564,7 +567,7 @@ public class BunkerClass {
         try {
             if (_p != null)
             {
-                InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getRepairKitAmount() + " kit de réparations !");
+                InGameUtilities.sendPlayerSucces(_p, "Vous avez rÃ©cupÃ©rÃ© " + getRepairKitAmount() + " kit de rÃ©parations !");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give " + _p.getName() + " Kitreparation " + getRepairKitAmount());
             }
             final Connection connection = firelandConnection.getConnection();
@@ -617,7 +620,7 @@ public class BunkerClass {
         try {
             if (_p != null)
             {
-                InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getMedsAmount() + " médicaments !");
+                InGameUtilities.sendPlayerSucces(_p, "Vous avez rÃ©cupÃ©rÃ© " + getMedsAmount() + " mÃ©dicaments !");
                 _p.getInventory().addItem(new ItemStack(Material.HONEYCOMB, getMedsAmount()));
             }
             final Connection connection = firelandConnection.getConnection();
@@ -670,7 +673,7 @@ public class BunkerClass {
         try {
             if (_p != null)
             {
-                InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getAntiDouleurAmount() + " Anti-Douleurs !");
+                InGameUtilities.sendPlayerSucces(_p, "Vous avez rÃ©cupÃ©rÃ© " + getAntiDouleurAmount() + " Anti-Douleurs !");
 
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give " + _p.getName() + " Antidouleur " + getAntiDouleurAmount());
             }
@@ -725,7 +728,7 @@ public class BunkerClass {
         try {
             if (_p != null)
             {
-                InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getSerumAmount() + " Sérum du Berserker !");
+                InGameUtilities.sendPlayerSucces(_p, "Vous avez rÃ©cupÃ©rÃ© " + getSerumAmount() + " SÃ©rum du Berserker !");
 
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give " + _p.getName() + " Serumberserker " + getSerumAmount());
             }
@@ -751,6 +754,14 @@ public class BunkerClass {
 
     public void changeSkin(Player p, String _skin)
     {
+
+        long delay = getDelayForSkinChange();
+        if (delay > 0)
+        {
+            InGameUtilities.sendPlayerError(p, "Vous ne pouvez pas encore changer de skin, veuillez patienter " + BasicUtilities.getStringTime(delay));
+            return;
+        }
+        setSkinChanged();
         m_skin = _skin;
         while (!m_playerInsideOldLocation.isEmpty())
         {
@@ -758,11 +769,54 @@ public class BunkerClass {
         }
         if (!loadFileAndPaste(m_skin + m_level + ".schem"))
         {
-            InGameUtilities.sendPlayerError(p, "Le skin de bunker a été équipé. Cependant, il n'est pas disponible pour ce niveau. Le skin sera appliqué quand vous atteindrez le niveau requis");
+            InGameUtilities.sendPlayerError(p, "Le skin de bunker a Ã©tÃ© Ã©quipÃ©. Cependant, il n'est pas disponible pour ce niveau. Le skin sera appliquÃ© quand vous atteindrez le niveau requis");
         }
         else
         {
-            InGameUtilities.sendPlayerSucces(p, "Le skin de bunker a été équipé et appliqué !");
+            InGameUtilities.sendPlayerSucces(p, "Le skin de bunker a Ã©tÃ© Ã©quipÃ© et appliquÃ© !");
+        }
+    }
+
+    public long getDelayForSkinChange()
+    {
+        Timestamp lastChanged = getLastSkinChange();
+        LocalDateTime localDateTime = lastChanged.toLocalDateTime();
+        LocalDateTime nextAvailable = localDateTime.plusDays(DELAY_BETWEEN_SKIN_CHANGE);
+        Timestamp nextAvailableChange = Timestamp.valueOf(nextAvailable);
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        return nextAvailableChange.getTime() - now.getTime();
+    }
+
+    public Timestamp getLastSkinChange()
+    {
+        Timestamp time = new Timestamp(0);
+        final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
+        try {
+            final Connection connection = firelandConnection.getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT last_skin_change FROM faction_housing WHERE faction = ?");
+            preparedStatement.setString(1, m_name);
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.next())
+            {
+                time = result.getTimestamp(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return time;
+    }
+
+    public void setSkinChanged()
+    {
+        final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
+        try {
+            final Connection connection = firelandConnection.getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET last_skin_change = ? WHERE faction = ?");
+            preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setString(2, m_name);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

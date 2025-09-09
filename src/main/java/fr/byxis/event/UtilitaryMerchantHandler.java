@@ -21,7 +21,7 @@ public class UtilitaryMerchantHandler implements Listener
 
     @EventHandler
     public void entitySpawn(EntitySpawnEvent e) {
-        if (e.getEntity() instanceof Villager && e.getEntity().getName() == "Marchand Utilitaire") {
+        if (e.getEntity() instanceof Villager && e.getEntity().getName().equals("Marchand Utilitaire")) {
             
             e.getEntity().setSilent(true);
             

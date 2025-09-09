@@ -39,14 +39,14 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     }
                 }
                 if (name.equalsIgnoreCase("")) {
-                    player.sendMessage("§cCe shop n'existe pas.");
+                    player.sendMessage("Â§cCe shop n'existe pas.");
                     return true;
                 }
                 if (getPlayerLevel(player.getUniqueId()).hasAccesstoShop(name))
                     sf.openInv(player, name.replaceAll("_", " "), 1);
                 else
                 {
-                    InGameUtilities.sendPlayerError(player, "Vous n'avez pas encore accès à ce shop. Pour y avoir accès, augmentez votre niveau.");
+                    InGameUtilities.sendPlayerError(player, "Vous n'avez pas encore accÃ¨s Ã  ce shop. Pour y avoir accÃ¨s, augmentez votre niveau.");
                 }
 
             } else if (args[0].equalsIgnoreCase("newitem") && player.hasPermission("fireland.admin")) {
@@ -54,7 +54,7 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     String name = player.getItemInHand().getItemMeta().getDisplayName();
                         /*name = name.replaceAll("[?.{1}]", "");
                         name = name.replaceAll("[^a-zA-Z0-9]", " ");*/
-                    name = name.replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "");
+                    name = name.replaceAll("Â§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "");
 
                     name = name.replaceAll("_", " ");
 
@@ -64,10 +64,10 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                         if (i + 1 != words.length)
                         {
 
-                            if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                            if (words[i + 1].contains("Â§") || words[i + 1].contains("Â§")) {
                                 sbb.append(words[i]);
                                 break;
-                            } //«
+                            } //Â§
                             else {
                                 sbb.append(words[i]).append(" ");
                             }
@@ -107,14 +107,14 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     player.sendMessage("c:" + command);
                     ShopFunction sf = new ShopFunction(main, player);
                     sf.addItemOnShop(name, item, dura, price, sell, shop, command, custommodeldata);
-                    player.sendMessage("§aItem " + name + "§r§a mis en vente dans le shop " + shop + " !");
+                    player.sendMessage("Â§aItem " + name + "Â§rÂ§a mis en vente dans le shop " + shop + " !");
                 }
                 else
                 {
                     player.sendMessage("L'item dans votre main est invalide.");
                 }
             } else {
-                player.sendMessage("§cUsage : /shop <shop/newitem>");
+                player.sendMessage("Â§cUsage : /shop <shop/newitem>");
             }
             return true;
         }

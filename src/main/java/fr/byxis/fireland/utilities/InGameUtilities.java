@@ -72,7 +72,7 @@ public class InGameUtilities implements Listener {
                 i++;
                 if (isPlayerMoving(player.getUniqueId()))
                 {
-                    sendPlayerError(player, "Téléportation annulée !");
+                    sendPlayerError(player, "TÃ©lÃ©portation annulÃ©e !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound " + player.getName() + " * minecraft:" + sound);
                     main.getHashMapManager().removeTeleporting(player.getUniqueId());
                     cancel();
@@ -81,11 +81,11 @@ public class InGameUtilities implements Listener {
                 {
                     if ((i % 5 == 0 && i != duration) || i == duration - 3 || i == duration - 2 || i == duration - 1)
                     {
-                        sendPlayerInformation(player, "Téléportation dans " + (duration - i) + " secondes");
+                        sendPlayerInformation(player, "TÃ©lÃ©portation dans " + (duration - i) + " secondes");
                     }
                     if (i == duration)
                     {
-                        sendPlayerInformation(player, "Téléportation...");
+                        sendPlayerInformation(player, "TÃ©lÃ©portation...");
                         player.teleport(loc);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
                         main.getHashMapManager().removeTeleporting(player.getUniqueId());
@@ -100,7 +100,7 @@ public class InGameUtilities implements Listener {
     {
         if (hasPlayerCooldown(player.getUniqueId()))
         {
-            InGameUtilities.sendPlayerError(player, "Vous êtes en cooldown. Vous pourrez vous téléporter dans " + BasicUtilities.getStringTime(new Date().getTime() - getPlayerCooldown(player.getUniqueId())));
+            InGameUtilities.sendPlayerError(player, "Vous Ãªtes en cooldown. Vous pourrez vous tÃ©lÃ©porter dans " + BasicUtilities.getStringTime(new Date().getTime() - getPlayerCooldown(player.getUniqueId())));
             return;
         }
         InGameUtilities.removePlayerCooldown(player.getUniqueId());
@@ -114,7 +114,7 @@ public class InGameUtilities implements Listener {
                 i++;
                 if (isPlayerMoving(player.getUniqueId()))
                 {
-                    sendPlayerError(player, "Téléportation annulée !");
+                    sendPlayerError(player, "TÃ©lÃ©portation annulÃ©e !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound " + player.getName() + " * minecraft:" + sound);
                     main.getHashMapManager().removeTeleporting(player.getUniqueId());
                     cancel();
@@ -123,11 +123,11 @@ public class InGameUtilities implements Listener {
                 {
                     if ((i % 5 == 0 && i != duration) || i == duration - 3 || i == duration - 2 || i == duration - 1)
                     {
-                        sendPlayerInformation(player, "Téléportation dans " + (duration - i) + " secondes");
+                        sendPlayerInformation(player, "TÃ©lÃ©portation dans " + (duration - i) + " secondes");
                     }
                     if (i == duration)
                     {
-                        sendPlayerInformation(player, "Téléportation...");
+                        sendPlayerInformation(player, "TÃ©lÃ©portation...");
                         player.teleport(loc);
                         PLAYER_COOLDOWN.put(player.getUniqueId(), new Date(System.currentTimeMillis() + cooldown * 1000L));
                         main.getHashMapManager().addTeleporting(player.getUniqueId());
@@ -248,7 +248,7 @@ public class InGameUtilities implements Listener {
         {
             return;
         }
-        p.sendMessage("§6§lFireland§8§l >> §7 " + msg);
+        p.sendMessage("Â§6Â§lFirelandÂ§8Â§l >> Â§7" + msg);
     }
 
     public static void sendPlayerSucces(Player p, String msg)
@@ -257,7 +257,16 @@ public class InGameUtilities implements Listener {
         {
             return;
         }
-        p.sendMessage("§6§lFireland§8§l >> §a " + msg);
+        p.sendMessage("Â§6Â§lFirelandÂ§8Â§l >> Â§a" + msg);
+    }
+
+    public static void sendPlayerBonus(Player p, String msg)
+    {
+        if (p == null)
+        {
+            return;
+        }
+        p.sendMessage("Â§6Â§lFirelandÂ§8Â§l >> Â§d" + msg);
     }
 
     public static void sendPlayerError(Player p, String msg)
@@ -266,7 +275,7 @@ public class InGameUtilities implements Listener {
         {
             return;
         }
-        p.sendMessage("§6§lFireland§8§l >> §c " + msg);
+        p.sendMessage("Â§6Â§lFirelandÂ§8Â§l >> Â§c" + msg);
     }
 
     public static void debugp(Object txt)
@@ -274,7 +283,7 @@ public class InGameUtilities implements Listener {
         Player p = Bukkit.getPlayer("Byxis_");
         if (p != null && p.isOnline())
         {
-            p.sendMessage("§c§lFireland§8§l >> §a " + txt);
+            p.sendMessage("Â§cÂ§lFirelandÂ§8Â§l >> Â§a" + txt);
         }
     }
 
@@ -283,7 +292,7 @@ public class InGameUtilities implements Listener {
         Player p = Bukkit.getPlayer("Byxis_");
         if (p != null && p.isOnline())
         {
-            p.sendMessage("§c[FBUG-§l " + code + "§r§c] >> §a " + txt);
+            p.sendMessage("Â§c[FBUG-Â§l " + code + "Â§rÂ§c] >> Â§a" + txt);
         }
     }
 
@@ -299,7 +308,7 @@ public class InGameUtilities implements Listener {
 
     public static void sendInteractivePlayerMessage(Player p, String msg, String cmd, String hover, ClickEvent.Action action)
     {
-        TextComponent message = new TextComponent("§6§lFireland§8§l >> §7 " + msg);
+        TextComponent message = new TextComponent("Â§6Â§lFirelandÂ§8Â§l >> Â§7" + msg);
         message.setClickEvent(new ClickEvent(action, cmd));
         message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
         p.spigot().sendMessage(message);
@@ -342,19 +351,19 @@ public class InGameUtilities implements Listener {
     public static ChatColor getStringColor(String color)
     {
         return switch (color) {
-            case "§0" -> ChatColor.BLACK;
-            case "§1" -> ChatColor.DARK_BLUE;
-            case "§2" -> ChatColor.DARK_GREEN;
-            case "§3" -> ChatColor.BLUE;
-            case "§4" -> ChatColor.RED;
-            case "§5" -> ChatColor.DARK_PURPLE;
-            case "§6" -> ChatColor.GOLD;
-            case "§8" -> ChatColor.DARK_GRAY;
-            case "§a" -> ChatColor.GREEN;
-            case "§b" -> ChatColor.AQUA;
-            case "§d" -> ChatColor.LIGHT_PURPLE;
-            case "§e" -> ChatColor.YELLOW;
-            case "§r" -> ChatColor.WHITE;
+            case "Â§0" -> ChatColor.BLACK;
+            case "Â§1" -> ChatColor.DARK_BLUE;
+            case "Â§2" -> ChatColor.DARK_GREEN;
+            case "Â§3" -> ChatColor.BLUE;
+            case "Â§4" -> ChatColor.RED;
+            case "Â§5" -> ChatColor.DARK_PURPLE;
+            case "Â§6" -> ChatColor.GOLD;
+            case "Â§8" -> ChatColor.DARK_GRAY;
+            case "Â§a" -> ChatColor.GREEN;
+            case "Â§b" -> ChatColor.AQUA;
+            case "Â§d" -> ChatColor.LIGHT_PURPLE;
+            case "Â§e" -> ChatColor.YELLOW;
+            case "Â§r" -> ChatColor.WHITE;
             default   -> ChatColor.GRAY;
         };
     }

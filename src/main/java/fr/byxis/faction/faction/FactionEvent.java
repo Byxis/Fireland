@@ -41,7 +41,7 @@ public class FactionEvent implements Listener {
             }
             if (infos.doShowPrefix())
             {
-                main.getHashMapManager().addFactionPrefixMap(e.getPlayer().getUniqueId(), infos.getColorcode() + infos.getName() + " > §r");
+                main.getHashMapManager().addFactionPrefixMap(e.getPlayer().getUniqueId(), infos.getColorcode() + infos.getName() + " > Â§r");
             }
         }
     }

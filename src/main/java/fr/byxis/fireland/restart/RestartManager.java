@@ -25,7 +25,7 @@ public class RestartManager {
         m_main = _main;
         m_main.getServer().getPluginManager().registerEvents(new RestartEvent(), m_main);
         m_main.getCommand("frestart").setExecutor(new RestartCommand());
-        m_bar = Bukkit.createBossBar("§a§lRedémarrage du serveur", BarColor.GREEN, BarStyle.SOLID);
+        m_bar = Bukkit.createBossBar("Â§aÂ§lRedÃ©marrage du serveur", BarColor.GREEN, BarStyle.SOLID);
         m_bar.setProgress(1);
 
         new BukkitRunnable() {
@@ -52,7 +52,7 @@ public class RestartManager {
         m_bar.removeAll();
         for (Player p : Bukkit.getOnlinePlayers())
         {
-            InGameUtilities.sendPlayerError(p, "Le redémarrage planifié à été annulé.");
+            InGameUtilities.sendPlayerError(p, "Le redÃ©marrage planifiÃ© Ã  Ã©tÃ© annulÃ©.");
         }
     }
 
@@ -62,7 +62,7 @@ public class RestartManager {
         m_timeTotal = _time;
         for (Player p : Bukkit.getOnlinePlayers())
         {
-            InGameUtilities.sendPlayerError(p, "§lLe serveur va redémarrer dans " + BasicUtilities.getStringTime(_time * 1000L));
+            InGameUtilities.sendPlayerError(p, "Â§lLe serveur va redÃ©marrer dans " + BasicUtilities.getStringTime(_time * 1000L));
             m_bar.addPlayer(p);
         }
     }
@@ -71,7 +71,7 @@ public class RestartManager {
     {
         for (Player p : Bukkit.getOnlinePlayers())
         {
-            p.kickPlayer("§cLe serveur redémarre.");
+            p.kickPlayer("Â§cLe serveur redÃ©marre.");
         }
         saveAll(_main);
         new BukkitRunnable() {
@@ -91,11 +91,11 @@ public class RestartManager {
             {
                 for (Player p : Bukkit.getOnlinePlayers())
                 {
-                    InGameUtilities.sendPlayerError(p, "Le serveur redémarre dans 1 minute ! Veuillez prendre vos dispositions !");
+                    InGameUtilities.sendPlayerError(p, "Le serveur redÃ©marre dans 1 minute ! Veuillez prendre vos dispositions !");
                 }
             }
             m_bar.setProgress(m_timeRemaining / m_timeTotal);
-            m_bar.setTitle("§a§lRedémarrage du serveur dans " + BasicUtilities.getStringTime((long) (m_timeRemaining * 1000L)));
+            m_bar.setTitle("Â§aÂ§lRedÃ©marrage du serveur dans " + BasicUtilities.getStringTime((long) (m_timeRemaining * 1000L)));
         }
         else if (m_timeRemaining > 0)
         {
@@ -103,17 +103,17 @@ public class RestartManager {
             {
                 for (Player p : Bukkit.getOnlinePlayers())
                 {
-                    InGameUtilities.sendPlayerError(p, "§4§lLe serveur redémarre dans 15 secondes ! Veuillez prendre vos dispositions !");
+                    InGameUtilities.sendPlayerError(p, "Â§4Â§lLe serveur redÃ©marre dans 15 secondes ! Veuillez prendre vos dispositions !");
                 }
             }
             m_bar.setColor(BarColor.RED);
             m_bar.setProgress(m_timeRemaining / m_timeTotal);
-            m_bar.setTitle("§c§lRedémarrage du serveur dans " + BasicUtilities.getStringTime((long) (m_timeRemaining * 1000L)));
+            m_bar.setTitle("Â§cÂ§lRedÃ©marrage du serveur dans " + BasicUtilities.getStringTime((long) (m_timeRemaining * 1000L)));
         }
         else if (m_timeRemaining == 0)
         {
             m_bar.setProgress(0);
-            m_bar.setTitle("§4§lRedémarrage du serveur imminent");
+            m_bar.setTitle("Â§4Â§lRedÃ©marrage du serveur imminent");
         }
     }
 

@@ -29,7 +29,7 @@ public class WorldGuardEvent implements Listener
         {
             if (p.getGameMode() != GameMode.SPECTATOR && p.getGameMode() != GameMode.CREATIVE)
             {
-                p.sendTitle("", "§cVous êtes invincible pendant 30 secondes");
+                p.sendTitle("", "Â§cVous Ãªtes invincible pendant 30 secondes");
                 p.playSound(p.getLocation(), "minecraft:gun.hud.leaving_safezone", 1, 1);
                 p.setInvulnerable(true);
 

@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
 
 import static fr.byxis.fireland.utilities.BasicUtilities.getUuid;
@@ -125,25 +126,25 @@ public class BunkerEvent implements Listener {
                                 if (bk.getAmeliorationPriceJetons() > 0)
                                 {
                                     JetonManager.payJetons(p, bk.getAmeliorationPriceJetons(),
-                                            "Achat de l'amélioration de bunker" + (bk.getBunkerLevel() + 1), false, true);
+                                            "Achat de l'amÃ©lioration de bunker" + (bk.getBunkerLevel() + 1), false, true);
                                 }
-                                ff.sendFactionPlayer(infos.getName(), "Le bunker de votre faction a été amélioré !");
+                                ff.sendFactionPlayer(infos.getName(), "Le bunker de votre faction a Ã©tÃ© amÃ©liorÃ© !");
                                 ff.take(infos.getName(), bk.getAmeliorationPriceMoney());
                                 bk.upgrade();
                             }
                             else
                             {
-                                InGameUtilities.sendPlayerError(p, "Vous n'avez pas assez de jetons pour améliorer le bunker.");
+                                InGameUtilities.sendPlayerError(p, "Vous n'avez pas assez de jetons pour amÃ©liorer le bunker.");
                             }
                         }
                         else
                         {
-                            InGameUtilities.sendPlayerError(p, "La faction n'a pas les fonds pour améliorer le bunker.");
+                            InGameUtilities.sendPlayerError(p, "La faction n'a pas les fonds pour amÃ©liorer le bunker.");
                         }
                     }
                     else
                     {
-                        InGameUtilities.sendPlayerError(p, "Le niveau de la faction est trop bas pour améliorer le bunker, cela nécessite le niveau " + bk.getAmeliorationFactionLevel() + ".");
+                        InGameUtilities.sendPlayerError(p, "Le niveau de la faction est trop bas pour amÃ©liorer le bunker, cela nÃ©cessite le niveau " + bk.getAmeliorationFactionLevel() + ".");
                     }
                 }
             }
@@ -169,13 +170,17 @@ public class BunkerEvent implements Listener {
                 {
                     if (!bk.isInvited(invitee))
                     {
-                        InGameUtilities.sendPlayerSucces(p, "Le joueur " + invitee.getName() + " a bien été invité !");
-                        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez été invité par " + p.getName() + " dans le bunker de " + bk.getName() + ", pour rejoindre, cliquez sur ce message ou tapez §d/bunker join " + bk.getName() + "§r§7 tout en étant dans une safe zone.", "/bunker join " + bk.getName(), "§dCliquez ici pour vous téléporter", ClickEvent.Action.RUN_COMMAND);
+                        InGameUtilities.sendPlayerSucces(p, "Le joueur " + invitee.getName() + " a bien Ã©tÃ© invitÃ© !");
+                        InGameUtilities.sendInteractivePlayerMessage(invitee, "Vous avez Ã©tÃ© invitÃ© par " + p.getName() + 
+                                " dans le bunker de " + bk.getName() + ", pour rejoindre, cliquez sur ce message ou " +
+                                "tapez Â§d/bunker join " + bk.getName() + "Â§rÂ§7 tout en Ã©tant dans une safe zone.",
+                                "/bunker join " + bk.getName(), "Â§dCliquez ici pour vous tÃ©lÃ©porter", 
+                                ClickEvent.Action.RUN_COMMAND);
                         bk.invite(p, invitee);
                     }
                     else
                     {
-                        InGameUtilities.sendPlayerError(p, "Le joueur a déjà été invité !");
+                        InGameUtilities.sendPlayerError(p, "Le joueur a dÃ©jÃ  Ã©tÃ© invitÃ© !");
                     }
                 }
             }
@@ -371,6 +376,20 @@ public class BunkerEvent implements Listener {
             bk.leave(p);
         }
     }
+
+    @EventHandler
+    public void onPluginDisable(PluginDisableEvent e) {
+        if (e.getPlugin().equals(main)) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
+                if (bk != null) {
+                    bk.leave(p);
+                }
+            }
+        }
+    }
+
+
 
     @EventHandler
     public void playerQuitInventory(InventoryCloseEvent e)

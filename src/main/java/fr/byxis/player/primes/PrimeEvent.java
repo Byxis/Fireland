@@ -136,7 +136,7 @@ public class PrimeEvent implements Listener {
             Player p = e.getPlayer();
             Player killer = e.getPlayer().getKiller();
             int prime = getPrime(p);
-            debugp(5, "player : " + p.getName() + ", killer : " + killer.getName() + ", prime : " + prime);
+            debugp(5, "player: " + p.getName() + ", killer: " + killer.getName() + ", prime: " + prime);
 
             FactionFunctions ff = new FactionFunctions(main, null);
 
@@ -148,15 +148,15 @@ public class PrimeEvent implements Listener {
                 {
                     if (!player.getName().equals(killer.getName()) && !player.getName().equals(p.getName()))
                     {
-                        InGameUtilities.sendPlayerInformation(player, "Le joueur " + killer.getName() + " a gagné §6" + prime + "$§7 de prime en tuant " + p.getName() + ".");
+                        InGameUtilities.sendPlayerInformation(player, "Le joueur " + killer.getName() + " a gagnÃ© Â§6" + prime + "$Â§7 de prime en tuant " + p.getName() + ".");
                     }
                     else if (player.getName().equals(killer.getName()))
                     {
-                        InGameUtilities.sendPlayerSucces(player, "Vous avez gagné §6" + prime + "$§7 de prime en tuant " + p.getName() + ".");
+                        InGameUtilities.sendPlayerSucces(player, "Vous avez gagnÃ© Â§6" + prime + "$Â§7 de prime en tuant " + p.getName() + ".");
                     }
                     else if (player.getName().equals(p.getName()))
                     {
-                        InGameUtilities.sendPlayerError(player, killer.getName() + " a gagné §6" + prime + "$§c de prime en vous tuant.");
+                        InGameUtilities.sendPlayerError(player, killer.getName() + " a gagnÃ© Â§6" + prime + "$Â§c de prime en vous tuant.");
                     }
                 }
             }

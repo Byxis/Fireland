@@ -43,12 +43,12 @@ public class BackPack implements Listener, CommandExecutor {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
-        // Vérifie si le joueur tient une peau de cuir en main
+        // VÃ©rifie si le joueur tient une peau de cuir en main
         if (item.getType() == Material.LEATHER && item.getAmount() == 1 && item.getItemMeta().hasCustomModelData() && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
-            // Si le joueur n'a pas encore de sac à dos, donne-lui-en un nouveau.
+            // Si le joueur n'a pas encore de sac Ã  dos, donne-lui-en un nouveau.
             if (isExceedingLimit(player))
             {
-                InGameUtilities.sendPlayerError(player, "Vous ne pouvez avoir qu'un seul sac à dos à la fois !");
+                InGameUtilities.sendPlayerError(player, "Vous ne pouvez avoir qu'un seul sac Ã  dos Ã  la fois !");
                 event.setCancelled(true);
                 return;
             }
@@ -63,7 +63,7 @@ public class BackPack implements Listener, CommandExecutor {
                 InGameUtilities.playWorldSound(player.getLocation(), "gun.hud.bag_open", SoundCategory.PLAYERS, 0.5f, 1f);
             }
             InGameUtilities.playWorldSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 0.5f, 0f);
-            event.setCancelled(true); // Empêche la peau de cuir d'être utilisée comme autre chose que pour ouvrir le sac à dos.
+            event.setCancelled(true); // EmpÃªche la peau de cuir d'Ãªtre utilisÃ©e comme autre chose que pour ouvrir le sac Ã  dos.
         }
     }
 
@@ -88,10 +88,10 @@ public class BackPack implements Listener, CommandExecutor {
     public void onInventoryClose(InventoryCloseEvent e) {
         if (e.getView().getTitle().contains("Pochette")
                 || e.getView().getTitle().contains("Sacoche")
-                || e.getView().getTitle().contains("Sac à dos")
+                || e.getView().getTitle().contains("Sac Ã  dos")
                 || e.getView().getTitle().contains("Sac de sport")
-                || e.getView().getTitle().contains("Sac de randonnée")
-                || e.getView().getTitle().contains("Sac à dos militaire")) {
+                || e.getView().getTitle().contains("Sac de randonnÃ©e")
+                || e.getView().getTitle().contains("Sac Ã  dos militaire")) {
             Player player = (Player) e.getPlayer();
             InGameUtilities.playWorldSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 0.5f, 0f);
             Inventory inventory = e.getInventory();
@@ -154,10 +154,10 @@ public class BackPack implements Listener, CommandExecutor {
         {
             if (e.getView().getTitle().contains("Pochette")
                     || e.getView().getTitle().contains("Sacoche")
-                    || e.getView().getTitle().contains("Sac à dos")
+                    || e.getView().getTitle().contains("Sac Ã  dos")
                     || e.getView().getTitle().contains("Sac de sport")
-                    || e.getView().getTitle().contains("Sac de randonnée")
-                    || e.getView().getTitle().contains("Sac à dos militaire")
+                    || e.getView().getTitle().contains("Sac de randonnÃ©e")
+                    || e.getView().getTitle().contains("Sac Ã  dos militaire")
             )
             {
                 e.setCancelled(true);
@@ -197,19 +197,19 @@ public class BackPack implements Listener, CommandExecutor {
         meta.setCustomModelData(level);
 
         String name = switch (level) {
-            case 1 -> "§cPochette";
-            case 2 -> "§cSacoche";
-            case 3 -> "§cSac à dos";
-            case 4 -> "§cSac de sport";
-            case 5 -> "§cSac de randonnée";
-            case 6 -> "§cSac à dos militaire";
-            default -> "§cA venir";
+            case 1 -> "Â§cPochette";
+            case 2 -> "Â§cSacoche";
+            case 3 -> "Â§cSac Ã  dos";
+            case 4 -> "Â§cSac de sport";
+            case 5 -> "Â§cSac de randonnÃ©e";
+            case 6 -> "Â§cSac Ã  dos militaire";
+            default -> "Â§cA venir";
         };
         meta.setDisplayName(name);
 
         ArrayList<String> lore = new ArrayList<>();
-        lore.add("§8Faites clic droit avec pour l'ouvrir");
-        lore.add("§8Vous ne pouvez pas le stocker");
+        lore.add("Â§8Faites clic droit avec pour l'ouvrir");
+        lore.add("Â§8Vous ne pouvez pas le stocker");
         meta.setLore(lore);
 
         backpack.setItemMeta(meta);

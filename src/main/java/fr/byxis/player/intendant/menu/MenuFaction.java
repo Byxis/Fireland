@@ -22,7 +22,7 @@ public class MenuFaction {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation infos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
-        Inventory faction = Bukkit.createInventory(null, 54, "§8Votre faction: " + ff.getColorCode(infos.getFactionName()) + infos.getFactionName());
+        Inventory faction = Bukkit.createInventory(null, 54, "Â§8Votre faction: " + ff.getColorCode(infos.getFactionName()) + infos.getFactionName());
         setFactionItems(main, faction, p, canReturn);
         p.openInventory(faction);
     }
@@ -40,32 +40,32 @@ public class MenuFaction {
                 inventory.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             }
 
-            String role = "§aMembre";
+            String role = "Â§aMembre";
             if (pInfos.getRole() == 1)
             {
-                role = "§eModérateur";
+                role = "Â§eModÃ©rateur";
             }
             else if (pInfos.getRole() == 2)
             {
-                role = "§cLeader";
+                role = "Â§cLeader";
             }
-            inventory.setItem(8, InventoryUtilities.setItemMeta(Material.BARRIER, "§4§lQuitter la faction", (short) 0));
-            inventory.setItem(26, InventoryUtilities.getHead(finfos.getLeader(), "§7Leader: " + Bukkit.getOfflinePlayer(finfos.getLeader()).getName()));
-            inventory.setItem(30, InventoryUtilities.setItemMetaLore(Material.GOLD_INGOT, "§aArgent - §6 " + finfos.getCurrentMoney() + "/" + finfos.getMaxMoney(), (short) 0, BasicUtilities.listMaker("§8- Faites un §dclic gauche §8pour ajouter §6100$", "§8à la faction (shift pour 1000$)", "§8- §c(Leader)§8 Faites un §dclic droit §8pour retirer §6100$", "§8de la faction (shift pour 1000$)")));
+            inventory.setItem(8, InventoryUtilities.setItemMeta(Material.BARRIER, "Â§4Â§lQuitter la faction", (short) 0));
+            inventory.setItem(26, InventoryUtilities.getHead(finfos.getLeader(), "Â§7Leader: " + Bukkit.getOfflinePlayer(finfos.getLeader()).getName()));
+            inventory.setItem(30, InventoryUtilities.setItemMetaLore(Material.GOLD_INGOT, "Â§aArgent - Â§6" + finfos.getCurrentMoney() + "/" + finfos.getMaxMoney(), (short) 0, BasicUtilities.listMaker("Â§8- Faites un Â§dclic gauche Â§8pour ajouter Â§6100$", "Â§8Ã  la faction (shift pour 1000$)", "Â§8- Â§c(Leader)Â§8 Faites un Â§dclic droit Â§8pour retirer Â§6100$", "Â§8de la faction (shift pour 1000$)")));
             if (finfos.getCurrentUpgrade() >= 5)
-                inventory.setItem(22, InventoryUtilities.setItemMeta(Material.STONE, "§7Bunker de faction", (short) 0));
+                inventory.setItem(22, InventoryUtilities.setItemMeta(Material.STONE, "Â§7Bunker de faction", (short) 0));
             else
             {
                 ArrayList<String> lore = new ArrayList();
-                lore.add("§cDisponible après l'amélioration de faction §l5");
-                inventory.setItem(22, InventoryUtilities.setItemMetaLore(Material.STONE, "§7Bunker de faction", (short) 0, lore));
+                lore.add("Â§cDisponible aprÃ¨s l'amÃ©lioration de faction Â§l5");
+                inventory.setItem(22, InventoryUtilities.setItemMetaLore(Material.STONE, "Â§7Bunker de faction", (short) 0, lore));
             }
-            inventory.setItem(32, InventoryUtilities.setItemMetaLore(Material.GRASS_BLOCK, "§aTerritoires claims -", (short) 0, BasicUtilities.listMaker("§8Consulter vos territoires claims", "§8et vous y téléporter.", "", "")));
-            inventory.setItem(35, InventoryUtilities.setItemMetaLore(Material.ANVIL, "§aAméliorations -", (short) 0, BasicUtilities.listMaker("§8Accédez aux améliorations de la faction !", "§cSeul le leader peut acheter des améliorations !", "", "")));
-            inventory.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "§7Vous êtes " + role + "§7.", (short) 0, BasicUtilities.listMaker("§8Date de création: " + finfos.getCreatedAt(), "", "", "")));
+            inventory.setItem(32, InventoryUtilities.setItemMetaLore(Material.GRASS_BLOCK, "Â§aTerritoires claims -", (short) 0, BasicUtilities.listMaker("Â§8Consulter vos territoires claims", "Â§8et vous y tÃ©lÃ©porter.", "", "")));
+            inventory.setItem(35, InventoryUtilities.setItemMetaLore(Material.ANVIL, "Â§aAmÃ©liorations -", (short) 0, BasicUtilities.listMaker("Â§8AccÃ©dez aux amÃ©liorations de la faction !", "Â§cSeul le leader peut acheter des amÃ©liorations !", "", "")));
+            inventory.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "Â§7Vous Ãªtes " + role + "Â§7.", (short) 0, BasicUtilities.listMaker("Â§8Date de crÃ©ation: " + finfos.getCreatedAt(), "", "", "")));
             if (canReturn)
             {
-                inventory.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+                inventory.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cRetour Ã  l'intendant", (short) 0));
             }
         }
 

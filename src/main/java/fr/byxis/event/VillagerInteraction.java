@@ -49,7 +49,7 @@ public class VillagerInteraction implements Listener
         {
             PermissionUtilities.commandExecutor(p, "shop lourd", "fireland.command.shop");
         }
-        else if (e.getRightClicked().getCustomName().contains("Héliport"))
+        else if (e.getRightClicked().getCustomName().contains("HÃ©liport"))
         {
             PermissionUtilities.commandExecutor(p, "heliport", "fireland.command.heliport");
         }

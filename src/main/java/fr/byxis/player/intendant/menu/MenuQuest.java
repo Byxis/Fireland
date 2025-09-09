@@ -24,7 +24,7 @@ public class MenuQuest {
     public static void openQuestMenu(Fireland main, Player p)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory playerList = Bukkit.createInventory(null, 54, "§8Quêtes quotidiennes");
+        Inventory playerList = Bukkit.createInventory(null, 54, "Â§8QuÃªtes quotidiennes");
         setQuestMenuItems(main, playerList, p);
         p.openInventory(playerList);
     }
@@ -37,7 +37,7 @@ public class MenuQuest {
             inv.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cRetour Ã  l'intendant", (short) 0));
         for (int i = 1; i < 5; i++)
         {
             QuestClass quest = getAvailableQuests().get(pq.getQuest(i).getId());
@@ -54,15 +54,15 @@ public class MenuQuest {
 
             if (pq.getQuest(i).getProgress() == -1)
             {
-                List<String> desc = usingSubstringMethod(quest.getDesc(), 52, "§7");
-                desc.add("§7Progrès : §aFini.");
-                inv.setItem(17 + 2 * i, InventoryUtilities.setItemMetaLore(Material.GLOW_ITEM_FRAME, "§a " + quest.getTitle(), (short) 0, desc));
+                List<String> desc = usingSubstringMethod(quest.getDesc(), 52, "Â§7");
+                desc.add("Â§7ProgrÃ¨s : Â§aFini.");
+                inv.setItem(17 + 2 * i, InventoryUtilities.setItemMetaLore(Material.GLOW_ITEM_FRAME, "Â§a" + quest.getTitle(), (short) 0, desc));
             }
             else
             {
-                List<String> desc = usingSubstringMethod(quest.getDesc(), 53, "§r§7");
-                desc.add("§7Progrès : §8 " + pq.getQuest(i).getProgress());
-                inv.setItem(17 + 2 * i, InventoryUtilities.setItemMetaLore(Material.ITEM_FRAME, "§e " + quest.getTitle(), (short) 0, desc));
+                List<String> desc = usingSubstringMethod(quest.getDesc(), 53, "Â§rÂ§7");
+                desc.add("Â§7ProgrÃ¨s : Â§8" + pq.getQuest(i).getProgress());
+                inv.setItem(17 + 2 * i, InventoryUtilities.setItemMetaLore(Material.ITEM_FRAME, "Â§e" + quest.getTitle(), (short) 0, desc));
             }
         }
 
@@ -70,16 +70,16 @@ public class MenuQuest {
         {
             if (pq.isClaimed())
             {
-                inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§aVous avez déjà récupérer les récompenses", (short) 0, BasicUtilities.listMaker("§8Après avoir effectué les 4 missions", "§8quotidiennes, vous pouvez récupérer", "§6200$ §8et §b1§8 jetons.", "")));
+                inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BARRIER, "Â§aVous avez dÃ©jÃ  rÃ©cupÃ©rer les rÃ©compenses", (short) 0, BasicUtilities.listMaker("Â§8AprÃ¨s avoir effectuÃ© les 4 missions", "Â§8quotidiennes, vous pouvez rÃ©cupÃ©rer", "Â§6200$ Â§8et Â§b1Â§8 jetons.", "")));
             }
             else
             {
-                inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.STRUCTURE_VOID, "§aRécupérer les récompenses", (short) 0, BasicUtilities.listMaker("§8Après avoir effectué les 4 missions", "§8quotidiennes, vous pouvez récupérer", "§6200$ §8et §b1§8 jetons.", "")));
+                inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.STRUCTURE_VOID, "Â§aRÃ©cupÃ©rer les rÃ©compenses", (short) 0, BasicUtilities.listMaker("Â§8AprÃ¨s avoir effectuÃ© les 4 missions", "Â§8quotidiennes, vous pouvez rÃ©cupÃ©rer", "Â§6200$ Â§8et Â§b1Â§8 jetons.", "")));
             }
         }
         else
         {
-            inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§cRécupérer les récompenses", (short) 0, BasicUtilities.listMaker("§8Après avoir effectué les 4 missions", "§8quotidiennes, vous pouvez récupérer", "§6200$ §8et §b1§8 jetons.", "")));
+            inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BARRIER, "Â§cRÃ©cupÃ©rer les rÃ©compenses", (short) 0, BasicUtilities.listMaker("Â§8AprÃ¨s avoir effectuÃ© les 4 missions", "Â§8quotidiennes, vous pouvez rÃ©cupÃ©rer", "Â§6200$ Â§8et Â§b1Â§8 jetons.", "")));
         }
 
     }

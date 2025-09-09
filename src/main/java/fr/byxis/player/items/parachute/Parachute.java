@@ -40,7 +40,7 @@ public class Parachute implements Listener
                 {
                     if (e.getPlayer().getWorld().getName().equalsIgnoreCase("essaim"))
                     {
-                        InGameUtilities.sendPlayerError(e.getPlayer(), "Le parachute a été désactivé dans les essaims !");
+                        InGameUtilities.sendPlayerError(e.getPlayer(), "Le parachute a Ã©tÃ© dÃ©sactivÃ© dans les essaims !");
                         return;
                     }
                     e.getItem().setType(Material.DANDELION);
@@ -52,7 +52,7 @@ public class Parachute implements Listener
                 {
                     if (e.getPlayer().getWorld().getName().equalsIgnoreCase("essaim"))
                     {
-                        InGameUtilities.sendPlayerError(e.getPlayer(), "Le parachute a été désactivé dans les essaims !");
+                        InGameUtilities.sendPlayerError(e.getPlayer(), "Le parachute a Ã©tÃ© dÃ©sactivÃ© dans les essaims !");
                         return;
                     }
                     setParachuting(e.getPlayer(), true);

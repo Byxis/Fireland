@@ -36,9 +36,9 @@ public class Menu implements Listener, CommandExecutor
 
         ItemMeta modifiedCentreVille = centreVille.getItemMeta();
         modifiedCentreVille.setCustomModelData(200);
-        modifiedCentreVille.setDisplayName("§lCentre-Ville");
+        modifiedCentreVille.setDisplayName("Â§lCentre-Ville");
         ArrayList<String> lore = new ArrayList<String>();
-        lore.add("§eCoût de la téléportation : " + main.getConfig().getInt("heliport.centreville.price") + "$");
+        lore.add("Â§eCoÃ»t de la tÃ©lÃ©portation : " + main.getConfig().getInt("heliport.centreville.price") + "$");
         modifiedCentreVille.setLore(lore);
         centreVille.setItemMeta(modifiedCentreVille);
         inv.setItem(11, centreVille);
@@ -47,9 +47,9 @@ public class Menu implements Listener, CommandExecutor
         ItemStack zoneNordEst = new ItemStack(Material.WHEAT_SEEDS);
         ItemMeta modifiedzoneNordEst = zoneNordEst.getItemMeta();
         modifiedzoneNordEst.setCustomModelData(200);
-        modifiedzoneNordEst.setDisplayName("§lZone Nord-Est");
+        modifiedzoneNordEst.setDisplayName("Â§lZone Nord-Est");
         lore = new ArrayList<String>();
-        lore.add("§eCoût de la téléportation : " + main.getConfig().getInt("heliport.zonene.price") + "$");
+        lore.add("Â§eCoÃ»t de la tÃ©lÃ©portation : " + main.getConfig().getInt("heliport.zonene.price") + "$");
         modifiedzoneNordEst.setLore(lore);
         zoneNordEst.setItemMeta(modifiedzoneNordEst);
         inv.setItem(14, zoneNordEst);
@@ -58,9 +58,9 @@ public class Menu implements Listener, CommandExecutor
         ItemStack zoneSud = new ItemStack(Material.WHEAT_SEEDS);
         ItemMeta modifiedzoneSud = zoneNordEst.getItemMeta();
         modifiedzoneSud.setCustomModelData(200);
-        modifiedzoneSud.setDisplayName("§lZone Sud");
+        modifiedzoneSud.setDisplayName("Â§lZone Sud");
         lore = new ArrayList<String>();
-        lore.add("§eCoût de la téléportation : " + main.getConfig().getInt("heliport.zones.price") + "$");
+        lore.add("Â§eCoÃ»t de la tÃ©lÃ©portation : " + main.getConfig().getInt("heliport.zones.price") + "$");
         modifiedzoneSud.setLore(lore);
         zoneSud.setItemMeta(modifiedzoneSud);
         inv.setItem(48, zoneSud);
@@ -69,9 +69,9 @@ public class Menu implements Listener, CommandExecutor
         ItemStack zoneMili = new ItemStack(Material.WHEAT_SEEDS);
         ItemMeta modifiedzoneMili = zoneNordEst.getItemMeta();
         modifiedzoneMili.setCustomModelData(200);
-        modifiedzoneMili.setDisplayName("§lBase Militaire");
+        modifiedzoneMili.setDisplayName("Â§lBase Militaire");
         lore = new ArrayList<String>();
-        lore.add("§eCoût de la téléportation : " + main.getConfig().getInt("heliport.zonemilli.price") + "$");
+        lore.add("Â§eCoÃ»t de la tÃ©lÃ©portation : " + main.getConfig().getInt("heliport.zonemilli.price") + "$");
         modifiedzoneMili.setLore(lore);
         zoneMili.setItemMeta(modifiedzoneMili);
         inv.setItem(51, zoneMili);
@@ -84,7 +84,7 @@ public class Menu implements Listener, CommandExecutor
             Player player = (Player) sender;
             if (cmd.getName().equalsIgnoreCase("menu") || cmd.getName().equalsIgnoreCase("heliport")) {
                 //"\uD83E\uDED4"
-                Inventory inv = Bukkit.createInventory(null, 54, "§f\uD83C\uDFA0");
+                Inventory inv = Bukkit.createInventory(null, 54, "Â§f\uD83C\uDFA0");
                 setItems(inv);
                 player.openInventory(inv);
                 return true;
@@ -107,20 +107,20 @@ public class Menu implements Listener, CommandExecutor
         Location zoneMilli = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.zonemilli.x"), main.getConfig().getDouble("heliport.zonemilli.y"), main.getConfig().getDouble("heliport.zonemilli.z"));
         //553.5D, 76.0D, 704.5D
         if (current != null) {
-            if (e.getView().getTitle().equalsIgnoreCase("§f\uD83C\uDFA0"))
+            if (e.getView().getTitle().equalsIgnoreCase("Â§f\uD83C\uDFA0"))
             {
                 switch (current.getItemMeta().getDisplayName())
                 {
-                    case "§lCentre-Ville":
+                    case "Â§lCentre-Ville":
                         teleportPlayer(player, current, centreville, main.getConfig().getInt("heliport.centreville.price"));
                         break;
-                    case "§lZone Nord-Est":
+                    case "Â§lZone Nord-Est":
                         teleportPlayer(player, current, zoneNE, main.getConfig().getInt("heliport.zonene.price"));
                         break;
-                    case "§lZone Sud":
+                    case "Â§lZone Sud":
                         teleportPlayer(player, current, zoneS, main.getConfig().getInt("heliport.zones.price"));
                         break;
-                    case "§lBase Militaire":
+                    case "Â§lBase Militaire":
                         teleportPlayer(player, current, zoneMilli, main.getConfig().getInt("heliport.zonemilli.price"));
                         break;
                         
@@ -140,13 +140,13 @@ public class Menu implements Listener, CommandExecutor
         {
             if (getEco().getBalance(player) >= price) {
                 player.closeInventory();
-                player.sendMessage("§8La téléportation commence, veuillez ne pas bougez.");
+                player.sendMessage("Â§8La tÃ©lÃ©portation commence, veuillez ne pas bougez.");
                 teleportPlayer(player, loc, 15, "gun.hub.helico", main, price);
 
             }
             else
             {
-                player.sendMessage("§8Vous n'avez pas assez d'argent !");
+                player.sendMessage("Â§8Vous n'avez pas assez d'argent !");
                 player.closeInventory();
             }
         }
@@ -165,7 +165,7 @@ public class Menu implements Listener, CommandExecutor
                 i++;
                 if (InGameUtilities.isPlayerMoving(player.getUniqueId()))
                 {
-                    InGameUtilities.sendPlayerError(player, "Téléportation annulée !");
+                    InGameUtilities.sendPlayerError(player, "TÃ©lÃ©portation annulÃ©e !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound " + player.getName() + " * minecraft:" + sound);
                     _main.getHashMapManager().removeTeleporting(player.getUniqueId());
                     cancel();
@@ -174,14 +174,14 @@ public class Menu implements Listener, CommandExecutor
                 {
                     if ((i % 5 == 0 && i != duration) || i == duration - 3 || i == duration - 2 || i == duration - 1)
                     {
-                        InGameUtilities.sendPlayerInformation(player, "Téléportation dans " + (duration - i) + " secondes");
+                        InGameUtilities.sendPlayerInformation(player, "TÃ©lÃ©portation dans " + (duration - i) + " secondes");
                     }
                     if (i == duration)
                     {
-                        InGameUtilities.sendPlayerInformation(player, "Téléportation...");
+                        InGameUtilities.sendPlayerInformation(player, "TÃ©lÃ©portation...");
                         player.teleport(loc);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
-                        player.sendMessage("§7Vous avez payé " + price + "$");
+                        player.sendMessage("Â§7Vous avez payÃ© " + price + "$");
                         getEco().withdrawPlayer(player, price);
                         _main.getHashMapManager().removeTeleporting(player.getUniqueId());
                         cancel();

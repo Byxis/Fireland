@@ -51,13 +51,13 @@ public class WorldGuardEnterZoneEvent implements Listener {
         }
         if (captureZone == null) {
             if (capturedZone != null && capturedZone.isClaimed()) {
-                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans la zone " + capturedZone.getFormattedName() + " contrôlée par " + ff.getFactionInfo(capturedZone.getClaimer()).getColorcode() + capturedZone.getClaimer()));
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Â§7Vous entrez dans la zone " + capturedZone.getFormattedName() + " contrÃ´lÃ©e par " + ff.getFactionInfo(capturedZone.getClaimer()).getColorcode() + capturedZone.getClaimer()));
                 InGameUtilities.playPlayerSound(p, "gun.hud.enter_area", SoundCategory.AMBIENT, 1, 1);
             }
             else if (capturedZone != null)
             {
                 capturedZone.addBar(p);
-                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous entrez dans la zone " + capturedZone.getFormattedName()));
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Â§7Vous entrez dans la zone " + capturedZone.getFormattedName()));
                 InGameUtilities.playPlayerSound(p, "gun.hud.enter_area", SoundCategory.AMBIENT, 1, 1);
             }
             return;
@@ -105,13 +105,13 @@ public class WorldGuardEnterZoneEvent implements Listener {
         }
         if (captureZone == null) {
             if (capturedZone != null && capturedZone.isClaimed()) {
-                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§cVous quittez dans la zone " + capturedZone.getFormattedName() + " contrôlée par " + ff.getFactionInfo(capturedZone.getClaimer()).getColorcode() + capturedZone.getClaimer()));
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Â§cVous quittez dans la zone " + capturedZone.getFormattedName() + " contrÃ´lÃ©e par " + ff.getFactionInfo(capturedZone.getClaimer()).getColorcode() + capturedZone.getClaimer()));
                 InGameUtilities.playPlayerSound(p, "gun.hud.leaving_area", SoundCategory.AMBIENT, 1, 1);
             }
             else if (capturedZone != null)
             {
                 capturedZone.removeBar(p);
-                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous quittez dans la zone " + capturedZone.getFormattedName()));
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Â§7Vous quittez dans la zone " + capturedZone.getFormattedName()));
                 InGameUtilities.playPlayerSound(p, "gun.hud.leaving_area", SoundCategory.AMBIENT, 1, 1);
             }
             return;

@@ -36,7 +36,7 @@ public class PlayerLevel {
         DbConnection connectionDb = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = connectionDb.getConnection();
-            //Préparation de la commande
+            //PrÃ©paration de la commande
             PreparedStatement getInfos = connection.prepareStatement("SELECT level, xp, nation, rang FROM player_level WHERE uuid = ?");
             getInfos.setString(1, uuid.toString());
             ResultSet rs = getInfos.executeQuery();
@@ -185,7 +185,7 @@ public class PlayerLevel {
                 case 1 -> "Survivant";
                 case 2 -> "Soldat";
                 case 3 -> "Colonel";
-                case 4 -> "Héros";
+                case 4 -> "HÃ©ros";
             };
         };
     }
@@ -195,7 +195,7 @@ public class PlayerLevel {
         DbConnection connectionDb = main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = connectionDb.getConnection();
-            //Préparation de la commande
+            //PrÃ©paration de la commande
             PreparedStatement updateInfos = connection.prepareStatement("UPDATE player_level SET level = ?, xp = ?, nation = ?, rang = ?, can_change = ? WHERE uuid = ?");
             updateInfos.setInt(1, m_level);
             updateInfos.setInt(2, m_xp);
@@ -302,7 +302,7 @@ public class PlayerLevel {
     {
         Player p = Bukkit.getPlayer(m_uuid);
         InGameUtilities.playPlayerSound(p, "gun.hud.rangchange", SoundCategory.AMBIENT, 1, 1);
-        p.sendTitle("", "§7Passage au " + type + " " + amount);
+        p.sendTitle("", "Â§7Passage au " + type + " " + amount);
     }
 
     public boolean hasClaimedReward(Fireland _main, int _lvl)
@@ -312,7 +312,7 @@ public class PlayerLevel {
             DbConnection connectionDb = _main.getDatabaseManager().getFirelandConnection();
             try {
                 final Connection connection = connectionDb.getConnection();
-                //Préparation de la commande
+                //PrÃ©paration de la commande
                 PreparedStatement hasClaimedReward = connection.prepareStatement("SELECT * FROM player_level_rewards WHERE uuid = ? AND level = ?");
                 hasClaimedReward.setString(1, m_uuid.toString());
                 hasClaimedReward.setInt(2, _lvl);
@@ -338,7 +338,7 @@ public class PlayerLevel {
         DbConnection connectionDb = _main.getDatabaseManager().getFirelandConnection();
         try {
             final Connection connection = connectionDb.getConnection();
-            //Préparation de la commande
+            //PrÃ©paration de la commande
             PreparedStatement setClaimedReward = connection.prepareStatement("INSERT INTO player_level_rewards(uuid, level) VALUES (?,?)");
             setClaimedReward.setString(1, m_uuid.toString());
             setClaimedReward.setInt(2, _lvl);
@@ -357,9 +357,9 @@ public class PlayerLevel {
             int money = getRewardsMoney(_lvl);
             String item = getRewardsItems(_lvl);
             if (jetons > 0)
-                InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré " + jetons + "§f\u26c1§a et " + money + "§f$§a.");
+                InGameUtilities.sendPlayerSucces(p, "Vous avez rÃ©cupÃ©rÃ© " + jetons + "Â§fâ›Â§a et " + money + "Â§f$Â§a.");
             else
-                InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré " + money + "§f$§a.");
+                InGameUtilities.sendPlayerSucces(p, "Vous avez rÃ©cupÃ©rÃ© " + money + "Â§f$Â§a.");
             if (!item.isEmpty())
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.replace("Player", p.getName()));
             addJetonsPlayer(m_uuid, jetons);
@@ -368,7 +368,7 @@ public class PlayerLevel {
         }
         else
         {
-            InGameUtilities.sendPlayerError(p, "Vous avez déjà récupéré cette récompense.");
+            InGameUtilities.sendPlayerError(p, "Vous avez dÃ©jÃ  rÃ©cupÃ©rÃ© cette rÃ©compense.");
         }
     }
 
@@ -421,11 +421,11 @@ public class PlayerLevel {
             Player p = Bukkit.getPlayer(m_uuid);
             if (questIds.size() > 1)
             {
-                InGameUtilities.sendPlayerSucces(p, "Vous avez débloqué une nouvelle quête !");
+                InGameUtilities.sendPlayerSucces(p, "Vous avez dÃ©bloquÃ© une nouvelle quÃªte !");
             }
             else
             {
-                InGameUtilities.sendPlayerSucces(p, "Vous avez débloqué de nouvelles quêtes !");
+                InGameUtilities.sendPlayerSucces(p, "Vous avez dÃ©bloquÃ© de nouvelles quÃªtes !");
             }
             for (Integer id : questIds)
             {

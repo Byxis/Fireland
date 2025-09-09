@@ -16,7 +16,7 @@ public class ItemDurability
             ItemMeta meta = item.getItemMeta();
             ArrayList lore = new ArrayList<>();
             lore.add(item.getLore().get(0));
-            lore.add("§8Durabilité : §70%");
+            lore.add("Â§8DurabilitÃ© : Â§70%");
             item.setItemMeta(meta);
             return true;
         }
@@ -24,7 +24,7 @@ public class ItemDurability
         {
             ArrayList lore = new ArrayList<>();
             lore.add(item.getLore().get(0));
-            lore.add("§8Durabilité : §7 " + removeDurability(item, amount) + "%");
+            lore.add("Â§8DurabilitÃ© : Â§7" + removeDurability(item, amount) + "%");
             ItemMeta meta = item.getItemMeta();
             meta.setLore(lore);
             item.setItemMeta(meta);
@@ -37,7 +37,7 @@ public class ItemDurability
         ItemMeta meta = item.getItemMeta();
         ArrayList lore = new ArrayList<>();
         lore.add(item.getLore().get(0));
-        lore.add("§8Durabilité : §7 " + amount + "%");
+        lore.add("Â§8DurabilitÃ© : Â§7" + amount + "%");
         meta.setLore(lore);
         item.setItemMeta(meta);
     }

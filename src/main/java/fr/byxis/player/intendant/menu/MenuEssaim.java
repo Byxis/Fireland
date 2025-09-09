@@ -36,123 +36,123 @@ public class MenuEssaim {
 
         ArrayList<String> lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("immeuble-infeste"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Vendredi 18h");
-        lore.add("§8Difficulté : " + getDifficulty(1));
-        inv.setItem(10, InventoryUtilities.setItemMetaLore(Material.CYAN_TERRACOTTA, "§7Immeuble Infesté", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Vendredi 18h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(1));
+        inv.setItem(10, InventoryUtilities.setItemMetaLore(Material.CYAN_TERRACOTTA, "Â§7Immeuble InfestÃ©", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("usine-portuaire"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Mercredi 16h");
-        lore.add("§8Difficulté : " + getDifficulty(3));
-        inv.setItem(11, InventoryUtilities.setItemMetaLore(Material.BRICKS, "§7Usine", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Mercredi 16h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(3));
+        inv.setItem(11, InventoryUtilities.setItemMetaLore(Material.BRICKS, "Â§7Usine", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("station-de-traitement-des-eaux"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Mercredi 18h");
-        lore.add("§8Difficulté : " + getDifficulty(4));
-        inv.setItem(12, InventoryUtilities.setItemMetaLore(Material.MOSSY_STONE_BRICKS, "§7Station de traitement des eaux", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Mercredi 18h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(4));
+        inv.setItem(12, InventoryUtilities.setItemMetaLore(Material.MOSSY_STONE_BRICKS, "Â§7Station de traitement des eaux", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("entrepot-militaire"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Mercredi 15h");
-        lore.add("§8Difficulté : " + getDifficulty(5));
-        inv.setItem(13, InventoryUtilities.setItemMetaLore(Material.END_STONE_BRICKS, "§7Entrepôt Militaire", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Mercredi 15h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(5));
+        inv.setItem(13, InventoryUtilities.setItemMetaLore(Material.END_STONE_BRICKS, "Â§7EntrepÃ´t Militaire", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("none"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§c Bientôt");
-        lore.add("§8Difficulté : " + getDifficulty(6));
-        inv.setItem(14, InventoryUtilities.setItemMetaLore(Material.PRISMARINE_BRICKS, "§7Epave du porte-avion", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§c BientÂ§t");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(6));
+        inv.setItem(14, InventoryUtilities.setItemMetaLore(Material.PRISMARINE_BRICKS, "Â§7Ã‰pave du porte-avion", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("hangar-silencieux"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Samedi 15h");
-        lore.add("§8Difficulté : " + getDifficulty(6));
-        inv.setItem(15, InventoryUtilities.setItemMetaLore(Material.COAL_BLOCK, "§7Hangar Silencieux", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Samedi 15h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(6));
+        inv.setItem(15, InventoryUtilities.setItemMetaLore(Material.COAL_BLOCK, "Â§7Hangar Silencieux", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("crypte"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Lundi 17h");
-        lore.add("§8Difficulté : " + getDifficulty(6));
-        inv.setItem(16, InventoryUtilities.setItemMetaLore(Material.SKELETON_SKULL, "§7Crypte", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Lundi 17h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(6));
+        inv.setItem(16, InventoryUtilities.setItemMetaLore(Material.SKELETON_SKULL, "Â§7Crypte", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("centrale-nucleaire"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Vendredi 15h");
-        lore.add("§8Difficulté : " + getDifficulty(7));
-        inv.setItem(19, InventoryUtilities.setItemMetaLore(Material.WAXED_WEATHERED_COPPER, "§7Centrale Nucléaire", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Vendredi 15h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(7));
+        inv.setItem(19, InventoryUtilities.setItemMetaLore(Material.WAXED_WEATHERED_COPPER, "Â§7Centrale NuclÃ©aire", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("station-petroliere"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Samedi 19h");
-        lore.add("§8Difficulté : " + getDifficulty(7));
-        inv.setItem(20, InventoryUtilities.setItemMetaLore(Material.BLACKSTONE, "§7Station Pétrolière", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Samedi 19h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(7));
+        inv.setItem(20, InventoryUtilities.setItemMetaLore(Material.BLACKSTONE, "Â§7Station PÃ©troliÃ¨re", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("laboratoire"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Dimanche 18h");
-        lore.add("§8Difficulté : " + getDifficulty(9));
-        inv.setItem(21, InventoryUtilities.setItemMetaLore(Material.SMOOTH_QUARTZ, "§7Laboratoire", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Dimanche 18h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(9));
+        inv.setItem(21, InventoryUtilities.setItemMetaLore(Material.SMOOTH_QUARTZ, "Â§7Laboratoire", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("bunker-de-latus"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Samedi 10h");
-        lore.add("§8Difficulté : " + getDifficulty(9));
-        inv.setItem(22, InventoryUtilities.setItemMetaLore(Material.DEEPSLATE_BRICKS, "§7Bunker de Latus", (short) 1, lore));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Samedi 10h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(9));
+        inv.setItem(22, InventoryUtilities.setItemMetaLore(Material.DEEPSLATE_BRICKS, "Â§7Bunker de Latus", (short) 1, lore));
 
         lore = new ArrayList<>();
         if (main.getEssaimManager().isEssaimActive("antre-de-la-pondeuse"))
-            lore.add("§8Disponibilité :§a Ouvert");
+            lore.add("Â§8DisponibilitÃ© :Â§a Ouvert");
         else
-            lore.add("§8Disponibilité :§7 Dimanche 10h");
-        lore.add("§8Difficulté : " + getDifficulty(12));
+            lore.add("Â§8DisponibilitÃ© :Â§7 Dimanche 10h");
+        lore.add("Â§8DifficultÃ© : " + getDifficulty(12));
 
-        inv.setItem(23, InventoryUtilities.setItemMetaLore(Material.SCULK, "§7Antre de la Pondeuse", (short) 1, lore));
+        inv.setItem(23, InventoryUtilities.setItemMetaLore(Material.SCULK, "Â§7Antre de la Pondeuse", (short) 1, lore));
         lore = new ArrayList<>();
-        lore.add("§4§lAbsence de données");
-        inv.setItem(24, InventoryUtilities.setItemMetaLore(Material.SEA_LANTERN, "§7Les Abysses", (short) 1, lore));
+        lore.add("Â§4Â§lAbsence de donnÃ©es");
+        inv.setItem(24, InventoryUtilities.setItemMetaLore(Material.SEA_LANTERN, "Â§7Les Abysses", (short) 1, lore));
 
-        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
+        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cRetour Ã  l'intendant", (short) 0));
     }
 
     private static String getDifficulty(int i)
     {
         return switch (i)
         {
-            case 1 -> "§a\u2620";
-            case 2 -> "§a\u2620\u2620";
-            case 3 -> "§a\u2620\u2620\u2620";
-            case 4 -> "§e\u2620";
-            case 5 -> "§e\u2620\u2620";
-            case 6 -> "§e\u2620\u2620\u2620";
-            case 7 -> "§c\u2620";
-            case 8 -> "§c\u2620\u2620";
-            case 9 -> "§c\u2620\u2620\u2620";
-            case 10 -> "§4\u2620";
-            case 11 -> "§4\u2620\u2620";
-            case 12 -> "§4\u2620\u2620\u2620";
+            case 1 -> "Â§aâ˜ ";
+            case 2 -> "Â§aâ˜ â˜ ";
+            case 3 -> "Â§aâ˜ â˜ â˜ ";
+            case 4 -> "Â§eâ˜ ";
+            case 5 -> "Â§eâ˜ â˜ ";
+            case 6 -> "Â§eâ˜ â˜ â˜ ";
+            case 7 -> "Â§câ˜ ";
+            case 8 -> "Â§câ˜ â˜ ";
+            case 9 -> "Â§câ˜ â˜ â˜ ";
+            case 10 -> "Â§4â˜ ";
+            case 11 -> "Â§4â˜ â˜ ";
+            case 12 -> "Â§4â˜ â˜ â˜ ";
             default -> "";
         };
     }

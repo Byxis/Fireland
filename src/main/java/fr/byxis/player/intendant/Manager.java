@@ -77,7 +77,7 @@ public class Manager implements Listener {
                         MenuQuest.openQuestMenu(main, p);
                     }
                     case NETHER_STAR -> {
-                        //TODO: SuccËs
+                        //TODO: Succ√®s
                     }
                     case WHITE_BANNER, BLACK_BANNER -> {
                         openLevelMenu(main, p, 0);
@@ -176,7 +176,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if (inv.getTitle().contains("AmÈliorations pour"))
+            else if (inv.getTitle().contains("Am√©liorations pour"))
             {
                 /**       Click check        **/
                 InventoryUtilities.clickManager(e);
@@ -207,7 +207,7 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 2)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez Ítre niveau de faction 2 pour dÈbloquer cette amÈlioration.");
+                                InGameUtilities.sendPlayerError(p, "Vous devez √™tre niveau de faction 2 pour d√©bloquer cette am√©lioration.");
                             }
                             else
                             {
@@ -224,7 +224,7 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 5)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez Ítre niveau de faction 5 pour dÈbloquer cette amÈlioration.");
+                                InGameUtilities.sendPlayerError(p, "Vous devez √™tre niveau de faction 5 pour d√©bloquer cette am√©lioration.");
                             }
                             else
                             {
@@ -245,7 +245,7 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 4)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez Ítre niveau de faction 4 pour dÈbloquer cette amÈlioration.");
+                                InGameUtilities.sendPlayerError(p, "Vous devez √™tre niveau de faction 4 pour d√©bloquer cette am√©lioration.");
                             }
                             else
                             {
@@ -266,7 +266,7 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 3)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez Ítre niveau de faction 3 pour dÈbloquer cette amÈlioration.");
+                                InGameUtilities.sendPlayerError(p, "Vous devez √™tre niveau de faction 3 pour d√©bloquer cette am√©lioration.");
                             }
                             else
                             {
@@ -287,7 +287,7 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 2)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez Ítre niveau de faction 2 pour dÈbloquer cette amÈlioration.");
+                                InGameUtilities.sendPlayerError(p, "Vous devez √™tre niveau de faction 2 pour d√©bloquer cette am√©lioration.");
                             }
                             else
                             {
@@ -308,7 +308,7 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 6)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez Ítre niveau de faction 6 pour dÈbloquer cette amÈlioration.");
+                                InGameUtilities.sendPlayerError(p, "Vous devez √™tre niveau de faction 6 pour d√©bloquer cette am√©lioration.");
                             }
                             else
                             {
@@ -324,7 +324,7 @@ public class Manager implements Listener {
                         return;
                     }
                 }
-                if (itemclicked.getType() == color && PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.command.faction.color") && !itemclicked.getItemMeta().getDisplayName().contains("AmÈliorer la faction au rang")
+                if (itemclicked.getType() == color && PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.command.faction.color") && !itemclicked.getItemMeta().getDisplayName().contains("Am√©liorer la faction au rang")
                         && !itemclicked.getItemMeta().getDisplayName().contains("Retour au menu Faction") && pInfos.getRole() == 2)
                 {
                     MenuColor.openColorMenu(main, p, finfos);
@@ -342,7 +342,7 @@ public class Manager implements Listener {
 
                 /**       Click check        **/
 
-                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour ‡ l'intendant"))
+                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour √† l'intendant"))
                 {
                     MenuPerks.openPerks(main, p);
                 }
@@ -414,7 +414,7 @@ public class Manager implements Listener {
 
                 /**       Click check        **/
 
-                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour ‡ l'intendant"))
+                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour √† l'intendant"))
                 {
                     openIntendant(main, p);
                 }
@@ -443,7 +443,7 @@ public class Manager implements Listener {
                     MenuBooster.openBoosters(main, p);
                 }
             }
-            else if (inv.getTitle().contains("QuÍtes quotidiennes"))
+            else if (inv.getTitle().contains("Qu√™tes quotidiennes"))
             {
                 /**       Click check        **/
 
@@ -467,7 +467,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if (inv.getTitle().equalsIgnoreCase("ß4Primes"))
+            else if (inv.getTitle().equalsIgnoreCase("¬ß4Primes"))
             {
                 /**       Click check        **/
 
@@ -493,7 +493,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if (inv.getTitle().equalsIgnoreCase("ß4Primes: SÈlectionner un joueur"))
+            else if (inv.getTitle().equalsIgnoreCase("¬ß4Primes: S√©lectionner un joueur"))
             {
                 /**       Click check        **/
 
@@ -516,7 +516,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if (inv.getTitle().equalsIgnoreCase("ß4Primes: Ajouter un montant"))
+            else if (inv.getTitle().equalsIgnoreCase("¬ß4Primes: Ajouter un montant"))
             {
                 /**       Click check        **/
 
@@ -599,9 +599,9 @@ public class Manager implements Listener {
                                 addPrime(BasicUtilities.getUuid(player), money);
                                 if (Bukkit.getPlayer(player) != null && Bukkit.getPlayer(player).isOnline())
                                 {
-                                    InGameUtilities.sendPlayerError(Bukkit.getPlayer(player), "Une prime de " + money + "$ vous a ÈtÈ attribuÈ.");
+                                    InGameUtilities.sendPlayerError(Bukkit.getPlayer(player), "Une prime de " + money + "$ vous a √©t√© attribu√©e.");
                                 }
-                                InGameUtilities.sendPlayerSucces(p, "Une prime de " + money + "$ a ÈtÈ attribuÈ ‡ " + player + ".");
+                                InGameUtilities.sendPlayerSucces(p, "Une prime de " + money + "$ a √©t√© attribu√©e √† " + player + ".");
                             }
                             else
                             {
@@ -611,7 +611,7 @@ public class Manager implements Listener {
                     }
                 }
             }
-            else if (inv.getTitle().equalsIgnoreCase("ß4Primes disponibles"))
+            else if (inv.getTitle().equalsIgnoreCase("¬ß4Primes disponibles"))
             {
                 /**       Click check        **/
 
@@ -674,7 +674,7 @@ public class Manager implements Listener {
                         for (Player player : Bukkit.getOnlinePlayers())
                         {
                             if (!player.getName().equalsIgnoreCase(p.getName()))
-                                player.sendMessage("ßcLe joueur " + p.getName() + " a rejoint la nation des Bannis.");
+                                player.sendMessage("¬ßcLe joueur " + p.getName() + " a rejoint la nation des Bannis.");
                         }
                     }
                     else if (itemclicked.getItemMeta().getDisplayName().contains("Neutre"))
@@ -685,7 +685,7 @@ public class Manager implements Listener {
                         for (Player player : Bukkit.getOnlinePlayers())
                         {
                             if (!player.getName().equalsIgnoreCase(p.getName()))
-                                player.sendMessage("ß7Le joueur " + p.getName() + " a rejoint la nation des Neutres.");
+                                player.sendMessage("¬ß7Le joueur " + p.getName() + " a rejoint la nation des Neutres.");
                         }
                     }
                     else if (itemclicked.getItemMeta().getDisplayName().contains("Etat"))
@@ -696,13 +696,13 @@ public class Manager implements Listener {
                         for (Player player : Bukkit.getOnlinePlayers())
                         {
                             if (!player.getName().equalsIgnoreCase(p.getName()))
-                                player.sendMessage("ßaLe joueur " + p.getName() + " a rejoint la nation de l'Etat.");
+                                player.sendMessage("¬ßaLe joueur " + p.getName() + " a rejoint la nation de l'Etat.");
                         }
                     }
                     p.closeInventory();
                 }
             }
-            else if (inv.getTitle().contains("Votre niveau : "))
+            else if (inv.getTitle().contains("Votre niveau: "))
             {
                 /**       Click check        **/
 
@@ -726,7 +726,7 @@ public class Manager implements Listener {
                     }
                     case WHITE_BANNER, BLACK_BANNER -> {
                         PlayerLevel pl = getPlayerLevel(p.getUniqueId());
-                        InGameUtilities.sendInteractivePlayerMessage(p, "ßcPour changer de nation, cliquez sur ce message. Vous devez payer " + pl.getJetonPriceNationChange() + "ßf\u26C1ßc et " + pl.getMoneyPriceNationChange() + "ßf$", "/level changeNation8484", "ßcCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
+                        InGameUtilities.sendInteractivePlayerMessage(p, "¬ßcPour changer de nation, cliquez sur ce message. Vous devez payer " + pl.getJetonPriceNationChange() + "¬ßf‚õÅ¬ßc et " + pl.getMoneyPriceNationChange() + "¬ßf$", "/level changeNation8484", "¬ßcCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
                         p.closeInventory();
                     }
                 }

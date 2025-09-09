@@ -61,7 +61,7 @@ success:
     type: "RANK_CHANGE"
     item: ""
     objective:
-      rank: "Héros"
+      rank: "HÃ©ros"
     reward:
       money: 0
       jeton: 0
@@ -83,7 +83,7 @@ success:
     type: "USE_BOOST"
     item: ""
     objective:
-      duration: 1 #en heure (voir menu booster) et -1 si tu t'en blc de la durée/ du level
+      duration: 1 #en heure (voir menu booster) et -1 si tu t'en blc de la duree/ du level
       level: 1
       amount: 1
     reward:

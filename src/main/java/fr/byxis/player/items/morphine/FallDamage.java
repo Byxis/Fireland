@@ -53,7 +53,7 @@ public class FallDamage implements Listener
             if (!hasLegsBroken(player) && doBreakLegs(e.getDamage())) {
                 InGameUtilities.playWorldSound(player.getLocation(), "entity.player.bonebreak", SoundCategory.AMBIENT, 1, 1);
                 setLegsBroken(player, true);
-                InGameUtilities.sendPlayerError(player, "Vous vous êtes cassé la jambe ! Utilisez une seringue de morphine pour vous soigner.");
+                InGameUtilities.sendPlayerError(player, "Vous vous Ãªtes cassÃ© la jambe ! Utilisez une seringue de morphine pour vous soigner.");
             }
         }
     }
@@ -69,7 +69,7 @@ public class FallDamage implements Listener
                 setLegsBroken(p, false);
                 InGameUtilities.playWorldSound(p.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
 
-                p.sendMessage("§8Vous avez soigné votre jambe !");
+                p.sendMessage("Â§8Vous avez soignÃ© votre jambe !");
                 if (!p.getGameMode().equals(GameMode.CREATIVE)) {
                     p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
                 }
@@ -93,8 +93,8 @@ public class FallDamage implements Listener
 
                 InGameUtilities.playWorldSound(friend.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
 
-                p.sendMessage("§8Vous avez soigné la jambe de " + friend.getName() + "!");
-                friend.sendMessage("§8 " + p.getName() + " a soigné votre jambe !");
+                p.sendMessage("Â§8Vous avez soignÃ© la jambe de " + friend.getName() + "!");
+                friend.sendMessage("Â§8" + p.getName() + " a soignÃ© votre jambe !");
                 if (!p.getGameMode().equals(GameMode.CREATIVE)) {
                     p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
                 }

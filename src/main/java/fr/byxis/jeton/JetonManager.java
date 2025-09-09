@@ -75,12 +75,12 @@ public class JetonManager {
             if (facture != -1)
             {
                 removeJetonsPlayer(_p.getUniqueId(), _amount);
-                InGameUtilities.sendPlayerInformation(_p, "Vous avez pay� �b " + _amount + "\u26c1�r�7. " +
-                        "(Facture n�" + facture + ").");
-                return  true;
+                InGameUtilities.sendPlayerInformation(_p, "Vous avez payé §b" + _amount + "§r⛁§7. " +
+                        "(Facture n°" + facture + ").");
+                return true;
             }
-            InGameUtilities.sendPlayerError(_p, "Une erreur est survenue pendant la cr�ation de la facture. " +
-                    "Vous n'avez pas �t� d�bit�. Merci de contacter le staff pour r�soudre ce probl�me.");
+            InGameUtilities.sendPlayerError(_p, "Une erreur est survenue pendant la création de la facture. " +
+                    "Vous n'avez pas été débité. Merci de contacter le staff pour résoudre ce problème.");
         }
         else if (_doLog)
         {
@@ -109,45 +109,45 @@ public class JetonManager {
                     list.add(new String[]{rs.getString(1), String.valueOf(rs.getInt(2)), rs.getString(3)});
 
                 if (consulter.getName().equals(buyer.getName()))
-                    consulter.sendMessage("�8------------- �7Vos factures �8-------------");
-                //"�8 [<] ---------------------------------- [>] "
+                    consulter.sendMessage("§8------------- §7Vos factures §8-------------");
+                //"§8 [<] ---------------------------------- [>] "
                 else
-                    consulter.sendMessage("�8----------- �7Facture de " + buyer.getName() + " �8-----------");
+                    consulter.sendMessage("§8----------- §7Facture de " + buyer.getName() + " §8-----------");
 
                 for (int i = page * pageSize; i < page * pageSize + pageSize && i < list.size(); i++)
                 {
                     String number = list.get(i)[0];
                     String price = list.get(i)[1];
                     String desc = list.get(i)[2];
-                    consulter.sendMessage("�aFacture n��d " + number + "�a - �+" + desc + " �a(�b " + price + "\u26c1�a)");
+                    consulter.sendMessage("§aFacture n°§d " + number + "§a - §7" + desc + " §a(§b " + price + "⛁§a)");
                 }
                 ComponentBuilder message = new ComponentBuilder();
                 if (buyer.getName().equals(consulter.getName()))
                 {
                     if (page > 0)
                     {
-                        message.append("�2[<]")
-                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("�2Page pr�c�dente").create()))
+                        message.append("§2[<]")
+                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page précédente").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/facture " + (page - 1)));
                     }
                     else
                     {
-                        message.append("�7[<]")
+                        message.append("§7[<]")
                                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     }
-                    message.append("�8 ---------------------------------- ")
+                    message.append("§8 ---------------------------------- ")
                             .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                             .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     if (page * pageSize + pageSize < list.size())
                     {
-                        message.append("�4[>]")
-                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("�2Page suivante").create()))
+                        message.append("§4[>]")
+                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page suivante").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/facture " + (page + 1)));
                     }
                     else
                     {
-                        message.append("�7[>]")
+                        message.append("§7[>]")
                                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     }
@@ -158,28 +158,28 @@ public class JetonManager {
                 {
                     if (page > 0)
                     {
-                        message.append("�2[<]")
-                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("�2Page pr�c�dente").create()))
+                        message.append("§2[<]")
+                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page précédente").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/facture " + buyer.getName() + " " + (page - 1)));
                     }
                     else
                     {
-                        message.append("�7[<]")
+                        message.append("§7[<]")
                                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     }
-                    message.append("�8 ---------------------------------- ")
+                    message.append("§8 ---------------------------------- ")
                             .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                             .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     if (page * pageSize + pageSize < list.size())
                     {
-                        message.append("�4[>]")
-                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("�2Page suivante").create()))
+                        message.append("§4[>]")
+                                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§2Page suivante").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/facture " + buyer.getName() + " " + (page + 1)));
                     }
                     else
                     {
-                        message.append("�7[>]")
+                        message.append("§7[>]")
                                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()))
                                 .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
                     }
@@ -195,7 +195,7 @@ public class JetonManager {
                     InGameUtilities.sendPlayerError(consulter, "Le joueur " + buyer.getName() + " n'a aucune facture.");
             }
         } catch (SQLException e) {
-            //Une erreur est survenue (Probl�me de connexion � la BD)
+            //Une erreur est survenue (Problème de connexion à la BD)
             InGameUtilities.sendPlayerError(consulter, "Une erreur est survenue.");
             e.printStackTrace();
         }

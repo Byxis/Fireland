@@ -28,7 +28,7 @@ quest:
       progress: 2 #en cours
     2:
       id: 8
-      progress: 0 #début
+      progress: 0 #debut
     3:
       id: 3
       progress: -1 #fini

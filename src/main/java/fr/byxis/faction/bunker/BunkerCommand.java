@@ -29,31 +29,31 @@ public class BunkerCommand implements CommandExecutor {
                 if (!main.getBunkerManager().getLoadedBunker().containsKey(strings[1]))
                 {
                     bunker.join(p);
-                    InGameUtilities.sendPlayerInformation(p, "Vous avez forcé l'entrée dans le bunker.");
+                    InGameUtilities.sendPlayerInformation(p, "Vous avez forcÃ© l'entrÃ©e dans le bunker.");
                     return true;
                 }
             }
             else if (p.hasPermission("fireland.bunker.mod") && strings.length >= 2 && strings[0].equalsIgnoreCase("info"))
             {
                 BunkerClass bk = main.getBunkerManager().getBunker(strings[1]);
-                p.sendMessage("§8Bunker de la faction §7 " + bk.getName() + " §d(Niv. " + bk.getBunkerLevel() + ")");
-                StringBuilder sb = new StringBuilder("§8Joueurs dedans : §7");
+                p.sendMessage("Â§8Bunker de la faction Â§7" + bk.getName() + " Â§d(Niv. " + bk.getBunkerLevel() + ")");
+                StringBuilder sb = new StringBuilder("Â§8Joueurs dedans : Â§7");
                 for (Player pl : bk.getPlayerInside())
                 {
                     sb.append(pl.getName()).append(" ");
                 }
                 p.sendMessage(sb.toString());
-                p.sendMessage("§8Location : x§7 " + bk.getBunkerLocation().getBlockX() + "§8 y§7 " + bk.getBunkerLocation().getBlockZ() + "§8 z§7 " + bk.getBunkerLocation().getBlockZ());
+                p.sendMessage("Â§8Location : xÂ§7 " + bk.getBunkerLocation().getBlockX() + "Â§8 yÂ§7 " + bk.getBunkerLocation().getBlockZ() + "Â§8 zÂ§7 " + bk.getBunkerLocation().getBlockZ());
                 return true;
             }
             else if (p.hasPermission("fireland.bunker.mod") && strings.length == 1 && strings[0].equalsIgnoreCase("info"))
             {
-                StringBuilder sb = new StringBuilder("§8Bunkers chargés : §7");
+                StringBuilder sb = new StringBuilder("Â§8Bunkers chargÃ©s : Â§7");
                 for (BunkerClass bk : main.getBunkerManager().getLoadedBunker().values())
                 {
                     sb.append(bk.getName()).append(" ");
                 }
-                sb.append("§b");
+                sb.append("Â§b");
                 for (String str : main.getBunkerManager().getLoadedBunker().keySet())
                 {
                     sb.append(str).append(" ");
@@ -73,7 +73,7 @@ public class BunkerCommand implements CommandExecutor {
                         }
                         else
                         {
-                            InGameUtilities.sendPlayerError(p, "Vous devez être en safe zone pour rejoindre un bunker !");
+                            InGameUtilities.sendPlayerError(p, "Vous devez Ãªtre en safe zone pour rejoindre un bunker !");
                         }
                         return true;
                     }

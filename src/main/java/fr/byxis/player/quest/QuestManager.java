@@ -89,7 +89,7 @@ public class QuestManager {
         }
         if (i >= 100)
         {
-            InGameUtilities.sendPlayerError(p, "Une erreur est survenue lors du chargement des quêtes.");
+            InGameUtilities.sendPlayerError(p, "Une erreur est survenue lors du chargement des quÃªtes.");
         }
     }
 
@@ -257,13 +257,13 @@ public class QuestManager {
         {
             if (playerQuest.get(p.getUniqueId()).getQuest(i).getProgress() != -1)
             {
-                InGameUtilities.sendPlayerError(p, "Vous n'avez pas terminé les missions.");
+                InGameUtilities.sendPlayerError(p, "Vous n'avez pas terminÃ© les missions.");
                 return;
             }
         }
         Fireland.getEco().depositPlayer(p, 200);
         JetonManager.addJetonsPlayer(p.getUniqueId(), 1);
-        InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré les récompenses de missions.");
+        InGameUtilities.sendPlayerSucces(p, "Vous avez rÃ©cupÃ©rÃ© les rÃ©compenses de missions.");
         playerQuest.get(p.getUniqueId()).setClaimed(true);
     }
 
@@ -359,7 +359,7 @@ public class QuestManager {
             QuestClass quest = null;
             String objective = config.getConfig().getString("quest." + i + ".objective");
             String desc = config.getConfig().getString("quest." + i + ".desc");
-            desc = desc.replaceAll("&", "§");
+            desc = desc.replaceAll("&", "Â§");
             if (config.getConfig().contains("quest." + i + ".amount"))
             {
                 desc = desc.replaceAll("<amount>", String.valueOf(config.getConfig().getInt("quest." + i + ".amount")));

@@ -98,7 +98,7 @@ menus:
           - '&Duree de mute : &e3 Heures'
           - ' '
           - '&7Leger Spam'
-          - '&fEnvoie le meme message 2 à 5 fois'
+          - '&fEnvoie le meme message 2 Ã  5 fois'
           - ' '
           - '&7Legere pub'
           - "&fDemande si quelqu'un veut jouer a un autre serveur"
@@ -124,7 +124,7 @@ menus:
           - '&fDuree de mute : &e2 Jours'
           - ' '
           - '&7Spam modere'
-          - '&fEnvoie le meme message 6 à 20 fois'
+          - '&fEnvoie le meme message 6 Ã  20 fois'
           - ' '
           - '&7Pub modere'
           - "&fEnvoie l'ip d'un serveur"

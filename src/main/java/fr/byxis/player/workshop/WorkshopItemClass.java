@@ -9,6 +9,8 @@ public class WorkshopItemClass
     private final String type;
     private final int scrap;
     private final int gunPowder;
+    private final int medicine;
+    private final int duration;
     private final int customModelData;
     private final Material mat;
     private final short durability;
@@ -16,13 +18,15 @@ public class WorkshopItemClass
     private final boolean know;
 
 
-    public WorkshopItemClass(String _recipeName, String _itemName, String _type, int _scrap, int _gunpowder, Material _mat, short _durability, String _command, boolean _know, int _customModelData)
+    public WorkshopItemClass(String _recipeName, String _itemName, String _type, int _scrap, int _gunpowder, int _medicine, int _duration, Material _mat, short _durability, String _command, boolean _know, int _customModelData)
     {
         this.recipeName = _recipeName;
         this.itemName = _itemName;
         this.scrap = _scrap;
         this.type = _type;
         this.gunPowder = _gunpowder;
+        this.medicine = _medicine;
+        this.duration = _duration;
         this.mat = _mat;
         this.durability = _durability;
         this.command = _command;
@@ -80,4 +84,33 @@ public class WorkshopItemClass
     {
         return know;
     }
+
+    public int getMedicine()
+    {
+        return medicine;
+    }
+
+    public int getDuration()
+    {
+        return duration;
+    }
+
+    @Override
+    public String toString() {
+        return "WorkshopItemClass {" +
+                "\n  recipeName: '" + recipeName + '\'' +
+                ",\n  itemName: '" + itemName + '\'' +
+                ",\n  type: '" + type + '\'' +
+                ",\n  scrap: " + scrap +
+                ",\n  gunPowder: " + gunPowder +
+                ",\n  medicine: " + medicine +
+                ",\n  duration: " + duration +
+                ",\n  customModelData: " + customModelData +
+                ",\n  mat: " + (mat != null ? mat.name() : "null") +
+                ",\n  durability: " + durability +
+                ",\n  command: '" + command + '\'' +
+                ",\n  know: " + know +
+                "\n}";
+    }
+
 }

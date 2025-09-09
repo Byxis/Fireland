@@ -118,7 +118,7 @@ public class RecyclerFunction {
 
     public void openRecyclingGui(Player p)
     {
-        Inventory recyclingMenu = Bukkit.createInventory(null, 54, "§2Recycleur");
+        Inventory recyclingMenu = Bukkit.createInventory(null, 54, "Â§2Recycleur");
         setItemsGuiInv(recyclingMenu);
         p.openInventory(recyclingMenu);
     }
@@ -129,7 +129,7 @@ public class RecyclerFunction {
         {
             if (i == 49)
             {
-                _inv.setItem(i, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRecycler les items", (short) 1));
+                _inv.setItem(i, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cRecycler les items", (short) 1));
             }
             else
             {
@@ -138,10 +138,10 @@ public class RecyclerFunction {
 
         }
         ArrayList<String> l = new ArrayList<>();
-        l.add("§8Pour recycler des items, faites un");
-        l.add("§6clic gauche§8 sur le bouton");
-        l.add("§8recyclage.§4§lLes items seront supprimés§r§8.");
-        _inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "§r- Informations -", (short) 1, l));
+        l.add("Â§8Pour recycler des items, faites un");
+        l.add("Â§6clic gaucheÂ§8 sur le bouton");
+        l.add("Â§8recyclage.Â§4Â§lLes items seront supprimÃ©sÂ§rÂ§8.");
+        _inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "Â§r- Informations -", (short) 1, l));
     }
 
     public void recycle(InventoryView inv, Player p) {
@@ -177,7 +177,7 @@ public class RecyclerFunction {
     private boolean hasGived(Player p, ItemStack component, int space, ItemStack item, int scrapNbr) {
         if (scrapNbr > space)
         {
-            p.sendMessage("§cVous n'avez pas assez d'espace pour recycler cet item !");
+            p.sendMessage("Â§cVous n'avez pas assez d'espace pour recycler cet item !");
             return true;
         }
         InGameUtilities.playPlayerSound(p, "gun.hud.scraps", SoundCategory.BLOCKS, 1, 0);

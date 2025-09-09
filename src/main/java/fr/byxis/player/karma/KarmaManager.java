@@ -40,34 +40,34 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
         String rangStr = "";
         if (rangDouble == 100)
         {
-            rangStr = "§dHéros";
+            rangStr = "Â§dHÃ©ros";
         }
         else if (rangDouble >= 75)
         {
-            rangStr = "§7Héros";
+            rangStr = "Â§7HÃ©ros";
         }
         else if (rangDouble >= 50)
         {
-            rangStr = "§7Civil";
+            rangStr = "Â§7Civil";
         }
         else if (rangDouble >= 25)
         {
-            rangStr = "§7Hors la loi";
+            rangStr = "Â§7Hors la loi";
         }
         else if (rangDouble > 0)
         {
-            rangStr = "§cCriminel";
+            rangStr = "Â§cCriminel";
         }
         else if (rangDouble == 0)
         {
-            rangStr = "§4Banni";
+            rangStr = "Â§4Banni";
         }
         return rangStr;
     }
 
     private String rangText(Player p)
     {
-        return getRang(p.getUniqueId()) + " §7(" + getKarma(p.getUniqueId()) + "§7)";
+        return getRang(p.getUniqueId()) + " Â§7(" + getKarma(p.getUniqueId()) + "Â§7)";
     }
 
     public void badAction(UUID _uuid, double _amount)
@@ -152,30 +152,30 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
             {
                 if (player != p)
                 {
-                    player.sendMessage("§d§l " + p.getName() + "§r§d est devenu un Héros !");
+                    player.sendMessage("Â§dÂ§l " + p.getName() + "Â§rÂ§d est devenu un HÃ©ros !");
                 }
             }
-            p.sendTitle("", "§dPassage au rang Héros !");
+            p.sendTitle("", "Â§dPassage au rang HÃ©ros !");
             InGameUtilities.playPlayerSound(p, heros, SoundCategory.AMBIENT, 1, 1);
         }
         else if (bef >= 75 && now < 75)
         {
-            p.sendTitle("", "§7Rétrogradage au rang Civil.");
+            p.sendTitle("", "Â§7RÃ©trogradage au rang Civil.");
             InGameUtilities.playPlayerSound(p, sound, SoundCategory.AMBIENT, 1, 1);
         }
         else if (bef >= 50 && now < 50)
         {
-            p.sendTitle("", "§7Rétrogradage au rang Hors la Loi.");
+            p.sendTitle("", "Â§7RÃ©trogradage au rang Hors la Loi.");
             InGameUtilities.playPlayerSound(p, sound, SoundCategory.AMBIENT, 1, 1);
         }
         else if (bef < 50 && now >= 50)
         {
-            p.sendTitle("", "§7Passage au rang Civil !");
+            p.sendTitle("", "Â§7Passage au rang Civil !");
             InGameUtilities.playPlayerSound(p, sound, SoundCategory.AMBIENT, 1, 1);
         }
         else if (bef < 25 && now >= 25)
         {
-            p.sendTitle("", "§7Passage au rang Hors la Loi.");
+            p.sendTitle("", "Â§7Passage au rang Hors la Loi.");
             InGameUtilities.playPlayerSound(p, sound, SoundCategory.AMBIENT, 1, 1);
         }
         else if (bef >= 25 && now < 25)
@@ -184,15 +184,15 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
             {
                 if (player != p)
                 {
-                    player.sendMessage("§4§l " + p.getName() + "§r§4 est devenu un Criminel.");
+                    player.sendMessage("Â§4Â§l " + p.getName() + "Â§rÂ§4 est devenu un Criminel.");
                 }
             }
-            p.sendTitle("", "§cRétrogradage au rang Criminel.");
+            p.sendTitle("", "Â§cRÃ©trogradage au rang Criminel.");
             InGameUtilities.playPlayerSound(p, crim, SoundCategory.AMBIENT, 1, 1);
         }
         else if (bef <= 25 && now == 0)
         {
-            p.sendTitle("", "§4Rétrogradage au rang Criminel.");
+            p.sendTitle("", "Â§4RÃ©trogradage au rang Criminel.");
             InGameUtilities.playPlayerSound(p, crim, SoundCategory.AMBIENT, 1, 1);
         }
 
@@ -261,18 +261,18 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
         {
             if (args.length == 0)
             {
-                sender.sendMessage("§aVotre rang : " + rangText((Player) sender));
+                sender.sendMessage("Â§aVotre rang : " + rangText((Player) sender));
             }
             else if (args.length == 1)
             {
                 final Player victim = Bukkit.getPlayer(args[0]);
                 if (victim != null)
                 {
-                    sender.sendMessage("§aVoici le rang de " + victim.getName() + " : " + rangText(victim));
+                    sender.sendMessage("Â§aVoici le rang de " + victim.getName() + ": " + rangText(victim));
                 }
                 else
                 {
-                    sender.sendMessage("§cErreur ! Utilisation : /rang [player]");
+                    sender.sendMessage("Â§cErreur ! Utilisation: /rang [player]");
                 }
             }
             else if (sender.hasPermission("fireland.command.rang.admin"))
@@ -282,7 +282,7 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
                     int amount = Integer.parseInt(args[1]);
 
                 } catch (NumberFormatException e) {
-                    sender.sendMessage("§cErreur ! Utilisation : /rang (set/add/remove) (int) [player]");
+                    sender.sendMessage("Â§cErreur ! Utilisation: /rang (set/add/remove) (int) [player]");
                     return false;
                 }
                 if (args[0].equalsIgnoreCase("set"))
@@ -294,22 +294,22 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
                             for (Player p : Bukkit.getServer().getOnlinePlayers())
                             {
                                 setKarma(p.getUniqueId(), Integer.parseInt(args[1]));
-                                p.sendMessage("§aVotre rang est maintenant : " + rangText(p));
+                                p.sendMessage("Â§aVotre rang est maintenant : " + rangText(p));
                             }
-                            sender.sendMessage("§aLe nouveau rang de tous les joueurs est : " + rangText((Player) sender));
+                            sender.sendMessage("Â§aLe nouveau rang de tous les joueurs est : " + rangText((Player) sender));
                         }
                         else
                         {
                             final Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
                             setKarma(victim.getUniqueId(), Integer.parseInt(args[1]));
-                            sender.sendMessage("§aLe nouveau rang de " + victim.getName() + " est : " + rangText(victim));
-                            victim.sendMessage("§aVotre rang est maintenant : " + rangText(victim));
+                            sender.sendMessage("Â§aLe nouveau rang de " + victim.getName() + " est " + rangText(victim));
+                            victim.sendMessage("Â§aVotre rang est maintenant : " + rangText(victim));
                         }
                     }
                     else {
                         Player p = (Player) sender;
                         setKarma(p.getUniqueId(), Integer.parseInt(args[1]));
-                        p.sendMessage("§aVotre rang est maintenant : " + rangText((Player) sender));
+                        p.sendMessage("Â§aVotre rang est maintenant : " + rangText((Player) sender));
                     }
                 }
                 else if (args[0].equalsIgnoreCase("add"))
@@ -321,22 +321,22 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
                             for (Player player : Bukkit.getServer().getOnlinePlayers())
                             {
                                 goodAction(player.getUniqueId(), Integer.parseInt(args[1]));
-                                player.sendMessage("§aVotre rang est maintenant : " + rangText(player));
+                                player.sendMessage("Â§aVotre rang est maintenant : " + rangText(player));
                             }
-                            sender.sendMessage("§aLe nouveau rang de tous les joueurs est : " + rangText((Player) sender));
+                            sender.sendMessage("Â§aLe nouveau rang de tous les joueurs est : " + rangText((Player) sender));
                         }
                         else
                         {
                             final Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
                             goodAction(victim.getUniqueId(), Integer.parseInt(args[1]));
-                            sender.sendMessage("§aLe nouveau rang de " + victim.getName() + " est : " + rangText(victim));
-                            victim.sendMessage("§aVotre rang est maintenant : " + rangText(victim));
+                            sender.sendMessage("Â§aLe nouveau rang de " + victim.getName() + " est " + rangText(victim));
+                            victim.sendMessage("Â§aVotre rang est maintenant : " + rangText(victim));
                         }
                     }
                     else {
                         Player p = (Player) sender;
                         goodAction(p.getUniqueId(), Integer.parseInt(args[1]));
-                        p.sendMessage("§aVotre rang est maintenant : " + rangText((Player) sender));
+                        p.sendMessage("Â§aVotre rang est maintenant : " + rangText((Player) sender));
                     }
                 }
                 else if (args[0].equalsIgnoreCase("remove"))
@@ -348,22 +348,22 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
                             for (Player player : Bukkit.getServer().getOnlinePlayers())
                             {
                                 badAction(player.getUniqueId(), Integer.parseInt(args[1]));
-                                player.sendMessage("§aVotre rang est maintenant : " + rangText(player));
+                                player.sendMessage("Â§aVotre rang est maintenant : " + rangText(player));
                             }
-                            sender.sendMessage("§aLe nouveau rang de tous les joueurs est : " + rangText((Player) sender));
+                            sender.sendMessage("Â§aLe nouveau rang de tous les joueurs est : " + rangText((Player) sender));
                         }
                         else
                         {
                             final Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
                             badAction(victim.getUniqueId(), Integer.parseInt(args[1]));
-                            sender.sendMessage("§aLe nouveau rang de " + victim.getName() + " est : " + rangText(victim));
-                            victim.sendMessage("§aVotre rang est maintenant : " + rangText(victim));
+                            sender.sendMessage("Â§aLe nouveau rang de " + victim.getName() + " est " + rangText(victim));
+                            victim.sendMessage("Â§aVotre rang est maintenant : " + rangText(victim));
                         }
                     }
                     else {
                         Player p = (Player) sender;
                         badAction(p.getUniqueId(), Integer.parseInt(args[1]));
-                        p.sendMessage("§aVotre rang est maintenant : " + rangText((Player) sender));
+                        p.sendMessage("Â§aVotre rang est maintenant : " + rangText((Player) sender));
                     }
                 }
             }

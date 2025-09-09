@@ -4,6 +4,7 @@ import fr.byxis.faction.bunker.BunkerClass;
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.faction.faction.FactionPlayerInformation;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Bukkit;
@@ -25,9 +26,9 @@ public class MenuBunker {
         BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
         Inventory zoneInv = null;
         if (bk == null)
-            zoneInv = Bukkit.createInventory(null, 27, "ß8Menu du Bunker ßa ");
+            zoneInv = Bukkit.createInventory(null, 27, "¬ß8Menu du Bunker ¬ßa");
         else
-            zoneInv = Bukkit.createInventory(null, 27, "ß8Menu du Bunkerßa - Nv. " + bk.getBunkerLevel());
+            zoneInv = Bukkit.createInventory(null, 27, "¬ß8Menu du Bunker¬ßa - Nv. " + bk.getBunkerLevel());
         setBunkerItem(main, zoneInv, p, bk);
         p.openInventory(zoneInv);
     }
@@ -37,23 +38,23 @@ public class MenuBunker {
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
         if (bk != null && pInfos.getRole() == 2 && bk.getName().equalsIgnoreCase(pInfos.getFactionName())) {
-            inv.setItem(10, InventoryUtilities.setItemMeta(Material.BARRIER, "ßcQuitter le Bunker", (short) 0));
+            inv.setItem(10, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ßcQuitter le Bunker", (short) 0));
             List<String> lore = new ArrayList<String>();
-            lore.add("ßrß8Prix : ß6" + bk.getAmeliorationPriceMoney() + "ßrßf$ß8 et ßb" + bk.getAmeliorationPriceJetons() + "ßf\u26c1");
-            inv.setItem(12, InventoryUtilities.setItemMetaLore(Material.ANVIL, "ßaAmÈliorer le bunker", (short) 0, lore));
-            inv.setItem(14, InventoryUtilities.setItemMeta(Material.RABBIT_HIDE, "ßdChanger de skin", (short) 0));
-            inv.setItem(16, InventoryUtilities.setItemMeta(Material.MAP, "ßeInviter un joueur", (short) 0));
+            lore.add("¬ßr¬ß8Prix : ¬ß6" + bk.getAmeliorationPriceMoney() + "¬ßr¬ßf$¬ß8 et ¬ßb" + bk.getAmeliorationPriceJetons() + "¬ßf‚õÅ");
+            inv.setItem(12, InventoryUtilities.setItemMetaLore(Material.ANVIL, "¬ßaAm√©liorer le bunker", (short) 0, lore));
+            inv.setItem(14, InventoryUtilities.setItemMeta(Material.RABBIT_HIDE, "¬ßdChanger de skin", (short) 0));
+            inv.setItem(16, InventoryUtilities.setItemMeta(Material.MAP, "¬ßeInviter un joueur", (short) 0));
         } else if (bk != null && pInfos.getRole() == 1 && bk.getName().equalsIgnoreCase(pInfos.getFactionName())) {
-            inv.setItem(12, InventoryUtilities.setItemMeta(Material.BARRIER, "ßcQuitter le Bunker", (short) 0));
-            inv.setItem(14, InventoryUtilities.setItemMeta(Material.MAP, "ßeInviter un joueur", (short) 0));
+            inv.setItem(12, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ßcQuitter le Bunker", (short) 0));
+            inv.setItem(14, InventoryUtilities.setItemMeta(Material.MAP, "¬ßeInviter un joueur", (short) 0));
         } else {
-            inv.setItem(13, InventoryUtilities.setItemMeta(Material.BARRIER, "ßcQuitter le Bunker", (short) 0));
+            inv.setItem(13, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ßcQuitter le Bunker", (short) 0));
         }
     }
 
     public static void openInviteBunker(Fireland main, Player p, int page) {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory zoneInv = Bukkit.createInventory(null, 54, "ß8Inviter dans votre bunker");
+        Inventory zoneInv = Bukkit.createInventory(null, 54, "¬ß8Inviter dans votre bunker");
         setInviteBunker(main, zoneInv, p, page);
         p.openInventory(zoneInv);
     }
@@ -67,19 +68,19 @@ public class MenuBunker {
         int i = 0;
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (!player.getName().equalsIgnoreCase(p.getName())) {
-                inv.setItem(i, InventoryUtilities.getHead(player.getUniqueId(), "ßeInviter " + player.getName()));
+                inv.setItem(i, InventoryUtilities.getHead(player.getUniqueId(), "¬ßeInviter " + player.getName()));
                 i++;
             }
             if (i == 45) {
                 break;
             }
         }
-        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "ßcRetour", (short) 0));
+        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "¬ßcRetour", (short) 0));
     }
 
     public static void openBunkerFood(Fireland main, Player p) {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory inv = Bukkit.createInventory(null, 9, "ß8Nourriture du bunker");
+        Inventory inv = Bukkit.createInventory(null, 9, "¬ß8Nourriture du bunker");
         setBunkerFoodItem(main, inv, p);
         p.openInventory(inv);
     }
@@ -90,28 +91,28 @@ public class MenuBunker {
         for (int i = 0; i < 9; i++) {
             inv.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        inv.setItem(8, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "ßcQuitter", (short) 1));
+        inv.setItem(8, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "¬ßcQuitter", (short) 1));
         if (bk != null) {
             int food = bk.getFoodAmount();
             List<String> lore = new ArrayList<String>();
-            lore.add("ßrß8GÈnËre ß7" + bk.getMaxFood() + "ß8 steaks par jour");
+            lore.add("¬ßr¬ß8G√©n√®re ¬ß7" + bk.getMaxFood() + "¬ß8 steaks par jour");
             if (food > 0) {
                 ItemStack beef = new ItemStack(Material.COOKED_BEEF, food);
                 ItemMeta meta = beef.getItemMeta();
-                meta.setDisplayName("ß7Steak");
+                meta.setDisplayName("¬ß7Steak");
                 meta.setLore(lore);
                 beef.setItemMeta(meta);
 
                 inv.setItem(0, beef);
             } else {
-                inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.BARRIER, "ßcAucun steak en stock", (short) 0, lore));
+                inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.BARRIER, "¬ßcAucun steak en stock", (short) 0, lore));
             }
         }
     }
 
     public static void openBunkerMechanic(Fireland main, Player p) {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory inv = Bukkit.createInventory(null, 9, "ß8Atelier du bunker");
+        Inventory inv = Bukkit.createInventory(null, 9, "¬ß8Atelier du bunker");
         setBunkerMechanicItem(main, inv, p);
         p.openInventory(inv);
     }
@@ -122,51 +123,51 @@ public class MenuBunker {
         for (int i = 0; i < 9; i++) {
             inv.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        inv.setItem(8, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "ßcQuitter", (short) 1));
+        inv.setItem(8, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "¬ßcQuitter", (short) 1));
         if (bk != null) {
             int scrapNb = bk.getScrapAmount();
             List<String> lore = new ArrayList<String>();
-            lore.add("ßrß8GÈnËre ß7" + bk.getMaxScrap() + "ß8 scraps par jour");
+            lore.add("¬ßr¬ß8G√©n√®re ¬ß7" + bk.getMaxScrap() + "¬ß8 scraps par jour");
             if (scrapNb > 0) {
                 ItemStack scrap = new ItemStack(Material.NETHERITE_SCRAP, scrapNb);
                 ItemMeta meta = scrap.getItemMeta();
-                meta.setDisplayName("ß7Scrap");
+                meta.setDisplayName("¬ß7Scrap");
                 meta.setLore(lore);
                 scrap.setItemMeta(meta);
 
                 inv.setItem(0, scrap);
             } else {
-                inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.BARRIER, "ßcAucun scrap en stock", (short) 0, lore));
+                inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.BARRIER, "¬ßcAucun scrap en stock", (short) 0, lore));
             }
 
             int powderNb = bk.getPowderAmount();
             lore = new ArrayList<String>();
-            lore.add("ßrß8GÈnËre ß7" + bk.getMaxPowder() + "ß8 poudre par jour");
+            lore.add("¬ßr¬ß8G√©n√®re ¬ß7" + bk.getMaxPowder() + "¬ß8 poudre par jour");
             if (powderNb > 0) {
                 ItemStack powder = new ItemStack(Material.GUNPOWDER, powderNb);
                 ItemMeta meta = powder.getItemMeta();
-                meta.setDisplayName("ß7Poudre");
+                meta.setDisplayName("¬ß7Poudre");
                 meta.setLore(lore);
                 powder.setItemMeta(meta);
 
                 inv.setItem(1, powder);
             } else {
-                inv.setItem(1, InventoryUtilities.setItemMetaLore(Material.BARRIER, "ßcAucune poudre en stock", (short) 0, lore));
+                inv.setItem(1, InventoryUtilities.setItemMetaLore(Material.BARRIER, "¬ßcAucune poudre en stock", (short) 0, lore));
             }
 
             int repairKitNb = bk.getRepairKitAmount();
             lore = new ArrayList<String>();
-            lore.add("ßrß8GÈnËre ß7" + bk.getMaxRepairKit() + "ß8 kit de rÈparation par semaine");
+            lore.add("¬ßr¬ß8G√©n√®re ¬ß7" + bk.getMaxRepairKit() + "¬ß8 kit de r√©paration par semaine");
             if (repairKitNb > 0) {
                 ItemStack kit = new ItemStack(Material.IRON_INGOT, repairKitNb);
                 ItemMeta meta = kit.getItemMeta();
-                meta.setDisplayName("ß7Kit de rÈparation");
+                meta.setDisplayName("¬ß7Kit de r√©paration");
                 meta.setLore(lore);
                 kit.setItemMeta(meta);
 
                 inv.setItem(2, kit);
             } else {
-                inv.setItem(2, InventoryUtilities.setItemMetaLore(Material.BARRIER, "ßcAucun kit de rÈparation en stock", (short) 0, lore));
+                inv.setItem(2, InventoryUtilities.setItemMetaLore(Material.BARRIER, "¬ßcAucun kit de r√©paration en stock", (short) 0, lore));
             }
         }
     }
@@ -174,7 +175,7 @@ public class MenuBunker {
     public static void openBunkerAlchemy(Fireland main, Player p)
     {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
-        Inventory inv = Bukkit.createInventory(null, 9, "ß8Atelier d'Alchimie du bunker");
+        Inventory inv = Bukkit.createInventory(null, 9, "¬ß8Atelier d'Alchimie du bunker");
         setBunkerAlchemyItem(main, inv, p);
         p.openInventory(inv);
     }
@@ -187,60 +188,60 @@ public class MenuBunker {
         {
             inv.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        inv.setItem(8, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "ßcQuitter", (short) 1));
+        inv.setItem(8, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "¬ßcQuitter", (short) 1));
         if (bk != null)
         {
             int medsNb = bk.getMedsAmount();
             List<String> lore = new ArrayList<String>();
-            lore.add("ßrß8GÈnËre ß7 " + bk.getMaxMeds() + "ß8 mÈdicaments par jour");
+            lore.add("¬ßr¬ß8G√©n√®re ¬ß7" + bk.getMaxMeds() + "¬ß8 m√©dicaments par jour");
             if (medsNb > 0)
             {
                 ItemStack meds = new ItemStack(Material.HONEYCOMB, medsNb);
                 ItemMeta meta = meds.getItemMeta();
-                meta.setDisplayName("ß7MÈdicaments");
+                meta.setDisplayName("¬ß7M√©dicaments");
                 meta.setLore(lore);
                 meds.setItemMeta(meta);
 
                 inv.setItem(0, meds);
             }
             else {
-                inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.BARRIER, "ßcAucun mÈdicament en stock", (short) 0, lore));
+                inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.BARRIER, "¬ßcAucun m√©dicament en stock", (short) 0, lore));
             }
 
             int antidouleurNb = bk.getAntiDouleurAmount();
             lore = new ArrayList<String>();
-            lore.add("ßrß8GÈnËre ß7 " + bk.getMaxAntiDouleur() + "ß8 anti-douleurs par jour");
+            lore.add("¬ßr¬ß8G√©n√®re ¬ß7" + bk.getMaxAntiDouleur() + "¬ß8 anti-douleurs par jour");
             if (antidouleurNb > 0)
             {
                 ItemStack powder = new ItemStack(Material.WHEAT_SEEDS, antidouleurNb);
                 ItemMeta meta = powder.getItemMeta();
                 meta.setCustomModelData(104);
-                meta.setDisplayName("ß7Anti-Douleurs");
+                meta.setDisplayName("¬ß7Anti-Douleurs");
                 meta.setLore(lore);
                 powder.setItemMeta(meta);
 
                 inv.setItem(1, powder);
             }
             else {
-                inv.setItem(1, InventoryUtilities.setItemMetaLore(Material.BARRIER, "ßcAucun Anti-Douleur en stock", (short) 0, lore));
+                inv.setItem(1, InventoryUtilities.setItemMetaLore(Material.BARRIER, "¬ßcAucun Anti-Douleur en stock", (short) 0, lore));
             }
 
             int serumNb = bk.getSerumAmount();
             lore = new ArrayList<String>();
-            lore.add("ßrß8GÈnËre ß7 " + bk.getMaxSerum() + "ß8 sÈrum du berserker par semaine");
+            lore.add("¬ßr¬ß8G√©n√®re ¬ß7" + bk.getMaxSerum() + "¬ß8 s√©rum du berserker par semaine");
             if (serumNb > 0)
             {
                 ItemStack powder = new ItemStack(Material.WHEAT_SEEDS, serumNb);
                 ItemMeta meta = powder.getItemMeta();
                 meta.setCustomModelData(113);
-                meta.setDisplayName("ß7SÈrum du Berserker");
+                meta.setDisplayName("¬ß7S√©rum du Berserker");
                 meta.setLore(lore);
                 powder.setItemMeta(meta);
 
                 inv.setItem(2, powder);
             }
             else {
-                inv.setItem(2, InventoryUtilities.setItemMetaLore(Material.BARRIER, "ßcAucun sÈrum en stock", (short) 0, lore));
+                inv.setItem(2, InventoryUtilities.setItemMetaLore(Material.BARRIER, "¬ßcAucun s√©rum en stock", (short) 0, lore));
             }
         }
     }
@@ -248,7 +249,7 @@ public class MenuBunker {
     public static void openBunkerChest(Fireland main, Player p) {
         BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
         Inventory zoneInv = null;
-        zoneInv = Bukkit.createInventory(null, 54, "ß8Stockage du bunker");
+        zoneInv = Bukkit.createInventory(null, 54, "¬ß8Stockage du bunker");
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
         if (bk != null && (p.hasPermission("fireland.bunker.mod") || pInfos != null && pInfos.getFactionName().equalsIgnoreCase(bk.getName())))
@@ -264,75 +265,75 @@ public class MenuBunker {
         {
             inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
-        inv.setItem(8 + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "ßcQuitter", (short) 1));
+        inv.setItem(8 + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "¬ßcQuitter", (short) 1));
 
         if (bk.getBunkerLevel() >= 1)
         {
-            inv.setItem(9, InventoryUtilities.setItemMeta(Material.CHEST, "ßaStockage 1", (short) 1));
+            inv.setItem(9, InventoryUtilities.setItemMeta(Material.CHEST, "¬ßaStockage 1", (short) 1));
         }
         else
         {
-            inv.setItem(9, InventoryUtilities.setItemMeta(Material.BARRIER, "ß4Stockage 1", (short) 1));
+            inv.setItem(9, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ß4Stockage 1", (short) 1));
         }
 
         if (bk.getBunkerLevel() >= 3)
         {
-            inv.setItem(11, InventoryUtilities.setItemMeta(Material.CHEST, "ßaStockage 2", (short) 1));
+            inv.setItem(11, InventoryUtilities.setItemMeta(Material.CHEST, "¬ßaStockage 2", (short) 1));
         }
         else
         {
-            inv.setItem(11, InventoryUtilities.setItemMeta(Material.BARRIER, "ß4Stockage 2", (short) 1));
+            inv.setItem(11, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ß4Stockage 2", (short) 1));
         }
 
         if (bk.getBunkerLevel() >= 4)
         {
-            inv.setItem(13, InventoryUtilities.setItemMeta(Material.CHEST, "ßaStockage 3", (short) 1));
+            inv.setItem(13, InventoryUtilities.setItemMeta(Material.CHEST, "¬ßaStockage 3", (short) 1));
         }
         else
         {
-            inv.setItem(13, InventoryUtilities.setItemMeta(Material.BARRIER, "ß4Stockage 3", (short) 1));
+            inv.setItem(13, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ß4Stockage 3", (short) 1));
         }
 
         if (bk.getBunkerLevel() >= 5)
         {
-            inv.setItem(15, InventoryUtilities.setItemMeta(Material.CHEST, "ßaStockage 4", (short) 1));
+            inv.setItem(15, InventoryUtilities.setItemMeta(Material.CHEST, "¬ßaStockage 4", (short) 1));
         }
         else
         {
-            inv.setItem(15, InventoryUtilities.setItemMeta(Material.BARRIER, "ß4Stockage 4", (short) 1));
+            inv.setItem(15, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ß4Stockage 4", (short) 1));
         }
 
         if (bk.getBunkerLevel() >= 8)
         {
-            inv.setItem(17, InventoryUtilities.setItemMeta(Material.CHEST, "ßaStockage 5", (short) 1));
-            inv.setItem(27, InventoryUtilities.setItemMeta(Material.CHEST, "ßaStockage 6", (short) 1));
+            inv.setItem(17, InventoryUtilities.setItemMeta(Material.CHEST, "¬ßaStockage 5", (short) 1));
+            inv.setItem(27, InventoryUtilities.setItemMeta(Material.CHEST, "¬ßaStockage 6", (short) 1));
         }
         else
         {
-            inv.setItem(17, InventoryUtilities.setItemMeta(Material.BARRIER, "ß4Stockage 5", (short) 1));
-            inv.setItem(27, InventoryUtilities.setItemMeta(Material.BARRIER, "ß4Stockage 6", (short) 1));
+            inv.setItem(17, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ß4Stockage 5", (short) 1));
+            inv.setItem(27, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ß4Stockage 6", (short) 1));
         }
 
         if (bk.getBunkerLevel() >= 9)
         {
-            inv.setItem(29, InventoryUtilities.setItemMeta(Material.CHEST, "ßaStockage 7", (short) 1));
-            inv.setItem(31, InventoryUtilities.setItemMeta(Material.CHEST, "ßaStockage 8", (short) 1));
+            inv.setItem(29, InventoryUtilities.setItemMeta(Material.CHEST, "¬ßaStockage 7", (short) 1));
+            inv.setItem(31, InventoryUtilities.setItemMeta(Material.CHEST, "¬ßaStockage 8", (short) 1));
         }
         else
         {
-            inv.setItem(29, InventoryUtilities.setItemMeta(Material.BARRIER, "ß4Stockage 7", (short) 1));
-            inv.setItem(31, InventoryUtilities.setItemMeta(Material.BARRIER, "ß4Stockage 8", (short) 1));
+            inv.setItem(29, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ß4Stockage 7", (short) 1));
+            inv.setItem(31, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ß4Stockage 8", (short) 1));
         }
 
         if (bk.getBunkerLevel() >= 10)
         {
-            inv.setItem(33, InventoryUtilities.setItemMeta(Material.CHEST, "ßaStockage 9", (short) 1));
-            inv.setItem(35, InventoryUtilities.setItemMeta(Material.CHEST, "ßaStockage 10", (short) 1));
+            inv.setItem(33, InventoryUtilities.setItemMeta(Material.CHEST, "¬ßaStockage 9", (short) 1));
+            inv.setItem(35, InventoryUtilities.setItemMeta(Material.CHEST, "¬ßaStockage 10", (short) 1));
         }
         else
         {
-            inv.setItem(33, InventoryUtilities.setItemMeta(Material.BARRIER, "ß4Stockage 9", (short) 1));
-            inv.setItem(35, InventoryUtilities.setItemMeta(Material.BARRIER, "ß4Stockage 10", (short) 1));
+            inv.setItem(33, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ß4Stockage 9", (short) 1));
+            inv.setItem(35, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ß4Stockage 10", (short) 1));
         }
     }
 
@@ -340,7 +341,7 @@ public class MenuBunker {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
         Inventory zoneInv = null;
-        zoneInv = Bukkit.createInventory(null, 54, "ß8Skin de Bunker");
+        zoneInv = Bukkit.createInventory(null, 54, "¬ß8Skin de Bunker");
         setBunkerSkinItem(main, zoneInv, p, bk);
         p.openInventory(zoneInv);
     }
@@ -377,12 +378,20 @@ public class MenuBunker {
         inv.setItem(18, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         inv.setItem(27, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         inv.setItem(36, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
-        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "ßcQuitter", (short) 1));
+        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "¬ßcQuitter", (short) 1));
 
-        inv.setItem(45, InventoryUtilities.setItemMeta(Material.CLOCK, "ßaVous pouvez changer de skin.", (short) 1));
+        long delay = bk.getDelayForSkinChange();
+        if (delay > 0)
+        {
+            inv.setItem(45, InventoryUtilities.setItemMeta(Material.BARRIER, "¬ßcVous pouvez changer de skin dans " + BasicUtilities.getStringTime(delay), (short) 1));
+        }
+        else
+        {
+            inv.setItem(45, InventoryUtilities.setItemMeta(Material.CLOCK, "¬ßaVous pouvez changer de skin.", (short) 1));
+        }
         if (current != null)
         {
-            inv.setItem(0, InventoryUtilities.setItemMeta(current, main.getBunkerManager().getBunkerSkins().get(current)[0] + " ßd(…quipÈ)", (short) 0));
+            inv.setItem(0, InventoryUtilities.setItemMeta(current, main.getBunkerManager().getBunkerSkins().get(current)[0] + " ¬ßd(√©quip√©)", (short) 0));
         }
         if (!possessed.isEmpty())
         {
@@ -390,11 +399,11 @@ public class MenuBunker {
             {
                 if (i >= 8)
                 {
-                    inv.setItem(i + 11, InventoryUtilities.setItemMeta(possessed.get(i), main.getBunkerManager().getBunkerSkins().get(possessed.get(i))[0] + " ßa(PossÈdÈ)", (short) 0));
+                    inv.setItem(i + 11, InventoryUtilities.setItemMeta(possessed.get(i), main.getBunkerManager().getBunkerSkins().get(possessed.get(i))[0] + " ¬ßa(Poss√©d√©)", (short) 0));
                 }
                 else
                 {
-                    inv.setItem(i + 10, InventoryUtilities.setItemMeta(possessed.get(i), main.getBunkerManager().getBunkerSkins().get(possessed.get(i))[0] + " ßa(PossÈdÈ)", (short) 0));
+                    inv.setItem(i + 10, InventoryUtilities.setItemMeta(possessed.get(i), main.getBunkerManager().getBunkerSkins().get(possessed.get(i))[0] + " ¬ßa(Poss√©d√©)", (short) 0));
                 }
             }
         }
@@ -404,11 +413,11 @@ public class MenuBunker {
             {
                 if (i >= 8)
                 {
-                    inv.setItem(i + 29, InventoryUtilities.setItemMeta(locked.get(i), main.getBunkerManager().getBunkerSkins().get(locked.get(i))[0] + " ßc(VerrouillÈ)", (short) 0));
+                    inv.setItem(i + 29, InventoryUtilities.setItemMeta(locked.get(i), main.getBunkerManager().getBunkerSkins().get(locked.get(i))[0] + " ¬ßc(Verrouill√©)", (short) 0));
                 }
                 else
                 {
-                    inv.setItem(i + 28, InventoryUtilities.setItemMeta(locked.get(i), main.getBunkerManager().getBunkerSkins().get(locked.get(i))[0] + " ßc(VerrouillÈ)", (short) 0));
+                    inv.setItem(i + 28, InventoryUtilities.setItemMeta(locked.get(i), main.getBunkerManager().getBunkerSkins().get(locked.get(i))[0] + " ¬ßc(Verrouill√©)", (short) 0));
                 }
             }
         }

@@ -83,32 +83,32 @@ public class ScoreboardPlayer implements Listener
             objective = board.getObjective("fireland");
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName("§f§lStatistiques");
+        objective.setDisplayName("Â§fÂ§lStatistiques");
 
         String state = "";
         if (main.getCfgm().getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state"))
         {
-            state += "§2infecté";
+            state += "Â§2infectÃ©";
         }
         if (main.getCfgm().getPlayerDB().getDouble("thirst." + p.getUniqueId()) <= 10)
         {
             if (!state.isEmpty())
             {
-                state += "§7, ";
+                state += "Â§7, ";
             }
-            state += "§3assoiffé";
+            state += "Â§3assoiffÃ©";
         }
         if (p.getFoodLevel() <= 6)
         {
             if (!state.isEmpty())
             {
-                state += "§7, ";
+                state += "Â§7, ";
             }
-            state += "§caffamé";
+            state += "Â§caffamÃ©";
         }
         if (!state.isEmpty())
         {
-            state = "§7sain";
+            state = "Â§7sain";
         }
         if (!main.getHashMapManager().getDiscretionMap().containsKey(p.getUniqueId()))
         {
@@ -129,37 +129,37 @@ public class ScoreboardPlayer implements Listener
 
         //double numDiscretion = main.getCfgm().getPlayerDB().getDouble("discretion."+p.getUniqueId()+".score");
         double numDiscretion = main.getHashMapManager().getDiscretionMap().get(p.getUniqueId()).getScore();
-        String shotColor = "§7";
+        String shotColor = "Â§7";
         if (main.getHashMapManager().getDiscretionMap().get(p.getUniqueId()).isShooting())
         {
-            shotColor = "§4";
+            shotColor = "Â§4";
         }
         else if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingCamo())
         {
-            shotColor = "§2";
+            shotColor = "Â§2";
         }
         else if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingLights())
         {
-            shotColor = "§e";
+            shotColor = "Â§e";
         }
 
         JetonsCommandManager jetons = new JetonsCommandManager(main);
 
-        Score line1 = objective.getScore("§7-");
-        Score line2 = objective.getScore("§7- ");
+        Score line1 = objective.getScore("Â§7-");
+        Score line2 = objective.getScore("Â§7- ");
         Score none1 = objective.getScore("");
         Score none2 = objective.getScore(" ");
-        Score money = objective.getScore("§8Monnaie : §6 " + Math.round(getEco().getBalance(p)) + "§r$" +
-                "  §8| §b " + jetons.getJetonsPlayer(p.getUniqueId()) + "§r\u26c1");
-        Score bank = objective.getScore("§8Banque : §6 " + Math.round(main.getCfgm().getEnderchest().getDouble("bank." + p.getUniqueId() + ".money")) + "§r$");
-        Score infect = objective.getScore("§8État : " + state);
-        Score discretion = objective.getScore("§8Discretion : " + shotColor + numDiscretion + "%");
+        Score money = objective.getScore("Â§8Monnaie : Â§6" + Math.round(getEco().getBalance(p)) + "$Â§r" +
+                "  Â§8| Â§b" + jetons.getJetonsPlayer(p.getUniqueId()) + "Â§râ›");
+        Score bank = objective.getScore("Â§8Banque : Â§6" + Math.round(main.getCfgm().getEnderchest().getDouble("bank." + p.getUniqueId() + ".money")) + "$Â§r");
+        Score infect = objective.getScore("Â§8Ã‰tat : " + state);
+        Score discretion = objective.getScore("Â§8Discretion : " + shotColor + numDiscretion + "%");
         String prime = "";
         if (PrimeEvent.getConfig().getConfig().contains(p.getUniqueId().toString()))
         {
-            prime = " §c(Recherché)";
+            prime = " Â§c(RecherchÃ©)";
         }
-        Score rang = objective.getScore("§8Niveau : §7 " + getPlayerLevel(p.getUniqueId()).getStringRank() + prime + " §8(Niv. " + getPlayerLevel(p.getUniqueId()).getLevel() + ")");
+        Score rang = objective.getScore("Â§8Niveau : Â§7" + getPlayerLevel(p.getUniqueId()).getStringRank() + prime + " Â§8(Niv. " + getPlayerLevel(p.getUniqueId()).getLevel() + ")");
 
         line2.setScore(8);
         none2.setScore(7);

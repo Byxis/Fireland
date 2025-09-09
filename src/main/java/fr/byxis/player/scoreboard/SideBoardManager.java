@@ -40,11 +40,11 @@ public class SideBoardManager {
             obj = _playerBoard.getObjective("fireland");
 
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-        obj.setDisplayName("§f§lStatistiques");
+        obj.setDisplayName("Â§fÂ§lStatistiques");
 
-        // Remplacer 'getMoney(player)' et 'getTokens(player)' par les méthodes pour obtenir l'argent et les jetons du joueur
-        Score line1 = obj.getScore("§7-");
-        Score line2 = obj.getScore("§7- ");
+        // Remplacer 'getMoney(player)' et 'getTokens(player)' par les mÃ©thodes pour obtenir l'argent et les jetons du joueur
+        Score line1 = obj.getScore("Â§7-");
+        Score line2 = obj.getScore("Â§7- ");
         Score none1 = obj.getScore("");
         Score none2 = obj.getScore(" ");
         Score money = obj.getScore(getMoneyText(_p));
@@ -67,8 +67,8 @@ public class SideBoardManager {
 
        /*
 
-        Score line1 = objective.getScore("§7-");
-        Score line2 = objective.getScore("§7- ");
+        Score line1 = objective.getScore("Â§7-");
+        Score line2 = objective.getScore("Â§7- ");
         Score none1 = objective.getScore("");
         Score none2 = objective.getScore(" ");
         Score money = objective.getScore(getMoneyText(p));
@@ -92,13 +92,13 @@ public class SideBoardManager {
 
     private String getMoneyText(Player p)
     {
-        return "§8Monnaie : §6 " + Math.round(Fireland.getEco().getBalance(p)) + "§r$" +
-                "  §8| §b " + JetonManager.getJetonsPlayer(p.getUniqueId()) + "§r\u26c1";
+        return "Â§8Monnaie : Â§6" + Math.round(Fireland.getEco().getBalance(p)) + "$Â§r" +
+                "  Â§8| Â§b" + JetonManager.getJetonsPlayer(p.getUniqueId()) + "Â§râ›";
     }
 
     private String getBankText(Player p)
     {
-        return "§8Banque : §6 " + Math.round(m_main.getCfgm().getEnderchest().getDouble("bank." + p.getUniqueId() + ".money")) + "§r$";
+        return "Â§8Banque : Â§6" + Math.round(m_main.getCfgm().getEnderchest().getDouble("bank." + p.getUniqueId() + ".money")) + "$Â§r";
     }
 
     private String getStateText(Player p)
@@ -106,29 +106,29 @@ public class SideBoardManager {
         String state = "";
         if (m_main.getCfgm().getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state"))
         {
-            state += "§2infecté";
+            state += "Â§2infectÃ©";
         }
         if (m_main.getCfgm().getPlayerDB().getDouble("thirst." + p.getUniqueId()) <= 10)
         {
             if (!state.isEmpty())
             {
-                state += "§7, ";
+                state += "Â§7, ";
             }
-            state += "§3assoiffé";
+            state += "Â§3assoiffÃ©";
         }
         if (p.getFoodLevel() <= 6)
         {
             if (!state.isEmpty())
             {
-                state += "§7, ";
+                state += "Â§7, ";
             }
-            state += "§caffamé";
+            state += "Â§caffamÃ©";
         }
         if (state.isEmpty())
         {
-            state = "§7sain";
+            state = "Â§7sain";
         }
-        return "§8État : " + state;
+        return "Â§8Ã‰tat : " + state;
     }
 
     private String getDiscretionText(Player p)
@@ -139,32 +139,32 @@ public class SideBoardManager {
         }
 
         double numDiscretion = HashMapManager.getDiscretionMap().get(p.getUniqueId()).getScore();
-        String shotColor = "§7";
+        String shotColor = "Â§7";
 
         String prime = "";
         if (PrimeEvent.getConfig().getConfig().contains(p.getUniqueId().toString()))
         {
-            prime = " §c(Recherché)";
+            prime = " Â§c(RecherchÃ©)";
         }
 
         if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isShooting())
         {
-            shotColor = "§4";
+            shotColor = "Â§4";
         }
         else if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingCamo())
         {
-            shotColor = "§2";
+            shotColor = "Â§2";
         }
         else if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingLights())
         {
-            shotColor = "§e";
+            shotColor = "Â§e";
         }
 
-        return "§8Discretion : " + shotColor + numDiscretion + "% " + prime;
+        return "Â§8Discretion : " + shotColor + numDiscretion + "%" + prime;
     }
 
     private String getRankText(Player p)
     {
-        return "§8Niveau : §7 " + getPlayerLevel(p.getUniqueId()).getStringRank() + " §8(Niv. " + getPlayerLevel(p.getUniqueId()).getLevel() + ")";
+        return "Â§8Niveau : Â§7" + getPlayerLevel(p.getUniqueId()).getStringRank() + " Â§8(Niv. " + getPlayerLevel(p.getUniqueId()).getLevel() + ")";
     }
 }

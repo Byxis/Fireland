@@ -112,11 +112,11 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
 
             if (karma >= 75)
             {
-                return "  งd(งlงdงn" + (reduction * 100) + "งrงd%)";
+                return "  ยงd(ยงlยงdยงn" + (reduction * 100) + "ยงrยงd%)";
             }
             else if (karma < 50)
             {
-                return "  ง4(งl+งrง4งn" + (reduction * 100) + "งrง4%)";
+                return "  ยง4(ยงl+ยงrยง4ยงn" + (reduction * 100) + "ยงrยง4%)";
             }
 
         }
@@ -130,7 +130,7 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
                 if (args.length == 1) {
                     if (getKarma(player.getUniqueId()) < 25)
                     {
-                        player.sendMessage("งcJe ne vends pas ma marchandise เ des criminels comme vous !");
+                        player.sendMessage("ยงcJe ne vends pas ma marchandise ร  des criminels comme vous !");
                     }
                     else if (args[0].equalsIgnoreCase("revolver"))
                     {
@@ -164,7 +164,7 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
                     }
                     else if (main.getCfgm().getKarmaDB().getDouble(player.getUniqueId().toString()) <= 75 && args[0].contains("pass"))
                     {
-                        player.sendMessage("งcJe ne vous fais pas encore assez confiance pour vous vendre des pass !");
+                        player.sendMessage("ยงcJe ne vous fais pas encore assez confiance pour vous vendre des pass !");
                     }
                     else if (args[0].contains("pass"))
                     {
@@ -191,7 +191,7 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
                     
                 }
                 else {
-                    player.sendMessage("งcUsage : /shop <revolver/smg/fusil/assaut/lourd/utilitaire/passv/passb/passj/passr>");
+                    player.sendMessage("ยงcUsage : /shop <revolver/smg/fusil/assaut/lourd/utilitaire/passv/passb/passj/passr>");
                 }
                 return true;
             }
@@ -354,866 +354,866 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
         String command = "";
         boolean food = false;
         
-        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Pomme"))
+        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Pomme"))
         {
             food = true;
             price = 20;
             command = "minecraft:give " + p.getName() + " apple";
             name = "une pomme";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Veste de commando"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Veste de commando"))
         {
             price = 1000;
             command = "minecraft:give " + p.getName() + " diamond_chestplate";
             name = "une veste de commando";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Gilet pare-balle de commando"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Gilet pare-balle de commando"))
         {
             price = 1000;
             command = "minecraft:give " + p.getName() + " diamond_leggings";
             name = "un gilet pare-balle de commando";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Casque de commando"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Casque de commando"))
         {
             price = 800;
             command = "minecraft:give " + p.getName() + " diamond_helmet";
             name = "un casque de commando";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Bottes de commando"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Bottes de commando"))
         {
             price = 800;
             command = "minecraft:give " + p.getName() + " diamond_boots";
             name = "des bottes de commando";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Veste de CRS"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Veste de CRS"))
         {
             price = 700;
             command = "minecraft:give " + p.getName() + " iron_chestplate";
             name = "une veste de CRS";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Gilet pare-balle de CRS"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Gilet pare-balle de CRS"))
         {
             price = 700;
             command = "minecraft:give " + p.getName() + " iron_leggings";
             name = "un gilet pare-balle CRS";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Casque de CRS"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Casque de CRS"))
         {
             price = 500;
             command = "minecraft:give " + p.getName() + " iron_helmet";
             name = "un casque de CRS";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Bottes de CRS"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Bottes de CRS"))
         {
             price = 500;
             command = "minecraft:give " + p.getName() + " iron_boots";
             name = "des bottes de CRS";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Grenade "))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Grenade "))
         {
             price = 350;
             command = "shot give " + p.getName() + " grenade";
             name = "une grenade";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Parachute"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Parachute"))
         {
             price = 2000;
             command = "shot give " + p.getName() + " para";
             name = "un parachute";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Hache"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Hache"))
         {
             price = 700;
             command = "shot give " + p.getName() + " hache";
             name = "une hache";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Machette"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Machette"))
         {
             price = 900;
             command = "shot give " + p.getName() + " machet";
             name = "une machette";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7TAC Crossbow"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7TAC Crossbow"))
         {
             price = 2500;
             command = "shot give " + p.getName() + " tac";
             name = "un TAC Crossbow";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Carreau"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Carreau"))
         {
             price = 20;
             command = "shot give " + p.getName() + " carrea";
             name = "un carreau";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Cookie"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Cookie"))
         {
             food = true;
             price = 10;
             command = "minecraft:give " + p.getName() + " cookie";
             name = "un cookie";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Tarte"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Tarte"))
         {
             food = true;
             price = 25;
             command = "minecraft:give " + p.getName() + " pumpkin_pie";
             name = "une tarte";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Pain"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Pain"))
         {
             food = true;
             price = 20;
             command = "minecraft:give " + p.getName() + " bread";
             name = "du pain";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Carotte"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Carotte"))
         {
             food = true;
             price = 17;
             command = "minecraft:give " + p.getName() + " carrot";
             name = "une carotte";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Seringue Antidote"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Seringue Antidote"))
         {
             price = 150;
             command = "shot give " + p.getName() + " serin";
             name = "une seringue antidote";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Kit de soin"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Kit de soin"))
         {
             food = true;
             price = 150;
             command = "shot give " + p.getName() + " kit";
             name = "un kit de soin";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Lunettes de vision nocturne"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Lunettes de vision nocturne"))
         {
             price = 2000;
             command = "shot give " + p.getName() + " nvgo";
             name = "des lunettes de vision nocturne";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Bouteille d'eau"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Bouteille d'eau"))
         {
             food = true;
             price = 80;
             command = "minecraft:give " + p.getName() + " potion{Potion:\"minecraft:water\"}";
             name = "une bouteille d'eau";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Walther PPK"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Walther PPK"))
         {
             price = 200;
             command = "shot give " + p.getName() + " walth";
             name = "un WaltherPPK";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Colt 1911"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Colt 1911"))
         {
             price = 230;
             command = "shot give " + p.getName() + " colt";
             name = "un colt 1911";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Makarov"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Makarov"))
         {
             price = 200;
             command = "shot give " + p.getName() + " maka";
             name = "un Makarov";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Beretta M9"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Beretta M9"))
         {
             price = 350;
             command = "shot give " + p.getName() + " berettam9";
             name = "un BerettaM9";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Glock 17"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Glock 17"))
         {
             price = 370;
             command = "shot give " + p.getName() + " glock";
             name = "un Glock 17";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Hk USP"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Hk USP"))
         {
             price = 430;
             command = "shot give " + p.getName() + " hkusp";
             name = "un Hk USP";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Five-seveN"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Five-seveN"))
         {
             price = 500;
             command = "shot give " + p.getName() + " fnfive";
             name = "un Five SeveN";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7r8"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7r8"))
         {
             price = 300;
             command = "shot give " + p.getName() + " r8";
             name = "un r8";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Magnum 44"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Magnum 44"))
         {
             price = 350;
             command = "shot give " + p.getName() + " Magn";
             name = "un Magnum 44";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Taurus Raging Bull"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Taurus Raging Bull"))
         {
             price = 550;
             command = "shot give " + p.getName() + " taurus";
             name = "un Taurus Raging Bull";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7IMI Desert-Eagle"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7IMI Desert-Eagle"))
         {
             price = 1000;
             command = "shot give " + p.getName() + " imide";
             name = "un IMI Desert Eagle";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Beretta 92r"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Beretta 92r"))
         {
             price = 700;
             command = "shot give " + p.getName() + " beret";
             name = "un Beretta 92r";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7CZ75a"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7CZ75a"))
         {
             price = 600;
             command = "shot give " + p.getName() + " CZ75";
             name = "un CZ75a";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de Revolver"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de Revolver"))
         {
             price = 20;
             command = "shot give " + p.getName() + " chargeur_rev";
             name = "un Chargeur de Revolver";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de Haute Capacit้"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de Haute Capacitรฉ"))
         {
             price = 25;
             command = "shot give " + p.getName() + " chargeur_revolver_haute";
-            name = "un Chargeur de Haute Capacit้";
+            name = "un Chargeur de Haute Capacitรฉ";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de Desert Eagle"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de Desert Eagle"))
         {
             price = 35;
             command = "shot give " + p.getName() + " chargeur_des";
             name = "un Chargeur de Desert Eagle";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Cartouche de .347 Magnum"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Cartouche de .347 Magnum"))
         {
             price = 4;
             command = "shot give " + p.getName() + " cartouche_347";
             name = "une Cartouche de .347 Magnum";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Uzi"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Uzi"))
         {
             price = 750;
             command = "shot give " + p.getName() + " uzi";
             name = "un Uzi";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7PP 2000"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7PP 2000"))
         {
             price = 780;
             command = "shot give " + p.getName() + " pp";
             name = "un PP 2000";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Kriss Vector"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Kriss Vector"))
         {
             price = 780;
             command = "shot give " + p.getName() + " kriss";
             name = "un Kriss Vector";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7HK MP5"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7HK MP5"))
         {
             price = 800;
             command = "shot give " + p.getName() + " hkmp5";
             name = "un HK MP5";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7MAC 10"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7MAC 10"))
         {
             price = 750;
             command = "shot give " + p.getName() + " mac10";
             name = "un MAC 10";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7TEC-9"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7TEC-9"))
         {
             price = 880;
             command = "shot give " + p.getName() + " tec";
             name = "un TEC-9";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7UMP45"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7UMP45"))
         {
             price = 850;
             command = "shot give " + p.getName() + " ump";
             name = "un UMP45";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7HK MP7"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7HK MP7"))
         {
             price = 850;
             command = "shot give " + p.getName() + " hkmp7";
             name = "un HK MP7";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7MP40"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7MP40"))
         {
             price = 900;
             command = "shot give " + p.getName() + " MP40";
             name = "un MP40";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7FN P90"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7FN P90"))
         {
             price = 1300;
             command = "shot give " + p.getName() + " FNP90";
             name = "un FN P90";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7MP9"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7MP9"))
         {
             price = 900;
             command = "shot give " + p.getName() + " MP9";
             name = "un MP9";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Thompson"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Thompson"))
         {
             price = 1500;
             command = "shot give " + p.getName() + " tho";
             name = "une Thompson";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de UZI"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de UZI"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_uzi";
             name = "un Chargeur de Uzi";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de HKMP7"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de HKMP7"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_hkmp7";
             name = "un Chargeur de HK MP7";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de Kriss Vector"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de Kriss Vector"))
         {
             price = 45;
             command = "shot give " + p.getName() + " chargeur_kriss";
             name = "un Chargeur de Kriss Vector";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de MP40"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de MP40"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_mp40";
             name = "un Chargeur de MP40";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de UMP45"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de UMP45"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_ump";
             name = "un Chargeur de UMP45";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de MP9"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de MP9"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_mp9";
             name = "un Chargeur de MP9";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de HKMP5"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de HKMP5"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_hkmp5";
             name = "un Chargeur de HK MP5";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de PP2000"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de PP2000"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_pp2";
             name = "un Chargeur de PP2000";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de TEC9"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de TEC9"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_tec";
             name = "un Chargeur de TEC9";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de MAC10"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de MAC10"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_mac";
             name = "un Chargeur de MAC10";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de FNP90"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de FNP90"))
         {
             price = 45;
             command = "shot give " + p.getName() + " chargeur_fnp";
             name = "un Chargeur de FNP90";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de Thompson"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de Thompson"))
         {
             price = 50;
             command = "shot give " + p.getName() + " chargeur_thompson";
             name = "un Chargeur de Thompson";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Barrett M107"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Barrett M107"))
         {
             price = 3000;
             command = "shot give " + p.getName() + " barret";
             name = "un Barett M107";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7L96A1"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7L96A1"))
         {
             price = 2300;
             command = "shot give " + p.getName() + " l96";
             name = "un L96A1";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7SVD Dragunov"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7SVD Dragunov"))
         {
             price = 2600;
             command = "shot give " + p.getName() + " svdd";
             name = "un SVD Dragunov";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7VSS Vintorez"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7VSS Vintorez"))
         {
             price = 3500;
             command = "shot give " + p.getName() + " vssvin";
             name = "un VSS Vintorez";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7M40A1"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7M40A1"))
         {
             price = 2000;
             command = "shot give " + p.getName() + " m40a";
             name = "un M40A1";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Mosin Nagant"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Mosin Nagant"))
         {
             price = 2100;
             command = "shot give " + p.getName() + " mosin";
             name = "un Mosin Nagant";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Karabiner 98k"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Karabiner 98k"))
         {
             price = 2150;
             command = "shot give " + p.getName() + " karabiner";
             name = "un Karabiner 98k";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7SVT 40"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7SVT 40"))
         {
             price = 2100;
             command = "shot give " + p.getName() + " SVT";
             name = "un SVT40";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7CheyTacM200"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7CheyTacM200"))
         {
             price = 2700;
             command = "shot give " + p.getName() + " cheyt";
             name = "un Cheytac M200";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7SPAS 12"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7SPAS 12"))
         {
             price = 2600;
             command = "shot give " + p.getName() + " spas";
             name = "un SPAS 12";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7XM 1014"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7XM 1014"))
         {
             price = 2300;
             command = "shot give " + p.getName() + " xm";
             name = "un XM 1014";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Benelli Nova"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Benelli Nova"))
         {
             price = 2200;
             command = "shot give " + p.getName() + " benell";
             name = "un Benelli Nova";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Remington 870"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Remington 870"))
         {
             price = 2100;
             command = "shot give " + p.getName() + " remin";
             name = "un Remington 870";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7AA12"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7AA12"))
         {
             price = 3000;
             command = "shot give " + p.getName() + " aa";
             name = "un AA12";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Cartouche de Calibre 12"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Cartouche de Calibre 12"))
         {
             price = 10;
             command = "shot give " + p.getName() + " cartouche_cal";
             name = "une Cartouche de Calibre 12";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de Barrett"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de Barrett"))
         {
             price = 50;
             command = "shot give " + p.getName() + " chargeur_barr";
             name = "un Chargeur de Barrett";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de L96"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de L96"))
         {
             price = 35;
             command = "shot give " + p.getName() + " chargeur_l96";
             name = "un Chargeur de L96";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de SVD Dragunov"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de SVD Dragunov"))
         {
             price = 35;
             command = "shot give " + p.getName() + " chargeur_svd";
             name = "un Chargeur de SVD Dragunov";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Cartouche de 7.62 NATO"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Cartouche de 7.62 NATO"))
         {
             price = 10;
             command = "shot give " + p.getName() + " cartouche_762";
             name = "une Cartouche de 7.62 NATO";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de ASVAL"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de ASVAL"))
         {
             price = 50;
             command = "shot give " + p.getName() + " chargeur_ASVAL";
             name = "un Chargeur de ASVAL";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de SVT-40"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de SVT-40"))
         {
             price = 30;
             command = "shot give " + p.getName() + " chargeur_svt";
             name = "un Chargeur de SVT-40";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de AA12"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de AA12"))
         {
             price = 50;
             command = "shot give " + p.getName() + " chargeur_aa";
             name = "un Chargeur de AA12";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de CheytacM200"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de CheytacM200"))
         {
             price = 30;
             command = "shot give " + p.getName() + " chargeur_chey";
             name = "un Chargeur de CheytacM200";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7RPK"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7RPK"))
         {
             price = 1400;
             command = "shot give " + p.getName() + " rpk";
             name = "un RPK";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7AK12"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7AK12"))
         {
             price = 1450;
             command = "shot give " + p.getName() + " AK12";
             name = "un AK12";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7AK74"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7AK74"))
         {
             price = 1400;
             command = "shot give " + p.getName() + " ak74";
             name = "un AK74";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7FN Scar-H"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7FN Scar-H"))
         {
             price = 2100;
             command = "shot give " + p.getName() + " fnscar-h";
             name = "une FN Scar-H";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7ACR"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7ACR"))
         {
             price = 1650;
             command = "shot give " + p.getName() + " acr";
             name = "une ACR";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7M16 A4"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7M16 A4"))
         {
             price = 1600;
             command = "shot give " + p.getName() + " m16a4";
             name = "une M16 A4";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7M14"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7M14"))
         {
             price = 1500;
             command = "shot give " + p.getName() + " M14";
             name = "une M14";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7IWI ACE53"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7IWI ACE53"))
         {
             price = 1900;
             command = "shot give " + p.getName() + " iwiace";
             name = "une IWI ACE53";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Steyr AUG"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Steyr AUG"))
         {
             price = 1900;
             command = "shot give " + p.getName() + " steyraug";
             name = "une Steyr AUG";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7HK 416"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7HK 416"))
         {
             price = 1650;
             command = "shot give " + p.getName() + " HK416";
             name = "une HK 416";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7TAR 21"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7TAR 21"))
         {
             price = 1600;
             command = "shot give " + p.getName() + " tar";
             name = "une TAR 21";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Famas"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Famas"))
         {
             price = 1850;
             command = "shot give " + p.getName() + " famas";
             name = "un Famas";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7FN FAL"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7FN FAL"))
         {
             price = 1800;
             command = "shot give " + p.getName() + " FNfal";
             name = "un FN FAL";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7AS VAL"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7AS VAL"))
         {
             price = 3200;
             command = "shot give " + p.getName() + " asval";
             name = "un AS VAL";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de M14"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de M14"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_m14";
             name = "un Chargeur de M14";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de ASVAL"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de ASVAL"))
         {
             price = 50;
             command = "shot give " + p.getName() + " chargeur_asval";
             name = "un Chargeur de ASVAL";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de SteyrAUG"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de SteyrAUG"))
         {
             price = 45;
             command = "shot give " + p.getName() + " chargeur_steyrau";
             name = "un Chargeur de SteyrAUG";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de HK416"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de HK416"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_HK416";
             name = "un Chargeur de HK416";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de M16"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de M16"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_m16";
             name = "un Chargeur de M16";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de Famas"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de Famas"))
         {
             price = 45;
             command = "shot give " + p.getName() + " chargeur_famas";
             name = "un Chargeur de Famas";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de FNFAL"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de FNFAL"))
         {
             price = 45;
             command = "shot give " + p.getName() + " chargeur_fnfal";
             name = "un Chargeur de FNFAL";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de AK"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de AK"))
         {
             price = 45;
             command = "shot give " + p.getName() + " chargeur_ak";
             name = "un Chargeur de AK";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de Scar"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de Scar"))
         {
             price = 45;
             command = "shot give " + p.getName() + " chargeur_scar";
             name = "un Chargeur de Scar";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de TAR21"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de TAR21"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_tar21";
             name = "un Chargeur de TAR21";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de IWI ACE53"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de IWI ACE53"))
         {
             price = 45;
             command = "shot give " + p.getName() + " chargeur_iwiace";
             name = "un Chargeur de IWI ACE53";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de M2 Browning"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de M2 Browning"))
         {
             price = 55;
             command = "shot give " + p.getName() + " chargeur_m2_br";
             name = "un Chargeur de M2 Browning";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de MK48"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de MK48"))
         {
             price = 50;
             command = "shot give " + p.getName() + " chargeur_mk48";
             name = "un Chargeur de MK48";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de M60"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de M60"))
         {
             price = 55;
             command = "shot give " + p.getName() + " chargeur_m60";
             name = "un Chargeur de M60";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de M249"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de M249"))
         {
             price = 45;
             command = "shot give " + p.getName() + " chargeur_m249";
             name = "un Chargeur de M249";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de Minigun"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de Minigun"))
         {
             price = 55;
             command = "shot give " + p.getName() + " chargeur_minigun";
             name = "un Chargeur de Minigun";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Grenade 40mm"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Grenade 40mm"))
         {
             price = 60;
             command = "shot give " + p.getName() + " grenade40";
             name = "une grenade 40mm";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Roquette"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Roquette"))
         {
             price = 65;
             command = "shot give " + p.getName() + " roquette";
             name = "une Roquette";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7M2 Browning"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7M2 Browning"))
         {
             price = 3000;
             command = "shot give " + p.getName() + " M2_browning";
             name = "une M2 Browning";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7MK48"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7MK48"))
         {
             price = 2600;
             command = "shot give " + p.getName() + " MK48";
             name = "une MK48";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7M60"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7M60"))
         {
             price = 3400;
             command = "shot give " + p.getName() + " M60";
             name = "une M60";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7M249"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7M249"))
         {
             price = 2500;
             command = "shot give " + p.getName() + " M249";
             name = "une M249";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Minigun"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Minigun"))
         {
             price = 3200;
             command = "shot give " + p.getName() + " Minigun";
             name = "une Minigun";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7M32 MGL"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7M32 MGL"))
         {
             price = 4000;
             command = "shot give " + p.getName() + " M32MGL";
             name = "une M32 MGL";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7M79"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7M79"))
         {
             price = 3000;
             command = "shot give " + p.getName() + " M79";
             name = "une M79";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7RPG-7"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7RPG-7"))
         {
             price = 3500;
             command = "shot give " + p.getName() + " RPG";
             name = "un RPG-7";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Lampe de Poche"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Lampe de Poche"))
         {
             price = 80;
             command = "shot give " + p.getName() + " lampe";
             name = "une lampe de poche";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7G36C"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7G36C"))
         {
             price = 1700;
             command = "shot give " + p.getName() + " g36c";
             name = "un G36C";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7M4A1"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7M4A1"))
         {
             price = 1600;
             command = "shot give " + p.getName() + " m4A1";
             name = "une M4A4";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de G36C"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de G36C"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_g36";
             name = "un chargeur de G36C";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7AKM"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7AKM"))
         {
             price = 1450;
             command = "shot give " + p.getName() + " akm";
             name = "une AKM";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7L86"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7L86"))
         {
             price = 1850;
             command = "shot give " + p.getName() + " l86";
             name = "une L86";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de L86"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de L86"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_L86";
             name = "un chargeur de L86";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7r8"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7r8"))
         {
             price = 300;
             command = "shot give " + p.getName() + " r8";
             name = "un r8";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Chargeur de KP31 Suomi"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Chargeur de KP31 Suomi"))
         {
             price = 40;
             command = "shot give " + p.getName() + " chargeur_kp31";
             name = "un chargeur de KP31 Suomi";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7KP31 Suomi"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7KP31 Suomi"))
         {
             price = 1500;
             command = "shot give " + p.getName() + " kp31";
             name = "une KP31 Suomi";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7CZ52"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7CZ52"))
         {
             price = 210;
             command = "shot give " + p.getName() + " cz52";
             name = "un CZ52";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง8Pass - งaVert"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง8Pass - ยงaVert"))
         {
             price = 1200;
             command = "minecraft:give " + p.getName() + " minecraft:music_disc_cat";
             name = "un pass vert";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง8Pass - ง9Bleu"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง8Pass - ยง9Bleu"))
         {
             price = 3000;
             command = "minecraft:give " + p.getName() + " minecraft:music_disc_wait";
             name = "un pass bleu";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง8Pass - งeJaune"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง8Pass - ยงeJaune"))
         {
             price = 7000;
             command = "minecraft:give " + p.getName() + " minecraft:music_disc_13";
             name = "un pass jaune";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง8Pass - งcRouge"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง8Pass - ยงcRouge"))
         {
             price = 18000;
             command = "minecraft:give " + p.getName() + " minecraft:music_disc_blocks";
             name = "un pass rouge";
         }
-        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง7Cartouche de Calibre 12"))
+        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง7Cartouche de Calibre 12"))
         {
             price = 10;
             command = "shot give " + p.getName() + " cartouche_calibre12";
@@ -1243,21 +1243,21 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
                 {
                     if (command.contains("minecraft:give ") && !food)
                     {
-                        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง8Pass - งaVert"))
+                        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง8Pass - ยงaVert"))
                         {
-                            command += "{display:{Name:\"{\\\"text\\\":\\\"" + "งaPass Vert" + "\\\"}\"}} 1";
+                            command += "{display:{Name:\"{\\\"text\\\":\\\"" + "ยงaPass Vert" + "\\\"}\"}} 1";
                         }
-                        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง8Pass - ง9Bleu"))
+                        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง8Pass - ยง9Bleu"))
                         {
-                            command += "{display:{Name:\"{\\\"text\\\":\\\"" + "ง9Pass Bleu" + "\\\"}\"}} 1";
+                            command += "{display:{Name:\"{\\\"text\\\":\\\"" + "ยง9Pass Bleu" + "\\\"}\"}} 1";
                         }
-                        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง8Pass - งeJaune"))
+                        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง8Pass - ยงeJaune"))
                         {
-                            command += "{display:{Name:\"{\\\"text\\\":\\\"" + "งePass Jaune" + "\\\"}\"}} 1";
+                            command += "{display:{Name:\"{\\\"text\\\":\\\"" + "ยงePass Jaune" + "\\\"}\"}} 1";
                         }
-                        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ง8Pass - งcRouge"))
+                        else if (item.getItemMeta().getDisplayName().equalsIgnoreCase("ยง8Pass - ยงcRouge"))
                         {
-                            command += "{display:{Name:\"{\\\"text\\\":\\\"" + "งcPass Rouge" + "\\\"}\"}} 1";
+                            command += "{display:{Name:\"{\\\"text\\\":\\\"" + "ยงcPass Rouge" + "\\\"}\"}} 1";
                         }
                         else
                         {
@@ -1268,13 +1268,13 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
                     if (p.getGameMode() == GameMode.CREATIVE)
                     {
                         p.playSound(p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
-                        p.sendMessage("ง7Vous avez achet้ " + name + " pour " + newprice + "$ !");
+                        p.sendMessage("ยง7Vous avez achetรฉ " + name + " pour " + newprice + "$ !");
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
                     }
                     else
                     {
                         p.playSound(p.getLocation(), "minecraft:gun.hud.money_drop", (float) 0.1, 1);
-                        p.sendMessage("ง7Vous avez achet้ " + name + " pour " + newprice + "$ !");
+                        p.sendMessage("ยง7Vous avez achetรฉ " + name + " pour " + newprice + "$ !");
                         sellItemKarma(p.getUniqueId());
                         getEco().withdrawPlayer(p, newprice);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
@@ -1282,7 +1282,7 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
                 }
                 else 
                 {
-                    p.sendMessage("งCVous n'avez pas assez d'argent !");
+                    p.sendMessage("ยงCVous n'avez pas assez d'argent !");
                 }
             }
         }
@@ -1329,13 +1329,13 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
                 }
                 if (!hasSelled) 
                 {
-                    p.sendMessage("งCVous n'avez pas l'item...");
+                    p.sendMessage("ยงCVous n'avez pas l'item...");
                 }
                 else
                 {
                     float totalSell = (float) (num * sell);
                     getEco().depositPlayer(p, num);
-                    p.sendMessage("ง7Vous avez vendu " + name + "งax " + num + "ง7 pour " + totalSell + "$ !");
+                    p.sendMessage("ยง7Vous avez vendu " + name + "ยงax " + num + "ยง7 pour " + totalSell + "$ !");
                     InGameUtilities.playPlayerSound(p, "gun.hud.money_pickup", SoundCategory.AMBIENT, 1, 1);
 
                     sellItemKarma(p.getUniqueId());
@@ -1353,7 +1353,7 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
                             hasSelled = true;
                             s.setAmount(s.getAmount() - 1);
                             getEco().depositPlayer(p, sell);
-                            p.sendMessage("ง7Vous avez vendu " + name + " pour " + sell + "$ !");
+                            p.sendMessage("ยง7Vous avez vendu " + name + " pour " + sell + "$ !");
                             InGameUtilities.playPlayerSound(p, "gun.hud.money_pickup", SoundCategory.AMBIENT, 1, 1);
 
                             sellItemKarma(p.getUniqueId());
@@ -1365,7 +1365,7 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
                             hasSelled = true;
                             s.setAmount(s.getAmount() - 1);
                             getEco().depositPlayer(p, sell);
-                            p.sendMessage("ง7Vous avez vendu " + name + " pour " + sell + "$ !");
+                            p.sendMessage("ยง7Vous avez vendu " + name + " pour " + sell + "$ !");
                             InGameUtilities.playPlayerSound(p, "gun.hud.money_pickup", SoundCategory.AMBIENT, 1, 1);
 
                             sellItemKarma(p.getUniqueId());
@@ -1376,7 +1376,7 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
                 }
                 if (!hasSelled) 
                 {
-                    p.sendMessage("งCVous n'avez pas l'item...");
+                    p.sendMessage("ยงCVous n'avez pas l'item...");
                 }
             }
             
@@ -1394,7 +1394,7 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
         inv.setItem(6, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         inv.setItem(7, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         inv.setItem(8, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
-        inv.setItem(36, setItemMetaLore(Material.BOOK, "งr- Informations -", (short) 1, listMaker3("ง8Pour acheter un item, faites un", "ง6clic gaucheง8 dessus, pour le", "ง8vendre, faites un ง6clic droitง8.", _uuid)));
+        inv.setItem(36, setItemMetaLore(Material.BOOK, "ยงr- Informations -", (short) 1, listMaker3("ยง8Pour acheter un item, faites un", "ยง6clic gaucheยง8 dessus, pour le", "ยง8vendre, faites un ยง6clic droitยง8.", _uuid)));
         inv.setItem(37, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         inv.setItem(38, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         inv.setItem(39, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
@@ -1404,25 +1404,25 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
         
         if (name.equalsIgnoreCase("Marchand de Pass Vert")) 
         {
-            inv.setItem(22, setItemMetaLore(Material.MUSIC_DISC_CAT, "ง8Pass - งaVert", (short) 0, listMaker3("ง7Permet l'acc่s เ certaines zones", "ง8Co๛t: ง61200$", "ง8Vente: ง6300$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.MUSIC_DISC_CAT, "ยง8Pass - ยงaVert", (short) 0, listMaker3("ยง7Permet l'accรจs ร  certaines zones", "ยง8Coรปt: ยง61200$", "ยง8Vente: ยง6300$", _uuid)));
             inv.setItem(43, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             inv.setItem(44, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand de Pass Bleu"))
         {
-            inv.setItem(22, setItemMetaLore(Material.MUSIC_DISC_WAIT, "ง8Pass - ง9Bleu", (short) 0, listMaker3("ง7Permet l'acc่s เ certaines zones", "ง8Co๛t: ง63000$", "ง8Vente: ง6750$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.MUSIC_DISC_WAIT, "ยง8Pass - ยง9Bleu", (short) 0, listMaker3("ยง7Permet l'accรจs ร  certaines zones", "ยง8Coรปt: ยง63000$", "ยง8Vente: ยง6750$", _uuid)));
             inv.setItem(43, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             inv.setItem(44, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand de Pass Jaune"))
         {
-            inv.setItem(22, setItemMetaLore(Material.MUSIC_DISC_13, "ง8Pass - งeJaune", (short) 0, listMaker3("ง7Permet l'acc่s เ certaines zones", "ง8Co๛t: ง67000$", "ง8Vente: ง61750$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.MUSIC_DISC_13, "ยง8Pass - ยงeJaune", (short) 0, listMaker3("ยง7Permet l'accรจs ร  certaines zones", "ยง8Coรปt: ยง67000$", "ยง8Vente: ยง61750$", _uuid)));
             inv.setItem(43, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             inv.setItem(44, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand de Pass Rouge"))
         {
-            inv.setItem(22, setItemMetaLore(Material.MUSIC_DISC_BLOCKS, "ง8Pass - งcRouge", (short) 0, listMaker3("ง7Permet l'acc่s เ certaines zones", "ง8Co๛t: ง618000$", "ง8Vente: ง64500$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.MUSIC_DISC_BLOCKS, "ยง8Pass - ยงcRouge", (short) 0, listMaker3("ยง7Permet l'accรจs ร  certaines zones", "ยง8Coรปt: ยง618000$", "ยง8Vente: ยง64500$", _uuid)));
             inv.setItem(43, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             inv.setItem(44, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
@@ -1439,7 +1439,7 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
         inv.setItem(6, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         inv.setItem(7, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         inv.setItem(8, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
-        inv.setItem(45, setItemMetaLore(Material.BOOK, "งr- Informations -", (short) 1, listMaker3("ง8Pour acheter un item, faites un", "ง6clic gaucheง8 dessus, pour le", "ง8vendre, faites un ง6clic droitง8.", _uuid)));
+        inv.setItem(45, setItemMetaLore(Material.BOOK, "ยงr- Informations -", (short) 1, listMaker3("ยง8Pour acheter un item, faites un", "ยง6clic gaucheยง8 dessus, pour le", "ยง8vendre, faites un ยง6clic droitยง8.", _uuid)));
         inv.setItem(46, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         inv.setItem(47, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         inv.setItem(48, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
@@ -1449,207 +1449,207 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
         
         if (name.equalsIgnoreCase("Marchand de Revolver (1/2)")) {
 
-            inv.setItem(19, setItemMetaLore(Material.STONE_AXE, "ง7Walther PPK", (short) 18, listMaker3("ง8Munitions: ง7Revolver", "ง8Co๛t: ง6200$", "ง8Vente: ง650$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.IRON_SHOVEL, "ง7Makarov", (short) 4, listMaker3("ง8Munitions: ง7Revolver", "ง8Co๛t: ง6200$", "ง8Vente: ง650$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.STONE_AXE, "ง7Colt 1911", (short) 6, listMaker3("ง8Munitions: ง7Revolver", "ง8Co๛t: ง6230$", "ง8Vente: ง657.5$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.STONE_AXE, "ง7Glock 17", (short) 0, listMaker3("ง8Munitions: ง7Haute Capacit้", "ง8Co๛t: ง6370$", "ง8Vente: ง692.5$", _uuid)));
-            inv.setItem(23, setItemMetaLore(Material.IRON_SHOVEL, "ง7Beretta 92r", (short) 31, listMaker3("ง8Munitions: ง7Haute Capacit้", "ง8Co๛t: ง6700$", "ง8Vente: ง6175$", _uuid)));
-            inv.setItem(24, setItemMetaLore(Material.IRON_SHOVEL, "ง7CZ75a", (short) 37, listMaker3("ง8Munitions: ง7Haute Capacit้", "ง8Co๛t: ง6600$", "ง8Vente: ง6150$", _uuid)));
-            inv.setItem(25, setItemMetaLore(Material.WOODEN_SHOVEL, "ง7Five-seveN", (short) 0, listMaker3("ง8Munitions: ง7Haute Capacit้", "ง8Co๛t: ง6500$", "ง8Vente: ง6125$", _uuid)));
-            inv.setItem(28, setItemMetaLore(Material.STONE_AXE, "ง7Beretta M9", (short) 49, listMaker3("ง8Munitions: ง7Haute Capacit้", "ง8Co๛t: ง6350$", "ง8Vente: ง687.5", _uuid)));
-            inv.setItem(29, setItemMetaLore(Material.STONE_AXE, "ง7HK Usp", (short) 24, listMaker3("ง8Munitions: ง7Haute Capacit้", "ง8Co๛t: ง6430$", "ง8Vente: ง6107.5$", _uuid)));
-            inv.setItem(30, setItemMetaLore(Material.STONE_AXE, "ง7Taurus Raging Bull", (short) 33, listMaker3("ง8Munitions: ง7.347 Magnum", "ง8Co๛t: ง6550$", "ง8Vente: ง6137.5$", _uuid)));
-            inv.setItem(31, setItemMetaLore(Material.STONE_AXE, "ง7r8", (short) 45, listMaker3("ง8Munitions: ง7.347 Magnum", "ง8Co๛t: ง6300$", "ง8Vente: ง675$", _uuid)));
-            inv.setItem(32, setItemMetaLore(Material.IRON_SHOVEL, "ง7Magnum 44", (short) 10, listMaker3("ง8Munitions: ง7.347 Magnum", "ง8Co๛t: ง6350$", "ง8Vente: ง687.5$", _uuid)));
-            inv.setItem(33, setItemMetaLore(Material.STONE_AXE, "ง7IMI Desert-Eagle", (short) 29, listMaker3("ง8Munitions: ง7Desert Eagle", "ง8Co๛t: ง61000$", "ง8Vente: ง6250$", _uuid)));
-            inv.setItem(34, setItemMetaLore(Material.DIAMOND_AXE, "ง7CZ52", (short) 9, listMaker3("ง8Munitions: ง7Revolver", "ง8Co๛t: ง6210$", "ง8Vente: ง652.5$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/2]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[2/2]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.STONE_AXE, "ยง7Walther PPK", (short) 18, listMaker3("ยง8Munitions: ยง7Revolver", "ยง8Coรปt: ยง6200$", "ยง8Vente: ยง650$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.IRON_SHOVEL, "ยง7Makarov", (short) 4, listMaker3("ยง8Munitions: ยง7Revolver", "ยง8Coรปt: ยง6200$", "ยง8Vente: ยง650$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.STONE_AXE, "ยง7Colt 1911", (short) 6, listMaker3("ยง8Munitions: ยง7Revolver", "ยง8Coรปt: ยง6230$", "ยง8Vente: ยง657.5$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.STONE_AXE, "ยง7Glock 17", (short) 0, listMaker3("ยง8Munitions: ยง7Haute Capacitรฉ", "ยง8Coรปt: ยง6370$", "ยง8Vente: ยง692.5$", _uuid)));
+            inv.setItem(23, setItemMetaLore(Material.IRON_SHOVEL, "ยง7Beretta 92r", (short) 31, listMaker3("ยง8Munitions: ยง7Haute Capacitรฉ", "ยง8Coรปt: ยง6700$", "ยง8Vente: ยง6175$", _uuid)));
+            inv.setItem(24, setItemMetaLore(Material.IRON_SHOVEL, "ยง7CZ75a", (short) 37, listMaker3("ยง8Munitions: ยง7Haute Capacitรฉ", "ยง8Coรปt: ยง6600$", "ยง8Vente: ยง6150$", _uuid)));
+            inv.setItem(25, setItemMetaLore(Material.WOODEN_SHOVEL, "ยง7Five-seveN", (short) 0, listMaker3("ยง8Munitions: ยง7Haute Capacitรฉ", "ยง8Coรปt: ยง6500$", "ยง8Vente: ยง6125$", _uuid)));
+            inv.setItem(28, setItemMetaLore(Material.STONE_AXE, "ยง7Beretta M9", (short) 49, listMaker3("ยง8Munitions: ยง7Haute Capacitรฉ", "ยง8Coรปt: ยง6350$", "ยง8Vente: ยง687.5", _uuid)));
+            inv.setItem(29, setItemMetaLore(Material.STONE_AXE, "ยง7HK Usp", (short) 24, listMaker3("ยง8Munitions: ยง7Haute Capacitรฉ", "ยง8Coรปt: ยง6430$", "ยง8Vente: ยง6107.5$", _uuid)));
+            inv.setItem(30, setItemMetaLore(Material.STONE_AXE, "ยง7Taurus Raging Bull", (short) 33, listMaker3("ยง8Munitions: ยง7.347 Magnum", "ยง8Coรปt: ยง6550$", "ยง8Vente: ยง6137.5$", _uuid)));
+            inv.setItem(31, setItemMetaLore(Material.STONE_AXE, "ยง7r8", (short) 45, listMaker3("ยง8Munitions: ยง7.347 Magnum", "ยง8Coรปt: ยง6300$", "ยง8Vente: ยง675$", _uuid)));
+            inv.setItem(32, setItemMetaLore(Material.IRON_SHOVEL, "ยง7Magnum 44", (short) 10, listMaker3("ยง8Munitions: ยง7.347 Magnum", "ยง8Coรปt: ยง6350$", "ยง8Vente: ยง687.5$", _uuid)));
+            inv.setItem(33, setItemMetaLore(Material.STONE_AXE, "ยง7IMI Desert-Eagle", (short) 29, listMaker3("ยง8Munitions: ยง7Desert Eagle", "ยง8Coรปt: ยง61000$", "ยง8Vente: ยง6250$", _uuid)));
+            inv.setItem(34, setItemMetaLore(Material.DIAMOND_AXE, "ยง7CZ52", (short) 9, listMaker3("ยง8Munitions: ยง7Revolver", "ยง8Coรปt: ยง6210$", "ยง8Vente: ยง652.5$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/2]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[2/2]", (short) 1));
             return;
         }
         else if (name.equalsIgnoreCase("Marchand de Revolver (2/2)"))
         {
-            inv.setItem(19, setItemMetaLore(Material.GRAY_DYE, "ง7Chargeur de Desert Eagle", (short) 0, listMaker2("ง8Co๛t: ง635$", "ง8Vente: ง68.75$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.MELON_SEEDS, "ง7Chargeur de Haute Capacit้", (short) 0, listMaker2("ง8Co๛t: ง625$", "ง8Vente: ง66.25$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.PUMPKIN_SEEDS, "ง7Chargeur de Revolver", (short) 0, listMaker2("ง8Co๛t: ง620$", "ง8Vente: ง65$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.CYAN_DYE, "ง7Cartouche de .347 Magnum", (short) 0, listMaker2("ง8Co๛t: ง64$", "ง8Vente: ง61$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/2]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[2/2]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.GRAY_DYE, "ยง7Chargeur de Desert Eagle", (short) 0, listMaker2("ยง8Coรปt: ยง635$", "ยง8Vente: ยง68.75$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.MELON_SEEDS, "ยง7Chargeur de Haute Capacitรฉ", (short) 0, listMaker2("ยง8Coรปt: ยง625$", "ยง8Vente: ยง66.25$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.PUMPKIN_SEEDS, "ยง7Chargeur de Revolver", (short) 0, listMaker2("ยง8Coรปt: ยง620$", "ยง8Vente: ยง65$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.CYAN_DYE, "ยง7Cartouche de .347 Magnum", (short) 0, listMaker2("ยง8Coรปt: ยง64$", "ยง8Vente: ยง61$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/2]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[2/2]", (short) 1));
             return;
         }
         else if (name.equalsIgnoreCase("Marchand de SMG (1/2)"))
         {
-            inv.setItem(19, setItemMetaLore(Material.GOLDEN_PICKAXE, "ง7Uzi", (short) 6, listMaker3("ง8Munitions: ง7Uzi", "ง8Co๛t: ง6750$", "ง8Vente: ง6187.5$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.STONE_AXE, "ง7PP 2000", (short) 41, listMaker3("ง8Munitions: ง7PP 2000", "ง8Co๛t: ง6780$", "ง8Vente: ง6195$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.GOLDEN_SHOVEL, "ง7Kriss Vector", (short) 0, listMaker3("ง8Munitions: ง7Kriss Vector", "ง8Co๛t: ง6780$", "ง8Vente: ง6195$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.GOLDEN_HOE, "ง7HK MP5", (short) 0, listMaker3("ง8Munitions: ง7HK MP5", "ง8Co๛t: ง6800$", "ง8Vente: ง6200$", _uuid)));
-            inv.setItem(23, setItemMetaLore(Material.STONE_AXE, "ง7MAC 10", (short) 12, listMaker3("ง8Munitions: ง7MAC10", "ง8Co๛t: ง6750$", "ง8Vente: ง6187.5$", _uuid)));
-            inv.setItem(24, setItemMetaLore(Material.IRON_AXE, "ง7TEC-9", (short) 4, listMaker3("ง8Munitions: ง7TEC-9", "ง8Co๛t: ง6880$", "ง8Vente: ง6220$", _uuid)));
-            inv.setItem(25, setItemMetaLore(Material.STONE_AXE, "ง7UMP45", (short) 37, listMaker3("ง8Munitions: ง7UMP45", "ง8Co๛t: ง6850$", "ง8Vente: ง6212.5$", _uuid)));
-            inv.setItem(28, setItemMetaLore(Material.IRON_HOE, "ง7HK MP7", (short) 100, listMaker3("ง8Munitions: ง7HK MP7", "ง8Co๛t: ง6850$", "ง8Vente: ง6212.5$", _uuid)));
-            inv.setItem(29, setItemMetaLore(Material.DIAMOND_AXE, "ง7MP40", (short) 21, listMaker3("ง8Munitions: ง7MP40", "ง8Co๛t: ง6900$", "ง8Vente: ง6225$", _uuid)));
-            inv.setItem(30, setItemMetaLore(Material.IRON_HOE, "ง7FN P90", (short) 0, listMaker3("ง8Munitions: ง7FN P90", "ง8Co๛t: ง61300$", "ง8Vente: ง6325$", _uuid)));
-            inv.setItem(31, setItemMetaLore(Material.IRON_HOE, "ง7MP9", (short) 170, listMaker3("ง8Munitions: ง7MP9", "ง8Co๛t: ง6900$", "ง8Vente: ง6225$", _uuid)));
-            inv.setItem(32, setItemMetaLore(Material.GOLDEN_SHOVEL, "ง7Thompson", (short) 4, listMaker3("ง8Munitions: ง7Thompson", "ง8Co๛t: ง61500$", "ง8Vente: ง6375$", _uuid)));
-            inv.setItem(33, setItemMetaLore(Material.DIAMOND_AXE, "ง7KP31 Suomi", (short) 18, listMaker3("ง8Munitions: ง7KP31 Suomi", "ง8Co๛t: ง61500$", "ง8Vente: ง6375$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/2]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[2/2]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.GOLDEN_PICKAXE, "ยง7Uzi", (short) 6, listMaker3("ยง8Munitions: ยง7Uzi", "ยง8Coรปt: ยง6750$", "ยง8Vente: ยง6187.5$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.STONE_AXE, "ยง7PP 2000", (short) 41, listMaker3("ยง8Munitions: ยง7PP 2000", "ยง8Coรปt: ยง6780$", "ยง8Vente: ยง6195$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.GOLDEN_SHOVEL, "ยง7Kriss Vector", (short) 0, listMaker3("ยง8Munitions: ยง7Kriss Vector", "ยง8Coรปt: ยง6780$", "ยง8Vente: ยง6195$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.GOLDEN_HOE, "ยง7HK MP5", (short) 0, listMaker3("ยง8Munitions: ยง7HK MP5", "ยง8Coรปt: ยง6800$", "ยง8Vente: ยง6200$", _uuid)));
+            inv.setItem(23, setItemMetaLore(Material.STONE_AXE, "ยง7MAC 10", (short) 12, listMaker3("ยง8Munitions: ยง7MAC10", "ยง8Coรปt: ยง6750$", "ยง8Vente: ยง6187.5$", _uuid)));
+            inv.setItem(24, setItemMetaLore(Material.IRON_AXE, "ยง7TEC-9", (short) 4, listMaker3("ยง8Munitions: ยง7TEC-9", "ยง8Coรปt: ยง6880$", "ยง8Vente: ยง6220$", _uuid)));
+            inv.setItem(25, setItemMetaLore(Material.STONE_AXE, "ยง7UMP45", (short) 37, listMaker3("ยง8Munitions: ยง7UMP45", "ยง8Coรปt: ยง6850$", "ยง8Vente: ยง6212.5$", _uuid)));
+            inv.setItem(28, setItemMetaLore(Material.IRON_HOE, "ยง7HK MP7", (short) 100, listMaker3("ยง8Munitions: ยง7HK MP7", "ยง8Coรปt: ยง6850$", "ยง8Vente: ยง6212.5$", _uuid)));
+            inv.setItem(29, setItemMetaLore(Material.DIAMOND_AXE, "ยง7MP40", (short) 21, listMaker3("ยง8Munitions: ยง7MP40", "ยง8Coรปt: ยง6900$", "ยง8Vente: ยง6225$", _uuid)));
+            inv.setItem(30, setItemMetaLore(Material.IRON_HOE, "ยง7FN P90", (short) 0, listMaker3("ยง8Munitions: ยง7FN P90", "ยง8Coรปt: ยง61300$", "ยง8Vente: ยง6325$", _uuid)));
+            inv.setItem(31, setItemMetaLore(Material.IRON_HOE, "ยง7MP9", (short) 170, listMaker3("ยง8Munitions: ยง7MP9", "ยง8Coรปt: ยง6900$", "ยง8Vente: ยง6225$", _uuid)));
+            inv.setItem(32, setItemMetaLore(Material.GOLDEN_SHOVEL, "ยง7Thompson", (short) 4, listMaker3("ยง8Munitions: ยง7Thompson", "ยง8Coรปt: ยง61500$", "ยง8Vente: ยง6375$", _uuid)));
+            inv.setItem(33, setItemMetaLore(Material.DIAMOND_AXE, "ยง7KP31 Suomi", (short) 18, listMaker3("ยง8Munitions: ยง7KP31 Suomi", "ยง8Coรปt: ยง61500$", "ยง8Vente: ยง6375$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/2]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[2/2]", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand de SMG (2/2)"))
         {
-            inv.setItem(19, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de UZI", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de HKMP7", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de Kriss Vector", (short) 0, listMaker2("ง8Co๛t: ง645$", "ง8Vente: ง611.25$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de MP40", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(23, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de UMP45", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(24, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de MP9", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(25, setItemMetaLore(Material.MAGENTA_DYE, "ง7Chargeur de HKMP5", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(28, setItemMetaLore(Material.PURPLE_DYE, "ง7Chargeur de PP2000", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(29, setItemMetaLore(Material.PURPLE_DYE, "ง7Chargeur de TEC9", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(30, setItemMetaLore(Material.PURPLE_DYE, "ง7Chargeur de MAC10", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(31, setItemMetaLore(Material.STICK, "ง7Chargeur de FNP90", (short) 0, listMaker2("ง8Co๛t: ง645$", "ง8Vente: ง611.25$", _uuid)));
-            inv.setItem(32, setItemMetaLore(Material.YELLOW_DYE, "ง7Chargeur de Thompson", (short) 0, listMaker2("ง8Co๛t: ง650$", "ง8Vente: ง612.5$", _uuid)));
-            inv.setItem(33, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de KP31 Suomi", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/2]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[2/2]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de UZI", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de HKMP7", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de Kriss Vector", (short) 0, listMaker2("ยง8Coรปt: ยง645$", "ยง8Vente: ยง611.25$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de MP40", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(23, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de UMP45", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(24, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de MP9", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(25, setItemMetaLore(Material.MAGENTA_DYE, "ยง7Chargeur de HKMP5", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(28, setItemMetaLore(Material.PURPLE_DYE, "ยง7Chargeur de PP2000", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(29, setItemMetaLore(Material.PURPLE_DYE, "ยง7Chargeur de TEC9", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(30, setItemMetaLore(Material.PURPLE_DYE, "ยง7Chargeur de MAC10", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(31, setItemMetaLore(Material.STICK, "ยง7Chargeur de FNP90", (short) 0, listMaker2("ยง8Coรปt: ยง645$", "ยง8Vente: ยง611.25$", _uuid)));
+            inv.setItem(32, setItemMetaLore(Material.YELLOW_DYE, "ยง7Chargeur de Thompson", (short) 0, listMaker2("ยง8Coรปt: ยง650$", "ยง8Vente: ยง612.5$", _uuid)));
+            inv.setItem(33, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de KP31 Suomi", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/2]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[2/2]", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand de Fusil (1/2)"))
         {
-            inv.setItem(19, setItemMetaLore(Material.DIAMOND_AXE, "ง7L96A1", (short) 3, listMaker3("ง8Munitions: ง7L96A1", "ง8Co๛t: ง62300$", "ง8Vente: ง6575$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.DIAMOND_AXE, "ง7SVD Dragunov", (short) 0, listMaker3("ง8Munitions: ง7SVD Dragunov", "ง8Co๛t: ง62600$", "ง8Vente: ง6650$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.DIAMOND_SHOVEL, "ง7VSS Vintorez", (short) 3, listMaker3("ง8Munitions: ง7AS VAL", "ง8Co๛t: ง63500$", "ง8Vente: ง6875$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.WOODEN_HOE, "ง7M40A1", (short) 5, listMaker3("ง8Munitions: ง77.62 NATO", "ง8Co๛t: ง62000$", "ง8Vente: ง6500$", _uuid)));
-            inv.setItem(23, setItemMetaLore(Material.IRON_SHOVEL, "ง7Mosin Nagant", (short) 7, listMaker3("ง8Munitions: ง77.62 NATO", "ง8Co๛t: ง62100$", "ง8Vente: ง6525$", _uuid)));
-            inv.setItem(24, setItemMetaLore(Material.DIAMOND_AXE, "ง7Karabiner 98k", (short) 15, listMaker3("ง8Munitions: ง77.62 NATO", "ง8Co๛t: ง62150$", "ง8Vente: ง6537.5$", _uuid)));
-            inv.setItem(25, setItemMetaLore(Material.IRON_HOE, "ง7SVT 40", (short) 120, listMaker3("ง8Munitions: ง7SVT 40", "ง8Co๛t: ง62100$", "ง8Vente: ง6525$", _uuid)));
-            inv.setItem(28, setItemMetaLore(Material.DIAMOND_AXE, "ง7CheyTacM200", (short) 12, listMaker3("ง8Munitions: ง7Cheytac M200", "ง8Co๛t: ง62700$", "ง8Vente: ง6375$", _uuid)));
-            inv.setItem(29, setItemMetaLore(Material.WOODEN_HOE, "ง7SPAS 12", (short) 8, listMaker3("ง8Munitions: ง7Calibre 12", "ง8Co๛t: ง62600$", "ง8Vente: ง6650$", _uuid)));
-            inv.setItem(30, setItemMetaLore(Material.WOODEN_HOE, "ง7XM 1014", (short) 2, listMaker3("ง8Munitions: ง7Calibre 12", "ง8Co๛t: ง62300$", "ง8Vente: ง6575$", _uuid)));
-            inv.setItem(31, setItemMetaLore(Material.IRON_AXE, "ง7Benelli Nova", (short) 34, listMaker3("ง8Munitions: ง7Calibre 12", "ง8Co๛t: ง62200$", "ง8Vente: ง6550$", _uuid)));
-            inv.setItem(32, setItemMetaLore(Material.WOODEN_HOE, "ง7Remington 870", (short) 14, listMaker3("ง8Munitions: ง7Calibre 12", "ง8Co๛t: ง62100$", "ง8Vente: ง6525$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/2]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[2/2]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.DIAMOND_AXE, "ยง7L96A1", (short) 3, listMaker3("ยง8Munitions: ยง7L96A1", "ยง8Coรปt: ยง62300$", "ยง8Vente: ยง6575$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.DIAMOND_AXE, "ยง7SVD Dragunov", (short) 0, listMaker3("ยง8Munitions: ยง7SVD Dragunov", "ยง8Coรปt: ยง62600$", "ยง8Vente: ยง6650$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.DIAMOND_SHOVEL, "ยง7VSS Vintorez", (short) 3, listMaker3("ยง8Munitions: ยง7AS VAL", "ยง8Coรปt: ยง63500$", "ยง8Vente: ยง6875$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.WOODEN_HOE, "ยง7M40A1", (short) 5, listMaker3("ยง8Munitions: ยง77.62 NATO", "ยง8Coรปt: ยง62000$", "ยง8Vente: ยง6500$", _uuid)));
+            inv.setItem(23, setItemMetaLore(Material.IRON_SHOVEL, "ยง7Mosin Nagant", (short) 7, listMaker3("ยง8Munitions: ยง77.62 NATO", "ยง8Coรปt: ยง62100$", "ยง8Vente: ยง6525$", _uuid)));
+            inv.setItem(24, setItemMetaLore(Material.DIAMOND_AXE, "ยง7Karabiner 98k", (short) 15, listMaker3("ยง8Munitions: ยง77.62 NATO", "ยง8Coรปt: ยง62150$", "ยง8Vente: ยง6537.5$", _uuid)));
+            inv.setItem(25, setItemMetaLore(Material.IRON_HOE, "ยง7SVT 40", (short) 120, listMaker3("ยง8Munitions: ยง7SVT 40", "ยง8Coรปt: ยง62100$", "ยง8Vente: ยง6525$", _uuid)));
+            inv.setItem(28, setItemMetaLore(Material.DIAMOND_AXE, "ยง7CheyTacM200", (short) 12, listMaker3("ยง8Munitions: ยง7Cheytac M200", "ยง8Coรปt: ยง62700$", "ยง8Vente: ยง6375$", _uuid)));
+            inv.setItem(29, setItemMetaLore(Material.WOODEN_HOE, "ยง7SPAS 12", (short) 8, listMaker3("ยง8Munitions: ยง7Calibre 12", "ยง8Coรปt: ยง62600$", "ยง8Vente: ยง6650$", _uuid)));
+            inv.setItem(30, setItemMetaLore(Material.WOODEN_HOE, "ยง7XM 1014", (short) 2, listMaker3("ยง8Munitions: ยง7Calibre 12", "ยง8Coรปt: ยง62300$", "ยง8Vente: ยง6575$", _uuid)));
+            inv.setItem(31, setItemMetaLore(Material.IRON_AXE, "ยง7Benelli Nova", (short) 34, listMaker3("ยง8Munitions: ยง7Calibre 12", "ยง8Coรปt: ยง62200$", "ยง8Vente: ยง6550$", _uuid)));
+            inv.setItem(32, setItemMetaLore(Material.WOODEN_HOE, "ยง7Remington 870", (short) 14, listMaker3("ยง8Munitions: ยง7Calibre 12", "ยง8Coรปt: ยง62100$", "ยง8Vente: ยง6525$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/2]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[2/2]", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand de Fusil (2/2)"))
         {
-            inv.setItem(19, setItemMetaLore(Material.PINK_DYE, "ง7Chargeur de L96", (short) 0, listMaker2("ง8Co๛t: ง635$", "ง8Vente: ง68.75$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.PINK_DYE, "ง7Chargeur de SVD Dragunov", (short) 0, listMaker2("ง8Co๛t: ง635$", "ง8Vente: ง68.75$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.CYAN_DYE, "ง7Cartouche de 7.62 NATO", (short) 0, listMaker2("ง8Co๛t: ง610$", "ง8Vente: ง62.5$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.LAPIS_LAZULI, "ง7Chargeur de ASVAL", (short) 0, listMaker2("ง8Co๛t: ง650$", "ง8Vente: ง612.5$", _uuid)));
-            inv.setItem(23, setItemMetaLore(Material.PINK_DYE, "ง7Chargeur de SVT-40", (short) 0, listMaker2("ง8Co๛t: ง630$", "ง8Vente: ง67.5$", _uuid)));
-            inv.setItem(24, setItemMetaLore(Material.BROWN_DYE, "ง7Chargeur de CheytacM200", (short) 0, listMaker2("ง8Co๛t: ง630$", "ง8Vente: ง67.5$", _uuid)));
-            inv.setItem(25, setItemMetaLore(Material.BEETROOT_SEEDS, "ง7Cartouche de Calibre 12", (short) 0, listMaker2("ง8Co๛t: ง610$", "ง8Vente: ง62.5$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/2]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[2/2]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.PINK_DYE, "ยง7Chargeur de L96", (short) 0, listMaker2("ยง8Coรปt: ยง635$", "ยง8Vente: ยง68.75$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.PINK_DYE, "ยง7Chargeur de SVD Dragunov", (short) 0, listMaker2("ยง8Coรปt: ยง635$", "ยง8Vente: ยง68.75$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.CYAN_DYE, "ยง7Cartouche de 7.62 NATO", (short) 0, listMaker2("ยง8Coรปt: ยง610$", "ยง8Vente: ยง62.5$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.LAPIS_LAZULI, "ยง7Chargeur de ASVAL", (short) 0, listMaker2("ยง8Coรปt: ยง650$", "ยง8Vente: ยง612.5$", _uuid)));
+            inv.setItem(23, setItemMetaLore(Material.PINK_DYE, "ยง7Chargeur de SVT-40", (short) 0, listMaker2("ยง8Coรปt: ยง630$", "ยง8Vente: ยง67.5$", _uuid)));
+            inv.setItem(24, setItemMetaLore(Material.BROWN_DYE, "ยง7Chargeur de CheytacM200", (short) 0, listMaker2("ยง8Coรปt: ยง630$", "ยง8Vente: ยง67.5$", _uuid)));
+            inv.setItem(25, setItemMetaLore(Material.BEETROOT_SEEDS, "ยง7Cartouche de Calibre 12", (short) 0, listMaker2("ยง8Coรปt: ยง610$", "ยง8Vente: ยง62.5$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/2]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[2/2]", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand de Fusil d'Assaut (1/3)"))
         {
-            inv.setItem(19, setItemMetaLore(Material.DIAMOND_SHOVEL, "ง7RPK", (short) 11, listMaker3("ง8Munitions: ง7Fusil d'Assaut", "ง8Co๛t: ง61400$", "ง8Vente: ง6350$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.GOLDEN_PICKAXE, "ง7AK12", (short) 5, listMaker3("ง8Munitions: ง7AK", "ง8Co๛t: ง61450$", "ง8Vente: ง6362.5$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.GOLDEN_PICKAXE, "ง7AK74", (short) 11, listMaker3("ง8Munitions: ง7AK", "ง8Co๛t: ง61400$", "ง8Vente: ง6350$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.GOLDEN_AXE, "ง7G36C", (short) 0, listMaker3("ง8Munitions: ง7G36C", "ง8Co๛t: ง61700$", "ง8Vente: ง6425$", _uuid)));
-            inv.setItem(23, setItemMetaLore(Material.GOLDEN_SHOVEL, "ง7ACR", (short) 19, listMaker3("ง8Munitions: ง7M16", "ง8Co๛t: ง61650$", "ง8Vente: ง6412.5$", _uuid)));
-            inv.setItem(24, setItemMetaLore(Material.DIAMOND_SHOVEL, "ง7M16 A4", (short) 0, listMaker3("ง8Munitions: ง7M16", "ง8Co๛t: ง61600$", "ง8Vente: ง6400$", _uuid)));
-            inv.setItem(25, setItemMetaLore(Material.IRON_HOE, "ง7M14", (short) 75, listMaker3("ง8Munitions: ง7M14", "ง8Co๛t: ง61500$", "ง8Vente: ง6375$", _uuid)));
-            inv.setItem(28, setItemMetaLore(Material.DIAMOND_SHOVEL, "ง7IWI ACE53", (short) 6, listMaker3("ง8Munitions: ง7IWI ACE53", "ง8Co๛t: ง61900$", "ง8Vente: ง6475$", _uuid)));
-            inv.setItem(29, setItemMetaLore(Material.WOODEN_PICKAXE, "ง7Steyr AUG", (short) 0, listMaker3("ง8Munitions: ง7STEYR AUG", "ง8Co๛t: ง61900$", "ง8Vente: ง6475$", _uuid)));
-            inv.setItem(30, setItemMetaLore(Material.STONE_HOE, "ง7HK 416", (short) 1, listMaker3("ง8Munitions: ง7HK 416", "ง8Co๛t: ง61650$", "ง8Vente: ง6412.5$", _uuid)));
-            inv.setItem(31, setItemMetaLore(Material.GOLDEN_SHOVEL, "ง7TAR 21", (short) 7, listMaker3("ง8Munitions: ง7TAR21", "ง8Co๛t: ง61600$", "ง8Vente: ง6400$", _uuid)));
-            inv.setItem(32, setItemMetaLore(Material.IRON_HOE, "ง7Famas", (short) 25, listMaker3("ง8Munitions: ง7FAMAS", "ง8Co๛t: ง61850$", "ง8Vente: ง6462.5$", _uuid)));
-            inv.setItem(33, setItemMetaLore(Material.GOLDEN_SHOVEL, "ง7FN FAL", (short) 10, listMaker3("ง8Munitions: ง7FNFAL", "ง8Co๛t: ง61800$", "ง8Vente: ง6450$", _uuid)));
-            inv.setItem(34, setItemMetaLore(Material.IRON_HOE, "ง7AS VAL", (short) 50, listMaker3("ง8Munitions: ง7AS VAL", "ง8Co๛t: ง63200$", "ง8Vente: ง6800$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/3]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[2/3]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.DIAMOND_SHOVEL, "ยง7RPK", (short) 11, listMaker3("ยง8Munitions: ยง7Fusil d'Assaut", "ยง8Coรปt: ยง61400$", "ยง8Vente: ยง6350$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.GOLDEN_PICKAXE, "ยง7AK12", (short) 5, listMaker3("ยง8Munitions: ยง7AK", "ยง8Coรปt: ยง61450$", "ยง8Vente: ยง6362.5$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.GOLDEN_PICKAXE, "ยง7AK74", (short) 11, listMaker3("ยง8Munitions: ยง7AK", "ยง8Coรปt: ยง61400$", "ยง8Vente: ยง6350$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.GOLDEN_AXE, "ยง7G36C", (short) 0, listMaker3("ยง8Munitions: ยง7G36C", "ยง8Coรปt: ยง61700$", "ยง8Vente: ยง6425$", _uuid)));
+            inv.setItem(23, setItemMetaLore(Material.GOLDEN_SHOVEL, "ยง7ACR", (short) 19, listMaker3("ยง8Munitions: ยง7M16", "ยง8Coรปt: ยง61650$", "ยง8Vente: ยง6412.5$", _uuid)));
+            inv.setItem(24, setItemMetaLore(Material.DIAMOND_SHOVEL, "ยง7M16 A4", (short) 0, listMaker3("ยง8Munitions: ยง7M16", "ยง8Coรปt: ยง61600$", "ยง8Vente: ยง6400$", _uuid)));
+            inv.setItem(25, setItemMetaLore(Material.IRON_HOE, "ยง7M14", (short) 75, listMaker3("ยง8Munitions: ยง7M14", "ยง8Coรปt: ยง61500$", "ยง8Vente: ยง6375$", _uuid)));
+            inv.setItem(28, setItemMetaLore(Material.DIAMOND_SHOVEL, "ยง7IWI ACE53", (short) 6, listMaker3("ยง8Munitions: ยง7IWI ACE53", "ยง8Coรปt: ยง61900$", "ยง8Vente: ยง6475$", _uuid)));
+            inv.setItem(29, setItemMetaLore(Material.WOODEN_PICKAXE, "ยง7Steyr AUG", (short) 0, listMaker3("ยง8Munitions: ยง7STEYR AUG", "ยง8Coรปt: ยง61900$", "ยง8Vente: ยง6475$", _uuid)));
+            inv.setItem(30, setItemMetaLore(Material.STONE_HOE, "ยง7HK 416", (short) 1, listMaker3("ยง8Munitions: ยง7HK 416", "ยง8Coรปt: ยง61650$", "ยง8Vente: ยง6412.5$", _uuid)));
+            inv.setItem(31, setItemMetaLore(Material.GOLDEN_SHOVEL, "ยง7TAR 21", (short) 7, listMaker3("ยง8Munitions: ยง7TAR21", "ยง8Coรปt: ยง61600$", "ยง8Vente: ยง6400$", _uuid)));
+            inv.setItem(32, setItemMetaLore(Material.IRON_HOE, "ยง7Famas", (short) 25, listMaker3("ยง8Munitions: ยง7FAMAS", "ยง8Coรปt: ยง61850$", "ยง8Vente: ยง6462.5$", _uuid)));
+            inv.setItem(33, setItemMetaLore(Material.GOLDEN_SHOVEL, "ยง7FN FAL", (short) 10, listMaker3("ยง8Munitions: ยง7FNFAL", "ยง8Coรปt: ยง61800$", "ยง8Vente: ยง6450$", _uuid)));
+            inv.setItem(34, setItemMetaLore(Material.IRON_HOE, "ยง7AS VAL", (short) 50, listMaker3("ยง8Munitions: ยง7AS VAL", "ยง8Coรปt: ยง63200$", "ยง8Vente: ยง6800$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/3]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[2/3]", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand de Fusil d'Assaut (2/3)"))
         {
-            inv.setItem(19, setItemMetaLore(Material.GOLDEN_SHOVEL, "ง7M4A1", (short) 13, listMaker3("ง8Munitions: ง7M16", "ง8Co๛t: ง61600$", "ง8Vente: ง6400$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.GOLDEN_PICKAXE, "ง7AKM", (short) 0, listMaker3("ง8Munitions: ง7AK", "ง8Co๛t: ง61450$", "ง8Vente: ง6362.5$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.DIAMOND_AXE, "ง7L86", (short) 16, listMaker3("ง8Munitions: ง7L86", "ง8Co๛t: ง61400$", "ง8Vente: ง6350$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/3]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[3/3]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.GOLDEN_SHOVEL, "ยง7M4A1", (short) 13, listMaker3("ยง8Munitions: ยง7M16", "ยง8Coรปt: ยง61600$", "ยง8Vente: ยง6400$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.GOLDEN_PICKAXE, "ยง7AKM", (short) 0, listMaker3("ยง8Munitions: ยง7AK", "ยง8Coรปt: ยง61450$", "ยง8Vente: ยง6362.5$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.DIAMOND_AXE, "ยง7L86", (short) 16, listMaker3("ยง8Munitions: ยง7L86", "ยง8Coรปt: ยง61400$", "ยง8Vente: ยง6350$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/3]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[3/3]", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand de Fusil d'Assaut (3/3)"))
         {
-            inv.setItem(19, setItemMetaLore(Material.LIGHT_BLUE_DYE, "ง7Chargeur de M14", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.LAPIS_LAZULI, "ง7Chargeur de ASVAL", (short) 0, listMaker2("ง8Co๛t: ง650$", "ง8Vente: ง612.5$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.BLUE_DYE, "ง7Chargeur de SteyrAUG", (short) 0, listMaker2("ง8Co๛t: ง645$", "ง8Vente: ง611.25$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.GOLD_NUGGET, "ง7Chargeur de HK416", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(23, setItemMetaLore(Material.INK_SAC, "ง7Chargeur de M16", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(24, setItemMetaLore(Material.GOLD_NUGGET, "ง7Chargeur de FAMAS", (short) 0, listMaker2("ง8Co๛t: ง645$", "ง8Vente: ง611.25$", _uuid)));
-            inv.setItem(25, setItemMetaLore(Material.LIME_DYE, "ง7Chargeur de FNFAL", (short) 0, listMaker2("ง8Co๛t: ง645$", "ง8Vente: ง611.25$", _uuid)));
-            inv.setItem(28, setItemMetaLore(Material.GOLD_NUGGET, "ง7Chargeur de AK", (short) 0, listMaker2("ง8Co๛t: ง645$", "ง8Vente: ง611.25$", _uuid)));
-            inv.setItem(29, setItemMetaLore(Material.LIGHT_BLUE_DYE, "ง7Chargeur de TAR21", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(30, setItemMetaLore(Material.GOLD_NUGGET, "ง7Chargeur de IWI ACE53", (short) 0, listMaker2("ง8Co๛t: ง645$", "ง8Vente: ง611.25$", _uuid)));
-            inv.setItem(31, setItemMetaLore(Material.INK_SAC, "ง7Chargeur de L86", (short) 0, listMaker2("ง8Co๛t: ง640$", "ง8Vente: ง610$", _uuid)));
-            inv.setItem(32, setItemMetaLore(Material.LAPIS_LAZULI, "ง7Chargeur de G36C", (short) 0, listMaker2("ง8Co๛t: ง645$", "ง8Vente: ง611.25$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[2/3]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[3/3]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.LIGHT_BLUE_DYE, "ยง7Chargeur de M14", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.LAPIS_LAZULI, "ยง7Chargeur de ASVAL", (short) 0, listMaker2("ยง8Coรปt: ยง650$", "ยง8Vente: ยง612.5$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.BLUE_DYE, "ยง7Chargeur de SteyrAUG", (short) 0, listMaker2("ยง8Coรปt: ยง645$", "ยง8Vente: ยง611.25$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.GOLD_NUGGET, "ยง7Chargeur de HK416", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(23, setItemMetaLore(Material.INK_SAC, "ยง7Chargeur de M16", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(24, setItemMetaLore(Material.GOLD_NUGGET, "ยง7Chargeur de FAMAS", (short) 0, listMaker2("ยง8Coรปt: ยง645$", "ยง8Vente: ยง611.25$", _uuid)));
+            inv.setItem(25, setItemMetaLore(Material.LIME_DYE, "ยง7Chargeur de FNFAL", (short) 0, listMaker2("ยง8Coรปt: ยง645$", "ยง8Vente: ยง611.25$", _uuid)));
+            inv.setItem(28, setItemMetaLore(Material.GOLD_NUGGET, "ยง7Chargeur de AK", (short) 0, listMaker2("ยง8Coรปt: ยง645$", "ยง8Vente: ยง611.25$", _uuid)));
+            inv.setItem(29, setItemMetaLore(Material.LIGHT_BLUE_DYE, "ยง7Chargeur de TAR21", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(30, setItemMetaLore(Material.GOLD_NUGGET, "ยง7Chargeur de IWI ACE53", (short) 0, listMaker2("ยง8Coรปt: ยง645$", "ยง8Vente: ยง611.25$", _uuid)));
+            inv.setItem(31, setItemMetaLore(Material.INK_SAC, "ยง7Chargeur de L86", (short) 0, listMaker2("ยง8Coรปt: ยง640$", "ยง8Vente: ยง610$", _uuid)));
+            inv.setItem(32, setItemMetaLore(Material.LAPIS_LAZULI, "ยง7Chargeur de G36C", (short) 0, listMaker2("ยง8Coรปt: ยง645$", "ยง8Vente: ยง611.25$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[2/3]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[3/3]", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand d'armes lourdes (1/2)"))
         {
-            inv.setItem(19, setItemMetaLore(Material.STONE_PICKAXE, "ง7FN Scar-H", (short) 2, listMaker3("ง8Munitions: ง7SCAR", "ง8Co๛t: ง62100$", "ง8Vente: ง6525$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.IRON_SHOVEL, "ง7M2 Browning", (short) 19, listMaker3("ง8Munitions: ง7M2 Browning", "ง8Co๛t: ง63000$", "ง8Vente: ง6750$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.IRON_SHOVEL, "ง7MK48", (short) 13, listMaker3("ง8Munitions: ง7MK48", "ง8Co๛t: ง62600$", "ง8Vente: ง6650$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.WOODEN_AXE, "ง7M60", (short) 0, listMaker3("ง8Munitions: ง7M60", "ง8Co๛t: ง62800$", "ง8Vente: ง6700$", _uuid)));
-            inv.setItem(23, setItemMetaLore(Material.IRON_SHOVEL, "ง7M249", (short) 16, listMaker3("ง8Munitions: ง7M249", "ง8Co๛t: ง62500$", "ง8Vente: ง6625$", _uuid)));
-            inv.setItem(24, setItemMetaLore(Material.IRON_SHOVEL, "ง7Minigun", (short) 34, listMaker3("ง8Munitions: ง7Minigun", "ง8Co๛t: ง63200$", "ง8Vente: ง6805$", _uuid)));
-            inv.setItem(25, setItemMetaLore(Material.IRON_SHOVEL, "ง7M32 MGL", (short) 22, listMaker3("ง8Munitions: ง7Grenade 40mm", "ง8Co๛t: ง64000$", "ง8Vente: ง61000$", _uuid)));
-            inv.setItem(28, setItemMetaLore(Material.GOLDEN_HOE, "ง7M79", (short) 4, listMaker3("ง8Munitions: ง7Grenade 40mm", "ง8Co๛t: ง63000$", "ง8Vente: ง6750$", _uuid)));
-            inv.setItem(29, setItemMetaLore(Material.IRON_SHOVEL, "ง7RPG-7", (short) 0, listMaker3("ง8Munitions: ง7Roquette", "ง8Co๛t: ง63500$", "ง8Vente: ง6875$", _uuid)));
-            inv.setItem(30, setItemMetaLore(Material.WOODEN_HOE, "ง7Barrett M107", (short) 11, listMaker3("ง8Munitions: ง7Barrett M107", "ง8Co๛t: ง63000$", "ง8Vente: ง6750$", _uuid)));
-            inv.setItem(31, setItemMetaLore(Material.IRON_AXE, "ง7AA12", (short) 1, listMaker3("ง8Munitions: ง7Calibre 12", "ง8Co๛t: ง63000$", "ง8Vente: ง6750$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/2]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[2/2]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.STONE_PICKAXE, "ยง7FN Scar-H", (short) 2, listMaker3("ยง8Munitions: ยง7SCAR", "ยง8Coรปt: ยง62100$", "ยง8Vente: ยง6525$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.IRON_SHOVEL, "ยง7M2 Browning", (short) 19, listMaker3("ยง8Munitions: ยง7M2 Browning", "ยง8Coรปt: ยง63000$", "ยง8Vente: ยง6750$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.IRON_SHOVEL, "ยง7MK48", (short) 13, listMaker3("ยง8Munitions: ยง7MK48", "ยง8Coรปt: ยง62600$", "ยง8Vente: ยง6650$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.WOODEN_AXE, "ยง7M60", (short) 0, listMaker3("ยง8Munitions: ยง7M60", "ยง8Coรปt: ยง62800$", "ยง8Vente: ยง6700$", _uuid)));
+            inv.setItem(23, setItemMetaLore(Material.IRON_SHOVEL, "ยง7M249", (short) 16, listMaker3("ยง8Munitions: ยง7M249", "ยง8Coรปt: ยง62500$", "ยง8Vente: ยง6625$", _uuid)));
+            inv.setItem(24, setItemMetaLore(Material.IRON_SHOVEL, "ยง7Minigun", (short) 34, listMaker3("ยง8Munitions: ยง7Minigun", "ยง8Coรปt: ยง63200$", "ยง8Vente: ยง6805$", _uuid)));
+            inv.setItem(25, setItemMetaLore(Material.IRON_SHOVEL, "ยง7M32 MGL", (short) 22, listMaker3("ยง8Munitions: ยง7Grenade 40mm", "ยง8Coรปt: ยง64000$", "ยง8Vente: ยง61000$", _uuid)));
+            inv.setItem(28, setItemMetaLore(Material.GOLDEN_HOE, "ยง7M79", (short) 4, listMaker3("ยง8Munitions: ยง7Grenade 40mm", "ยง8Coรปt: ยง63000$", "ยง8Vente: ยง6750$", _uuid)));
+            inv.setItem(29, setItemMetaLore(Material.IRON_SHOVEL, "ยง7RPG-7", (short) 0, listMaker3("ยง8Munitions: ยง7Roquette", "ยง8Coรปt: ยง63500$", "ยง8Vente: ยง6875$", _uuid)));
+            inv.setItem(30, setItemMetaLore(Material.WOODEN_HOE, "ยง7Barrett M107", (short) 11, listMaker3("ยง8Munitions: ยง7Barrett M107", "ยง8Coรปt: ยง63000$", "ยง8Vente: ยง6750$", _uuid)));
+            inv.setItem(31, setItemMetaLore(Material.IRON_AXE, "ยง7AA12", (short) 1, listMaker3("ยง8Munitions: ยง7Calibre 12", "ยง8Coรปt: ยง63000$", "ยง8Vente: ยง6750$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/2]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[2/2]", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand d'armes lourdes (2/2)"))
         {
-            inv.setItem(19, setItemMetaLore(Material.BLUE_DYE, "ง7Chargeur de SCAR", (short) 0, listMaker2("ง8Co๛t: ง645$", "ง8Vente: ง611.25$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.BRICK, "ง7Chargeur de M2 Browning", (short) 0, listMaker2("ง8Co๛t: ง655$", "ง8Vente: ง613.75$", _uuid)));
-            inv.setItem(21, setItemMetaLore(Material.BRICK, "ง7Chargeur de MK48", (short) 0, listMaker2("ง8Co๛t: ง650$", "ง8Vente: ง612.5$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.LIGHT_GRAY_DYE, "ง7Chargeur de M60", (short) 0, listMaker2("ง8Co๛t: ง655$", "ง8Vente: ง613.75$", _uuid)));
-            inv.setItem(23, setItemMetaLore(Material.LIGHT_GRAY_DYE, "ง7Chargeur de M249", (short) 0, listMaker2("ง8Co๛t: ง645$", "ง8Vente: ง611.25$", _uuid)));
-            inv.setItem(24, setItemMetaLore(Material.BRICK, "ง7Chargeur de Minigun", (short) 0, listMaker2("ง8Co๛t: ง655$", "ง8Vente: ง613.75$", _uuid)));
-            inv.setItem(25, setItemMetaLore(Material.CHARCOAL, "ง7Grenade 40mm", (short) 0, listMaker2("ง8Co๛t: ง660$", "ง8Vente: ง615$", _uuid)));
-            inv.setItem(28, setItemMetaLore(Material.IRON_NUGGET, "ง7Roquette", (short) 0, listMaker2("ง8Co๛t: ง665$", "ง8Vente: ง616.25$", _uuid)));
-            inv.setItem(29, setItemMetaLore(Material.BEETROOT_SEEDS, "ง7Cartouche de Calibre 12", (short) 0, listMaker2("ง8Co๛t: ง610$", "ง8Vente: ง62.5$", _uuid)));
-            inv.setItem(30, setItemMetaLore(Material.GREEN_DYE, "ง7Chargeur de AA12", (short) 0, listMaker2("ง8Co๛t: ง650$", "ง8Vente: ง612.5$", _uuid)));
-            inv.setItem(31, setItemMetaLore(Material.BROWN_DYE, "ง7Chargeur de Barrett", (short) 0, listMaker2("ง8Co๛t: ง650$", "ง8Vente: ง612.5$", _uuid)));
-            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/2]", (short) 1));
-            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[2/2]", (short) 1));
+            inv.setItem(19, setItemMetaLore(Material.BLUE_DYE, "ยง7Chargeur de SCAR", (short) 0, listMaker2("ยง8Coรปt: ยง645$", "ยง8Vente: ยง611.25$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.BRICK, "ยง7Chargeur de M2 Browning", (short) 0, listMaker2("ยง8Coรปt: ยง655$", "ยง8Vente: ยง613.75$", _uuid)));
+            inv.setItem(21, setItemMetaLore(Material.BRICK, "ยง7Chargeur de MK48", (short) 0, listMaker2("ยง8Coรปt: ยง650$", "ยง8Vente: ยง612.5$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.LIGHT_GRAY_DYE, "ยง7Chargeur de M60", (short) 0, listMaker2("ยง8Coรปt: ยง655$", "ยง8Vente: ยง613.75$", _uuid)));
+            inv.setItem(23, setItemMetaLore(Material.LIGHT_GRAY_DYE, "ยง7Chargeur de M249", (short) 0, listMaker2("ยง8Coรปt: ยง645$", "ยง8Vente: ยง611.25$", _uuid)));
+            inv.setItem(24, setItemMetaLore(Material.BRICK, "ยง7Chargeur de Minigun", (short) 0, listMaker2("ยง8Coรปt: ยง655$", "ยง8Vente: ยง613.75$", _uuid)));
+            inv.setItem(25, setItemMetaLore(Material.CHARCOAL, "ยง7Grenade 40mm", (short) 0, listMaker2("ยง8Coรปt: ยง660$", "ยง8Vente: ยง615$", _uuid)));
+            inv.setItem(28, setItemMetaLore(Material.IRON_NUGGET, "ยง7Roquette", (short) 0, listMaker2("ยง8Coรปt: ยง665$", "ยง8Vente: ยง616.25$", _uuid)));
+            inv.setItem(29, setItemMetaLore(Material.BEETROOT_SEEDS, "ยง7Cartouche de Calibre 12", (short) 0, listMaker2("ยง8Coรปt: ยง610$", "ยง8Vente: ยง62.5$", _uuid)));
+            inv.setItem(30, setItemMetaLore(Material.GREEN_DYE, "ยง7Chargeur de AA12", (short) 0, listMaker2("ยง8Coรปt: ยง650$", "ยง8Vente: ยง612.5$", _uuid)));
+            inv.setItem(31, setItemMetaLore(Material.BROWN_DYE, "ยง7Chargeur de Barrett", (short) 0, listMaker2("ยง8Coรปt: ยง650$", "ยง8Vente: ยง612.5$", _uuid)));
+            inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/2]", (short) 1));
+            inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[2/2]", (short) 1));
         }
         else if (name.equalsIgnoreCase("Marchand Utilitaire"))
         {
             inv.setItem(52, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             inv.setItem(53, setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
             
-            inv.setItem(10, setItemMetaLore(Material.IRON_HELMET, "ง7Casque de CRS", (short) 0, listMaker2("ง8Co๛t: ง6500$", "ง8Vente: ง6125$", _uuid)));
-            inv.setItem(19, setItemMetaLore(Material.IRON_CHESTPLATE, "ง7Veste de CRS", (short) 0, listMaker2("ง8Co๛t: ง6700$", "ง8Vente: ง6175$", _uuid)));
-            inv.setItem(28, setItemMetaLore(Material.IRON_LEGGINGS, "ง7Gilet pare-balle de CRS", (short) 0, listMaker2("ง8Co๛t: ง6700$", "ง8Vente: ง6175$", _uuid)));
-            inv.setItem(37, setItemMetaLore(Material.IRON_BOOTS, "ง7Bottes de CRS", (short) 0, listMaker2("ง8Co๛t: ง6500$", "ง8Vente: ง6125$", _uuid)));
+            inv.setItem(10, setItemMetaLore(Material.IRON_HELMET, "ยง7Casque de CRS", (short) 0, listMaker2("ยง8Coรปt: ยง6500$", "ยง8Vente: ยง6125$", _uuid)));
+            inv.setItem(19, setItemMetaLore(Material.IRON_CHESTPLATE, "ยง7Veste de CRS", (short) 0, listMaker2("ยง8Coรปt: ยง6700$", "ยง8Vente: ยง6175$", _uuid)));
+            inv.setItem(28, setItemMetaLore(Material.IRON_LEGGINGS, "ยง7Gilet pare-balle de CRS", (short) 0, listMaker2("ยง8Coรปt: ยง6700$", "ยง8Vente: ยง6175$", _uuid)));
+            inv.setItem(37, setItemMetaLore(Material.IRON_BOOTS, "ยง7Bottes de CRS", (short) 0, listMaker2("ยง8Coรปt: ยง6500$", "ยง8Vente: ยง6125$", _uuid)));
             
-            inv.setItem(11, setItemMetaLore(Material.DIAMOND_HELMET, "ง7Casque de Commando", (short) 0, listMaker2("ง8Co๛t: ง6800$", "ง8Vente: ง6200$", _uuid)));
-            inv.setItem(20, setItemMetaLore(Material.DIAMOND_CHESTPLATE, "ง7Veste de Commando", (short) 0, listMaker2("ง8Co๛t: ง61000$", "ง8Vente: ง6250$", _uuid)));
-            inv.setItem(29, setItemMetaLore(Material.DIAMOND_LEGGINGS, "ง7Gilet pare-balle de Commando", (short) 0, listMaker2("ง8Co๛t: ง61000$", "ง8Vente: ง6250$", _uuid)));
-            inv.setItem(38, setItemMetaLore(Material.DIAMOND_BOOTS, "ง7Bottes de Commando", (short) 0, listMaker2("ง8Co๛t: ง6800$", "ง8Vente: ง6200$", _uuid)));
+            inv.setItem(11, setItemMetaLore(Material.DIAMOND_HELMET, "ยง7Casque de Commando", (short) 0, listMaker2("ยง8Coรปt: ยง6800$", "ยง8Vente: ยง6200$", _uuid)));
+            inv.setItem(20, setItemMetaLore(Material.DIAMOND_CHESTPLATE, "ยง7Veste de Commando", (short) 0, listMaker2("ยง8Coรปt: ยง61000$", "ยง8Vente: ยง6250$", _uuid)));
+            inv.setItem(29, setItemMetaLore(Material.DIAMOND_LEGGINGS, "ยง7Gilet pare-balle de Commando", (short) 0, listMaker2("ยง8Coรปt: ยง61000$", "ยง8Vente: ยง6250$", _uuid)));
+            inv.setItem(38, setItemMetaLore(Material.DIAMOND_BOOTS, "ยง7Bottes de Commando", (short) 0, listMaker2("ยง8Coรปt: ยง6800$", "ยง8Vente: ยง6200$", _uuid)));
             
-            inv.setItem(13, setItemMetaLore(Material.IRON_SWORD, "ง7Hache", (short) 0, listMaker2("ง8Co๛t: ง6700$", "ง8Vente: ง6175$", _uuid)));
-            inv.setItem(22, setItemMetaLore(Material.DIAMOND_SWORD, "ง7Machette", (short) 0, listMaker2("ง8Co๛t: ง6900$", "ง8Vente: ง6225$", _uuid)));
-            inv.setItem(31, setItemMetaLore(Material.STONE_SHOVEL, "ง7TAC Crossbow", (short) 0, listMaker3("ง8Munitions: ง7Carreau 40mm", "ง8Co๛t: ง62500$", "ง8Vente: ง6625$", _uuid)));
-            inv.setItem(40, setItemMetaLore(Material.ARROW, "ง7Carreau", (short) 0, listMaker2("ง8Co๛t: ง620$", "ง8Vente: ง65$", _uuid)));
+            inv.setItem(13, setItemMetaLore(Material.IRON_SWORD, "ยง7Hache", (short) 0, listMaker2("ยง8Coรปt: ยง6700$", "ยง8Vente: ยง6175$", _uuid)));
+            inv.setItem(22, setItemMetaLore(Material.DIAMOND_SWORD, "ยง7Machette", (short) 0, listMaker2("ยง8Coรปt: ยง6900$", "ยง8Vente: ยง6225$", _uuid)));
+            inv.setItem(31, setItemMetaLore(Material.STONE_SHOVEL, "ยง7TAC Crossbow", (short) 0, listMaker3("ยง8Munitions: ยง7Carreau 40mm", "ยง8Coรปt: ยง62500$", "ยง8Vente: ยง6625$", _uuid)));
+            inv.setItem(40, setItemMetaLore(Material.ARROW, "ยง7Carreau", (short) 0, listMaker2("ยง8Coรปt: ยง620$", "ยง8Vente: ยง65$", _uuid)));
             
-            inv.setItem(15, setItemMetaLore(Material.APPLE, "ง7Pomme", (short) 0, listMaker2("ง8Co๛t: ง620$", "ง8Vente: ง65$", _uuid)));
-            inv.setItem(16, setItemMetaLore(Material.SLIME_BALL, "ง7Grenade", (short) 0, listMaker2("ง8Co๛t: ง6350$", "ง8Vente: ง687.5$", _uuid)));
-            inv.setItem(17, setItemMetaLore(Material.DANDELION, "ง7Parachute", (short) 0, listMaker2("ง8Co๛t: ง62000$", "ง8Vente: ง6500$", _uuid)));
-            inv.setItem(24, setItemMetaLore(Material.BREAD, "ง7Pain", (short) 0, listMaker2("ง8Co๛t: ง620$", "ง8Vente: ง65$", _uuid)));
-            inv.setItem(25, setItemMetaLore(Material.QUARTZ, "ง7Kit de soin", (short) 0, listMaker2("ง8Co๛t: ง6150$", "ง8Vente: ง637.5$", _uuid)));
-            inv.setItem(26, setItemMetaLore(Material.RED_DYE, "ง7Lunettes de vision nocturne", (short) 0, listMaker2("ง8Co๛t: ง62000$", "ง8Vente: ง6500$", _uuid)));
-            inv.setItem(33, setItemMetaLore(Material.PUMPKIN_PIE, "ง7Tarte", (short) 0, listMaker2("ง8Co๛t: ง625$", "ง8Vente: ง66.25$", _uuid)));
-            inv.setItem(34, setItemMetaLore(Material.GHAST_TEAR, "ง7Seringue Antidote", (short) 0, listMaker2("ง8Co๛t: ง6150$", "ง8Vente: ง637,5$", _uuid)));
-            inv.setItem(35, setItemMetaLore(Material.GLASS_BOTTLE, "ง7Bouteille d'Eau", (short) 0, listMaker2("ง8Co๛t: ง680$", "ง8Vente: ง620$", _uuid)));
-            inv.setItem(42, setItemMetaLore(Material.COOKIE, "ง7Cookie", (short) 0, listMaker2("ง8Co๛t: ง610$", "ง8Vente: ง62.5$", _uuid)));
-            inv.setItem(43, setItemMetaLore(Material.CARROT, "ง7Carotte", (short) 0, listMaker2("ง8Co๛t: ง617$", "ง8Vente: ง64.25$", _uuid)));
-            inv.setItem(44, setItemMetaLore(Material.END_ROD, "ง7Lampe de Poche", (short) 0, listMaker2("ง8Co๛t: ง680$", "ง8Vente: ง620$", _uuid)));
+            inv.setItem(15, setItemMetaLore(Material.APPLE, "ยง7Pomme", (short) 0, listMaker2("ยง8Coรปt: ยง620$", "ยง8Vente: ยง65$", _uuid)));
+            inv.setItem(16, setItemMetaLore(Material.SLIME_BALL, "ยง7Grenade", (short) 0, listMaker2("ยง8Coรปt: ยง6350$", "ยง8Vente: ยง687.5$", _uuid)));
+            inv.setItem(17, setItemMetaLore(Material.DANDELION, "ยง7Parachute", (short) 0, listMaker2("ยง8Coรปt: ยง62000$", "ยง8Vente: ยง6500$", _uuid)));
+            inv.setItem(24, setItemMetaLore(Material.BREAD, "ยง7Pain", (short) 0, listMaker2("ยง8Coรปt: ยง620$", "ยง8Vente: ยง65$", _uuid)));
+            inv.setItem(25, setItemMetaLore(Material.QUARTZ, "ยง7Kit de soin", (short) 0, listMaker2("ยง8Coรปt: ยง6150$", "ยง8Vente: ยง637.5$", _uuid)));
+            inv.setItem(26, setItemMetaLore(Material.RED_DYE, "ยง7Lunettes de vision nocturne", (short) 0, listMaker2("ยง8Coรปt: ยง62000$", "ยง8Vente: ยง6500$", _uuid)));
+            inv.setItem(33, setItemMetaLore(Material.PUMPKIN_PIE, "ยง7Tarte", (short) 0, listMaker2("ยง8Coรปt: ยง625$", "ยง8Vente: ยง66.25$", _uuid)));
+            inv.setItem(34, setItemMetaLore(Material.GHAST_TEAR, "ยง7Seringue Antidote", (short) 0, listMaker2("ยง8Coรปt: ยง6150$", "ยง8Vente: ยง637,5$", _uuid)));
+            inv.setItem(35, setItemMetaLore(Material.GLASS_BOTTLE, "ยง7Bouteille d'Eau", (short) 0, listMaker2("ยง8Coรปt: ยง680$", "ยง8Vente: ยง620$", _uuid)));
+            inv.setItem(42, setItemMetaLore(Material.COOKIE, "ยง7Cookie", (short) 0, listMaker2("ยง8Coรปt: ยง610$", "ยง8Vente: ยง62.5$", _uuid)));
+            inv.setItem(43, setItemMetaLore(Material.CARROT, "ยง7Carotte", (short) 0, listMaker2("ยง8Coรปt: ยง617$", "ยง8Vente: ยง64.25$", _uuid)));
+            inv.setItem(44, setItemMetaLore(Material.END_ROD, "ยง7Lampe de Poche", (short) 0, listMaker2("ยง8Coรปt: ยง680$", "ยง8Vente: ยง620$", _uuid)));
         }
         else if (name.equalsIgnoreCase("Marchand Utilitaire"))
         {
@@ -1658,33 +1658,33 @@ public class Shop implements Listener, CommandExecutor, TabCompleter {
         }
         /*
 		 * 
-			inv.setItem(19, setItemMetaLore(Material.WOODEN_HOE, "ง7", (short) 11, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(20, setItemMetaLore(Material.STONE_AXE, "ง7", (short) 41, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(21, setItemMetaLore(Material.GOLDEN_SHOVEL, "ง7", (short) 0, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(22, setItemMetaLore(Material.GOLDEN_HOE, "ง7", (short) 0, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(23, setItemMetaLore(Material.STONE_AXE, "ง7", (short) 12, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(24, setItemMetaLore(Material.IRON_AXE, "ง7", (short) 4, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(25, setItemMetaLore(Material.STONE_AXE, "ง", (short) 37, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(28, setItemMetaLore(Material.IRON_HOE, "ง7", (short) 100, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(29, setItemMetaLore(Material.DIAMOND_AXE, "ง7", (short) 21, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(30, setItemMetaLore(Material.IRON_HOE, "ง7", (short) 0, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(31, setItemMetaLore(Material.IRON_HOE, "ง7", (short) 170, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(32, setItemMetaLore(Material.GOLDEN_SHOVEL, "ง7", (short) 4, listMaker3("ง8Munitions: ง7", "ง8Co๛t: ง6$", "ง8Vente: ง6$")));
+			inv.setItem(19, setItemMetaLore(Material.WOODEN_HOE, "ยง7", (short) 11, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(20, setItemMetaLore(Material.STONE_AXE, "ยง7", (short) 41, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(21, setItemMetaLore(Material.GOLDEN_SHOVEL, "ยง7", (short) 0, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(22, setItemMetaLore(Material.GOLDEN_HOE, "ยง7", (short) 0, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(23, setItemMetaLore(Material.STONE_AXE, "ยง7", (short) 12, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(24, setItemMetaLore(Material.IRON_AXE, "ยง7", (short) 4, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(25, setItemMetaLore(Material.STONE_AXE, "ยง", (short) 37, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(28, setItemMetaLore(Material.IRON_HOE, "ยง7", (short) 100, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(29, setItemMetaLore(Material.DIAMOND_AXE, "ยง7", (short) 21, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(30, setItemMetaLore(Material.IRON_HOE, "ยง7", (short) 0, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(31, setItemMetaLore(Material.IRON_HOE, "ยง7", (short) 170, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(32, setItemMetaLore(Material.GOLDEN_SHOVEL, "ยง7", (short) 4, listMaker3("ยง8Munitions: ยง7", "ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
 			
-			inv.setItem(19, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(20, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(21, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(22, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(23, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(24, setItemMetaLore(Material.ORANGE_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(25, setItemMetaLore(Material.MAGENTA_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(28, setItemMetaLore(Material.PURPLE_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(29, setItemMetaLore(Material.PURPLE_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(30, setItemMetaLore(Material.PURPLE_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(31, setItemMetaLore(Material.STICK, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(32, setItemMetaLore(Material.YELLOW_DYE, "ง7Chargeur de ", (short) 0, listMaker2("ง8Co๛t: ง6$", "ง8Vente: ง6$")));
-			inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "งr[1/2]", (short) 1));
-			inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "งr[2/2]", (short) 1));
+			inv.setItem(19, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(20, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(21, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(22, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(23, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(24, setItemMetaLore(Material.ORANGE_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(25, setItemMetaLore(Material.MAGENTA_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(28, setItemMetaLore(Material.PURPLE_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(29, setItemMetaLore(Material.PURPLE_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(30, setItemMetaLore(Material.PURPLE_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(31, setItemMetaLore(Material.STICK, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(32, setItemMetaLore(Material.YELLOW_DYE, "ยง7Chargeur de ", (short) 0, listMaker2("ยง8Coรปt: ยง6$", "ยง8Vente: ยง6$")));
+			inv.setItem(52, setItemMeta(Material.LIME_STAINED_GLASS_PANE, "ยงr[1/2]", (short) 1));
+			inv.setItem(53, setItemMeta(Material.RED_STAINED_GLASS_PANE, "ยงr[2/2]", (short) 1));
 		*/
     }
     

@@ -199,12 +199,12 @@ public class CaptureZone {
                                 if (zone.getClaimer() == null || !zone.getClaimer().equalsIgnoreCase(factionCapturing.getName()))
                                 {
                                     addProgressionTime(zone, factionCapturing, -2 * captureRefreshRate * boosterCapture);
-                                    //Décapture automatique
+                                    //DÃ©capture automatique
                                 }
                             }
                             if (factionCapturing.getProgression() <= 0 && factionCapturing.getPlayerList().isEmpty())
                             {
-                                iterator.remove(); // Suppression de l'élément via l'itérateur
+                                iterator.remove();
                             }
                         }
                         int max = 0;
@@ -265,12 +265,12 @@ public class CaptureZone {
                                 if (factionToUncapture.getName().equalsIgnoreCase(factionCapturing.getName()))
                                 {
                                     addProgressionTime(zone, factionToUncapture, 2 * captureRefreshRate * boosterCapture);
-                                    //Si tu proteges ta faction, ça capture
+                                    //Si tu proteges ta faction, Ã§a capture
                                 }
                                 else
                                 {
                                     addProgressionTime(zone, factionToUncapture, -2 * captureRefreshRate * boosterCapture);
-                                    //Si tu décaptures une faction, ça décapture
+                                    //Si tu dÃ©captures une faction, Ã§a dÃ©capture
                                 }
                             }
                             else
@@ -285,7 +285,7 @@ public class CaptureZone {
                             {
                                 if (zone.getClaimer() == null || (zone.getClaimer() != null && !factionMonority.getName().equalsIgnoreCase(zone.getClaimer())))
                                 {
-                                    //Si t'es minoritaire, tu décaptures
+                                    //Si t'es minoritaire, tu dÃ©captures
                                     addProgressionTime(zone, factionCapturing, -2 * captureRefreshRate);
                                 }
                             }
@@ -315,7 +315,7 @@ public class CaptureZone {
         }
         else
         {
-            color = "§r";
+            color = "Â§r";
         }
 
         zone.setColor(color);
@@ -355,14 +355,14 @@ public class CaptureZone {
         else if (data.getZoneEnterBool(zone.getName()))
         {
             data.setZoneEnterBool(zone.getName(), false);
-            data.sendTextToPlayerZoneEnter(zone.getName(), "§cLa zone se décapture !");
+            data.sendTextToPlayerZoneEnter(zone.getName(), "Â§cLa zone se dÃ©capture !");
         }
 
         if (prog <= 5 && nextProg > 5)
         {
             for (Player p : Bukkit.getOnlinePlayers())
             {
-                InGameUtilities.sendPlayerError(p, "La faction " + color + faction.getName() + "§R§c est en train de capturer la zone " + zone.getFormattedName() + " ! Allez-y vite pour contester la capture !");
+                InGameUtilities.sendPlayerError(p, "La faction " + color + faction.getName() + "Â§RÂ§c est en train de capturer la zone " + zone.getFormattedName() + " ! Allez-y vite pour contester la capture !");
             }
         }
         if (prog >= 100)
@@ -391,7 +391,7 @@ public class CaptureZone {
                     addPlayerXp(p.getUniqueId(), 300, LevelStorage.Nation.Bannis);
                 }
                 InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
-                InGameUtilities.sendPlayerInformation(p, "La faction " + color + faction.getName() + "§R§7 a capturé la zone " + zone.getFormattedName() + " !");
+                InGameUtilities.sendPlayerInformation(p, "La faction " + color + faction.getName() + "Â§RÂ§7 a capturÃ© la zone " + zone.getFormattedName() + " !");
             }
 
             data.getZoneInCapture().get(zone.getName()).clear();
@@ -400,7 +400,7 @@ public class CaptureZone {
         {
             if (faction.getName().equalsIgnoreCase(zone.getClaimer()))
             {
-                changeAnimationStep(-1, zone, "§r");
+                changeAnimationStep(-1, zone, "Â§r");
                 zone.unclaim();
                 data.removeSavedClaiming(zone.getName(), null);
                 data.saveTiming(faction.getName(), zone.getClaimedAt(), zone.getName());

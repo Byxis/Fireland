@@ -95,7 +95,7 @@ public class EssaimFunctions {
             String xyz = configManager.getConfig().getString(name + ".spawners." + spawner + ".position.x") + " "
                     + configManager.getConfig().getString(name + ".spawners." + spawner + ".position.y") + " "
                     + configManager.getConfig().getString(name + ".spawners." + spawner + ".position.z");
-            InGameUtilities.sendInteractivePlayerMessage(p, spawner + " : §d§l" + xyz, "/tp " + p.getName() + " " + xyz, "§aCliquez ici pour vous téléporter", ClickEvent.Action.RUN_COMMAND);
+            InGameUtilities.sendInteractivePlayerMessage(p, spawner + " :Â§dÂ§l" + xyz, "/tp " + p.getName() + " " + xyz, "Â§aCliquez ici pour vous tÃ©lÃ©porter", ClickEvent.Action.RUN_COMMAND);
         }
     }
 
@@ -141,7 +141,7 @@ public class EssaimFunctions {
         {
             if (!PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.essaim.access." + essaim))
             {
-                InGameUtilities.sendPlayerError(p, "Vous n'avez pas complété la quête requise ou n'avez pas l'extension DLC.");
+                InGameUtilities.sendPlayerError(p, "Vous n'avez pas complÃ©tÃ© la quÃªte requise ou n'avez pas l'extension DLC.");
                 return;
             }
             if (isEssaimOccuped(essaim)) {
@@ -151,7 +151,7 @@ public class EssaimFunctions {
                 }
                 else
                 {
-                    InGameUtilities.sendPlayerError(p, "Un groupe est déjà entré dans l'essaim !");
+                    InGameUtilities.sendPlayerError(p, "Un groupe est dÃ©jÃ  entrÃ© dans l'essaim !");
                 }
             }
             else if (!main.getHashMapManager().isTeleporting(p.getUniqueId()) && EssaimManager.getActiveEssaims().containsKey(essaim))
@@ -189,7 +189,7 @@ public class EssaimFunctions {
             {
                 member.teleport(EssaimManager.getActiveEssaims().get(essaim).getEntry());
                 member.closeInventory();
-                InGameUtilities.sendPlayerError(member, "L'expédition a été abandonnée !");
+                InGameUtilities.sendPlayerError(member, "L'expÃ©dition a Ã©tÃ© abandonnÃ©e !");
             }
         }
         else
@@ -200,11 +200,11 @@ public class EssaimFunctions {
                 {
                     member.teleport(EssaimManager.getActiveEssaims().get(essaim).getEntry());
                     member.closeInventory();
-                    InGameUtilities.sendPlayerError(member, "Vous avez abandonné l'expédition !");
+                    InGameUtilities.sendPlayerError(member, "Vous avez abandonnÃ© l'expÃ©dition !");
                 }
                 else
                 {
-                    InGameUtilities.sendPlayerError(member, p.getName() + " a abandonné l'expédition !");
+                    InGameUtilities.sendPlayerError(member, p.getName() + " a abandonnÃ© l'expÃ©dition !");
                 }
             }
         }
@@ -219,7 +219,7 @@ public class EssaimFunctions {
             {
                 if (EssaimManager.getGroups().get(essaim).invitePlayer(p))
                 {
-                    InGameUtilities.sendPlayerInformation(EssaimManager.getGroups().get(essaim).getLeader(), "Vous avez invité " + p.getName() + " à votre groupe.");
+                    InGameUtilities.sendPlayerInformation(EssaimManager.getGroups().get(essaim).getLeader(), "Vous avez invitÃ© " + p.getName() + " Ã  votre groupe.");
                 }
                 else
                 {
@@ -228,12 +228,12 @@ public class EssaimFunctions {
             }
             else
             {
-                InGameUtilities.sendPlayerInformation(p, "Vous ne pouvez pas vous inviter vous-même !");
+                InGameUtilities.sendPlayerInformation(p, "Vous ne pouvez pas vous inviter vous-mÃªme !");
             }
         }
         else
         {
-            InGameUtilities.sendPlayerError(p, "L'essaim n'est pas occupé!");
+            InGameUtilities.sendPlayerError(p, "L'essaim n'est pas occupÃ©!");
         }
     }
 
@@ -247,12 +247,12 @@ public class EssaimFunctions {
                 {
                     if (PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.essaim.access." + essaim))
                     {
-                        InGameUtilities.sendPlayerInformation(p, "Vous êtes entré dans le groupe.");
+                        InGameUtilities.sendPlayerInformation(p, "Vous Ãªtes entrÃ© dans le groupe.");
                         if (isServerRestartingSoon())
-                            InGameUtilities.sendPlayerError(p, "Le serveur redémarre bientôt, lancer un essaim est fortement déconseillé.");
+                            InGameUtilities.sendPlayerError(p, "Le serveur redÃ©marre bientÃ´t, lancer un essaim est fortement dÃ©conseillÃ©.");
                         for (Player member : EssaimManager.getGroups().get(essaim).getMembers())
                         {
-                            InGameUtilities.sendPlayerInformation(member, p.getName() + " a rejoint l'expédition.");
+                            InGameUtilities.sendPlayerInformation(member, p.getName() + " a rejoint l'expÃ©dition.");
                             if (member.getOpenInventory().getTitle().contentEquals("Invitation :"))
                             {
                                 EssaimFunctions.openInvitation(essaim, member);
@@ -267,18 +267,18 @@ public class EssaimFunctions {
                     }
                     else
                     {
-                        InGameUtilities.sendPlayerError(p, "Vous n'avez pas complété la quête requise ou n'avez pas l'extension DLC.");
+                        InGameUtilities.sendPlayerError(p, "Vous n'avez pas complÃ©tÃ© la quÃªte requise ou n'avez pas l'extension DLC.");
                     }
                 }
                 else
                 {
-                    InGameUtilities.sendPlayerError(p, "Vous n'êtes pas dans la même faction que la personne qui vous invite !");
+                    InGameUtilities.sendPlayerError(p, "Vous n'Ãªtes pas dans la mÃªme faction que la personne qui vous invite !");
                 }
 
             }
             else
             {
-                InGameUtilities.sendPlayerError(p, "Vous êtes déjà dans le groupe !");
+                InGameUtilities.sendPlayerError(p, "Vous Ãªtes dÃ©jÃ  dans le groupe !");
             }
         } else
         {
@@ -290,7 +290,7 @@ public class EssaimFunctions {
     public static void openMenu(String essaim, Player p)
     {
         InGameUtilities.playWorldSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, SoundCategory.BLOCKS, 1, 1);
-        Inventory essaimInv = Bukkit.createInventory(null, 27, "§8Essaim : §c" + TextUtilities.convertStorableToClean(essaim));
+        Inventory essaimInv = Bukkit.createInventory(null, 27, "Â§8Essaim : Â§c" + TextUtilities.convertStorableToClean(essaim));
         setItemMenu(essaimInv, p, essaim);
         p.openInventory(essaimInv);
     }
@@ -298,15 +298,15 @@ public class EssaimFunctions {
     private static void setItemMenu(Inventory inv, Player p, String essaim) {
         if (EssaimManager.getActiveEssaims().get(essaim).isFinished())
         {
-            inv.setItem(13, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cQuitter l'essaim", (short) 1));
+            inv.setItem(13, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cQuitter l'essaim", (short) 1));
         }
         else
         {
-            ItemStack head = InventoryUtilities.getHead(EssaimManager.getGroups().get(essaim).getLeader().getUniqueId(), "§eMembres - §7(" + EssaimManager.getGroups().get(essaim).getMembers().size() + "/4)");
+            ItemStack head = InventoryUtilities.getHead(EssaimManager.getGroups().get(essaim).getLeader().getUniqueId(), "Â§eMembres - Â§7(" + EssaimManager.getGroups().get(essaim).getMembers().size() + "/4)");
             ArrayList<String> lore = new ArrayList<>();
             for (Player member : EssaimManager.getGroups().get(essaim).getMembers())
             {
-                lore.add("§8 " + member.getName());
+                lore.add("Â§8" + member.getName());
             }
             head.setLore(lore);
             inv.setItem(4, head);
@@ -320,9 +320,9 @@ public class EssaimFunctions {
             if (main.getEssaimManager().getConfig().contains(essaim + ".recommendations.3"))
                 lore.add(main.getEssaimManager().getConfig().getString(essaim + ".recommendations.3"));
 
-            inv.setItem(10, InventoryUtilities.setItemMetaLore(Material.LIME_STAINED_GLASS_PANE, "§aLancer l'expédition", (short) 1, lore));
-            inv.setItem(13, InventoryUtilities.setItemMeta(Material.YELLOW_STAINED_GLASS_PANE, "§eInviter des membres de votre faction", (short) 1));
-            inv.setItem(16, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cQuitter l'expédition", (short) 1));
+            inv.setItem(10, InventoryUtilities.setItemMetaLore(Material.LIME_STAINED_GLASS_PANE, "Â§aLancer l'expÃ©dition", (short) 1, lore));
+            inv.setItem(13, InventoryUtilities.setItemMeta(Material.YELLOW_STAINED_GLASS_PANE, "Â§eInviter des membres de votre faction", (short) 1));
+            inv.setItem(16, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cQuitter l'expÃ©dition", (short) 1));
 
         }
     }
@@ -330,7 +330,7 @@ public class EssaimFunctions {
     private static void creationGroup(String essaim, Player p)
     {
         if (isServerRestartingSoon())
-            InGameUtilities.sendPlayerError(p, "Le serveur redémarre bientôt, lancer un essaim est fortement déconseillé.");
+            InGameUtilities.sendPlayerError(p, "Le serveur redÃ©marre bientÃ´t, lancer un essaim est fortement dÃ©conseillÃ©.");
         main.getEssaimManager().resetEssaim(essaim);
         if (!EssaimManager.getGroups().containsKey(essaim)) {
             EssaimManager.getGroups().put(essaim, new EssaimGroup(essaim, p));
@@ -348,7 +348,7 @@ public class EssaimFunctions {
                 EssaimManager.getGroups().get(essaim).joinGroup(p);
             }
         }
-        InGameUtilities.sendPlayerInformation(p, "Vous avez créé un groupe dans l'essaim !");
+        InGameUtilities.sendPlayerInformation(p, "Vous avez crÃ©Ã© un groupe dans l'essaim !");
     }
 
     private static void teleportCreateEssaim(Player player, Location loc, String sound, int duration, String essaim)
@@ -364,7 +364,7 @@ public class EssaimFunctions {
                 i++;
                 if (InGameUtilities.isPlayerMoving(player.getUniqueId()))
                 {
-                    InGameUtilities.sendPlayerError(player, "Téléportation annulée !");
+                    InGameUtilities.sendPlayerError(player, "TÃ©lÃ©portation annulÃ©e !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound " + player.getName() + " * minecraft:" + sound);
                     main.getHashMapManager().removeTeleporting(player.getUniqueId());
                     cancel();
@@ -373,11 +373,11 @@ public class EssaimFunctions {
                 {
                     if ((i % 5 == 0 && i != duration) || i == duration - 3 || i == duration - 2 || i == duration - 1)
                     {
-                        InGameUtilities.sendPlayerInformation(player, "Téléportation dans " + (duration - i) + " secondes");
+                        InGameUtilities.sendPlayerInformation(player, "TÃ©lÃ©portation dans " + (duration - i) + " secondes");
                     }
                     if (i == duration)
                     {
-                        InGameUtilities.sendPlayerInformation(player, "Téléportation...");
+                        InGameUtilities.sendPlayerInformation(player, "TÃ©lÃ©portation...");
                         player.teleport(loc);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
                         creationGroup(essaim, player);
@@ -404,7 +404,7 @@ public class EssaimFunctions {
                 i++;
                 if (InGameUtilities.isPlayerMoving(player.getUniqueId()))
                 {
-                    InGameUtilities.sendPlayerError(player, "Téléportation annulée !");
+                    InGameUtilities.sendPlayerError(player, "TÃ©lÃ©portation annulÃ©e !");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stopsound " + player.getName() + " * minecraft:" + sound);
                     main.getHashMapManager().removeTeleporting(player.getUniqueId());
                     cancel();
@@ -413,14 +413,14 @@ public class EssaimFunctions {
                 {
                     if ((i % 5 == 0 && i != duration) || i == duration - 3 || i == duration - 2 || i == duration - 1)
                     {
-                        InGameUtilities.sendPlayerInformation(player, "Téléportation dans " + (duration - i) + " secondes");
+                        InGameUtilities.sendPlayerInformation(player, "TÃ©lÃ©portation dans " + (duration - i) + " secondes");
                     }
                     if (i == duration)
                     {
                         if (joinGroup(essaim, player))
                         {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
-                            InGameUtilities.sendPlayerInformation(player, "Téléportation...");
+                            InGameUtilities.sendPlayerInformation(player, "TÃ©lÃ©portation...");
                             main.getHashMapManager().removeTeleporting(player.getUniqueId());
                             player.teleport(loc);
                         }
@@ -466,26 +466,26 @@ public class EssaimFunctions {
 
     public static void openInvitation(String essaim, Player p)
     {
-        Inventory invitationInv = Bukkit.createInventory(null, 54, "§8Invitation : §c" + TextUtilities.convertStorableToClean(essaim));
+        Inventory invitationInv = Bukkit.createInventory(null, 54, "Â§8Invitation : Â§c" + TextUtilities.convertStorableToClean(essaim));
         setItemInvitation(invitationInv, p, essaim);
         p.openInventory(invitationInv);
     }
 
     private static void setItemInvitation(Inventory inv, Player p, String essaim) {
 
-        inv.setItem(0, InventoryUtilities.setItemMeta(Material.BOOK, "§eMembres - §7(" + EssaimManager.getGroups().get(essaim).getMembers().size() + "/4)", (short) 1));
+        inv.setItem(0, InventoryUtilities.setItemMeta(Material.BOOK, "Â§eMembres - Â§7(" + EssaimManager.getGroups().get(essaim).getMembers().size() + "/4)", (short) 1));
 
         for (int i = 0; i < 9; i++)
         {
             inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
-            inv.setItem(i + 9, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, "§rCliquez sur un joueur pour l'inviter", (short) 1));
+            inv.setItem(i + 9, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, "Â§rCliquez sur un joueur pour l'inviter", (short) 1));
         }
 
-        inv.setItem(17, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, "§rCliquez sur un joueur pour l'inviter", (short) 1));
+        inv.setItem(17, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, "Â§rCliquez sur un joueur pour l'inviter", (short) 1));
         int i = 1;
         for (Player member : EssaimManager.getGroups().get(essaim).getMembers())
         {
-            inv.setItem(i, InventoryUtilities.getHead(member.getUniqueId(), "§8 " + member.getName()));
+            inv.setItem(i, InventoryUtilities.getHead(member.getUniqueId(), "Â§8" + member.getName()));
             i++;
         }
         i = 18;
@@ -503,11 +503,11 @@ public class EssaimFunctions {
             }
             if (show)
             {
-                inv.setItem(i, InventoryUtilities.getHead(member.getUuid(), "§8 " + member.getName()));
+                inv.setItem(i, InventoryUtilities.getHead(member.getUuid(), "Â§8" + member.getName()));
                 i++;
             }
         }
-        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour", (short) 0));
+        inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "Â§cRetour", (short) 0));
 
     }
 
@@ -518,7 +518,7 @@ public class EssaimFunctions {
             EssaimManager.getActiveEssaims().get(essaimName).setFinish();
             for (Player player : EssaimManager.getGroups().get(essaimName).getMembers())
             {
-                InGameUtilities.sendPlayerInformation(player, "Vous avez terminé l'expédition ! L'essaim se fermera automatiquement dans quelques minutes.");
+                InGameUtilities.sendPlayerInformation(player, "Vous avez terminÃ© l'expÃ©dition ! L'essaim se fermera automatiquement dans quelques minutes.");
             }
         }
 
@@ -530,7 +530,7 @@ public class EssaimFunctions {
             EssaimManager.getActiveEssaims().get(essaimName).unFinish();
             for (Player player : EssaimManager.getGroups().get(essaimName).getMembers())
             {
-                InGameUtilities.sendPlayerInformation(player, "Vous avez activé une mission annexe, le décompte a été annulé.");
+                InGameUtilities.sendPlayerInformation(player, "Vous avez activÃ© une mission annexe, le dÃ©compte a Ã©tÃ© annulÃ©.");
 
             }
         }
@@ -544,11 +544,11 @@ public class EssaimFunctions {
         {
             if (EssaimManager.getGroups().get(essaimName).getMembers().contains(player))
             {
-                InGameUtilities.sendPlayerError(player, "Vous avez échoué l'expédition.");
+                InGameUtilities.sendPlayerError(player, "Vous avez Ã©chouÃ© l'expÃ©dition.");
             }
             else
             {
-                InGameUtilities.sendPlayerError(player, "L'expédition de la faction " + color + pInfo.getName() + "§r§c dans l'essaim " + TextUtilities.convertStorableToClean(essaimName) + " a échoué.");
+                InGameUtilities.sendPlayerError(player, "L'expÃ©dition de la faction " + color + pInfo.getName() + "Â§rÂ§c dans l'essaim " + TextUtilities.convertStorableToClean(essaimName) + " a Ã©chouÃ©.");
             }
             InGameUtilities.playPlayerSound(player, "entity.wither.death", SoundCategory.AMBIENT, 1, 1);
         }
@@ -568,28 +568,28 @@ public class EssaimFunctions {
                 {
                     if (forced)
                     {
-                        InGameUtilities.sendPlayerError(player, "Vous avez été expulsé de l'essaim, par conséquent, l'expédition est terminée.");
+                        InGameUtilities.sendPlayerError(player, "Vous avez Ã©tÃ© expulsÃ© de l'essaim, par consÃ©quent, l'expÃ©dition est terminÃ©e.");
                     }
                     else
                     {
                         if (EssaimManager.getGroups().get(essaimName).getLeader().getName().equals(player.getName()))
                         {
-                            InGameUtilities.sendPlayerInformation(player, "Vous avez quitté l'essaim, par conséquent, l'expédition est terminée.");
+                            InGameUtilities.sendPlayerInformation(player, "Vous avez quittÃ© l'essaim, par consÃ©quent, l'expÃ©dition est terminÃ©e.");
                         }
                         else
                         {
-                            InGameUtilities.sendPlayerInformation(player, "Le leader a quitté l'essaim, par conséquent, l'expédition est terminée.");
+                            InGameUtilities.sendPlayerInformation(player, "Le leader a quittÃ© l'essaim, par consÃ©quent, l'expÃ©dition est terminÃ©e.");
                         }
 
                     }
                     addPlayerXp(player.getUniqueId(), 200, LevelStorage.Nation.Etat);
                     JetonManager.addJetonsPlayer(player.getUniqueId(), EssaimManager.getGroups().get(essaimName).getRewardJetons());
-                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagné §d " + EssaimManager.getGroups().get(essaimName).getRewardJetons() + "§r§7 jetons !");
+                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagnÃ© Â§d" + EssaimManager.getGroups().get(essaimName).getRewardJetons() + "Â§rÂ§7 jetons !");
                     player.teleport(EssaimManager.getActiveEssaims().get(essaimName).getEntry());
                 }
                 else
                 {
-                    InGameUtilities.sendPlayerInformation(player, "L'essaim " + TextUtilities.convertStorableToClean(essaimName) + " a été pacifié par la faction " + color + pInfo.getName() + "§r§7.");
+                    InGameUtilities.sendPlayerInformation(player, "L'essaim " + TextUtilities.convertStorableToClean(essaimName) + " a Ã©tÃ© pacifiÃ© par la faction " + color + pInfo.getName() + "Â§rÂ§7.");
                 }
                 InGameUtilities.playPlayerSound(player, "gun.hud.boss_killed", SoundCategory.AMBIENT, 1, 1);
             }
@@ -605,14 +605,14 @@ public class EssaimFunctions {
                 if (player.getName().equalsIgnoreCase(p.getName()))
                 {
                     addPlayerXp(player.getUniqueId(), 200, LevelStorage.Nation.Etat);
-                    InGameUtilities.sendPlayerInformation(player, "Vous avez quitté l'essaim");
+                    InGameUtilities.sendPlayerInformation(player, "Vous avez quittÃ© l'essaim");
                     JetonManager.addJetonsPlayer(p.getUniqueId(), EssaimManager.getGroups().get(essaimName).getRewardJetons());
-                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagné §d " + EssaimManager.getGroups().get(essaimName).getRewardJetons() + " §r§7 jetons !");
+                    InGameUtilities.sendPlayerInformation(player, "Vous avez gagnÃ© Â§d" + EssaimManager.getGroups().get(essaimName).getRewardJetons() + " Â§rÂ§7 jetons !");
                     player.teleport(EssaimManager.getActiveEssaims().get(essaimName).getEntry());
                 }
                 else
                 {
-                    InGameUtilities.sendPlayerInformation(player, "Le joueur " + p.getName() + " a quitté l'essaim");
+                    InGameUtilities.sendPlayerInformation(player, "Le joueur " + p.getName() + " a quittÃ© l'essaim");
                 }
             }
         }
@@ -630,28 +630,28 @@ public class EssaimFunctions {
     public static void openStartingMenu(String essaim, Player p)
     {
         InGameUtilities.playWorldSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, SoundCategory.BLOCKS, 1, 1);
-        Inventory essaimInv = Bukkit.createInventory(null, 27, "§8Lancement de §c" + TextUtilities.convertStorableToClean(essaim));
+        Inventory essaimInv = Bukkit.createInventory(null, 27, "Â§8Lancement de Â§c" + TextUtilities.convertStorableToClean(essaim));
         setStartingMenu(essaimInv, p, essaim);
         p.openInventory(essaimInv);
     }
 
     private static void setStartingMenu(Inventory inv, Player p, String essaim) {
         ArrayList<String> lore = new ArrayList<String>();
-        lore.add("§8Une issue s'offre à vous. Vous garderez votre inventaire");
-        lore.add("§8en cas de mort mais la récompense finale sera amoindrie.");
-        inv.setItem(10, InventoryUtilities.setItemMetaLore(Material.PLAYER_HEAD, "§eÉchappatoire", (short) 1, lore));
+        lore.add("Â§8Une issue s'offre Ã  vous. Vous garderez votre inventaire");
+        lore.add("Â§8en cas de mort mais la rÃ©compense finale sera amoindrie.");
+        inv.setItem(10, InventoryUtilities.setItemMetaLore(Material.PLAYER_HEAD, "Â§eÃ‰chappatoire", (short) 1, lore));
 
         lore = new ArrayList<String>();
-        lore.add("§8Aucun retour possible. Vous perdrez votre inventaire");
-        lore.add("§8en cas de mort mais la récompense finale sera augmentée.");
-        inv.setItem(13, InventoryUtilities.setItemMetaLore(Material.SKELETON_SKULL, "§cÉtreinte Mortelle", (short) 1, lore));
+        lore.add("Â§8Aucun retour possible. Vous perdrez votre inventaire");
+        lore.add("Â§8en cas de mort mais la rÃ©compense finale sera augmentÃ©e.");
+        inv.setItem(13, InventoryUtilities.setItemMetaLore(Material.SKELETON_SKULL, "Â§cÃªtreinte Mortelle", (short) 1, lore));
 
         lore = new ArrayList<String>();
-        lore.add("§8Personne ne peux vous retenir de choisir cette voie, mais");
-        lore.add("§8restez sur vos gardes. La récompense finale sera maximale et");
-        lore.add("§8suivie d'un bonus de 5 jetons.");
-        lore.add("§cÀ venir bientôt...");
-        inv.setItem(16, InventoryUtilities.setItemMetaLore(Material.WITHER_SKELETON_SKULL, "§4§lLune de Sang", (short) 1, lore));
+        lore.add("Â§8Personne ne peux vous retenir de choisir cette voie, mais");
+        lore.add("Â§8restez sur vos gardes. La rÃ©compense finale sera maximale et");
+        lore.add("Â§8suivie d'un bonus de 5 jetons.");
+        lore.add("Â§cÃ€ venir bientÃ´t...");
+        inv.setItem(16, InventoryUtilities.setItemMetaLore(Material.WITHER_SKELETON_SKULL, "Â§4Â§lLune de Sang", (short) 1, lore));
     }
 
     public static EssaimConfigManager getConfigManager()

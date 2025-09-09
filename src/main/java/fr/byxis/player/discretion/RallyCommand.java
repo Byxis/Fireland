@@ -32,11 +32,11 @@ public record RallyCommand(fr.byxis.fireland.Fireland main) implements CommandEx
         if (args.length >= 3) {
             Player p = (Player) sender;
             if (p.hasPermission("fireland.command.rally.admin")) {
-                p.sendMessage("§cUtilisation : /rally <joueur> [distance]");
+                p.sendMessage("Â§cUtilisation: /rally <joueur> [distance]");
             }
         } else if (args.length == 1)
         {
-            final Player victim = Bukkit.getPlayer(args[1]);
+            final Player victim = Bukkit.getPlayer(args[0]);
 
             if (victim != null) {
 

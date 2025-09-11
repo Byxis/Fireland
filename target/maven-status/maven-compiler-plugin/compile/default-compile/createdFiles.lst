@@ -4,6 +4,7 @@ fr\byxis\faction\bunker\BunkerManager.class
 fr\byxis\fireland\Fireland$3.class
 fr\byxis\jeton\JetonsCommandManager.class
 fr\byxis\faction\zone\zoneclass\ZoneClass.class
+fr\byxis\player\bank\BankStorage.class
 fr\byxis\event\QuadListener.class
 fr\byxis\faction\essaim\EssaimFunctions.class
 fr\byxis\faction\essaim\EssaimEventHandler$1.class
@@ -114,12 +115,15 @@ fr\byxis\event\EntitySpawn.class
 fr\byxis\player\quest\questclass\EnterRegionQuestClass.class
 fr\byxis\event\DoorPass.class
 fr\byxis\faction\essaim\EssaimManager.class
+fr\byxis\storage\StorageEvent.class
 fr\byxis\player\advancements\AdvancementsManager$Success.class
 fr\byxis\player\intendant\menu\MenuLevel$1.class
 fr\byxis\player\advancements\CraftBreakAdvancements.class
 fr\byxis\player\items\compass\Compass$1.class
 fr\byxis\player\workshop\recycler\RecyclerFunction.class
 fr\byxis\faction\faction\events\PlayerLeaveFactionEvent.class
+fr\byxis\player\bank\Bank.class
+fr\byxis\player\bank\BankCommandTabCompleter.class
 fr\byxis\player\scoreboard\ScoreboardPlayer.class
 fr\byxis\command\NightVision.class
 fr\byxis\db\DbConnection.class
@@ -151,6 +155,7 @@ fr\byxis\fireland\utilities\BlockUtilities.class
 fr\byxis\player\intendant\menu\MenuBunker.class
 fr\byxis\player\quest\questclass\InteractQuestClass.class
 fr\byxis\player\advancements\AdvancementsManager$1.class
+fr\byxis\storage\AbstractStorage.class
 fr\byxis\faction\bunker\BunkerCommand.class
 fr\byxis\event\InteractionManager$1.class
 fr\byxis\player\advancements\SkinEquipAdvancements.class
@@ -182,6 +187,7 @@ fr\byxis\player\items\water\BottleFilled.class
 fr\byxis\player\rank\RankCustomMessage.class
 fr\byxis\event\ZombieManager$1.class
 fr\byxis\faction\bunker\BunkerStorage.class
+fr\byxis\storage\StorageEvent$1.class
 fr\byxis\faction\zone\ZoneSaveEvent.class
 fr\byxis\player\intendant\menu\MenuColor.class
 fr\byxis\player\scoreboard\SideBoardManager.class
@@ -226,6 +232,7 @@ fr\byxis\player\items\serum\Serum.class
 fr\byxis\faction\zone\CaptureZone.class
 fr\byxis\faction\zone\ZoneManager.class
 fr\byxis\fireland\Fireland$1.class
+fr\byxis\player\bank\BankAccount.class
 fr\byxis\player\booster\BoosterManager.class
 fr\byxis\player\intendant\menu\MenuIntendant.class
 fr\byxis\player\packet\PacketPlayer$1.class

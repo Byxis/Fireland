@@ -102,7 +102,7 @@ public class QuestManager {
 
     public static void saveProgress()
     {
-        if (playerQuest.isEmpty())
+        if (playerQuest == null || playerQuest.isEmpty())
         {
             return;
         }

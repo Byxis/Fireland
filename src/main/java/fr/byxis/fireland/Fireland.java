@@ -26,6 +26,8 @@ import fr.byxis.jeton.JetonManager;
 import fr.byxis.jeton.JetonsCommandManager;
 import fr.byxis.player.PlayerAddonsEnabler;
 import fr.byxis.player.PlayerDeath;
+import fr.byxis.player.bank.Bank;
+import fr.byxis.player.bank.BankCommandTabCompleter;
 import fr.byxis.player.booster.BoosterCommandCompleter;
 import fr.byxis.player.booster.BoosterManager;
 import fr.byxis.player.discretion.DiscretionClass;
@@ -42,6 +44,7 @@ import fr.byxis.player.shop.ShopEventManager;
 import fr.byxis.player.workshop.WorkshopManager;
 import fr.byxis.player.workshop.WorkshopManagerEvent;
 import fr.byxis.player.workshop.WorkshopManagerTabCompleter;
+import fr.byxis.storage.StorageEvent;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -97,6 +100,7 @@ public class Fireland extends JavaPlugin {
         getCommand("rally").setExecutor(new RallyCommand(this));
         getCommand("stack").setExecutor(new Stack());
         getCommand("bank").setExecutor(new Bank(this));
+        getCommand("bank").setTabCompleter(new BankCommandTabCompleter(this));
         getCommand("ambientsound").setExecutor(new AmbientSound(this));
         getCommand("n").setExecutor(new NightVision());
         getCommand("faction").setExecutor(new FactionManager(this));
@@ -151,6 +155,7 @@ public class Fireland extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Manager(this), this);
         getServer().getPluginManager().registerEvents(new BoosterManager(this), this);
         getServer().getPluginManager().registerEvents(new InGameUtilities(this), this);
+        getServer().getPluginManager().registerEvents(new StorageEvent(this), this);
         zoneManager.registerEvents();
     }
 

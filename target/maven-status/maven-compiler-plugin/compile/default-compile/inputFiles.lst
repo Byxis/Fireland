@@ -53,6 +53,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopIte
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\SideBoardManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DbConnection.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneEvent.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\bank\Bank.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\command\SpeedFly.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\karma\KarmaManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\WGUtilities.java
@@ -107,6 +108,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\ItemDu
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\lamp\Lamp.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\shop\ShopFunction.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\toxic\SporeDamage.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\storage\StorageEvent.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopCraftingItemClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimCommandCompleter.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\ProgressQuest.java
@@ -114,6 +116,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\PlayerManager
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\menu\MenuEssaim.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\Fireland.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\PlayerAddonsEnabler.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\bank\BankAccount.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\PlayerLevel.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\bunker\BunkerCommand.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\quest\questclass\PlayerQuests.java
@@ -135,6 +138,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneCo
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\fireland\utilities\Vector2.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\discretion\ZombieDetection.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimCommandManager.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\bank\BankCommandTabCompleter.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\workshop\WorkshopManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\PacketListener.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\db\DatabaseType.java
@@ -161,6 +165,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\discretion\R
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\pvpmanager\PvPManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\scoreboard\NameTagManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\zone\ZoneManager.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\bank\BankStorage.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\level\LevelCommand.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\backpack\BackPack.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\intendant\IntendantCommand.java
@@ -168,6 +173,7 @@ C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\booster\Boos
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\event\ChatListener.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\EssaimConfigManager.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\notes\NotesConfig.java
+C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\storage\AbstractStorage.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\faction\essaim\essaimClass\ActiveMobSpawning.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\advancements\AdvancementsClass.java
 C:\Users\Alexis\IdeaProjects\Fireland\src\main\java\fr\byxis\player\items\toxic\Mask.java

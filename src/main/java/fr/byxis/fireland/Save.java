@@ -2,6 +2,8 @@ package fr.byxis.fireland;
 
 import fr.byxis.event.SaveEvent;
 import fr.byxis.faction.essaim.EssaimFunctions;
+import fr.byxis.player.bank.Bank;
+import fr.byxis.player.bank.BankStorage;
 import fr.byxis.player.primes.PrimeEvent;
 import fr.byxis.player.quest.QuestManager;
 
@@ -13,6 +15,7 @@ public class Save {
         SaveEvent.saveAllPlayerDatas();
         EssaimFunctions.saveEssaim();
         PrimeEvent.savePrime();
+        Bank.saveAllBankStorage();
 
     }
 

@@ -227,16 +227,19 @@ public class Bank implements Listener, CommandExecutor
             if (current.getType().equals(Material.ANVIL))
             {
                 int price = getMaxMoney(player);
-                if (playerMoney >= price)
-                {
+                if (playerMoney >= price) {
                     getEco().withdrawPlayer(player, price);
-                    main.getCfgm().getEnderchest().set("bank." + player.getUniqueId() + ".upgrade", getBankUpgrade(player) + 1);
-                    player.sendMessage("§aVous avez payé §6" + price + "$§a pour améliorer votre banque au niveau §d" + (main.getCfgm().getEnderchest().getInt("bank." + player.getUniqueId() + ".upgrade") + 1) + "§a !");
+
+                    int newUpgradeLevel = getBankUpgrade(player) + 1;
+                    main.getCfgm().getEnderchest().set("bank." + player.getUniqueId() + ".upgrade", newUpgradeLevel);
+                    main.getCfgm().saveEnderchest();
+
+                    player.sendMessage("§aVous avez payé §6" + price + "$§a pour améliorer votre banque au niveau §d" + newUpgradeLevel + "§a !");
                     InGameUtilities.playPlayerSound(player, "block.anvil.use", SoundCategory.AMBIENT, 1, 1);
                     InGameUtilities.playPlayerSound(player, "entity.player.levelup", SoundCategory.AMBIENT, 1, 1);
-                    main.getCfgm().saveEnderchest();
                     openBankMenu(player);
                 }
+
                 else
                 {
                     player.sendMessage("§cVous n'avez pas assez d'argent.");

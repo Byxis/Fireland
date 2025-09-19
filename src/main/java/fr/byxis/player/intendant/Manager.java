@@ -702,7 +702,7 @@ public class Manager implements Listener {
                     p.closeInventory();
                 }
             }
-            else if (inv.getTitle().contains("Votre niveau: "))
+            else if (inv.getTitle().contains("Votre niveau : "))
             {
                 /**       Click check        **/
 

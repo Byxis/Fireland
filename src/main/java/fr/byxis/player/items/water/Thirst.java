@@ -158,7 +158,7 @@ public class Thirst implements Listener, CommandExecutor
                     main.getCfgm().savePlayerDB();
                     p.setExp(thirst * 0.01f);
                 }
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 60, 0, true, false));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20 * 60, 0, true, false));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 20 * 60, 1, true, false));
                 if (Math.random() > 0.5)
                 {

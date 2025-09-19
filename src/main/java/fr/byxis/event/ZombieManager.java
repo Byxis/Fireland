@@ -40,8 +40,8 @@ public class ZombieManager implements Listener
             );
 
             if (vulnerableCauses.contains(e.getCause())) {
-                if (zombie.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-                    zombie.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+                if (zombie.hasPotionEffect(PotionEffectType.RESISTANCE)) {
+                    zombie.removePotionEffect(PotionEffectType.RESISTANCE);
 
                     if (resistanceTasks.containsKey(zombieId)) {
                         resistanceTasks.get(zombieId).cancel();
@@ -50,14 +50,14 @@ public class ZombieManager implements Listener
                     BukkitTask task = new BukkitRunnable() {
                         @Override
                         public void run() {
-                            zombie.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 50, true, false));
+                            zombie.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, Integer.MAX_VALUE, 50, true, false));
                             resistanceTasks.remove(zombieId);
                         }
                     }.runTaskLater(main, 5 * 20);
 
                     resistanceTasks.put(zombieId, task);
                 }
-            } else if (zombie.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
+            } else if (zombie.hasPotionEffect(PotionEffectType.RESISTANCE)) {
                 e.setDamage(0);
             }
         }

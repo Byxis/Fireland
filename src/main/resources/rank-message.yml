@@ -1,0 +1,63 @@
+admin:
+  # Messages de mort - Style commandement militaire
+  PLAYERKILL: "§f{player} §7a été neutralisé par §f{killer}"
+  INFECTION: "§f{player} §7a succombé au virus"
+  FALL: "§f{player} §7a fait une chute fatale depuis les ruines"
+  DROWNING: "§f{player} §7s'est noyé dans un verre d'eau"
+  FIRE: "§f{player} §7a trop joué avec son briquet"
+  LAVA: "§f{player} §7a plongé dans une piscine de lave"
+  SUFFOCATION: "§f{player} §7a été écrasé sous les décombres"
+  STARVATION: "§f{player} §7est mort de faim dans ce monde hostile"
+  POISON: "§f{player} §7a été empoisonné"
+  ENTITY_ATTACK: "§f{player} §7a été dévoré par sa création"
+
+  JOIN: "§f{player} §7prend le contrôle des opérations"
+  LEAVE: "§f{player} §7termine sa surveillance"
+
+veteran:
+  # Messages de mort - Style vétéran aguerri
+  PLAYERKILL: "§6Le vétéran §f{player} §7a été éliminé par §f{killer} §7au combat"
+  INFECTION: "§7Le vétéran §f{player} §7n'a pas survécu à l'infection"
+  FALL: "§7Le vétéran §f{player} §7a chuté des hauteurs de la zone de guerre"
+  DROWNING: "§7Le vétéran §f{player} §7s'est noyé dans les eaux contaminées"
+  FIRE: "§7Le vétéran §f{player} §7a péri dans les flammes ardentes"
+  LAVA: "§7Le vétéran §f{player} §7a été englouti par les coulées de lave"
+  SUFFOCATION: "§7Le vétéran §f{player} §7a été enseveli sous les ruines"
+  STARVATION: "§7Le vétéran §f{player} §7n'a pas trouvé de vivres à temps"
+  POISON: "§7Le vétéran §f{player} §7a succombé aux radiations"
+  ENTITY_ATTACK: "§7Le vétéran §f{player} §7a été submergé par la horde d'infectés"
+
+  JOIN: "§6Le vétéran {player} §7rejoint le champ de bataille"
+  LEAVE: "§6Le vétéran {player} §7retourne à la base"
+
+stratege:
+  # Messages de mort - Style tacticien
+  PLAYERKILL: "§eLe stratège §f{player} §7a été abattu par §f{killer}"
+  INFECTION: "§7Le stratège §f{player} §7a été contaminé par le virus"
+  FALL: "§7Le stratège §f{player} §7a mal calculé sa chute"
+  DROWNING: "§7Le stratège §f{player} §7s'est noyé dans les eaux irradiées"
+  FIRE: "§7Le stratège §f{player} §7a été consumé par les flammes"
+  LAVA: "§7Le stratège §f{player} §7a sous-estimé la lave"
+  SUFFOCATION: "§7Le stratège §f{player} §7a été écrasé par les débris"
+  STARVATION: "§7Le stratège §f{player} §7n'a pas rationné ses vivres"
+  POISON: "§7Le stratège §f{player} §7a mal évalué la contamination"
+  ENTITY_ATTACK: "§7Le stratège §f{player} §7a été dépassé par les infectés"
+
+  JOIN: "§eLe stratège {player} §7arrive sur le terrain"
+  LEAVE: "§eLe stratège {player} §7retourne planifier"
+
+mercenaire:
+  # Messages de mort - Style mercenaire basique
+  PLAYERKILL: "§7Le mercenaire §f{player} §7a été tué par §f{killer}"
+  INFECTION: "§7Le mercenaire §f{player} §7est devenu infecté"
+  FALL: "§7Le mercenaire §f{player} §7a fait une chute mortelle"
+  DROWNING: "§7Le mercenaire §f{player} §7s'est noyé"
+  FIRE: "§7Le mercenaire §f{player} §7a brûlé vif"
+  LAVA: "§7Le mercenaire §f{player} §7a coulé dans la lave"
+  SUFFOCATION: "§7Le mercenaire §f{player} §7a été écrasé"
+  STARVATION: "§7Le mercenaire §f{player} §7est mort de faim"
+  POISON: "§7Le mercenaire §f{player} §7a été empoisonné"
+  ENTITY_ATTACK: "§7Le mercenaire §f{player} §7a été dévoré par les zombies"
+
+  JOIN: "§7Le mercenaire {player} §7entre en service"
+  LEAVE: "§7Le mercenaire {player} §7quitte la zone"

@@ -277,40 +277,17 @@ public class EssaimManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (isNewHour())
-                {
-                    debug(7, "Tentative d'ouverture");
-                    for (String essaim : configManager.getConfig().getConfigurationSection("").getKeys(false))
-                    {
-                        debug(7, "Tentative d'ouverture de l'essaim " + essaim);
-                        LocalDateTime today = LocalDateTime.now();
-                        if (isEssaimOpened(essaim))
-                        {
-                            debug(7, "Essaim déjà ouvert " + essaim);
-                            continue;
-                        }
-                        if (configManager.getConfig().getInt(essaim + ".hour") == today.getHour() &&
-                                configManager.getConfig().getInt(essaim + ".day") == today.getDayOfWeek().getValue())
-                        {
 
-                            debug(7, "Ouverture de l'essaim " + essaim);
-                            enableEssaim(essaim);
-                            for (Player p : Bukkit.getOnlinePlayers())
-                            {
-                                InGameUtilities.sendPlayerInformation(p, "L'essaim " + activeEssaims.get(essaim).getFormattedName() + " est désormais ouvert. Allez vite le pacifier avant que la menace se répande !");
-                            }
-                        }
-                        debug(7, "L'essaim " + essaim + " est :" + activeEssaims.containsKey(essaim));
-                    }
-                }
+                //tryOpeningEssaim();
                 for (EssaimClass essaimClass : activeEssaims.values())
                 {
-                    if (essaimClass.isFinished() && essaimClass.shouldClose())
+                    if (essaimClass.isFinished() && essaimClass.shouldClose() && groups.containsKey(essaimClass.getName()))
                     {
                         EssaimFunctions.leaveFinishedEssaim(essaimClass.getName(), groups.get(essaimClass.getName()).getMembers().get(0), true);
                     }
                     else if (essaimClass.isFinished() && groups.containsKey(essaimClass.getName()))
                     {
+
                         for (Player player : groups.get(essaimClass.getName()).getMembers())
                         {
                             InGameUtilities.sendPlayerInformation(player, "Vous allez être expulsé de l'essaim dans " + (8 - new Timestamp(System.currentTimeMillis() - essaimClass.getFinishDate().getTime()).getMinutes()) + " minutes.");
@@ -364,5 +341,37 @@ public class EssaimManager {
     public static HashMap<String, EssaimGroup> getGroups()
     {
         return groups;
+    }
+
+    @Deprecated(forRemoval = true, since = "4.0")
+
+    private void tryOpeningEssaim()
+    {
+        if (isNewHour())
+        {
+            debug(7, "Tentative d'ouverture");
+            for (String essaim : configManager.getConfig().getConfigurationSection("").getKeys(false))
+            {
+                debug(7, "Tentative d'ouverture de l'essaim " + essaim);
+                LocalDateTime today = LocalDateTime.now();
+                if (isEssaimOpened(essaim))
+                {
+                    debug(7, "Essaim déjà ouvert " + essaim);
+                    continue;
+                }
+                if (configManager.getConfig().getInt(essaim + ".hour") == today.getHour() &&
+                        configManager.getConfig().getInt(essaim + ".day") == today.getDayOfWeek().getValue())
+                {
+
+                    debug(7, "Ouverture de l'essaim " + essaim);
+                    enableEssaim(essaim);
+                    for (Player p : Bukkit.getOnlinePlayers())
+                    {
+                        InGameUtilities.sendPlayerInformation(p, "L'essaim " + activeEssaims.get(essaim).getFormattedName() + " est désormais ouvert. Allez vite le pacifier avant que la menace se répande !");
+                    }
+                }
+                debug(7, "L'essaim " + essaim + " est :" + activeEssaims.containsKey(essaim));
+            }
+        }
     }
 }

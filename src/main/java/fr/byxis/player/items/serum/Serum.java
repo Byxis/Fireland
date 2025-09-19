@@ -68,13 +68,13 @@ public class Serum implements Listener
         if (intRandom == 2)
         {
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 120, 4, true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 120, 1, true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 40, 1, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * 120, 1, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 20 * 40, 1, true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 20, 4, true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20 * 120, 4, true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 5, 0, true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 300, 2, true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 20 * 300, 2, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 20 * 120, 4, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 20 * 5, 0, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20 * 300, 2, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 20 * 300, 2, true));
         }
         else
         {

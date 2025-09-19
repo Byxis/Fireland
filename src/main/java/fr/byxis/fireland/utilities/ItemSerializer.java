@@ -173,7 +173,7 @@ public class ItemSerializer {
                 String value = args[2];
                 NamespacedKey namespacedKey = new NamespacedKey("weaponmechanics", key);
                 ItemMeta meta = item.getItemMeta();
-                meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+                meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
                 PersistentDataContainer container = meta.getPersistentDataContainer();
                 switch (key) {
                     case "max-durability":

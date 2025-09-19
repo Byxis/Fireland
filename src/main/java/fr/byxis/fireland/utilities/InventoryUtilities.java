@@ -163,7 +163,7 @@ public class InventoryUtilities {
 
         List<Pattern> patterns = new ArrayList<Pattern>();
 
-        patterns.add(new Pattern(DyeColor.LIGHT_GRAY, PatternType.STRIPE_SMALL));
+        patterns.add(new Pattern(DyeColor.LIGHT_GRAY, PatternType.SMALL_STRIPES));
         patterns.add(new Pattern(DyeColor.GRAY, PatternType.FLOWER));
         patterns.add(new Pattern(DyeColor.BLACK, PatternType.CURLY_BORDER));
         patterns.add(new Pattern(DyeColor.BLACK, PatternType.TRIANGLE_TOP));
@@ -172,7 +172,7 @@ public class InventoryUtilities {
 
         m.setPatterns(patterns);
         m.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        m.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        m.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
         i.setItemMeta(m);
         return i;
     }
@@ -185,7 +185,7 @@ public class InventoryUtilities {
 
         List<Pattern> patterns = new ArrayList<Pattern>();
 
-        patterns.add(new Pattern(DyeColor.LIGHT_GRAY, PatternType.STRIPE_SMALL));
+        patterns.add(new Pattern(DyeColor.LIGHT_GRAY, PatternType.SMALL_STRIPES));
         patterns.add(new Pattern(DyeColor.GRAY, PatternType.FLOWER));
         patterns.add(new Pattern(DyeColor.BLACK, PatternType.CURLY_BORDER));
         patterns.add(new Pattern(DyeColor.BLACK, PatternType.TRIANGLE_TOP));
@@ -194,7 +194,7 @@ public class InventoryUtilities {
 
         m.setPatterns(patterns);
         m.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        m.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        m.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
         i.setItemMeta(m);
         return i;
     }
@@ -211,13 +211,13 @@ public class InventoryUtilities {
         patterns.add(new Pattern(DyeColor.LIGHT_BLUE, PatternType.GRADIENT));
         patterns.add(new Pattern(DyeColor.WHITE, PatternType.CURLY_BORDER));
         patterns.add(new Pattern(DyeColor.WHITE, PatternType.CROSS));
-        patterns.add(new Pattern(DyeColor.LIGHT_BLUE, PatternType.CIRCLE_MIDDLE));
+        patterns.add(new Pattern(DyeColor.LIGHT_BLUE, PatternType.CIRCLE));
         patterns.add(new Pattern(DyeColor.LIGHT_BLUE, PatternType.FLOWER));
         patterns.add(new Pattern(DyeColor.WHITE, PatternType.TRIANGLE_TOP));
 
         m.setPatterns(patterns);
         m.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        m.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        m.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
         i.setItemMeta(m);
         return i;
     }
@@ -233,13 +233,13 @@ public class InventoryUtilities {
         patterns.add(new Pattern(DyeColor.LIGHT_BLUE, PatternType.GRADIENT));
         patterns.add(new Pattern(DyeColor.WHITE, PatternType.CURLY_BORDER));
         patterns.add(new Pattern(DyeColor.WHITE, PatternType.CROSS));
-        patterns.add(new Pattern(DyeColor.LIGHT_BLUE, PatternType.CIRCLE_MIDDLE));
+        patterns.add(new Pattern(DyeColor.LIGHT_BLUE, PatternType.CIRCLE));
         patterns.add(new Pattern(DyeColor.LIGHT_BLUE, PatternType.FLOWER));
         patterns.add(new Pattern(DyeColor.WHITE, PatternType.TRIANGLE_TOP));
 
         m.setPatterns(patterns);
         m.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        m.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        m.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
         i.setItemMeta(m);
         return i;
     }

@@ -28,6 +28,7 @@ import java.util.List;
 
 import static fr.byxis.faction.essaim.EssaimManager.disableEssaim;
 import static fr.byxis.fireland.restart.RestartManager.isServerRestartingSoon;
+import static fr.byxis.fireland.utilities.InGameUtilities.debug;
 import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 import static fr.byxis.player.level.LevelStorage.addPlayerXp;
 

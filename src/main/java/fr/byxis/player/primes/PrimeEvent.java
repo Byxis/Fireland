@@ -131,12 +131,10 @@ public class PrimeEvent implements Listener {
     @EventHandler
     public void playerKill(PlayerDeathEvent e)
     {
-        if (e.getPlayer().getLastDamageCause().getEntity() != null)
+        if (e.getPlayer().getLastDamageCause().getEntity() instanceof Player killer)
         {
             Player p = e.getPlayer();
-            Player killer = e.getPlayer().getKiller();
             int prime = getPrime(p);
-            debugp(5, "player: " + p.getName() + ", killer: " + killer.getName() + ", prime: " + prime);
 
             FactionFunctions ff = new FactionFunctions(main, null);
 

@@ -384,52 +384,21 @@ public class EssaimEventHandler implements Listener {
             if (e.getClickedBlock().getType() == Material.IRON_DOOR && e.getItem() != null && e.getItem().getType() == Material.ECHO_SHARD) {
                 if (e.getItem().getItemMeta().hasCustomModelData())
                 {
-                    String name = "";
-                    if (e.getItem().getItemMeta().getCustomModelData() == 1)
-                    {
-                        name = "bunker-de-latus";
-                    }
-                    else if (e.getItem().getItemMeta().getCustomModelData() == 2)
-                    {
-                        name = "usine-portuaire";
-                    }
-                    else if (e.getItem().getItemMeta().getCustomModelData() == 3)
-                    {
-                        name = "station-de-traitement-des-eaux";
-                    }
-                    else if (e.getItem().getItemMeta().getCustomModelData() == 4)
-                    {
-                        name = "entrepot-militaire";
-                    }
-                    else if (e.getItem().getItemMeta().getCustomModelData() == 5)
-                    {
-                        name = "immeuble-infeste";
-                    }
-                    else if (e.getItem().getItemMeta().getCustomModelData() == 6)
-                    {
-                        name = "hangar-silencieux";
-                    }
-                    else if (e.getItem().getItemMeta().getCustomModelData() == 8)
-                    {
-                        name = "centrale-nucleaire";
-                    }
-                    else if (e.getItem().getItemMeta().getCustomModelData() == 9)
-                    {
-                        name = "epave-du-porte-avion";
-                    }
-                    else if (e.getItem().getItemMeta().getCustomModelData() == 10)
-                    {
-                        name = "crypte";
-                    }
-                    else if (e.getItem().getItemMeta().getCustomModelData() == 11)
-                    {
-                        name = "station-petroliere";
-                    }
-                    else if (e.getItem().getItemMeta().getCustomModelData() == 12)
-                    {
-                        name = "laboratoire";
-                    }
-                    if (!name.equals(""))
+                    String name = switch (e.getItem().getItemMeta().getCustomModelData()) {
+                        case 1 -> "bunker-de-latus";
+                        case 2 -> "usine-portuaire";
+                        case 3 -> "station-de-traitement-des-eaux";
+                        case 4 -> "entrepot-militaire";
+                        case 5 -> "immeuble-infeste";
+                        case 6 -> "hangar-silencieux";
+                        case 8 -> "centrale-nucleaire";
+                        case 9 -> "epave-du-porte-avion";
+                        case 10 -> "crypte";
+                        case 11 -> "station-petroliere";
+                        case 12 -> "laboratoire";
+                        default -> "";
+                    };
+                    if (!name.isEmpty())
                     {
                         Location loc = new Location(Bukkit.getWorld("essaim"),
                                 EssaimManager.getConfigManager().getConfig().getInt(name + ".key.position.x"),

@@ -72,7 +72,7 @@ public class QuadListener implements Listener
             quad.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999999, 1, true, false, false));
             quad.setSilent(true);
             quad.setInvulnerable(true);
-            quad.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+            quad.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0);
         }
         else
         {

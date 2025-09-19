@@ -50,7 +50,6 @@ public class PacketPlayer implements CommandExecutor {
             else if (strings[0].equalsIgnoreCase("opendoor"))
             {
                 InGameUtilities.sendPlayerInformation(p, "Packet envoyé. Porte ouverte");
-                //noinspection removal
                 playTestOpenDoorPacket(p, p.getTargetBlock(50).getLocation());
             }
             else if (strings[0].equalsIgnoreCase("spyglass"))
@@ -67,12 +66,12 @@ public class PacketPlayer implements CommandExecutor {
 
     private void playTestBorderPacket(Player p)
     {
-        pf.sendWorldBorderWarningDistancePacket(p, 1);
+        PacketFunctions.sendWorldBorderWarningDistancePacket(p, 1);
         new BukkitRunnable()
         {
             @Override
             public void run() {
-                pf.sendWorldBorderWarningDistancePacket(p, 0);
+                PacketFunctions.sendWorldBorderWarningDistancePacket(p, 0);
             }
         }.runTaskLater(main, 20);
     }

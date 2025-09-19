@@ -9,6 +9,7 @@ import org.bukkit.Particle;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -77,10 +78,11 @@ public class PvPManager implements Listener {
     @EventHandler
     public void playerHit(EntityDamageByEntityEvent e)
     {
-        if (e.getEntity() instanceof Player p && e.getDamager() instanceof Player d && !e.isCancelled())
+        if (e.getEntity() instanceof Player p && !e.isCancelled())
         {
+            Entity d = e.getDamager();
             ItemStack itemCrackData = new ItemStack(Material.REDSTONE_BLOCK);
-            p.getWorld().spawnParticle(Particle.ITEM_CRACK, p.getLocation().add(0, 1, 0), 20, 0, 0, 0, 0.1,  itemCrackData);
+            p.getWorld().spawnParticle(Particle.ITEM, p.getLocation().add(0, 1, 0), 20, 0, 0, 0, 0.1,  itemCrackData);
 
             if (p.getName().equalsIgnoreCase(d.getName()))
                 return;
@@ -93,14 +95,15 @@ public class PvPManager implements Listener {
                 }
             }
 
-            if (d.getGameMode() != GameMode.CREATIVE && !d.isInvulnerable())
+            if (d instanceof Player dp && dp.getGameMode() != GameMode.CREATIVE && !d.isInvulnerable())
             {
                 if (!pvpTimer.containsKey(d.getUniqueId()))
                 {
-                    InGameUtilities.sendPlayerError(d, "Vous entrez en combat pendant 30s. Ne vous déconnectez pas où vous perdrez votre stuff.");
+                    InGameUtilities.sendPlayerError(dp, "Vous entrez en combat pendant 30s. Ne vous déconnectez pas où vous perdrez votre stuff.");
                 }
-                putPvpTimer(d);
+                putPvpTimer(dp);
             }
+
             if (p.getGameMode() != GameMode.CREATIVE && !p.isInvulnerable())
             {
                 if (!pvpTimer.containsKey(p.getUniqueId()))

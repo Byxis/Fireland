@@ -35,6 +35,7 @@ import fr.byxis.player.discretion.RallyCommand;
 import fr.byxis.player.discretion.ZombieDetection;
 import fr.byxis.player.intendant.IntendantCommand;
 import fr.byxis.player.intendant.Manager;
+import fr.byxis.player.items.CustomStackSizeManager;
 import fr.byxis.player.items.morphine.FallDamage;
 import fr.byxis.player.items.toxic.Mask;
 import fr.byxis.player.items.water.Thirst;
@@ -264,7 +265,7 @@ public class Fireland extends JavaPlugin {
                         }
 
                         if (thirst <= 0f) {
-                            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 80, 0, false, false), true);
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 0, false, false), true);
                             if (p.getHealth() > 1)
                             {
                                 p.damage(1);
@@ -273,7 +274,7 @@ public class Fireland extends JavaPlugin {
 
                         if (hasLegsBroken(p))
                         {
-                            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30, 3, false, false));
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 30, 3, false, false));
                             p.damage(0.00001f);
                         }
 
@@ -369,7 +370,7 @@ public class Fireland extends JavaPlugin {
                             int level = getLevelInfection(p);
                             if (level == 0)
                             {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 240, 0, false, false), true);
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 240, 0, false, false), true);
 
                                 if (playerDBConfig.getString("infected." + p.getUniqueId() + ".time") == null)
                                 {
@@ -537,13 +538,14 @@ public class Fireland extends JavaPlugin {
 
     private void changeItemsStackSize()
     {
-        modifyStackSize(Material.WHEAT_SEEDS, 4, false);
-        modifyStackSize(Material.ECHO_SHARD, 1, false);
-        modifyStackSize(Material.IRON_NUGGET, 32, false);
-        modifyStackSize(Material.LEATHER, 1, false);
-        modifyStackSize(Material.POTION, 2, false);
-        modifyStackSize(Material.END_ROD, 1, false);
-        modifyStackSize(Material.RABBIT_HIDE, 1, false);
+        CustomStackSizeManager customStackSizeManager = new CustomStackSizeManager();
+        customStackSizeManager.changeMaterialStack(Material.WHEAT_SEEDS, 4);
+        customStackSizeManager.changeMaterialStack(Material.ECHO_SHARD, 1);
+        customStackSizeManager.changeMaterialStack(Material.IRON_NUGGET, 32);
+        customStackSizeManager.changeMaterialStack(Material.LEATHER, 1);
+        customStackSizeManager.changeMaterialStack(Material.POTION, 2);
+        customStackSizeManager.changeMaterialStack(Material.END_ROD, 1);
+        customStackSizeManager.changeMaterialStack(Material.RABBIT_HIDE, 1);
     }
 
     public void dateListener()
@@ -628,48 +630,6 @@ public class Fireland extends JavaPlugin {
         }
     }
     */
-    public boolean modifyStackSize(Material material, int size, boolean log) {
-        // Verify that the material is an item (that can be stored in an inventory).
-        if (!material.isItem()) {
-            this.getLogger().warning(String.format("%s is not an item.", material.name()));
-            return false;
-        }
-        // Do nothing if the stack size is already correct.
-        if (material.getMaxStackSize() == size) {
-            if (log) {
-                this.getLogger().info(String.format("%s already has maximum stack size %d.", material.name(), size));
-            }
-            return true;
-        }
-
-        try {
-            // Get the server package version.
-            // In 1.14, the package that the server class CraftServer is in, is called "org.bukkit.craftbukkit.v1_14_R1".
-            String packageVersion = this.getServer().getClass().getPackage().getName().split("\\.")[3];
-            // Convert a Material into its corresponding Item by using the getItem method on the Material.
-            Class<?> magicClass = Class.forName("org.bukkit.craftbukkit." + packageVersion + ".util.CraftMagicNumbers");
-            Method method = magicClass.getDeclaredMethod("getItem", Material.class);
-            Object item = method.invoke(null, material);
-            // Get the maxItemStack field in Item and change it.
-            Class<?> itemClass = Class.forName("net.minecraft.world.item.Item");
-            Field field = itemClass.getDeclaredField("d");
-            field.setAccessible(true);
-            field.setInt(item, size);
-            // Change the maxStack field in the Material.
-            Field mf = Material.class.getDeclaredField("maxStack");
-            mf.setAccessible(true);
-            mf.setInt(material, size);
-            if (log)
-            {
-                this.getLogger().info(String.format("Applied a maximum stack size of %d to %s.", size, material.name()));
-            }
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            this.getLogger().severe(String.format("Reflection error while modifying maximum stack size of %s.", material.name()));
-            return false;
-        }
-    }
 
     /*public WorldGuardPlugin getWorldGuard()
 	{

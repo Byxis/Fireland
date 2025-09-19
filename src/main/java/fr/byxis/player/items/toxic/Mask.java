@@ -37,7 +37,7 @@ public class Mask implements Listener
             if (p.getInventory().getHelmet().getType() == Material.BROWN_DYE && getDurability(p.getInventory().getHelmet()) > 0)
             {
                 p.removePotionEffect(PotionEffectType.BLINDNESS);
-                p.removePotionEffect(PotionEffectType.CONFUSION);
+                p.removePotionEffect(PotionEffectType.NAUSEA);
             }
         }
         else if (p.getGameMode() != GameMode.CREATIVE)

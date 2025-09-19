@@ -3,6 +3,7 @@ package fr.byxis.player.packet;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.WrappedBlockData;
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Location;
@@ -51,20 +52,12 @@ public class PacketFunctions {
             return;
         }
 
-        // Open the door
-        Openable doorData = (Openable) doorBlock.getState().getBlockData();
-        //doorData.setOpen(openable);
-        doorBlock.setBlockData(doorData);
-        // Send a packet to the player to update the door's appearance
         PacketContainer packet = new PacketContainer(PacketType.Play.Server.BLOCK_CHANGE);
-        WrappedBlockData wrappedDoorData = WrappedBlockData.createData(doorBlock.getType(), doorBlock.getData());
-        packet.getBlockData().write(0, wrappedDoorData);
-        packet.getIntegers().write(0, doorBlock.getX()).write(1, doorBlock.getY()).write(2, doorBlock.getZ());
-        try {
-            main.getProtocolManager().sendServerPacket(p, packet);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        packet.getBlockPositionModifier().write(0, new BlockPosition(loc.toVector()));
+        packet.getBlockData().write(0, WrappedBlockData.createData(Material.AIR));
+
+// Envoyer seulement au joueur autorisé
+        ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
     }
 
 }

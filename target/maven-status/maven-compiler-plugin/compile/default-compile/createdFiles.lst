@@ -127,6 +127,7 @@ fr\byxis\player\bank\BankCommandTabCompleter.class
 fr\byxis\player\scoreboard\ScoreboardPlayer.class
 fr\byxis\command\NightVision.class
 fr\byxis\db\DbConnection.class
+fr\byxis\player\items\CustomStackSizeManager.class
 fr\byxis\fireland\restart\RestartManager.class
 fr\byxis\event\PacketListener.class
 fr\byxis\fireland\Fireland.class

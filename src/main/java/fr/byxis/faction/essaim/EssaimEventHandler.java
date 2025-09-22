@@ -38,7 +38,6 @@ public class EssaimEventHandler implements Listener {
     @EventHandler
     public void mobKilled(MythicMobDeathEvent e)
     {
-
         mobDisappearingHandler(e.getMob());
     }
 
@@ -325,7 +324,6 @@ public class EssaimEventHandler implements Listener {
     @EventHandler
     public void playerJoin(PlayerJoinEvent e)
     {
-        String current = null;
         if (!main.getEssaimManager().getExistingEssaims().isEmpty())
         {
             for (String essaim : main.getEssaimManager().getExistingEssaims().keySet())

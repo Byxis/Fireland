@@ -2,64 +2,77 @@ package fr.byxis.faction.essaim.essaimClass;
 
 import org.bukkit.Location;
 
-public class Spawner {
+/**
+ * Class representing a spawner in the game.
+ */
+public class Spawner
+{
 
-    private final String name;
-    private final String essaim;
-    private final Location loc;
-    private final String mob;
-    private final int amount;
-    private final String command;
-    private final double activationDelay;
-    private final double spawnDelay;
-    private final boolean isAffectedByDifficulty;
+    private final String m_name;
+    private final String m_essaim;
+    private final Location m_loc;
+    private final String m_mob;
+    private final int m_amount;
+    private final String m_command;
+    private final double m_activationDelay;
+    private final double m_spawnDelay;
+    private final boolean m_isAffectedByDifficulty;
 
     public Spawner(String _name, String _essaim, Location _loc, String _mob, int _amount, double _activationDelay, double _spawnDelay, String _command, Boolean _isAffecteByDifficulty)
     {
-        this.name = _name;
-        this.essaim = _essaim;
-        this.loc = _loc;
-        this.mob = _mob;
-        this.activationDelay = _activationDelay;
-        this.spawnDelay = _spawnDelay;
-        this.command = _command;
-        this.amount = _amount;
-        this.isAffectedByDifficulty = _isAffecteByDifficulty;
+        this.m_name = _name;
+        this.m_essaim = _essaim;
+        this.m_loc = _loc;
+        this.m_mob = _mob;
+        this.m_activationDelay = _activationDelay;
+        this.m_spawnDelay = _spawnDelay;
+        this.m_command = _command;
+        this.m_amount = _amount;
+        this.m_isAffectedByDifficulty = _isAffecteByDifficulty;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getAmount()
+    {
+        return m_amount;
     }
 
-    public String getMob() {
-        return mob;
+    public String getMob()
+    {
+        return m_mob;
     }
 
-    public Location getLoc() {
-        return loc;
+    public Location getLoc()
+    {
+        return m_loc;
     }
 
-    public String getEssaim() {
-        return essaim;
+    public String getEssaim()
+    {
+        return m_essaim;
     }
 
-    public String getName() {
-        return name;
+    public String getName()
+    {
+        return m_name;
     }
 
-    public String getCommand() {
-        return command;
+    public String getCommand()
+    {
+        return m_command;
     }
 
-    public double getActivationDelay() {
-        return activationDelay;
+    public double getActivationDelay()
+    {
+        return m_activationDelay;
     }
 
-    public double getSpawnDelay() {
-        return spawnDelay;
+    public double getSpawnDelay()
+    {
+        return m_spawnDelay;
     }
 
-    public boolean isAffectedByDifficulty() {
-        return isAffectedByDifficulty;
+    public boolean isAffectedByDifficulty()
+    {
+        return m_isAffectedByDifficulty;
     }
 }

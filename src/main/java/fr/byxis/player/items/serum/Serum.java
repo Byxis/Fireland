@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import static fr.byxis.player.items.toxic.InfectedPlayer.setInfection;
+import static fr.byxis.player.items.infection.InfectedPlayer.setInfection;
 
 public class Serum implements Listener
 {
@@ -75,6 +75,7 @@ public class Serum implements Listener
             p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 20 * 5, 0, true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20 * 300, 2, true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 20 * 300, 2, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 20 * 300, 2, true));
         }
         else
         {

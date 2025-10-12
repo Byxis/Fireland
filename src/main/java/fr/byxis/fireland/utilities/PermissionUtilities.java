@@ -37,18 +37,45 @@ public class PermissionUtilities {
         API.getUserManager().saveUser(user);
     }
 
-    public static boolean hasPermission(Player p, String permission)
+    /**
+     * Checks if a player has a specific permission.
+     *
+     * @param _player The player to check
+     * @param _permission The permission to check for
+     *
+     * @return true if the player has the permission, false otherwise
+     */
+    public static boolean hasPermission(Player _player, String _permission)
     {
-        User user = API.getPlayerAdapter(Player.class).getUser(p);
-        return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
-    }
-    public static boolean hasPermission(UUID playerUUID, String permission) {
-        LuckPerms api = LuckPermsProvider.get();
-        User user = api.getUserManager().getUser(playerUUID);
-        if (user != null) {
-            return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
+        if (_player == null || _permission == null || _permission.isEmpty())
+        {
+            return false;
         }
-        return false;
+        return hasPermission(_player.getUniqueId(), _permission);
+    }
+
+    /**
+     * Checks if a player has a specific permission.
+     *
+     * @param _playerUUID The uuid of the player to check
+     * @param _permission The permission to check for
+     *
+     * @return true if the player has the permission, false otherwise
+     */
+    public static boolean hasPermission(UUID _playerUUID, String _permission)
+    {
+        if (_playerUUID == null || _permission == null || _permission.isEmpty())
+        {
+            return false;
+        }
+
+        User user = API.getUserManager().getUser(_playerUUID);
+        if (user == null)
+        {
+            return false;
+        }
+
+        return user.getCachedData().getPermissionData().checkPermission(_permission).asBoolean();
     }
 
     public static void addTempPermission(Player p, String permission, Date finished)

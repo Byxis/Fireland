@@ -31,8 +31,6 @@ public class InteractionManager implements Listener {
         m_forbiddenMats.add(Material.DROPPER);
         m_forbiddenMats.add(Material.DISPENSER);
         m_forbiddenMats.add(Material.BARREL);
-        m_forbiddenMats.add(Material.LEGACY_BED);
-        m_forbiddenMats.add(Material.LEGACY_BED_BLOCK);
         m_forbiddenMats.add(Material.BLACK_BED);
         m_forbiddenMats.add(Material.BLUE_BED);
         m_forbiddenMats.add(Material.BROWN_BED);

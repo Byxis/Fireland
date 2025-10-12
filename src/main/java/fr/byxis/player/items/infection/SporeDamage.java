@@ -1,4 +1,4 @@
-package fr.byxis.player.items.toxic;
+package fr.byxis.player.items.infection;
 
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
@@ -12,8 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static fr.byxis.player.items.toxic.InfectedPlayer.isInfected;
-import static fr.byxis.player.items.toxic.InfectedPlayer.setInfection;
+import static fr.byxis.player.items.infection.InfectedPlayer.isInfected;
+import static fr.byxis.player.items.infection.InfectedPlayer.setInfection;
 
 public class SporeDamage {
 

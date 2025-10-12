@@ -1,12 +1,11 @@
 package fr.byxis.fireland.utilities;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ListUtilities {
 
@@ -104,6 +103,26 @@ public class ListUtilities {
             }
         }
         return l;
+    }
+
+    public static List<String> filterSuggestions(String input, List<String> options) {
+        List<String> filtered = new ArrayList<>();
+        String lowerInput = input.toLowerCase();
+
+        for (String option : options) {
+            if (option.toLowerCase().startsWith(lowerInput)) {
+                filtered.add(option);
+            }
+        }
+
+        return filtered;
+    }
+
+    public static List<String> getOnlinePlayerNames()
+    {
+        return Bukkit.getOnlinePlayers().stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 
 }

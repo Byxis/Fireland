@@ -6,6 +6,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -276,6 +277,42 @@ public class InGameUtilities implements Listener {
             return;
         }
         p.sendMessage("§6§lFireland§8§l >> §c" + msg);
+    }
+
+    public static void sendError(CommandSender _sender, String _msg)
+    {
+        if (_sender instanceof Player p)
+        {
+            sendPlayerError(p, _msg);
+        }
+        else
+        {
+            _sender.sendMessage(Ansi.ansi().fg(Ansi.Color.RED).toString() + "[Fireland] " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + _msg);
+        }
+    }
+
+    public static void sendInformation(CommandSender _sender, String _msg)
+    {
+        if (_sender instanceof Player p)
+        {
+            sendPlayerInformation(p, _msg);
+        }
+        else
+        {
+            _sender.sendMessage(Ansi.ansi().fg(Ansi.Color.YELLOW).toString() + "[Fireland] " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + _msg);
+        }
+    }
+
+    public static void sendSucces(CommandSender _sender, String _msg)
+    {
+        if (_sender instanceof Player p)
+        {
+            sendPlayerSucces(p, _msg);
+        }
+        else
+        {
+            _sender.sendMessage(Ansi.ansi().fg(Ansi.Color.GREEN).toString() + "[Fireland] " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + _msg);
+        }
     }
 
     public static void debugp(Object txt)

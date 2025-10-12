@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static fr.byxis.fireland.utilities.InGameUtilities.sendEveryoneCustomText;
+import static fr.byxis.fireland.utilities.ListUtilities.filterSuggestions;
 import static fr.byxis.fireland.utilities.ListUtilities.tabList;
 
 public class RankCustomMessage implements Listener, CommandExecutor, TabCompleter {
@@ -203,18 +204,5 @@ public class RankCustomMessage implements Listener, CommandExecutor, TabComplete
         }
 
         return suggestions;
-    }
-
-    private List<String> filterSuggestions(String input, List<String> options) {
-        List<String> filtered = new ArrayList<>();
-        String lowerInput = input.toLowerCase();
-
-        for (String option : options) {
-            if (option.toLowerCase().startsWith(lowerInput)) {
-                filtered.add(option);
-            }
-        }
-
-        return filtered;
     }
 }

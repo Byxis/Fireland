@@ -1,4 +1,4 @@
-package fr.byxis.player.items.toxic;
+package fr.byxis.player.items.infection;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
@@ -23,13 +23,21 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.jetbrains.annotations.NotNull;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class InfectedPlayer implements Listener, CommandExecutor
 {
 
     private static Fireland main = null;
-
     private static FileConfiguration config = null;
+    private static HashMap<UUID, Instant> m_invincibility = new HashMap<>();
 
     public InfectedPlayer(Fireland _main)
     {
@@ -56,7 +64,7 @@ public class InfectedPlayer implements Listener, CommandExecutor
                 mob = MythicBukkit.inst().getMobManager().getMythicMob("Infecte").orElse(null);
 
             }
-            else if (level == 1)
+            else if (level >= 1)
             {
                 mob = MythicBukkit.inst().getMobManager().getMythicMob("Malabar").orElse(null);
             }
@@ -66,8 +74,7 @@ public class InfectedPlayer implements Listener, CommandExecutor
         }
         p.playSound(p.getLocation(), "minecraft:gun.hud.death", 10, 1);
     }
-    
-    @SuppressWarnings("deprecation")
+
     @EventHandler
     public void playerHit(EntityDamageByEntityEvent  e) {
         Entity damaged = e.getEntity();
@@ -95,7 +102,7 @@ public class InfectedPlayer implements Listener, CommandExecutor
 
     private void tryApplyInfection(Player p)
     {
-        if (!isInfected(p))
+        if (!isInfected(p) && !canBeInfected(p))
         {
             setInfection(p, true);
             p.sendMessage("§8Vous avez été infecté ! Trouvez vite une seringue avant l'infection ne vous tue");
@@ -103,7 +110,31 @@ public class InfectedPlayer implements Listener, CommandExecutor
             p.playSound(p.getLocation(), "minecraft:entity.infected.bite", 1, 1);
         }
     }
-    
+
+    private boolean canBeInfected(Player p) {
+        return !isInvincible(p);
+    }
+
+    private boolean isInvincible(Player p) {
+        Instant now = Instant.now();
+        Instant until = m_invincibility.get(p.getUniqueId());
+        if (until == null) return false;
+        if (until.isAfter(now)) return true;
+        m_invincibility.remove(p.getUniqueId(), until);
+        return false;
+    }
+
+    private boolean addInvincibility(Player p) {
+        Instant now = Instant.now();
+        Instant existing = m_invincibility.get(p.getUniqueId());
+        if (existing != null && existing.isAfter(now)) {
+            return false; // déjà invincible
+        }
+        Instant until = now.plus(Duration.ofMinutes(10));
+        m_invincibility.put(p.getUniqueId(), until);
+        return true;
+    }
+
     @SuppressWarnings("deprecation")
     @EventHandler
     public void playerSoin(PlayerInteractEvent e) {
@@ -112,12 +143,37 @@ public class InfectedPlayer implements Listener, CommandExecutor
             return;
         if (p.getItemInHand().getType() == Material.WHEAT_SEEDS && p.getItemInHand().getItemMeta().hasCustomModelData() && p.getItemInHand().getItemMeta().getCustomModelData() == 102) {
 
-            
+
             if (isInfected(p)) {
                 setInfection(p, false);
                 InGameUtilities.playWorldSound(p.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
-                
+
                 p.sendMessage("§8Vous avez soigné votre infection !");
+                if (!p.getGameMode().equals(GameMode.CREATIVE)) {
+                    p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+                }
+            }
+        }
+        if (p.getItemInHand().getType() == Material.WHEAT_SEEDS && p.getItemInHand().getItemMeta().hasCustomModelData() && p.getItemInHand().getItemMeta().getCustomModelData() == 114) {
+
+
+            if (!isInfected(p)) {
+                addInvincibility(p);
+                InGameUtilities.playWorldSound(p.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
+
+                InGameUtilities.sendPlayerSucces(p, "§8Vous êtes immunisé de l'infection pendant 10 minutes !");
+                if (!p.getGameMode().equals(GameMode.CREATIVE)) {
+                    p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+                }
+            }
+            else
+            {
+                InGameUtilities.playWorldSound(p.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
+                InGameUtilities.sendPlayerError(p, "§8Vous avez aggravé votre infection.");
+
+                setInfection(p, true, getLevelInfection(p) + 1);
+                setInfectionTime(p, 1);
+
                 if (!p.getGameMode().equals(GameMode.CREATIVE)) {
                     p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
                 }
@@ -176,6 +232,12 @@ public class InfectedPlayer implements Listener, CommandExecutor
         main.getCfgm().savePlayerDB();
     }
 
+    public static void setInfectionTime(Player _p, int _time)
+    {
+        config.set("infected." + _p.getUniqueId() + ".time", _time);
+        main.getCfgm().savePlayerDB();
+    }
+
     public static boolean isInfected(Player p)
     {
         return config.getBoolean("infected." + p.getUniqueId() + ".state");
@@ -193,9 +255,8 @@ public class InfectedPlayer implements Listener, CommandExecutor
         return 0;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, String @NotNull [] args) {
         if (sender instanceof Player) {
             if (cmd.getName().equalsIgnoreCase("infect")) {
                 Player p = (Player) sender;

@@ -1,4 +1,4 @@
-package fr.byxis.player.items.toxic;
+package fr.byxis.player.items.infection;
 
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.GameMode;

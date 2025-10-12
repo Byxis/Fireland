@@ -1,0 +1,29 @@
+# Container for MariaDB, which is the db used in Fireland
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: MariaDB
+    environment:
+      MARIADB_ROOT_PASSWORD: pass # To replace with desired password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: mon-phpmyadmin
+    links:
+      - mariadb:db
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+
+volumes:
+  mariadb_data:

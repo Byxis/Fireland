@@ -96,7 +96,7 @@ public class ShopFunction {
         return null;
     }
 
-    public void setItemsOnShopInv(Inventory _inv, ArrayList<ShopItemClass> _items, int _currentPage, int _pageMax, Player p, boolean isSkinShop, String _shop)
+    public void setItemsOnShopInv(Inventory _inv, ArrayList<ShopItemClass> _items, int _currentPage, int _pageMax, Player p, String _shop)
     {
         for (int i = 0; i < 9; i++)
         {
@@ -133,7 +133,7 @@ public class ShopFunction {
         l.add("§8Pour acheter un item, faites un");
         l.add("§6clic gauche§8 dessus, pour le");
         l.add("§8vendre, faites un §6clic droit§8.");
-        if (isSkinShop)
+        if (_shop.contains("skin") || _shop.contains("Pets"))
         {
             l.add("§c§lPlus d'infos sur discord §6(/discord)");
         }
@@ -147,12 +147,7 @@ public class ShopFunction {
             }
             ShopItemClass item = _items.get(i);
             List<String> lore = new ArrayList<>();
-            if (!isSkinShop)
-            {
-                lore.add("§8Achat: §6" + getPriceText(item, p, false, _shop));
-                lore.add("§8Vente: §6" + getSellText(item, p, false));
-            }
-            else
+            if (_shop.contains("skin"))
             {
                 if (PermissionUtilities.hasPermission(p, item.getCommand()))
                 {
@@ -162,6 +157,30 @@ public class ShopFunction {
                 {
                     lore.add("§8Achat: §6" + getPriceText(item, p, true, _shop));
                 }
+            }
+            else if (_shop.contains("Pets"))
+            {
+                if (PermissionUtilities.hasPermission(p, item.getCommand()))
+                {
+                    lore.add("§aPossédé");
+                }
+                else
+                {
+                    if (item.getCommand().contains("Chien Tactique") || item.getCommand().contains("Drone")
+                            || (item.getCommand().contains("Dog") && item.getCommand().contains("bot")))
+                    {
+                        lore.add("§8Achat: §6" + getPriceText(item, p, false, _shop));
+                    }
+                    else
+                    {
+                        lore.add("§8Achat: §6" + item.getPrice() + "$");
+                    }
+                }
+            }
+            else
+            {
+                lore.add("§8Achat: §6" + getPriceText(item, p, false, _shop));
+                lore.add("§8Vente: §6" + getSellText(item, p, false));
             }
             _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(
                     InventoryUtilities.setItemMetaLore(item.getMat(), "§r§7" + item.getItemName(),
@@ -173,7 +192,7 @@ public class ShopFunction {
     {
         if (isSkinShop)
         {
-            return "§b " + item.getPrice() + " ?";
+            return "§b" + item.getPrice() + "⛁";
         }
         else
         {
@@ -181,12 +200,12 @@ public class ShopFunction {
             if (pl.getReduction() > 0 && pl.hasAccessToReductions(_shop))
             {
                 double price = priceReduction(p.getUniqueId(), item.getPrice(), _shop);
-                return "§6§m " + item.getPrice() + "$§r §d" + price + "$ §8(-" + Math.round(pl.getReduction() * 100) + "%)";
+                return "§6§m" + item.getPrice() + "$§r §d" + price + "$ §8(-" + Math.round(pl.getReduction() * 100) + "%)";
             }
             else if (pl.getReduction() > 0 && pl.hasAccessToAugmentation(_shop))
             {
                 double price = priceReduction(p.getUniqueId(), item.getPrice(), _shop);
-                return "§6§m " + item.getPrice() + "$§r §c" + price + "$ §8(+" + Math.round(pl.getReduction() * 100) + "%)";
+                return "§6§m" + item.getPrice() + "$§r §c" + price + "$ §8(+" + Math.round(pl.getReduction() * 100) + "%)";
             }
             return item.getPrice() + "$";
         }
@@ -290,31 +309,68 @@ public class ShopFunction {
             nbrItems -= 14;
             maxPage++;
         }
-        boolean isASkinShop = _shop.equalsIgnoreCase("skin");
         Inventory craftMenu = Bukkit.createInventory(null, 54, "Marchand de " + _shop.replaceAll("_", " ") + " (" + page + "/" + maxPage + ")");
-        setItemsOnShopInv(craftMenu, items, page, maxPage, _p, isASkinShop, _shop);
+        setItemsOnShopInv(craftMenu, items, page, maxPage, _p, _shop);
         _p.openInventory(craftMenu);
     }
 
-    public void buyItem(ItemStack _itemClicked, Player _p, String _shop, boolean isSkinShop)
+    public void buyItem(ItemStack _itemClicked, Player _p, String _shop, String _title)
     {
         String name = _itemClicked.getItemMeta().getDisplayName();
         //name = name.replaceAll("[§.{1}]", "");
         name = name.replaceAll("§7", "");
         ShopItemClass item = getAnItemOnShop(_shop.replaceAll(" ", "_"), name);
+
+        boolean isSkinShop = _title.contains("skins");
+        boolean isPetShop = _title.contains("Pets");
+
         if (item != null)
         {
             if (isSkinShop)
             {
-                if (_p.hasPermission(item.getCommand()))
+                if (PermissionUtilities.hasPermission(_p, item.getCommand()))
                 {
                     InGameUtilities.sendPlayerError(_p, "Vous avez déjà ce skin !");
                 }
                 else if (JetonManager.payJetons(_p, item.getPrice(),
                         "Achat du skin " + item.getItemName(), false, true))
                 {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + _p.getName() + " permission set " + item.getCommand() + " true");
-                    InGameUtilities.sendPlayerInformation(_p, "Vous avez acheté le skin " + item.getItemName() + " ! Merci pour votre achat !");
+                    PermissionUtilities.addPermission(_p, item.getCommand());
+                    InGameUtilities.sendPlayerInformation(_p, "Vous avez acheté le skin " + item.getItemName()
+                            + " pour " + item.getPrice() + "§f⛁ ! Merci pour votre achat !");
+                    InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
+                }
+            }
+            if (isPetShop)
+            {
+                if (PermissionUtilities.hasPermission(_p, item.getCommand()))
+                {
+                    InGameUtilities.sendPlayerError(_p, "Vous avez déjà ce skin !");
+                }
+                else if (item.getCommand().contains("Chien Tactique") || item.getCommand().contains("Drone")
+                        || (item.getCommand().contains("Dog") && item.getCommand().contains("bot")))
+                {
+                    PermissionUtilities.addPermission(_p, item.getCommand());
+                    double balance = getEco().getBalance(_p);
+                    if (item.getPrice() <= balance)
+                    {
+                        getEco().withdrawPlayer(_p, item.getPrice());
+                        _p.sendMessage("§aVous avez acheté le familier " + item.getItemName() + "§r§a pour §c" +
+                                item.getPrice() + "$ §a!");
+                    }
+                    else
+                    {
+                        InGameUtilities.sendPlayerError(_p, "Vous n'avez pas assez d'argent.");
+                        PermissionUtilities.removePermission(_p, item.getCommand());
+                        return;
+                    }
+                }
+                else if (JetonManager.payJetons(_p, item.getPrice(),
+                        "Achat du skin " + item.getItemName(), false, true))
+                {
+                    PermissionUtilities.addPermission(_p, item.getCommand());
+                    InGameUtilities.sendPlayerInformation(_p, "Vous avez acheté le familier " + item.getItemName()
+                            + " pour " + item.getPrice() + "§f⛁ ! Merci pour votre achat !");
                     InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                 }
             }

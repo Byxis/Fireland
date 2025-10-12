@@ -1,9 +1,10 @@
 package fr.byxis.faction.faction.events;
 
 import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 
-public class FactionBuyPerkEvent  extends Event {
+public class FactionBuyPerkEvent extends Event {
 
     private final String faction;
     private final String perk;
@@ -15,6 +16,7 @@ public class FactionBuyPerkEvent  extends Event {
         faction = _faction;
         perk = _perk;
     }
+
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;

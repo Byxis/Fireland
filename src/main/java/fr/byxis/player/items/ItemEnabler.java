@@ -7,9 +7,9 @@ import fr.byxis.player.items.lamp.Lamp;
 import fr.byxis.player.items.notes.OpenNotes;
 import fr.byxis.player.items.parachute.Parachute;
 import fr.byxis.player.items.serum.Serum;
-import fr.byxis.player.items.toxic.InfectedPlayer;
-import fr.byxis.player.items.toxic.Mask;
-import fr.byxis.player.items.toxic.SporeDamage;
+import fr.byxis.player.items.infection.InfectedPlayer;
+import fr.byxis.player.items.infection.Mask;
+import fr.byxis.player.items.infection.SporeDamage;
 import fr.byxis.player.items.water.BottleFilled;
 import fr.byxis.player.items.water.Thirst;
 

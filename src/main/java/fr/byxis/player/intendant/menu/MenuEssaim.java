@@ -1,9 +1,13 @@
 package fr.byxis.player.intendant.menu;
 
-import fr.byxis.faction.essaim.EssaimFunctions;
 import fr.byxis.faction.essaim.EssaimManager;
+import fr.byxis.faction.essaim.enums.CooldownType;
 import fr.byxis.faction.essaim.essaimClass.EssaimClass;
+import fr.byxis.faction.essaim.repository.EssaimRepository;
+import fr.byxis.faction.essaim.services.EssaimConfigService;
+import fr.byxis.faction.essaim.services.EssaimCooldownService;
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import org.bukkit.Bukkit;
@@ -12,6 +16,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MenuEssaim {
@@ -81,31 +86,131 @@ public class MenuEssaim {
 
     private static void setEssaimItem(Fireland main, Inventory inv, Player p, String essaimName, Material material, String displayName, int slot, int difficulty, String schedule) {
         ArrayList<String> lore = new ArrayList<>();
-        boolean isActive = main.getEssaimManager().isEssaimActive(essaimName);
+        EssaimManager essaimManager = main.getEssaimManager();
+        boolean isActive = essaimManager.isEssaimActive(essaimName);
 
+        // Statut de disponibilité (code existant)
         if (isActive) {
-            EssaimClass essaimClass = EssaimManager.getActiveEssaims().get(essaimName);
-            boolean isEventBased = essaimClass.isEvenBased();
-            if (isEventBased) {
-                if (EssaimFunctions.hasFinishedEvent(p, essaimClass))
-                {
-                    lore.add("§8Disponibilité : §aÉvènement déjà réalisé");
-                }
-                else
-                {
-                    lore.add("§8Disponibilité : §aOuvert §d(Événementiel)");
+            EssaimClass essaimClass = essaimManager.getEssaimService().getActiveEssaim(essaimName);
+
+            if (essaimClass != null) {
+                boolean isEventBased = essaimClass.isEventBased();
+
+                if (isEventBased) {
+                    if (hasPlayerFinishedEvent(p, essaimClass, essaimManager)) {
+                        lore.add("§8Disponibilité : §aÉvènement déjà réalisé");
+                    } else {
+                        lore.add("§8Disponibilité : §aOuvert §d(Événementiel)");
+                    }
+                } else {
+                    lore.add("§8Disponibilité : §aOuvert");
                 }
             } else {
-                lore.add("§8Disponibilité : §aOuvert");
+                lore.add("§8Disponibilité : §7Erreur de chargement");
             }
         } else {
             lore.add("§8Disponibilité : §7" + schedule);
         }
 
         lore.add("§8Difficulté : " + getDifficulty(difficulty));
+
+        // Ajout des informations de récompenses
+        if (!essaimName.equals("none")) {
+            addRewardInformation(main, lore, p, essaimName);
+        }
+
         inv.setItem(slot, InventoryUtilities.setItemMetaLore(material, displayName, (short) 1, lore));
     }
 
+    private static void addRewardInformation(Fireland main, ArrayList<String> lore, Player p, String essaimName) {
+        EssaimConfigService configService = new EssaimConfigService(main);
+
+        // Récupérer les informations de récompenses depuis EssaimConfigService
+        EssaimConfigService.EssaimInfo essaimInfo = configService.getEssaimInfo(essaimName);
+        if (essaimInfo == null || essaimInfo.rewards() == null) return;
+
+        EssaimConfigService.RewardConfiguration rewards = essaimInfo.rewards();
+
+        lore.add(""); // Ligne vide
+
+        // Afficher les jetons
+        if (rewards.hasJetons()) {
+            String jetonsStatus = getRewardStatus(main, p, essaimName, "jetons", "default", rewards.getJetonsCooldown());
+            String jetonsLabel = getRewardLabel(rewards.getJetonsCooldown());
+            lore.add("§8" + jetonsLabel + " (" + rewards.getJetonsAmount() + " jetons) : " + jetonsStatus);
+        }
+
+        // Afficher les commandes
+        for (int i = 0; i < rewards.getCommandRewards().size(); i++) {
+            EssaimConfigService.CommandReward commandReward = rewards.getCommandRewards().get(i);
+            String commandStatus = getRewardStatus(main, p, essaimName, "command", "command_" + i, commandReward.getCooldown());
+            String commandLabel = getRewardLabel(commandReward.getCooldown());
+            lore.add("§8" + commandLabel + " : " + commandStatus);
+        }
+    }
+
+    private static String getRewardLabel(String cooldownValue) {
+        return switch (cooldownValue.toLowerCase()) {
+            case "first_time" -> "Première récompense";
+            case "1d", "24h", "dynamic_day" -> "Récompenses journalières";
+            case "1w", "7d", "dynamic_week" -> "Récompenses hebdomadaires";
+            case "1m", "30d", "dynamic_month" -> "Récompenses mensuelles";
+            case "none" -> "Récompenses permanentes";
+            default -> {
+                if (cooldownValue.contains("d")) {
+                    yield "Récompenses (" + cooldownValue + ")";
+                } else if (cooldownValue.contains("h")) {
+                    yield "Récompenses (" + cooldownValue + ")";
+                }
+                yield "Récompenses spéciales";
+            }
+        };
+    }
+
+    private static String getRewardStatus(Fireland main, Player p, String essaimName, String rewardType, String rewardId, String cooldownValue) {
+        EssaimManager essaimManager = main.getEssaimManager();
+        EssaimCooldownService cooldownService = essaimManager.getEssaimService().getCooldownService();
+        EssaimRepository repository = essaimManager.getEssaimService().getRepository();
+
+        if (cooldownService.canReceiveReward(p.getUniqueId(), essaimName, rewardType, rewardId, cooldownValue)) {
+            return "§adisponible";
+        }
+
+        CooldownType cooldownType = CooldownType.fromString(cooldownValue);
+
+        switch (cooldownType) {
+            case FIRST_TIME:
+                return "§cobtenue";
+
+            case NONE:
+                return "§atoujours disponible";
+
+            default:
+                // Calculer le temps restant pour tous les autres types
+                LocalDateTime lastReward = repository.getLastRewardDate(p.getUniqueId(), essaimName, rewardType, rewardId);
+                if (lastReward != null) {
+                    try {
+                        var duration = CooldownType.getDuration(cooldownValue);
+                        var nextAvailable = lastReward.plus(duration);
+                        var now = LocalDateTime.now();
+
+                        if (now.isBefore(nextAvailable)) {
+                            long secondsRemaining = java.time.Duration.between(now, nextAvailable).getSeconds();
+                            String timeString = BasicUtilities.getStringTime(secondsRemaining);
+                            return "§cdans " + timeString;
+                        }
+                    } catch (Exception e) {
+                        return "§7erreur cooldown";
+                    }
+                }
+                return "§adisponible";
+        }
+    }
+
+    private static boolean hasPlayerFinishedEvent(Player player, EssaimClass essaimClass, EssaimManager essaimManager) {
+        return essaimManager.getConfigService().getRawConfig()
+                .getBoolean("player_completion." + player.getUniqueId() + "." + essaimClass.getName(), false);
+    }
 
     private static String getDifficulty(int i)
     {
@@ -126,5 +231,4 @@ public class MenuEssaim {
             default -> "";
         };
     }
-
 }

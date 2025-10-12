@@ -9,9 +9,9 @@ import fr.byxis.command.*;
 import fr.byxis.db.DatabaseManager;
 import fr.byxis.event.*;
 import fr.byxis.faction.bunker.BunkerManager;
-import fr.byxis.faction.essaim.EssaimCommandCompleter;
-import fr.byxis.faction.essaim.EssaimCommandManager;
 import fr.byxis.faction.essaim.EssaimManager;
+import fr.byxis.faction.essaim.commands.EssaimCommandCompleter;
+import fr.byxis.faction.essaim.commands.EssaimCommandManager;
 import fr.byxis.faction.faction.FactionEvent;
 import fr.byxis.faction.faction.FactionManager;
 import fr.byxis.faction.faction.FactionManagerTabCompleter;
@@ -37,7 +37,7 @@ import fr.byxis.player.intendant.IntendantCommand;
 import fr.byxis.player.intendant.Manager;
 import fr.byxis.player.items.CustomStackSizeManager;
 import fr.byxis.player.items.morphine.FallDamage;
-import fr.byxis.player.items.toxic.Mask;
+import fr.byxis.player.items.infection.Mask;
 import fr.byxis.player.items.water.Thirst;
 import fr.byxis.player.packet.PacketPlayer;
 import fr.byxis.player.shop.ShopCommandManager;
@@ -58,13 +58,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.fusesource.jansi.Ansi;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Date;
 
 import static fr.byxis.fireland.Save.saveAll;
 import static fr.byxis.player.items.morphine.FallDamage.hasLegsBroken;
-import static fr.byxis.player.items.toxic.InfectedPlayer.*;
+import static fr.byxis.player.items.infection.InfectedPlayer.*;
 import static fr.byxis.player.packet.PacketFunctions.sendWorldBorderWarningDistancePacket;
 
 
@@ -119,7 +117,8 @@ public class Fireland extends JavaPlugin {
         getCommand("playpacket").setExecutor(new PacketPlayer(this));
         getCommand("booster").setExecutor(new BoosterManager(this));
         getCommand("booster").setTabCompleter(new BoosterCommandCompleter(this));
-        getCommand("essaim").setExecutor(new EssaimCommandManager(this));
+
+        getCommand("essaim").setExecutor(new EssaimCommandManager(this, this.essaimManager));
         getCommand("essaim").setTabCompleter(new EssaimCommandCompleter(this));
     }
 
@@ -180,7 +179,7 @@ public class Fireland extends JavaPlugin {
 
         new JetonManager(this);
         zoneManager = new ZoneManager(this);
-        essaimManager = new EssaimManager(this);
+        this.essaimManager = new EssaimManager(this);
         bunkerManager = new BunkerManager(this);
         permissionUtilities = new PermissionUtilities(this);
         playerAddonsEnabler = new PlayerAddonsEnabler(this);
@@ -401,8 +400,12 @@ public class Fireland extends JavaPlugin {
                                     p.damage(2);
                                 }
                             }
-                            else if (level == 1)
+                            else if (level >= 1)
                             {
+                                if (timer % 10 == 0 && timer <= 30)
+                                {
+                                    p.sendMessage("§8Votre infection vous fait de plus en plus souffrir !");
+                                }
                                 if (timer >= 30)
                                 {
                                     p.sendMessage("§8Votre infection a causé votre perte....");

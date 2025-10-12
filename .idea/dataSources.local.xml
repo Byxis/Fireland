@@ -2,13 +2,13 @@
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="IU-251.25410.129">
     <data-source name="Minestrator" uuid="78a596c5-5cd1-4fb5-9fbc-92db5a115216">
-      <database-info product="MySQL" version="12.0.2-MariaDB-ubu2404" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-j-8.2.0 (Revision: 06a1f724497fd81c6a659131fda822c9e5085b6c)" dbms="MARIADB" exact-version="12.0.2" exact-driver-version="8.2">
+      <database-info product="MariaDB" version="10.11.6-MariaDB-0+deb12u1" jdbc-version="4.2" driver-name="MariaDB Connector/J" driver-version="3.3.3" dbms="MARIADB" exact-version="10.11.6" exact-driver-version="3.3">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
-      <user-name>root</user-name>
+      <user-name>minesr_Ogs0Xj7r</user-name>
       <schema-mapping>
         <introspection-scope>
           <node kind="schema" qname="@" />

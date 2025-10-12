@@ -12,9 +12,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import static fr.byxis.player.level.LevelStorage.getPlayerLevelSavings;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevelSavings;
 import static fr.byxis.player.scoreboard.ScoreboardPlayer.getTimeString;
 
 public class MenuLevel {
@@ -166,59 +169,128 @@ public class MenuLevel {
         }
     }
 
-    private static void getLore(PlayerLevel pl, ArrayList<String> lore, int pos, String color, Fireland main) {
-        lore.clear();
-        if (color.equals("§a"))
+    /**
+     * Generates the lore for a level item in the menu.
+     *
+     * @param _playerLevel The player's level data
+     * @param _lore The list to populate with lore lines
+     * @param _level The level number
+     * @param _color The color code to use for the text
+     * @param _main The main plugin instance
+     */
+    private static void getLore(PlayerLevel _playerLevel, ArrayList<String> _lore, int _level, String _color, Fireland _main)
+    {
+        _lore.clear();
+
+        addClaimStatusLore(_playerLevel, _lore, _level, _color, _main);
+        addRewardsLore(_playerLevel, _lore, _level, _color);
+        addPassAccessLore(_lore, _level);
+    }
+
+    /**
+     * Adds the claim status message to the lore.
+     *
+     * @param _playerLevel The player's level data
+     * @param _lore The list to populate with lore lines
+     * @param _level The level number
+     * @param _color The color code to use for the text
+     * @param _main The main plugin instance
+     */
+    private static void addClaimStatusLore(PlayerLevel _playerLevel, ArrayList<String> _lore, int _level, String _color, Fireland _main)
+    {
+        if (_color.equals("§a"))
         {
-            if (pl.hasClaimedReward(main, pos))
+            if (_playerLevel.hasClaimedReward(_main, _level))
             {
-                lore.add("§9Vous avez déjà récupéré cette récompense");
+                _lore.add("§9Vous avez déjà récupéré cette récompense");
             }
             else
             {
-                lore.add("§a§lCliquez pour récupérer votre récompense !");
+                _lore.add("§a§lCliquez pour récupérer votre récompense !");
             }
         }
-        if (pl.getRewardsJetons(pos) > 0)
+    }
+
+    /**
+     * Adds the rewards information to the lore.
+     *
+     * @param _playerLevel The player's level data
+     * @param _lore The list to populate with lore lines
+     * @param _level The level number
+     * @param _color The color code to use for the text
+     */
+    private static void addRewardsLore(PlayerLevel _playerLevel, ArrayList<String> _lore, int _level, String _color)
+    {
+        int jetons = _playerLevel.getRewardsJetons(_level);
+        int money = _playerLevel.getRewardsMoney(_level);
+        boolean hasItems = !_playerLevel.getRewardsItems(_level).isEmpty();
+        String hasPet = _playerLevel.getRewardsPetsFormatted(_level);
+
+        List<String> rewardParts = new ArrayList<>();
+
+        if (jetons > 0)
         {
-            if (!pl.getRewardsItems(pos).isEmpty())
-            {
-                lore.add(color + "Récompense : §b" + pl.getRewardsJetons(pos) + "§f⛁ " + color + ", §7un item " + color + " et §7" + pl.getRewardsMoney(pos) + "§f$");
-            }
-            else
-            {
-                lore.add(color + "Récompense : §b" + pl.getRewardsJetons(pos) + "§f⛁ " + color + " et §7" + pl.getRewardsMoney(pos) + "§f$");
-            }
-        }
-        else
-        {
-            if (!pl.getRewardsItems(pos).isEmpty())
-            {
-                lore.add(color + "Récompense : §7Un item " + color + " et §7" + pl.getRewardsMoney(pos) + "§f$");
-            }
-            else
-            {
-                lore.add(color + "Récompense : §7" + pl.getRewardsMoney(pos) + "§f$");
-            }
-        }
-        switch (pos)
-        {
-            case 0:
-                lore.add("§aAccès au pass vert");
-                break;
-            case 25:
-                lore.add("§9Accès au pass bleu");
-                break;
-            case 50:
-                lore.add("§eAccès au pass jaune");
-                break;
-            case 75:
-                lore.add("§4Accès au pass rouge");
-                break;
-            default:
-                break;
+            rewardParts.add("§b" + jetons + "§f⛁");
         }
 
+        if (hasItems)
+        {
+            rewardParts.add("§7un item");
+        }
+
+        if (money > 0)
+        {
+            rewardParts.add("§7" + money + "§f$");
+        }
+
+        if (!hasPet.isEmpty())
+        {
+            rewardParts.add(hasPet);
+        }
+
+        if (!rewardParts.isEmpty())
+        {
+            StringBuilder rewards = new StringBuilder();
+            for (int i = 0; i < rewardParts.size(); i++)
+            {
+                if (i > 0)
+                {
+                    if (i == rewardParts.size() - 1)
+                    {
+                        rewards.append(_color).append(" et ");
+                    }
+                    else
+                    {
+                        rewards.append(_color).append(", ");
+                    }
+                }
+                rewards.append(rewardParts.get(i));
+            }
+            _lore.add(_color + "Récompense : " + rewards);
+        }
+    }
+
+    /**
+     * Adds the pass access information to the lore for milestone levels.
+     *
+     * @param _lore The list to populate with lore lines
+     * @param _level The level number
+     */
+    private static void addPassAccessLore(ArrayList<String> _lore, int _level)
+    {
+        String passAccess = switch (_level)
+        {
+            case 0 -> "§aAccès au pass vert";
+            case 25 -> "§9Accès au pass bleu";
+            case 50 -> "§eAccès au pass jaune";
+            case 75 -> "§4Accès au pass rouge";
+            default -> null;
+        };
+
+        if (passAccess != null)
+        {
+            _lore.add(passAccess);
+        }
     }
 
 }

@@ -1,8 +1,16 @@
 bunker-de-latus:
   region: essaim-bunker-latus
-  day: 5
-  hour: 23
-  jetons: 10
+  day: 6
+  hour: 10
+  rewards:
+    jetons:
+      amount: 12
+      # cooldown: week (default)
+    commands:
+      - command: "wm give Player secretiontoxique"
+        cooldown: none
+      - command: "luckperms user Player permission set fireland.pet.aberration true"
+        cooldown: first-time
   hub:
     position:
       world: essaim
@@ -12,710 +20,393 @@ bunker-de-latus:
   start:
     position:
       world: essaim
-      x: -59.0
-      y: 3.0
-      z: -167.0
+      x: -61
+      y: 11
+      z: -177
   reset:
     position:
       world: essaim
-      x: -59.0
-      y: 13.0
-      z: -198.0
-  spawners:
-    spawner1: # salle
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 0.5
-      type: Infecte
-      amount: 15
-      command: essaim setblock -65 19 -246 redstone_block
-      position:
-        x: -92
-        y: -6
-        z: -199
-    spawner1-1:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 0.5
-      type: Exploseur
-      amount: 4
-      command: essaim setblock -66 19 -246 redstone_block
-      position:
-        x: -92
-        y: -6
-        z: -199
-    spawner1-2:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 0.7
-      type: Infecte
-      amount: 20
-      command: essaim setblock -67 19 -246 redstone_block
-      position:
-        x: -76
-        y: -6
-        z: -237
-    spawner1-3:
-      type: Exploseur
-      amount: 10
-      command: essaim setblock -68 19 -246 redstone_block
-      activation-delay: 0
-      spawn-delay: 3
-      position:
-        x: -55
-        y: -6
-        z: -187
-      affected-by-difficulty: true
-    spawner2:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 0.5
-      type: Infecte
-      amount: 20
-      command: essaim setblock -58 19 -246 redstone_block
-      position:
-        x: -92
-        y: -6
-        z: -204
-    spawner2-1:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 0.5
-      type: Blinde
-      amount: 4
-      command: essaim setblock -59 19 -246 redstone_block
-      position:
-        x: -92
-        y: -6
-        z: -204
-    spawner2-2:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 0.7
-      type: Infecte
-      amount: 30
-      command: essaim setblock -60 19 -246 redstone_block
-      position:
-        x: -76
-        y: -6
-        z: -237
-    spawner2-3:
-      type: Vautour
-      amount: 5
-      command: essaim setblock -61 19 -246 redstone_block
-      activation-delay: 0
-      spawn-delay: 3
-      position:
-        x: -55
-        y: -6
-        z: -187
-      affected-by-difficulty: true
-    spawner2-4:
-      type: Infecte
-      amount: 5
-      command: essaim setblock -57 19 -246 redstone_block
-      activation-delay: 1
-      spawn-delay: 2
-      position:
-        x: -63
-        y: 3
-        z: -241
-      affected-by-difficulty: false
-    spawner3:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 0.5
-      type: Infecte
-      amount: 25
-      command: essaim setblock -50 19 -246 redstone_block
-      position:
-        x: -91
-        y: -6
-        z: -211
-    spawner3-1:
-      affected-by-difficulty: true
-      activation-delay: 2
-      spawn-delay: 8
-      type: Chevreau
-      amount: 5
-      command: essaim setblock -51 19 -246 redstone_block
-      position:
-        x: -91
-        y: -6
-        z: -211
-    spawner3-2:
-      affected-by-difficulty: true
-      activation-delay: 3
-      spawn-delay: 3
-      type: Blinde
-      amount: 10
-      command: essaim setblock -52 19 -246 redstone_block
-      position:
-        x: -76
-        y: -6
-        z: -237
-    spawner3-3:
-      type: Blinde
-      amount: 10
-      command: essaim setblock -53 19 -246 redstone_block
-      activation-delay: 0
-      spawn-delay: 3
-      position:
-        x: -55
-        y: -6
-        z: -187
-      affected-by-difficulty: true
-    spawner3-4:
-      type: Infecte
-      amount: 10
-      command: essaim setblock -54 19 -246 redstone_block
-      activation-delay: 1
-      spawn-delay: 2
-      position:
-        x: -63
-        y: 3
-        z: -241
-      affected-by-difficulty: false
-    spawner4:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 1
-      type: Infecte
-      amount: 10
-      command: essaim setblock -48 19 -246 redstone_block
-      position:
-        x: -91
-        y: -6
-        z: -216
-    spawner4-1:
-      affected-by-difficulty: true
-      activation-delay: 5
-      spawn-delay: 15
-      type: Vautour
-      amount: 5
-      command: essaim setblock -47 19 -246 redstone_block
-      position:
-        x: -91
-        y: -6
-        z: -216
-    spawner4-2:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 1
-      type: Infecte
-      amount: 30
-      command: essaim setblock -46 19 -246 redstone_block
-      position:
-        x: -76
-        y: -6
-        z: -237
-    spawner4-3:
-      type: Infecte
-      amount: 30
-      command: essaim setblock -45 19 -246 redstone_block
-      activation-delay: 10
-      spawn-delay: 1
-      position:
-        x: -55
-        y: -6
-        z: -187
-      affected-by-difficulty: true
-    spawner5:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 4
-      type: Blinde
-      amount: 4
-      command: essaim setblock -44 19 -246 redstone_block
-      position:
-        x: -92
-        y: -6
-        z: -222
-    spawner5-1:
-      affected-by-difficulty: true
-      activation-delay: 8
-      spawn-delay: 10
-      type: Chevreau
-      amount: 3
-      command: essaim setblock -43 19 -246 redstone_block
-      position:
-        x: -92
-        y: -6
-        z: -222
-    spawner5-2:
-      type: Infecte
-      amount: 15
-      command: essaim setblock -42 19 -246 redstone_block
-      activation-delay: 1
-      spawn-delay: 2
-      position:
-        x: -63
-        y: 3
-        z: -241
-      affected-by-difficulty: false
-    spawner6: # salle2
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 2
-      type: Vautour
-      amount: 10
-      command: essaim setblock -33 10 -323 redstone_block
-      position:
-        x: -35
-        y: -6
-        z: -285
-    spawner6-1:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 4
-      type: Exploseur
-      amount: 3
-      command: essaim setblock -33 10 -322 redstone_block
-      position:
-        x: -35
-        y: -6
-        z: -285
-    spawner6-2:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 1
-      type: Infecte
-      amount: 30
-      command: essaim setblock -33 10 -321 redstone_block
-      position:
-        x: -35
-        y: -6
-        z: -285
-    spawner6-3:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 1
-      type: Infecte
-      amount: 30
-      command: essaim setblock -33 10 -320 redstone_block
-      position:
-        x: -66
-        y: 3
-        z: -327
-    spawner7:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 4
-      type: Blinde
-      amount: 10
-      command: essaim setblock -33 10 -317 redstone_block
-      position:
-        x: -35
-        y: -6
-        z: -285
-    spawner7-1:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 0.5
-      type: Infecte
-      amount: 30
-      command: essaim setblock -33 10 -316 redstone_block
-      position:
-        x: -35
-        y: -6
-        z: -285
-    spawner7-2:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 3
-      type: Exploseur
-      amount: 5
-      command: essaim setblock -33 10 -315 redstone_block
-      position:
-        x: -35
-        y: -6
-        z: -285
-    spawner7-3:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 3
-      type: Blinde
-      amount: 10
-      command: essaim setblock -33 10 -314 redstone_block
-      position:
-        x: -66
-        y: 3
-        z: -327
-    spawner8:
-      affected-by-difficulty: false
-      activation-delay: 0
-      spawn-delay: 0.5
-      type: Sujet-Omega
-      amount: 1
-      command: essaim setblock -65 17 -307 redstone_block
-      position:
-        x: -56
-        y: -6
-        z: -320
-    spawner8-1:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 6
-      type: Blinde
-      amount: 12
-      command: ''
-      position:
-        x: -56
-        y: -6
-        z: -320
-    spawner8-2:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 5
-      type: Infecte
-      amount: 20
-      command: ''
-      position:
-        x: -56
-        y: -6
-        z: -320
-    spawner8-3:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 5
-      type: Chevreau
-      amount: 5
-      command: ''
-      position:
-        x: -56
-        y: -6
-        z: -320
-    spawner9: # salle annexe
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 1
-      type: Infecte
-      amount: 20
-      command: essaim setblock -14 7 -201 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner9-1:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 4
-      type: Blinde
-      amount: 6
-      command: essaim setblock -14 7 -202 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner9-2:
-      affected-by-difficulty: true
-      activation-delay: 0
-      spawn-delay: 5
-      type: Exploseur
-      amount: 5
-      command: essaim setblock -14 7 -203 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner9-3:
-      affected-by-difficulty: true
-      type: Infecte
-      amount: 20
-      command: essaim setblock -14 7 -198 redstone_block
-      activation-delay: 0
-      spawn-delay: 1
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner9-4:
-      affected-by-difficulty: true
-      type: Blinde
-      amount: 6
-      command: essaim setblock -14 7 -199 redstone_block
-      activation-delay: 0
-      spawn-delay: 5
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner9-5:
-      affected-by-difficulty: false
-      type: Chevreau
-      amount: 1
-      command: essaim setblock -14 7 -200 redstone_block
-      activation-delay: 0
-      spawn-delay: 5
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner10:
-      affected-by-difficulty: true
-      activation-delay: 10
-      spawn-delay: 1
-      type: Infecte
-      amount: 30
-      command: essaim setblock -14 7 -206 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner10-1:
-      affected-by-difficulty: true
-      activation-delay: 10
-      spawn-delay: 5
-      type: Vautour
-      amount: 5
-      command: essaim setblock -14 7 -207 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner10-2:
-      affected-by-difficulty: false
-      activation-delay: 10
-      spawn-delay: 4
-      type: Chevreau
-      amount: 1
-      command: essaim setblock -14 7 -208 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner10-3:
-      affected-by-difficulty: true
-      type: Infecte
-      amount: 30
-      command: essaim setblock -14 7 -205 redstone_block
-      activation-delay: 10
-      spawn-delay: 0.5
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner10-4:
-      affected-by-difficulty: true
-      type: Vautour
-      amount: 7
-      command: essaim setblock -14 7 -209 redstone_block
-      activation-delay: 10
-      spawn-delay: 5
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner11:
-      affected-by-difficulty: true
-      activation-delay: 10
-      spawn-delay: 1
-      type: Infecte
-      amount: 40
-      command: essaim setblock -14 7 -211 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner11-1:
-      affected-by-difficulty: true
-      activation-delay: 10
-      spawn-delay: 4
-      type: Blinde
-      amount: 5
-      command: essaim setblock -14 7 -212 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner11-2:
-      affected-by-difficulty: true
-      activation-delay: 10
-      spawn-delay: 5
-      type: Exploseur
-      amount: 10
-      command: essaim setblock -14 7 -213 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner11-3:
-      affected-by-difficulty: true
-      type: Infecte
-      amount: 40
-      command: essaim setblock -14 7 -214 redstone_block
-      activation-delay: 10
-      spawn-delay: 0.5
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner11-4:
-      affected-by-difficulty: true
-      type: Blinde
-      amount: 7
-      command: essaim setblock -14 7 -215 redstone_block
-      activation-delay: 10
-      spawn-delay: 4
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner11-5:
-      affected-by-difficulty: true
-      type: Exploseur
-      amount: 10
-      command: essaim setblock -14 7 -216 redstone_block
-      activation-delay: 10
-      spawn-delay: 4
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner13:
-      affected-by-difficulty: true
-      activation-delay: 10
-      spawn-delay: 1
-      type: Infecte
-      amount: 40
-      command: essaim setblock -13 11 -209 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner13-1:
-      affected-by-difficulty: true
-      activation-delay: 10
-      spawn-delay: 4
-      type: Blinde
-      amount: 5
-      command: essaim setblock -13 11 -208 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner13-2:
-      affected-by-difficulty: true
-      activation-delay: 10
-      spawn-delay: 5
-      type: Exploseur
-      amount: 10
-      command: essaim setblock -13 11 -207 redstone_block
-      position:
-        x: -4
-        y: -6
-        z: -239
-    spawner13-3:
-      affected-by-difficulty: true
-      type: Infecte
-      amount: 40
-      command: essaim setblock -13 11 -206 redstone_block
-      activation-delay: 10
-      spawn-delay: 0.5
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner13-4:
-      affected-by-difficulty: true
-      type: Blinde
-      amount: 7
-      command: essaim setblock -13 11 -205 redstone_block
-      activation-delay: 10
-      spawn-delay: 4
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner13-5:
-      affected-by-difficulty: true
-      type: Exploseur
-      amount: 10
-      command: essaim setblock -13 11 -204 redstone_block
-      activation-delay: 10
-      spawn-delay: 4
-      position:
-        x: -4
-        y: -6
-        z: -182
-    spawner12: # couloirs
-      affected-by-difficulty: true
-      type: Vautour
-      amount: 2
-      command: ''
-      activation-delay: 10
-      spawn-delay: 2
-      position:
-        x: -63
-        y: 3
-        z: -264
-    spawner12-1:
-      affected-by-difficulty: true
-      type: Blinde
-      amount: 2
-      command: ''
-      activation-delay: 0
-      spawn-delay: 2
-      position:
-        x: -49
-        y: 3
-        z: -252
-    spawner12-2:
-      affected-by-difficulty: true
-      type: Blinde
-      amount: 5
-      command: ''
-      activation-delay: 0
-      spawn-delay: 5
-      position:
-        x: -55
-        y: -6
-        z: -254
-    spawner12-3:
-      type: Infecte
-      amount: 20
-      command: ''
-      activation-delay: 0
-      spawn-delay: 1
-      position:
-        x: -56
-        y: -6
-        z: -186
-      affected-by-difficulty: true
-    spawner12-4:
-      type: Blinde
-      amount: 3
-      command: ''
-      activation-delay: 0
-      spawn-delay: 3
-      position:
-        x: -56
-        y: -6
-        z: -186
-      affected-by-difficulty: true
-  entry:
-    position:
-      x: 33.0
-      y: 57.0
-      z: 570.0
-      world: world
-  key:
-    position:
-      x: -42.0
-      y: -6.0
-      z: -260.0
-      world: essaim
+      x: -64
+      y: 11
+      z: -177
   solo:
     position:
-      x: -56
-      y: 13.0
-      z: -198
       world: essaim
+      x: -58
+      y: 11
+      z: -177
+  entry:
+    position:
+      world: world
+      x: 32
+      y: 58
+      z: 574
+  key:
+    position:
+      world: essaim
+      x: -35
+      y: -6
+      z: -291
+  spawners:
+    bunker1:
+      type: Infecte
+      amount: 10
+      command: essaim setblock -55 11 -183 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -56
+        y: -6
+        z: -188
+      affected-by-difficulty: true
+    bunker1-1:
+      type: Blinde
+      amount: 5
+      command: essaim setblock -54 11 -183 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -57
+        y: -6
+        z: -186
+      affected-by-difficulty: true
+    bunker1-2:
+      type: Blinde
+      amount: 5
+      command: essaim setblock -54 13 -199 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -32
+        y: -6
+        z: -225
+      affected-by-difficulty: true
+    bunker1-3:
+      type: Exploseur
+      amount: 5
+      command: essaim setblock -55 13 -199 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -27
+        y: -6
+        z: -198
+      affected-by-difficulty: true
+    bunker1-4:
+      type: Blinde
+      amount: 5
+      command: essaim setblock -57 13 -199 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -77
+        y: -6
+        z: -228
+      affected-by-difficulty: true
+    bunker1-5:
+      type: Infecte
+      amount: 10
+      command: essaim setblock -58 13 -199 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -81
+        y: -6
+        z: -198
+      affected-by-difficulty: true
+    bunker1-6:
+      type: Malabar
+      amount: 2
+      command: essaim setblock -59 13 -199 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -90
+        y: -6
+        z: -216
+      affected-by-difficulty: true
+    bunker2-1:
+      type: Blinde
+      amount: 5
+      command: essaim setblock -91 4 -173 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -90
+        y: 5
+        z: -184
+      affected-by-difficulty: true
+    bunker2-2:
+      type: Vautour
+      amount: 4
+      command: essaim setblock -106 15 -229 redstone_block
+      activation-delay: 3
+      spawn-delay: 2
+      position:
+        x: -105
+        y: 5
+        z: -255
+      affected-by-difficulty: true
+    bunker2-3:
+      type: Vautour
+      amount: 4
+      command: essaim setblock -107 15 -229 redstone_block
+      activation-delay: 3
+      spawn-delay: 2
+      position:
+        x: -92
+        y: 5
+        z: -256
+      affected-by-difficulty: true
+    bunker2-4:
+      type: Blinde
+      amount: 5
+      command: essaim setblock -105 15 -239 redstone_block
+      activation-delay: 3
+      spawn-delay: 2
+      position:
+        x: -106
+        y: 5
+        z: -246
+      affected-by-difficulty: true
+    bunker2-5:
+      type: Blinde
+      amount: 5
+      command: essaim setblock -106 15 -239 redstone_block
+      activation-delay: 3
+      spawn-delay: 2
+      position:
+        x: -90
+        y: 5
+        z: -229
+      affected-by-difficulty: true
+    bunker2-6:
+      type: Infecte
+      amount: 7
+      command: essaim setblock -107 15 -239 redstone_block
+      activation-delay: 3
+      spawn-delay: 2
+      position:
+        x: -89
+        y: 5
+        z: -255
+      affected-by-difficulty: true
+    bunker2-7:
+      type: Putrifieur
+      amount: 12
+      command: essaim setblock -84 16 -262 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -79
+        y: 1
+        z: -272
+      affected-by-difficulty: true
+    bunker2-8:
+      type: Vautour
+      amount: 4
+      command: essaim setblock -85 16 -262 redstone_block
+      activation-delay: 5
+      spawn-delay: 0
+      position:
+        x: -66
+        y: 1
+        z: -265
+      affected-by-difficulty: true
+    bunker3:
+      type: Blinde
+      amount: 3
+      command: essaim setblock -17 6 -222 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: -8
+        y: -6
+        z: -240
+      affected-by-difficulty: true
+    bunker3-1:
+      type: Blinde
+      amount: 3
+      command: essaim setblock -17 6 -221 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: -9
+        y: -6
+        z: -215
+      affected-by-difficulty: true
+    bunker3-2:
+      type: Blinde
+      amount: 3
+      command: essaim setblock -17 6 -220 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: -21
+        y: -6
+        z: -228
+      affected-by-difficulty: true
+    bunker3-3:
+      type: Malabar
+      amount: 1
+      command: essaim setblock -17 6 -208 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -15
+        y: -6
+        z: -196
+      affected-by-difficulty: true
+    bunker3-4:
+      type: Exploseur
+      amount: 2
+      command: essaim setblock -17 6 -207 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 2
+        y: -6
+        z: -192
+      affected-by-difficulty: true
+    bunker3-5:
+      type: Infecte
+      amount: 7
+      command: essaim setblock -17 6 -206 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 1
+        y: -6
+        z: -196
+      affected-by-difficulty: true
+    bunker4:
+      type: Exploseur
+      amount: 5
+      command: ''
+      activation-delay: 5
+      spawn-delay: 12
+      position:
+        x: -24
+        y: -6
+        z: -198
+      affected-by-difficulty: true
+    bunker4-1:
+      type: Blinde
+      amount: 7
+      command: ''
+      activation-delay: 5
+      spawn-delay: 8
+      position:
+        x: -87
+        y: -6
+        z: -198
+      affected-by-difficulty: true
+    bunker4-2:
+      type: Putrifieur
+      amount: 7
+      command: ''
+      activation-delay: 5
+      spawn-delay: 8
+      position:
+        x: -55
+        y: -6
+        z: -240
+      affected-by-difficulty: true
+    bunker5:
+      type: Blinde
+      amount: 10
+      command: essaim setblock -30 7 -269 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: -43
+        y: -6
+        z: -279
+      affected-by-difficulty: true
+    bunker5-1:
+      type: Blinde
+      amount: 10
+      command: essaim setblock -31 7 -269 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: -16
+        y: -6
+        z: -263
+      affected-by-difficulty: true
+    bunker5-2:
+      type: Infecte
+      amount: 10
+      command: essaim setblock -32 7 -269 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: -32
+        y: -6
+        z: -249
+      affected-by-difficulty: true
+    bunker5-3:
+      type: Chimere
+      amount: 1
+      command: essaim setblock -17 -49 -284 redstone_block
+      activation-delay: 2
+      spawn-delay: 10
+      position:
+        x: -46
+        y: -58
+        z: -244
+      affected-by-difficulty: true
+    bunker5-4:
+      type: Chimere
+      amount: 2
+      command: essaim setblock -17 -49 -283 redstone_block
+      activation-delay: 2
+      spawn-delay: 10
+      position:
+        x: -42
+        y: -58
+        z: -283
+      affected-by-difficulty: true
+    bunker5-5:
+      type: Mycoris
+      amount: 6
+      command: ''
+      activation-delay: 10
+      spawn-delay: 6
+      position:
+        x: -14
+        y: -58
+        z: -243
+      affected-by-difficulty: true
+  closed: false
+  difficulty:
+    '1':
+      position:
+        x: -46
+        y: 14
+        z: -217.0
+        world: essaim
+    '2':
+      position:
+        x: -44
+        y: 14
+        z: -217.0
+        world: essaim
+    '3':
+      position:
+        x: -42
+        y: 14
+        z: -217.0
+        world: essaim
 station-de-traitement-des-eaux:
   region: essaim-station-traitement
-  day: 5
+  day: 3
   hour: 18
-  jetons: 8
+  rewards:
+    jetons: 8
+    commands:
+      - wm give Player boutlangue
+      - luckperms user Player permission set fireland.pet.putrifieuralpha true
   hub:
     position:
       x: -43.5
@@ -841,6 +532,28 @@ station-de-traitement-des-eaux:
         y: -11
         z: 64
       affected-by-difficulty: true
+    station1-9:
+      type: Putrifieur
+      amount: 5
+      command: ''
+      activation-delay: 10
+      spawn-delay: 3
+      position:
+        x: 29
+        y: -5
+        z: 64
+      affected-by-difficulty: true
+    station1-10:
+      type: Putrifieur
+      amount: 5
+      command: ''
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -1
+        y: -10
+        z: 94
+      affected-by-difficulty: true
     station2:
       type: Blinde
       amount: 4
@@ -854,7 +567,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station2-1:
       type: Putrifieur
-      amount: 30
+      amount: 7
       command: essaim setblock 37 7 84 redstone_block
       activation-delay: 3
       spawn-delay: 1
@@ -865,7 +578,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station2-2:
       type: Exploseur
-      amount: 4
+      amount: 2
       command: essaim setblock 37 7 83 redstone_block
       activation-delay: 3
       spawn-delay: 4
@@ -875,8 +588,8 @@ station-de-traitement-des-eaux:
         z: 102
       affected-by-difficulty: true
     station3:
-      type: Chlorophylle
-      amount: 1
+      type: Vautour
+      amount: 2
       command: essaim setblock 81 -29 105 redstone_block
       activation-delay: 0
       spawn-delay: 0
@@ -887,7 +600,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: false
     station4:
       type: Putrifieur
-      amount: 20
+      amount: 6
       command: essaim setblock 69 -19 115 redstone_block
       activation-delay: 10
       spawn-delay: 1
@@ -898,7 +611,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station4-1:
       type: Exploseur
-      amount: 10
+      amount: 2
       command: essaim setblock 70 -19 115 redstone_block
       activation-delay: 12
       spawn-delay: 4
@@ -909,7 +622,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station4-2:
       type: Blinde
-      amount: 10
+      amount: 4
       command: essaim setblock 71 -19 115 redstone_block
       activation-delay: 15
       spawn-delay: 5
@@ -920,10 +633,10 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station5:
       type: Putrifieur
-      amount: 20
+      amount: 5
       command: essaim setblock 75 -19 115 redstone_block
-      activation-delay: 20
-      spawn-delay: 1
+      activation-delay: 5
+      spawn-delay: 3
       position:
         x: 93
         y: -26
@@ -931,9 +644,9 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station5-1:
       type: Exploseur
-      amount: 10
+      amount: 2
       command: essaim setblock 76 -19 115 redstone_block
-      activation-delay: 22
+      activation-delay: 7
       spawn-delay: 4
       position:
         x: 93
@@ -942,9 +655,9 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station5-2:
       type: Blinde
-      amount: 10
+      amount: 4
       command: essaim setblock 77 -19 115 redstone_block
-      activation-delay: 25
+      activation-delay: 7
       spawn-delay: 5
       position:
         x: 85
@@ -952,19 +665,19 @@ station-de-traitement-des-eaux:
         z: 123
     station5-3:
       type: Infecte
-      amount: 10
+      amount: 4
       command: essaim setblock 78 -19 115 redstone_block
-      activation-delay: 20
-      spawn-delay: 1
+      activation-delay: 5
+      spawn-delay: 3
       position:
         x: 93
         y: -26
         z: 89
     station6:
       type: Putrifieur
-      amount: 20
+      amount: 5
       command: essaim setblock 81 -19 115 redstone_block
-      activation-delay: 20
+      activation-delay: 5
       spawn-delay: 1
       position:
         x: 85
@@ -973,9 +686,9 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station6-1:
       type: Vautour
-      amount: 10
+      amount: 3
       command: essaim setblock 82 -19 115 redstone_block
-      activation-delay: 22
+      activation-delay: 7
       spawn-delay: 4
       position:
         x: 93
@@ -984,9 +697,9 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station6-2:
       type: Blinde
-      amount: 10
+      amount: 4
       command: essaim setblock 83 -19 115 redstone_block
-      activation-delay: 25
+      activation-delay: 7
       spawn-delay: 5
       position:
         x: 85
@@ -994,9 +707,9 @@ station-de-traitement-des-eaux:
         z: 123
     station6-3:
       type: Infecte
-      amount: 10
+      amount: 4
       command: essaim setblock 84 -19 115 redstone_block
-      activation-delay: 20
+      activation-delay: 5
       spawn-delay: 1
       position:
         x: 85
@@ -1004,9 +717,9 @@ station-de-traitement-des-eaux:
         z: 123
     station7:
       type: Putrifieur
-      amount: 30
+      amount: 7
       command: essaim setblock 87 -19 115 redstone_block
-      activation-delay: 20
+      activation-delay: 5
       spawn-delay: 1
       position:
         x: 93
@@ -1015,9 +728,9 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station7-1:
       type: Vautour
-      amount: 11
+      amount: 3
       command: essaim setblock 88 -19 115 redstone_block
-      activation-delay: 30
+      activation-delay: 7
       spawn-delay: 6
       position:
         x: 85
@@ -1026,9 +739,9 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station7-2:
       type: Infecte
-      amount: 30
+      amount: 7
       command: essaim setblock 89 -19 115 redstone_block
-      activation-delay: 20
+      activation-delay: 5
       spawn-delay: 1
       position:
         x: 85
@@ -1051,7 +764,7 @@ station-de-traitement-des-eaux:
       amount: 30
       command: ''
       activation-delay: 12
-      spawn-delay: 3
+      spawn-delay: 4
       position:
         x: 134
         y: -39
@@ -1059,7 +772,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station8-2:
       type: Vautour
-      amount: 15
+      amount: 4
       command: ''
       activation-delay: 0
       spawn-delay: 5
@@ -1070,7 +783,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station9:
       type: Putrifieur
-      amount: 20
+      amount: 7
       command: essaim setblock 64 -20 140 redstone_block
       activation-delay: 10
       spawn-delay: 1
@@ -1081,7 +794,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station9-1:
       type: Putrifieur
-      amount: 20
+      amount: 7
       command: essaim setblock 65 -20 140 redstone_block
       activation-delay: 10
       spawn-delay: 1
@@ -1092,7 +805,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station9-2:
       type: Putrifieur
-      amount: 20
+      amount: 7
       command: essaim setblock 66 -20 140 redstone_block
       activation-delay: 10
       spawn-delay: 1
@@ -1103,7 +816,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station10:
       type: Putrifieur
-      amount: 20
+      amount: 7
       command: essaim setblock 72 -20 140 redstone_block
       activation-delay: 10
       spawn-delay: 1
@@ -1114,7 +827,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station10-1:
       type: Blinde
-      amount: 18
+      amount: 5
       command: essaim setblock 73 -20 140 redstone_block
       activation-delay: 13
       spawn-delay: 2
@@ -1125,7 +838,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station10-2:
       type: Vautour
-      amount: 15
+      amount: 5
       command: essaim setblock 74 -20 140 redstone_block
       activation-delay: 15
       spawn-delay: 4
@@ -1136,7 +849,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station11:
       type: Putrifieur
-      amount: 30
+      amount: 5
       command: essaim setblock 80 -20 140 redstone_block
       activation-delay: 10
       spawn-delay: 1
@@ -1147,7 +860,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station11-1:
       type: Exploseur
-      amount: 10
+      amount: 5
       command: essaim setblock 81 -20 140 redstone_block
       activation-delay: 13
       spawn-delay: 4
@@ -1158,7 +871,7 @@ station-de-traitement-des-eaux:
       affected-by-difficulty: true
     station11-2:
       type: Chevreau
-      amount: 10
+      amount: 5
       command: essaim setblock 82 -20 140 redstone_block
       activation-delay: 15
       spawn-delay: 5
@@ -1167,11 +880,35 @@ station-de-traitement-des-eaux:
         y: -32
         z: 153
       affected-by-difficulty: true
+  closed: false
+  difficulty:
+    '1':
+      position:
+        x: -13
+        y: -5.0
+        z: 119.0
+        world: essaim
+    '2':
+      position:
+        x: -13
+        y: -5.0
+        z: 117.0
+        world: essaim
+    '3':
+      position:
+        x: -13
+        y: -5.0
+        z: 115.0
+        world: essaim
 usine-portuaire:
   region: essaim-usine-portuaire
   day: 3
-  hour: 18
-  jetons: 5
+  hour: 16
+  rewards:
+    jetons: 5
+    commands:
+      - wm give Player morceaukeratine
+      - luckperms user Player permission set fireland.pet.sujetdelta true
   hub:
     position:
       x: -190
@@ -1211,40 +948,51 @@ usine-portuaire:
   spawners:
     usine1:
       type: Infecte
-      amount: 20
+      amount: 7
+      command: essaim setblock -215 -10 -7 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: -209
+        y: -59
+        z: 9
+      affected-by-difficulty: true
+    usine1-1:
+      type: Infecte
+      amount: 7
+      command: essaim setblock -215 -10 -8 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: -206
+        y: -28
+        z: -12
+      affected-by-difficulty: true
+    usine1-2:
+      type: Blinde
+      amount: 5
       command: essaim setblock -215 -10 -9 redstone_block
       activation-delay: 3
       spawn-delay: 1
       position:
-        x: -207
+        x: -229
         y: -28
         z: -13
       affected-by-difficulty: true
-    usine1-1:
-      type: Blinde
-      amount: 5
-      command: essaim setblock -215 -10 -8 redstone_block
-      activation-delay: 3
-      spawn-delay: 1
-      position:
-        x: -232
-        y: -28
-        z: -13
-      affected-by-difficulty: true
-    usine1-2:
+    usine1-3:
       type: Infecte
-      amount: 10
+      amount: 7
       command: essaim setblock -215 -10 -7 redstone_block
-      activation-delay: 3
+      activation-delay: 2
       spawn-delay: 1
       position:
-        x: -216
+        x: -218
         y: -28
         z: 26
       affected-by-difficulty: true
     usine2:
       type: Infecte
-      amount: 25
+      amount: 13
       command: essaim setblock -215 -10 -2 redstone_block
       activation-delay: 3
       spawn-delay: 1
@@ -1255,7 +1003,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine2-1:
       type: Blinde
-      amount: 7
+      amount: 4
       command: essaim setblock -215 -10 -1 redstone_block
       activation-delay: 3
       spawn-delay: 1
@@ -1266,7 +1014,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine2-2:
       type: Exploseur
-      amount: 10
+      amount: 5
       command: essaim setblock -215 -10 -0 redstone_block
       activation-delay: 3
       spawn-delay: 1
@@ -1277,7 +1025,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine3:
       type: Infecte
-      amount: 30
+      amount: 15
       command: essaim setblock -215 -10 5 redstone_block
       activation-delay: 3
       spawn-delay: 1
@@ -1288,7 +1036,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine3-1:
       type: Blinde
-      amount: 10
+      amount: 5
       command: essaim setblock -215 -10 6 redstone_block
       activation-delay: 3
       spawn-delay: 1
@@ -1299,7 +1047,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine3-2:
       type: Blinde
-      amount: 10
+      amount: 5
       command: essaim setblock -215 -10 7 redstone_block
       activation-delay: 3
       spawn-delay: 1
@@ -1310,7 +1058,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine4:
       type: Infecte
-      amount: 5
+      amount: 3
       command: essaim setblock -264 -16 -9 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1321,7 +1069,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine4-1:
       type: Infecte
-      amount: 5
+      amount: 3
       command: essaim setblock -264 -16 -8 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1332,7 +1080,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine4-2:
       type: Infecte
-      amount: 5
+      amount: 3
       command: essaim setblock -264 -16 -7 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1343,7 +1091,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine4-3:
       type: Blinde
-      amount: 5
+      amount: 3
       command: essaim setblock -264 -16 -6 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1354,7 +1102,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine4-4:
       type: Infecte
-      amount: 5
+      amount: 3
       command: essaim setblock -264 -16 -5 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1365,7 +1113,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine4-5:
       type: Infecte
-      amount: 5
+      amount: 3
       command: essaim setblock -264 -16 -4 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1376,7 +1124,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine5:
       type: Infecte
-      amount: 7
+      amount: 4
       command: essaim setblock -264 -16 -2 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1387,7 +1135,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine5-1:
       type: Infecte
-      amount: 7
+      amount: 4
       command: essaim setblock -264 -16 -1 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1398,7 +1146,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine5-2:
       type: Infecte
-      amount: 7
+      amount: 4
       command: essaim setblock -264 -16 0 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1409,7 +1157,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine5-3:
       type: Blinde
-      amount: 7
+      amount: 4
       command: essaim setblock -264 -16 1 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1420,7 +1168,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine5-4:
       type: Infecte
-      amount: 7
+      amount: 4
       command: essaim setblock -264 -16 2 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1431,7 +1179,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine5-5:
       type: Infecte
-      amount: 7
+      amount: 4
       command: essaim setblock -264 -16 3 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1442,7 +1190,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine6:
       type: Vautour
-      amount: 5
+      amount: 3
       command: essaim setblock -264 -16 7 redstone_block
       activation-delay: 5
       spawn-delay: 4
@@ -1453,7 +1201,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine6-1:
       type: Infecte
-      amount: 15
+      amount: 8
       command: essaim setblock -264 -16 8 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1464,7 +1212,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine6-2:
       type: Blinde
-      amount: 7
+      amount: 4
       command: essaim setblock -264 -16 9 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1475,7 +1223,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine7:
       type: Blinde
-      amount: 8
+      amount: 3
       command: essaim setblock -329 -14 -7 redstone_block
       activation-delay: 4
       spawn-delay: 5
@@ -1486,7 +1234,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine7-1:
       type: Exploseur
-      amount: 5
+      amount: 1
       command: essaim setblock -328 -14 -7 redstone_block
       activation-delay: 4
       spawn-delay: 5
@@ -1497,7 +1245,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine7-2:
       type: Infecte
-      amount: 13
+      amount: 7
       command: essaim setblock -327 -14 -7 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1508,7 +1256,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine8:
       type: Blinde
-      amount: 10
+      amount: 3
       command: essaim setblock -322 -14 -7 redstone_block
       activation-delay: 4
       spawn-delay: 5
@@ -1519,7 +1267,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine8-1:
       type: Exploseur
-      amount: 10
+      amount: 1
       command: essaim setblock -321 -14 -7 redstone_block
       activation-delay: 4
       spawn-delay: 5
@@ -1530,7 +1278,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine8-2:
       type: Infecte
-      amount: 15
+      amount: 7
       command: essaim setblock -320 -14 -7 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1541,7 +1289,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine9:
       type: Blinde
-      amount: 10
+      amount: 3
       command: essaim setblock -316 -14 -7 redstone_block
       activation-delay: 4
       spawn-delay: 5
@@ -1552,7 +1300,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine9-1:
       type: Exploseur
-      amount: 10
+      amount: 1
       command: essaim setblock -315 -14 -7 redstone_block
       activation-delay: 4
       spawn-delay: 5
@@ -1563,7 +1311,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine9-2:
       type: Infecte
-      amount: 15
+      amount: 6
       command: essaim setblock -314 -14 -7 redstone_block
       activation-delay: 1
       spawn-delay: 1
@@ -1607,7 +1355,7 @@ usine-portuaire:
       affected-by-difficulty: false
     usine11:
       type: Putrifieur
-      amount: 20
+      amount: 8
       command: essaim setblock -272 -14 34 redstone_block
       activation-delay: 5
       spawn-delay: 1
@@ -1618,7 +1366,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine11-1:
       type: Infecte
-      amount: 20
+      amount: 8
       command: essaim setblock -271 -14 34 redstone_block
       activation-delay: 5
       spawn-delay: 1
@@ -1629,7 +1377,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine11-2:
       type: Exploseur
-      amount: 8
+      amount: 2
       command: essaim setblock -270 -14 34 redstone_block
       activation-delay: 5
       spawn-delay: 4
@@ -1640,7 +1388,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine12:
       type: Blinde
-      amount: 20
+      amount: 10
       command: essaim setblock -267 -14 34 redstone_block
       activation-delay: 5
       spawn-delay: 2
@@ -1651,7 +1399,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine12-1:
       type: Infecte
-      amount: 20
+      amount: 8
       command: essaim setblock -266 -14 34 redstone_block
       activation-delay: 5
       spawn-delay: 1
@@ -1662,7 +1410,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine12-2:
       type: Exploseur
-      amount: 8
+      amount: 2
       command: essaim setblock -265 -14 34 redstone_block
       activation-delay: 5
       spawn-delay: 4
@@ -1673,7 +1421,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine13:
       type: Blinde
-      amount: 15
+      amount: 4
       command: essaim setblock -262 -14 34 redstone_block
       activation-delay: 7
       spawn-delay: 2
@@ -1684,7 +1432,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine13-1:
       type: Vautour
-      amount: 10
+      amount: 3
       command: essaim setblock -261 -14 34 redstone_block
       activation-delay: 7
       spawn-delay: 4
@@ -1695,7 +1443,7 @@ usine-portuaire:
       affected-by-difficulty: true
     usine13-2:
       type: Putrifieur
-      amount: 20
+      amount: 8
       command: essaim setblock -260 -14 34 redstone_block
       activation-delay: 7
       spawn-delay: 1
@@ -1704,53 +1452,2607 @@ usine-portuaire:
         y: -28
         z: 33
       affected-by-difficulty: true
+  closed: true
+  difficulty:
+    '2':
+      position:
+        x: -200
+        y: -10.0
+        z: 9.0
+        world: essaim
+    '1':
+      position:
+        x: -200
+        y: -10.0
+        z: 12
+        world: essaim
+    '3':
+      position:
+        x: -200
+        y: -10.0
+        z: 15
+        world: essaim
 entrepot-militaire:
-  event:
-    delay: 30 #En jours
-    isevent: false # ou true
+  day: 3
+  hour: 15
+  rewards:
+    jetons: 8
+    commands:
+      - wm give Player excroissance
+      - luckperms user Player permission set fireland.pet.exploseuralpha true
+  entry:
+    position:
+      x: 758
+      y: 64
+      z: 171
+      world: world
+  key:
+    position:
+      x: 263
+      y: 1
+      z: -258
+      world: essaim
+  solo:
+    position:
+      x: 246
+      y: 17
+      z: -235
+      world: essaim
+  reset:
+    position:
+      x: 272
+      y: 13
+      z: -235
+      world: essaim
   hub:
     position:
       x: 231.0
       y: 1.0
-      z: -225.0
+      z: -213
       world: essaim
   start:
     position:
-      x: 255.0
+      x: 253.0
       y: 13.0
-      z: -234.0
+      z: -235.0
       world: essaim
   spawners:
     entrepot1:
-      type: Sujet-Beta
+      type: Vautour
+      amount: 5
+      command: ''
+      activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: 264
+        y: 1
+        z: -237
+      affected-by-difficulty: true
+    entrepot1-1:
+      type: Vautour
+      amount: 5
+      command: ''
+      activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: 264
+        y: 1
+        z: -251
+      affected-by-difficulty: true
+    entrepot1-2:
+      type: Blinde
+      amount: 6
+      command: ''
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 214
+        y: 1
+        z: -288
+      affected-by-difficulty: true
+    entrepot1-3:
+      type: Infecte
+      amount: 14
+      command: ''
+      activation-delay: 0
+      spawn-delay: 4
+      position:
+        x: 239
+        y: 1
+        z: -288
+      affected-by-difficulty: true
+    entrepot2:
+      type: Exploseur
+      amount: 14
+      command: ''
+      activation-delay: 0
+      spawn-delay: 10
+      position:
+        x: 232
+        y: 1
+        z: -235
+      affected-by-difficulty: true
+    entrepot2-1:
+      type: Exploseur
+      amount: 14
+      command: ''
+      activation-delay: 0
+      spawn-delay: 10
+      position:
+        x: 227
+        y: 1
+        z: -290
+      affected-by-difficulty: true
+    entrepot4:
+      type: Rejeton
+      amount: 6
+      command: essaim setblock 355 10 -277 redstone_block
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: 339
+        y: -7
+        z: -256
+      affected-by-difficulty: true
+    entrepot4-1:
+      type: Rejeton
+      amount: 6
+      command: essaim setblock 354 10 -277 redstone_block
+      activation-delay: 1
+      spawn-delay: 1
+      position:
+        x: 340
+        y: -7
+        z: -271
+      affected-by-difficulty: true
+    entrepot4-2:
+      type: Rejeton
+      amount: 6
+      command: essaim setblock 353 10 -277 redstone_block
+      activation-delay: 1
+      spawn-delay: 1
+      position:
+        x: 357
+        y: -7
+        z: -257
+      affected-by-difficulty: true
+    entrepot5:
+      type: Chimere
+      amount: 1
+      command: essaim setblock 350 10 -277 redstone_block
+      activation-delay: 2
+      spawn-delay: 0
+      position:
+        x: 321
+        y: -7
+        z: -262
+      affected-by-difficulty: false
+    entrepot5-1:
+      type: Mycoris
+      amount: 4
+      command: essaim setblock 349 10 -277 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 359
+        y: -7
+        z: -273
+      affected-by-difficulty: true
+    entrepot5-2:
+      type: Rejeton
+      amount: 4
+      command: essaim setblock 348 10 -277 redstone_block
+      activation-delay: 5
+      spawn-delay: 2
+      position:
+        x: 357
+        y: -7
+        z: -258
+      affected-by-difficulty: true
+  closed: false
+immeuble-infeste:
+  day: 5
+  hour: 18
+  rewards:
+    jetons: 4
+  entry:
+    position:
+      x: -544
+      y: 65
+      z: -314
+      world: world
+  key:
+    position:
+      x: 0
+      y: 1
+      z: 0
+      world: essaim
+  solo:
+    position:
+      x: 246
+      y: 17
+      z: -235
+      world: essaim
+  reset:
+    position:
+      x: -272
+      y: -39
+      z: -352
+      world: essaim
+  hub:
+    position:
+      x: -277
+      y: -19
+      z: -338
+      world: essaim
+  start:
+    position:
+      x: -272
+      y: -39
+      z: -343
+      world: essaim
+  spawners:
+    immeuble1:
+      type: Infecte
+      amount: 8
+      command: ''
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -295
+        y: -7
+        z: -337
+      affected-by-difficulty: true
+    immeuble1-1:
+      type: Exploseur
+      amount: 3
+      command: ''
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -290
+        y: -7
+        z: -332
+      affected-by-difficulty: true
+    immeuble1-2:
+      type: Infecte
+      amount: 4
+      command: ''
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -291
+        y: -7
+        z: -325
+      affected-by-difficulty: true
+    immeuble2:
+      type: Blinde
+      amount: 2
+      command: essaim setblock -286 -39 -333 REDSTONE_BLOCK
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -297
+        y: -2
+        z: -337
+      affected-by-difficulty: true
+    immeuble2-1:
+      type: Infecte
+      amount: 4
+      command: essaim setblock -286 -39 -334 REDSTONE_BLOCK
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -283
+        y: -2
+        z: -338
+      affected-by-difficulty: true
+    immeuble2-2:
+      type: Exploseur
+      amount: 3
+      command: essaim setblock -286 -39 -335 REDSTONE_BLOCK
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -279
+        y: -2
+        z: -322
+      affected-by-difficulty: true
+    immeuble3:
+      type: Exploseur
+      amount: 2
+      command: essaim setblock -286 -39 -330 REDSTONE_BLOCK
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -298
+        y: 3
+        z: -352
+      affected-by-difficulty: true
+    immeuble3-1:
+      type: Infecte
+      amount: 5
+      command: essaim setblock -286 -39 -329 REDSTONE_BLOCK
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -292
+        y: 3
+        z: -335
+      affected-by-difficulty: true
+    immeuble3-2:
+      type: Blinde
+      amount: 2
+      command: essaim setblock -286 -39 -328 REDSTONE_BLOCK
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -278
+        y: 3
+        z: -334
+      affected-by-difficulty: true
+    immeuble3-3:
+      type: Infecte
+      amount: 2
+      command: ''
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -312
+        y: 3
+        z: -327
+      affected-by-difficulty: true
+    immeuble3-4:
+      type: Infecte
+      amount: 2
+      command: ''
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -312
+        y: -17
+        z: -330
+      affected-by-difficulty: true
+    immeuble4-1:
+      type: Infecte
+      amount: 4
+      command: ''
+      activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: -278
+        y: -19
+        z: -353
+      affected-by-difficulty: true
+    immeuble4-2:
+      type: Blinde
+      amount: 1
+      command: ''
+      activation-delay: 1
+      spawn-delay: 5
+      position:
+        x: -305
+        y: -19
+        z: -321
+      affected-by-difficulty: true
+  closed: true
+  difficulty:
+    '3':
+      position:
+        x: -286
+        y: -39.0
+        z: -346
+        world: essaim
+    '1':
+      position:
+        x: -286
+        y: -39.0
+        z: -350
+        world: essaim
+    '2':
+      position:
+        x: -286
+        y: -39.0
+        z: -348
+        world: essaim
+crypte:
+  entry:
+    position:
+      x: 311
+      y: 65
+      z: -207
+      world: world
+  key:
+    position:
+      x: 152
+      y: 171
+      z: -228
+      world: essaim
+  solo:
+    position:
+      x: 67
+      y: 180
+      z: -413
+      world: essaim
+  reset:
+    position:
+      x: 62
+      y: 176
+      z: -419
+      world: essaim
+  hub:
+    position:
+      x: 64
+      y: 171
+      z: -433
+      world: essaim
+  start:
+    position:
+      x: 64
+      y: 180
+      z: -413
+      world: essaim
+  spawners:
+    crypte1:
+      type: Infecte
+      amount: 10
+      command: essaim setblock 24 179 -398 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 13
+        y: 171
+        z: -403
+      affected-by-difficulty: true
+    crypte1-1:
+      type: Infecte
+      amount: 10
+      command: essaim setblock 24 179 -399 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 34
+        y: 171
+        z: -398
+      affected-by-difficulty: true
+    crypte1-2:
+      type: Infecte
+      amount: 14
+      command: essaim setblock 80 179 -372 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 74
+        y: 171
+        z: -357
+      affected-by-difficulty: true
+    crypte1-3:
+      type: Exploseur
+      amount: 2
+      command: essaim setblock 81 179 -372 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 74
+        y: 171
+        z: -374
+      affected-by-difficulty: true
+    crypte1-4:
+      type: Putrifieur
+      amount: 10
+      command: essaim setblock 111 179 -390 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 114
+        y: 171
+        z: -383
+      affected-by-difficulty: true
+    crypte1-5:
+      type: Blinde
+      amount: 3
+      command: essaim setblock 110 179 -390 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 113
+        y: 171
+        z: -406
+      affected-by-difficulty: true
+    crypte1-6:
+      type: Putrifieur
+      amount: 10
+      command: essaim setblock 104 179 -326 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 114
+        y: 171
+        z: -326
+      affected-by-difficulty: true
+    crypte1-7:
+      type: Blinde
+      amount: 3
+      command: essaim setblock 105 179 -326 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 105
+        y: 171
+        z: -306
+      affected-by-difficulty: true
+    crypte1-8:
+      type: Infecte
+      amount: 14
+      command: essaim setblock 111  179 -326 redstone_block
+      activation-delay: 6
+      spawn-delay: 0.5
+      position:
+        x: 114
+        y: 171
+        z: -326
+      affected-by-difficulty: true
+    crypte1-9:
+      type: Exploseur
+      amount: 3
+      command: essaim setblock 112  179 -326 redstone_block
+      activation-delay: 6
+      spawn-delay: 0.5
+      position:
+        x: 105
+        y: 171
+        z: -306
+      affected-by-difficulty: true
+    crypte1-10:
+      type: Blinde
+      amount: 3
+      command: essaim setblock 71 179 -326 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 84
+        y: 171
+        z: -336
+      affected-by-difficulty: true
+    crypte1-11:
+      type: Blinde
+      amount: 3
+      command: essaim setblock 71 179 -325 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 84
+        y: 171
+        z: -315
+      affected-by-difficulty: true
+    crypte1-12:
+      type: Exploseur
+      amount: 3
+      command: essaim setblock 71 179 -321 redstone_block
+      activation-delay: 6
+      spawn-delay: 0.5
+      position:
+        x: 84
+        y: 171
+        z: -336
+      affected-by-difficulty: true
+    crypte1-13:
+      type: Blinde
+      amount: 3
+      command: essaim setblock 71 179 -320 redstone_block
+      activation-delay: 6
+      spawn-delay: 0.5
+      position:
+        x: 84
+        y: 171
+        z: -315
+      affected-by-difficulty: true
+    crypte1-14:
+      type: Blinde
+      amount: 3
+      command: essaim setblock 71 179 -317 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 84
+        y: 171
+        z: -315
+      affected-by-difficulty: true
+    crypte1-15:
+      type: Putrifieur
+      amount: 10
+      command: essaim setblock 71 179 -316 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 84
+        y: 171
+        z: -336
+      affected-by-difficulty: true
+    crypte1-16:
+      type: Putrifieur
+      amount: 5
+      command: essaim setblock 83 179 -307 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 85
+        y: 171
+        z: -295
+      affected-by-difficulty: true
+    crypte1-17:
+      type: Putrifieur
+      amount: 5
+      command: essaim setblock 82 179 -307 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 63
+        y: 171
+        z: -295
+      affected-by-difficulty: true
+    crypte1-18:
+      type: Putrifieur
+      amount: 5
+      command: essaim setblock 81 179 -307 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 85
+        y: 171
+        z: -307
+      affected-by-difficulty: true
+    crypte1-19:
+      type: Blinde
+      amount: 3
+      command: essaim setblock 86 179 -307 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 85
+        y: 171
+        z: -295
+      affected-by-difficulty: true
+    crypte1-20:
+      type: Blinde
+      amount: 3
+      command: essaim setblock 85 179 -307 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 63
+        y: 171
+        z: -295
+      affected-by-difficulty: true
+    crypte1-21:
+      type: Infecte
+      amount: 4
+      command: essaim setblock 87 179 -307 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: 85
+        y: 171
+        z: -307
+      affected-by-difficulty: true
+    crypte2:
+      type: Infecte
+      amount: 6
+      command: ''
+      activation-delay: 3
+      spawn-delay: 4
+      position:
+        x: 163
+        y: 171
+        z: -262
+      affected-by-difficulty: true
+    crypte2-1:
+      type: Infecte
+      amount: 6
+      command: ''
+      activation-delay: 3
+      spawn-delay: 4
+      position:
+        x: 164
+        y: 171
+        z: -237
+      affected-by-difficulty: true
+    crypte3:
+      type: Infecte
+      amount: 6
+      command: essaim setblock -7 176 -308 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: -17
+        y: 171
+        z: -310
+    crypte3-1:
+      type: Blinde
+      amount: 4
+      command: essaim setblock -7 176 -306 redstone_block
+      activation-delay: 3
+      spawn-delay: 2
+      position:
+        x: -24
+        y: 171
+        z: -302
+    crypte3-2:
+      type: Putrifieur
+      amount: 6
+      command: essaim setblock -7 176 -307 redstone_block
+      activation-delay: 3
+      spawn-delay: 0.5
+      position:
+        x: -17
+        y: 171
+        z: -294
+      affected-by-difficulty: true
+    crypte4:
+      type: Hurleur
+      amount: 6
+      command: essaim setblock -7 176 -303 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: -17
+        y: 171
+        z: -310
+    crypte4-1:
+      type: Putrifieur
+      amount: 6
+      command: essaim setblock -7 176 -302 redstone_block
+      activation-delay: 5
+      spawn-delay: 0.5
+      position:
+        x: -24
+        y: 171
+        z: -302
+    crypte4-2:
+      type: Blinde
+      amount: 4
+      command: essaim setblock -7 176 -301 redstone_block
+      activation-delay: 5
+      spawn-delay: 2
+      position:
+        x: -17
+        y: 171
+        z: -294
+    crypte5:
+      type: Infecte
+      amount: 6
+      command: essaim setblock -7 176 -298 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: -17
+        y: 171
+        z: -310
+    crypte5-1:
+      type: Vautour
+      amount: 3
+      command: essaim setblock -7 176 -297 redstone_block
+      activation-delay: 5
+      spawn-delay: 4
+      position:
+        x: -24
+        y: 171
+        z: -302
+    crypte5-2:
+      type: Blinde
+      amount: 4
+      command: essaim setblock -7 176 -296 redstone_block
+      activation-delay: 5
+      spawn-delay: 3
+      position:
+        x: -17
+        y: 171
+        z: -294
+      affected-by-difficulty: true
+  closed: true
+  day: 1
+  hour: 17
+  rewards:
+    jetons: 18
+    commands:
+      - luckperms user Player permission set fireland.pet.martyr true
+  difficulty:
+    '1':
+      position:
+        x: 63
+        y: 176.0
+        z: -387.0
+        world: essaim
+    '2':
+      position:
+        x: 65
+        y: 176.0
+        z: -387
+        world: essaim
+    '3':
+      position:
+        x: 67
+        y: 176.0
+        z: -387.0
+        world: essaim
+station-petroliere:
+  spawners:
+    stationpet1:
+      type: Mycoris
+      amount: 4
+      command: essaim setblock 431 212 -121 redstone_block
+      activation-delay: 2
+      spawn-delay: 3
+      position:
+        x: 435
+        y: 205
+        z: -122
+      affected-by-difficulty: true
+    stationpet1-2:
+      type: Rejeton
+      amount: 4
+      command: essaim setblock 431 212 -122 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: 435
+        y: 205
+        z: -125
+      affected-by-difficulty: true
+    stationpet2:
+      type: Blinde
+      amount: 3
+      command: ''
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: 402
+        y: 198
+        z: -161
+      affected-by-difficulty: true
+    stationpet2-1:
+      type: Infecte
+      amount: 6
+      command: essaim setblock 408 214 -205 redstone_block
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: 393
+        y: 200
+        z: -197
+      affected-by-difficulty: true
+    stationpet2-2:
+      type: Putrifieur
+      amount: 6
+      command: essaim setblock 407 214 -205 redstone_block
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: 393
+        y: 200
+        z: -207
+      affected-by-difficulty: true
+    stationpet2-3:
+      type: Mycoris
+      amount: 3
+      command: essaim setblock 406 214 -205 redstone_block
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: 407
+        y: 198
+        z: -204
+      affected-by-difficulty: true
+    stationpet2-4:
+      type: Rejeton
+      amount: 5
+      command: essaim setblock 410 214 -205 redstone_block
+      activation-delay: 4
+      spawn-delay: 1
+      position:
+        x: 405
+        y: 198
+        z: -194
+      affected-by-difficulty: true
+    stationpet2-5:
+      type: Rejeton
+      amount: 5
+      command: essaim setblock 411 214 -205 redstone_block
+      activation-delay: 4
+      spawn-delay: 1
+      position:
+        x: 404
+        y: 198
+        z: -206
+      affected-by-difficulty: true
+    stationpet2-6:
+      type: Exploseur
+      amount: 3
+      command: essaim setblock 412 214 -205 redstone_block
+      activation-delay: 4
+      spawn-delay: 2
+      position:
+        x: 393
+        y: 200
+        z: -199
+      affected-by-difficulty: true
+    stationpet2-7:
+      type: Chimere
+      amount: 1
+      command: ''
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: 389
+        y: 198
+        z: -144
+      affected-by-difficulty: true
+    stationpet3:
+      type: Mycoris
+      amount: 6
+      command: essaim setblock 397 215 -81 redstone_block
+      activation-delay: 0
+      spawn-delay: 4
+      position:
+        x: 405
+        y: 187
+        z: -72
+      affected-by-difficulty: true
+    stationpet3-1:
+      type: Mycoris
+      amount: 6
+      command: essaim setblock 397 215 -80 redstone_block
+      activation-delay: 0
+      spawn-delay: 4
+      position:
+        x: 393
+        y: 187
+        z: -75
+      affected-by-difficulty: true
+    stationpet3-2:
+      type: Blinde
+      amount: 4
+      command: essaim setblock 397 215 -77 redstone_block
+      activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: 412
+        y: 187
+        z: -67
+      affected-by-difficulty: true
+    stationpet3-3:
+      type: Blinde
+      amount: 4
+      command: essaim setblock 397 215 -76 redstone_block
+      activation-delay: 5
+      spawn-delay: 3
+      position:
+        x: 391
+        y: 187
+        z: -69
+      affected-by-difficulty: true
+    stationpet3-4:
+      type: Rejeton
+      amount: 5
+      command: essaim setblock 397 215 -75 redstone_block
+      activation-delay: 5
+      spawn-delay: 3
+      position:
+        x: 393
+        y: 187
+        z: -76
+      affected-by-difficulty: true
+    stationpet3-5:
+      type: Putrifieur
+      amount: 5
+      command: essaim setblock 397 215 -73 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: 412
+        y: 187
+        z: -67
+      affected-by-difficulty: true
+    stationpet3-6:
+      type: Exploseur
+      amount: 1
+      command: essaim setblock 397 215 -72 redstone_block
+      activation-delay: 5
+      spawn-delay: 3
+      position:
+        x: 391
+        y: 187
+        z: -69
+      affected-by-difficulty: true
+    stationpet3-7:
+      type: Mycoris
+      amount: 3
+      command: essaim setblock 397 215 -71 redstone_block
+      activation-delay: 5
+      spawn-delay: 3
+      position:
+        x: 394
+        y: 187
+        z: -76
+      affected-by-difficulty: true
+    stationpet4:
+      type: Mycoris
+      amount: 6
+      command: ''
+      activation-delay: 0
+      spawn-delay: 5
+      position:
+        x: 422
+        y: 174
+        z: -157
+      affected-by-difficulty: true
+    stationpet4-1:
+      type: Mycoris
+      amount: 6
+      command: ''
+      activation-delay: 0
+      spawn-delay: 5
+      position:
+        x: 423
+        y: 174
+        z: -115
+      affected-by-difficulty: true
+    stationpet5:
+      type: PondeuseBras
+      amount: 1
+      command: essaim setblock 438 223 -83 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 455
+        y: 213
+        z: -89
+      affected-by-difficulty: false
+    stationpet5-1:
+      type: PondeuseBras
+      amount: 1
+      command: essaim setblock 438 223 -90 redstone_block
+      activation-delay: 12
+      spawn-delay: 0
+      position:
+        x: 443
+        y: 213
+        z: -62
+      affected-by-difficulty: false
+    stationpet5-2:
+      type: PondeuseBras
+      amount: 1
+      command: essaim setblock 438 223 -91 redstone_block
+      activation-delay: 10
+      spawn-delay: 0
+      position:
+        x: 458
+        y: 213
+        z: -62
+      affected-by-difficulty: false
+    stationpet5-3:
+      type: PondeuseBras
+      amount: 1
+      command: essaim setblock 438 223 -92 redstone_block
+      activation-delay: 8
+      spawn-delay: 0
+      position:
+        x: 442
+        y: 213
+        z: -90
+      affected-by-difficulty: false
+    stationpet5-4:
+      type: Chimere
+      amount: 1
+      command: essaim setblock 438 223 -93 redstone_block
+      activation-delay: 5
+      spawn-delay: 0
+      position:
+        x: 451
+        y: 205
+        z: -71
+      affected-by-difficulty: false
+    stationpet5-5:
+      type: Mycoris
+      amount: 6
+      command: essaim setblock 438 223 -84 redstone_block
+      activation-delay: 0
+      spawn-delay: 4
+      position:
+        x: 459
+        y: 206
+        z: -85
+      affected-by-difficulty: true
+    stationpet5-6:
+      type: Putrifieur
+      amount: 10
+      command: essaim setblock 438 223 -85 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: 451
+        y: 205
+        z: -64
+      affected-by-difficulty: true
+    stationpet5-7:
+      type: Putrifieur
+      amount: 10
+      command: essaim setblock 438 223 -86 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: 450
+        y: 205
+        z: -88
+      affected-by-difficulty: true
+  closed: false
+  hub:
+    position:
+      x: 479
+      y: 205
+      z: -137
+      world: essaim
+  reset:
+    position:
+      x: 437
+      y: 213
+      z: -136
+      world: essaim
+  solo:
+    position:
+      x: 437 213 -139
+      y: 213
+      z: -139
+      world: essaim
+  start:
+    position:
+      x: 437
+      y: 213
+      z: -133
+      world: essaim
+  entry:
+    position:
+      x: -887
+      y: 77
+      z: 811
+      world: world
+  key:
+    position:
+      x: 413
+      y: 205
+      z: -76
+      world: essaim
+  day: 6
+  hour: 19
+  rewards:
+    jetons: 22
+    commands:
+      - luckperms user Player permission set fireland.pet.chimerealpha true
+  difficulty:
+    '1':
+      position:
+        x: 437
+        y: 213.0
+        z: -145
+        world: essaim
+    '2':
+      position:
+        x: 437
+        y: 213.0
+        z: -143
+        world: essaim
+    '3':
+      position:
+        x: 437
+        y: 213.0
+        z: -141
+        world: essaim
+laboratoire:
+  spawners:
+    labo1:
+      type: Infecte
+      amount: 10
+      command: essaim setblock 455 156 -412 redstone_block
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: 461
+        y: 140
+        z: -426
+      affected-by-difficulty: true
+    labo1-1:
+      type: Infecte
+      amount: 10
+      command: essaim setblock 455 156 -413 redstone_block
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: 441
+        y: 140
+        z: -418
+      affected-by-difficulty: true
+    labo1-2:
+      type: Blinde
+      amount: 4
+      command: essaim setblock 455 156 -414 redstone_block
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: 457
+        y: 144
+        z: -398
+      affected-by-difficulty: true
+    labo1-3:
+      type: Vautour
+      amount: 4
+      command: essaim setblock 455 156 -418 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: 461
+        y: 140
+        z: -426
+      affected-by-difficulty: true
+    labo1-4:
+      type: Blinde
+      amount: 4
+      command: essaim setblock 455 156 -419 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: 441
+        y: 140
+        z: -418
+      affected-by-difficulty: true
+    labo1-5:
+      type: Blinde
+      amount: 4
+      command: essaim setblock 455 156 -420 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: 457
+        y: 144
+        z: -398
+      affected-by-difficulty: true
+    labo1-6:
+      type: Infecte
+      amount: 10
+      command: essaim setblock 455 156 -424 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: 461
+        y: 140
+        z: -426
+      affected-by-difficulty: true
+    labo1-7:
+      type: Infecte
+      amount: 10
+      command: essaim setblock 455 156 -425 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: 441
+        y: 140
+        z: -418
+      affected-by-difficulty: true
+    labo1-8:
+      type: Blinde
+      amount: 4
+      command: essaim setblock 455 156 -426 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: 457
+        y: 144
+        z: -398
+      affected-by-difficulty: true
+    labo1-9:
+      type: Malabar
+      amount: 1
+      command: essaim setblock 455 156 -427 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 473
+        y: 140
+        z: -407
+      affected-by-difficulty: true
+    labo2:
+      type: Putrifieur
+      amount: 14
+      command: ''
+      activation-delay: 5
+      spawn-delay: 5
+      position:
+        x: 402
+        y: 140
+        z: -427
+      affected-by-difficulty: true
+    labo2-1:
+      type: Putrifieur
+      amount: 14
+      command: ''
+      activation-delay: 5
+      spawn-delay: 5
+      position:
+        x: 401
+        y: 140
+        z: -486
+      affected-by-difficulty: true
+    labo3:
+      type: Infecte
+      amount: 5
+      command: essaim setblock 400 151 -403 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 422
+        y: 142
+        z: -403
+      affected-by-difficulty: true
+    labo3-1:
+      type: Putrifieur
+      amount: 5
+      command: essaim setblock 400 151 -404 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 416
+        y: 142
+        z: -403
+      affected-by-difficulty: true
+    labo3-2:
+      type: Infecte
+      amount: 5
+      command: essaim setblock 400 151 -405 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 411
+        y: 142
+        z: -403
+      affected-by-difficulty: true
+    labo3-3:
+      type: Infecte
+      amount: 5
+      command: essaim setblock 400 151 -406 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 406
+        y: 142
+        z: -403
+      affected-by-difficulty: true
+    labo3-4:
+      type: Exploseur
+      amount: 4
+      command: essaim setblock 400 151 -407 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 401
+        y: 142
+        z: -403
+      affected-by-difficulty: true
+    labo3-5:
+      type: Malabar
+      amount: 2
+      command: essaim setblock 400 151 -409 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 434
+        y: 140
+        z: -419
+      affected-by-difficulty: true
+    labo3-6:
+      type: Infecte
+      amount: 10
+      command: essaim setblock 400 151 -410 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 434
+        y: 140
+        z: -419
+      affected-by-difficulty: true
+    labo3-7:
+      type: Infecte
+      amount: 10
+      command: essaim setblock 400 151 -411 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: 454
+        y: 144
+        z: -398
+      affected-by-difficulty: true
+  closed: false
+  hub:
+    position:
+      x: 431.0
+      y: 180.0
+      z: -491.0
+      world: essaim
+  reset:
+    position:
+      x: 442
+      y: 170.0
+      z: -482.0
+      world: essaim
+  solo:
+    position:
+      x: 444
+      y: 170.0
+      z: -482.0
+      world: essaim
+  start:
+    position:
+      x: 440
+      y: 170.0
+      z: -482.0
+      world: essaim
+  key:
+    position:
+      x: 430
+      y: 140.0
+      z: -416.0
+      world: essaim
+  entry:
+    position:
+      x: -843
+      y: 65.0
+      z: -35.0
+      world: world
+  day: 7
+  hour: 18
+  rewards:
+    jetons: 26
+    commands:
+      - luckperms user Player permission set fireland.pet.effigie true
+  difficulty:
+    '1':
+      position:
+        x: 434
+        y: 170.0
+        z: -482.0
+        world: essaim
+    '2':
+      position:
+        x: 436
+        y: 170.0
+        z: -482.0
+        world: essaim
+    '3':
+      position:
+        x: 438
+        y: 170.0
+        z: -482.0
+        world: essaim
+antre-de-la-pondeuse:
+  spawners:
+    antre1:
+      type: Chimere
+      amount: 1
+      command: ''
+      activation-delay: 4
+      spawn-delay: 0
+      position:
+        x: -336
+        y: 281
+        z: 383
+      affected-by-difficulty: true
+    antre1-1:
+      type: Infecte
+      amount: 5
+      command: ''
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -291
+        y: 281
+        z: 384
+      affected-by-difficulty: true
+    antre2:
+      type: Chimere
+      amount: 1
+      command: essaim setblock -245 303 382 redstone_block
+      activation-delay: 0
+      spawn-delay: 6
+      position:
+        x: -206
+        y: 281
+        z: 385
+      affected-by-difficulty: true
+    antre2-1:
+      type: Blinde
+      amount: 6
+      command: essaim setblock -244 303 382 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: -201
+        y: 281
+        z: 425
+      affected-by-difficulty: true
+    antre2-2:
+      type: Infecte
+      amount: 10
+      command: essaim setblock -243 303 382 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: -234
+        y: 281
+        z: 426
+      affected-by-difficulty: true
+    antre2-3:
+      type: Infecte
+      amount: 10
+      command: essaim setblock -242 303 382 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: -217
+        y: 281
+        z: 366
+      affected-by-difficulty: true
+    antre2-4:
+      type: Mycoris
+      amount: 5
+      command: essaim setblock -240 303 382 redstone_block
+      activation-delay: 0
+      spawn-delay: 6
+      position:
+        x: -206
+        y: 281
+        z: 385
+      affected-by-difficulty: true
+    antre2-5:
+      type: Blinde
+      amount: 6
+      command: essaim setblock -239 303 382 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: -201
+        y: 281
+        z: 425
+      affected-by-difficulty: true
+    antre2-6:
+      type: Infecte
+      amount: 15
+      command: essaim setblock -238 303 382 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: -234
+        y: 281
+        z: 426
+      affected-by-difficulty: true
+    antre2-7:
+      type: Infecte
+      amount: 15
+      command: essaim setblock -237 303 382 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: -217
+        y: 281
+        z: 366
+      affected-by-difficulty: true
+    antre2-8:
+      type: Mycoris
+      amount: 5
+      command: essaim setblock -239 303 393 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -226
+        y: 299
+        z: 373
+      affected-by-difficulty: true
+    antre2-9:
+      type: Mycoris
+      amount: 5
+      command: essaim setblock -238 303 393 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -208
+        y: 299
+        z: 391
+      affected-by-difficulty: true
+    antre2-10:
+      type: Hurleur
+      amount: 10
+      command: essaim setblock -237 303 393 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -206
+        y: 299
+        z: 433
+      affected-by-difficulty: true
+    antre2-11:
+      type: Infecte
+      amount: 10
+      command: essaim setblock -237 303 393 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -190
+        y: 299
+        z: 405
+      affected-by-difficulty: true
+    antre2-12:
+      type: Putrifieur
+      amount: 8
+      command: essaim setblock -190 310 413 redstone_block
+      activation-delay: 0
+      spawn-delay: 0.5
+      position:
+        x: -181
+        y: 299
+        z: 439
+      affected-by-difficulty: true
+    antre2-13:
+      type: Exploseur
+      amount: 5
+      command: essaim setblock -190 310 413 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: -173
+        y: 299
+        z: 403
+      affected-by-difficulty: true
+    antre2-14:
+      type: Rejeton
+      amount: 4
+      command: ''
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -173
+        y: 285
+        z: 397
+      affected-by-difficulty: true
+    antre2-15:
+      type: Blinde
+      amount: 20
+      command: essaim setblock -190 293 383 redstone_block
+      activation-delay: 3
+      spawn-delay: 3
+      position:
+        x: -197
+        y: 281
+        z: 384
+      affected-by-difficulty: true
+    antre2-16:
+      type: Infecte
+      amount: 20
+      command: essaim setblock -190 293 382 redstone_block
+      activation-delay: 1
+      spawn-delay: 4
+      position:
+        x: -197
+        y: 281
+        z: 384
+      affected-by-difficulty: true
+    antre2-17:
+      type: Malabar
+      amount: 1
+      command: essaim setblock -189 310 413 redstone_block
+      activation-delay: 0
+      spawn-delay: 0
+      position:
+        x: -182
+        y: 299
+        z: 396
+      affected-by-difficulty: false
+    antre3:
+      type: Putrifieur
+      amount: 10
+      command: ''
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: -256
+        y: 281
+        z: 155
+      affected-by-difficulty: true
+    antre3-1:
+      type: Mycoris
+      amount: 12
+      command: ''
+      activation-delay: 5
+      spawn-delay: 7
+      position:
+        x: -245
+        y: 281
+        z: 174
+      affected-by-difficulty: true
+    antre3-2:
+      type: Mycoris
+      amount: 12
+      command: ''
+      activation-delay: 5
+      spawn-delay: 7
+      position:
+        x: -267
+        y: 281
+        z: 174
+      affected-by-difficulty: true
+    antre3-3:
+      type: Putrifieur
+      amount: 12
+      command: ''
+      activation-delay: 9
+      spawn-delay: 7
+      position:
+        x: -266
+        y: 281
+        z: 174
+      affected-by-difficulty: true
+    antre3-4:
+      type: Putrifieur
+      amount: 12
+      command: ''
+      activation-delay: 9
+      spawn-delay: 7
+      position:
+        x: -246
+        y: 281
+        z: 174
+      affected-by-difficulty: true
+    antre4:
+      type: Chimere
       amount: 1
       command: ''
       activation-delay: 0
       spawn-delay: 0
       position:
-        x: 264
-        y: 1
-        z: -245
+        x: -259
+        y: 281
+        z: 371
+      affected-by-difficulty: true
+    antre4-1:
+      type: Blinde
+      amount: 10
+      command: essaim setblock -210 300 460 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: -227
+        y: 281
+        z: 457
+      affected-by-difficulty: true
+    antre4-2:
+      type: Infecte
+      amount: 10
+      command: essaim setblock -210 300 461 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: -218
+        y: 281
+        z: 448
+      affected-by-difficulty: true
+    antre4-3:
+      type: Chimere
+      amount: 3
+      command: ''
+      activation-delay: 0
+      spawn-delay: 10
+      position:
+        x: -275
+        y: 215
+        z: 432
+      affected-by-difficulty: true
+    antre3-5:
+      type: Rejeton
+      amount: 10
+      command: ''
+      activation-delay: 5
+      spawn-delay: 3
+      position:
+        x: -256
+        y: 282
+        z: 151
+      affected-by-difficulty: true
+    antre5:
+      type: Chimere
+      amount: 1
+      command: essaim setblock -271 29 412 redstone_block
+      activation-delay: 1
+      spawn-delay: 10
+      position:
+        x: -283
+        y: -25
+        z: 359
       affected-by-difficulty: false
-    entrepot2:
+    antre5-1:
+      type: Chimere
+      amount: 1
+      command: essaim setblock -271 29 411 redstone_block
+      activation-delay: 3
+      spawn-delay: 10
+      position:
+        x: -250
+        y: -25
+        z: 383
+      affected-by-difficulty: false
+    antre5-2:
+      type: Chimere
+      amount: 1
+      command: essaim setblock -271 29 410 redstone_block
+      activation-delay: 6
+      spawn-delay: 10
+      position:
+        x: -277
+        y: -25
+        z: 399
+      affected-by-difficulty: false
+    antre5-3:
+      type: Infecte
+      amount: 10
+      command: essaim setblock -271 29 409 redstone_block
+      activation-delay: 5
+      spawn-delay: 4
+      position:
+        x: -300
+        y: -25
+        z: 378
+      affected-by-difficulty: true
+    antre5-4:
+      type: Infecte
+      amount: 10
+      command: essaim setblock -271 29 408 redstone_block
+      activation-delay: 5
+      spawn-delay: 4
+      position:
+        x: -261
+        y: -25
+        z: 362
+      affected-by-difficulty: true
+    antre5-5:
+      type: Chimere
+      amount: 1
+      command: essaim setblock -271 29 406 redstone_block
+      activation-delay: 10
+      spawn-delay: 10
+      position:
+        x: -274
+        y: -25
+        z: 372
+      affected-by-difficulty: false
+    antre5-6:
+      type: Chimere
+      amount: 1
+      command: essaim setblock -271 29 405 redstone_block
+      activation-delay: 3
+      spawn-delay: 10
+      position:
+        x: -248
+        y: -25
+        z: 374
+      affected-by-difficulty: false
+    antre5-7:
+      type: Chimere
+      amount: 1
+      command: essaim setblock -271 29 404 redstone_block
+      activation-delay: 6
+      spawn-delay: 10
+      position:
+        x: -285
+        y: -25
+        z: 399
+      affected-by-difficulty: false
+    antre5-8:
+      type: Putrifieur
+      amount: 10
+      command: essaim setblock -271 29 403 redstone_block
+      activation-delay: 5
+      spawn-delay: 4
+      position:
+        x: -249
+        y: -25
+        z: 388
+      affected-by-difficulty: true
+    antre5-9:
+      type: Blinde
+      amount: 6
+      command: essaim setblock -271 29 402 redstone_block
+      activation-delay: 5
+      spawn-delay: 4
+      position:
+        x: -299
+        y: -25
+        z: 368
+      affected-by-difficulty: true
+    antre4-4:
+      type: Blinde
+      amount: 10
+      command: ''
+      activation-delay: 5
+      spawn-delay: 3
+      position:
+        x: -304
+        y: 217
+        z: 453
+      affected-by-difficulty: true
+    antre4-5:
+      type: Blinde
+      amount: 10
+      command: ''
+      activation-delay: 5
+      spawn-delay: 3
+      position:
+        x: -245
+        y: 217
+        z: 454
+      affected-by-difficulty: true
+  hub:
+    position:
+      x: -410
+      y: 207
+      z: 383
+      world: essaim
+  reset:
+    position:
+      x: -388
+      y: 277
+      z: 379
+      world: essaim
+  solo:
+    position:
+      x: -388
+      y: 277
+      z: 385
+      world: essaim
+  start:
+    position:
+      x: -388
+      y: 277
+      z: 382
+      world: essaim
+  key:
+    position:
+      x: 0
+      y: 0.0
+      z: 0
+      world: essaim
+  entry:
+    position:
+      x: 71
+      y: -59
+      z: 238
+      world: world
+  day: 7
+  hour: 10
+  rewards:
+    jetons: 18
+    commands:
+      - luckperms user Player permission set fireland.pet.pondeuse true
+  closed: false
+  difficulty:
+    '1':
+      position:
+        x: -354
+        y: 215.0
+        z: 384
+        world: essaim
+    '2':
+      position:
+        x: -354
+        y: 215.0
+        z: 382
+        world: essaim
+    '3':
+      position:
+        x: -354.0
+        y: 215.0
+        z: 380.0
+        world: essaim
+abysses:
+  day: 7
+  hour: 10
+  rewards:
+    jetons: 18
+    commands:
+      - luckperms user Player permission set fireland.pet.vessel true
+  spawners:
+    abysse1:
+      type: Chimere
+      amount: 1
+      command: ''
+      activation-delay: 4
+      spawn-delay: 0
+      position:
+        x: -336
+        y: 281
+        z: 383
+      affected-by-difficulty: true
+  hub:
+    position:
+      x: -291
+      y: 281
+      z: 618
+      world: essaim
+  reset:
+    position:
+      x: -255
+      y: 211
+      z: 633
+      world: essaim
+  solo:
+    position:
+      x: -255
+      y: 211
+      z: 629
+      world: essaim
+  start:
+    position:
+      x: -255
+      y: 211
+      z: 631
+      world: essaim
+  key:
+    position:
+      x: 0
+      y: 0.0
+      z: 0
+      world: essaim
+  entry:
+    position:
+      x: 60
+      y: -59
+      z: 240
+      world: world
+  closed: false
+  difficulty:
+    '1':
+      position:
+        x: -262
+        y: 211.0
+        z: 631
+        world: essaim
+    '2':
+      position:
+        x: -262
+        y: 211.0
+        z: 633
+        world: essaim
+    '3':
+      position:
+        x: -262.0
+        y: 211.0
+        z: 629
+        world: essaim
+centrale-nucleaire:
+  day: 5
+  hour: 15
+  rewards:
+    jetons: 8
+    commands:
+      - wm give Player coeurmycelien
+      - luckperms user Player permission set fireland.pet.mycorisalpha true
+  spawners:
+    centrale1:
+      type: Exploseur
+      amount: 5
+      command: essaim setblock 355 5 -17 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: 389
+        y: -6
+        z: -8
+      affected-by-difficulty: true
+    centrale1-1:
+      type: Putrifieur
+      amount: 5
+      command: essaim setblock 355 5 -16 redstone_block
+      activation-delay: 5
+      spawn-delay: 1
+      position:
+        x: 345
+        y: -6
+        z: -12
+      affected-by-difficulty: true
+    centrale1-2:
+      type: Blinde
+      amount: 5
+      command: essaim setblock 355 5 -15 redstone_block
+      activation-delay: 8
+      spawn-delay: 1
+      position:
+        x: 345
+        y: -6
+        z: -30
+      affected-by-difficulty: true
+    centrale1-3:
+      type: Infecte
+      amount: 5
+      command: essaim setblock 355 5 -14 redstone_block
+      activation-delay: 8
+      spawn-delay: 1
+      position:
+        x: 374
+        y: -6
+        z: -33
+      affected-by-difficulty: true
+    centrale2:
+      type: Infecte
+      amount: 8
+      command: essaim setblock 439 -9 -6 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: 460
+        y: -9
+        z: 11
+      affected-by-difficulty: true
+    centrale2-1:
+      type: Infecte
+      amount: 8
+      command: essaim setblock 439 -9 -5 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: 438
+        y: -9
+        z: 15
+      affected-by-difficulty: true
+    centrale2-2:
+      type: Infecte
+      amount: 8
+      command: essaim setblock 439 -9 -4 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: 438
+        y: -9
+        z: 7
+      affected-by-difficulty: true
+    centrale3:
+      type: Chimere
+      amount: 1
+      command: essaim setblock 413 -29 3 redstone_block
+      activation-delay: 2
+      spawn-delay: 1
+      position:
+        x: 411
+        y: -40
+        z: -3
+      affected-by-difficulty: false
+    centrale3-1:
+      type: Blinde
+      amount: 7
+      command: essaim setblock 414 -31 21 redstone_block
+      activation-delay: 2
+      spawn-delay: 0
+      position:
+        x: 404
+        y: -40
+        z: 23
+      affected-by-difficulty: true
+    centrale3-2:
+      type: Mycoris
+      amount: 7
+      command: essaim setblock 414 -31 22 redstone_block
+      activation-delay: 5
+      spawn-delay: 4
+      position:
+        x: 436
+        y: -40
+        z: 22
+      affected-by-difficulty: true
+    centrale3-3:
+      type: Putrifieur
+      amount: 4
+      command: essaim setblock 414 -31 23 redstone_block
+      activation-delay: 2
+      spawn-delay: 0
+      position:
+        x: 426
+        y: -40
+        z: 21
+      affected-by-difficulty: true
+    centrale3-4:
+      type: Chimere
+      amount: 1
+      command: essaim setblock 414 -31 27 redstone_block
+      activation-delay: 0
+      spawn-delay: 10
+      position:
+        x: 436
+        y: -40
+        z: 22
+      affected-by-difficulty: true
+    centrale3-5:
+      type: Blinde
+      amount: 4
+      command: essaim setblock 414 -31 28 redstone_block
+      activation-delay: 5
+      spawn-delay: 4
+      position:
+        x: 404
+        y: -40
+        z: 23
+      affected-by-difficulty: true
+    centrale4:
+      type: Chimere
+      amount: 1
+      command: ''
+      activation-delay: 0
+      spawn-delay: 10
+      position:
+        x: 431
+        y: -46
+        z: 78
+      affected-by-difficulty: true
+    centrale4-1:
+      type: Putrifieur
+      amount: 10
+      command: ''
+      activation-delay: 5
+      spawn-delay: 5
+      position:
+        x: 438
+        y: -46
+        z: 100
+      affected-by-difficulty: true
+  closed: true
+  entry:
+    position:
+      x: -612.0
+      y: 66.0
+      z: 427.0
+      world: world
+  hub:
+    position:
+      x: 313.0
+      y: -6.0
+      z: -20.0
+      world: essaim
+  start:
+    position:
+      x: 362
+      y: 9
+      z: -11
+      world: essaim
+  solo:
+    position:
+      x: 362
+      y: 9
+      z: -7
+      world: essaim
+  reset:
+    position:
+      x: 362
+      y: 9
+      z: -9
+      world: essaim
+  key:
+    position:
+      x: 421
+      y: -10.0
+      z: -10
+      world: essaim
+  difficulty:
+    '1':
+      position:
+        x: 360
+        y: 5.0
+        z: -23.0
+        world: essaim
+    '2':
+      position:
+        x: 360.0
+        y: 5.0
+        z: -25.0
+        world: essaim
+    '3':
+      position:
+        x: 360.0
+        y: 5.0
+        z: -27.0
+        world: essaim
+hangar-silencieux:
+  day: 6
+  hour: 15
+  rewards:
+    jetons: 8
+    commands:
+      - wm give Player oeilarrache
+      - luckperms user Player permission set fireland.pet.vautouralpha true
+  entry:
+    position:
+      x: -125
+      y: 66
+      z: -406
+      world: world
+  hub:
+    position:
+      x: 335
+      y: -7
+      z: 255
+      world: essaim
+  start:
+    position:
+      x: 332
+      y: 4
+      z: 319
+      world: essaim
+  solo:
+    position:
+      x: 336
+      y: 4
+      z: 319
+      world: essaim
+  reset:
+    position:
+      x: 334
+      y: 4
+      z: 319
+      world: essaim
+  key:
+    position:
+      x: 338
+      y: -32
+      z: 378
+      world: essaim
+  difficulty:
+    '1':
+      position:
+        x: 332
+        y: 4
+        z: 330
+        world: essaim
+    '2':
+      position:
+        x: 334
+        y: 4
+        z: 330
+        world: essaim
+    '3':
+      position:
+        x: 336
+        y: 4
+        z: 330
+        world: essaim
+  spawners:
+    hangar1:
       type: Vautour
-      amount: 10
-      command: ''
+      amount: 5
+      command: essaim setblock 303 7 329 redstone_block
+      activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: 314
+        y: -1
+        z: 347
+      affected-by-difficulty: true
+    hangar1-1:
+      type: Vautour
+      amount: 5
+      command: essaim setblock 303 7 330 redstone_block
+      activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: 301
+        y: -1
+        z: 347
+      affected-by-difficulty: true
+    hangar1-2:
+      type: Infecte
+      amount: 7
+      command: essaim setblock 303 7 331 redstone_block
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: 295
+        y: -7
+        z: 334
+      affected-by-difficulty: true
+    hangar1-3:
+      type: Vautour
+      amount: 5
+      command: essaim setblock 303 7 334 redstone_block
+      activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: 314
+        y: -1
+        z: 347
+      affected-by-difficulty: true
+    hangar1-4:
+      type: Vautour
+      amount: 5
+      command: essaim setblock 303 7 335 redstone_block
+      activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: 301
+        y: -1
+        z: 347
+      affected-by-difficulty: true
+    hangar1-5:
+      type: Infecte
+      amount: 7
+      command: essaim setblock 303 7 336 redstone_block
+      activation-delay: 0
+      spawn-delay: 1
+      position:
+        x: 295
+        y: -7
+        z: 334
+      affected-by-difficulty: true
+    hangar2:
+      type: Vautour
+      amount: 5
+      command: essaim setblock 344 -20 370 redstone_block
+      activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: 308
+        y: -32
+        z: 356
+      affected-by-difficulty: true
+    hangar2-1:
+      type: Exploseur
+      amount: 5
+      command: essaim setblock 344 -20 369 redstone_block
+      activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: 327
+        y: -32
+        z: 376
+      affected-by-difficulty: true
+    hangar2-2:
+      type: Hurleur
+      amount: 5
+      command: essaim setblock 344 -20 368 redstone_block
       activation-delay: 0
       spawn-delay: 0
       position:
-        x: 261
-        y: 1
-        z: -238
-      affected-by-difficulty: false
-    entrepot3:
-      type: Chevreau
-      amount: 10
-      command: ''
+        x: 346
+        y: -32
+        z: 358
+      affected-by-difficulty: true
+    hangar2-3:
+      type: Vautour
+      amount: 5
+      command: essaim setblock 344 -20 360 redstone_block
       activation-delay: 0
+      spawn-delay: 3
+      position:
+        x: 302
+        y: -32
+        z: 366
+      affected-by-difficulty: true
+    hangar2-4:
+      type: Blinde
+      amount: 7
+      command: essaim setblock 344 -20 359 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: 308
+        y: -32
+        z: 357
+      affected-by-difficulty: true
+    hangar2-5:
+      type: Infecte
+      amount: 7
+      command: essaim setblock 344 -20 358 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: 326
+        y: -32
+        z: 376
+      affected-by-difficulty: true
+    hangar2-6:
+      type: Infecte
+      amount: 7
+      command: essaim setblock 344 -20 357 redstone_block
+      activation-delay: 0
+      spawn-delay: 2
+      position:
+        x: 345
+        y: -32
+        z: 358
+      affected-by-difficulty: true
+    hangar3:
+      type: Chimere
+      amount: 1
+      command: ''
+      activation-delay: 3
       spawn-delay: 0
       position:
-        x: 261
-        y: 1
-        z: -251
+        x: 292
+        y: -32
+        z: 366
       affected-by-difficulty: false
+  closed: false
+territoire-du-yÅkai:
+  day: 1
+  hour: 1
+  rewards:
+    jetons: 12
+    commands:
+      - luckperms user Player permission set fireland.pet.vilerin true
+  hub:
+    position:
+      world: essaim
+      x: 547
+      y: 69
+      z: 272
+  start:
+    position:
+      world: essaim
+      x: 536
+      y: 62
+      z: 366
+  reset:
+    position:
+      world: essaim
+      x: 541
+      y: 62
+      z: 362
+  solo:
+    position:
+      world: essaim
+      x: 543
+      y: 62
+      z: 362
+  entry:
+    position:
+      world: world
+      x: -473
+      y: 65
+      z: -453
+  key:
+    position:
+      world: essaim
+      x: 0
+      y: 0
+      z: 0
+  difficulty:
+    '1':
+      position:
+        x: 360
+        y: 5.0
+        z: -23.0
+        world: essaim
+    '2':
+      position:
+        x: 360.0
+        y: 5.0
+        z: -25.0
+        world: essaim
+    '3':
+      position:
+        x: 360.0
+        y: 5.0
+        z: -27.0
+        world: essaim
+  spawners:
+    yokai1:
+      type: Infecte
+      amount: 1
+      command: ''
+      activation-delay: 1
+      spawn-delay: 1
+      position:
+        x: 546
+        y: 69
+        z: 353
+      affected-by-difficulty: true
+  closed: false

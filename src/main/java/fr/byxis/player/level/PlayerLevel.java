@@ -3,6 +3,7 @@ package fr.byxis.player.level;
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.skytasul.quests.api.QuestsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.SoundCategory;
@@ -13,8 +14,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static fr.byxis.jeton.JetonManager.addJetonsPlayer;
 
@@ -356,12 +359,20 @@ public class PlayerLevel {
             int jetons = getRewardsJetons(_lvl);
             int money = getRewardsMoney(_lvl);
             String item = getRewardsItems(_lvl);
+            String pet = getRewardsPets(_lvl);
             if (jetons > 0)
                 InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré " + jetons + "§f⛁§a et " + money + "§f$§a.");
             else
                 InGameUtilities.sendPlayerSucces(p, "Vous avez récupéré " + money + "§f$§a.");
             if (!item.isEmpty())
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), item.replace("Player", p.getName()));
+
+            if (!pet.isEmpty())
+            {
+                PermissionUtilities.addPermission(p, pet);
+                InGameUtilities.sendPlayerSucces(p, "Vous avez débloqué le familier §6" + getRewardsPetsFormatted(_lvl) + "§a.");
+            }
+
             addJetonsPlayer(m_uuid, jetons);
             Fireland.getEco().depositPlayer(p, money);
             setClaimedRewards(_main, _lvl);
@@ -407,6 +418,25 @@ public class PlayerLevel {
             case 90 -> "wm give Player m60";
             case 100 -> "wm give Player aa12";
         };
+    }
+
+    public String getRewardsPets(int lvl)
+    {
+        return switch (lvl)
+        {
+            case 20 -> "fireland.pet.chien-tactique";
+            case 40 -> "fireland.pet.dogbot";
+            case 60 -> "fireland.pet.drone";
+            default -> "";
+        };
+    }
+
+    public String getRewardsPetsFormatted(int lvl)
+    {
+        String hasPet = getRewardsPets(lvl);
+        return Arrays.stream(hasPet.split("\\.")[2].replace("-", " ").split(" "))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 
     public void givePlayerMission(int _level)

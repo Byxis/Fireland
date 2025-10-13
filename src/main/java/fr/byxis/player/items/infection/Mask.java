@@ -21,84 +21,118 @@ import static fr.byxis.player.items.ItemDurability.remLoreDurability;
 public class Mask implements Listener
 {
 
-    public static void addEffects(Player p)
+    public static void addEffects(Player _player)
     {
-        if (p.getInventory().getHelmet() != null)
+        if (_player == null) return;
+
+        ItemStack helmet = _player.getInventory().getHelmet();
+        boolean isCreative = _player.getGameMode() == GameMode.CREATIVE;
+
+        if (helmet != null)
         {
-            if (p.getInventory().getHelmet().getType() == Material.RED_DYE && getDurability(p.getInventory().getHelmet()) >= 0)
+            Material mat = helmet.getType();
+
+            if (mat == Material.RED_DYE && getDurability(helmet) > 0f)
             {
-                p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 800, 2, false, false));
-                remLoreDurability(p.getInventory().getHelmet(), 0.1f);
+                _player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 800, 2, false, false));
+                remLoreDurability(helmet, 0.1f);
             }
-            else if (p.getGameMode() != GameMode.CREATIVE && !p.hasPermission("fireland.command.n"))
+            else if (!isCreative && !_player.hasPermission("fireland.command.n"))
             {
-                p.removePotionEffect(PotionEffectType.NIGHT_VISION);
+                _player.removePotionEffect(PotionEffectType.NIGHT_VISION);
             }
-            if (hasGazMask(p))
+
+            if (hasGazMask(_player))
             {
-                p.removePotionEffect(PotionEffectType.BLINDNESS);
-                p.removePotionEffect(PotionEffectType.NAUSEA);
+                _player.removePotionEffect(PotionEffectType.BLINDNESS);
+                _player.removePotionEffect(PotionEffectType.NAUSEA);
             }
         }
-        else if (p.getGameMode() != GameMode.CREATIVE)
+        else
         {
-            p.removePotionEffect(PotionEffectType.NIGHT_VISION);
+            if (!isCreative)
+            {
+                _player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+            }
         }
     }
 
     @EventHandler
-    public void playerPutMask(PlayerInteractEvent e)
+    public void playerPutMask(PlayerInteractEvent _event)
     {
-        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)
-            return;
+        Action action = _event.getAction();
+        if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return;
 
-        ItemStack item = e.getPlayer().getInventory().getHelmet();
-        //Masque a gaz
-        if (e.getPlayer().getItemInHand().getType() == Material.BROWN_DYE && (e.getPlayer().getInventory().getHelmet() == null || (
-                e.getPlayer().getInventory().getHelmet().getType() != Material.BROWN_DYE &&
-                e.getPlayer().getCooldown(e.getPlayer().getInventory().getItemInHand().getType()) <= 0)))
+        Player player = _event.getPlayer();
+
+        ItemStack hand = _event.getItem();
+        if (hand == null) return;
+
+        ItemStack previousHelmet = player.getInventory().getHelmet();
+        Material handType = hand.getType();
+
+        if (handType == Material.BROWN_DYE)
         {
-
-
-            InGameUtilities.playWorldSound(e.getPlayer().getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, SoundCategory.PLAYERS, 1, 1);
-            e.getPlayer().getInventory().setHelmet(e.getPlayer().getItemInHand());
-            e.getPlayer().getItemInHand().setAmount(0);
-            if (item != null)
+            boolean helmetIsDifferent = previousHelmet == null || previousHelmet.getType() != Material.BROWN_DYE;
+            if (helmetIsDifferent && player.getCooldown(handType) <= 0)
             {
-                e.getPlayer().getInventory().addItem(item);
-                e.getPlayer().setCooldown(item.getType(), 20);
+                InGameUtilities.playWorldSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, SoundCategory.PLAYERS, 1f, 1f);
+
+                putItemOnHelmet(player, hand, previousHelmet);
+            }
+            return;
+        }
+
+        if (handType == Material.RED_DYE)
+        {
+            boolean helmetIsDifferent = previousHelmet == null || previousHelmet.getType() != Material.RED_DYE;
+            if (helmetIsDifferent && player.getCooldown(handType) <= 0)
+            {
+                InGameUtilities.playWorldSound(player.getLocation(), "gun.nvgoggle.on", SoundCategory.PLAYERS, 1f, 1f);
+
+                putItemOnHelmet(player, hand, previousHelmet);
             }
         }
-        //Vision nocturne
-        else if (e.getPlayer().getItemInHand().getType() == Material.RED_DYE && (e.getPlayer().getInventory().getHelmet() == null || (
-                e.getPlayer().getInventory().getHelmet().getType() != Material.RED_DYE &&
-                        e.getPlayer().getCooldown(e.getPlayer().getInventory().getItemInHand().getType()) <= 0)))
-        {
+    }
 
-            InGameUtilities.playWorldSound(e.getPlayer().getLocation(), "gun.nvgoggle.on", SoundCategory.PLAYERS, 1, 1);;
-            e.getPlayer().getInventory().setHelmet(e.getPlayer().getItemInHand());
-            e.getPlayer().getItemInHand().setAmount(0);
-            if (item != null)
-            {
-                e.getPlayer().getInventory().addItem(item);
-                e.getPlayer().setCooldown(item.getType(), 20);
-            }
+    private void putItemOnHelmet(Player _player, ItemStack _hand, ItemStack _previousHelmet)
+    {
+        _player.getInventory().setHelmet(_hand.clone());
+        int amount = _hand.getAmount();
+        if (amount <= 1)
+        {
+            _player.getInventory().setItemInMainHand(null);
+        }
+        else
+        {
+            _hand.setAmount(amount - 1);
+            _player.getInventory().setItemInMainHand(_hand);
+        }
+
+        if (_previousHelmet != null)
+        {
+            _player.getInventory().addItem(_previousHelmet);
+            _player.setCooldown(_previousHelmet.getType(), 20);
         }
     }
 
     @EventHandler
     public void playerDamage(EntityDamageEvent _damageEvent)
     {
-        if (_damageEvent.getEntity() instanceof Player _player)
+        if (!(_damageEvent.getEntity() instanceof Player _player)) return;
+
+        if (hasGazMask(_player))
         {
-            if (hasGazMask(_player))
+            if (_damageEvent.getCause() == EntityDamageEvent.DamageCause.POISON)
             {
-                if (_damageEvent.getCause() == EntityDamageEvent.DamageCause.POISON)
+                _damageEvent.setCancelled(true);
+                _damageEvent.setDamage(0.0);
+                _player.removePotionEffect(PotionEffectType.POISON);
+
+                ItemStack helmet = _player.getInventory().getHelmet();
+                if (helmet != null)
                 {
-                    _damageEvent.setCancelled(true);
-                    _damageEvent.setDamage(0);
-                    _player.removePotionEffect(PotionEffectType.POISON);
-                    remLoreDurability(_player.getInventory().getHelmet(), 0.5f);
+                    remLoreDurability(helmet, 0.5f);
                 }
             }
         }
@@ -106,9 +140,14 @@ public class Mask implements Listener
 
     public static boolean hasGazMask(Player _player)
     {
-        if (_player.getInventory().getHelmet() == null) return false;
-        Material mat = _player.getInventory().getHelmet().getType();
-        if (mat == Material.BROWN_DYE && getDurability(_player.getInventory().getHelmet()) > 0)
+        if (_player == null) return false;
+
+        ItemStack helmet = _player.getInventory().getHelmet();
+        if (helmet == null) return false;
+
+        Material mat = helmet.getType();
+
+        if (mat == Material.BROWN_DYE && getDurability(helmet) > 0f)
         {
             return true;
         }

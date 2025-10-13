@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  * Gère tous les événements liés au système d'infection.
@@ -155,6 +156,10 @@ public class InfectionListeners implements Listener
         {
             handleBerserkerSerumUse(player);
         }
+        else if (isStimulant(item))
+        {
+            handleStimulantUse(player);
+        }
         else if (item.getType() == Material.IRON_INGOT && player.getCooldown(Material.IRON_INGOT) <= 0)
         {
             handleInventoryRepair(player);
@@ -170,6 +175,14 @@ public class InfectionListeners implements Listener
         if (isSyringe(item) && _event.getRightClicked() instanceof Player _target)
         {
             handleSyringeOnFriend(player, _target);
+        }
+        if (isFungalSyringe(item) && _event.getRightClicked() instanceof Player _target)
+        {
+            handleFungalSyringeOnFriend(player, _target);
+        }
+        if (isStimulant(item) && _event.getRightClicked() instanceof Player _target)
+        {
+            handleStimulantOnFriend(player, _target);
         }
         else if (isBerserkerSerum(item) && _event.getRightClicked() instanceof Player _target)
         {
@@ -198,7 +211,7 @@ public class InfectionListeners implements Listener
 
         m_manager.cure(_player);
         InGameUtilities.playWorldSound(_player.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
-        _player.sendMessage("§8Vous avez soigné votre infection !");
+        _player.sendMessage("§8Vous avez soigné votre infection fongique !");
 
         consumeItem(_player);
     }
@@ -238,6 +251,20 @@ public class InfectionListeners implements Listener
         consumeItem(_healer);
     }
 
+    private void handleFungalSyringeOnFriend(Player _healer, Player _target)
+    {
+        if (!m_manager.isInfected(_target)) return;
+        if (m_manager.getData(_target).m_infectionType() != InfectionType.MYCELIAL) return;
+
+        m_manager.cure(_target);
+        InGameUtilities.playWorldSound(_target.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
+
+        _healer.sendMessage("§8Vous avez soigné l'infection fongique de " + _target.getName() + "!");
+        _target.sendMessage("§8" + _healer.getName() + " a soigné votre infection fongique !");
+
+        consumeItem(_healer);
+    }
+
     private void handleInventoryRepair(Player _player)
     {
         PermissionUtilities.commandExecutor(_player, "wm repair " + _player.getName() + " INVENTORY", "*");
@@ -255,6 +282,15 @@ public class InfectionListeners implements Listener
         consumeItem(_player);
     }
 
+    private void handleStimulantUse(Player _player)
+    {
+        InGameUtilities.playWorldSound(_player.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
+        _player.sendMessage("§cVous avez utilisé un stimulant de combat !");
+
+        applyStimulant(_player);
+        consumeItem(_player);
+    }
+
     private void handleBerserkerSerumOnFriend(Player _healer, Player _target)
     {
         InGameUtilities.playWorldSound(_target.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
@@ -263,6 +299,17 @@ public class InfectionListeners implements Listener
         _target.sendMessage("§c" + _healer.getName() + " a utilisé un sérum du berserker sur vous !");
 
         applyBerserkerSerum(_target);
+        consumeItem(_healer);
+    }
+
+    private void handleStimulantOnFriend(Player _healer, Player _target)
+    {
+        InGameUtilities.playWorldSound(_target.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
+
+        _healer.sendMessage("§cVous avez utilisé un stimulant de combat sur " + _target.getName() + "!");
+        _target.sendMessage("§c" + _healer.getName() + " a utilisé un stimulant de combat sur vous !");
+
+        applyStimulant(_target);
         consumeItem(_healer);
     }
 
@@ -300,6 +347,12 @@ public class InfectionListeners implements Listener
         }
     }
 
+    private void applyStimulant(Player _player)
+    {
+        _player.addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.SPEED, 4 * 60, 0, true, false));
+        _player.addPotionEffect(new org.bukkit.potion.PotionEffect(PotionEffectType.REGENERATION, 15, 1, true, false));
+    }
+
     // ==================== UTILS ====================
 
     private void notifyInfection(Player _player)
@@ -325,6 +378,11 @@ public class InfectionListeners implements Listener
     }
 
     private boolean isBerserkerSerum(ItemStack _item)
+    {
+        return hasCustomModelData(_item, InfectionConstants.BERSERKER_SERUM_CUSTOM_MODEL_DATA);
+    }
+
+    private boolean isStimulant(ItemStack _item)
     {
         return hasCustomModelData(_item, InfectionConstants.BERSERKER_SERUM_CUSTOM_MODEL_DATA);
     }

@@ -5,55 +5,58 @@ import java.time.Instant;
 /**
  * Immutable data class representing a player's infection status.
  *
- * @param m_infectionLevel The current level of the infection (0 = safe, 1+ = infected).
+ * @param m_infectionType The current type of the infection (0 = safe, 1+ = infected).
  * @param m_infectedSince The timestamp (in milliseconds) when the player was infected.
  * @param m_invincibilityUntil The timestamp until which the player is invincible to new infections.
  */
 public record InfectionData(
-        int m_infectionLevel,
+        InfectionType m_infectionType,
         long m_infectedSince,
         Instant m_invincibilityUntil
 )
 {
 
     public static final InfectionData HEALTHY = new InfectionData(
-            0, 0, null);
+            InfectionType.SAFE, 0, null);
 
     public static InfectionData createInfection()
     {
-        return new InfectionData(1, System.currentTimeMillis(), null);
+        return new InfectionData(InfectionType.PRIMARY, System.currentTimeMillis(), null);
     }
 
-    public static InfectionData createInfectionWithLevel(int _level)
+    public static InfectionData createInfectionWithLevel(InfectionType _type)
     {
-        if (_level < 1) throw new IllegalArgumentException("Infection level must be >= 1");
-        return new InfectionData(_level, System.currentTimeMillis(), null);
+        if (_type == InfectionType.SAFE) throw new IllegalArgumentException("Infection level must be greater than SAFE");
+        return new InfectionData(_type, System.currentTimeMillis(), null);
     }
 
     public boolean isInfected()
     {
-        return m_infectionLevel > 0;
+        return m_infectionType != InfectionType.SAFE;
     }
 
     public InfectionData increaseLevel()
     {
-        if (m_infectionLevel == 0)
+        if (m_infectionType == InfectionType.SAFE)
         {
             return createInfection();
         }
-        return new InfectionData(m_infectionLevel + 1, System.currentTimeMillis(), m_invincibilityUntil);
+        if (m_infectionType.ordinal() == InfectionType.values().length - 1)
+        {
+            return this;
+        }
+        return new InfectionData(InfectionType.values()[m_infectionType.ordinal() + 1], System.currentTimeMillis(), m_invincibilityUntil);
     }
 
-    public InfectionData withLevel(int _level)
+    public InfectionData withLevel(InfectionType _type)
     {
-        if (_level < 0) throw new IllegalArgumentException("Infection level cannot be negative");
-        if (_level == 0) return HEALTHY;
-        return new InfectionData(_level, System.currentTimeMillis(), m_invincibilityUntil);
+        if (m_infectionType == InfectionType.SAFE) return HEALTHY;
+        return new InfectionData(_type, System.currentTimeMillis(), m_invincibilityUntil);
     }
 
     public InfectionData withInvincibility(Instant _until)
     {
-        return new InfectionData(m_infectionLevel, m_infectedSince, _until);
+        return new InfectionData(m_infectionType, m_infectedSince, _until);
     }
 
     public boolean isCurrentlyInvincible()
@@ -64,19 +67,20 @@ public record InfectionData(
 
     public long getMinutesSinceInfection()
     {
-        if (m_infectionLevel == 0) return 0;
+        if (m_infectionType == InfectionType.SAFE) return 0;
         return (System.currentTimeMillis() - m_infectedSince) / 60000;
     }
 
     public String getInfectionName()
     {
-        return switch (m_infectionLevel)
+        return switch (m_infectionType)
         {
-            case 1 -> "Primaire";
-            case 2 -> "Kératinienne";
-            case 3 -> "Nécrophage";
-            case 4 -> "Mycélienne";
-            case 5 -> "Brutale";
+            case PRIMARY -> "Primaire";
+            case KERATINIC -> "Kératinienne";
+            case NECROPHAGIC -> "Nécrophage";
+            case MYCELIAL -> "Mycélienne";
+            case BRUTAL -> "Brutale";
+            case BUBONIC -> "Bubonique";
             default -> "Mortel";
         };
     }

@@ -2,6 +2,7 @@ package fr.byxis.player.items.infection;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.player.items.infection.virus.InfectionManager;
+import fr.byxis.player.items.infection.virus.InfectionType;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -59,7 +60,7 @@ public class SporeDamage {
                     p.damage(1);
                     EntityDamageEvent e = new EntityDamageEvent(p, EntityDamageEvent.DamageCause.POISON, 1);
                     p.setLastDamageCause(e);
-                    if (m_manager.tryInfectWithLevel(p, 1, 4))
+                    if (m_manager.tryInfectWithLevel(p, 1, InfectionType.MYCELIAL))
                     {
                         p.sendMessage("§8Vous avez été infecté par les spores ! Trouvez vite une seringue avant l'infection ne vous tue");
                         p.sendTitle("§8Vous avez été infecté !", "");

@@ -7,17 +7,26 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Handle the /infect and /cure commands to manage player infections.
- * <p>
+ *
  * Commands:
- * - /infect [player]: Infects the specified player or oneself if no player is specified.
+ * - /infect [player] [infectionType]: Infects the specified player or oneself if no player is specified.
+ *   If infectionType is provided it must match one of InfectionType enum names (case-insensitive).
  * - /cure [player]: Cures the specified player or oneself if no player is specified.
+ *
+ * Also provides tab-completion for player names and infection types.
  */
-public class InfectionCommands implements CommandExecutor
+public class InfectionCommands implements CommandExecutor, TabCompleter
 {
 
     private final InfectionManager m_manager;
@@ -94,23 +103,31 @@ public class InfectionCommands implements CommandExecutor
             }
             try
             {
-                int level = Integer.parseInt(_args[1]);
-                if (level < 1)
+                String typeStr = _args[1].toUpperCase();
+                InfectionType type = InfectionType.valueOf(typeStr);
+                m_manager.infectWithLevel(target, type);
+                if (!_executor.equals(target))
                 {
-                    _executor.sendMessage("§cLe niveau d'infection doit être supérieur ou égal à 1.");
-                    return false;
+                    _executor.sendMessage("§8" + target.getName() + " a été infecté avec le type " + type.name().toLowerCase() + ".");
                 }
-                m_manager.infectWithLevel(target, level);
+                else
+                {
+                    _executor.sendMessage("§8Vous vous êtes infecté avec le type " + type.name().toLowerCase() + ".");
+                }
                 return true;
             }
-            catch (NumberFormatException e)
+            catch (IllegalArgumentException e)
             {
-                _executor.sendMessage("§cLe niveau d'infection doit être un nombre entier.");
+                String valid = Arrays.stream(InfectionType.values())
+                        .map(Enum::name)
+                        .map(String::toLowerCase)
+                        .collect(Collectors.joining(", "));
+                _executor.sendMessage("§cType d'infection invalide. Types valides: " + valid);
                 return false;
             }
         }
 
-        _executor.sendMessage("§cMauvaise formulation de la commande ! (/infect [player])");
+        _executor.sendMessage("§cMauvaise formulation de la commande ! (/infect [player] [infectionType])");
         return false;
     }
 
@@ -183,5 +200,43 @@ public class InfectionCommands implements CommandExecutor
         }
 
         return null;
+    }
+
+    // ==================== TAB COMPLETION ====================
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args)
+    {
+        List<String> suggestions = new ArrayList<>();
+
+        if (args.length == 1)
+        {
+            String prefix = args[0].toLowerCase();
+            for (Player online : Bukkit.getOnlinePlayers())
+            {
+                String name = online.getName();
+                if (name.toLowerCase().startsWith(prefix))
+                {
+                    suggestions.add(name);
+                }
+            }
+            return suggestions;
+        }
+
+        if (args.length == 2 && command.getName().equalsIgnoreCase("infect"))
+        {
+            String prefix = args[1].toLowerCase();
+            for (InfectionType type : InfectionType.values())
+            {
+                String name = type.name().toLowerCase();
+                if (name.startsWith(prefix))
+                {
+                    suggestions.add(name);
+                }
+            }
+            return suggestions;
+        }
+
+        return suggestions;
     }
 }

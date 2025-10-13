@@ -4,6 +4,7 @@ import fr.byxis.fireland.Fireland;
 import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
+import io.lumine.mythic.core.mobs.MobExecutor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -33,9 +34,9 @@ public class InfectionManager
         return getData(_player).isInfected();
     }
 
-    public int getInfectionLevel(Player _player)
+    public InfectionType getInfectionType(Player _player)
     {
-        return getData(_player).m_infectionLevel();
+        return getData(_player).m_infectionType();
     }
 
     public String getInfectionName(Player _player)
@@ -58,13 +59,13 @@ public class InfectionManager
         return infect(_player);
     }
 
-    public boolean tryInfectWithLevel(Player _player, double _probability, int _level)
+    public boolean tryInfectWithLevel(Player _player, double _probability, InfectionType _type)
     {
         if (!canBeInfected(_player)) return false;
 
         if (probabilityCheck(_player, _probability)) return false;
 
-        return infectWithLevel(_player, _level);
+        return infectWithLevel(_player, _type);
     }
 
     public boolean infect(Player _player)
@@ -80,9 +81,9 @@ public class InfectionManager
         return true;
     }
 
-    public boolean infectWithLevel(Player _player, int _level)
+    public boolean infectWithLevel(Player _player, InfectionType _type)
     {
-        InfectionData newData = InfectionData.createInfectionWithLevel(_level);
+        InfectionData newData = InfectionData.createInfectionWithLevel(_type);
         m_repository.set(_player, newData);
         return true;
     }
@@ -99,10 +100,10 @@ public class InfectionManager
         m_repository.set(_player, newData);
     }
 
-    public void setLevel(Player _player, int _level)
+    public void setLevel(Player _player, InfectionType _type)
     {
         InfectionData currentData = getData(_player);
-        InfectionData newData = currentData.withLevel(_level);
+        InfectionData newData = currentData.withLevel(_type);
         m_repository.set(_player, newData);
     }
 
@@ -124,17 +125,15 @@ public class InfectionManager
     public void aggravateInfection(Player _player)
     {
         InfectionData currentData = getData(_player);
-        int newLevel = currentData.m_infectionLevel() + 1;
-        InfectionData newData = new InfectionData(newLevel, System.currentTimeMillis(), currentData.m_invincibilityUntil());
-        m_repository.set(_player, newData);
+        m_repository.set(_player, currentData.increaseLevel());
     }
 
     public void handleInfectedDeath(Player _player)
     {
         if (!isInfected(_player)) return;
 
-        int level = getInfectionLevel(_player);
-        MythicMob mob = getMobForLevel(level);
+        InfectionType level = getInfectionType(_player);
+        MythicMob mob = getMobForInfectionType(level);
 
         if (mob != null)
         {
@@ -143,13 +142,18 @@ public class InfectionManager
         cure(_player);
     }
 
-    private MythicMob getMobForLevel(int _level)
+    private MythicMob getMobForInfectionType(InfectionType _type)
     {
-        return switch (_level)
+        MobExecutor mobExecutor = MythicBukkit.inst().getMobManager();
+        return switch (_type)
         {
-            case 2, 3 -> MythicBukkit.inst().getMobManager().getMythicMob("Malabar").orElse(null);
-            case 4 -> MythicBukkit.inst().getMobManager().getMythicMob("Malabar").orElse(null);
-            default -> MythicBukkit.inst().getMobManager().getMythicMob("Infecte").orElse(null);
+            case SAFE -> null;
+            case PRIMARY -> mobExecutor.getMythicMob("Infecte").orElse(null);
+            case KERATINIC -> mobExecutor.getMythicMob("Blinde").orElse(null);
+            case BUBONIC -> mobExecutor.getMythicMob("Putrifieur").orElse(null);
+            case MYCELIAL -> mobExecutor.getMythicMob("Mycoris").orElse(null);
+            case BRUTAL -> mobExecutor.getMythicMob("Malabar").orElse(null);
+            case NECROPHAGIC -> mobExecutor.getMythicMob("Vautour").orElse(null);
         };
     }
 

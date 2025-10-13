@@ -22,7 +22,7 @@ public class InfectionTickSystem extends BukkitRunnable
 
     private final Plugin m_plugin;
     private final InfectionManager m_manager;
-    private final Map<Integer, InfectionLevelConfig> m_levelConfigs;
+    private final Map<InfectionType, InfectionLevelConfig> m_levelConfigs;
     private final Map<UUID, Set<Long>> m_sentWarnings;
 
     public InfectionTickSystem(Plugin _plugin, InfectionManager _manager)
@@ -37,7 +37,7 @@ public class InfectionTickSystem extends BukkitRunnable
 
     private void initializeInfectionLevels()
     {
-        m_levelConfigs.put(1, InfectionLevelConfig.builder()
+        m_levelConfigs.put(InfectionType.PRIMARY, InfectionLevelConfig.builder()
                 .deathTime(5)
                 .continuousDamage(1)
                 .addWarning(1, "§8Votre infection commence à se faire sentir...", 3)
@@ -49,7 +49,21 @@ public class InfectionTickSystem extends BukkitRunnable
                 .build()
         );
 
-        m_levelConfigs.put(2, InfectionLevelConfig.builder()
+        m_levelConfigs.put(InfectionType.BUBONIC, InfectionLevelConfig.builder()
+                .deathTime(5)
+                .continuousDamage(1)
+                .addWarning(1, "§8Vous sentez une douleur sourde dans vos membres...", 2)
+                .addWarning(2, "§8L'infection bubonique progresse !", 3)
+                .addWarning(3, "§8Vos ganglions commencent à enfler !", 3)
+                .addWarning(4, "§8Vous vous sentez de plus en plus mal ! Trouvez une seringue !", 4)
+                .addProgressiveEffect(PotionEffectType.WEAKNESS, 0)
+                .addEffectProgression(PotionEffectType.WEAKNESS, 2, 1)
+                .addEffectProgression(PotionEffectType.POISON, 3, 0)
+                .addEffectProgression(PotionEffectType.WEAKNESS, 4, 1)
+                .build()
+        );
+
+        m_levelConfigs.put(InfectionType.KERATINIC, InfectionLevelConfig.builder()
                 .deathTime(4)
                 .continuousDamage(2)
                 .addWarning(1, "§8Vos membres commencent à se rigidifier...", 2)
@@ -65,7 +79,7 @@ public class InfectionTickSystem extends BukkitRunnable
                 .build()
         );
 
-        m_levelConfigs.put(3, InfectionLevelConfig.builder()
+        m_levelConfigs.put(InfectionType.NECROPHAGIC, InfectionLevelConfig.builder()
                 .deathTime(3)
                 .continuousDamage(2)
                 .addWarning(1, "§8Vous sentez une faiblesse s'installer...", 3)
@@ -80,7 +94,7 @@ public class InfectionTickSystem extends BukkitRunnable
                 .build()
         );
 
-        m_levelConfigs.put(4, InfectionLevelConfig.builder()
+        m_levelConfigs.put(InfectionType.MYCELIAL, InfectionLevelConfig.builder()
                 .deathTime(4)
                 .continuousDamage(3)
                 .addWarning(0, "§8Des spores commencent à envahir vos poumons...", 3)
@@ -94,7 +108,7 @@ public class InfectionTickSystem extends BukkitRunnable
                 .build()
         );
 
-        m_levelConfigs.put(5, InfectionLevelConfig.builder()
+        m_levelConfigs.put(InfectionType.BRUTAL, InfectionLevelConfig.builder()
                 .deathTime(2)
                 .continuousDamage(4)
                 .addWarning(0, "§8Votre corps commence une transformation horrifiante...", 5)
@@ -128,12 +142,12 @@ public class InfectionTickSystem extends BukkitRunnable
                 continue;
             }
 
-            int level = data.m_infectionLevel();
+            InfectionType level = data.m_infectionType();
             InfectionLevelConfig config = m_levelConfigs.get(level);
 
             if (config == null)
             {
-                config = m_levelConfigs.get(1);
+                config = m_levelConfigs.get(InfectionType.PRIMARY);
             }
 
             processInfection(player, data, config);

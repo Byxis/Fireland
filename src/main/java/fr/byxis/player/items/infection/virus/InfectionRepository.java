@@ -81,7 +81,7 @@ public class InfectionRepository
             return InfectionData.HEALTHY;
         }
 
-        int level = m_config.getInt(path + ".level", 0);
+        InfectionType level = InfectionType.values()[m_config.getInt(path + ".level", 0)];
         long time = m_config.getLong(path + ".time", 0);
 
         Instant invincibilityUntil = null;
@@ -98,13 +98,13 @@ public class InfectionRepository
     {
         String path = "infected." + _uuid;
 
-        if (_data.m_infectionLevel() == 0 && _data.m_invincibilityUntil() == null)
+        if (_data.m_infectionType() == InfectionType.SAFE && _data.m_invincibilityUntil() == null)
         {
             m_config.set(path, null);
             return;
         }
 
-        m_config.set(path + ".level", _data.m_infectionLevel());
+        m_config.set(path + ".level", _data.m_infectionType().ordinal());
         m_config.set(path + ".time", _data.m_infectedSince());
 
         if (_data.m_invincibilityUntil() != null)

@@ -2,11 +2,11 @@ package fr.byxis.player.items.infection.virus;
 
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
+import io.lumine.mythic.bukkit.MythicBukkit;
+import io.lumine.mythic.core.mobs.MobExecutor;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Stray;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -40,12 +40,54 @@ public class InfectionListeners implements Listener
 
         Entity damager = _event.getDamager();
 
-        // Level 1 infection
-        if (damager instanceof Zombie || damager instanceof Stray)
+        MobExecutor mobExecutor = MythicBukkit.inst().getMobManager();
+
+        boolean isMythicMob = mobExecutor.isMythicMob(damager);
+
+        if (isMythicMob)
         {
-            if (m_manager.tryInfect(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE))
+            String internalName = mobExecutor.getMythicMobInstance(damager).getType().getInternalName();
+            if (internalName.equals("Infecte"))
             {
-                notifyInfection(_victim);
+                if (m_manager.tryInfect(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE))
+                {
+                    notifyInfection(_victim);
+                }
+            }
+            else if (internalName.equals("Blinde"))
+            {
+                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.KERATINIC))
+                {
+                    notifyInfection(_victim);
+                }
+            }
+            else if (internalName.equals("Malabar"))
+            {
+                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.BRUTAL))
+                {
+                    notifyInfection(_victim);
+                }
+            }
+            else if (internalName.equals("Vautour"))
+            {
+                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.NECROPHAGIC))
+                {
+                    notifyInfection(_victim);
+                }
+            }
+            else if (internalName.equals("Mycoris") || internalName.equals("Rejeton"))
+            {
+                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.NECROPHAGIC))
+                {
+                    notifyInfection(_victim);
+                }
+            }
+            else if (internalName.equals("Exploseur") || internalName.equals("Hurleur") || internalName.equals("Putrifieur"))
+            {
+                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.NECROPHAGIC))
+                {
+                    notifyInfection(_victim);
+                }
             }
         }
         // Infection by player with bare hands
@@ -53,8 +95,8 @@ public class InfectionListeners implements Listener
         {
             if (m_manager.isInfected(_attacker) && _attacker.getInventory().getItemInMainHand().getType() == Material.AIR)
             {
-                int level = m_manager.getInfectionLevel(_attacker);
-                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.PLAYER_INFECTION_CHANCE, level))
+                InfectionType type = m_manager.getInfectionType(_attacker);
+                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.PLAYER_INFECTION_CHANCE, type))
                 {
                     notifyInfection(_victim);
                 }
@@ -234,7 +276,7 @@ public class InfectionListeners implements Listener
         }
         else
         {
-            m_manager.infectWithLevel(_player, 5);
+            m_manager.infectWithLevel(_player, InfectionType.BRUTAL);
             _player.sendMessage("§c§lLe sérum a échoué... Vous êtes infecté !");
             _player.sendTitle("§c§lÉchec du sérum !", "§8Vous êtes infecté", 10, 70, 20);
             _player.playSound(_player.getLocation(), "minecraft:entity.infected.bite", 1, 1);

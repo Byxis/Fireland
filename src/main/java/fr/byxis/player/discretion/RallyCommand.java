@@ -1,9 +1,13 @@
 package fr.byxis.player.discretion;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.utilities.InGameUtilities;
+import io.lumine.mythic.api.adapters.AbstractEntity;
+import io.lumine.mythic.api.mobs.MythicMob;
+import io.lumine.mythic.bukkit.MythicBukkit;
+import io.lumine.mythic.core.mobs.ActiveMob;
+import io.lumine.mythic.core.mobs.MobExecutor;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +16,7 @@ import org.bukkit.entity.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public record RallyCommand(fr.byxis.fireland.Fireland main) implements CommandExecutor
+public record RallyCommand(Fireland main) implements CommandExecutor
 {
 
     private static boolean isParsable(String input) {
@@ -124,30 +128,47 @@ public record RallyCommand(fr.byxis.fireland.Fireland main) implements CommandEx
 
     private void rallyEntities(Player victim, long distance) {
         List<Entity> entities = nearbyEntities(victim.getLocation(), distance);
+        MobExecutor mobManager = MythicBukkit.inst().getMobManager();
         for (Entity entity : entities) {
             if (entity instanceof Zombie || entity instanceof Stray || entity instanceof WitherSkeleton)
             {
                 Monster mob = (Monster) entity;
-                if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish || mob.getTarget().getLocation().distance(mob.getLocation()) > victim.getLocation().distance(mob.getLocation())) {
+                if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish ||
+                        mob.getTarget().getLocation().distance(mob.getLocation()) >
+                                victim.getLocation().distance(mob.getLocation())) {
                     mob.setTarget(victim);
                     if (victim.getLocation().distance(mob.getLocation()) > 60D && Math.random() <= 0.1) {
                         victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
+                        InGameUtilities.playWorldSound(mob.getLocation(), "entity.infected.scream_far",
+                                SoundCategory.HOSTILE, 1f, 1f);
                     }
                 }
             }
-            else if (entity instanceof Wolf mob)
+            else if (mobManager.isMythicMob(entity))
             {
-                mob.setTarget(victim);
-                if (victim.getLocation().distance(mob.getLocation()) > 60D && Math.random() <= 0.1)
+                ActiveMob mythicMob = mobManager.getMythicMobInstance(entity);
+                if (mythicMob.getType().getInternalName().equalsIgnoreCase("Chien Infecte"))
                 {
-                    victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
+                    mythicMob.setTarget((AbstractEntity) victim);
+                    if (victim.getLocation().distance(mythicMob.getLocation().toPosition().toLocation()) > 60D &&
+                            Math.random() <= 0.1)
+                    {
+                        victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
+                        InGameUtilities.playWorldSound(mythicMob.getLocation().toPosition().toLocation(),
+                                "entity.infected.scream_far", SoundCategory.HOSTILE, 1f, 1f);
+                    }
                 }
             }
             else if (entity instanceof IronGolem)
             {
                 ((IronGolem) entity).setTarget(victim);
-                if (victim.getLocation().distance(entity.getLocation()) > 60D && Math.random() <= 0.1 && (((IronGolem) entity).getTarget() == null || (((IronGolem) entity).getTarget().getLocation().distance(entity.getLocation()) > victim.getLocation().distance(entity.getLocation())))) {
+                if (victim.getLocation().distance(entity.getLocation()) > 60D && Math.random() <= 0.1 &&
+                        (((IronGolem) entity).getTarget() == null ||
+                                (((IronGolem) entity).getTarget().getLocation().distance(entity.getLocation()) >
+                                        victim.getLocation().distance(entity.getLocation())))) {
                     victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
+                    InGameUtilities.playWorldSound(entity.getLocation(), "entity.infected.scream_far",
+                            SoundCategory.HOSTILE, 1f, 1f);
                 }
             }
         }

@@ -20,6 +20,7 @@ public class InfectionConstants
     public static final int SYRINGE_CUSTOM_MODEL_DATA = 102;
     public static final int VACCINE_CUSTOM_MODEL_DATA = 114;
     public static final int BERSERKER_SERUM_CUSTOM_MODEL_DATA = 113;
+    public static final int FUNGAL_VACCINE_CUSTOM_MODEL_DATA = 118;
 
     // Infection risk reductions
 

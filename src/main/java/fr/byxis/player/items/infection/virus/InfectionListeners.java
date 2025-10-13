@@ -143,6 +143,10 @@ public class InfectionListeners implements Listener
         {
             handleSyringeUse(player);
         }
+        if (isFungalSyringe(item))
+        {
+            handleFungalSyringeUse(player);
+        }
         else if (isVaccine(item))
         {
             handleVaccineUse(player);
@@ -178,6 +182,19 @@ public class InfectionListeners implements Listener
     private void handleSyringeUse(Player _player)
     {
         if (!m_manager.isInfected(_player)) return;
+        if (m_manager.getData(_player).m_infectionType() == InfectionType.MYCELIAL) return;
+
+        m_manager.cure(_player);
+        InGameUtilities.playWorldSound(_player.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
+        _player.sendMessage("§8Vous avez soigné votre infection !");
+
+        consumeItem(_player);
+    }
+
+    private void handleFungalSyringeUse(Player _player)
+    {
+        if (!m_manager.isInfected(_player)) return;
+        if (m_manager.getData(_player).m_infectionType() != InfectionType.MYCELIAL) return;
 
         m_manager.cure(_player);
         InGameUtilities.playWorldSound(_player.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
@@ -295,6 +312,11 @@ public class InfectionListeners implements Listener
     private boolean isSyringe(ItemStack _item)
     {
         return hasCustomModelData(_item, InfectionConstants.SYRINGE_CUSTOM_MODEL_DATA);
+    }
+
+    private boolean isFungalSyringe(ItemStack _item)
+    {
+        return hasCustomModelData(_item, InfectionConstants.FUNGAL_VACCINE_CUSTOM_MODEL_DATA);
     }
 
     private boolean isVaccine(ItemStack _item)

@@ -18,14 +18,14 @@ import static fr.byxis.player.items.infection.Mask.hasGazMask;
 
 public class SporeDamage {
 
-    private final Fireland main;
+    private final Fireland m_main;
     private final InfectionManager m_manager;
-    private final HashMap<UUID, Boolean> isAffectedByToxicity;
+    private final HashMap<UUID, Boolean> m_isAffectedByToxicity;
 
     public SporeDamage(Fireland _main, InfectionManager _infectionManager)
     {
-        this.main = _main;
-        this.isAffectedByToxicity = new HashMap<>();
+        this.m_main = _main;
+        this.m_isAffectedByToxicity = new HashMap<>();
         this.m_manager = _infectionManager;
         loop();
     }
@@ -41,7 +41,7 @@ public class SporeDamage {
                     toxicityDamageHandler(p);
                 }
             }
-        }.runTaskTimer(main, 0, 20);
+        }.runTaskTimer(m_main, 0, 20);
     }
 
 
@@ -51,9 +51,9 @@ public class SporeDamage {
         {
             return;
         }
-        if (isAffectedByToxicity.containsKey(p.getUniqueId()))
+        if (m_isAffectedByToxicity.containsKey(p.getUniqueId()))
         {
-            if (isAffectedByToxicity.get(p.getUniqueId()))
+            if (m_isAffectedByToxicity.get(p.getUniqueId()))
             {
                 if (!m_manager.getData(p).isInfected())
                 {
@@ -68,12 +68,12 @@ public class SporeDamage {
                     }
                 }
             }
-            isAffectedByToxicity.replace(p.getUniqueId(), isAffected(p));
+            m_isAffectedByToxicity.replace(p.getUniqueId(), isAffected(p));
 
         }
         else
         {
-            isAffectedByToxicity.put(p.getUniqueId(), isAffected(p));
+            m_isAffectedByToxicity.put(p.getUniqueId(), isAffected(p));
         }
     }
 

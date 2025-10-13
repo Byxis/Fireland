@@ -1,8 +1,10 @@
 package fr.byxis.event;
 
 import fr.byxis.fireland.Fireland;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -27,17 +29,19 @@ public class ZombieManager implements Listener
 
     @EventHandler
     public void zombieDamageEvent(EntityDamageEvent e) {
+        Set<EntityDamageEvent.DamageCause> vulnerableCauses = EnumSet.of(
+                EntityDamageEvent.DamageCause.FIRE,
+                EntityDamageEvent.DamageCause.FIRE_TICK,
+                EntityDamageEvent.DamageCause.LAVA,
+                EntityDamageEvent.DamageCause.MELTING,
+                EntityDamageEvent.DamageCause.HOT_FLOOR
+        );
+
         if (e.getEntityType() == EntityType.ZOMBIE_VILLAGER && e.getEntity() instanceof LivingEntity) {
             LivingEntity zombie = (LivingEntity) e.getEntity();
             UUID zombieId = zombie.getUniqueId();
 
-            Set<EntityDamageEvent.DamageCause> vulnerableCauses = EnumSet.of(
-                    EntityDamageEvent.DamageCause.FIRE,
-                    EntityDamageEvent.DamageCause.FIRE_TICK,
-                    EntityDamageEvent.DamageCause.LAVA,
-                    EntityDamageEvent.DamageCause.MELTING,
-                    EntityDamageEvent.DamageCause.HOT_FLOOR
-            );
+
 
             if (vulnerableCauses.contains(e.getCause())) {
                 if (zombie.hasPotionEffect(PotionEffectType.RESISTANCE)) {
@@ -59,6 +63,32 @@ public class ZombieManager implements Listener
                 }
             } else if (zombie.hasPotionEffect(PotionEffectType.RESISTANCE)) {
                 e.setDamage(0);
+            }
+        }
+        else if (e.getEntity() instanceof Player p)
+        {
+            float protection = 0;
+
+            if (vulnerableCauses.contains(e.getCause()))
+            {
+                if (p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.CHAINMAIL_HELMET)
+                {
+                    protection += 0.1f;
+                }
+                if (p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.CHAINMAIL_CHESTPLATE)
+                {
+                    protection += 0.1f;
+                }
+                if (p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.CHAINMAIL_LEGGINGS)
+                {
+                    protection += 0.1f;
+                }
+                if (p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.CHAINMAIL_BOOTS)
+                {
+                    protection += 0.1f;
+                }
+
+                e.setDamage(e.getDamage() * (1 - protection));
             }
         }
     }

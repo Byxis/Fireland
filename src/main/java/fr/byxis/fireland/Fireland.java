@@ -49,6 +49,7 @@ import fr.byxis.storage.StorageEvent;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -222,7 +223,6 @@ public class Fireland extends JavaPlugin {
         }.runTaskTimer(this, 0, 2000);
 
         new BukkitRunnable() {
-            @SuppressWarnings({ "deprecation" })
             @Override
             public void run() {
                 if (hashMapManager.getBooster() != null && hashMapManager.getBooster().getFinished().before(new Date(System.currentTimeMillis())))
@@ -250,7 +250,7 @@ public class Fireland extends JavaPlugin {
 
                         if (p.isClimbing() || p.isSprinting() || p.isSwimming())
                         {
-                            if (!p.isOnGround())
+                            if (!((Entity) p).isOnGround())
                             {
                                 playerDBConfig.set("thirst." + p.getUniqueId(), thirst - 0.4);
                                 cfgm.savePlayerDB();
@@ -263,7 +263,7 @@ public class Fireland extends JavaPlugin {
                         }
 
                         if (thirst <= 0f) {
-                            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 0, false, false), true);
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 0, false, false));
                             if (p.getHealth() > 1)
                             {
                                 p.damage(1);

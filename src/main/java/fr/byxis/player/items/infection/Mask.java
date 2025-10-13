@@ -27,7 +27,7 @@ public class Mask implements Listener
         {
             if (p.getInventory().getHelmet().getType() == Material.RED_DYE && getDurability(p.getInventory().getHelmet()) >= 0)
             {
-                p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 800, 2, false, false), true);
+                p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 800, 2, false, false));
                 remLoreDurability(p.getInventory().getHelmet(), 0.1f);
             }
             else if (p.getGameMode() != GameMode.CREATIVE && !p.hasPermission("fireland.command.n"))

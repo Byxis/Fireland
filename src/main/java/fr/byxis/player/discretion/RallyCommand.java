@@ -147,7 +147,7 @@ public record RallyCommand(Fireland main) implements CommandExecutor
             else if (mobManager.isMythicMob(entity))
             {
                 ActiveMob mythicMob = mobManager.getMythicMobInstance(entity);
-                if (mythicMob.getType().getInternalName().equalsIgnoreCase("Chien Infecte"))
+                if (mythicMob.getType().getInternalName().equalsIgnoreCase("Chieninfecte"))
                 {
                     mythicMob.setTarget((AbstractEntity) victim);
                     if (victim.getLocation().distance(mythicMob.getLocation().toPosition().toLocation()) > 60D &&

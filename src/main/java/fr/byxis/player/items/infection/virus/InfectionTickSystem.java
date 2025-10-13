@@ -1,13 +1,11 @@
-package fr.byxis.player.items.infection;
+package fr.byxis.player.items.infection.virus;
 
 import fr.byxis.fireland.utilities.InGameUtilities;
-import fr.byxis.player.items.infection.virus.InfectionData;
-import fr.byxis.player.items.infection.virus.InfectionManager;
 import fr.byxis.player.packet.PacketFunctions;
 import org.bukkit.GameMode;
-import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -260,8 +258,7 @@ public class InfectionTickSystem extends BukkitRunnable
             }
 
             _player.addPotionEffect(
-                    new PotionEffect(effectType, 240, currentAmplifier, false, false),
-                    true
+                    new PotionEffect(effectType, 240, currentAmplifier, false, false)
             );
         }
     }
@@ -302,11 +299,11 @@ public class InfectionTickSystem extends BukkitRunnable
         {
             private long m_deathTime = 10;
             private int m_continuousDamage = 0;
-            private Map<Long, WarningData> m_specificWarnings = new HashMap<>();
+            private final Map<Long, WarningData> m_specificWarnings = new HashMap<>();
             private long m_warningInterval = 0;
             private String m_warningMessage = "";
-            private Map<PotionEffectType, Integer> m_progressiveEffects = new HashMap<>();
-            private Map<PotionEffectType, TreeMap<Long, Integer>> m_effectProgressions = new HashMap<>();
+            private final Map<PotionEffectType, Integer> m_progressiveEffects = new HashMap<>();
+            private final Map<PotionEffectType, TreeMap<Long, Integer>> m_effectProgressions = new HashMap<>();
 
             public Builder deathTime(long _minutes)
             {

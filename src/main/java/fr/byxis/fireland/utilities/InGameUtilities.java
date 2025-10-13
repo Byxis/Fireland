@@ -17,7 +17,7 @@ import org.fusesource.jansi.Ansi;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InGameUtilities implements Listener {
+public class    InGameUtilities implements Listener {
 
 
     private static Fireland main;

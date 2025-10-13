@@ -1,6 +1,7 @@
 package fr.byxis.player.items.infection;
 
 import fr.byxis.fireland.Fireland;
+import fr.byxis.player.items.infection.virus.InfectionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -12,18 +13,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static fr.byxis.player.items.infection.InfectedPlayer.isInfected;
-import static fr.byxis.player.items.infection.InfectedPlayer.setInfection;
+import static fr.byxis.player.items.infection.Mask.hasGazMask;
 
 public class SporeDamage {
 
     private final Fireland main;
+    private final InfectionManager m_manager;
     private final HashMap<UUID, Boolean> isAffectedByToxicity;
 
-    public SporeDamage(Fireland _main)
+    public SporeDamage(Fireland _main, InfectionManager _infectionManager)
     {
         this.main = _main;
         this.isAffectedByToxicity = new HashMap<>();
+        this.m_manager = _infectionManager;
         loop();
     }
 
@@ -52,20 +54,13 @@ public class SporeDamage {
         {
             if (isAffectedByToxicity.get(p.getUniqueId()))
             {
-                if (isInfected(p))
-                {
-                    p.damage(3);
-                    EntityDamageEvent e = new EntityDamageEvent(p, EntityDamageEvent.DamageCause.POISON, 3);
-                    p.setLastDamageCause(e);
-                }
-                else
+                if (!m_manager.getData(p).isInfected())
                 {
                     p.damage(1);
                     EntityDamageEvent e = new EntityDamageEvent(p, EntityDamageEvent.DamageCause.POISON, 1);
                     p.setLastDamageCause(e);
-                    if (Math.random() < 0.1)
+                    if (m_manager.tryInfectWithLevel(p, 1, 4))
                     {
-                        setInfection(p, true);
                         p.sendMessage("§8Vous avez été infecté par les spores ! Trouvez vite une seringue avant l'infection ne vous tue");
                         p.sendTitle("§8Vous avez été infecté !", "");
                         p.playSound(p.getLocation(), "minecraft:entity.infected.bite", 1, 1);
@@ -83,7 +78,7 @@ public class SporeDamage {
 
     private boolean isAffected(Player p) {
         Location loc = p.getLocation();
-        if ((p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.BROWN_DYE))
+        if (hasGazMask(p))
         {
             return false;
         }

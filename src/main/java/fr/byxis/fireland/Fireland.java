@@ -62,7 +62,6 @@ import java.util.Date;
 
 import static fr.byxis.fireland.Save.saveAll;
 import static fr.byxis.player.items.morphine.FallDamage.hasLegsBroken;
-import static fr.byxis.player.items.infection.InfectedPlayer.*;
 import static fr.byxis.player.packet.PacketFunctions.sendWorldBorderWarningDistancePacket;
 
 
@@ -353,71 +352,6 @@ public class Fireland extends JavaPlugin {
 
             }
         }.runTaskTimer(this, 0, 400);
-
-        new BukkitRunnable() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public void run() {
-                for (Player p : getServer().getOnlinePlayers())
-                {
-                    if (p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE))
-                    {
-
-                        boolean infected = isInfected(p);
-                        if (infected) {
-                            int timer = getTimeInfected(p);
-                            int level = getLevelInfection(p);
-                            if (level == 0)
-                            {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 240, 0, false, false), true);
-
-                                if (playerDBConfig.getString("infected." + p.getUniqueId() + ".time") == null)
-                                {
-                                    playerDBConfig.set("infected." + p.getUniqueId() + ".time", 1);
-                                }
-                                else
-                                {
-                                    playerDBConfig.set("infected." + p.getUniqueId() + ".time", timer + 1);
-                                }
-                                cfgm.savePlayerDB();
-                                if (timer >= 120)
-                                {
-                                    p.sendMessage("§8Votre infection a causé votre perte....");
-                                    p.setHealth(0.0D);
-                                }
-                                else if (timer == 20 || timer == 40 || timer == 60 || timer == 80)
-                                {
-                                    p.sendMessage("§8Votre infection s'aggrave !");
-                                    p.damage(3);
-                                }
-                                else if (timer == 100)
-                                {
-                                    p.sendMessage("§8Votre infection est très grave ! Cherchez vite une seringue !");
-                                    p.damage(3);
-                                }
-                                else if (p.getHealth() > 2)
-                                {
-                                    p.damage(2);
-                                }
-                            }
-                            else if (level >= 1)
-                            {
-                                if (timer % 10 == 0 && timer <= 30)
-                                {
-                                    p.sendMessage("§8Votre infection vous fait de plus en plus souffrir !");
-                                }
-                                if (timer >= 30)
-                                {
-                                    p.sendMessage("§8Votre infection a causé votre perte....");
-                                    p.setHealth(0.0D);
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
-        }.runTaskTimer(this, 0, 100);
         new BukkitRunnable()
         {
             @Override
@@ -768,5 +702,10 @@ public class Fireland extends JavaPlugin {
     public static Economy getEco()
     {
         return eco;
+    }
+
+    public PlayerAddonsEnabler getPlayerAddonsEnabler()
+    {
+        return playerAddonsEnabler;
     }
 }

@@ -28,6 +28,13 @@ public class PlayerAddonsEnabler {
         _main.getCommand("rank").setExecutor(rankCustomMessage);
         _main.getCommand("rank").setTabCompleter(rankCustomMessage);
         _main.getServer().getPluginManager().registerEvents(new PvPManager(_main), _main);
-        _main.getServer().getPluginManager().registerEvents(new PlayerScoreboardManager(_main), _main);
+        _main.getServer().getPluginManager().registerEvents(new PlayerScoreboardManager(_main, item.getInfectionManager()), _main);
+    }
+
+    public void SaveAll()
+    {
+        item.SaveAll();
+        QuestManager.saveProgress();
+        PrimeEvent.savePrime();
     }
 }

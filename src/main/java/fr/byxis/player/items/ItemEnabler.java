@@ -3,11 +3,11 @@ package fr.byxis.player.items;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.player.items.backpack.BackPack;
 import fr.byxis.player.items.compass.Compass;
+import fr.byxis.player.items.infection.InfectionTickSystem;
+import fr.byxis.player.items.infection.virus.*;
 import fr.byxis.player.items.lamp.Lamp;
 import fr.byxis.player.items.notes.OpenNotes;
 import fr.byxis.player.items.parachute.Parachute;
-import fr.byxis.player.items.serum.Serum;
-import fr.byxis.player.items.infection.InfectedPlayer;
 import fr.byxis.player.items.infection.Mask;
 import fr.byxis.player.items.infection.SporeDamage;
 import fr.byxis.player.items.water.BottleFilled;
@@ -18,6 +18,7 @@ public class ItemEnabler
 
     private final Fireland main;
     private SporeDamage sporeDamage;
+    private InfectionManager infectionManager;
 
     public ItemEnabler(Fireland _main)
     {
@@ -31,19 +32,22 @@ public class ItemEnabler
         water();
         boussole();
         notes();
-        _main.getServer().getPluginManager().registerEvents(new Serum(), _main);
     }
 
     private void toxic()
     {
-        //Infection
-        main.getCommand("cure").setExecutor(new InfectedPlayer(main));
-        main.getCommand("infect").setExecutor(new InfectedPlayer(main));
-        main.getServer().getPluginManager().registerEvents(new InfectedPlayer(main), main);
+        infectionManager = new InfectionManager(main, new InfectionRepository(main.getConfig()));
+        infectionManager.loadAll();
+        InfectionCommands infectionCommands = new InfectionCommands(infectionManager);
+        main.getCommand("cure").setExecutor(infectionCommands);
+        main.getCommand("infect").setExecutor(infectionCommands);
+        main.getServer().getPluginManager().registerEvents(new InfectionListeners(infectionManager), main);
+        InfectionTickSystem infectionTickSystem = new InfectionTickSystem(main, infectionManager);
+        infectionTickSystem.start();
 
         //Mask
         main.getServer().getPluginManager().registerEvents(new Mask(), main);
-        sporeDamage = new SporeDamage(main);
+        sporeDamage = new SporeDamage(main, infectionManager);
     }
 
     private void backPack()
@@ -82,4 +86,16 @@ public class ItemEnabler
 
     }
 
+    public void SaveAll()
+    {
+        if (infectionManager != null)
+        {
+            infectionManager.saveAll();
+        }
+    }
+
+    public InfectionManager getInfectionManager()
+    {
+        return infectionManager;
+    }
 }

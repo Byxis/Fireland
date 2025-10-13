@@ -43,6 +43,17 @@ public class PacketPlayer implements CommandExecutor {
                             return true;
                         }
                     }
+                    try
+                    {
+                        float intensity = Float.parseFloat(strings[1]);
+                        InGameUtilities.sendPlayerInformation(p, "Packet envoyé avec une intensité de " + intensity + ".");
+                        playTestBorderPacket(p, intensity);
+                        return true;
+                    }
+                    catch (NumberFormatException e)
+                    {
+                        // Not a number
+                    }
                     InGameUtilities.sendPlayerError(p, "Personne non trouvée.");
                     return false;
                 }
@@ -67,6 +78,18 @@ public class PacketPlayer implements CommandExecutor {
     private void playTestBorderPacket(Player p)
     {
         PacketFunctions.sendWorldBorderWarningDistancePacket(p, 1);
+        new BukkitRunnable()
+        {
+            @Override
+            public void run() {
+                PacketFunctions.sendWorldBorderWarningDistancePacket(p, 0);
+            }
+        }.runTaskLater(main, 20);
+    }
+
+    private void playTestBorderPacket(Player p, float intensity)
+    {
+        PacketFunctions.sendWorldBorderWarningDistancePacket(p, intensity);
         new BukkitRunnable()
         {
             @Override

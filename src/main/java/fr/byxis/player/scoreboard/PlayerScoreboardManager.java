@@ -1,6 +1,7 @@
 package fr.byxis.player.scoreboard;
 
 import fr.byxis.fireland.Fireland;
+import fr.byxis.player.items.infection.virus.InfectionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -18,12 +19,12 @@ public class PlayerScoreboardManager implements @NotNull Listener {
 
     private static Scoreboard m_scoreboard;
 
-    public PlayerScoreboardManager(Fireland _main)
+    public PlayerScoreboardManager(Fireland _main, InfectionManager _manager)
     {
         m_main = _main;
         m_manager = Bukkit.getScoreboardManager();
         m_scoreboard = m_manager.getMainScoreboard();
-        m_sbManager = new SideBoardManager(m_main);
+        m_sbManager = new SideBoardManager(m_main, _manager);
         m_ntManager = new NameTagManager(m_main);
 
         m_main.getServer().getPluginManager().registerEvents(m_ntManager, m_main);

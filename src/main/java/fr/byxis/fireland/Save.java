@@ -9,12 +9,14 @@ public class Save {
 
     public static void saveAll(Fireland main)
     {
-        QuestManager.saveProgress();
-        SaveEvent.saveAllPlayerDatas();
+        if (main.getPlayerAddonsEnabler() != null) {
+            main.getPlayerAddonsEnabler().SaveAll();
+        }
         if (main.getEssaimManager() != null) {
             main.getEssaimManager().getConfigService().saveConfiguration();
         }
-        PrimeEvent.savePrime();
+
+        SaveEvent.saveAllPlayerDatas();
         Bank.saveAllBankStorage();
 
     }

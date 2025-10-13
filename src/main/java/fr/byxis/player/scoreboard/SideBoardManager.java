@@ -3,6 +3,8 @@ package fr.byxis.player.scoreboard;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.HashMapManager;
 import fr.byxis.jeton.JetonManager;
+import fr.byxis.player.items.infection.virus.InfectionData;
+import fr.byxis.player.items.infection.virus.InfectionManager;
 import fr.byxis.player.primes.PrimeEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
@@ -12,10 +14,12 @@ import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 public class SideBoardManager {
 
     private final Fireland m_main;
+    private final InfectionManager m_manager;
 
-    public SideBoardManager(Fireland _main)
+    public SideBoardManager(Fireland _main, InfectionManager _manager)
     {
         m_main = _main;
+        m_manager = _manager;
     }
 
     public void updateSideBoard(Player _p, Scoreboard _mainBoard, Scoreboard _playerBoard)
@@ -104,9 +108,9 @@ public class SideBoardManager {
     private String getStateText(Player p)
     {
         String state = "";
-        if (m_main.getCfgm().getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state"))
+        if (m_manager.isInfected(p))
         {
-            state += "§2infecté";
+            state += "§2Infection " + m_manager.getInfectionName(p);
         }
         if (m_main.getCfgm().getPlayerDB().getDouble("thirst." + p.getUniqueId()) <= 10)
         {

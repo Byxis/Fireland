@@ -34,7 +34,7 @@ public class Mask implements Listener
             {
                 p.removePotionEffect(PotionEffectType.NIGHT_VISION);
             }
-            if (p.getInventory().getHelmet().getType() == Material.BROWN_DYE && getDurability(p.getInventory().getHelmet()) > 0)
+            if (hasGazMask(p))
             {
                 p.removePotionEffect(PotionEffectType.BLINDNESS);
                 p.removePotionEffect(PotionEffectType.NAUSEA);
@@ -87,21 +87,48 @@ public class Mask implements Listener
     }
 
     @EventHandler
-    public void playerDamage(EntityDamageEvent e)
+    public void playerDamage(EntityDamageEvent _damageEvent)
     {
-        if (e.getEntity() instanceof Player p)
+        if (_damageEvent.getEntity() instanceof Player _player)
         {
-            if (p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.BROWN_DYE && getDurability(p.getInventory().getHelmet()) > 0)
+            if (hasGazMask(_player))
             {
-                if (e.getCause() == EntityDamageEvent.DamageCause.POISON)
+                if (_damageEvent.getCause() == EntityDamageEvent.DamageCause.POISON)
                 {
-                    e.setCancelled(true);
-                    e.setDamage(0);
-                    p.removePotionEffect(PotionEffectType.POISON);
-                    remLoreDurability(p.getInventory().getHelmet(), 0.5f);
+                    _damageEvent.setCancelled(true);
+                    _damageEvent.setDamage(0);
+                    _player.removePotionEffect(PotionEffectType.POISON);
+                    remLoreDurability(_player.getInventory().getHelmet(), 0.5f);
                 }
             }
         }
+    }
+
+    public static boolean hasGazMask(Player _player)
+    {
+        if (_player.getInventory().getHelmet() == null) return false;
+        Material mat = _player.getInventory().getHelmet().getType();
+        if (mat == Material.BROWN_DYE && getDurability(_player.getInventory().getHelmet()) > 0)
+        {
+            return true;
+        }
+        else if (mat == Material.NETHERITE_HELMET)
+        {
+            return true;
+        }
+
+        /* TO BE IMPLEMENTED IN 1.12.10
+        else if (
+                mat == Material.COPPER_HELMET &&
+                        _player.getInventory().getChestplate() != null && _player.getInventory().getChestplate().getType() == Material.COPPER_CHESTPLATE &&
+                        _player.getInventory().getLeggings() != null && _player.getInventory().getLeggings().getType() == Material.COPPER_LEGGINGS &&
+                        _player.getInventory().getBoots() != null && _player.getInventory().getBoots().getType() == Material.COPPER_BOOTS
+        )
+        {
+            return true;
+        }
+        */
+        return false;
     }
 
 }

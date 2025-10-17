@@ -226,12 +226,12 @@ public class InfectionTickSystem extends BukkitRunnable
     private void playSickSound(Player _player, long _currentMinute, long _deathTime)
     {
         double progression = Math.min(1.0, (double) _currentMinute / _deathTime);
-        double baseProbability = 0.05 + (0.45 * progression);
+        double baseProbability = 0.15 + (0.7 * progression);
 
         if (progression > 0.8)
         {
             double finalBoost = (progression - 0.8) / 0.2;
-            baseProbability = 0.05 + (0.45 * 0.8) + (0.14 * finalBoost);
+            baseProbability = 0.15 + (0.7 * 0.8) + (0.3 * finalBoost);
         }
 
         double randomValue = ThreadLocalRandom.current().nextDouble();

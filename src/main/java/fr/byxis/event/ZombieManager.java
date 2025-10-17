@@ -65,32 +65,6 @@ public class ZombieManager implements Listener
                 e.setDamage(0);
             }
         }
-        else if (e.getEntity() instanceof Player p)
-        {
-            float protection = 0;
-
-            if (vulnerableCauses.contains(e.getCause()))
-            {
-                if (p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.CHAINMAIL_HELMET)
-                {
-                    protection += 0.1f;
-                }
-                if (p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.CHAINMAIL_CHESTPLATE)
-                {
-                    protection += 0.1f;
-                }
-                if (p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.CHAINMAIL_LEGGINGS)
-                {
-                    protection += 0.1f;
-                }
-                if (p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.CHAINMAIL_BOOTS)
-                {
-                    protection += 0.1f;
-                }
-
-                e.setDamage(e.getDamage() * (1 - protection));
-            }
-        }
     }
 
 }

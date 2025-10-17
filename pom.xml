@@ -246,4 +246,20 @@
         </dependency>
         <!--  OTHER DEPENDANCY  -->
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <build>
+                <directory>${project.basedir}/target/dev</directory>
+            </build>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <build>
+                <directory>${project.basedir}/target/prod</directory>
+            </build>
+        </profile>
+    </profiles>
+
 </project>

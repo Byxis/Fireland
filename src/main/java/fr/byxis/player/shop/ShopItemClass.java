@@ -4,65 +4,71 @@ import org.bukkit.Material;
 
 public class ShopItemClass {
 
-    private final String itemName;
-    private final Material mat;
-    private final short dura;
-    private final String command;
-    private final int price;
-    private final int sell;
-    private final int customModelData;
-    private final boolean show;
+    private final String m_itemName;
+    private final Material m_mat;
+    private final short m_dura;
+    private final String m_command;
+    private final int m_price;
+    private final int m_sell;
+    private final int m_customModelData;
+    private final boolean m_show;
+    private final String m_currency;
 
-    public ShopItemClass(String _itemName, Material _mat, short _dura, String _command, int _price, int _sell, int _customModelData, boolean _show)
+    public ShopItemClass(String _itemName, Material _mat, short _dura, String _command, int _price, int _sell, int _customModelData, boolean _show, String _currency)
     {
-        this.itemName = _itemName;
-        this.mat = _mat;
-        this.dura = _dura;
-        this.command = _command;
-        this.price = _price;
-        this.sell = _sell;
-        this.customModelData = _customModelData;
-        this.show = _show;
+        this.m_itemName = _itemName;
+        this.m_mat = _mat;
+        this.m_dura = _dura;
+        this.m_command = _command;
+        this.m_price = _price;
+        this.m_sell = _sell;
+        this.m_customModelData = _customModelData;
+        this.m_show = _show;
+        this.m_currency = _currency;
     }
 
     public String getItemName()
     {
-        return itemName;
+        return m_itemName;
     }
 
     public Material getMat()
     {
-        return mat;
+        return m_mat;
     }
 
     public short getDura()
     {
-        return dura;
+        return m_dura;
     }
 
     public String getCommand()
     {
-        return command;
+        return m_command;
     }
 
     public int getPrice()
     {
-        return price;
+        return m_price;
     }
 
     public int getSell()
     {
-        return sell;
+        return m_sell;
     }
 
     public int getCustomModelData()
     {
-        return customModelData;
+        return m_customModelData;
     }
 
     public boolean isShow()
     {
-        return show;
+        return m_show;
+    }
+
+    public String getCurrency() {
+        return m_currency;
     }
 
 }

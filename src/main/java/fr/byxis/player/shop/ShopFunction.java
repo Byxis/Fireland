@@ -45,7 +45,7 @@ public class ShopFunction {
 
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show" +
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show, item_shop.currency" +
                     " FROM item_shop INNER JOIN items" +
                     " ON item_shop.item_name = items.item_name" +
                     " WHERE item_shop.shop = ?;");
@@ -53,7 +53,7 @@ public class ShopFunction {
             final ResultSet rs = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
             while (rs.next()) {
-                ShopItemClass item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8));
+                ShopItemClass item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getString(9));
                 if (item.isShow())
                 {
                     items.add(item);
@@ -75,7 +75,7 @@ public class ShopFunction {
 
             final Connection connection = firelandConnection.getConnection();
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show" +
+            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show, item_shop.currency" +
                     " FROM item_shop INNER JOIN items" +
                     " ON item_shop.item_name = items.item_name" +
                     " WHERE item_shop.shop = ?" +
@@ -85,7 +85,7 @@ public class ShopFunction {
             final ResultSet rs = preparedStatement1.executeQuery();
             //On vérifie s'il y a un résultat à la requête
             if (rs.next()) {
-                item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8));
+                item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getString(9));
             }
             return item;
         } catch (SQLException e) {
@@ -147,7 +147,7 @@ public class ShopFunction {
             }
             ShopItemClass item = _items.get(i);
             List<String> lore = new ArrayList<>();
-            if (_shop.contains("skin"))
+            if (item.getCurrency().equals("J"))
             {
                 if (PermissionUtilities.hasPermission(p, item.getCommand()))
                 {
@@ -155,32 +155,13 @@ public class ShopFunction {
                 }
                 else
                 {
-                    lore.add("§8Achat: §6" + getPriceText(item, p, true, _shop));
+                    lore.add("§8Achat: §6" + getPriceText(item, p, _shop));
                 }
             }
-            else if (_shop.contains("Pets"))
+            else if (item.getCurrency().equals("$"))
             {
-                if (PermissionUtilities.hasPermission(p, item.getCommand()))
-                {
-                    lore.add("§aPossédé");
-                }
-                else
-                {
-                    if (item.getCommand().contains("Chien Tactique") || item.getCommand().contains("Drone")
-                            || (item.getCommand().contains("Dog") && item.getCommand().contains("bot")))
-                    {
-                        lore.add("§8Achat: §6" + getPriceText(item, p, false, _shop));
-                    }
-                    else
-                    {
-                        lore.add("§8Achat: §6" + item.getPrice() + "$");
-                    }
-                }
-            }
-            else
-            {
-                lore.add("§8Achat: §6" + getPriceText(item, p, false, _shop));
-                lore.add("§8Vente: §6" + getSellText(item, p, false));
+                lore.add("§8Achat: §6" + getPriceText(item, p, _shop));
+                lore.add("§8Vente: §6" + getSellText(item));
             }
             _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(
                     InventoryUtilities.setItemMetaLore(item.getMat(), "§r§7" + item.getItemName(),
@@ -188,9 +169,9 @@ public class ShopFunction {
         }
     }
 
-    public String getPriceText(ShopItemClass item, Player p, boolean isSkinShop, String _shop)
+    public String getPriceText(ShopItemClass item, Player p, String _shop)
     {
-        if (isSkinShop)
+        if (item.getCurrency().equals("J"))
         {
             return "§b" + item.getPrice() + "⛁";
         }
@@ -212,9 +193,9 @@ public class ShopFunction {
 
     }
 
-    public String getSellText(ShopItemClass item, Player p, boolean isSkinShop)
+    public String getSellText(ShopItemClass item)
     {
-        if (isSkinShop)
+        if (item.getCurrency().equals("J"))
         {
             return "";
         }
@@ -317,16 +298,11 @@ public class ShopFunction {
     public void buyItem(ItemStack _itemClicked, Player _p, String _shop, String _title)
     {
         String name = _itemClicked.getItemMeta().getDisplayName();
-        //name = name.replaceAll("[§.{1}]", "");
         name = name.replaceAll("§7", "");
         ShopItemClass item = getAnItemOnShop(_shop.replaceAll(" ", "_"), name);
-
-        boolean isSkinShop = _title.contains("skins");
-        boolean isPetShop = _title.contains("Pets");
-
         if (item != null)
         {
-            if (isSkinShop)
+            if (item.getCurrency().equals("J"))
             {
                 if (PermissionUtilities.hasPermission(_p, item.getCommand()))
                 {
@@ -341,44 +317,11 @@ public class ShopFunction {
                     InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                 }
             }
-            if (isPetShop)
-            {
-                if (PermissionUtilities.hasPermission(_p, item.getCommand()))
-                {
-                    InGameUtilities.sendPlayerError(_p, "Vous avez déjà ce skin !");
-                }
-                else if (item.getCommand().contains("Chien Tactique") || item.getCommand().contains("Drone")
-                        || (item.getCommand().contains("Dog") && item.getCommand().contains("bot")))
-                {
-                    PermissionUtilities.addPermission(_p, item.getCommand());
-                    double balance = getEco().getBalance(_p);
-                    if (item.getPrice() <= balance)
-                    {
-                        getEco().withdrawPlayer(_p, item.getPrice());
-                        _p.sendMessage("§aVous avez acheté le familier " + item.getItemName() + "§r§a pour §c" +
-                                item.getPrice() + "$ §a!");
-                    }
-                    else
-                    {
-                        InGameUtilities.sendPlayerError(_p, "Vous n'avez pas assez d'argent.");
-                        PermissionUtilities.removePermission(_p, item.getCommand());
-                        return;
-                    }
-                }
-                else if (JetonManager.payJetons(_p, item.getPrice(),
-                        "Achat du skin " + item.getItemName(), false, true))
-                {
-                    PermissionUtilities.addPermission(_p, item.getCommand());
-                    InGameUtilities.sendPlayerInformation(_p, "Vous avez acheté le familier " + item.getItemName()
-                            + " pour " + item.getPrice() + "§f⛁ ! Merci pour votre achat !");
-                    InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
-                }
-            }
-            else
+            else if (item.getCurrency().equals("$"))
             {
                 double balance = getEco().getBalance(_p);
                 double prix;
-                if (!item.getItemName().contains("Pass"))
+                if (!item.getItemName().contains("Pass") && !_shop.contains("pets"))
                 {
                     prix = priceReduction(_p.getUniqueId(), item.getPrice(), _shop);
                 }
@@ -387,7 +330,21 @@ public class ShopFunction {
                     prix = item.getPrice();
                 }
 
-                if (balance >= prix)
+                if (_p.getGameMode() == GameMode.CREATIVE)
+                {
+                    String command = item.getCommand().replaceAll("Player", _p.getName());
+                    if (command.contains("mcgive"))
+                    {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give " + _p.getName() + " minecraft:" + item.getMat().name().toLowerCase() + "{display:{Name:'[{\"text\":\"§r" + "§r " + item.getItemName() + "\"}]'}} 1");
+                    }
+                    else
+                    {
+                        PermissionUtilities.commandExecutor(_p, command, "crackshot.give.all");
+                    }
+                    _p.sendMessage("§aVous avez acheté : " + item.getItemName() + "§r§a pour §c" + prix + "$ §a!");
+                    InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
+                }
+                else if (balance >= prix)
                 {
                     actualiseBuyProgress(_p, (int) prix);
                     String command = item.getCommand().replaceAll("Player", _p.getName());
@@ -417,20 +374,6 @@ public class ShopFunction {
                         _p.sendMessage("§aVous avez acheté : " + item.getItemName() + "§r§a pour §6" + prix + "$ §a!");
                         InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                     }
-                }
-                else if (_p.getGameMode() == GameMode.CREATIVE)
-                {
-                    String command = item.getCommand().replaceAll("Player", _p.getName());
-                    if (command.contains("mcgive"))
-                    {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give " + _p.getName() + " minecraft:" + item.getMat().name().toLowerCase() + "{display:{Name:'[{\"text\":\"§r" + "§r " + item.getItemName() + "\"}]'}} 1");
-                    }
-                    else
-                    {
-                        PermissionUtilities.commandExecutor(_p, command, "crackshot.give.all");
-                    }
-                    _p.sendMessage("§aVous avez acheté : " + item.getItemName() + "§r§a pour §c" + prix + "$ §a!");
-                    InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                 }
                 else
                 {
@@ -611,12 +554,13 @@ public class ShopFunction {
                 preparedStatement2.executeUpdate();
             }
             sender.sendMessage("§aItem " + _item.name() + " ajouté au shop " + _shop);
-            final PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO item_shop(item_name, shop, price, sell)" +
-                    " VALUES(?,?,?,?)");
+            final PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO item_shop(item_name, shop, price, sell, currency)" +
+                    " VALUES(?,?,?,?,?)");
             preparedStatement3.setString(1, _name);
             preparedStatement3.setString(2, _shop);
             preparedStatement3.setInt(3, _price);
             preparedStatement3.setInt(4, _sell);
+            preparedStatement3.setString(5, "$");
             preparedStatement3.executeUpdate();
 
         } catch (SQLException e) {

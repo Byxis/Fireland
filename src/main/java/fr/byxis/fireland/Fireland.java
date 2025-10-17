@@ -367,21 +367,21 @@ public class Fireland extends JavaPlugin {
                     if (p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE))
                     {
                         CobwebDamage.damagePlayerInCobweb(p);
-                        boolean infected = playerDBConfig.getBoolean("infected." + p.getUniqueId() + ".state");
-                        if (infected)
-                        {
-                            sendWorldBorderWarningDistancePacket(p, 1);
-                            InGameUtilities.playPlayerSound(p, "entity.player.heartbeat", SoundCategory.MASTER, 1, 1);
-                        }
-                        else if (p.getHealth() < 7) {
+                        if (p.getHealth() < 7) {
                             InGameUtilities.playPlayerSound(p, "entity.player.heartbeat", SoundCategory.MASTER, (float) ((7 - p.getHealth()) / 7), 1);
 
                             final double borderDistance = 10 * WorldUtilities.getWorldBorderDistance(p.getLocation(), Bukkit.getWorld(p.getLocation().getWorld().getName()).getWorldBorder().getCenter());
-                            sendWorldBorderWarningDistancePacket(p, (float) ((7 - p.getHealth()) / 7), borderDistance);
+                            if (!playerAddonsEnabler.getItemEnabler().getInfectionManager().isInfected(p))
+                            {
+                                sendWorldBorderWarningDistancePacket(p, (float) ((7 - p.getHealth()) / 7), borderDistance);
+                            }
                         }
                         else
                         {
-                            sendWorldBorderWarningDistancePacket(p, 0);
+                            if (!playerAddonsEnabler.getItemEnabler().getInfectionManager().isInfected(p))
+                            {
+                                sendWorldBorderWarningDistancePacket(p, 0);
+                            }
                         }
 
                         int safezone = cfgm.getPlayerDB().getInt("safezone." + p.getUniqueId() + ".time");

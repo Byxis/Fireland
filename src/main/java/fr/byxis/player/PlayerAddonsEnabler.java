@@ -4,6 +4,7 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.player.items.ItemEnabler;
 import fr.byxis.player.level.LevelStorage;
 import fr.byxis.player.primes.PrimeEvent;
+import fr.byxis.player.protection.ProtectionManager;
 import fr.byxis.player.pvpmanager.PvPManager;
 import fr.byxis.player.quest.QuestManager;
 import fr.byxis.player.rank.RankCustomMessage;
@@ -11,30 +12,33 @@ import fr.byxis.player.scoreboard.PlayerScoreboardManager;
 
 public class PlayerAddonsEnabler {
 
-    private final Fireland main;
-    private final ItemEnabler item;
-    private final QuestManager questManager;
-    private final LevelStorage levelStorage;
+    private final Fireland m_fireland;
+    private final ItemEnabler m_itemEnabler;
+    private final QuestManager m_questManager;
+    private final LevelStorage m_levelStorage;
 
-    public PlayerAddonsEnabler(Fireland _main)
+    public PlayerAddonsEnabler(Fireland _fireland)
     {
-        this.main = _main;
-        item = new ItemEnabler(_main);
-        questManager = new QuestManager(_main);
-        levelStorage = new LevelStorage(_main);
-        RankCustomMessage rankCustomMessage = new RankCustomMessage(_main);
-        _main.getServer().getPluginManager().registerEvents(new PrimeEvent(_main), _main);
-        _main.getServer().getPluginManager().registerEvents(rankCustomMessage, _main);
-        _main.getCommand("rank").setExecutor(rankCustomMessage);
-        _main.getCommand("rank").setTabCompleter(rankCustomMessage);
-        _main.getServer().getPluginManager().registerEvents(new PvPManager(_main), _main);
-        _main.getServer().getPluginManager().registerEvents(new PlayerScoreboardManager(_main, item.getInfectionManager()), _main);
+        this.m_fireland = _fireland;
+        m_itemEnabler = new ItemEnabler(_fireland);
+        m_questManager = new QuestManager(_fireland);
+        m_levelStorage = new LevelStorage(_fireland);
+        RankCustomMessage rankCustomMessage = new RankCustomMessage(_fireland);
+        _fireland.getServer().getPluginManager().registerEvents(new PrimeEvent(_fireland), _fireland);
+        _fireland.getServer().getPluginManager().registerEvents(rankCustomMessage, _fireland);
+        _fireland.getCommand("rank").setExecutor(rankCustomMessage);
+        _fireland.getCommand("rank").setTabCompleter(rankCustomMessage);
+        _fireland.getServer().getPluginManager().registerEvents(new PvPManager(_fireland), _fireland);
+        _fireland.getServer().getPluginManager().registerEvents(new ProtectionManager(), _fireland);
+        _fireland.getServer().getPluginManager().registerEvents(new PlayerScoreboardManager(_fireland, m_itemEnabler.getInfectionManager()), _fireland);
     }
 
     public void SaveAll()
     {
-        item.SaveAll();
+        m_itemEnabler.SaveAll();
         QuestManager.saveProgress();
         PrimeEvent.savePrime();
     }
+
+    public ItemEnabler getItemEnabler() { return m_itemEnabler; }
 }

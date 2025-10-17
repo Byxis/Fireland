@@ -54,7 +54,7 @@ public class InfectionManager
     {
         if (!canBeInfected(_player)) return false;
 
-        if (probabilityCheck(_player, _probability)) return false;
+        if (!probabilityCheck(_player, _probability)) return false;
 
         return infect(_player);
     }

@@ -93,9 +93,8 @@ public class JetonManager {
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         int pageSize = 5;
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement = connection
                     .prepareStatement("SELECT number, amount, description " +

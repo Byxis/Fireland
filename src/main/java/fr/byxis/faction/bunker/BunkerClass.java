@@ -66,8 +66,8 @@ public class BunkerClass {
 
 
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT number, level, skin FROM faction_housing WHERE faction = ?");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
@@ -89,8 +89,8 @@ public class BunkerClass {
     void upgrade()
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET level = ? WHERE faction = ?");
             m_level += 1;
             preparedStatement.setInt(1, m_level);
@@ -179,8 +179,8 @@ public class BunkerClass {
     {
         int number = 1;
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(number) FROM faction_housing;");
             final ResultSet result = preparedStatement.executeQuery();
             if (result.next())
@@ -210,8 +210,8 @@ public class BunkerClass {
             loadFileAndPaste("emptyspace.schem");
         }
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement removeBk = connection.prepareStatement("DELETE FROM faction_housing WHERE faction = ?");
             removeBk.setString(1, m_name);
             removeBk.executeUpdate();
@@ -366,8 +366,8 @@ public class BunkerClass {
     {
         Timestamp claimed = new Timestamp(System.currentTimeMillis());
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT food_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
@@ -421,8 +421,8 @@ public class BunkerClass {
     {
         Timestamp claimed = new Timestamp(System.currentTimeMillis());
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT scrap_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
@@ -476,8 +476,8 @@ public class BunkerClass {
     {
         Timestamp claimed = new Timestamp(System.currentTimeMillis());
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT powder_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
@@ -530,8 +530,8 @@ public class BunkerClass {
     {
         Timestamp claimed = new Timestamp(System.currentTimeMillis());
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT repairkit_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
@@ -584,8 +584,8 @@ public class BunkerClass {
     {
         Timestamp claimed = new Timestamp(System.currentTimeMillis());
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT meds_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
@@ -637,8 +637,8 @@ public class BunkerClass {
     {
         Timestamp claimed = new Timestamp(System.currentTimeMillis());
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT antidouleur_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
@@ -691,8 +691,8 @@ public class BunkerClass {
     {
         Timestamp claimed = new Timestamp(System.currentTimeMillis());
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT serum_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
@@ -791,8 +791,8 @@ public class BunkerClass {
     {
         Timestamp time = new Timestamp(0);
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT last_skin_change FROM faction_housing WHERE faction = ?");
             preparedStatement.setString(1, m_name);
             ResultSet result = preparedStatement.executeQuery();
@@ -809,8 +809,8 @@ public class BunkerClass {
     public void setSkinChanged()
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET last_skin_change = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);

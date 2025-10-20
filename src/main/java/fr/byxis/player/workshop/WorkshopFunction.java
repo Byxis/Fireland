@@ -110,8 +110,8 @@ public class WorkshopFunction
     public void createRecipe(String _name, String _command, String _type, Integer _scrap, Integer _gunpowder, Integer _medicine, Integer _duration, String _itemName, String _mat, int _durability)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //On prépare la requête SQL
             final PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO workshop_recipes (name, type, scrap, gunpowder, medicine, duration) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, _name);
@@ -152,9 +152,8 @@ public class WorkshopFunction
 
     public int getTimeCrafted(String _recipeName, String _uuid) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.crafted_time FROM player_workshop INNER JOIN players ON player_workshop.player_uuid = players.uuid WHERE player_workshop.player_uuid = ? AND player_workshop.recipe_name = ?");
             preparedStatement1.setString(1, _uuid);
             preparedStatement1.setString(2, _recipeName);
@@ -177,8 +176,8 @@ public class WorkshopFunction
     public void craftItemNbr(String _recipeName, String _uuid, int _amount) {
         actualiseCraftProgress(Bukkit.getPlayer(UUID.fromString(_uuid)), _amount);
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             // Vérifie si le joueur a déjà crafté cette recette
             final PreparedStatement selectStatement = connection.prepareStatement(
@@ -217,8 +216,8 @@ public class WorkshopFunction
 
     public void learnRecipe(String _recipeName, String _uuid) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE player_workshop SET know = 1 WHERE player_uuid = ? AND recipe_name = ?");
             preparedStatement4.setString(1, _uuid);
             preparedStatement4.setString(2, _recipeName);
@@ -234,8 +233,8 @@ public class WorkshopFunction
 
     public int getCraftedTimeToLearn(String _recipeName) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT workshop_recipes.type FROM workshop_recipes WHERE name = ?");
             preparedStatement1.setString(1, _recipeName);
 
@@ -280,8 +279,8 @@ public class WorkshopFunction
 
     public boolean isLearned(String _recipeName, String _uuid) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_workshop.know FROM player_workshop WHERE player_uuid = ? AND recipe_name = ?");
             preparedStatement1.setString(1, _uuid);
             preparedStatement1.setString(2, _recipeName);
@@ -305,8 +304,8 @@ public class WorkshopFunction
     private int getNbrOfShowingItems(String _uuid, int _scrapAmount, int _gunpowderAmount)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT workshop_recipes.scrap, workshop_recipes.gunpowder, player_workshop.know FROM workshop_recipes INNER JOIN player_workshop WHERE player_workshop.recipe_name = workshop_recipes.name");
 
             final ResultSet resultSet = preparedStatement1.executeQuery();
@@ -330,8 +329,8 @@ public class WorkshopFunction
     public ArrayList<WorkshopItemClass> getAllCraftableItems(Player p, String _uuid) {
         ArrayList<WorkshopItemClass> items = new ArrayList<>();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement(
                     "SELECT " +
                             "workshop_recipes.name, " +
@@ -395,8 +394,8 @@ public class WorkshopFunction
     public WorkshopItemClass getACraftableItem(Player p, String _uuid, int _scrapAmount, int _gunpowderAmount, int _medicineAmount, String _itemName) {
         WorkshopItemClass item = null;
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement(
                     "SELECT " +
                             "workshop_recipes.name, " +
@@ -743,8 +742,8 @@ public class WorkshopFunction
     public void initPlayerRecipe(String _uuid)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT workshop_recipes.name FROM workshop_recipes\n" +
                     "WHERE workshop_recipes.name NOT IN (SELECT player_workshop.recipe_name FROM player_workshop WHERE player_workshop.player_uuid = ?);");
             preparedStatement1.setString(1, _uuid);
@@ -769,8 +768,8 @@ public class WorkshopFunction
     public boolean addItemToCraft(String _uuid, WorkshopItemClass item, double reduction)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO player_crafting(player_uuid, item, creation_date, finish_date, is_breakable) VALUES(?,?,?,?,?)");
             final long time = System.currentTimeMillis();
             Timestamp currentTime = new Timestamp(time);
@@ -891,8 +890,8 @@ public class WorkshopFunction
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
         int nbr = 0;
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM player_crafting WHERE player_uuid = ?");
             preparedStatement.setString(1, _uuid);
             ResultSet rs = preparedStatement.executeQuery();
@@ -912,9 +911,8 @@ public class WorkshopFunction
     {
         ArrayList<WorkshopCraftingItemClass> items = new ArrayList<>();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_crafting.item, workshop_recipes.type, items.item, items.durability, items.command, player_crafting.creation_date, player_crafting.finish_date, items.custom_model_data, items.recipe_name \n" +
                     "FROM player_crafting INNER JOIN items, workshop_recipes \n" +
@@ -940,9 +938,8 @@ public class WorkshopFunction
     public void removeFromQueue(WorkshopCraftingItemClass _itm, String _uuid)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement(
                     "DELETE FROM player_crafting" +
                     " WHERE player_uuid = ?" +
@@ -960,9 +957,8 @@ public class WorkshopFunction
     public void setUnbreakable(WorkshopCraftingItemClass _itm, String _uuid)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement(
                     "UPDATE player_crafting" +
                     " SET is_breakable = ?" +
@@ -982,9 +978,8 @@ public class WorkshopFunction
     public void removeTime(WorkshopCraftingItemClass _itm, String _uuid)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement = connection.prepareStatement("" +
                     "SELECT finish_date" +
@@ -1055,9 +1050,8 @@ public class WorkshopFunction
     public int getNbrOfItemCrafting(String _uuid)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement1 = connection.prepareStatement("" +
                     "SELECT COUNT(*)" +
@@ -1095,8 +1089,8 @@ public class WorkshopFunction
             return;
         }
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT recipe_name, workshop_recipes.type " +
                     "FROM items INNER JOIN workshop_recipes" +
                     " ON items.recipe_name = workshop_recipes.name WHERE items.item_name LIKE ?");
@@ -1166,9 +1160,8 @@ public class WorkshopFunction
     public void forgetAllPlans(String _uuid)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement1 = connection.prepareStatement("" +
                     "DELETE FROM player_workshop" +

@@ -41,9 +41,8 @@ public class ShopFunction {
     public ArrayList<ShopItemClass> getAllItemsOnShop(String _shop) {
         ArrayList<ShopItemClass> items = new ArrayList<>();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show, item_shop.currency" +
                     " FROM item_shop INNER JOIN items" +
@@ -71,9 +70,8 @@ public class ShopFunction {
     public ShopItemClass getAnItemOnShop(String _shop, String _itemName) {
         ShopItemClass item = null;
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show, item_shop.currency" +
                     " FROM item_shop INNER JOIN items" +
@@ -531,9 +529,8 @@ public class ShopFunction {
     public void addItemOnShop(String _name, Material _item, short _dura, int _price, int _sell, String _shop, String _command, int _custommodeldata)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT item_name" +
                     " FROM items" +
@@ -575,8 +572,8 @@ public class ShopFunction {
         ArrayList<String> l = new ArrayList<>();
         l.add("--Shop");
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT DISTINCT item_shop.shop" +
                     " FROM item_shop");
             ResultSet rs = preparedStatement3.executeQuery();

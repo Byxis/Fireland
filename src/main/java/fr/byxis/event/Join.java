@@ -34,8 +34,9 @@ public class Join implements Listener
         final UUID uuid = p.getUniqueId();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
+            
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT uuid FROM players WHERE uuid = ?");
             preparedStatement1.setString(1, uuid.toString());
             
@@ -64,8 +65,8 @@ public class Join implements Listener
         final UUID uuid = p.getUniqueId();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE players SET name = ? WHERE uuid = ?");
             preparedStatement.setString(1, p.getName());
             preparedStatement.setString(2, uuid.toString());

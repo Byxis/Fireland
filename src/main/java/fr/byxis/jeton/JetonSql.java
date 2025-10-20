@@ -19,9 +19,8 @@ public class JetonSql
     public int createFacture(String _uuid, int _amount, String _desc, boolean update)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(number)" +
                     " FROM jeton_history");
@@ -52,8 +51,8 @@ public class JetonSql
     private int addFactureToDb(String _uuid, int number, int _amount, String _desc)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO jeton_history(number, player_uuid, amount, date, description)" +
                     " VALUES(?,?,?,?,?)");
@@ -73,8 +72,8 @@ public class JetonSql
     private int updateFactureToDb(int number, int _amount)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement2 = connection.prepareStatement("" +
                     "UPDATE jeton_history" +

@@ -97,8 +97,8 @@ public class FactionFunctions {
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         //On prépare une requete sql
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT players.name,player_faction.role, players.uuid, joined_at FROM players INNER JOIN player_faction ON player_faction.player_uuid = players.uuid WHERE player_faction.player_faction = ? ORDER BY player_faction.role DESC, player_faction.joined_at");
             preparedStatement1.setString(1, factionName);
             
@@ -133,8 +133,8 @@ public class FactionFunctions {
         final UUID uuid = invited.getUniqueId();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //On prépare la requête sql
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT available_time,faction_name FROM invite WHERE player_uuid = ? AND faction_name=?");
             preparedStatement1.setString(1, uuid.toString());
@@ -525,8 +525,8 @@ public class FactionFunctions {
 		 */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //On prépare la requete SQL
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT player_faction FROM player_faction WHERE player_uuid=?");
             preparedStatement.setString(1, p.getUniqueId().toString());
@@ -557,8 +557,8 @@ public class FactionFunctions {
          *   - String name : le nom de la faction
          */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             // Récupère les informations de base de la faction
             final PreparedStatement requestInfo = connection.prepareStatement(
@@ -660,8 +660,8 @@ public class FactionFunctions {
          *   - String name : le nom de la faction
          */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             // Récupère les informations de base de la faction
             final PreparedStatement requestInfo = connection.prepareStatement(
@@ -782,8 +782,8 @@ public class FactionFunctions {
         FactionPlayerInformation info = new FactionPlayerInformation("", "", -1, null, null);
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //Préparation de la requête sql
             final PreparedStatement getInfos = connection.prepareStatement("SELECT player_faction,role, joined_at FROM player_faction WHERE player_uuid=?");
             getInfos.setString(1, playerUuid.toString());

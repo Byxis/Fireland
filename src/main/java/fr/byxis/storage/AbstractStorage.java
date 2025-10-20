@@ -189,8 +189,8 @@ public abstract class AbstractStorage {
 
     private ItemStack loadItemFromDatabase(int index) {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement(
                     "SELECT item FROM " + m_tableName + " WHERE owner = ? AND index_item = ?"
             );
@@ -208,8 +208,8 @@ public abstract class AbstractStorage {
 
     private void saveItemToDatabase(int index, ItemStack item) {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement checkStatement = connection.prepareStatement(
                     "SELECT 1 FROM " + m_tableName + " WHERE owner = ? AND index_item = ?"
             );
@@ -242,8 +242,8 @@ public abstract class AbstractStorage {
 
     private void removeItemFromDatabase(int index) {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement(
                     "DELETE FROM " + m_tableName + " WHERE owner = ? AND index_item = ?"
             );

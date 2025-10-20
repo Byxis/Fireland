@@ -107,8 +107,8 @@ public class DataZone {
     private void saveClaiming(String factionName, Timestamp claimedAt, String zone) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //Préparation de la commande
             PreparedStatement isInDb = connection.prepareStatement("SELECT capture_zone.faction_name FROM capture_zone WHERE capture_zone.zone = ?");
             isInDb.setString(1, zone);
@@ -136,9 +136,8 @@ public class DataZone {
     public void saveTiming(String factionName, Timestamp claimedAt, String zone) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             PreparedStatement isInDb = connection.prepareStatement("SELECT faction_zone.duration FROM faction_zone WHERE faction_zone.zone = ? AND faction_zone.faction_name =?");
             isInDb.setString(1, zone);
             isInDb.setString(2, factionName);
@@ -166,8 +165,8 @@ public class DataZone {
     void removeSavedClaiming(String zone, String faction) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //Préparation de la commande
             final PreparedStatement isInDb = connection.prepareStatement("SELECT faction_name, capture_time FROM capture_zone WHERE zone = ?");
             isInDb.setString(1, zone);
@@ -297,8 +296,8 @@ public class DataZone {
 
     private void actualizeClaiming() {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //Preparation de la commande
             for (ZoneClass zone : this.zones) {
                 final PreparedStatement isInDb = connection.prepareStatement("SELECT zone,faction_name,capture_time FROM capture_zone WHERE zone = ?");
@@ -344,8 +343,8 @@ public class DataZone {
     private Timestamp getRewardNumber(ZoneClass zone) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //Préparation de la commande
             final PreparedStatement isInDb = connection.prepareStatement("SELECT rewarded_at FROM capture_zone WHERE zone = ?");
             isInDb.setString(1, zone.getName());
@@ -363,8 +362,8 @@ public class DataZone {
     private void setRewardNumber(ZoneClass zone, Timestamp time) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //Préparation de la commande
             final PreparedStatement insert = connection.prepareStatement("UPDATE capture_zone SET rewarded_at = ? WHERE zone = ? AND faction_name = ? ");
             insert.setTimestamp(1, time);

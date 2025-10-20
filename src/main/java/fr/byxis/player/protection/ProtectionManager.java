@@ -29,7 +29,7 @@ public class ProtectionManager implements Listener
         {
             handleFireResistance(_event);
         }
-        else if (_event.getCause() != EntityDamageEvent.DamageCause.WITHER)
+        else if (_event.getCause() == EntityDamageEvent.DamageCause.WITHER)
         {
             handleWitherResistance(_event);
         }

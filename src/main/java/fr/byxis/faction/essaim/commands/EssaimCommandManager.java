@@ -703,11 +703,21 @@ public class EssaimCommandManager implements CommandExecutor
                 return false;
             }
 
-            if (m_groupManager.joinGroup(essaimName, player))
-            {
-                Location hubLocation = m_configService.getEssaimLocation(essaimName, EssaimConfigService.LocationType.HUB);
-                teleportJoiningPlayerToEssaim(player, hubLocation, essaimName);
-            }
+            Location hubLocation = m_configService.getEssaimLocation(essaimName, EssaimConfigService.LocationType.HUB);
+
+            InGameUtilities.teleportPlayer(player, hubLocation, 10, "gun.hub.helico", () -> {
+                if (player.isOnline() && m_groupManager.joinGroup(essaimName, player))
+                {
+                    InGameUtilities.sendPlayerSucces(player, "Vous avez rejoint l'essaim " + essaimName + " !");
+                    return true;
+                }
+                else
+                {
+                    InGameUtilities.sendPlayerError(player, "Impossible de rejoindre l'essaim !");
+                    return false;
+                }
+            });
+
             return true;
         }
         catch (Exception e)

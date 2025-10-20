@@ -16,6 +16,7 @@ import org.fusesource.jansi.Ansi;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 public class    InGameUtilities implements Listener {
 
@@ -62,7 +63,30 @@ public class    InGameUtilities implements Listener {
 
     public static void teleportPlayer(Player player, Location loc, int duration, String sound)
     {
+        teleportPlayer(player, loc, duration, sound, null);
+    }
+
+    public static void teleportPlayer(Player player, Location loc, int baseDuration, String sound, Supplier<Boolean> onComplete)
+    {
+        int duration = player.getGameMode() == GameMode.CREATIVE ? 0 : baseDuration;
+
+        if (duration == 0)
+        {
+            boolean success = true;
+            if (onComplete != null)
+            {
+                success = onComplete.get();
+            }
+
+            if (success)
+            {
+                player.teleport(loc);
+            }
+            return;
+        }
+
         main.getHashMapManager().addTeleporting(player.getUniqueId());
+        InGameUtilities.setPlayerMoving(player.getUniqueId(), false);
         player.playSound(player.getLocation(), "minecraft:" + sound, (float) 0.1, (float) 1);
 
         new BukkitRunnable() {
@@ -86,17 +110,31 @@ public class    InGameUtilities implements Listener {
                     }
                     if (i == duration)
                     {
-                        sendPlayerInformation(player, "Téléportation...");
-                        player.teleport(loc);
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
+                        boolean success = true;
+                        if (onComplete != null)
+                        {
+                            success = onComplete.get();
+                        }
+
+                        if (success)
+                        {
+                            sendPlayerInformation(player, "Téléportation...");
+                            player.teleport(loc);
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title @a times 20 100 20");
+                        }
+                        else
+                        {
+                            sendPlayerError(player, "Téléportation échouée !");
+                        }
+
                         main.getHashMapManager().removeTeleporting(player.getUniqueId());
                         cancel();
                     }
                 }
-
             }
         }.runTaskTimer(main, 0L, 20L);
     }
+
     public static void teleportPlayer(Player player, Location loc, int duration, String sound, int cooldown)
     {
         if (hasPlayerCooldown(player.getUniqueId()))

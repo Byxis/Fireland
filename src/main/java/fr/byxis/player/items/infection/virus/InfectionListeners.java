@@ -48,46 +48,49 @@ public class InfectionListeners implements Listener
         if (isMythicMob)
         {
             String internalName = mobExecutor.getMythicMobInstance(damager).getType().getInternalName();
-            if (internalName.equals("Infecte"))
+            switch (internalName)
             {
-                if (m_manager.tryInfect(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE))
+                case "Infecte" ->
                 {
-                    notifyInfection(_victim);
+                    if (m_manager.tryInfect(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE))
+                    {
+                        notifyInfection(_victim);
+                    }
                 }
-            }
-            else if (internalName.equals("Blinde"))
-            {
-                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.KERATINIC))
+                case "Blinde" ->
                 {
-                    notifyInfection(_victim);
+                    if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.KERATINIC))
+                    {
+                        notifyInfection(_victim);
+                    }
                 }
-            }
-            else if (internalName.equals("Malabar"))
-            {
-                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.BRUTAL))
+                case "Malabar" ->
                 {
-                    notifyInfection(_victim);
+                    if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.BRUTAL))
+                    {
+                        notifyInfection(_victim);
+                    }
                 }
-            }
-            else if (internalName.equals("Vautour"))
-            {
-                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.NECROPHAGIC))
+                case "Vautour" ->
                 {
-                    notifyInfection(_victim);
+                    if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.NECROPHAGIC))
+                    {
+                        notifyInfection(_victim);
+                    }
                 }
-            }
-            else if (internalName.equals("Mycoris") || internalName.equals("Rejeton"))
-            {
-                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.NECROPHAGIC))
+                case "Mycoris", "Rejeton" ->
                 {
-                    notifyInfection(_victim);
+                    if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.MYCELIAL))
+                    {
+                        notifyInfection(_victim);
+                    }
                 }
-            }
-            else if (internalName.equals("Exploseur") || internalName.equals("Hurleur") || internalName.equals("Putrifieur"))
-            {
-                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.NECROPHAGIC))
+                case "Exploseur", "Hurleur", "Putrifieur" ->
                 {
-                    notifyInfection(_victim);
+                    if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.BUBONIC))
+                    {
+                        notifyInfection(_victim);
+                    }
                 }
             }
         }

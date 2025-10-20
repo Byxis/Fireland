@@ -10,7 +10,7 @@ import java.time.Duration;
 public class InfectionConstants
 {
     // Infection chances
-    public static final double ZOMBIE_INFECTION_CHANCE = 1;
+    public static final double ZOMBIE_INFECTION_CHANCE = 0.33;
     public static final double PLAYER_INFECTION_CHANCE = 1;
 
     // Infection invincibility duration for immunity vaccine

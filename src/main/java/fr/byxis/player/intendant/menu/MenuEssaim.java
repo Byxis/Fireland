@@ -40,40 +40,40 @@ public class MenuEssaim {
         }
 
         // Immeuble Infesté
-        setEssaimItem(main, inv, p, "immeuble-infeste", Material.CYAN_TERRACOTTA, "§7Immeuble Infesté", 10, 1, "Vendredi 18h");
+        setEssaimItem(main, inv, p, "immeuble-infeste", Material.CYAN_TERRACOTTA, "§7Immeuble Infesté", 10, 1);
 
         // Usine Portuaire
-        setEssaimItem(main, inv, p, "usine-portuaire", Material.BRICKS, "§7Usine", 11, 3, "Mercredi 16h");
+        setEssaimItem(main, inv, p, "usine-portuaire", Material.BRICKS, "§7Usine", 11, 3);
 
         // Station de traitement des eaux
-        setEssaimItem(main, inv, p, "station-de-traitement-des-eaux", Material.MOSSY_STONE_BRICKS, "§7Station de traitement des eaux", 12, 4, "Mercredi 18h");
+        setEssaimItem(main, inv, p, "station-de-traitement-des-eaux", Material.MOSSY_STONE_BRICKS, "§7Station de traitement des eaux", 12, 4);
 
         // Entrepôt Militaire
-        setEssaimItem(main, inv, p, "entrepot-militaire", Material.END_STONE_BRICKS, "§7Entrepôt Militaire", 13, 5, "Mercredi 15h");
+        setEssaimItem(main, inv, p, "entrepot-militaire", Material.END_STONE_BRICKS, "§7Entrepôt Militaire", 13, 5);
 
         // Épave du porte-avion
-        setEssaimItem(main, inv, p, "none", Material.PRISMARINE_BRICKS, "§7Épave du porte-avion", 14, 6, "Bientôt");
+        setEssaimItem(main, inv, p, "soute-du-porte-avion", Material.PRISMARINE_BRICKS, "§7Soute du porte-avion", 14, 9);
 
         // Hangar Silencieux
-        setEssaimItem(main, inv, p, "hangar-silencieux", Material.COAL_BLOCK, "§7Hangar Silencieux", 15, 6, "Samedi 15h");
+        setEssaimItem(main, inv, p, "hangar-silencieux", Material.COAL_BLOCK, "§7Hangar Silencieux", 15, 6);
 
         // Crypte
-        setEssaimItem(main, inv, p, "crypte", Material.SKELETON_SKULL, "§7Crypte", 16, 6, "Lundi 17h");
+        setEssaimItem(main, inv, p, "crypte", Material.SKELETON_SKULL, "§7Crypte", 16, 6);
 
         // Centrale Nucléaire
-        setEssaimItem(main, inv, p, "centrale-nucleaire", Material.WAXED_WEATHERED_COPPER, "§7Centrale Nucléaire", 19, 7, "Vendredi 15h");
+        setEssaimItem(main, inv, p, "centrale-nucleaire", Material.WAXED_WEATHERED_COPPER, "§7Centrale Nucléaire", 19, 7);
 
         // Station Pétrolière
-        setEssaimItem(main, inv, p, "station-petroliere", Material.BLACKSTONE, "§7Station Pétrolière", 20, 7, "Samedi 19h");
+        setEssaimItem(main, inv, p, "station-petroliere", Material.BLACKSTONE, "§7Station Pétrolière", 20, 7);
 
         // Laboratoire
-        setEssaimItem(main, inv, p, "laboratoire", Material.SMOOTH_QUARTZ, "§7Laboratoire", 21, 9, "Dimanche 18h");
+        setEssaimItem(main, inv, p, "laboratoire", Material.SMOOTH_QUARTZ, "§7Laboratoire", 21, 9);
 
         // Bunker de Latus
-        setEssaimItem(main, inv, p, "bunker-de-latus", Material.DEEPSLATE_BRICKS, "§7Bunker de Latus", 22, 9, "Samedi 10h");
+        setEssaimItem(main, inv, p, "bunker-de-latus", Material.DEEPSLATE_BRICKS, "§7Bunker de Latus", 22, 9);
 
         // Antre de la Pondeuse
-        setEssaimItem(main, inv, p, "antre-de-la-pondeuse", Material.SCULK, "§7Antre de la Pondeuse", 23, 12, "Dimanche 10h");
+        setEssaimItem(main, inv, p, "antre-de-la-pondeuse", Material.SCULK, "§7Antre de la Pondeuse", 23, 12);
 
         // Les Abysses
         ArrayList<String> lore = new ArrayList<>();
@@ -84,12 +84,11 @@ public class MenuEssaim {
         inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour à l'intendant", (short) 0));
     }
 
-    private static void setEssaimItem(Fireland main, Inventory inv, Player p, String essaimName, Material material, String displayName, int slot, int difficulty, String schedule) {
+    private static void setEssaimItem(Fireland main, Inventory inv, Player p, String essaimName, Material material, String displayName, int slot, int difficulty) {
         ArrayList<String> lore = new ArrayList<>();
         EssaimManager essaimManager = main.getEssaimManager();
         boolean isActive = essaimManager.isEssaimActive(essaimName);
 
-        // Statut de disponibilité (code existant)
         if (isActive) {
             EssaimClass essaimClass = essaimManager.getEssaimService().getActiveEssaim(essaimName);
 
@@ -108,13 +107,10 @@ public class MenuEssaim {
             } else {
                 lore.add("§8Disponibilité : §7Erreur de chargement");
             }
-        } else {
-            lore.add("§8Disponibilité : §7" + schedule);
         }
 
         lore.add("§8Difficulté : " + getDifficulty(difficulty));
 
-        // Ajout des informations de récompenses
         if (!essaimName.equals("none")) {
             addRewardInformation(main, lore, p, essaimName);
         }

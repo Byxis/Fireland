@@ -26,11 +26,11 @@ import static fr.byxis.player.quest.QuestManager.actualiseCraftProgress;
 public class WorkshopFunction
 {
 
-    public static final int TIME_CRAFT_A = 24 * 60 * 60 * 1000;
-    public static final int TIME_CRAFT_B = 3 * 60 * 60 * 1000;
-    public static final int TIME_CRAFT_C = 60 * 60 * 1000;
-    public static final int TIME_CRAFT_D = 30 * 60 * 1000;
-    public static final int TIME_CRAFT_E = 5 * 60 * 1000;
+    public static final int TIME_CRAFT_A = 2 * 60 * 60 * 1000;
+    public static final int TIME_CRAFT_B = 60 * 60 * 1000;
+    public static final int TIME_CRAFT_C = 20 * 60 * 1000;
+    public static final int TIME_CRAFT_D = 5 * 60 * 1000;
+    public static final int TIME_CRAFT_E = 30 * 1000;
     private final Fireland main;
     private final Player sender;
 
@@ -1029,18 +1029,17 @@ public class WorkshopFunction
     public boolean isBreakable(WorkshopCraftingItemClass _itm, String _uuid)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-
-            final Connection connection = firelandConnection.getConnection();
-
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("" +
+        try (Connection connection = firelandConnection.getConnection())
+        {
+            final PreparedStatement preparedStatement = connection.prepareStatement(
                     "SELECT is_breakable" +
                     " FROM player_crafting" +
                     " WHERE player_uuid = ?" +
                     " AND creation_date = ?;");
-            preparedStatement1.setString(1, _uuid);
-            preparedStatement1.setTimestamp(2, _itm.getCreationDate());
-            ResultSet rs = preparedStatement1.executeQuery();
+            preparedStatement.setString(1, _uuid);
+            preparedStatement.setTimestamp(2, _itm.getCreationDate());
+            ResultSet rs = preparedStatement.executeQuery();
+            preparedStatement.close();
             if (rs.next())
             {
                 return rs.getBoolean(1);

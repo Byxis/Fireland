@@ -8,6 +8,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BundleMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -15,6 +16,8 @@ import org.bukkit.persistence.PersistentDataType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
 
 public class BackPackClass {
     private final int maxInventorySize;
@@ -99,13 +102,18 @@ public class BackPackClass {
     }
 
     public void saveBackPack(ItemStack item, Inventory inventory) {
-        ItemMeta meta = item.getItemMeta();
-        PersistentDataContainer container = meta.getPersistentDataContainer();
+        BundleMeta bundleMeta = (BundleMeta) item.getItemMeta();
+        bundleMeta.setItems(new ArrayList<>());
+
+        PersistentDataContainer container = bundleMeta.getPersistentDataContainer();
         try {
             ItemStack[] items = inventory.getContents();
             List<String> itemList = new ArrayList<>();
             for (ItemStack itemStack : items) {
                 if (itemStack != null) {
+                    if (itemStack.getType() != Material.WHITE_STAINED_GLASS_PANE)
+                        bundleMeta.addItem(itemStack);
+
                     YamlConfiguration config = new YamlConfiguration();
                     config.set("item", itemStack);
                     itemList.add(config.saveToString());
@@ -113,9 +121,11 @@ public class BackPackClass {
                     itemList.add(null);
                 }
             }
+
             String data = gson.toJson(itemList);
             container.set(backpackKey, PersistentDataType.STRING, data);
-            item.setItemMeta(meta);
+
+            item.setItemMeta(bundleMeta);
         } catch (Exception e) {
             e.printStackTrace();
         }

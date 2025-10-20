@@ -8,13 +8,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -43,9 +41,9 @@ public class BackPack implements Listener, CommandExecutor {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
-        // Vérifie si le joueur tient une peau de cuir en main
-        if (item.getType() == Material.LEATHER && item.getAmount() == 1 && item.getItemMeta().hasCustomModelData() && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
-            // Si le joueur n'a pas encore de sac à dos, donne-lui-en un nouveau.
+
+        if (item.getType() == Material.BUNDLE && item.getAmount() == 1 && item.getItemMeta().hasCustomModelData() && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
+
             if (isExceedingLimit(player))
             {
                 InGameUtilities.sendPlayerError(player, "Vous ne pouvez avoir qu'un seul sac à dos à la fois !");
@@ -72,7 +70,7 @@ public class BackPack implements Listener, CommandExecutor {
         int sacados = 1;
         for (ItemStack item : p.getInventory().getContents())
         {
-            if (item != null && item.getType() == Material.LEATHER && item.getItemMeta().hasCustomModelData())
+            if (item != null && item.getType() == Material.BUNDLE && item.getItemMeta().hasCustomModelData())
             {
                 sacados -= 1;
                 if (sacados < 0)
@@ -105,8 +103,13 @@ public class BackPack implements Listener, CommandExecutor {
     @EventHandler
     public void inventoryManager(InventoryClickEvent e)
     {
-        if (e.getCurrentItem() != null && (e.getCurrentItem().getType() == Material.LEATHER))
+        if (e.getCurrentItem() != null && (e.getCurrentItem().getType() == Material.BUNDLE))
         {
+            if (e.getClick().isRightClick())
+            {
+                e.setCancelled(true);
+                return;
+            }
             BackPackClass bp = new BackPackClass(8);
             if (bp.isBackPackEmpty(e.getCurrentItem()) || e.getView().getTitle().contains("Corps de "))
             {
@@ -136,7 +139,7 @@ public class BackPack implements Listener, CommandExecutor {
         {
             ItemStack item = e.getView().getPlayer().getInventory().getItem(e.getHotbarButton());
             assert item != null;
-            if (item.getType() != Material.LEATHER)
+            if (item.getType() != Material.BUNDLE)
                 return;
 
             BackPackClass bp = new BackPackClass(8);
@@ -167,9 +170,29 @@ public class BackPack implements Listener, CommandExecutor {
     }
 
     @EventHandler
+    public void preventBundleInteraction(PlayerInteractEvent e)
+    {
+        ItemStack item = e.getItem();
+
+        if (item != null && item.getType() == Material.BUNDLE)
+        {
+            BackPackClass bp = new BackPackClass(8);
+
+            if (!bp.isBackPackEmpty(item))
+            {
+                if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
+                {
+                    e.setCancelled(true);
+                    e.setUseItemInHand(Event.Result.DENY);
+                }
+            }
+        }
+    }
+
+    @EventHandler
     public void playerDrag(InventoryDragEvent e)
     {
-        if (e.getCursor() != null && (e.getCursor().getType() == Material.LEATHER))
+        if (e.getCursor() != null && (e.getCursor().getType() == Material.BUNDLE))
         {
             BackPackClass bp = new BackPackClass(8);
             if (bp.isBackPackEmpty(e.getCursor()) || e.getView().getTitle().contains("Corps de "))
@@ -191,7 +214,7 @@ public class BackPack implements Listener, CommandExecutor {
 
     public void giveItem(Player p, int level) {
         BackPackClass bp = new BackPackClass(level);
-        ItemStack backpack = new ItemStack(Material.LEATHER, 1);
+        ItemStack backpack = new ItemStack(Material.BUNDLE, 1);
 
         ItemMeta meta = backpack.getItemMeta();
         meta.setCustomModelData(level);

@@ -9,6 +9,8 @@ import fr.byxis.jeton.JetonManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import static fr.byxis.player.level.LevelStorage.addPlayerXp;
+
 /**
  * Gère les récompenses des essaims (jetons, expérience, etc.)
  */
@@ -55,6 +57,11 @@ public class EssaimRewardService
             {
                 giveRewardToPlayer(member, essaim.getName(), "jetons", "default",
                         rewards.getJetonsAmount(), rewards.getJetonsCooldown(), group);
+            }
+
+            if (rewards.hasXp())
+            {
+                addPlayerXp(member.getUniqueId(), rewards.getXpAmount());
             }
 
             for (int i = 0; i < rewards.getCommandRewards().size(); i++)

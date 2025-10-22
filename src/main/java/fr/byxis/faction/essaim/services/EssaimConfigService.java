@@ -301,11 +301,17 @@ public class EssaimConfigService
                     }
                     else
                     {
-                        String command = (String) cmdObj;
+                        String command = String.valueOf(cmdObj);
                         rewardConfig.addCommand(command, "1w");
                     }
                 }
             }
+        }
+
+        if (m_config.contains(rewardsPath + ".xp"))
+        {
+            int xp = m_config.getInt(rewardsPath + ".xp", 0);
+            rewardConfig.setXp(xp);
         }
 
         return rewardConfig;
@@ -537,6 +543,9 @@ public class EssaimConfigService
         private String m_jetonsCooldown = "1w";
         private final List<CommandReward> m_commandRewards = new ArrayList<>();
 
+        // Nouveau champ pour XP
+        private int m_xpAmount = 0;
+
         /**
          * Sets the token (jetons) reward amount and cooldown.
          *
@@ -598,6 +607,21 @@ public class EssaimConfigService
         public boolean hasJetons()
         {
             return m_jetonsAmount > 0;
+        }
+
+        public void setXp(int _amount)
+        {
+            this.m_xpAmount = Math.max(0, _amount);
+        }
+
+        public int getXpAmount()
+        {
+            return this.m_xpAmount;
+        }
+
+        public boolean hasXp()
+        {
+            return this.m_xpAmount > 0;
         }
     }
 

@@ -3,6 +3,7 @@ bunker-de-latus:
   day: 6
   hour: 10
   rewards:
+    xp: 500
     jetons:
       amount: 12
       # cooldown: week (default)

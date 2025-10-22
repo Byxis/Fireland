@@ -1,8 +1,11 @@
 package fr.byxis.faction.essaim.events;
 
 import fr.byxis.faction.essaim.EssaimManager;
+import fr.byxis.faction.essaim.conditions.ConditionType;
 import fr.byxis.faction.essaim.essaimClass.EssaimClass;
 import fr.byxis.faction.essaim.essaimClass.EssaimGroup;
+import fr.byxis.faction.essaim.conditions.ConditionScope;
+import fr.byxis.faction.essaim.conditions.EssaimCondition;
 import fr.byxis.faction.essaim.managers.GroupManager;
 import fr.byxis.faction.essaim.managers.SpawnerManager;
 import fr.byxis.faction.essaim.services.EssaimConfigService;
@@ -33,6 +36,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -452,11 +456,6 @@ public class EssaimEventHandler implements Listener {
             return;
         }
 
-        if (!canPlayerJoinEssaim(_player, _essaimName))
-        {
-            return;
-        }
-
         if (m_groupManager.hasGroup(_essaimName))
         {
             if (m_groupManager.findPlayerGroup(_player).isPresent())
@@ -472,8 +471,25 @@ public class EssaimEventHandler implements Listener {
         }
         else
         {
-            System.out.println("Creating a new group");
-            createNewGroupAndTeleport(_player, _essaimName);
+            EssaimCooldownService cooldownService = m_essaimManager.getEssaimService().getCooldownService();
+            EssaimClass essaim = m_essaimService.getActiveEssaim(_essaimName);
+
+            if (!cooldownService.canPlayerEnter(_player, essaim))
+            {
+                long minutesRemaining = cooldownService.getRemainingParticipationCooldownMinutes(_player, _essaimName);
+                InGameUtilities.sendPlayerInformation(_player, "§cVous devez attendre encore " + minutesRemaining + " minutes avant de rejoindre cet essaim.");
+            }
+            else if (EssaimCondition.checkEssaimConditions(m_configService, _player, _essaimName))
+            {
+                m_fireland.getLogger().info("Creating a new group");
+                createNewGroupAndTeleport(_player, _essaimName);
+            }
+            else
+            {
+                InGameUtilities.sendPlayerError(_player, "Vous ne remplissez pas les conditions pour entrer " +
+                        "dans cet essaim : " + EssaimCondition.getUnsatisfiedConditionDescription(m_configService,
+                        _player, _essaimName));
+            }
         }
     }
 
@@ -979,30 +995,5 @@ public class EssaimEventHandler implements Listener {
             boolean isActive = m_essaimService.isEssaimActive(essaimName);
             m_configService.setEssaimClosed(essaimName, !isActive);
         }
-    }
-
-    /**
-     * Checks if a player can join a essaim based on participation cooldowns.
-     * <p>
-     * Displays an error message to the player if the cooldown hasn't expired.
-     *
-     * @param _player The player to check
-     * @param _essaimName The essaim name
-     *
-     * @return true if the player can join, false if the cooldown is active
-     */
-    public boolean canPlayerJoinEssaim(Player _player, String _essaimName)
-    {
-        EssaimCooldownService cooldownService = m_essaimManager.getEssaimService().getCooldownService();
-        EssaimClass essaim = m_essaimService.getActiveEssaim(_essaimName);
-
-        if (!cooldownService.canPlayerEnter(_player, essaim))
-        {
-            long minutesRemaining = cooldownService.getRemainingParticipationCooldownMinutes(_player, _essaimName);
-            InGameUtilities.sendPlayerInformation(_player, "§cVous devez attendre encore " + minutesRemaining + " minutes avant de rejoindre cet essaim.");
-            return false;
-        }
-
-        return true;
     }
 }

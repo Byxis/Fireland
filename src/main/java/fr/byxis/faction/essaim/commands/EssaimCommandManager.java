@@ -1,11 +1,15 @@
 package fr.byxis.faction.essaim.commands;
 
 import fr.byxis.faction.essaim.EssaimManager;
+import fr.byxis.faction.essaim.conditions.ConditionScope;
+import fr.byxis.faction.essaim.conditions.EssaimCondition;
+import fr.byxis.faction.essaim.essaimClass.EssaimClass;
 import fr.byxis.faction.essaim.essaimClass.EssaimGroup;
 import fr.byxis.faction.essaim.essaimClass.Spawner;
 import fr.byxis.faction.essaim.managers.GroupManager;
 import fr.byxis.faction.essaim.managers.SpawnerManager;
 import fr.byxis.faction.essaim.services.EssaimConfigService;
+import fr.byxis.faction.essaim.services.EssaimCooldownService;
 import fr.byxis.faction.essaim.services.EssaimService;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
@@ -703,10 +707,25 @@ public class EssaimCommandManager implements CommandExecutor
                 return false;
             }
 
+            if (!EssaimCondition.checkEssaimConditions(m_configService, player, essaimName, ConditionScope.ALL_MEMBERS))
+            {
+                InGameUtilities.sendPlayerError(player, "Vous ne remplissez pas les conditions pour entrer " +
+                        "dans cet essaim : " + EssaimCondition.getUnsatisfiedConditionDescription(m_configService,
+                        player, essaimName, ConditionScope.ALL_MEMBERS));
+                return false;
+            }
+
             Location hubLocation = m_configService.getEssaimLocation(essaimName, EssaimConfigService.LocationType.HUB);
 
             InGameUtilities.teleportPlayer(player, hubLocation, 10, "gun.hub.helico", () -> {
-                if (player.isOnline() && m_groupManager.joinGroup(essaimName, player))
+                if (!EssaimCondition.checkEssaimConditions(m_configService, player, essaimName, ConditionScope.ALL_MEMBERS))
+                {
+                    InGameUtilities.sendPlayerError(player, "Vous ne remplissez pas les conditions pour entrer " +
+                            "dans cet essaim : " + EssaimCondition.getUnsatisfiedConditionDescription(m_configService,
+                            player, essaimName, ConditionScope.ALL_MEMBERS));
+                    return false;
+                }
+                else if (player.isOnline() && m_groupManager.joinGroup(essaimName, player))
                 {
                     InGameUtilities.sendPlayerSucces(player, "Vous avez rejoint l'essaim " + essaimName + " !");
                     return true;

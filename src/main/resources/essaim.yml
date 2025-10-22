@@ -2,6 +2,14 @@ bunker-de-latus:
   region: essaim-bunker-latus
   day: 6
   hour: 10
+  conditions:
+    - type: "level"
+      level: 10
+      scope: "leader"
+    - type: "has_item"
+      display-name: "Epee"
+      material: "DIAMOND_SWORD"
+      scope: "all"
   rewards:
     xp: 500
     jetons:

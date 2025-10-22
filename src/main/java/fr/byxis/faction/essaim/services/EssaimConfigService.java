@@ -1,9 +1,11 @@
 package fr.byxis.faction.essaim.services;
 
+import fr.byxis.faction.essaim.conditions.*;
 import fr.byxis.faction.essaim.essaimClass.Spawner;
 import fr.byxis.fireland.Fireland;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -353,6 +355,84 @@ public class EssaimConfigService
         m_config.set(_essaimName, null);
         saveConfiguration();
     }
+
+    /**
+     * Gets all conditions for a specific essaim.
+     * <p>
+     * Loads and parses all conditions from the configuration file.
+     *
+     * @param _essaimName The essaim name
+     * @return A list of EssaimCondition objects (empty if none configured)
+     */
+    public List<EssaimCondition> getEssaimConditions(String _essaimName)
+    {
+        List<EssaimCondition> conditions = new ArrayList<>();
+        String conditionsPath = _essaimName + ".conditions";
+
+        if (!m_config.contains(conditionsPath))
+        {
+            return conditions;
+        }
+
+        List<?> conditionsList = m_config.getList(conditionsPath);
+        if (conditionsList == null)
+        {
+            return conditions;
+        }
+
+        for (Object obj : conditionsList)
+        {
+            if (obj instanceof Map)
+            {
+                Map<String, Object> conditionMap = (Map<String, Object>) obj;
+                String typeStr = (String) conditionMap.get("type");
+                String scopeStr = (String) conditionMap.getOrDefault("scope", "leader");
+
+                ConditionType type = ConditionType.fromConfigKey(typeStr);
+                ConditionScope scope = ConditionScope.fromConfigKey(scopeStr);
+
+                if (type == null)
+                {
+                    continue;
+                }
+
+                EssaimCondition condition = switch (type)
+                {
+                    case LEVEL:
+                        int level = ((Number) conditionMap.get("level")).intValue();
+                        yield new LevelCondition(level, scope);
+                    case HAS_ITEM:
+                        String materialStr = (String) conditionMap.get("material");
+                        String displayName = (String) conditionMap.get("display-name");
+                        try
+                        {
+                            Material material = Material.valueOf(materialStr.toUpperCase());
+                            yield new HasItemCondition(material, scope, displayName);
+                        }
+                        catch (IllegalArgumentException _)
+                        {
+                            yield null;
+                        }
+                };
+                if (condition != null)
+                    conditions.add(condition);
+            }
+        }
+
+        return conditions;
+    }
+
+    /**
+     * Checks if an essaim has any conditions configured.
+     *
+     * @param _essaimName The essaim name
+     * @return true if the essaim has conditions, false otherwise
+     */
+    public boolean hasConditions(String _essaimName)
+    {
+        return m_config.contains(_essaimName + ".conditions");
+    }
+
 
     // Configuration management
 

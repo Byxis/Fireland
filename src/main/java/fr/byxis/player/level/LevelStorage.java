@@ -58,6 +58,14 @@ public class LevelStorage {
         }
     }
 
+    public static void addPlayerXp(UUID _uuid, int _xp)
+    {
+        if (!m_levelMap.containsKey(_uuid))
+            m_levelMap.put(_uuid, new PlayerLevel(m_main, _uuid));
+        PlayerLevel pl = m_levelMap.get(_uuid);
+        pl.addXp(m_main, _xp);
+    }
+
     public static void saveLevels()
     {
         if (m_levelMap.isEmpty()) return;

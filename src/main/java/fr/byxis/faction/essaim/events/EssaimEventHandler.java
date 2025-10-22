@@ -481,7 +481,7 @@ public class EssaimEventHandler implements Listener {
      * Creates a new group and teleports the player to the essaim hub.
      * <p>
      * Checks permissions, handles teleportation with delay (except in creative mode),
-     * and creates the group after teleportation.
+     * and creates the group after teleportation using a callback.
      *
      * @param _player The player to teleport
      * @param _essaimName The essaim name
@@ -506,81 +506,33 @@ public class EssaimEventHandler implements Listener {
         }
 
         Location hubLocation = m_configService.getEssaimLocation(_essaimName, EssaimConfigService.LocationType.HUB);
-        int teleportDuration = _player.getGameMode() == GameMode.CREATIVE ? 0 : 10;
-
-        InGameUtilities.setPlayerMoving(_player.getUniqueId(), false);
-
-        if (teleportDuration > 0)
-        {
-            InGameUtilities.sendPlayerInformation(_player, "Téléportation dans " + teleportDuration + " secondes...");
-
-            new BukkitRunnable()
+        InGameUtilities.teleportPlayer(_player, hubLocation, 10, "gun.hub.helico", () -> {
+            if (_player.isOnline() && !m_groupManager.hasGroup(_essaimName))
             {
-                @Override
-                public void run()
+                try
                 {
-                    if (_player.isOnline() && !m_fireland.getHashMapManager().isTeleporting(_player.getUniqueId()))
-                    {
-                        createGroupAfterTeleport(_player, _essaimName);
-                    }
+                    EssaimGroup newGroup = m_groupManager.createGroup(_essaimName, _player);
+                    m_fireland.getLogger().info("Group created for player: " + _player.getName() + " in essaim: " + _essaimName);
+
+                    InGameUtilities.sendPlayerInformation(_player, "§aBienvenue dans l'essaim " + TextUtilities.convertStorableToClean(_essaimName) + " !");
+                    return true;
                 }
-            }.runTaskLater(m_fireland, (teleportDuration + 1) * 20L);
-
-            InGameUtilities.teleportPlayer(_player, hubLocation, teleportDuration, "gun.hub.helico");
-        }
-        else
-        {
-            _player.teleport(hubLocation);
-            createGroupAfterTeleport(_player, _essaimName);
-        }
-    }
-
-    /**
-     * Creates the group after the player's teleportation.
-     * <p>
-     * Performs a final check that no group already exists and creates the group.
-     * In case of error, teleports the player to spawn and restores their state.
-     *
-     * @param _player The player to create the group for
-     * @param _essaimName The essaim name
-     */
-    private void createGroupAfterTeleport(Player _player, String _essaimName)
-    {
-        try
-        {
-            // Vérifier une dernière fois qu'aucun groupe n'existe
-            if (m_groupManager.hasGroup(_essaimName))
+                catch (IllegalStateException e)
+                {
+                    InGameUtilities.sendPlayerError(_player, "Un groupe est déjà entré dans l'essaim !");
+                }
+                catch (Exception e)
+                {
+                    InGameUtilities.sendPlayerError(_player, "Erreur lors de l'entrée dans l'essaim !");
+                    m_fireland.getLogger().severe("Error joining essaim " + _essaimName + ": " + e.getMessage());
+                }
+            }
+            else if (m_groupManager.hasGroup(_essaimName))
             {
                 InGameUtilities.sendPlayerError(_player, "Un groupe existe déjà !");
-                _player.teleport(_player.getWorld().getSpawnLocation());
-                return;
             }
-
-            EssaimGroup newGroup = m_groupManager.createGroup(_essaimName, _player);
-            System.out.println("Group created for player: " + _player.getName() + " in essaim: " + _essaimName);
-
-            InGameUtilities.playPlayerSound(_player, "gun.hub.helico", SoundCategory.MASTER, 1, 1);
-            InGameUtilities.sendPlayerInformation(_player, "§aBienvenue dans l'essaim " + TextUtilities.convertStorableToClean(_essaimName) + " !");
-        }
-        catch (IllegalStateException e)
-        {
-            // Un groupe existe déjà
-            InGameUtilities.sendPlayerError(_player, "Un groupe est déjà entré dans l'essaim !");
-            _player.teleport(_player.getWorld().getSpawnLocation());
-        }
-        catch (Exception e)
-        {
-            InGameUtilities.sendPlayerError(_player, "Erreur lors de l'entrée dans l'essaim !");
-            m_fireland.getLogger().severe("Error joining essaim " + _essaimName + ": " + e.getMessage());
-
-            // Téléporter le joueur de retour en cas d'erreur
-            _player.teleport(_player.getWorld().getSpawnLocation());
-        }
-        finally
-        {
-            // S'assurer que l'état de mouvement est restauré
-            InGameUtilities.setPlayerMoving(_player.getUniqueId(), true);
-        }
+            return false;
+        });
     }
 
     /**

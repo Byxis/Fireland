@@ -1038,42 +1038,4 @@ public class EssaimCommandManager implements CommandExecutor
                 .findFirst()
                 .orElse(null);
     }
-
-    /**
-     * Teleports a player joining an essaim to the specified destination
-     * @param _player the player to teleport
-     * @param _destination the destination location
-     * @param _essaimName the name of the essaim
-     */
-    private void teleportJoiningPlayerToEssaim(Player _player, Location _destination, String _essaimName) {
-        if (m_fireland.getHashMapManager().isTeleporting(_player.getUniqueId()))
-        {
-            InGameUtilities.sendPlayerError(_player, "Vous êtes déjà en cours de téléportation !");
-            return;
-        }
-
-        InGameUtilities.setPlayerMoving(_player.getUniqueId(), false);
-
-        int teleportDuration = _player.getGameMode() == GameMode.CREATIVE ? 0 : 10;
-
-        try
-        {
-            if (teleportDuration > 0)
-            {
-                InGameUtilities.teleportPlayer(_player, _destination, teleportDuration, "gun.hub.helico");
-
-            }
-            else
-            {
-                _player.teleport(_destination);
-            }
-        }
-        catch (Exception e)
-        {
-            InGameUtilities.sendPlayerError(_player, "Erreur lors de la téléportation !");
-            m_fireland.getLogger().severe("Error teleporting _player to essaim " + _essaimName + ": " + e.getMessage());
-
-            InGameUtilities.setPlayerMoving(_player.getUniqueId(), true);
-        }
-    }
 }

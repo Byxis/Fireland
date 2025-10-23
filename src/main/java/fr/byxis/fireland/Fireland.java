@@ -144,7 +144,6 @@ public class Fireland extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Join(this), this);
         getServer().getPluginManager().registerEvents(new FactionPvp(this), this);
         getServer().getPluginManager().registerEvents(new PlayerManager(this), this);
-        getServer().getPluginManager().registerEvents(new ZombieManager(this), this);
         getServer().getPluginManager().registerEvents(new JetonsCommandManager(this), this);
         //getServer().getPluginManager().registerEvents(new KarmaManager(this), this);
         getServer().getPluginManager().registerEvents(new WorkshopManagerEvent(this), this);

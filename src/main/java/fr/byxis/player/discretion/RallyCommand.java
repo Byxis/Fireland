@@ -1,6 +1,7 @@
 package fr.byxis.player.discretion;
 
 import fr.byxis.fireland.Fireland;
+import fr.byxis.fireland.HashMapManager;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import io.lumine.mythic.api.adapters.AbstractEntity;
 import io.lumine.mythic.api.mobs.MythicMob;
@@ -138,9 +139,9 @@ public record RallyCommand(Fireland main) implements CommandExecutor
                                 victim.getLocation().distance(mob.getLocation())) {
                     mob.setTarget(victim);
                     if (victim.getLocation().distance(mob.getLocation()) > 60D && Math.random() <= 0.1) {
-                        victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
+                        victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 3, 1);
                         InGameUtilities.playWorldSound(mob.getLocation(), "entity.infected.scream_far",
-                                SoundCategory.HOSTILE, 1f, 1f);
+                                SoundCategory.HOSTILE, 3f, 1f);
                     }
                 }
             }
@@ -153,9 +154,9 @@ public record RallyCommand(Fireland main) implements CommandExecutor
                     if (victim.getLocation().distance(mythicMob.getLocation().toPosition().toLocation()) > 60D &&
                             Math.random() <= 0.1)
                     {
-                        victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
+                        victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 3, 1);
                         InGameUtilities.playWorldSound(mythicMob.getLocation().toPosition().toLocation(),
-                                "entity.infected.scream_far", SoundCategory.HOSTILE, 1f, 1f);
+                                "entity.infected.scream_far", SoundCategory.HOSTILE, 3f, 1f);
                     }
                 }
             }
@@ -166,9 +167,9 @@ public record RallyCommand(Fireland main) implements CommandExecutor
                         (((IronGolem) entity).getTarget() == null ||
                                 (((IronGolem) entity).getTarget().getLocation().distance(entity.getLocation()) >
                                         victim.getLocation().distance(entity.getLocation())))) {
-                    victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 1, 1);
+                    victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 3, 1);
                     InGameUtilities.playWorldSound(entity.getLocation(), "entity.infected.scream_far",
-                            SoundCategory.HOSTILE, 1f, 1f);
+                            SoundCategory.HOSTILE, 3f, 1f);
                 }
             }
         }
@@ -176,7 +177,7 @@ public record RallyCommand(Fireland main) implements CommandExecutor
 
     private void setHasShotted(Player victim)
     {
-        main.getHashMapManager().getDiscretionMap().get(victim.getUniqueId()).setShooting(10);
+        HashMapManager.getDiscretionMap().get(victim.getUniqueId()).setShooting(10);
     }
 
 }

@@ -182,6 +182,11 @@
             <version>42.7.7</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.1.0</version>
+        </dependency>
         <!--  DATABASE  -->
 
         <!--  GAME VERSION  -->

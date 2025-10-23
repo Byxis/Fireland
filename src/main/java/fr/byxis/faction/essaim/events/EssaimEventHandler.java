@@ -661,6 +661,7 @@ public class EssaimEventHandler implements Listener {
                     if (target != null)
                     {
                         invitePlayerToGroup(essaimName, target);
+                        InGameUtilities.sendPlayerSucces(_player, "Vous avez invité " + targetName + " à rejoindre l'expédition.");
                         InGameUtilities.playPlayerSound(_player, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
                     }
                 }

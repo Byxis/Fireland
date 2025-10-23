@@ -387,7 +387,7 @@ public class InfectionListeners implements Listener
 
     private boolean isStimulant(ItemStack _item)
     {
-        return hasCustomModelData(_item, InfectionConstants.BERSERKER_SERUM_CUSTOM_MODEL_DATA);
+        return hasCustomModelData(_item, InfectionConstants.STIMULANT_CUSTOM_MODEL_DATA);
     }
 
     private boolean hasCustomModelData(ItemStack _item, int _modelData)

@@ -12,7 +12,9 @@ import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class QuestManager {
 
@@ -20,15 +22,15 @@ public class QuestManager {
 
     private static QuestConfig config = null;
 
-    private static HashMap<Integer, QuestClass> availableQuests;
-    private static HashMap<UUID, PlayerQuests> playerQuest;
+    private static Map<Integer, QuestClass> availableQuests;
+    private static Map<UUID, PlayerQuests> playerQuest;
 
     public QuestManager(Fireland _main)
     {
         if (QuestManager.main == null)
             QuestManager.main = _main;
         if (QuestManager.playerQuest == null)
-            QuestManager.playerQuest = new HashMap<>();
+            QuestManager.playerQuest = new ConcurrentHashMap<>();
         if (QuestManager.config == null)
             QuestManager.config = new QuestConfig(_main);
         questSeek();

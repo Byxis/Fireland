@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LevelStorage {
 
@@ -18,18 +19,18 @@ public class LevelStorage {
         Null
     }
 
-    private static HashMap<UUID, PlayerLevel> m_levelMap;
+    private static Map<UUID, PlayerLevel> m_levelMap;
 
-    private static HashMap<UUID, LevelSavings> m_levelSavingsMap;
+    private static Map<UUID, LevelSavings> m_levelSavingsMap;
 
     public LevelStorage(Fireland main)
     {
         if (m_main == null)
             m_main = main;
         if (m_levelMap == null)
-            m_levelMap = new HashMap<>();
+            m_levelMap = new ConcurrentHashMap<>();
         if (m_levelSavingsMap == null)
-            m_levelSavingsMap = new HashMap<>();
+            m_levelSavingsMap = new ConcurrentHashMap<>();
         loadPlayerKillMap();
         main.getServer().getPluginManager().registerEvents(new LevelEvent(main), main);
         main.getCommand("level").setExecutor(new LevelCommand(main));

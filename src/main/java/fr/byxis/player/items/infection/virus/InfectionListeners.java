@@ -57,14 +57,7 @@ public class InfectionListeners implements Listener
                         notifyInfection(_victim);
                     }
                 }
-                case "Blinde" ->
-                {
-                    if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.KERATINIC))
-                    {
-                        notifyInfection(_victim);
-                    }
-                }
-                case "Malabar" ->
+                case "Blinde", "Malabar" ->
                 {
                     if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.KERATINIC))
                     {

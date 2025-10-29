@@ -36,9 +36,9 @@ public class PlayerLevel {
     {
         m_uuid = uuid;
         m_rewardsClaimed = new HashMap<Integer, Boolean>();
-        DbConnection connectionDb = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = connectionDb.getConnection();
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //Préparation de la commande
             PreparedStatement getInfos = connection.prepareStatement("SELECT level, xp, nation, rang FROM player_level WHERE uuid = ?");
             getInfos.setString(1, uuid.toString());
@@ -195,9 +195,9 @@ public class PlayerLevel {
 
     public void save(Fireland main)
     {
-        DbConnection connectionDb = main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = connectionDb.getConnection();
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //Préparation de la commande
             PreparedStatement updateInfos = connection.prepareStatement("UPDATE player_level SET level = ?, xp = ?, nation = ?, rang = ?, can_change = ? WHERE uuid = ?");
             updateInfos.setInt(1, m_level);
@@ -312,9 +312,9 @@ public class PlayerLevel {
     {
         if (!m_rewardsClaimed.containsKey(_lvl))
         {
-            DbConnection connectionDb = _main.getDatabaseManager().getFirelandConnection();
-            try {
-                final Connection connection = connectionDb.getConnection();
+            final DbConnection firelandConnection = _main.getDatabaseManager().getFirelandConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
                 //Préparation de la commande
                 PreparedStatement hasClaimedReward = connection.prepareStatement("SELECT * FROM player_level_rewards WHERE uuid = ? AND level = ?");
                 hasClaimedReward.setString(1, m_uuid.toString());

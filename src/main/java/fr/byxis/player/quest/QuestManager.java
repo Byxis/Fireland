@@ -37,12 +37,12 @@ public class QuestManager {
         init();
         _main.getServer().getPluginManager().registerEvents(new QuestEventHandler(_main), _main);
     }
-    public static HashMap<UUID, PlayerQuests> getPlayerQuest()
+    public static Map<UUID, PlayerQuests> getPlayerQuest()
     {
         return playerQuest;
     }
 
-    public static HashMap<Integer, QuestClass> getAvailableQuests()
+    public static Map<Integer, QuestClass> getAvailableQuests()
     {
         return availableQuests;
     }

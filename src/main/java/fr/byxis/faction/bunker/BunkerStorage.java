@@ -50,10 +50,8 @@ public class BunkerStorage {
     public void updateItemStorage(int index, ItemStack item)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction_storage SET item = ? WHERE faction = ? AND index_item = ?");
             preparedStatement2.setString(2, m_name);
@@ -69,10 +67,8 @@ public class BunkerStorage {
     public void setItemStorage(int index, ItemStack item)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO faction_storage(faction,index_item,item) VALUES(?,?,?)");
             preparedStatement2.setString(1, m_name);
@@ -88,10 +84,8 @@ public class BunkerStorage {
     public boolean indexStorageUsed(int index)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT index_item FROM faction_storage WHERE faction = ? AND index_item = ?");
             preparedStatement2.setString(1, m_name);
@@ -111,10 +105,8 @@ public class BunkerStorage {
     public void removeItemStorage(int index)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
 
             final PreparedStatement preparedStatement2 = connection.prepareStatement("DELETE FROM faction_storage WHERE faction_storage.faction = ? AND faction_storage.index_item = ?;");
             preparedStatement2.setString(1, m_name);

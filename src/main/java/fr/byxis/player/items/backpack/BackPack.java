@@ -19,8 +19,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BackPack implements Listener, CommandExecutor {
+
+    ArrayList<InventoryAction> bundleActions = new ArrayList<>(Arrays.asList(
+            InventoryAction.PICKUP_FROM_BUNDLE,
+            InventoryAction.PICKUP_ALL_INTO_BUNDLE,
+            InventoryAction.PICKUP_SOME_INTO_BUNDLE,
+            InventoryAction.PLACE_FROM_BUNDLE,
+            InventoryAction.PLACE_ALL_INTO_BUNDLE,
+            InventoryAction.PLACE_SOME_INTO_BUNDLE
+    ));
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
@@ -105,7 +115,7 @@ public class BackPack implements Listener, CommandExecutor {
     {
         if (e.getCurrentItem() != null && (e.getCurrentItem().getType() == Material.BUNDLE))
         {
-            if (e.getClick().isRightClick())
+            if (bundleActions.contains(e.getAction()))
             {
                 e.setCancelled(true);
                 return;

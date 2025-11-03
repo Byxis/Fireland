@@ -4,7 +4,7 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.HashMapManager;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import io.lumine.mythic.api.adapters.AbstractEntity;
-import io.lumine.mythic.api.mobs.MythicMob;
+import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.core.mobs.ActiveMob;
 import io.lumine.mythic.core.mobs.MobExecutor;
@@ -130,48 +130,74 @@ public record RallyCommand(Fireland main) implements CommandExecutor
     private void rallyEntities(Player victim, long distance) {
         List<Entity> entities = nearbyEntities(victim.getLocation(), distance);
         MobExecutor mobManager = MythicBukkit.inst().getMobManager();
+        Location victimLoc = victim.getLocation();
+
         for (Entity entity : entities) {
             if (entity instanceof Zombie || entity instanceof Stray || entity instanceof WitherSkeleton)
             {
-                Monster mob = (Monster) entity;
-                if (mob.getTarget() == null || mob.getTarget() instanceof Silverfish ||
-                        mob.getTarget().getLocation().distance(mob.getLocation()) >
-                                victim.getLocation().distance(mob.getLocation())) {
-                    mob.setTarget(victim);
-                    if (victim.getLocation().distance(mob.getLocation()) > 60D && Math.random() <= 0.1) {
-                        victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 3, 1);
-                        InGameUtilities.playWorldSound(mob.getLocation(), "entity.infected.scream_far",
-                                SoundCategory.HOSTILE, 3f, 1f);
-                    }
-                }
+                handleVanillaMob((Monster) entity, victim, victimLoc);
             }
             else if (mobManager.isMythicMob(entity))
             {
-                ActiveMob mythicMob = mobManager.getMythicMobInstance(entity);
-                if (mythicMob.getType().getInternalName().equalsIgnoreCase("Chieninfecte"))
-                {
-                    mythicMob.setTarget((AbstractEntity) victim);
-                    if (victim.getLocation().distance(mythicMob.getLocation().toPosition().toLocation()) > 60D &&
-                            Math.random() <= 0.1)
-                    {
-                        victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 3, 1);
-                        InGameUtilities.playWorldSound(mythicMob.getLocation().toPosition().toLocation(),
-                                "entity.infected.scream_far", SoundCategory.HOSTILE, 3f, 1f);
-                    }
-                }
+                handleMythicMob(mobManager.getMythicMobInstance(entity), victim, victimLoc);
             }
             else if (entity instanceof IronGolem)
             {
-                ((IronGolem) entity).setTarget(victim);
-                if (victim.getLocation().distance(entity.getLocation()) > 60D && Math.random() <= 0.1 &&
-                        (((IronGolem) entity).getTarget() == null ||
-                                (((IronGolem) entity).getTarget().getLocation().distance(entity.getLocation()) >
-                                        victim.getLocation().distance(entity.getLocation())))) {
-                    victim.playSound(victim.getLocation(), "minecraft:entity.infected.scream_far", 3, 1);
-                    InGameUtilities.playWorldSound(entity.getLocation(), "entity.infected.scream_far",
-                            SoundCategory.HOSTILE, 3f, 1f);
-                }
+                handleIronGolem((IronGolem) entity, victim, victimLoc);
             }
+        }
+    }
+
+    private void handleVanillaMob(Monster mob, Player victim, Location victimLoc)
+    {
+        Entity currentTarget = mob.getTarget();
+        double distanceToVictim = victimLoc.distance(mob.getLocation());
+
+        if (currentTarget == null ||
+                currentTarget instanceof Silverfish ||
+                currentTarget.getLocation().distance(mob.getLocation()) > distanceToVictim)
+        {
+
+            mob.setTarget(victim);
+            playDistantScreamIfNeeded(victim, victimLoc, mob.getLocation(), distanceToVictim);
+        }
+    }
+
+    private void handleMythicMob(ActiveMob mythicMob, Player victim, Location victimLoc)
+    {
+        if (!mythicMob.getType().getInternalName().equalsIgnoreCase("Chieninfecte"))
+        {
+            return;
+        }
+
+        AbstractEntity mythicTarget = BukkitAdapter.adapt(victim);
+        mythicMob.setTarget(mythicTarget);
+
+        Location mobLoc = mythicMob.getLocation().toPosition().toLocation();
+        double distance = victimLoc.distance(mobLoc);
+        playDistantScreamIfNeeded(victim, victimLoc, mobLoc, distance);
+    }
+
+    private void handleIronGolem(IronGolem golem, Player victim, Location victimLoc)
+    {
+        LivingEntity currentTarget = golem.getTarget();
+        double distanceToVictim = victimLoc.distance(golem.getLocation());
+
+        if (currentTarget == null ||
+                currentTarget.getLocation().distance(golem.getLocation()) > distanceToVictim)
+        {
+
+            golem.setTarget(victim);
+            playDistantScreamIfNeeded(victim, victimLoc, golem.getLocation(), distanceToVictim);
+        }
+    }
+
+    private void playDistantScreamIfNeeded(Player victim, Location victimLoc, Location mobLoc, double distance)
+    {
+        if (distance > 60D && Math.random() <= 0.1)
+        {
+            victim.playSound(victimLoc, "minecraft:entity.infected.scream_far", 3, 1);
+            InGameUtilities.playWorldSound(mobLoc, "entity.infected.scream_far", SoundCategory.HOSTILE, 3f, 1f);
         }
     }
 

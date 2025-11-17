@@ -339,9 +339,8 @@ public class PlayerLevel {
     {
         m_rewardsClaimed.put(_lvl, true);
         DbConnection connectionDb = _main.getDatabaseManager().getFirelandConnection();
-        try {
-            final Connection connection = connectionDb.getConnection();
-            //Préparation de la commande
+        try (Connection connection = connectionDb.getConnection())
+        {
             PreparedStatement setClaimedReward = connection.prepareStatement("INSERT INTO player_level_rewards(uuid, level) VALUES (?,?)");
             setClaimedReward.setString(1, m_uuid.toString());
             setClaimedReward.setInt(2, _lvl);

@@ -400,13 +400,12 @@ public class BunkerClass {
     public void claimFood(Player _p)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
+        try (Connection connection = firelandConnection.getConnection()){
             if (_p != null)
             {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getFoodAmount() + " steaks !");
                 _p.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, getFoodAmount()));
             }
-            final Connection connection = firelandConnection.getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET food_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
@@ -455,13 +454,13 @@ public class BunkerClass {
     public void claimScrap(Player _p)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
+        try (Connection connection = firelandConnection.getConnection())
+        {
             if (_p != null)
             {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getScrapAmount() + " scraps !");
                 _p.getInventory().addItem(new ItemStack(Material.NETHERITE_SCRAP, getScrapAmount()));
             }
-            final Connection connection = firelandConnection.getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET scrap_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
@@ -510,13 +509,13 @@ public class BunkerClass {
     public void claimPowder(Player _p)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
+        try (Connection connection = firelandConnection.getConnection())
+        {
             if (_p != null)
             {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getPowderAmount() + " poudre !");
                 _p.getInventory().addItem(new ItemStack(Material.GUNPOWDER, getPowderAmount()));
             }
-            final Connection connection = firelandConnection.getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET powder_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
@@ -564,13 +563,13 @@ public class BunkerClass {
     public void claimRepairKit(Player _p)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
+        try (Connection connection = firelandConnection.getConnection())
+        {
             if (_p != null)
             {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getRepairKitAmount() + " kit de réparations !");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give " + _p.getName() + " Kitreparation " + getRepairKitAmount());
             }
-            final Connection connection = firelandConnection.getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET repairkit_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
@@ -617,13 +616,13 @@ public class BunkerClass {
     public void claimMeds(Player _p)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
+        try (Connection connection = firelandConnection.getConnection())
+        {
             if (_p != null)
             {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getMedsAmount() + " médicaments !");
                 _p.getInventory().addItem(new ItemStack(Material.HONEYCOMB, getMedsAmount()));
             }
-            final Connection connection = firelandConnection.getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET meds_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
@@ -670,14 +669,14 @@ public class BunkerClass {
     public void claimAntiDouleur(Player _p)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
+        try (Connection connection = firelandConnection.getConnection())
+        {
             if (_p != null)
             {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getAntiDouleurAmount() + " Anti-Douleurs !");
 
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give " + _p.getName() + " Antidouleur " + getAntiDouleurAmount());
             }
-            final Connection connection = firelandConnection.getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET antidouleur_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
@@ -725,14 +724,14 @@ public class BunkerClass {
     public void claimSerum(Player _p)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
+        try (Connection connection = firelandConnection.getConnection())
+        {
             if (_p != null)
             {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getSerumAmount() + " Sérum du Berserker !");
 
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give " + _p.getName() + " Serumberserker " + getSerumAmount());
             }
-            final Connection connection = firelandConnection.getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET serum_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);

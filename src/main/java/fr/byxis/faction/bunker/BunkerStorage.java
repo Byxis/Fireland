@@ -304,10 +304,8 @@ public class BunkerStorage {
     public void loadAllItems()
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT index_item, item FROM faction_storage WHERE faction = ?");
             preparedStatement2.setString(1, m_name);
             //On exécute la requete SQL

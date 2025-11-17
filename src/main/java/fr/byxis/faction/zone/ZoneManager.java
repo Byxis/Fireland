@@ -39,14 +39,13 @@ public class ZoneManager {
 
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
+        try (Connection connection = firelandConnection.getConnection())
+        {
             /*
             *
             * Partie zones claims
             *
             */
-
-            final Connection connection = firelandConnection.getConnection();
             //Préparation de la commande
             PreparedStatement isInDb = connection.prepareStatement("SELECT capture_zone.zone, capture_zone.capture_time FROM capture_zone " +
                     "WHERE capture_zone.faction_name = ?;");

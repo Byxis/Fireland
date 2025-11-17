@@ -218,9 +218,7 @@ public class FactionFunctions {
         final UUID uuid = p.getUniqueId();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection()){
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT available_time FROM invite WHERE player_uuid  = ? AND faction_name = ?");
             preparedStatement1.setString(1, uuid.toString());
             preparedStatement1.setString(2, name);
@@ -255,9 +253,7 @@ public class FactionFunctions {
         final UUID uuid = p.getUniqueId();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection()){
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT faction_name FROM invite WHERE player_uuid  = ? AND faction_name = ?");
             preparedStatement1.setString(1, uuid.toString());
             preparedStatement1.setString(2, name);
@@ -285,9 +281,7 @@ public class FactionFunctions {
         final UUID uuid = p.getUniqueId();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection()){
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT player_uuid FROM player_faction WHERE player_uuid = ?");
             preparedStatement1.setString(1, uuid.toString());
             //Réalisation de la requête SQL
@@ -326,7 +320,7 @@ public class FactionFunctions {
 		 */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         
-        try {
+        try (Connection connection = firelandConnection.getConnection()){
             if (p.getUniqueId() == leader)
             {
                 p.sendMessage("§cVous êtes leader donc vous ne pouvez pas quitter votre faction ! Vous pouvez cependant la dissoudre ou donner le rôle a quelqu'un d'autre");
@@ -334,7 +328,6 @@ public class FactionFunctions {
             //Si ce n'est pas le leader, il peut quitter, dans ce cas on change la table faction_name et on le prévient
             else
             {
-                final Connection connection = firelandConnection.getConnection();
                 FactionInformation infos = getFactionInfo(getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName()).getFactionName());
 
                 final PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM player_faction WHERE player_faction.player_faction=? AND player_uuid = ?");
@@ -368,9 +361,8 @@ public class FactionFunctions {
         final UUID uuid = p.getUniqueId();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         
-        try {
-            //Initialisation de la connexion a la bd et de la première requete SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement verificationFactionWithName = connection.prepareStatement("SELECT name FROM faction WHERE name = ?"); //AND leader_uuid = ?
             verificationFactionWithName.setString(1, name);
 
@@ -466,8 +458,8 @@ public class FactionFunctions {
 
         //Connection a la bd
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //Préparation de la premiere requete
             final PreparedStatement getFactionName = connection.prepareStatement("SELECT name FROM faction WHERE leader_uuid = ?");
             getFactionName.setString(1, uuid.toString());
@@ -815,9 +807,8 @@ public class FactionFunctions {
 		 */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT upgrade FROM faction WHERE name = ?");
             preparedStatement1.setString(1, factionName);
             //Réalisation de la requête SQL
@@ -856,9 +847,9 @@ public class FactionFunctions {
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT role FROM player_faction WHERE player_uuid = ?");
             preparedStatement1.setString(1, playerUuid.toString());
             //Réalisation de la requête SQL
@@ -895,9 +886,9 @@ public class FactionFunctions {
 		 */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT money FROM faction WHERE name = ?");
             preparedStatement1.setString(1, factionName);
             //Réalisation de la requête SQL
@@ -938,9 +929,8 @@ public class FactionFunctions {
 		 */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //On prépare la requete de modification :
             final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET money=? WHERE name = ?");
             //On modifie l'attribut money qui correspond au rang de la faction, on ajoute 1
@@ -971,9 +961,8 @@ public class FactionFunctions {
 		 */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             //Si la faction est trouvée dans la table upgrade, on améliore son rang
 
             //On prépare la requete de modification :
@@ -1005,9 +994,8 @@ public class FactionFunctions {
     public double getFactionMoney(String factionName) {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT money FROM faction WHERE name = ?");
             preparedStatement1.setString(1, factionName);
             //Réalisation de la requête SQL
@@ -1033,10 +1021,8 @@ public class FactionFunctions {
 		 */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM player_faction WHERE player_faction=? AND player_uuid = ?");
             preparedStatement1.setString(1, infos.getName());
             preparedStatement1.setString(2, victim.toString());
@@ -1061,10 +1047,9 @@ public class FactionFunctions {
          * 	- String _factionName : le nom de la faction que l'on améliore.
          */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try
-        {
-            final Connection connection = firelandConnection.getConnection();
 
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement checkPerkStatement = connection.prepareStatement(
                     "SELECT 1 FROM perks WHERE perk = ?"
             );
@@ -1140,10 +1125,8 @@ public class FactionFunctions {
 		 */
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT enabled FROM faction_perks WHERE faction_name = ? AND perk_name = ? ");
             preparedStatement2.setString(1, _factionName);
             preparedStatement2.setString(2, _perk);
@@ -1167,10 +1150,8 @@ public class FactionFunctions {
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO faction_storage(faction,index_item,item) VALUES(?,?,?)");
             preparedStatement2.setString(1, faction);
             preparedStatement2.setInt(2, index);
@@ -1186,10 +1167,8 @@ public class FactionFunctions {
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction_storage SET item = ? WHERE faction = ? AND index_item = ?");
             preparedStatement2.setString(2, faction);
             preparedStatement2.setInt(3, index);
@@ -1206,10 +1185,8 @@ public class FactionFunctions {
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT index_item FROM faction_storage WHERE faction = ? AND index_item = ?");
             preparedStatement2.setString(1, faction);
             preparedStatement2.setInt(2, index);
@@ -1230,10 +1207,8 @@ public class FactionFunctions {
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
 
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement2 = connection.prepareStatement("DELETE FROM faction_storage WHERE faction_storage.faction = ? AND faction_storage.index_item = ?;");
             preparedStatement2.setString(1, faction);
             preparedStatement2.setInt(2, index);
@@ -1277,10 +1252,8 @@ public class FactionFunctions {
         Inventory inv = Bukkit.createInventory(null, getAmeliorationsUpgrades(rang)[2], "§8Stockage de: §6" + factionName);
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         inv.setItem(0, null);
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT index_item, item FROM faction_storage WHERE faction = ?");
             preparedStatement2.setString(1, factionName);
             //On exécute la requete SQL
@@ -1311,10 +1284,8 @@ public class FactionFunctions {
     public String getColorCode(String factionName)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT color_code FROM faction WHERE name = ?");
             preparedStatement2.setString(1, factionName);
             //On exécute la requete SQL
@@ -1332,10 +1303,8 @@ public class FactionFunctions {
     public void setColorCode(String factionName, String colorCode)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction SET color_code = ? WHERE name = ?");
             preparedStatement2.setString(1, colorCode);
             preparedStatement2.setString(2, factionName);
@@ -1451,10 +1420,8 @@ public class FactionFunctions {
     {
         ArrayList<String[]> faction = new ArrayList<>();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
-        try {
-            //On prépare la requête SQL
-            final Connection connection = firelandConnection.getConnection();
-
+        try (Connection connection = firelandConnection.getConnection())
+        {
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT faction.color_code, faction.name FROM faction ORDER BY faction.upgrade DESC, faction.name, faction.created_at;");
             //On exécute la requete SQL
             ResultSet rs = preparedStatement.executeQuery();

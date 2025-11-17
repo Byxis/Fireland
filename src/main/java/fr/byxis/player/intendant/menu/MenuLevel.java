@@ -16,9 +16,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static fr.byxis.fireland.utilities.BasicUtilities.getStringTime;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 import static fr.byxis.player.level.LevelStorage.getPlayerLevelSavings;
-import static fr.byxis.player.scoreboard.ScoreboardPlayer.getTimeString;
 
 public class MenuLevel {
 
@@ -146,7 +146,8 @@ public class MenuLevel {
         }
         lore.clear();
         lore.add("§8Expérience : §7" + pl.getXp() + "/" + pl.getRemainingXp());
-        lore.add("§8Temps survécu : §7" + getTimeString(main, pl.getUuid()));
+        double time = main.getCfgm().getPlayerDB().getDouble("playtime." + pl.getUuid());
+        lore.add("§8Temps survécu : §7" + getStringTime((long) time));
         inv.setItem(49, InventoryUtilities.getHead(pl.getUuid(), "§aNiveau : " + pl.getLevel(), lore));
         if (page <= 0)
         {

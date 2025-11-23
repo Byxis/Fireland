@@ -10,7 +10,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerScoreboardManager implements @NotNull Listener {
+public class PlayerScoreboardManager implements @NotNull Listener
+{
 
     private final Fireland m_main;
     private static SideBoardManager m_sbManager = null;
@@ -24,7 +25,7 @@ public class PlayerScoreboardManager implements @NotNull Listener {
         m_main = _main;
         m_manager = Bukkit.getScoreboardManager();
         m_scoreboard = m_manager.getMainScoreboard();
-        m_sbManager = new SideBoardManager(m_main, _manager);
+        m_sbManager = new SideBoardManager(m_main, _manager, m_main.getDiscretionManager());
         m_ntManager = new NameTagManager(m_main);
 
         m_main.getServer().getPluginManager().registerEvents(m_ntManager, m_main);
@@ -38,9 +39,11 @@ public class PlayerScoreboardManager implements @NotNull Listener {
 
     private void loop()
     {
-        new BukkitRunnable() {
+        new BukkitRunnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 for (Player p : Bukkit.getOnlinePlayers())
                 {
                     refreshScoreboard(p);
@@ -54,21 +57,14 @@ public class PlayerScoreboardManager implements @NotNull Listener {
         return m_scoreboard;
     }
 
-    /*public static Scoreboard getPlayerScoreboard(Player p)
-    {
-        if (!m_scoreboardPlayers.containsKey(p.getUniqueId()))
-        {
-            m_scoreboardPlayers.put(p.getUniqueId(), m_scoreboard);
-        }
-        else if (m_hasScoreboardChanged)
-        {
-            m_scoreboardPlayers.replace(p.getUniqueId(), m_scoreboard);
-        }
-        return m_scoreboardPlayers.get(p.getUniqueId());
-    }
-
-    public static void setPlayerScoreboard(Player p, Scoreboard board)
-    {
-        m_scoreboardPlayers.replace(p.getUniqueId(), board);
-    }*/
+    /*
+     * public static Scoreboard getPlayerScoreboard(Player p) { if
+     * (!m_scoreboardPlayers.containsKey(p.getUniqueId())) {
+     * m_scoreboardPlayers.put(p.getUniqueId(), m_scoreboard); } else if
+     * (m_hasScoreboardChanged) { m_scoreboardPlayers.replace(p.getUniqueId(),
+     * m_scoreboard); } return m_scoreboardPlayers.get(p.getUniqueId()); }
+     * 
+     * public static void setPlayerScoreboard(Player p, Scoreboard board) {
+     * m_scoreboardPlayers.replace(p.getUniqueId(), board); }
+     */
 }

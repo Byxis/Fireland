@@ -93,7 +93,7 @@ public class Fireland extends JavaPlugin
         getCommand("shop").setExecutor(new ShopCommandManager(this));
         getCommand("shop").setTabCompleter(new ShopCommandManager(this));
         getCommand("rename").setExecutor(new Rename());
-        getCommand("rally").setExecutor(new RallyCommand(this));
+        getCommand("rally").setExecutor(new RallyCommand(this, discretionManager));
         getCommand("stack").setExecutor(new Stack());
         getCommand("bank").setExecutor(new Bank(this));
         getCommand("bank").setTabCompleter(new BankCommandTabCompleter(this));
@@ -130,7 +130,8 @@ public class Fireland extends JavaPlugin
         getServer().getPluginManager().registerEvents(new VillagerInteraction(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
         getServer().getPluginManager().registerEvents(new FallDamage(this), this);
-        getServer().getPluginManager().registerEvents(new ZombieDetection(this), this);
+        getServer().getPluginManager().registerEvents(new ZombieDetectionListener(discretionManager), this);
+        getServer().getPluginManager().registerEvents(new DiscretionEventListener(this, discretionManager), this);
         getServer().getPluginManager().registerEvents(new AmbientSound(this), this);
         getServer().getPluginManager().registerEvents(new SilverfishSilent(), this);
         getServer().getPluginManager().registerEvents(new InteractionManager(), this);
@@ -173,6 +174,8 @@ public class Fireland extends JavaPlugin
 
         protocolManager = ProtocolLibrary.getProtocolManager();
         saveDefaultConfig();
+
+        discretionManager = new DiscretionManager(this);
 
         new JetonManager(this);
         zoneManager = new ZoneManager(this);
@@ -569,81 +572,17 @@ public class Fireland extends JavaPlugin
     }
 
     /*
-    public void modifyStackSize(Material mat, int size)
-    {
-        try {
-            Field f = Itr.class.getDeclaredField("OverStackSize");
-            f.setAccessible(true);
-            f.setInt(mat, size);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    */
+     * public void modifyStackSize(Material mat, int size) { try { Field f =
+     * Itr.class.getDeclaredField("OverStackSize"); f.setAccessible(true);
+     * f.setInt(mat, size); } catch (Exception e) { e.printStackTrace(); } }
+     */
 
-    /*public WorldGuardPlugin getWorldGuard()
-	{
-		Plugin plugin = this.getServer().getPluginManager().getPlugin("WorldGuard");
-		if(!(plugin instanceof WorldGuardPlugin))
-		{
-			return null;
-		}
-		return (WorldGuardPlugin) plugin;
-	}*/
-
-    private void checkDiscretionPoint(Player player)
-    {
-        double discretion = 100;
-        if (!HashMapManager.getDiscretionMap().containsKey(player.getUniqueId()))
-        {
-            hashMapManager.addDiscretionMap(player.getUniqueId());
-        }
-
-        if (HashMapManager.getDiscretionMap().get(player.getUniqueId()).isMoving())
-        {
-            discretion -= 30;
-            if (player.isSneaking())
-            {
-                discretion += 20;
-            }
-        }
-        if (HashMapManager.getDiscretionMap().get(player.getUniqueId()).isUsingCamo())
-        {
-            discretion += 15;
-        }
-
-        if (player.isSprinting() || player.isSwimming() || player.isClimbing())
-        {
-            discretion -= 50;
-
-        }
-        if (!player.isFlying() && !player.isOnGround() && !player.isClimbing())
-        {
-            discretion -= 30;
-        }
-        if ((player.getItemInHand() != null && player.getItemInHand().getType() == Material.END_ROD) || (player.getInventory().getItemInOffHand() != null && player.getInventory().getItemInOffHand().getType() == Material.END_ROD))
-        {
-            discretion -= 20;
-            hashMapManager.getDiscretionMap().get(player.getUniqueId()).setUsingLights(true);
-        }
-        else
-        {
-            hashMapManager.getDiscretionMap().get(player.getUniqueId()).setUsingLights(false);
-        }
-
-        if (discretion > 100)
-        {
-            discretion = 100;
-        }
-        else if (discretion < 0)
-        {
-            discretion = 0;
-        }
-
-        hashMapManager.getDiscretionMap().get(player.getUniqueId()).setScore(discretion);
-        //cfgm.getPlayerDB().set(sDiscretion+"score", discretion);
-        //cfgm.savePlayerDB();
-    }
+    /*
+     * public WorldGuardPlugin getWorldGuard() { Plugin plugin =
+     * this.getServer().getPluginManager().getPlugin("WorldGuard"); if(!(plugin
+     * instanceof WorldGuardPlugin)) { return null; } return (WorldGuardPlugin)
+     * plugin; }
+     */
 
     private void playTimePlayerAdd(Player p)
     {
@@ -721,4 +660,12 @@ public class Fireland extends JavaPlugin
     {
         return playerAddonsEnabler;
     }
+
+    private RestartManager restartManager;
+
+    public DiscretionManager getDiscretionManager()
+    {
+        return discretionManager;
+    }
+
 }

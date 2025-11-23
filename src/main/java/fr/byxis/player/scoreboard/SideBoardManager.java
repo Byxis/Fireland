@@ -1,37 +1,41 @@
 package fr.byxis.player.scoreboard;
 
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.HashMapManager;
 import fr.byxis.jeton.JetonManager;
-import fr.byxis.player.items.infection.virus.InfectionData;
+import fr.byxis.player.discretion.DiscretionManager;
 import fr.byxis.player.items.infection.virus.InfectionManager;
 import fr.byxis.player.primes.PrimeEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-
-public class SideBoardManager {
+public class SideBoardManager
+{
 
     private final Fireland m_main;
     private final InfectionManager m_manager;
+    private final DiscretionManager m_discretionManager;
 
-    public SideBoardManager(Fireland _main, InfectionManager _manager)
+    public SideBoardManager(Fireland _main, InfectionManager _manager, DiscretionManager _discretionManager)
     {
         m_main = _main;
         m_manager = _manager;
+        this.m_discretionManager = _discretionManager;
     }
 
     public void updateSideBoard(Player _p, Scoreboard _mainBoard, Scoreboard _playerBoard)
     {
-        for (Team team : _mainBoard.getTeams()) {
+        for (Team team : _mainBoard.getTeams())
+        {
             Team playerTeam = _playerBoard.registerNewTeam(team.getName());
             playerTeam.setDisplayName(team.getDisplayName());
             playerTeam.setPrefix(team.getPrefix());
             playerTeam.setSuffix(team.getSuffix());
             playerTeam.setColor(team.getColor());
             playerTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, team.getOption(Team.Option.NAME_TAG_VISIBILITY));
-            for (String entry : team.getEntries()) {
+            for (String entry : team.getEntries())
+            {
                 playerTeam.addEntry(entry);
             }
         }
@@ -46,7 +50,8 @@ public class SideBoardManager {
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName("§f§lStatistiques");
 
-        // Remplacer 'getMoney(player)' et 'getTokens(player)' par les méthodes pour obtenir l'argent et les jetons du joueur
+        // Remplacer 'getMoney(player)' et 'getTokens(player)' par les méthodes pour
+        // obtenir l'argent et les jetons du joueur
         Score line1 = obj.getScore("§7-");
         Score line2 = obj.getScore("§7- ");
         Score none1 = obj.getScore("");
@@ -69,35 +74,27 @@ public class SideBoardManager {
 
         _p.setScoreboard(_playerBoard);
 
-       /*
-
-        Score line1 = objective.getScore("§7-");
-        Score line2 = objective.getScore("§7- ");
-        Score none1 = objective.getScore("");
-        Score none2 = objective.getScore(" ");
-        Score money = objective.getScore(getMoneyText(p));
-        Score bank = objective.getScore(getBankText(p));
-        Score infect = objective.getScore(getStateText(p));
-        Score discretion = objective.getScore(getDiscretionText(p));
-        Score rang = objective.getScore(getRankText(p));
-
-        line2.setScore(8);
-        none2.setScore(7);
-        money.setScore(6);
-        bank.setScore(5);
-        infect.setScore(4);
-        discretion.setScore(3);
-        rang.setScore(2);
-        none1.setScore(1);
-        line1.setScore(0);
-        setPlayerScoreboard(p, board);
-        p.setScoreboard(board);*/
+        /*
+         * 
+         * Score line1 = objective.getScore("§7-"); Score line2 =
+         * objective.getScore("§7- "); Score none1 = objective.getScore(""); Score none2
+         * = objective.getScore(" "); Score money = objective.getScore(getMoneyText(p));
+         * Score bank = objective.getScore(getBankText(p)); Score infect =
+         * objective.getScore(getStateText(p)); Score discretion =
+         * objective.getScore(getDiscretionText(p)); Score rang =
+         * objective.getScore(getRankText(p));
+         * 
+         * line2.setScore(8); none2.setScore(7); money.setScore(6); bank.setScore(5);
+         * infect.setScore(4); discretion.setScore(3); rang.setScore(2);
+         * none1.setScore(1); line1.setScore(0); setPlayerScoreboard(p, board);
+         * p.setScoreboard(board);
+         */
     }
 
     private String getMoneyText(Player p)
     {
-        return "§8Monnaie : §6" + Math.round(Fireland.getEco().getBalance(p)) + "$§r" +
-                "  §8| §b" + JetonManager.getJetonsPlayer(p.getUniqueId()) + "§r⛁";
+        return "§8Monnaie : §6" + Math.round(Fireland.getEco().getBalance(p)) + "$§r" + "  §8| §b"
+                + JetonManager.getJetonsPlayer(p.getUniqueId()) + "§r⛁";
     }
 
     private String getBankText(Player p)
@@ -137,13 +134,8 @@ public class SideBoardManager {
 
     private String getDiscretionText(Player p)
     {
-        if (!HashMapManager.getDiscretionMap().containsKey(p.getUniqueId()))
-        {
-            m_main.getHashMapManager().addDiscretionMap(p.getUniqueId());
-        }
-
-        double numDiscretion = HashMapManager.getDiscretionMap().get(p.getUniqueId()).getScore();
-        String shotColor = "§7";
+        double numDiscretion = m_discretionManager.getDiscretion(p.getUniqueId()).getScore();
+        String color = m_discretionManager.getDiscretionColor(p.getUniqueId());
 
         String prime = "";
         if (PrimeEvent.getConfig().getConfig().contains(p.getUniqueId().toString()))
@@ -151,24 +143,12 @@ public class SideBoardManager {
             prime = " §c(Recherché)";
         }
 
-        if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isShooting())
-        {
-            shotColor = "§4";
-        }
-        else if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingCamo())
-        {
-            shotColor = "§2";
-        }
-        else if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingLights())
-        {
-            shotColor = "§e";
-        }
-
-        return "§8Discretion : " + shotColor + numDiscretion + "%" + prime;
+        return "§8Discretion : " + color + numDiscretion + "%" + prime;
     }
 
     private String getRankText(Player p)
     {
-        return "§8Niveau : §7" + getPlayerLevel(p.getUniqueId()).getStringRank() + " §8(Niv. " + getPlayerLevel(p.getUniqueId()).getLevel() + ")";
+        return "§8Niveau : §7" + getPlayerLevel(p.getUniqueId()).getStringRank() + " §8(Niv. " + getPlayerLevel(p.getUniqueId()).getLevel()
+                + ")";
     }
 }

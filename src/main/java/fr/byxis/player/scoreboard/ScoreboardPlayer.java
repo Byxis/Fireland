@@ -1,8 +1,11 @@
 package fr.byxis.player.scoreboard;
 
+import static fr.byxis.fireland.Fireland.getEco;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 import fr.byxis.fireland.Fireland;
-import fr.byxis.fireland.HashMapManager;
 import fr.byxis.jeton.JetonsCommandManager;
+import fr.byxis.player.discretion.DiscretionManager;
 import fr.byxis.player.karma.PlayerKarmaClass;
 import fr.byxis.player.primes.PrimeEvent;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,19 +18,16 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.util.UUID;
-
-import static fr.byxis.fireland.Fireland.getEco;
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-
 public class ScoreboardPlayer implements Listener
 {
 
-    private final Fireland main;
+    private final Fireland m_fireland;
+    private final DiscretionManager m_discretionManager;
 
-    public ScoreboardPlayer(Fireland _main)
+    public ScoreboardPlayer(Fireland _fireland, DiscretionManager _discretionManager)
     {
-        this.main = _main;
+        this.m_fireland = _fireland;
+        this.m_discretionManager = _discretionManager;
     }
 
     @EventHandler
@@ -36,46 +36,19 @@ public class ScoreboardPlayer implements Listener
         createScoreboard(e.getPlayer());
     }
 
-    public static String getTimeString(Fireland main, UUID p)
+    public void update(Player _player)
     {
-        double time = main.getCfgm().getPlayerDB().getDouble("playtime." + p);
-        int iTime = (int) time;
-        String sTime = "s";
 
-        if (time >= 86400)
+        for (String str : _player.getScoreboard().getEntries())
         {
-            time = ((time / 60) / 60) / 24;
-            iTime = (int) time;
-            sTime = "j";
+            _player.getScoreboard().resetScores(str);
         }
-        else if (time >= 3600)
-        {
-            time = (time / 60) / 60;
-            iTime = (int) time;
-            sTime = "h";
-        }
-        else if (time >= 60)
-        {
-            time = time / 60;
-            iTime = (int) time;
-            sTime = "min";
-        }
-        return iTime + sTime;
+        createScoreboard(_player);
     }
 
-    public void update(Player player)
+    private void createScoreboard(Player _p)
     {
-
-        for (String str : player.getScoreboard().getEntries())
-        {
-            player.getScoreboard().resetScores(str);
-        }
-        createScoreboard(player);
-    }
-
-    private void createScoreboard(Player p)
-    {
-        Scoreboard board = p.getScoreboard();
+        Scoreboard board = _p.getScoreboard();
         Objective objective = null;
         if (board.getObjective("fireland") == null)
             objective = board.registerNewObjective("fireland", "dummy");
@@ -86,11 +59,11 @@ public class ScoreboardPlayer implements Listener
         objective.setDisplayName("§f§lStatistiques");
 
         String state = "";
-        if (main.getCfgm().getPlayerDB().getBoolean("infected." + p.getUniqueId() + ".state"))
+        if (m_fireland.getCfgm().getPlayerDB().getBoolean("infected." + _p.getUniqueId() + ".state"))
         {
             state += "§2infecté";
         }
-        if (main.getCfgm().getPlayerDB().getDouble("thirst." + p.getUniqueId()) <= 10)
+        if (m_fireland.getCfgm().getPlayerDB().getDouble("thirst." + _p.getUniqueId()) <= 10)
         {
             if (!state.isEmpty())
             {
@@ -98,7 +71,7 @@ public class ScoreboardPlayer implements Listener
             }
             state += "§3assoiffé";
         }
-        if (p.getFoodLevel() <= 6)
+        if (_p.getFoodLevel() <= 6)
         {
             if (!state.isEmpty())
             {
@@ -110,56 +83,43 @@ public class ScoreboardPlayer implements Listener
         {
             state = "§7sain";
         }
-        if (!main.getHashMapManager().getDiscretionMap().containsKey(p.getUniqueId()))
-        {
-            main.getHashMapManager().addDiscretionMap(p.getUniqueId());
-        }
 
-        FileConfiguration karma = main.getCfgm().getKarmaDB();
-        if (!karma.contains(p.getUniqueId().toString()))
+        FileConfiguration karma = m_fireland.getCfgm().getKarmaDB();
+        if (!karma.contains(_p.getUniqueId().toString()))
         {
-            karma.set(p.getUniqueId().toString(), 62D);
-            main.getCfgm().saveKarmaDB();
+            karma.set(_p.getUniqueId().toString(), 62D);
+            m_fireland.getCfgm().saveKarmaDB();
         }
-        if (!main.getHashMapManager().getRangMap().containsKey(p.getUniqueId()))
+        if (!m_fireland.getHashMapManager().getRangMap().containsKey(_p.getUniqueId()))
         {
 
-            main.getHashMapManager().getRangMap().put(p.getUniqueId(), new PlayerKarmaClass(main.getCfgm().getKarmaDB().getDouble(p.getUniqueId().toString()), main.getCfgm().getKarmaDB().getDouble("max." + p.getUniqueId().toString())));
+            m_fireland.getHashMapManager().getRangMap().put(_p.getUniqueId(),
+                    new PlayerKarmaClass(m_fireland.getCfgm().getKarmaDB().getDouble(_p.getUniqueId().toString()),
+                            m_fireland.getCfgm().getKarmaDB().getDouble("max." + _p.getUniqueId().toString())));
         }
 
-        //double numDiscretion = main.getCfgm().getPlayerDB().getDouble("discretion."+p.getUniqueId()+".score");
-        double numDiscretion = main.getHashMapManager().getDiscretionMap().get(p.getUniqueId()).getScore();
-        String shotColor = "§7";
-        if (main.getHashMapManager().getDiscretionMap().get(p.getUniqueId()).isShooting())
-        {
-            shotColor = "§4";
-        }
-        else if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingCamo())
-        {
-            shotColor = "§2";
-        }
-        else if (HashMapManager.getDiscretionMap().get(p.getUniqueId()).isUsingLights())
-        {
-            shotColor = "§e";
-        }
+        double numDiscretion = m_discretionManager.getDiscretion(_p.getUniqueId()).getScore();
+        String shotColor = m_discretionManager.getDiscretionColor(_p.getUniqueId());
 
-        JetonsCommandManager jetons = new JetonsCommandManager(main);
+        JetonsCommandManager jetons = new JetonsCommandManager(m_fireland);
 
         Score line1 = objective.getScore("§7-");
         Score line2 = objective.getScore("§7- ");
         Score none1 = objective.getScore("");
         Score none2 = objective.getScore(" ");
-        Score money = objective.getScore("§8Monnaie : §6" + Math.round(getEco().getBalance(p)) + "$§r" +
-                "  §8| §b" + jetons.getJetonsPlayer(p.getUniqueId()) + "§r⛁");
-        Score bank = objective.getScore("§8Banque : §6" + Math.round(main.getCfgm().getEnderchest().getDouble("bank." + p.getUniqueId() + ".money")) + "$§r");
+        Score money = objective.getScore("§8Monnaie : §6" + Math.round(getEco().getBalance(_p)) + "$§r" + "  §8| §b"
+                + jetons.getJetonsPlayer(_p.getUniqueId()) + "§r⛁");
+        Score bank = objective.getScore("§8Banque : §6"
+                + Math.round(m_fireland.getCfgm().getEnderchest().getDouble("bank." + _p.getUniqueId() + ".money")) + "$§r");
         Score infect = objective.getScore("§8État : " + state);
         Score discretion = objective.getScore("§8Discretion : " + shotColor + numDiscretion + "%");
         String prime = "";
-        if (PrimeEvent.getConfig().getConfig().contains(p.getUniqueId().toString()))
+        if (PrimeEvent.getConfig().getConfig().contains(_p.getUniqueId().toString()))
         {
             prime = " §c(Recherché)";
         }
-        Score rang = objective.getScore("§8Niveau : §7" + getPlayerLevel(p.getUniqueId()).getStringRank() + prime + " §8(Niv. " + getPlayerLevel(p.getUniqueId()).getLevel() + ")");
+        Score rang = objective.getScore("§8Niveau : §7" + getPlayerLevel(_p.getUniqueId()).getStringRank() + prime + " §8(Niv. "
+                + getPlayerLevel(_p.getUniqueId()).getLevel() + ")");
 
         line2.setScore(8);
         none2.setScore(7);
@@ -170,7 +130,7 @@ public class ScoreboardPlayer implements Listener
         rang.setScore(2);
         none1.setScore(1);
         line1.setScore(0);
-        p.setScoreboard(board);
+        _p.setScoreboard(board);
     }
 
 }

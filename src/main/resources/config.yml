@@ -26,3 +26,7 @@ time:
   playerhaskilled: 150
   doorpass: 10
   handpass: 2
+
+discretion:
+  camo:
+    model-data: 0

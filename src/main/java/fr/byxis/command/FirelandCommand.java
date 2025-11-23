@@ -1,14 +1,15 @@
 package fr.byxis.command;
 
+import static fr.byxis.fireland.Save.reloadAll;
+
 import fr.byxis.fireland.Fireland;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import static fr.byxis.fireland.Save.reloadAll;
-
-public class FirelandCommand implements CommandExecutor {
+public class FirelandCommand implements CommandExecutor
+{
 
     public FirelandCommand(Fireland _main)
     {
@@ -16,8 +17,10 @@ public class FirelandCommand implements CommandExecutor {
     }
 
     private final Fireland main;
+
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings)
+    {
         if (strings.length == 1 && strings[0].equalsIgnoreCase("reload"))
         {
             reloadAll(main);

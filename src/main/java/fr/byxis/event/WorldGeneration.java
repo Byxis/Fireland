@@ -10,8 +10,10 @@ public class WorldGeneration implements Listener
 {
 
     @EventHandler
-    public void onBlockGrow(BlockSpreadEvent  e) {
-        if (e.getNewState().getType().equals(Material.VINE)) {
+    public void onBlockGrow(BlockSpreadEvent e)
+    {
+        if (e.getNewState().getType().equals(Material.VINE))
+        {
             e.setCancelled(true);
             return;
         }

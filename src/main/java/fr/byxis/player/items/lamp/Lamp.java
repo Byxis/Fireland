@@ -1,7 +1,11 @@
 package fr.byxis.player.items.lamp;
 
+import static fr.byxis.player.items.ItemDurability.*;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import java.util.HashMap;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -19,11 +23,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.UUID;
-
-import static fr.byxis.player.items.ItemDurability.*;
-
 public class Lamp implements Listener
 {
 
@@ -37,9 +36,8 @@ public class Lamp implements Listener
         loop();
     }
 
-
-
-    public void saveFloatInItem(ItemStack item, float value) {
+    public void saveFloatInItem(ItemStack item, float value)
+    {
         NamespacedKey key = new NamespacedKey("fireland", "durability");
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
@@ -47,22 +45,29 @@ public class Lamp implements Listener
         item.setItemMeta(meta);
     }
 
-    public float loadFloatFromItem(ItemStack item) {
+    public float loadFloatFromItem(ItemStack item)
+    {
         NamespacedKey key = new NamespacedKey("fireland", "durability");
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
-        if (container.has(key, PersistentDataType.FLOAT)) {
+        if (container.has(key, PersistentDataType.FLOAT))
+        {
             return container.get(key, PersistentDataType.FLOAT);
-        } else {
+        }
+        else
+        {
             return 100;
         }
     }
 
     @EventHandler
-    public void rightClickEvent(PlayerInteractEvent e) {
+    public void rightClickEvent(PlayerInteractEvent e)
+    {
         Player p = e.getPlayer();
-        if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem() != null) {
-            if (e.getItem().getType() == Material.END_ROD || (e.getItem().getType() == Material.RABBIT_HIDE && e.getItem().getItemMeta().hasCustomModelData() && e.getItem().getItemMeta().getCustomModelData() == 1))
+        if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem() != null)
+        {
+            if (e.getItem().getType() == Material.END_ROD || (e.getItem().getType() == Material.RABBIT_HIDE
+                    && e.getItem().getItemMeta().hasCustomModelData() && e.getItem().getItemMeta().getCustomModelData() == 1))
             {
                 if (!delay.containsKey(p.getUniqueId()))
                 {
@@ -97,7 +102,8 @@ public class Lamp implements Listener
         new BukkitRunnable()
         {
             @Override
-            public void run() {
+            public void run()
+            {
                 for (Player p : Bukkit.getOnlinePlayers())
                 {
                     if (delay.containsKey(p.getUniqueId()))
@@ -140,8 +146,7 @@ public class Lamp implements Listener
         ItemStack cursor = e.getCursor();
         ItemStack item = e.getCurrentItem();
         if (e.getCursor().getType() == Material.INK_SAC && (e.getCurrentItem().getType() == Material.END_ROD
-                || e.getCurrentItem().getType() == Material.RABBIT_HIDE
-                || e.getCurrentItem().getType() == Material.RED_DYE))
+                || e.getCurrentItem().getType() == Material.RABBIT_HIDE || e.getCurrentItem().getType() == Material.RED_DYE))
         {
             cursor.setAmount(cursor.getAmount() - 1);
             setLoreDurability(item, 100);

@@ -3,57 +3,16 @@ package fr.byxis.player.advancements;
 import com.google.common.collect.ArrayListMultimap;
 import fr.byxis.fireland.Fireland;
 import io.lumine.mythic.api.mobs.MythicMob;
+import java.util.HashMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-
-public class AdvancementsManager {
+public class AdvancementsManager
+{
 
     public enum Success
     {
-        KILL,
-        PLAY_TIME,
-        LEARN_RECIPE,
-        CRAFT,
-        CRAFT_SUCCES,
-        CRAFT_BREAK,
-        GRADE_CHANGE,
-        RANK_CHANGE,
-        EQUIP_SKIN,
-        USE_BOOSTER,
-        POSSESS_JETONS,
-        VOTE,
-        STAY_NIGHT,
-        STAY_BLOODY_NIGHT,
-        ATTRACT_ENEMIES,
-        FILL_BOTTLE,
-        CREATE_FACTION,
-        JOIN_FACTION,
-        GIVE_MONEY_FACTION,
-        REMOVE_MONEY_FACTION,
-        CAPTURE_POINT,
-        POSSESS_CAPTURE_POINTS,
-        CHANGE_FACTION_COLOR,
-        RANK_UP_FACTION,
-        BUY_BUNKER,
-        RANK_UP_BUNKER,
-        OPEN_CHEST,
-        SHOT_PLAYER,
-        KILL_PLAYER,
-        KILL_BANNI_WHILE_HERO,
-        END_ESSAIM,
-        ENTER_REGION,
-        BUY,
-        SELL,
-        USE_PARACHUTE,
-        USE_HELIPORT,
-        USE,
-        EQUIP,
-        REFUSED_SF,
-        RANK_UP_BANK,
-        DIE,
-        DIE_MONEY_LOOSE
+        KILL, PLAY_TIME, LEARN_RECIPE, CRAFT, CRAFT_SUCCES, CRAFT_BREAK, GRADE_CHANGE, RANK_CHANGE, EQUIP_SKIN, USE_BOOSTER, POSSESS_JETONS, VOTE, STAY_NIGHT, STAY_BLOODY_NIGHT, ATTRACT_ENEMIES, FILL_BOTTLE, CREATE_FACTION, JOIN_FACTION, GIVE_MONEY_FACTION, REMOVE_MONEY_FACTION, CAPTURE_POINT, POSSESS_CAPTURE_POINTS, CHANGE_FACTION_COLOR, RANK_UP_FACTION, BUY_BUNKER, RANK_UP_BUNKER, OPEN_CHEST, SHOT_PLAYER, KILL_PLAYER, KILL_BANNI_WHILE_HERO, END_ESSAIM, ENTER_REGION, BUY, SELL, USE_PARACHUTE, USE_HELIPORT, USE, EQUIP, REFUSED_SF, RANK_UP_BANK, DIE, DIE_MONEY_LOOSE
     };
 
     private final AdvancementsConfig m_config;
@@ -98,8 +57,7 @@ public class AdvancementsManager {
     {
         switch (_sucess)
         {
-            case KILL ->
-            {
+            case KILL -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof KillAdvancements success && !isSuccessFinished(advancement, p))
@@ -108,8 +66,7 @@ public class AdvancementsManager {
                     }
                 }
             }
-            case PLAY_TIME ->
-            {
+            case PLAY_TIME -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof PlayTimeAdvancements success && !isSuccessFinished(advancement, p))
@@ -118,8 +75,7 @@ public class AdvancementsManager {
                     }
                 }
             }
-            case LEARN_RECIPE ->
-            {
+            case LEARN_RECIPE -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof LearnRecipeAdvancements success && !isSuccessFinished(advancement, p))
@@ -128,8 +84,7 @@ public class AdvancementsManager {
                     }
                 }
             }
-            case CRAFT ->
-            {
+            case CRAFT -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof CraftAdvancements success && !isSuccessFinished(advancement, p))
@@ -138,8 +93,7 @@ public class AdvancementsManager {
                     }
                 }
             }
-            case CRAFT_SUCCES ->
-            {
+            case CRAFT_SUCCES -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof CraftSuccessAdvancements success && !isSuccessFinished(advancement, p))
@@ -148,8 +102,7 @@ public class AdvancementsManager {
                     }
                 }
             }
-            case CRAFT_BREAK ->
-            {
+            case CRAFT_BREAK -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof CraftBreakAdvancements success && !isSuccessFinished(advancement, p))
@@ -158,8 +111,7 @@ public class AdvancementsManager {
                     }
                 }
             }
-            case GRADE_CHANGE ->
-            {
+            case GRADE_CHANGE -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof GradeChangeAdvancements success && !isSuccessFinished(advancement, p))
@@ -168,8 +120,7 @@ public class AdvancementsManager {
                     }
                 }
             }
-            case RANK_CHANGE ->
-            {
+            case RANK_CHANGE -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof RankChangeAdvancements success && !isSuccessFinished(advancement, p))
@@ -178,8 +129,7 @@ public class AdvancementsManager {
                     }
                 }
             }
-            case EQUIP_SKIN ->
-            {
+            case EQUIP_SKIN -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof SkinEquipAdvancements success && !isSuccessFinished(advancement, p))
@@ -188,8 +138,7 @@ public class AdvancementsManager {
                     }
                 }
             }
-            case USE_BOOSTER ->
-            {
+            case USE_BOOSTER -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof UseBoosterAdvancements success && !isSuccessFinished(advancement, p))
@@ -198,8 +147,7 @@ public class AdvancementsManager {
                     }
                 }
             }
-            case POSSESS_JETONS ->
-            {
+            case POSSESS_JETONS -> {
                 for (AdvancementsClass advancement : m_success.get(Success.KILL))
                 {
                     if (advancement instanceof PossessJetonsAdvancements success && !isSuccessFinished(advancement, p))

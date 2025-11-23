@@ -10,8 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class UtilitaryMerchantHandler implements Listener
 {
-    
-    
+
     private final Fireland main;
 
     public UtilitaryMerchantHandler(Fireland _main)
@@ -20,21 +19,23 @@ public class UtilitaryMerchantHandler implements Listener
     }
 
     @EventHandler
-    public void entitySpawn(EntitySpawnEvent e) {
-        if (e.getEntity() instanceof Villager && e.getEntity().getName().equals("Marchand Utilitaire")) {
-            
+    public void entitySpawn(EntitySpawnEvent e)
+    {
+        if (e.getEntity() instanceof Villager && e.getEntity().getName().equals("Marchand Utilitaire"))
+        {
+
             e.getEntity().setSilent(true);
-            
-            new BukkitRunnable() {
+
+            new BukkitRunnable()
+            {
 
                 @Override
-                public void run() {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "effect give @e[type=minecraft:villager] minecraft:invisibility 999999 1 true");
+                public void run()
+                {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                            "effect give @e[type=minecraft:villager] minecraft:invisibility 999999 1 true");
                 }
-                
             }.runTaskLater(main, 1);
-            
-            
         }
     }
 }

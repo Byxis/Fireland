@@ -5,10 +5,9 @@ import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.core.mobs.MobExecutor;
+import java.time.Instant;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-
-import java.time.Instant;
 
 public class InfectionManager
 {
@@ -49,21 +48,24 @@ public class InfectionManager
         return getData(_player).isCurrentlyInvincible();
     }
 
-
     public boolean tryInfect(Player _player, double _probability)
     {
-        if (!canBeInfected(_player)) return false;
+        if (!canBeInfected(_player))
+            return false;
 
-        if (!probabilityCheck(_player, _probability)) return false;
+        if (!probabilityCheck(_player, _probability))
+            return false;
 
         return infect(_player);
     }
 
     public boolean tryInfectWithLevel(Player _player, double _probability, InfectionType _type)
     {
-        if (!canBeInfected(_player)) return false;
+        if (!canBeInfected(_player))
+            return false;
 
-        if (probabilityCheck(_player, _probability)) return false;
+        if (probabilityCheck(_player, _probability))
+            return false;
 
         return infectWithLevel(_player, _type);
     }
@@ -73,8 +75,7 @@ public class InfectionManager
         InfectionData newData = InfectionData.createInfection();
         m_repository.set(_player, newData);
 
-        _player.sendMessage("§8Vous avez été infecté par une infection de type " +
-                getInfectionName(_player).toLowerCase() + " !");
+        _player.sendMessage("§8Vous avez été infecté par une infection de type " + getInfectionName(_player).toLowerCase() + " !");
         _player.sendTitle("§8Vous avez été infecté !", "", 10, 70, 20);
         _player.playSound(_player.getLocation(), "minecraft:entity.infected.bite", 1, 1);
 
@@ -130,7 +131,8 @@ public class InfectionManager
 
     public void handleInfectedDeath(Player _player)
     {
-        if (!isInfected(_player)) return;
+        if (!isInfected(_player))
+            return;
 
         InfectionType level = getInfectionType(_player);
         MythicMob mob = getMobForInfectionType(level);
@@ -144,17 +146,25 @@ public class InfectionManager
 
     private MythicMob getMobForInfectionType(InfectionType _type)
     {
-        MobExecutor mobExecutor = MythicBukkit.inst().getMobManager();
-        return switch (_type)
+        try (MythicBukkit mythicBukkit = MythicBukkit.inst())
         {
-            case SAFE -> null;
-            case PRIMARY -> mobExecutor.getMythicMob("Infecte").orElse(null);
-            case KERATINIC -> mobExecutor.getMythicMob("Blinde").orElse(null);
-            case BUBONIC -> mobExecutor.getMythicMob("Putrifieur").orElse(null);
-            case MYCELIAL -> mobExecutor.getMythicMob("Mycoris").orElse(null);
-            case BRUTAL -> mobExecutor.getMythicMob("Malabar").orElse(null);
-            case NECROPHAGIC -> mobExecutor.getMythicMob("Vautour").orElse(null);
-        };
+            MobExecutor mobExecutor = mythicBukkit.getMobManager();
+            return switch (_type)
+            {
+                case SAFE -> null;
+                case PRIMARY -> mobExecutor.getMythicMob("Infecte").orElse(null);
+                case KERATINIC -> mobExecutor.getMythicMob("Blinde").orElse(null);
+                case BUBONIC -> mobExecutor.getMythicMob("Putrifieur").orElse(null);
+                case MYCELIAL -> mobExecutor.getMythicMob("Mycoris").orElse(null);
+                case BRUTAL -> mobExecutor.getMythicMob("Malabar").orElse(null);
+                case NECROPHAGIC -> mobExecutor.getMythicMob("Vautour").orElse(null);
+            };
+        }
+        catch (Exception _e)
+        {
+
+        }
+        return null;
     }
 
     public void saveAll()
@@ -169,8 +179,10 @@ public class InfectionManager
 
     private boolean canBeInfected(Player _player)
     {
-        if (isInfected(_player)) return false;
-        if (isInvincible(_player)) return false;
+        if (isInfected(_player))
+            return false;
+        if (isInvincible(_player))
+            return false;
         return !_player.isInvulnerable() && _player.getGameMode() != GameMode.CREATIVE;
     }
 

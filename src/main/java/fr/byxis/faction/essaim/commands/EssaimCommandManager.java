@@ -1,19 +1,22 @@
 package fr.byxis.faction.essaim.commands;
 
+import static fr.byxis.fireland.utilities.InGameUtilities.sendError;
+import static io.lumine.mythic.bukkit.commands.CommandHelper.sendSuccess;
+
 import fr.byxis.faction.essaim.EssaimManager;
 import fr.byxis.faction.essaim.conditions.ConditionScope;
 import fr.byxis.faction.essaim.conditions.EssaimCondition;
-import fr.byxis.faction.essaim.essaimClass.EssaimClass;
 import fr.byxis.faction.essaim.essaimClass.EssaimGroup;
 import fr.byxis.faction.essaim.essaimClass.Spawner;
 import fr.byxis.faction.essaim.managers.GroupManager;
 import fr.byxis.faction.essaim.managers.SpawnerManager;
 import fr.byxis.faction.essaim.services.EssaimConfigService;
-import fr.byxis.faction.essaim.services.EssaimCooldownService;
 import fr.byxis.faction.essaim.services.EssaimService;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
+import java.util.Map;
+import java.util.Optional;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -21,12 +24,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
-import java.util.Optional;
-
-import static fr.byxis.fireland.utilities.InGameUtilities.sendError;
-import static io.lumine.mythic.bukkit.commands.CommandHelper.sendSuccess;
 
 /**
  * Command manager for "essaim" commands
@@ -52,8 +49,7 @@ public class EssaimCommandManager implements CommandExecutor
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender _sender, @NotNull Command _command,
-                             @NotNull String _label, String[] _args)
+    public boolean onCommand(@NotNull CommandSender _sender, @NotNull Command _command, @NotNull String _label, String[] _args)
     {
         if (_args.length == 0)
         {
@@ -79,8 +75,7 @@ public class EssaimCommandManager implements CommandExecutor
                 case "setblock" -> handleSetBlockCommand(_sender, _args);
                 case "forcejoin" -> handleForceJoinCommand(_sender, _args);
                 case "forcekick" -> handleForceKickCommand(_sender, _args);
-                default ->
-                {
+                default -> {
                     sendError(_sender, "Commande inconnue !");
                     yield false;
                 }
@@ -96,8 +91,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "spawner" subcommand and its actions
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleSpawnerCommand(CommandSender _sender, String[] _args)
@@ -120,8 +118,7 @@ public class EssaimCommandManager implements CommandExecutor
             case "remove" -> handleSpawnerRemove(_sender, _args);
             case "activate" -> handleSpawnerActivate(_sender, _args);
             case "create" -> handleSpawnerCreate(_sender, _args);
-            default ->
-            {
+            default -> {
                 sendError(_sender, "Action de spawner inconnue !");
                 yield false;
             }
@@ -130,8 +127,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "spawner list" action
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleSpawnerList(CommandSender _sender, String[] _args)
@@ -153,18 +153,9 @@ public class EssaimCommandManager implements CommandExecutor
         {
             m_configService.getEssaimSpawners(essaimName).forEach((name, spawner) ->
             {
-                String coords = String.format("%.0f %.0f %.0f",
-                        spawner.getLoc().getX(),
-                        spawner.getLoc().getY(),
-                        spawner.getLoc().getZ()
-                );
-                InGameUtilities.sendInteractivePlayerMessage(
-                        player,
-                        name + " : §d§l" + coords,
-                        "/tp " + player.getName() + " " + coords,
-                        "§aCliquez ici pour vous téléporter",
-                        ClickEvent.Action.RUN_COMMAND
-                );
+                String coords = String.format("%.0f %.0f %.0f", spawner.getLoc().getX(), spawner.getLoc().getY(), spawner.getLoc().getZ());
+                InGameUtilities.sendInteractivePlayerMessage(player, name + " : §d§l" + coords, "/tp " + player.getName() + " " + coords,
+                        "§aCliquez ici pour vous téléporter", ClickEvent.Action.RUN_COMMAND);
             });
             return true;
         }
@@ -177,8 +168,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "spawner remove" action
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleSpawnerRemove(CommandSender _sender, String[] _args)
@@ -220,11 +214,15 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "spawner activate" action
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
-    private boolean handleSpawnerActivate(CommandSender _sender, String[] _args) {
+    private boolean handleSpawnerActivate(CommandSender _sender, String[] _args)
+    {
         if (_args.length != 4)
         {
             sendError(_sender, "Usage: /essaim spawner activate <essaim> <spawner>");
@@ -253,7 +251,9 @@ public class EssaimCommandManager implements CommandExecutor
             }
             return true;
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             sendError(_sender, "Erreur lors de l'activation : " + e.getMessage());
             return false;
         }
@@ -261,8 +261,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "spawner create" action
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleSpawnerCreate(CommandSender _sender, String[] _args)
@@ -281,8 +284,8 @@ public class EssaimCommandManager implements CommandExecutor
 
         if (_args.length < 9)
         {
-            sendError(_sender, "Usage: /essaim spawner create <essaim> <name> <mobtype> <amount> " +
-                    "<activation-delay> <spawn-delay> <affected-by-difficulty> [command...]");
+            sendError(_sender, "Usage: /essaim spawner create <essaim> <name> <mobtype> <amount> "
+                    + "<activation-delay> <spawn-delay> <affected-by-difficulty> [command...]");
             return false;
         }
 
@@ -298,13 +301,14 @@ public class EssaimCommandManager implements CommandExecutor
 
             // Build command from remaining _args
             StringBuilder commandBuilder = new StringBuilder();
-            for (int i = 9; i < _args.length; i++) {
+            for (int i = 9; i < _args.length; i++)
+            {
                 commandBuilder.append(_args[i]).append(" ");
             }
             String command = commandBuilder.toString().trim();
 
-            m_configService.createSpawner(essaimName, spawnerName, mobType, amount,
-                    activationDelay, spawnDelay, command, player.getLocation(), affectedByDifficulty);
+            m_configService.createSpawner(essaimName, spawnerName, mobType, amount, activationDelay, spawnDelay, command,
+                    player.getLocation(), affectedByDifficulty);
 
             sendSuccess(_sender, "Spawner " + spawnerName + " créé avec succès !");
             return true;
@@ -323,11 +327,15 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "create" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
-    private boolean handleCreateCommand(CommandSender _sender, String[] _args) {
+    private boolean handleCreateCommand(CommandSender _sender, String[] _args)
+    {
         if (!(_sender instanceof Player player))
         {
             sendError(_sender, "Cette commande nécessite d'être un joueur !");
@@ -351,7 +359,7 @@ public class EssaimCommandManager implements CommandExecutor
             String essaimName = _args[1];
             String region = _args[2];
             Location location = player.getLocation();
-            
+
             m_configService.createEssaim(essaimName, region, location);
 
             sendSuccess(_sender, "Essaim " + essaimName + " créé avec succès !");
@@ -366,11 +374,15 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "open" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
-    private boolean handleOpenCommand(CommandSender _sender, String[] _args) {
+    private boolean handleOpenCommand(CommandSender _sender, String[] _args)
+    {
         if (_sender instanceof Player p && !PermissionUtilities.hasPermission(p, "fireland.essaim.admin"))
         {
             sendError(_sender, "Permissions insuffisantes !");
@@ -406,8 +418,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "close" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleCloseCommand(CommandSender _sender, String[] _args)
@@ -448,8 +463,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "close" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleResetCommand(CommandSender _sender, String[] _args)
@@ -489,8 +507,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "finish" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleFinishCommand(CommandSender _sender, String[] _args)
@@ -522,9 +543,13 @@ public class EssaimCommandManager implements CommandExecutor
         }
     }
 
-    /** Handles the "unfinish" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+    /**
+     * Handles the "unfinish" subcommand
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleUnfinishCommand(CommandSender _sender, String[] _args)
@@ -558,8 +583,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "info" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleInfoCommand(CommandSender _sender, String[] _args)
@@ -608,8 +636,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "set" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleSetCommand(CommandSender _sender, String[] _args)
@@ -645,7 +676,8 @@ public class EssaimCommandManager implements CommandExecutor
             EssaimConfigService.LocationType locationType = parseLocationType(pointType);
             if (locationType == null)
             {
-                sendError(_sender, "Type de point invalide ! Utilisez : hub, start, reset, entry, solo, difficulty.1, difficulty.2, difficulty.3");
+                sendError(_sender,
+                        "Type de point invalide ! Utilisez : hub, start, reset, entry, solo, difficulty.1, difficulty.2, difficulty.3");
                 return false;
             }
 
@@ -667,11 +699,15 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Handles the "join" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
-    private boolean handleJoinCommand(CommandSender _sender, String[] _args) {
+    private boolean handleJoinCommand(CommandSender _sender, String[] _args)
+    {
         if (!(_sender instanceof Player player))
         {
             sendError(_sender, "Cette commande nécessite d'être un joueur !");
@@ -709,20 +745,21 @@ public class EssaimCommandManager implements CommandExecutor
 
             if (!EssaimCondition.checkEssaimConditions(m_configService, player, essaimName, ConditionScope.ALL_MEMBERS))
             {
-                InGameUtilities.sendPlayerError(player, "Vous ne remplissez pas les conditions pour entrer " +
-                        "dans cet essaim : " + EssaimCondition.getUnsatisfiedConditionDescription(m_configService,
-                        player, essaimName, ConditionScope.ALL_MEMBERS));
+                InGameUtilities.sendPlayerError(player,
+                        "Vous ne remplissez pas les conditions pour entrer " + "dans cet essaim : " + EssaimCondition
+                                .getUnsatisfiedConditionDescription(m_configService, player, essaimName, ConditionScope.ALL_MEMBERS));
                 return false;
             }
 
             Location hubLocation = m_configService.getEssaimLocation(essaimName, EssaimConfigService.LocationType.HUB);
 
-            InGameUtilities.teleportPlayer(player, hubLocation, 10, "gun.hub.helico", () -> {
+            InGameUtilities.teleportPlayer(player, hubLocation, 10, "gun.hub.helico", () ->
+            {
                 if (!EssaimCondition.checkEssaimConditions(m_configService, player, essaimName, ConditionScope.ALL_MEMBERS))
                 {
-                    InGameUtilities.sendPlayerError(player, "Vous ne remplissez pas les conditions pour entrer " +
-                            "dans cet essaim : " + EssaimCondition.getUnsatisfiedConditionDescription(m_configService,
-                            player, essaimName, ConditionScope.ALL_MEMBERS));
+                    InGameUtilities.sendPlayerError(player,
+                            "Vous ne remplissez pas les conditions pour entrer " + "dans cet essaim : " + EssaimCondition
+                                    .getUnsatisfiedConditionDescription(m_configService, player, essaimName, ConditionScope.ALL_MEMBERS));
                     return false;
                 }
                 else if (player.isOnline() && m_groupManager.joinGroup(essaimName, player))
@@ -748,8 +785,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * handles the "remove" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleRemoveCommand(CommandSender _sender, String[] _args)
@@ -783,8 +823,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * handle the "setblock" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleSetBlockCommand(CommandSender _sender, String[] _args)
@@ -834,7 +877,9 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Utility method to parse location type from string
-     * @param _pointType the string representation of the location type
+     * 
+     * @param _pointType
+     *            the string representation of the location type
      * @return the corresponding LocationType, or null if invalid
      */
     private EssaimConfigService.LocationType parseLocationType(String _pointType)
@@ -855,10 +900,15 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Utility method to set a block in the "essaim" world
-     * @param _x the x coordinate
-     * @param _y the y coordinate
-     * @param _z the z coordinate
-     * @param _material the material to set
+     * 
+     * @param _x
+     *            the x coordinate
+     * @param _y
+     *            the y coordinate
+     * @param _z
+     *            the z coordinate
+     * @param _material
+     *            the material to set
      */
     private void setBlockInEssaimWorld(int _x, int _y, int _z, Material _material)
     {
@@ -872,8 +922,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * handle "forcejoin" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleForceJoinCommand(CommandSender _sender, String[] _args)
@@ -936,7 +989,6 @@ public class EssaimCommandManager implements CommandExecutor
                 }
             }
 
-
             boolean joinResult = m_groupManager.joinGroup(essaimName, targetPlayer);
 
             if (joinResult)
@@ -981,8 +1033,11 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * handle "forcekick" subcommand
-     * @param _sender the command sender
-     * @param _args command arguments
+     * 
+     * @param _sender
+     *            the command sender
+     * @param _args
+     *            command arguments
      * @return true if the command was successful, false otherwise
      */
     private boolean handleForceKickCommand(CommandSender _sender, String[] _args)
@@ -1031,8 +1086,7 @@ public class EssaimCommandManager implements CommandExecutor
             m_groupManager.leaveGroup(essaimName, targetPlayer);
 
             sendSuccess(_sender, "Le joueur " + playerName + " a été exclu de l'essaim " + essaimName + " !");
-            InGameUtilities.sendPlayerInformation(targetPlayer,
-                    "§cVous avez été exclu de l'essaim par un administrateur.");
+            InGameUtilities.sendPlayerInformation(targetPlayer, "§cVous avez été exclu de l'essaim par un administrateur.");
 
             return true;
         }
@@ -1046,15 +1100,14 @@ public class EssaimCommandManager implements CommandExecutor
 
     /**
      * Utility method to find the essaim name by its group
-     * @param _group the EssaimGroup
+     * 
+     * @param _group
+     *            the EssaimGroup
      * @return the essaim name, or null if not found
      */
     private String findEssaimNameByGroup(EssaimGroup _group)
     {
-        return m_groupManager.getAllGroups().entrySet().stream()
-                .filter(entry -> entry.getValue().equals(_group))
-                .map(java.util.Map.Entry::getKey)
-                .findFirst()
-                .orElse(null);
+        return m_groupManager.getAllGroups().entrySet().stream().filter(entry -> entry.getValue().equals(_group))
+                .map(java.util.Map.Entry::getKey).findFirst().orElse(null);
     }
 }

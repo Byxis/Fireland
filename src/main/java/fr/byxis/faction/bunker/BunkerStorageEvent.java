@@ -1,4 +1,5 @@
 package fr.byxis.faction.bunker;
 
-public class BunkerStorageEvent {
+public class BunkerStorageEvent
+{
 }

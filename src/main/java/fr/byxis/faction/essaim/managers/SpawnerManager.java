@@ -8,14 +8,13 @@ import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.core.mobs.ActiveMob;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import java.util.HashMap;
 import java.util.Optional;
+import org.bukkit.scheduler.BukkitRunnable;
 
 /**
- * Manages spawner operations for the Essaim system
- * Handles activation, deactivation, and monitoring of spawners
+ * Manages spawner operations for the Essaim system Handles activation,
+ * deactivation, and monitoring of spawners
  */
 public class SpawnerManager
 {
@@ -36,11 +35,13 @@ public class SpawnerManager
     /**
      * Enables a spawner with proper validation and error handling
      *
-     * @param _spawner The spawner to enable
+     * @param _spawner
+     *            The spawner to enable
      *
      * @return true if spawner was enabled successfully, false if already active
      *
-     * @throws IllegalArgumentException if the mythic mob type doesn't exist
+     * @throws IllegalArgumentException
+     *             if the mythic mob type doesn't exist
      */
     public boolean enableSpawner(Spawner _spawner)
     {
@@ -66,7 +67,8 @@ public class SpawnerManager
     /**
      * Removes an active mob from tracking when it dies or despawns
      *
-     * @param _mob The active mob that was removed
+     * @param _mob
+     *            The active mob that was removed
      */
     public void onMobRemoved(ActiveMob _mob)
     {
@@ -90,7 +92,8 @@ public class SpawnerManager
     /**
      * Cleans up all spawners for a specific essaim
      *
-     * @param _essaimName The name of the essaim whose spawners should be cleaned up
+     * @param _essaimName
+     *            The name of the essaim whose spawners should be cleaned up
      */
     public void cleanupEssaimSpawners(String _essaimName)
     {
@@ -98,6 +101,8 @@ public class SpawnerManager
         {
             if (entry.getValue().getEssaim().equals(_essaimName))
             {
+                entry.getValue().getActiveMobs().forEach(ActiveMob::setDead);
+                entry.getValue().clear();
                 entry.getValue().getActiveMobs().forEach(ActiveMob::setDead);
                 return true;
             }
@@ -108,7 +113,8 @@ public class SpawnerManager
     /**
      * Checks if a spawner is currently active
      *
-     * @param _spawnerName The name of the spawner to check
+     * @param _spawnerName
+     *            The name of the spawner to check
      *
      * @return true if the spawner is active, false otherwise
      */
@@ -132,19 +138,31 @@ public class SpawnerManager
     /**
      * Retrieves a MythicMob by name
      *
-     * @param _mobName The name of the mythic mob
+     * @param _mobName
+     *            The name of the mythic mob
      *
      * @return An Optional containing the MythicMob if found, or empty if not found
      */
     private Optional<MythicMob> getMythicMob(String _mobName)
     {
-        return MythicBukkit.inst().getMobManager().getMythicMob(_mobName);
+        try (MythicBukkit mythicBukkit = MythicBukkit.inst())
+        {
+            return mythicBukkit.getMobManager().getMythicMob(_mobName);
+        }
+        catch (Exception _)
+        {
+
+        }
+
+        return null;
     }
 
     /**
-     * Calculates the number of entities to spawn based on spawner settings and group difficulty
+     * Calculates the number of entities to spawn based on spawner settings and
+     * group difficulty
      *
-     * @param _spawner The spawner configuration
+     * @param _spawner
+     *            The spawner configuration
      *
      * @return The calculated number of entities to spawn
      */
@@ -167,9 +185,12 @@ public class SpawnerManager
     /**
      * Schedules the spawning of entities over time based on spawner settings
      *
-     * @param _spawner The spawner configuration
-     * @param _mythicMob The mythic mob to spawn
-     * @param _entityCount The total number of entities to spawn
+     * @param _spawner
+     *            The spawner configuration
+     * @param _mythicMob
+     *            The mythic mob to spawn
+     * @param _entityCount
+     *            The total number of entities to spawn
      */
     private void scheduleSpawning(Spawner _spawner, MythicMob _mythicMob, int _entityCount)
     {
@@ -201,17 +222,15 @@ public class SpawnerManager
                     }
                 }
             }
-        }.runTaskTimer(m_fireland,
-                Math.round(_spawner.getActivationDelay() * 20),
-                (long) (_spawner.getSpawnDelay() * 20)
-        );
+        }.runTaskTimer(m_fireland, Math.round(_spawner.getActivationDelay() * 20), (long) (_spawner.getSpawnDelay() * 20));
     }
 
     /**
-     * Handles the completion of a spawner's lifecycle,
-     * Executes any associated commands and removes the spawner from active tracking
+     * Handles the completion of a spawner's lifecycle, Executes any associated
+     * commands and removes the spawner from active tracking
      *
-     * @param _spawnerName The name of the completed spawner
+     * @param _spawnerName
+     *            The name of the completed spawner
      */
     private void handleSpawnerCompletion(String _spawnerName)
     {
@@ -226,7 +245,8 @@ public class SpawnerManager
     /**
      * Finds a spawner configuration by its name
      *
-     * @param _spawnerName The name of the spawner to find
+     * @param _spawnerName
+     *            The name of the spawner to find
      *
      * @return The Spawner object if found, null otherwise
      */

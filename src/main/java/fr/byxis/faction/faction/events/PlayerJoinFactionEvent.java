@@ -4,7 +4,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class PlayerJoinFactionEvent extends Event {
+public class PlayerJoinFactionEvent extends Event
+{
 
     private final Player player;
     private final String faction;
@@ -16,19 +17,23 @@ public class PlayerJoinFactionEvent extends Event {
         this.faction = _faction;
     }
     @Override
-    public HandlerList getHandlers() {
+    public HandlerList getHandlers()
+    {
         return HANDLERS;
     }
 
-    public static HandlerList getHandlerList() {
+    public static HandlerList getHandlerList()
+    {
         return HANDLERS;
     }
 
-    public Player getPlayer() {
+    public Player getPlayer()
+    {
         return player;
     }
 
-    public String getFaction() {
+    public String getFaction()
+    {
         return faction;
     }
 }

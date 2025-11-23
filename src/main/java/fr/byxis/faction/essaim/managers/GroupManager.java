@@ -3,15 +3,14 @@ package fr.byxis.faction.essaim.managers;
 import fr.byxis.faction.essaim.enums.LeaveResult;
 import fr.byxis.faction.essaim.essaimClass.EssaimGroup;
 import fr.byxis.fireland.utilities.InGameUtilities;
-import org.bukkit.entity.Player;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import org.bukkit.entity.Player;
 
 /**
- * Manages Essaim groups and player membership
- * Handles group creation, joining, leaving, and lifecycle
+ * Manages Essaim groups and player membership Handles group creation, joining,
+ * leaving, and lifecycle
  */
 public class GroupManager
 {
@@ -26,12 +25,15 @@ public class GroupManager
     /**
      * Creates a new group for the specified essaim
      *
-     * @param _essaimName The essaim name
-     * @param _leader The group leader
+     * @param _essaimName
+     *            The essaim name
+     * @param _leader
+     *            The group leader
      *
      * @return The created group
      *
-     * @throws IllegalStateException if a group already exists for this essaim
+     * @throws IllegalStateException
+     *             if a group already exists for this essaim
      */
     public synchronized EssaimGroup createGroup(String _essaimName, Player _leader)
     {
@@ -50,8 +52,10 @@ public class GroupManager
     /**
      * Adds a player to an existing group
      *
-     * @param _essaimName The essaim name
-     * @param _player The player to add
+     * @param _essaimName
+     *            The essaim name
+     * @param _player
+     *            The player to add
      *
      * @return true if the player was added, false otherwise
      */
@@ -75,8 +79,10 @@ public class GroupManager
     /**
      * Removes a player from their group
      *
-     * @param _essaimName The essaim name
-     * @param _player The player to remove
+     * @param _essaimName
+     *            The essaim name
+     * @param _player
+     *            The player to remove
      *
      * @return true if the player was removed, false otherwise
      */
@@ -93,8 +99,7 @@ public class GroupManager
 
         switch (result)
         {
-            case SUCCESS ->
-            {
+            case SUCCESS -> {
                 if (wasLeader && !group.isEmpty())
                 {
                     notifyGroupMembers(group, "§e" + group.getLeader().getName() + " est maintenant le leader du groupe.");
@@ -105,13 +110,11 @@ public class GroupManager
                 }
                 return true;
             }
-            case GROUP_DISBANDED ->
-            {
+            case GROUP_DISBANDED -> {
                 m_activeGroups.remove(_essaimName);
                 return true;
             }
-            case NOT_IN_GROUP ->
-            {
+            case NOT_IN_GROUP -> {
                 return false;
             }
         }
@@ -128,9 +131,8 @@ public class GroupManager
     /**
      * Disbands the group completely
      *
-     * @param _essaimName The essaim name
-     *
-     * @return void
+     * @param _essaimName
+     *            The essaim name
      */
     public void disbandGroup(String _essaimName)
     {
@@ -144,7 +146,8 @@ public class GroupManager
     /**
      * Handles player death in a group
      *
-     * @param _player The player who died
+     * @param _player
+     *            The player who died
      */
     public void handlePlayerDeath(Player _player)
     {
@@ -168,8 +171,10 @@ public class GroupManager
     /**
      * Starts an essaim expedition for a group
      *
-     * @param _essaimName The essaim name
-     * @param _difficulty The expedition difficulty
+     * @param _essaimName
+     *            The essaim name
+     * @param _difficulty
+     *            The expedition difficulty
      *
      * @return true if the expedition was started, false otherwise
      */
@@ -209,9 +214,7 @@ public class GroupManager
 
     public Optional<EssaimGroup> findPlayerGroup(Player _player)
     {
-        return m_activeGroups.values().stream()
-                .filter(group -> group.getMembers().contains(_player))
-                .findFirst();
+        return m_activeGroups.values().stream().filter(group -> group.getMembers().contains(_player)).findFirst();
     }
 
     // Private helper methods
@@ -219,29 +222,27 @@ public class GroupManager
     /**
      * Notifies all group members with a message
      *
-     * @param _group The group to notify
-     * @param _string The message to send
+     * @param _group
+     *            The group to notify
+     * @param _string
+     *            The message to send
      */
     private void notifyGroupMembers(EssaimGroup _group, String _string)
     {
-        _group.getMembers().forEach(member ->
-                InGameUtilities.sendPlayerInformation(member, _string)
-        );
+        _group.getMembers().forEach(member -> InGameUtilities.sendPlayerInformation(member, _string));
     }
 
     /**
      * Finds the essaim name associated with a given group
      *
-     * @param _targetGroup The target group
+     * @param _targetGroup
+     *            The target group
      *
      * @return The essaim name, or null if not found
      */
     private String findEssaimNameByGroup(EssaimGroup _targetGroup)
     {
-        return m_activeGroups.entrySet().stream()
-                .filter(entry -> entry.getValue().equals(_targetGroup))
-                .map(Map.Entry::getKey)
-                .findFirst()
+        return m_activeGroups.entrySet().stream().filter(entry -> entry.getValue().equals(_targetGroup)).map(Map.Entry::getKey).findFirst()
                 .orElse(null);
     }
 }

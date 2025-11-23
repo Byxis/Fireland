@@ -2,6 +2,9 @@ package fr.byxis.player.items.notes;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -20,16 +23,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class OpenNotes implements @NotNull Listener, CommandExecutor {
+public class OpenNotes implements @NotNull Listener, CommandExecutor
+{
 
     private final Fireland main;
     private NotesConfig config;
 
-    public OpenNotes(Fireland _main) {
+    public OpenNotes(Fireland _main)
+    {
         this.main = _main;
         config = new NotesConfig(_main, true);
     }
@@ -67,7 +68,8 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
     @EventHandler
     public void interactNote(PlayerInteractEvent e)
     {
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.SMALL_AMETHYST_BUD)
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock() != null
+                && e.getClickedBlock().getType() == Material.SMALL_AMETHYST_BUD)
         {
             ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
             BookMeta meta = (BookMeta) book.getItemMeta();
@@ -96,7 +98,8 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
             int z = e.getBlockPlaced().getLocation().getBlockZ();
             config.getConfig().set(x + "." + y + "." + z + ".content", "");
             config.save();
-            InGameUtilities.sendPlayerSucces(e.getPlayer(), "Une nouvelle note a été crée. Pour modifier son contenu, faites /fnote <text> en pointant sur la note");
+            InGameUtilities.sendPlayerSucces(e.getPlayer(),
+                    "Une nouvelle note a été crée. Pour modifier son contenu, faites /fnote <text> en pointant sur la note");
         }
     }
 
@@ -125,7 +128,8 @@ public class OpenNotes implements @NotNull Listener, CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings)
+    {
 
         if (commandSender instanceof Player p)
         {

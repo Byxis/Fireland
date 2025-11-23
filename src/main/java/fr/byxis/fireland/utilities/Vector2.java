@@ -1,6 +1,7 @@
 package fr.byxis.fireland.utilities;
 
-public class Vector2 {
+public class Vector2
+{
 
     private double x;
     private double y;

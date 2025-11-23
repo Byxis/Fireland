@@ -1,6 +1,8 @@
 package fr.byxis.player.workshop;
 
 import fr.byxis.fireland.Fireland;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -8,9 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class WorkshopManagerTabCompleter implements TabCompleter
 {
@@ -22,9 +21,9 @@ public class WorkshopManagerTabCompleter implements TabCompleter
         this.main = _main;
     }
 
-
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args)
+    {
         List<String> l = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("workshop") && sender.hasPermission("fireland.command.workshop.admin"))
         {
@@ -79,7 +78,7 @@ public class WorkshopManagerTabCompleter implements TabCompleter
                         l.add("300");
                         l.add("--Durée custom (-1 pour durée par défaut) en secondes");
                     }
-                    //String _itemName, String _mat, int _durability
+                    // String _itemName, String _mat, int _durability
                     else if (args.length == 8)
                     {
                         l.add("--Nom de l'item");

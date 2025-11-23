@@ -1,6 +1,8 @@
 package fr.byxis.player.items.backpack;
 
 import fr.byxis.fireland.utilities.InGameUtilities;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -18,28 +20,27 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+public class BackPack implements Listener, CommandExecutor
+{
 
-public class BackPack implements Listener, CommandExecutor {
-
-    ArrayList<InventoryAction> bundleActions = new ArrayList<>(Arrays.asList(
-            InventoryAction.PICKUP_FROM_BUNDLE,
-            InventoryAction.PICKUP_ALL_INTO_BUNDLE,
-            InventoryAction.PICKUP_SOME_INTO_BUNDLE,
-            InventoryAction.PLACE_FROM_BUNDLE,
-            InventoryAction.PLACE_ALL_INTO_BUNDLE,
-            InventoryAction.PLACE_SOME_INTO_BUNDLE
-    ));
+    private ArrayList<InventoryAction> bundleActions = new ArrayList<>(Arrays.asList(InventoryAction.PICKUP_FROM_BUNDLE,
+            InventoryAction.PICKUP_ALL_INTO_BUNDLE, InventoryAction.PICKUP_SOME_INTO_BUNDLE, InventoryAction.PLACE_FROM_BUNDLE,
+            InventoryAction.PLACE_ALL_INTO_BUNDLE, InventoryAction.PLACE_SOME_INTO_BUNDLE));
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings)
+    {
 
-        if (commandSender instanceof Player p) {
-            if (command.getName().equalsIgnoreCase("backpack") && p.hasPermission("fireland.command.backpack")) {
-                if (strings.length == 0) {
+        if (commandSender instanceof Player p)
+        {
+            if (command.getName().equalsIgnoreCase("backpack") && p.hasPermission("fireland.command.backpack"))
+            {
+                if (strings.length == 0)
+                {
                     giveItem(p, 1);
-                } else {
+                }
+                else
+                {
                     giveItem(p, Integer.parseInt(strings[0]));
                 }
             }
@@ -48,11 +49,14 @@ public class BackPack implements Listener, CommandExecutor {
     }
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void onPlayerInteract(PlayerInteractEvent event)
+    {
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (item.getType() == Material.BUNDLE && item.getAmount() == 1 && item.getItemMeta().hasCustomModelData() && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
+        if (item.getType() == Material.BUNDLE && item.getAmount() == 1 && item.getItemMeta().hasCustomModelData()
+                && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR))
+        {
 
             if (isExceedingLimit(player))
             {
@@ -71,7 +75,8 @@ public class BackPack implements Listener, CommandExecutor {
                 InGameUtilities.playWorldSound(player.getLocation(), "gun.hud.bag_open", SoundCategory.PLAYERS, 0.5f, 1f);
             }
             InGameUtilities.playWorldSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 0.5f, 0f);
-            event.setCancelled(true); // Empêche la peau de cuir d'être utilisée comme autre chose que pour ouvrir le sac à dos.
+            event.setCancelled(true); // Empêche la peau de cuir d'être utilisée comme autre chose que pour ouvrir le
+                                      // sac à dos.
         }
     }
 
@@ -93,13 +98,12 @@ public class BackPack implements Listener, CommandExecutor {
     }
 
     @EventHandler
-    public void onInventoryClose(InventoryCloseEvent e) {
-        if (e.getView().getTitle().contains("Pochette")
-                || e.getView().getTitle().contains("Sacoche")
-                || e.getView().getTitle().contains("Sac à dos")
-                || e.getView().getTitle().contains("Sac de sport")
-                || e.getView().getTitle().contains("Sac de randonnée")
-                || e.getView().getTitle().contains("Sac à dos militaire")) {
+    public void onInventoryClose(InventoryCloseEvent e)
+    {
+        if (e.getView().getTitle().contains("Pochette") || e.getView().getTitle().contains("Sacoche")
+                || e.getView().getTitle().contains("Sac à dos") || e.getView().getTitle().contains("Sac de sport")
+                || e.getView().getTitle().contains("Sac de randonnée") || e.getView().getTitle().contains("Sac à dos militaire"))
+        {
             Player player = (Player) e.getPlayer();
             InGameUtilities.playWorldSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 0.5f, 0f);
             Inventory inventory = e.getInventory();
@@ -108,7 +112,6 @@ public class BackPack implements Listener, CommandExecutor {
             bp.saveBackPack(backPackItem, inventory);
         }
     }
-
 
     @EventHandler
     public void inventoryManager(InventoryClickEvent e)
@@ -130,15 +133,13 @@ public class BackPack implements Listener, CommandExecutor {
                 e.setCancelled(true);
                 return;
             }
-            if (e.getClickedInventory().getType() != InventoryType.PLAYER ||
-                    (
-                        e.getView().getTopInventory().getType() != InventoryType.PLAYER
-                        && e.getView().getTopInventory().getType() != InventoryType.CRAFTING
-                        && e.getView().getTopInventory().getType() != InventoryType.CREATIVE
-                    )
-            )
+            if (e.getClickedInventory().getType() != InventoryType.PLAYER
+                    || (e.getView().getTopInventory().getType() != InventoryType.PLAYER
+                            && e.getView().getTopInventory().getType() != InventoryType.CRAFTING
+                            && e.getView().getTopInventory().getType() != InventoryType.CREATIVE))
             {
-                if (!e.getView().getTitle().contains("Coffre") || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
+                if (!e.getView().getTitle().contains("Coffre")
+                        || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
                 {
                     e.setCancelled(true);
                     return;
@@ -165,13 +166,9 @@ public class BackPack implements Listener, CommandExecutor {
         }
         if (e.getCurrentItem() != null && e.getCurrentItem().getType() == Material.WHITE_STAINED_GLASS_PANE)
         {
-            if (e.getView().getTitle().contains("Pochette")
-                    || e.getView().getTitle().contains("Sacoche")
-                    || e.getView().getTitle().contains("Sac à dos")
-                    || e.getView().getTitle().contains("Sac de sport")
-                    || e.getView().getTitle().contains("Sac de randonnée")
-                    || e.getView().getTitle().contains("Sac à dos militaire")
-            )
+            if (e.getView().getTitle().contains("Pochette") || e.getView().getTitle().contains("Sacoche")
+                    || e.getView().getTitle().contains("Sac à dos") || e.getView().getTitle().contains("Sac de sport")
+                    || e.getView().getTitle().contains("Sac de randonnée") || e.getView().getTitle().contains("Sac à dos militaire"))
             {
                 e.setCancelled(true);
             }
@@ -211,10 +208,10 @@ public class BackPack implements Listener, CommandExecutor {
             }
             if (e.getInventory().getType() != InventoryType.PLAYER || (e.getView().getTopInventory().getType() != InventoryType.PLAYER
                     && e.getView().getTopInventory().getType() != InventoryType.CRAFTING
-                    && e.getView().getTopInventory().getType() != InventoryType.CREATIVE)
-            )
+                    && e.getView().getTopInventory().getType() != InventoryType.CREATIVE))
             {
-                if (!e.getView().getTitle().contains("Coffre") || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
+                if (!e.getView().getTitle().contains("Coffre")
+                        || !(e.getView().getTitle().contains("Stockage") && e.getView().getTitle().contains("de bunker")))
                 {
                     e.setCancelled(true);
                 }
@@ -222,14 +219,16 @@ public class BackPack implements Listener, CommandExecutor {
         }
     }
 
-    public void giveItem(Player p, int level) {
+    public void giveItem(Player p, int level)
+    {
         BackPackClass bp = new BackPackClass(level);
         ItemStack backpack = new ItemStack(Material.BUNDLE, 1);
 
         ItemMeta meta = backpack.getItemMeta();
         meta.setCustomModelData(level);
 
-        String name = switch (level) {
+        String name = switch (level)
+        {
             case 1 -> "§cPochette";
             case 2 -> "§cSacoche";
             case 3 -> "§cSac à dos";

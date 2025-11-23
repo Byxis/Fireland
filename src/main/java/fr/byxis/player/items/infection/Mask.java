@@ -1,5 +1,8 @@
 package fr.byxis.player.items.infection;
 
+import static fr.byxis.player.items.ItemDurability.getDurability;
+import static fr.byxis.player.items.ItemDurability.remLoreDurability;
+
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -15,15 +18,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import static fr.byxis.player.items.ItemDurability.getDurability;
-import static fr.byxis.player.items.ItemDurability.remLoreDurability;
-
 public class Mask implements Listener
 {
 
     public static void addEffects(Player _player)
     {
-        if (_player == null) return;
+        if (_player == null)
+            return;
 
         ItemStack helmet = _player.getInventory().getHelmet();
         boolean isCreative = _player.getGameMode() == GameMode.CREATIVE;
@@ -61,12 +62,14 @@ public class Mask implements Listener
     public void playerPutMask(PlayerInteractEvent _event)
     {
         Action action = _event.getAction();
-        if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return;
+        if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK)
+            return;
 
         Player player = _event.getPlayer();
 
         ItemStack hand = _event.getItem();
-        if (hand == null) return;
+        if (hand == null)
+            return;
 
         ItemStack previousHelmet = player.getInventory().getHelmet();
         Material handType = hand.getType();
@@ -119,7 +122,8 @@ public class Mask implements Listener
     @EventHandler
     public void playerDamage(EntityDamageEvent _damageEvent)
     {
-        if (!(_damageEvent.getEntity() instanceof Player _player)) return;
+        if (!(_damageEvent.getEntity() instanceof Player _player))
+            return;
 
         if (hasGazMask(_player))
         {
@@ -140,10 +144,12 @@ public class Mask implements Listener
 
     public static boolean hasGazMask(Player _player)
     {
-        if (_player == null) return false;
+        if (_player == null)
+            return false;
 
         ItemStack helmet = _player.getInventory().getHelmet();
-        if (helmet == null) return false;
+        if (helmet == null)
+            return false;
 
         Material mat = helmet.getType();
 
@@ -156,17 +162,16 @@ public class Mask implements Listener
             return true;
         }
 
-        /* TO BE IMPLEMENTED IN 1.12.10
-        else if (
-                mat == Material.COPPER_HELMET &&
-                        _player.getInventory().getChestplate() != null && _player.getInventory().getChestplate().getType() == Material.COPPER_CHESTPLATE &&
-                        _player.getInventory().getLeggings() != null && _player.getInventory().getLeggings().getType() == Material.COPPER_LEGGINGS &&
-                        _player.getInventory().getBoots() != null && _player.getInventory().getBoots().getType() == Material.COPPER_BOOTS
-        )
-        {
-            return true;
-        }
-        */
+        /*
+         * TO BE IMPLEMENTED IN 1.12.10 else if ( mat == Material.COPPER_HELMET &&
+         * _player.getInventory().getChestplate() != null &&
+         * _player.getInventory().getChestplate().getType() ==
+         * Material.COPPER_CHESTPLATE && _player.getInventory().getLeggings() != null &&
+         * _player.getInventory().getLeggings().getType() == Material.COPPER_LEGGINGS &&
+         * _player.getInventory().getBoots() != null &&
+         * _player.getInventory().getBoots().getType() == Material.COPPER_BOOTS ) {
+         * return true; }
+         */
         return false;
     }
 

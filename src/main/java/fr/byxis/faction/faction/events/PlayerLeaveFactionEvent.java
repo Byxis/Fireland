@@ -1,11 +1,11 @@
 package fr.byxis.faction.faction.events;
 
+import java.util.UUID;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import java.util.UUID;
-
-public class PlayerLeaveFactionEvent extends Event {
+public class PlayerLeaveFactionEvent extends Event
+{
 
     private final UUID player;
     private final String faction;
@@ -19,23 +19,28 @@ public class PlayerLeaveFactionEvent extends Event {
         this.isKicked = _isKicked;
     }
     @Override
-    public HandlerList getHandlers() {
+    public HandlerList getHandlers()
+    {
         return HANDLERS;
     }
 
-    public static HandlerList getHandlerList() {
+    public static HandlerList getHandlerList()
+    {
         return HANDLERS;
     }
 
-    public UUID getPlayerUuid() {
+    public UUID getPlayerUuid()
+    {
         return player;
     }
 
-    public String getFaction() {
+    public String getFaction()
+    {
         return faction;
     }
 
-    public boolean isKicked() {
+    public boolean isKicked()
+    {
         return isKicked;
     }
 }

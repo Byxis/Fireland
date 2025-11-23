@@ -17,8 +17,8 @@ public class WorkshopItemClass
     private final String command;
     private final boolean know;
 
-
-    public WorkshopItemClass(String _recipeName, String _itemName, String _type, int _scrap, int _gunpowder, int _medicine, int _duration, Material _mat, short _durability, String _command, boolean _know, int _customModelData)
+    public WorkshopItemClass(String _recipeName, String _itemName, String _type, int _scrap, int _gunpowder, int _medicine, int _duration,
+            Material _mat, short _durability, String _command, boolean _know, int _customModelData)
     {
         this.recipeName = _recipeName;
         this.itemName = _itemName;
@@ -33,7 +33,6 @@ public class WorkshopItemClass
         this.know = _know;
         this.customModelData = _customModelData;
     }
-
 
     public String getRecipeName()
     {
@@ -96,21 +95,12 @@ public class WorkshopItemClass
     }
 
     @Override
-    public String toString() {
-        return "WorkshopItemClass {" +
-                "\n  recipeName: '" + recipeName + '\'' +
-                ",\n  itemName: '" + itemName + '\'' +
-                ",\n  type: '" + type + '\'' +
-                ",\n  scrap: " + scrap +
-                ",\n  gunPowder: " + gunPowder +
-                ",\n  medicine: " + medicine +
-                ",\n  duration: " + duration +
-                ",\n  customModelData: " + customModelData +
-                ",\n  mat: " + (mat != null ? mat.name() : "null") +
-                ",\n  durability: " + durability +
-                ",\n  command: '" + command + '\'' +
-                ",\n  know: " + know +
-                "\n}";
+    public String toString()
+    {
+        return "WorkshopItemClass {" + "\n  recipeName: '" + recipeName + '\'' + ",\n  itemName: '" + itemName + '\'' + ",\n  type: '"
+                + type + '\'' + ",\n  scrap: " + scrap + ",\n  gunPowder: " + gunPowder + ",\n  medicine: " + medicine + ",\n  duration: "
+                + duration + ",\n  customModelData: " + customModelData + ",\n  mat: " + (mat != null ? mat.name() : "null")
+                + ",\n  durability: " + durability + ",\n  command: '" + command + '\'' + ",\n  know: " + know + "\n}";
     }
 
 }

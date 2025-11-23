@@ -22,12 +22,14 @@ public class WorkshopManager implements CommandExecutor
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args)
+    {
         WorkshopFunction wf = new WorkshopFunction(main, (Player) sender);
         if (cmd.getName().equalsIgnoreCase("workshop") && args.length >= 1)
         {
             if (args[0].equalsIgnoreCase("newrecipe") && args.length >= 6 && sender.hasPermission("fireland.command.workshop.admin"))
-            { //ws newrecipe a:NomRecette Type scrap canon a:Itemname a:materiel a:durability commande
+            { // ws newrecipe a:NomRecette Type scrap canon a:Itemname a:materiel a:durability
+              // commande
 
                 StringBuilder sb = new StringBuilder();
                 for (int i = 11; i < args.length; i++)
@@ -35,7 +37,8 @@ public class WorkshopManager implements CommandExecutor
                     sb.append(args[i]).append(" ");
                 }
 
-                for (int i = 0; i < args.length; i++) {
+                for (int i = 0; i < args.length; i++)
+                {
                     System.out.println("args[" + i + "] : " + args[i]);
                 }
 
@@ -72,17 +75,13 @@ public class WorkshopManager implements CommandExecutor
                 int durability = Integer.parseInt(args[9]);
                 System.out.println("durability (après conversion) : " + durability);
 
-
-
                 String command = sb.toString().trim();
-                //String _itemName, String _mat, int _durability
-                //ws newrecipe Plan_de_fabrication_de_ D 60 0 0 120 NETHERITE_HOE 0 wm give Player SWR8
-                ///    0                 1             2  3 4 5   6   7           8  9     10     11
+                // String _itemName, String _mat, int _durability
+                // ws newrecipe Plan_de_fabrication_de_ D 60 0 0 120 NETHERITE_HOE 0 wm give
+                // Player SWR8
+                /// 0 1 2 3 4 5 6 7 8 9 10 11
                 InGameUtilities.debug(155, command);
-                wf.createRecipe(planName, command, type, scrap,
-                        gunpowder, medicine,
-                        duration, itemName, material,
-                        durability);
+                wf.createRecipe(planName, command, type, scrap, gunpowder, medicine, duration, itemName, material, durability);
                 sender.sendMessage("§aNouveau plan créé : " + planName);
                 return true;
             }
@@ -96,8 +95,8 @@ public class WorkshopManager implements CommandExecutor
 
                 String command = sb.toString().trim();
 
-                //ws a:newrecipe E 20 0 10 30 wm give Player antidoul
-                //      0        1  2 3  4  5  6   7    8      9
+                // ws a:newrecipe E 20 0 10 30 wm give Player antidoul
+                // 0 1 2 3 4 5 6 7 8 9
                 String type = args[1];
                 int scrap = Integer.parseInt(args[2]);
                 int gunpowder = Integer.parseInt(args[3]);
@@ -110,7 +109,7 @@ public class WorkshopManager implements CommandExecutor
             {
                 if (args.length >= 4)
                 {
-                    Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[3]));
+                    Player victim = (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[3]));
                     wf.craftItemNbr(args[1], victim.getUniqueId().toString(), Integer.parseInt(args[2]));
                     sender.sendMessage("§aLe joueur " + victim.getName() + " à appris " + args[2] + " fois le plan " + args[1]);
                 }

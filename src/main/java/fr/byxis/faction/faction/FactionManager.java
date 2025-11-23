@@ -1,5 +1,8 @@
 package fr.byxis.faction.faction;
 
+import static fr.byxis.fireland.Fireland.getEco;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 import fr.byxis.faction.bunker.BunkerClass;
 import fr.byxis.faction.faction.events.PlayerLeaveFactionEvent;
 import fr.byxis.fireland.Fireland;
@@ -15,12 +18,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import static fr.byxis.fireland.Fireland.getEco;
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-
 public class FactionManager implements Listener, CommandExecutor
 {
-    
+
     final private Fireland main;
 
     public FactionManager(Fireland _main)
@@ -59,12 +59,12 @@ public class FactionManager implements Listener, CommandExecutor
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args)
+    {
         if (!(sender instanceof Player p))
         {
             return false;
         }
-
 
         FactionFunctions factionFunctions = new FactionFunctions(main, p);
 
@@ -76,12 +76,13 @@ public class FactionManager implements Listener, CommandExecutor
             if (factionName.equals(""))
             {
                 InGameUtilities.sendPlayerError(p, "Vous n'avez pas de faction.");
-                //Renvoyer le classement des plus grandes facs
+                // Renvoyer le classement des plus grandes facs
                 return true;
             }
             else
             {
-                factionFunctions.factionInformationSender(p, factionFunctions.getFactionInfo(factionName), factionFunctions.getPlayersFromFaction(factionName));
+                factionFunctions.factionInformationSender(p, factionFunctions.getFactionInfo(factionName),
+                        factionFunctions.getPlayersFromFaction(factionName));
             }
 
         }
@@ -158,14 +159,16 @@ public class FactionManager implements Listener, CommandExecutor
                     return false;
                 }
                 double money = getEco().getBalance(p);
-                if (money >= 1000 && factionFunctions.creatingFaction(p, args[1])) {
+                if (money >= 1000 && factionFunctions.creatingFaction(p, args[1]))
+                {
                     getEco().withdrawPlayer(p, 1000);
                     InGameUtilities.sendPlayerSucces(p, "Vous avez créé la faction " + args[1]);
                     for (Player op : Bukkit.getOnlinePlayers())
                     {
                         if (op != p)
                         {
-                            InGameUtilities.sendPlayerInformation(op, "La faction §d" + args[1] + "§7 a été créée par " + p.getName() + " !");
+                            InGameUtilities.sendPlayerInformation(op,
+                                    "La faction §d" + args[1] + "§7 a été créée par " + p.getName() + " !");
                         }
                     }
                     thingsToDoWhileJoining(p, args[1], factionFunctions.getFactionInfo(args[1]));
@@ -222,7 +225,8 @@ public class FactionManager implements Listener, CommandExecutor
             {
                 if (playerInfo.getRole() == 2)
                 {
-                    InGameUtilities.sendPlayerError(p, "Vous êtes leader et donc vous ne pouvez pas quitter la faction. Pour supprimer la faction, faites /faction disband. Pour désigner un nouveau leader, faites /faction promote <nom>.");
+                    InGameUtilities.sendPlayerError(p,
+                            "Vous êtes leader et donc vous ne pouvez pas quitter la faction. Pour supprimer la faction, faites /faction disband. Pour désigner un nouveau leader, faites /faction promote <nom>.");
                 }
                 else
                 {
@@ -273,8 +277,11 @@ public class FactionManager implements Listener, CommandExecutor
                 {
                     InGameUtilities.sendPlayerError(p, "Vous n'avez pas de faction !");
                     return true;
-                } else {
-                    factionFunctions.factionInformationSender(p, factionFunctions.getFactionInfo(factionName), factionFunctions.getPlayersFromFaction(factionName));
+                }
+                else
+                {
+                    factionFunctions.factionInformationSender(p, factionFunctions.getFactionInfo(factionName),
+                            factionFunctions.getPlayersFromFaction(factionName));
                 }
             }
             else
@@ -302,7 +309,8 @@ public class FactionManager implements Listener, CommandExecutor
                 }
                 if (playerInfo != null)
                 {
-                    InGameUtilities.sendPlayerInformation(p, "Votre faction a §6" + factionInfo.getCurrentMoney() + "$§7/§6 " + factionInfo.getMaxMoney() + "$§7.");
+                    InGameUtilities.sendPlayerInformation(p,
+                            "Votre faction a §6" + factionInfo.getCurrentMoney() + "$§7/§6 " + factionInfo.getMaxMoney() + "$§7.");
                 }
                 else
                 {
@@ -313,7 +321,8 @@ public class FactionManager implements Listener, CommandExecutor
             {
                 if (factionInfo != null)
                 {
-                    InGameUtilities.sendPlayerInformation(p, "La faction §r" + factionInfo.getName() + "§7 à §r" + factionInfo.getCurrentMoney() + "§7/§r " + factionInfo.getMaxMoney() + "§7$");
+                    InGameUtilities.sendPlayerInformation(p, "La faction §r" + factionInfo.getName() + "§7 à §r"
+                            + factionInfo.getCurrentMoney() + "§7/§r " + factionInfo.getMaxMoney() + "§7$");
                 }
             }
         }
@@ -332,7 +341,8 @@ public class FactionManager implements Listener, CommandExecutor
                     {
                         factionFunctions.take(factionInfo.getName(), factionInfo.getMaxMoney());
                         factionFunctions.upgradeFaction(factionInfo.getName());
-                        factionFunctions.sendFactionPlayer(factionInfo.getName(), "La faction passe au niveau §d§l" + (factionInfo.getCurrentUpgrade() + 1) + " §r§7!");
+                        factionFunctions.sendFactionPlayer(factionInfo.getName(),
+                                "La faction passe au niveau §d§l" + (factionInfo.getCurrentUpgrade() + 1) + " §r§7!");
                     }
                     else
                     {
@@ -350,11 +360,14 @@ public class FactionManager implements Listener, CommandExecutor
             }
             else
             {
-                FactionInformation factionUpgradeInfo = factionFunctions.getFactionInfoWithAmeliorations(factionFunctions.playerFactionName(p));
-                InGameUtilities.sendPlayerInformation(p, "Il vous faut §6" + factionUpgradeInfo.getCurrentMoney() + "§7/§6 " + factionInfo.getMaxMoney() + "$§7 pour améliorer votre faction !");
-                InGameUtilities.sendPlayerInformation(p, "Vous bénéficierez d'un nouveau maximum d'argent de §d" +
-                        factionUpgradeInfo.getMaxMoney() + "$§7, de §d" + factionUpgradeInfo.getCurrentChestSize()
-                        + "§7 slots de stockage et vous pourrez recruter §d" + factionUpgradeInfo.getMaxNbrOfPlayers() + "§7 personnes !");
+                FactionInformation factionUpgradeInfo = factionFunctions
+                        .getFactionInfoWithAmeliorations(factionFunctions.playerFactionName(p));
+                InGameUtilities.sendPlayerInformation(p, "Il vous faut §6" + factionUpgradeInfo.getCurrentMoney() + "§7/§6 "
+                        + factionInfo.getMaxMoney() + "$§7 pour améliorer votre faction !");
+                InGameUtilities.sendPlayerInformation(p,
+                        "Vous bénéficierez d'un nouveau maximum d'argent de §d" + factionUpgradeInfo.getMaxMoney() + "$§7, de §d"
+                                + factionUpgradeInfo.getCurrentChestSize() + "§7 slots de stockage et vous pourrez recruter §d"
+                                + factionUpgradeInfo.getMaxNbrOfPlayers() + "§7 personnes !");
                 InGameUtilities.sendPlayerInformation(p, "Pour l'améliorer, faites §c/faction upgrade yes§7.");
                 p.closeInventory();
             }
@@ -375,7 +388,8 @@ public class FactionManager implements Listener, CommandExecutor
                 }
                 else
                 {
-                    FactionPlayerInformation victimInfo = factionFunctions.getInformationOfPlayerInAFaction(victim.getUniqueId(), victim.getName());
+                    FactionPlayerInformation victimInfo = factionFunctions.getInformationOfPlayerInAFaction(victim.getUniqueId(),
+                            victim.getName());
                     if (!victimInfo.getFactionName().equalsIgnoreCase(playerInfo.getFactionName()))
                     {
                         p.sendMessage("§d" + victimInfo.getName() + " §cne fait pas partie de votre faction !");
@@ -392,7 +406,8 @@ public class FactionManager implements Listener, CommandExecutor
                             {
                                 factionFunctions.changePlayerRank(victim.getUniqueId(), playerInfo.getFactionName(), -1);
                                 InGameUtilities.sendPlayerInformation(p, "Le joueur §d" + victim.getName() + "§a a été rétrograder.");
-                                factionFunctions.sendFactionPlayer(factionInfo.getName(), "§cLe joueur " + victim.getName() + " a été rétrogradé.");
+                                factionFunctions.sendFactionPlayer(factionInfo.getName(),
+                                        "§cLe joueur " + victim.getName() + " a été rétrogradé.");
                             }
                             else
                             {
@@ -419,14 +434,15 @@ public class FactionManager implements Listener, CommandExecutor
                 }
                 else
                 {
-                    OfflinePlayer victim =  Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[1]));
+                    OfflinePlayer victim = Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[1]));
                     if (!(victim.hasPlayedBefore()) || p.getName().equalsIgnoreCase(victim.getName()))
                     {
                         InGameUtilities.sendPlayerError(p, "Personne non trouvée.");
                     }
                     else
                     {
-                        FactionPlayerInformation victimInfo = factionFunctions.getInformationOfPlayerInAFaction(victim.getUniqueId(), victim.getName());
+                        FactionPlayerInformation victimInfo = factionFunctions.getInformationOfPlayerInAFaction(victim.getUniqueId(),
+                                victim.getName());
                         if (!victimInfo.getFactionName().equalsIgnoreCase(playerInfo.getFactionName()))
                         {
                             p.sendMessage("§d" + victimInfo.getName() + " §cne fait pas partie de votre faction !");
@@ -438,7 +454,8 @@ public class FactionManager implements Listener, CommandExecutor
                                 if (victimInfo.getRole() == 0)
                                 {
                                     factionFunctions.changePlayerRank(victim.getUniqueId(), playerInfo.getFactionName(), 1);
-                                    factionFunctions.sendFactionPlayer(factionInfo.getName(), "Le joueur " + victim.getName() + " a été promu !");
+                                    factionFunctions.sendFactionPlayer(factionInfo.getName(),
+                                            "Le joueur " + victim.getName() + " a été promu !");
 
                                 }
                                 else if (victimInfo.getRole() == 1)
@@ -457,7 +474,9 @@ public class FactionManager implements Listener, CommandExecutor
                                     else
                                     {
                                         InGameUtilities.sendPlayerError(p, "Cette personne est un modérateur de la faction");
-                                        InGameUtilities.sendPlayerError(p, "Si vous voulez lui transférer le pouvoir, faites §4/faction promote " + victim.getName() + " yes§c.");
+                                        InGameUtilities.sendPlayerError(p,
+                                                "Si vous voulez lui transférer le pouvoir, faites §4/faction promote " + victim.getName()
+                                                        + " yes§c.");
                                     }
                                 }
                                 else
@@ -485,20 +504,23 @@ public class FactionManager implements Listener, CommandExecutor
                 double money = factionFunctions.getFactionMoney(playerInfo.getFactionName());
                 if (money >= 4000 * factionInfo.getCurrentUpgrade())
                 {
-                    if (factionFunctions.take(factionInfo.getName(), 4000 * factionInfo.getCurrentUpgrade())) {
+                    if (factionFunctions.take(factionInfo.getName(), 4000 * factionInfo.getCurrentUpgrade()))
+                    {
                         factionFunctions.sendFactionPlayer(factionInfo.getName(), "La faction a été renommée " + args[1] + " !");
                         factionFunctions.renameFaction(playerInfo.getFactionName(), args[1]);
                     }
                 }
                 else
                 {
-                    InGameUtilities.sendPlayerError(p, "La faction n'a pas assez d'argent ! Renommer sa faction coûte " + (4000 * factionInfo.getCurrentUpgrade()) + "$ !");
+                    InGameUtilities.sendPlayerError(p, "La faction n'a pas assez d'argent ! Renommer sa faction coûte "
+                            + (4000 * factionInfo.getCurrentUpgrade()) + "$ !");
                 }
             }
         }
         else if (args[0].equalsIgnoreCase("deposit") && p.hasPermission("fireland.command.faction.deposit"))
         {
-            if (factionInfo == null) {
+            if (factionInfo == null)
+            {
 
                 InGameUtilities.sendPlayerError(p, "Vous n'avez pas de faction !");
                 return true;
@@ -514,26 +536,31 @@ public class FactionManager implements Listener, CommandExecutor
                         {
                             getEco().withdrawPlayer(p, money);
                         }
-                    } else
+                    }
+                    else
                     {
                         InGameUtilities.sendPlayerError(p, "La faction ne peut pas contenir autant d'argent !");
                     }
-                } else
+                }
+                else
                 {
                     InGameUtilities.sendPlayerError(p, "Vous n'avez pas assez d'argent !");
                 }
-            } else
+            }
+            else
             {
                 InGameUtilities.sendPlayerError(p, "Utilisation: /faction deposit <nombre>");
             }
         }
         else if (args[0].equalsIgnoreCase("withdraw") && p.hasPermission("fireland.command.faction.withdraw"))
         {
-            if (factionInfo == null) {
+            if (factionInfo == null)
+            {
                 InGameUtilities.sendPlayerError(p, "Vous n'avez pas de faction !");
                 return true;
             }
-            if (args.length == 2) {
+            if (args.length == 2)
+            {
                 if (playerInfo.getRole() == 2 || playerInfo.getRole() == 1)
                 {
                     int amount = Integer.parseInt(args[1]);
@@ -554,27 +581,32 @@ public class FactionManager implements Listener, CommandExecutor
                 {
                     InGameUtilities.sendPlayerError(p, "Seul le leader ou les modérateurs peuvent effectuer cette action !");
                 }
-            } else {
+            }
+            else
+            {
                 InGameUtilities.sendPlayerError(p, "Utilisation: /faction withdraw <nombre>");
             }
         }
         else if (args[0].equalsIgnoreCase("kick"))
         {
-            if (factionInfo == null) {
+            if (factionInfo == null)
+            {
                 InGameUtilities.sendPlayerError(p, "Vous n'avez pas de faction !");
                 return true;
             }
-            if (args.length == 2) {
+            if (args.length == 2)
+            {
                 if (playerInfo.getRole() >= 1)
                 {
-                    OfflinePlayer victim =  Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[1]));
+                    OfflinePlayer victim = Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[1]));
                     if (p.getName().equalsIgnoreCase(victim.getName()))
                     {
                         InGameUtilities.sendPlayerError(p, "Vous ne pouvez pas vous exclure vous-même !");
                     }
                     else
                     {
-                        FactionPlayerInformation victimInfo = factionFunctions.getInformationOfPlayerInAFaction(victim.getUniqueId(), victim.getName());
+                        FactionPlayerInformation victimInfo = factionFunctions.getInformationOfPlayerInAFaction(victim.getUniqueId(),
+                                victim.getName());
                         if (!victimInfo.getFactionName().equalsIgnoreCase(playerInfo.getFactionName()))
                         {
                             p.sendMessage("§d" + victimInfo.getName() + " §cne fait pas partie de votre faction !");
@@ -589,7 +621,8 @@ public class FactionManager implements Listener, CommandExecutor
                             Bukkit.getPluginManager().callEvent(event);
                             InGameUtilities.sendPlayerError(p, "Vous avez exclu §4" + victim.getName() + " §c!");
                             factionFunctions.kickPlayer(factionInfo, victim.getUniqueId());
-                            factionFunctions.sendFactionPlayer(factionInfo.getName(), "§cLe joueur " + victim.getName() + " a été exclu de la faction.");
+                            factionFunctions.sendFactionPlayer(factionInfo.getName(),
+                                    "§cLe joueur " + victim.getName() + " a été exclu de la faction.");
 
                         }
                     }
@@ -606,11 +639,13 @@ public class FactionManager implements Listener, CommandExecutor
         }
         else if (args[0].equalsIgnoreCase("perk") && p.hasPermission("fireland.command.faction.perk"))
         {
-            if (factionInfo == null) {
+            if (factionInfo == null)
+            {
                 InGameUtilities.sendPlayerError(p, "Vous n'avez pas de faction !");
                 return true;
             }
-            if (args.length == 2) {
+            if (args.length == 2)
+            {
                 if (playerInfo.getRole() == 2)
                 {
                     if (isPerk(args[1]))
@@ -623,7 +658,8 @@ public class FactionManager implements Listener, CommandExecutor
                                 factionFunctions.take(factionInfo.getName(), price);
                                 factionFunctions.addPerk(factionInfo.getName(), args[1]);
                                 InGameUtilities.sendPlayerInformation(p, "Vous avez acheté une nouvelle amélioration pour votre faction !");
-                                factionFunctions.sendFactionPlayer(factionInfo.getName(), "La faction a débloqué une nouvelle amélioration !");
+                                factionFunctions.sendFactionPlayer(factionInfo.getName(),
+                                        "La faction a débloqué une nouvelle amélioration !");
                             }
                             else
                             {
@@ -746,10 +782,10 @@ public class FactionManager implements Listener, CommandExecutor
         }
     }
 
-    public boolean isValidText(String text) {
+    public boolean isValidText(String text)
+    {
         String pattern = "^[a-zA-ZàâäéèêëîïôöùûüçÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ\\-_.]*$";
         return text.matches(pattern);
     }
-
 
 }

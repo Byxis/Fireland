@@ -34,7 +34,7 @@ public class QuadListener implements Listener
     {
         boolean block = true;
         Location init = p.getLocation();
-        
+
         if (!(new Location(init.getWorld(), init.getX(), init.getY(), init.getZ()).getBlock().isPassable()) && block)
         {
             block = false;
@@ -55,15 +55,15 @@ public class QuadListener implements Listener
         {
             block = false;
         }
-        
+
         if (block)
         {
             Location loc = p.getLocation();
             loc.setYaw(0);
             loc.setPitch(0);
-            
+
             Zombie quad = (Zombie) p.getWorld().spawnEntity(p.getLocation(), EntityType.ZOMBIE);
-            
+
             quad.setBaby(true);
             quad.setPassenger(p);
             quad.setCanPickupItems(false);

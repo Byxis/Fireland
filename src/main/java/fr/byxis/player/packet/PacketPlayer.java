@@ -11,10 +11,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-public class PacketPlayer implements CommandExecutor {
+public class PacketPlayer implements CommandExecutor
+{
     private final Fireland main;
     private final PacketFunctions pf;
-    public PacketPlayer(Fireland _main) {
+    public PacketPlayer(Fireland _main)
+    {
         this.main = _main;
         this.pf = new PacketFunctions(_main);
     }
@@ -81,7 +83,8 @@ public class PacketPlayer implements CommandExecutor {
         new BukkitRunnable()
         {
             @Override
-            public void run() {
+            public void run()
+            {
                 PacketFunctions.sendWorldBorderWarningDistancePacket(p, 0);
             }
         }.runTaskLater(main, 20);
@@ -93,7 +96,8 @@ public class PacketPlayer implements CommandExecutor {
         new BukkitRunnable()
         {
             @Override
-            public void run() {
+            public void run()
+            {
                 PacketFunctions.sendWorldBorderWarningDistancePacket(p, 0);
             }
         }.runTaskLater(main, 20);
@@ -105,7 +109,8 @@ public class PacketPlayer implements CommandExecutor {
         new BukkitRunnable()
         {
             @Override
-            public void run() {
+            public void run()
+            {
                 pf.openDoor(p, loc, false);
             }
         }.runTaskLater(main, 20);

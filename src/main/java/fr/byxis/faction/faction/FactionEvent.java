@@ -11,11 +11,13 @@ import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class FactionEvent implements Listener {
+public class FactionEvent implements Listener
+{
 
     private final Fireland main;
     private final FactionFunctions ff;
-    public FactionEvent(Fireland _main) {
+    public FactionEvent(Fireland _main)
+    {
         this.main = _main;
         ff = new FactionFunctions(_main, null);
         if (Bukkit.getOnlinePlayers().isEmpty())
@@ -85,27 +87,19 @@ public class FactionEvent implements Listener {
         }
     }
 
-    /*@EventHandler
-    public void PlayerInteraction(InventoryClickEvent e)
-    {
-        if (e.getView().getTitle().contains("Stockage de la faction"))
-        {
-            Player p = (Player) e.getView().getPlayer();
-            FactionFunctions ff = new FactionFunctions(main, p);
-            String name = ff.playerFactionName(p);
-            main.getHashMapManager().replaceStorageFactionMap(name, e.getInventory());
-        }
-    }
-
-    @EventHandler
-    public void PlayerCloseInv(InventoryCloseEvent e)
-    {
-        if (e.getView().getTitle().contains("Stockage de la faction"))
-        {
-            Player p = (Player) e.getView().getPlayer();
-            FactionFunctions ff = new FactionFunctions(main, p);
-            String name = ff.playerFactionName(p);
-            main.getHashMapManager().replaceStorageFactionMap(name, e.getInventory());
-        }
-    }*/
+    /*
+     * @EventHandler public void PlayerInteraction(InventoryClickEvent e) { if
+     * (e.getView().getTitle().contains("Stockage de la faction")) { Player p =
+     * (Player) e.getView().getPlayer(); FactionFunctions ff = new
+     * FactionFunctions(main, p); String name = ff.playerFactionName(p);
+     * main.getHashMapManager().replaceStorageFactionMap(name, e.getInventory()); }
+     * }
+     * 
+     * @EventHandler public void PlayerCloseInv(InventoryCloseEvent e) { if
+     * (e.getView().getTitle().contains("Stockage de la faction")) { Player p =
+     * (Player) e.getView().getPlayer(); FactionFunctions ff = new
+     * FactionFunctions(main, p); String name = ff.playerFactionName(p);
+     * main.getHashMapManager().replaceStorageFactionMap(name, e.getInventory()); }
+     * }
+     */
 }

@@ -2,6 +2,10 @@ package fr.byxis.player.items.infection.virus;
 
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -11,18 +15,13 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * Handle the /infect and /cure commands to manage player infections.
  *
- * Commands:
- * - /infect [player] [infectionType]: Infects the specified player or oneself if no player is specified.
- *   If infectionType is provided it must match one of InfectionType enum names (case-insensitive).
- * - /cure [player]: Cures the specified player or oneself if no player is specified.
+ * Commands: - /infect [player] [infectionType]: Infects the specified player or
+ * oneself if no player is specified. If infectionType is provided it must match
+ * one of InfectionType enum names (case-insensitive). - /cure [player]: Cures
+ * the specified player or oneself if no player is specified.
  *
  * Also provides tab-completion for player names and infection types.
  */
@@ -49,16 +48,13 @@ public class InfectionCommands implements CommandExecutor, TabCompleter
 
         switch (commandName)
         {
-            case "infect" ->
-            {
+            case "infect" -> {
                 return handleInfectCommand(executor, _args);
             }
-            case "cure" ->
-            {
+            case "cure" -> {
                 return handleCureCommand(executor, _args);
             }
-            default ->
-            {
+            default -> {
                 return false;
             }
         }
@@ -118,9 +114,7 @@ public class InfectionCommands implements CommandExecutor, TabCompleter
             }
             catch (IllegalArgumentException e)
             {
-                String valid = Arrays.stream(InfectionType.values())
-                        .map(Enum::name)
-                        .map(String::toLowerCase)
+                String valid = Arrays.stream(InfectionType.values()).map(Enum::name).map(String::toLowerCase)
                         .collect(Collectors.joining(", "));
                 _executor.sendMessage("§cType d'infection invalide. Types valides: " + valid);
                 return false;
@@ -191,7 +185,8 @@ public class InfectionCommands implements CommandExecutor, TabCompleter
     private Player getPlayerFromName(String _name)
     {
         Player player = Bukkit.getPlayer(_name);
-        if (player != null) return player;
+        if (player != null)
+            return player;
 
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(BasicUtilities.getUuid(_name));
         if (offlinePlayer.isOnline())

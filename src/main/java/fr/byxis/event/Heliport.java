@@ -1,6 +1,7 @@
 package fr.byxis.event;
 
 import fr.byxis.fireland.Fireland;
+import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,13 +18,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-
 public class Heliport implements Listener, CommandExecutor
 {
-    
+
     private boolean mouvement = false;
-    
+
     private final Fireland main;
 
     public Heliport(Fireland _main)
@@ -31,22 +30,23 @@ public class Heliport implements Listener, CommandExecutor
         this.main = _main;
     }
 
-    private void setItems(Inventory inv) {
+    private void setItems(Inventory inv)
+    {
         ItemStack blueGlass = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
         ItemMeta modifiedBlueGlass = blueGlass.getItemMeta();
         modifiedBlueGlass.setDisplayName(" ");
         blueGlass.setItemMeta(modifiedBlueGlass);
-        
+
         ItemStack limeGlass = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
         ItemMeta modifiedLimeGlass = limeGlass.getItemMeta();
         modifiedLimeGlass.setDisplayName(" ");
         limeGlass.setItemMeta(modifiedLimeGlass);
-        
+
         ItemStack greenGlass = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta modifiedGreenGlass = greenGlass.getItemMeta();
         modifiedGreenGlass.setDisplayName("Héliport");
         greenGlass.setItemMeta(modifiedGreenGlass);
-        
+
         ItemStack centreVille = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta modifiedCentreVille = centreVille.getItemMeta();
         modifiedCentreVille.setDisplayName("§lCentre-Ville");
@@ -54,7 +54,7 @@ public class Heliport implements Listener, CommandExecutor
         lore.add("§eCoût de la téléportation : 250$");
         modifiedCentreVille.setLore(lore);
         centreVille.setItemMeta(modifiedCentreVille);
-        
+
         ItemStack zoneNordEst = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta modifiedzoneNordEst = centreVille.getItemMeta();
         modifiedCentreVille.setDisplayName("§lZone Nord-Est");
@@ -62,7 +62,7 @@ public class Heliport implements Listener, CommandExecutor
         lore.add("§eCoût de la téléportation : 500$");
         modifiedzoneNordEst.setLore(lore);
         zoneNordEst.setItemMeta(modifiedzoneNordEst);
-        
+
         inv.setItem(0, blueGlass);
         inv.setItem(1, blueGlass);
         inv.setItem(2, limeGlass);
@@ -118,45 +118,55 @@ public class Heliport implements Listener, CommandExecutor
         inv.setItem(52, blueGlass);
         inv.setItem(53, blueGlass);
     }
-    
+
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
-        
-        if (sender instanceof Player) {
+    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args)
+    {
+
+        if (sender instanceof Player)
+        {
             Player player = (Player) sender;
-            if (cmd.getName().equalsIgnoreCase("map")) {
-                
+            if (cmd.getName().equalsIgnoreCase("map"))
+            {
+
                 Inventory inv = Bukkit.createInventory(null, 54, "Héliport");
-                
+
                 setItems(inv);
-                
+
                 player.openInventory(inv);
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     @EventHandler
-    public void onClick(InventoryClickEvent e) {
+    public void onClick(InventoryClickEvent e)
+    {
         Player player = (Player) e.getWhoClicked();
         ItemStack current = e.getCurrentItem();
         Location loc = new Location(Bukkit.getWorld("world"), -444.5, 81, -439.5);
-        
-        if (current == null) return;
-        
-        if (e.getView().getTitle().equalsIgnoreCase("Heliport")) {
+
+        if (current == null)
+            return;
+
+        if (e.getView().getTitle().equalsIgnoreCase("Heliport"))
+        {
             e.setCancelled(true);
-            if (current.getType().equals(Material.GREEN_STAINED_GLASS_PANE) && current.getItemMeta().getDisplayName().equalsIgnoreCase("§lCentre-Ville")) {
+            if (current.getType().equals(Material.GREEN_STAINED_GLASS_PANE)
+                    && current.getItemMeta().getDisplayName().equalsIgnoreCase("§lCentre-Ville"))
+            {
                 player.closeInventory();
                 player.sendMessage("§8La téléportation commence, veuillez ne pas bougez.");
-                new BukkitRunnable() {
-                    
+                new BukkitRunnable()
+                {
+
                     private int i = 10;
-                    
+
                     @Override
-                    public void run() {
+                    public void run()
+                    {
                         if (mouvement)
                         {
                             player.sendMessage("§cTéléportation annulée !");
@@ -168,14 +178,14 @@ public class Heliport implements Listener, CommandExecutor
                         {
                             player.sendMessage("§8Téléportation dans " + i + " secondes !");
                         }
-                        
+
                         if (i == 0)
                         {
                             player.sendMessage("§8Téléportation...");
                             player.teleport(loc);
                             cancel();
                         }
-                        
+
                         i -= 1;
                     }
                 }.runTaskTimer(main, 0, 20);
@@ -183,26 +193,28 @@ public class Heliport implements Listener, CommandExecutor
             }
         }
     }
-    
+
     @EventHandler
-    public void playerMouvement(PlayerMoveEvent e) {
-        
+    public void playerMouvement(PlayerMoveEvent e)
+    {
+
         Location from = new Location(e.getFrom().getWorld(), e.getFrom().getX(), e.getFrom().getY(), e.getFrom().getZ());
         Location to = new Location(e.getTo().getWorld(), e.getTo().getX(), e.getTo().getY(), e.getTo().getZ());
-        
-        if (!to.equals(from)) {
+
+        if (!to.equals(from))
+        {
             mouvement = true;
-            new BukkitRunnable() {
+            new BukkitRunnable()
+            {
 
                 @Override
-                public void run() {
+                public void run()
+                {
                     mouvement = false;
                     cancel();
                 }
-                
             }.runTaskLater(main, 20);
             return;
         }
     }
-
 }

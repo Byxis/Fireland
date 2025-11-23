@@ -5,19 +5,17 @@ import java.time.Instant;
 /**
  * Immutable data class representing a player's infection status.
  *
- * @param m_infectionType The current type of the infection (0 = safe, 1+ = infected).
- * @param m_infectedSince The timestamp (in milliseconds) when the player was infected.
- * @param m_invincibilityUntil The timestamp until which the player is invincible to new infections.
+ * @param m_infectionType
+ *            The current type of the infection (0 = safe, 1+ = infected).
+ * @param m_infectedSince
+ *            The timestamp (in milliseconds) when the player was infected.
+ * @param m_invincibilityUntil
+ *            The timestamp until which the player is invincible to new
+ *            infections.
  */
-public record InfectionData(
-        InfectionType m_infectionType,
-        long m_infectedSince,
-        Instant m_invincibilityUntil
-)
-{
+public record InfectionData(InfectionType m_infectionType, long m_infectedSince, Instant m_invincibilityUntil) {
 
-    public static final InfectionData HEALTHY = new InfectionData(
-            InfectionType.SAFE, 0, null);
+    public static final InfectionData HEALTHY = new InfectionData(InfectionType.SAFE, 0, null);
 
     public static InfectionData createInfection()
     {
@@ -26,7 +24,8 @@ public record InfectionData(
 
     public static InfectionData createInfectionWithLevel(InfectionType _type)
     {
-        if (_type == InfectionType.SAFE) throw new IllegalArgumentException("Infection level must be greater than SAFE");
+        if (_type == InfectionType.SAFE)
+            throw new IllegalArgumentException("Infection level must be greater than SAFE");
         return new InfectionData(_type, System.currentTimeMillis(), null);
     }
 
@@ -50,7 +49,8 @@ public record InfectionData(
 
     public InfectionData withLevel(InfectionType _type)
     {
-        if (m_infectionType == InfectionType.SAFE) return HEALTHY;
+        if (m_infectionType == InfectionType.SAFE)
+            return HEALTHY;
         return new InfectionData(_type, System.currentTimeMillis(), m_invincibilityUntil);
     }
 
@@ -61,13 +61,15 @@ public record InfectionData(
 
     public boolean isCurrentlyInvincible()
     {
-        if (m_invincibilityUntil == null) return false;
+        if (m_invincibilityUntil == null)
+            return false;
         return m_invincibilityUntil.isAfter(Instant.now());
     }
 
     public long getMinutesSinceInfection()
     {
-        if (m_infectionType == InfectionType.SAFE) return 0;
+        if (m_infectionType == InfectionType.SAFE)
+            return 0;
         return (System.currentTimeMillis() - m_infectedSince) / 60000;
     }
 

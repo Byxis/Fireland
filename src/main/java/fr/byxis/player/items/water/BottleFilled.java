@@ -1,5 +1,8 @@
 package fr.byxis.player.items.water;
 
+import static fr.byxis.fireland.HashMapManager.canPurify;
+import static fr.byxis.fireland.HashMapManager.setPurify;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.Color;
@@ -20,9 +23,6 @@ import org.bukkit.material.Cauldron;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import static fr.byxis.fireland.HashMapManager.canPurify;
-import static fr.byxis.fireland.HashMapManager.setPurify;
 
 public class BottleFilled implements Listener
 {
@@ -116,9 +116,11 @@ public class BottleFilled implements Listener
                 minutes = 45;
             }
 
-            new BukkitRunnable() {
+            new BukkitRunnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     setPurify(p, true);
                     InGameUtilities.sendPlayerInformation(p, "Vous pouvez re-purifier une bouteille d'eau.");
                 }

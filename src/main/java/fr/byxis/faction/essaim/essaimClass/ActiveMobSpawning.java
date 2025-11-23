@@ -1,13 +1,13 @@
 package fr.byxis.faction.essaim.essaimClass;
 
 import io.lumine.mythic.core.mobs.ActiveMob;
-
 import java.util.ArrayList;
 
 /**
  * Class to manage the spawning of a group of mobs in an essaim
  */
-public class ActiveMobSpawning {
+public class ActiveMobSpawning
+{
 
     private final ArrayList<ActiveMob> m_activeMobs;
     private final Integer m_maxMobs;
@@ -24,31 +24,40 @@ public class ActiveMobSpawning {
 
     /**
      * Get the list of active mobs
+     * 
      * @return ArrayList of ActiveMob
      */
-    public ArrayList<ActiveMob> getActiveMobs() {
+    public ArrayList<ActiveMob> getActiveMobs()
+    {
         return m_activeMobs;
     }
 
     /**
      * Add an active mob to the list
-     * @param activeMob ActiveMob to add
+     * 
+     * @param activeMob
+     *            ActiveMob to add
      */
-    public void addActiveMob(ActiveMob activeMob) {
+    public void addActiveMob(ActiveMob activeMob)
+    {
         this.m_activeMobs.add(activeMob);
     }
 
     /**
      * Remove an active mob from the list
-     * @param activeMob ActiveMob to remove
+     * 
+     * @param activeMob
+     *            ActiveMob to remove
      */
-    public void removeActiveMob(ActiveMob activeMob) {
+    public void removeActiveMob(ActiveMob activeMob)
+    {
         this.m_activeMobs.remove(activeMob);
         this.m_remainingMobs--;
     }
 
     /**
      * Get the number of remaining mobs to spawn
+     * 
      * @return int number of remaining mobs
      */
     public int getRemaining()
@@ -58,6 +67,7 @@ public class ActiveMobSpawning {
 
     /**
      * Check if the spawner is finished (no more mobs to spawn and no active mobs)
+     * 
      * @return boolean true if finished, false otherwise
      */
     public boolean isSpawnerFinished()
@@ -67,17 +77,21 @@ public class ActiveMobSpawning {
 
     /**
      * Get the maximum number of mobs to spawn
+     * 
      * @return int maximum number of mobs
      */
-    public Integer getMax() {
+    public Integer getMax()
+    {
         return m_maxMobs;
     }
 
     /**
      * Get the name of the essaim associated with this spawner
+     * 
      * @return String name of the essaim
      */
-    public String getEssaim() {
+    public String getEssaim()
+    {
         return m_essaim;
     }
 

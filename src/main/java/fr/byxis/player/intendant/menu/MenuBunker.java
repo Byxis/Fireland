@@ -7,6 +7,8 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -16,12 +18,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MenuBunker
+{
 
-public class MenuBunker {
-
-    public static void openBunker(Fireland main, Player p) {
+    public static void openBunker(Fireland main, Player p)
+    {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
         Inventory zoneInv = null;
@@ -33,70 +34,88 @@ public class MenuBunker {
         p.openInventory(zoneInv);
     }
 
-    private static void setBunkerItem(Fireland main, Inventory inv, Player p, BunkerClass bk) {
+    private static void setBunkerItem(Fireland main, Inventory inv, Player p, BunkerClass bk)
+    {
 
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
-        if (bk != null && pInfos.getRole() == 2 && bk.getName().equalsIgnoreCase(pInfos.getFactionName())) {
+        if (bk != null && pInfos.getRole() == 2 && bk.getName().equalsIgnoreCase(pInfos.getFactionName()))
+        {
             inv.setItem(10, InventoryUtilities.setItemMeta(Material.BARRIER, "§cQuitter le Bunker", (short) 0));
             List<String> lore = new ArrayList<String>();
             lore.add("§r§8Prix : §6" + bk.getAmeliorationPriceMoney() + "§r§f$§8 et §b" + bk.getAmeliorationPriceJetons() + "§f⛁");
             inv.setItem(12, InventoryUtilities.setItemMetaLore(Material.ANVIL, "§aAméliorer le bunker", (short) 0, lore));
             inv.setItem(14, InventoryUtilities.setItemMeta(Material.RABBIT_HIDE, "§dChanger de skin", (short) 0));
             inv.setItem(16, InventoryUtilities.setItemMeta(Material.MAP, "§eInviter un joueur", (short) 0));
-        } else if (bk != null && pInfos.getRole() == 1 && bk.getName().equalsIgnoreCase(pInfos.getFactionName())) {
+        }
+        else if (bk != null && pInfos.getRole() == 1 && bk.getName().equalsIgnoreCase(pInfos.getFactionName()))
+        {
             inv.setItem(12, InventoryUtilities.setItemMeta(Material.BARRIER, "§cQuitter le Bunker", (short) 0));
             inv.setItem(14, InventoryUtilities.setItemMeta(Material.MAP, "§eInviter un joueur", (short) 0));
-        } else {
+        }
+        else
+        {
             inv.setItem(13, InventoryUtilities.setItemMeta(Material.BARRIER, "§cQuitter le Bunker", (short) 0));
         }
     }
 
-    public static void openInviteBunker(Fireland main, Player p, int page) {
+    public static void openInviteBunker(Fireland main, Player p, int page)
+    {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         Inventory zoneInv = Bukkit.createInventory(null, 54, "§8Inviter dans votre bunker");
         setInviteBunker(main, zoneInv, p, page);
         p.openInventory(zoneInv);
     }
 
-    private static void setInviteBunker(Fireland main, Inventory inv, Player p, int page) {
-        for (int i = 0; i < 9; i++) {
+    private static void setInviteBunker(Fireland main, Inventory inv, Player p, int page)
+    {
+        for (int i = 0; i < 9; i++)
+        {
             inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
 
-        //TODO: si il y a bcp de joueurs, faire un meilleur systeme pour voir tous les joueurs
+        // TODO: si il y a bcp de joueurs, faire un meilleur systeme pour voir tous les
+        // joueurs
         int i = 0;
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (!player.getName().equalsIgnoreCase(p.getName())) {
+        for (Player player : Bukkit.getOnlinePlayers())
+        {
+            if (!player.getName().equalsIgnoreCase(p.getName()))
+            {
                 inv.setItem(i, InventoryUtilities.getHead(player.getUniqueId(), "§eInviter " + player.getName()));
                 i++;
             }
-            if (i == 45) {
+            if (i == 45)
+            {
                 break;
             }
         }
         inv.setItem(53, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cRetour", (short) 0));
     }
 
-    public static void openBunkerFood(Fireland main, Player p) {
+    public static void openBunkerFood(Fireland main, Player p)
+    {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         Inventory inv = Bukkit.createInventory(null, 9, "§8Nourriture du bunker");
         setBunkerFoodItem(main, inv, p);
         p.openInventory(inv);
     }
 
-    private static void setBunkerFoodItem(Fireland main, Inventory inv, Player p) {
+    private static void setBunkerFoodItem(Fireland main, Inventory inv, Player p)
+    {
         BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 9; i++)
+        {
             inv.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
         inv.setItem(8, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cQuitter", (short) 1));
-        if (bk != null) {
+        if (bk != null)
+        {
             int food = bk.getFoodAmount();
             List<String> lore = new ArrayList<String>();
             lore.add("§r§8Génère §7" + bk.getMaxFood() + "§8 steaks par jour");
-            if (food > 0) {
+            if (food > 0)
+            {
                 ItemStack beef = new ItemStack(Material.COOKED_BEEF, food);
                 ItemMeta meta = beef.getItemMeta();
                 meta.setDisplayName("§7Steak");
@@ -104,31 +123,38 @@ public class MenuBunker {
                 beef.setItemMeta(meta);
 
                 inv.setItem(0, beef);
-            } else {
+            }
+            else
+            {
                 inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§cAucun steak en stock", (short) 0, lore));
             }
         }
     }
 
-    public static void openBunkerMechanic(Fireland main, Player p) {
+    public static void openBunkerMechanic(Fireland main, Player p)
+    {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         Inventory inv = Bukkit.createInventory(null, 9, "§8Atelier du bunker");
         setBunkerMechanicItem(main, inv, p);
         p.openInventory(inv);
     }
 
-    private static void setBunkerMechanicItem(Fireland main, Inventory inv, Player p) {
+    private static void setBunkerMechanicItem(Fireland main, Inventory inv, Player p)
+    {
         BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 9; i++)
+        {
             inv.setItem(i, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
         inv.setItem(8, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§cQuitter", (short) 1));
-        if (bk != null) {
+        if (bk != null)
+        {
             int scrapNb = bk.getScrapAmount();
             List<String> lore = new ArrayList<String>();
             lore.add("§r§8Génère §7" + bk.getMaxScrap() + "§8 scraps par jour");
-            if (scrapNb > 0) {
+            if (scrapNb > 0)
+            {
                 ItemStack scrap = new ItemStack(Material.NETHERITE_SCRAP, scrapNb);
                 ItemMeta meta = scrap.getItemMeta();
                 meta.setDisplayName("§7Scrap");
@@ -136,14 +162,17 @@ public class MenuBunker {
                 scrap.setItemMeta(meta);
 
                 inv.setItem(0, scrap);
-            } else {
+            }
+            else
+            {
                 inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§cAucun scrap en stock", (short) 0, lore));
             }
 
             int powderNb = bk.getPowderAmount();
             lore = new ArrayList<String>();
             lore.add("§r§8Génère §7" + bk.getMaxPowder() + "§8 poudre par jour");
-            if (powderNb > 0) {
+            if (powderNb > 0)
+            {
                 ItemStack powder = new ItemStack(Material.GUNPOWDER, powderNb);
                 ItemMeta meta = powder.getItemMeta();
                 meta.setDisplayName("§7Poudre");
@@ -151,14 +180,17 @@ public class MenuBunker {
                 powder.setItemMeta(meta);
 
                 inv.setItem(1, powder);
-            } else {
+            }
+            else
+            {
                 inv.setItem(1, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§cAucune poudre en stock", (short) 0, lore));
             }
 
             int repairKitNb = bk.getRepairKitAmount();
             lore = new ArrayList<String>();
             lore.add("§r§8Génère §7" + bk.getMaxRepairKit() + "§8 kit de réparation par semaine");
-            if (repairKitNb > 0) {
+            if (repairKitNb > 0)
+            {
                 ItemStack kit = new ItemStack(Material.IRON_INGOT, repairKitNb);
                 ItemMeta meta = kit.getItemMeta();
                 meta.setDisplayName("§7Kit de réparation");
@@ -166,7 +198,9 @@ public class MenuBunker {
                 kit.setItemMeta(meta);
 
                 inv.setItem(2, kit);
-            } else {
+            }
+            else
+            {
                 inv.setItem(2, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§cAucun kit de réparation en stock", (short) 0, lore));
             }
         }
@@ -204,7 +238,8 @@ public class MenuBunker {
 
                 inv.setItem(0, meds);
             }
-            else {
+            else
+            {
                 inv.setItem(0, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§cAucun médicament en stock", (short) 0, lore));
             }
 
@@ -222,7 +257,8 @@ public class MenuBunker {
 
                 inv.setItem(1, powder);
             }
-            else {
+            else
+            {
                 inv.setItem(1, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§cAucun Anti-Douleur en stock", (short) 0, lore));
             }
 
@@ -240,19 +276,22 @@ public class MenuBunker {
 
                 inv.setItem(2, powder);
             }
-            else {
+            else
+            {
                 inv.setItem(2, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§cAucun sérum en stock", (short) 0, lore));
             }
         }
     }
 
-    public static void openBunkerChest(Fireland main, Player p) {
+    public static void openBunkerChest(Fireland main, Player p)
+    {
         BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
         Inventory zoneInv = null;
         zoneInv = Bukkit.createInventory(null, 54, "§8Stockage du bunker");
         FactionFunctions ff = new FactionFunctions(main, p);
         FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
-        if (bk != null && (p.hasPermission("fireland.bunker.mod") || pInfos != null && pInfos.getFactionName().equalsIgnoreCase(bk.getName())))
+        if (bk != null
+                && (p.hasPermission("fireland.bunker.mod") || pInfos != null && pInfos.getFactionName().equalsIgnoreCase(bk.getName())))
         {
             InGameUtilities.playPlayerSound(p, Sound.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 1, 1);
             setBunkerChestItem(main, zoneInv, p, bk);
@@ -260,7 +299,8 @@ public class MenuBunker {
         }
     }
 
-    private static void setBunkerChestItem(Fireland main, Inventory inv, Player p, BunkerClass bk) {
+    private static void setBunkerChestItem(Fireland main, Inventory inv, Player p, BunkerClass bk)
+    {
         for (int i = 0; i < 9; i++)
         {
             inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
@@ -337,7 +377,8 @@ public class MenuBunker {
         }
     }
 
-    public static void openBunkerSkin(Fireland main, Player p) {
+    public static void openBunkerSkin(Fireland main, Player p)
+    {
         InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
         BunkerClass bk = main.getBunkerManager().findBunkerEnteredByPlayer(p.getName());
         Inventory zoneInv = null;
@@ -346,7 +387,8 @@ public class MenuBunker {
         p.openInventory(zoneInv);
     }
 
-    private static void setBunkerSkinItem(Fireland main, Inventory inv, Player p, BunkerClass bk) {
+    private static void setBunkerSkinItem(Fireland main, Inventory inv, Player p, BunkerClass bk)
+    {
         ArrayList<Material> possessed = new ArrayList<Material>();
         ArrayList<Material> locked = new ArrayList<Material>();
         Material current = null;
@@ -383,7 +425,8 @@ public class MenuBunker {
         long delay = bk.getDelayForSkinChange();
         if (delay > 0)
         {
-            inv.setItem(45, InventoryUtilities.setItemMeta(Material.BARRIER, "§cVous pouvez changer de skin dans " + BasicUtilities.getStringTime(delay), (short) 1));
+            inv.setItem(45, InventoryUtilities.setItemMeta(Material.BARRIER,
+                    "§cVous pouvez changer de skin dans " + BasicUtilities.getStringTime(delay), (short) 1));
         }
         else
         {
@@ -391,7 +434,8 @@ public class MenuBunker {
         }
         if (current != null)
         {
-            inv.setItem(0, InventoryUtilities.setItemMeta(current, main.getBunkerManager().getBunkerSkins().get(current)[0] + " §d(équipé)", (short) 0));
+            inv.setItem(0, InventoryUtilities.setItemMeta(current, main.getBunkerManager().getBunkerSkins().get(current)[0] + " §d(équipé)",
+                    (short) 0));
         }
         if (!possessed.isEmpty())
         {
@@ -399,11 +443,13 @@ public class MenuBunker {
             {
                 if (i >= 8)
                 {
-                    inv.setItem(i + 11, InventoryUtilities.setItemMeta(possessed.get(i), main.getBunkerManager().getBunkerSkins().get(possessed.get(i))[0] + " §a(Possédé)", (short) 0));
+                    inv.setItem(i + 11, InventoryUtilities.setItemMeta(possessed.get(i),
+                            main.getBunkerManager().getBunkerSkins().get(possessed.get(i))[0] + " §a(Possédé)", (short) 0));
                 }
                 else
                 {
-                    inv.setItem(i + 10, InventoryUtilities.setItemMeta(possessed.get(i), main.getBunkerManager().getBunkerSkins().get(possessed.get(i))[0] + " §a(Possédé)", (short) 0));
+                    inv.setItem(i + 10, InventoryUtilities.setItemMeta(possessed.get(i),
+                            main.getBunkerManager().getBunkerSkins().get(possessed.get(i))[0] + " §a(Possédé)", (short) 0));
                 }
             }
         }
@@ -413,11 +459,13 @@ public class MenuBunker {
             {
                 if (i >= 8)
                 {
-                    inv.setItem(i + 29, InventoryUtilities.setItemMeta(locked.get(i), main.getBunkerManager().getBunkerSkins().get(locked.get(i))[0] + " §c(Verrouillé)", (short) 0));
+                    inv.setItem(i + 29, InventoryUtilities.setItemMeta(locked.get(i),
+                            main.getBunkerManager().getBunkerSkins().get(locked.get(i))[0] + " §c(Verrouillé)", (short) 0));
                 }
                 else
                 {
-                    inv.setItem(i + 28, InventoryUtilities.setItemMeta(locked.get(i), main.getBunkerManager().getBunkerSkins().get(locked.get(i))[0] + " §c(Verrouillé)", (short) 0));
+                    inv.setItem(i + 28, InventoryUtilities.setItemMeta(locked.get(i),
+                            main.getBunkerManager().getBunkerSkins().get(locked.get(i))[0] + " §c(Verrouillé)", (short) 0));
                 }
             }
         }

@@ -2,7 +2,8 @@ package fr.byxis.fireland.utilities;
 
 import org.bukkit.ChatColor;
 
-public class TextUtilities {
+public class TextUtilities
+{
 
     public static String convertCleanToStorable(String text, String split)
     {

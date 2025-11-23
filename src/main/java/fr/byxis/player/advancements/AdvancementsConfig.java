@@ -1,16 +1,17 @@
 package fr.byxis.player.advancements;
 
 import fr.byxis.fireland.Fireland;
+import java.io.File;
+import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-
-public class AdvancementsConfig {
+public class AdvancementsConfig
+{
 
     private final Fireland main;
-    public AdvancementsConfig(Fireland _main) {
+    public AdvancementsConfig(Fireland _main)
+    {
         this.main = _main;
         this.name = "success";
         setup();
@@ -20,13 +21,18 @@ public class AdvancementsConfig {
     private File file;
     private final String name;
 
-    public void setup() {
+    public void setup()
+    {
         file = new File(main.getDataFolder(), name + ".yml");
-        if (!file.exists()) {
-            try {
+        if (!file.exists())
+        {
+            try
+            {
                 file.createNewFile();
                 main.getLogger().info(name + ".yml has been created !");
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 System.err.println("/!\\ Could not create " + name + ".yml");
             }
         }

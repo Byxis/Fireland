@@ -3,13 +3,13 @@ package fr.byxis.player.items;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.player.items.backpack.BackPack;
 import fr.byxis.player.items.compass.Compass;
+import fr.byxis.player.items.infection.Mask;
+import fr.byxis.player.items.infection.SporeDamage;
 import fr.byxis.player.items.infection.virus.*;
 import fr.byxis.player.items.infection.virus.InfectionTickSystem;
 import fr.byxis.player.items.lamp.Lamp;
 import fr.byxis.player.items.notes.OpenNotes;
 import fr.byxis.player.items.parachute.Parachute;
-import fr.byxis.player.items.infection.Mask;
-import fr.byxis.player.items.infection.SporeDamage;
 import fr.byxis.player.items.water.BottleFilled;
 import fr.byxis.player.items.water.Thirst;
 
@@ -24,7 +24,7 @@ public class ItemEnabler
     {
         this.main = _main;
 
-        //Enable
+        // Enable
         toxic();
         backPack();
         lamp();
@@ -47,7 +47,7 @@ public class ItemEnabler
         InfectionTickSystem infectionTickSystem = new InfectionTickSystem(main, infectionManager);
         infectionTickSystem.start();
 
-        //Mask
+        // Mask
         main.getServer().getPluginManager().registerEvents(new Mask(), main);
         sporeDamage = new SporeDamage(main, infectionManager);
     }
@@ -88,7 +88,7 @@ public class ItemEnabler
 
     }
 
-    public void SaveAll()
+    public void saveAll()
     {
         if (infectionManager != null)
         {

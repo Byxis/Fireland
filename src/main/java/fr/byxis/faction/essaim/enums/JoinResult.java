@@ -5,9 +5,5 @@ package fr.byxis.faction.essaim.enums;
  */
 public enum JoinResult
 {
-    SUCCESS,
-    INVALID_PLAYER,
-    GROUP_FULL,
-    ALREADY_IN_GROUP,
-    EXPEDITION_STARTED
+    SUCCESS, INVALID_PLAYER, GROUP_FULL, ALREADY_IN_GROUP, EXPEDITION_STARTED
 }

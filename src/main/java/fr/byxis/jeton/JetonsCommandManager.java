@@ -2,6 +2,9 @@ package fr.byxis.jeton;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,10 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class JetonsCommandManager extends JetonManager implements Listener, CommandExecutor, TabCompleter
 {
@@ -38,7 +37,8 @@ public class JetonsCommandManager extends JetonManager implements Listener, Comm
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args)
+    {
         if (sender instanceof Player && !sender.hasPermission("fireland.command.jeton.admin"))
         {
             sender.sendMessage("§aVous avez §d" + getJetonsPlayer(((Player) sender).getUniqueId()) + "§a jetons !");
@@ -67,7 +67,9 @@ public class JetonsCommandManager extends JetonManager implements Listener, Comm
                 {
                     int amount = Integer.parseInt(args[1]);
 
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e)
+                {
                     sender.sendMessage("§cErreur ! Utilisation: /jeton (set/add/remove) (int) [player]");
                     return false;
                 }
@@ -123,7 +125,8 @@ public class JetonsCommandManager extends JetonManager implements Listener, Comm
                             if (uuid != null)
                             {
                                 addJetonsPlayer(uuid, Integer.parseInt(args[1]));
-                                sender.sendMessage("§aLe joueur " + args[2] + " a gagné §d" + args[1] + "§a jetons ! Il en a désormais §d" + getJetonsPlayer(uuid) + "§r§a !");
+                                sender.sendMessage("§aLe joueur " + args[2] + " a gagné §d" + args[1] + "§a jetons ! Il en a désormais §d"
+                                        + getJetonsPlayer(uuid) + "§r§a !");
                                 if (Bukkit.getOfflinePlayer(uuid).isOnline())
                                 {
                                     Bukkit.getPlayer(uuid).sendMessage("§aVous avez gagné §d" + args[1] + "§a jetons !");
@@ -162,7 +165,6 @@ public class JetonsCommandManager extends JetonManager implements Listener, Comm
                                     Bukkit.getPlayer(uuid).sendMessage("§cVous avez perdu §d" + args[1] + "§c jetons !");
                                 }
                             }
-
 
                         }
                     }

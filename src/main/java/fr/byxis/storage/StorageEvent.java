@@ -3,8 +3,9 @@ package fr.byxis.storage;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.player.bank.Bank;
-import fr.byxis.player.bank.BankStorage;
-import org.bukkit.ChatColor;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -16,56 +17,52 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+public class StorageEvent implements Listener
+{
 
-public class StorageEvent implements Listener {
+    private final Fireland m_fireland;
+    private final Map<UUID, Integer> m_playerCurrentPage = new HashMap<>();
 
-    private final Fireland main;
-    // Track which page each player is currently viewing
-    private final Map<UUID, Integer> playerCurrentPage = new HashMap<>();
-
-    public StorageEvent(Fireland main) {
-        this.main = main;
+    public StorageEvent(Fireland _fireland)
+    {
+        this.m_fireland = _fireland;
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onInventoryClick(InventoryClickEvent e) {
-        Player player = (Player) e.getWhoClicked();
-        String inventoryTitle = e.getView().getTitle();
+    public void onInventoryClick(InventoryClickEvent _e)
+    {
+        Player player = (Player) _e.getWhoClicked();
+        String inventoryTitle = _e.getView().getTitle();
 
-        // Vérifier si c'est un inventaire de stockage (toutes les pages)
-        if (inventoryTitle.contains("Stockage de la banque") ||
-                (inventoryTitle.contains("Stockage") && (inventoryTitle.contains("(") || inventoryTitle.contains("/")))) {
+        if (inventoryTitle.contains("Stockage de la banque")
+                || (inventoryTitle.contains("Stockage") && (inventoryTitle.contains("(") || inventoryTitle.contains("/"))))
+        {
 
-            ItemStack itemClicked = e.getCurrentItem();
-            if (itemClicked == null) {
+            ItemStack itemClicked = _e.getCurrentItem();
+            if (itemClicked == null)
+            {
                 return;
             }
 
-            int clickedSlot = e.getSlot();
+            int clickedSlot = _e.getSlot();
 
-            // Handle navigation items (slots 45-53)
-            if (clickedSlot >= 45) {
-                e.setCancelled(true);
+            if (clickedSlot >= 45)
+            {
+                _e.setCancelled(true);
                 handleNavigationClick(player, itemClicked, clickedSlot, inventoryTitle);
                 return;
             }
 
-            // Handle regular storage interactions (slots 0-44)
-            switch (itemClicked.getType()) {
-                case WHITE_STAINED_GLASS_PANE:
-                    // Prevent interaction with placeholder items
-                    e.setCancelled(true);
+            switch (itemClicked.getType())
+            {
+                case WHITE_STAINED_GLASS_PANE :
+                    _e.setCancelled(true);
                     break;
-                case BARRIER:
-                    // Prevent interaction with barrier blocks
-                    e.setCancelled(true);
+                case BARRIER :
+                    _e.setCancelled(true);
                     InGameUtilities.playPlayerSound(player, Sound.ITEM_SHIELD_BREAK, SoundCategory.AMBIENT, 1, 0);
                     break;
-                default:
-                    // Allow normal item interactions in storage area
+                default :
                     break;
             }
         }
@@ -73,105 +70,130 @@ public class StorageEvent implements Listener {
 
     /**
      * Handle clicks on navigation items
+     *
+     * @param _player
+     *            The player who clicked
+     * @param _clickedItem
+     *            The item that was clicked
+     * @param _slot
+     *            The slot that was clicked
+     * @param _inventoryTitle
+     *            The title of the inventory
      */
-    private void handleNavigationClick(Player player, ItemStack clickedItem, int slot, String inventoryTitle) {
-        AbstractStorage storage = getPlayerStorage(player);
-        if (storage == null) return;
+    private void handleNavigationClick(Player _player, ItemStack _clickedItem, int _slot, String _inventoryTitle)
+    {
+        AbstractStorage storage = getPlayerStorage(_player);
+        if (storage == null)
+            return;
 
-        int currentPage = storage.getCurrentPage(inventoryTitle);
+        int currentPage = storage.getCurrentPage(_inventoryTitle);
         int totalPages = storage.getTotalPages();
 
-        switch (slot) {
-            case 48: // Previous page button
-                if (clickedItem.getType() == Material.ARROW && currentPage > 0) {
-                    saveCurrentPageAndOpen(player, storage, currentPage - 1);
-                    InGameUtilities.playPlayerSound(player, Sound.UI_BUTTON_CLICK, SoundCategory.AMBIENT, 1, 1.2f);
-                } else {
-                    InGameUtilities.playPlayerSound(player, Sound.ITEM_SHIELD_BREAK, SoundCategory.AMBIENT, 1, 0.8f);
+        switch (_slot)
+        {
+            case 48 : // Previous page button
+                if (_clickedItem.getType() == Material.ARROW && currentPage > 0)
+                {
+                    saveCurrentPageAndOpen(_player, storage, currentPage - 1);
+                    InGameUtilities.playPlayerSound(_player, Sound.UI_BUTTON_CLICK, SoundCategory.AMBIENT, 1, 1.2f);
+                }
+                else
+                {
+                    InGameUtilities.playPlayerSound(_player, Sound.ITEM_SHIELD_BREAK, SoundCategory.AMBIENT, 1, 0.8f);
                 }
                 break;
 
-            case 50: // Next page button
-                if (clickedItem.getType() == Material.ARROW && currentPage < totalPages - 1) {
-                    saveCurrentPageAndOpen(player, storage, currentPage + 1);
-                    InGameUtilities.playPlayerSound(player, Sound.UI_BUTTON_CLICK, SoundCategory.AMBIENT, 1, 1.2f);
-                } else {
-                    InGameUtilities.playPlayerSound(player, Sound.ITEM_SHIELD_BREAK, SoundCategory.AMBIENT, 1, 0.8f);
+            case 50 : // Next page button
+                if (_clickedItem.getType() == Material.ARROW && currentPage < totalPages - 1)
+                {
+                    saveCurrentPageAndOpen(_player, storage, currentPage + 1);
+                    InGameUtilities.playPlayerSound(_player, Sound.UI_BUTTON_CLICK, SoundCategory.AMBIENT, 1, 1.2f);
+                }
+                else
+                {
+                    InGameUtilities.playPlayerSound(_player, Sound.ITEM_SHIELD_BREAK, SoundCategory.AMBIENT, 1, 0.8f);
                 }
                 break;
 
-            case 49: // Page info (optional: quick jump to page 1)
-                if (clickedItem.getType() == Material.BOOK && currentPage != 0) {
-                    saveCurrentPageAndOpen(player, storage, 0);
-                    InGameUtilities.playPlayerSound(player, Sound.UI_BUTTON_CLICK, SoundCategory.AMBIENT, 1, 1.0f);
+            case 49 : // Page info (optional: quick jump to page 1)
+                if (_clickedItem.getType() == Material.BOOK && currentPage != 0)
+                {
+                    saveCurrentPageAndOpen(_player, storage, 0);
+                    InGameUtilities.playPlayerSound(_player, Sound.UI_BUTTON_CLICK, SoundCategory.AMBIENT, 1, 1.0f);
                 }
                 break;
 
-            case 53: // Close button
-                if (clickedItem.getType() == Material.RED_STAINED_GLASS_PANE) {
-                    player.closeInventory();
-                    InGameUtilities.playPlayerSound(player, Sound.UI_BUTTON_CLICK, SoundCategory.AMBIENT, 1, 0.8f);
+            case 53 : // Close button
+                if (_clickedItem.getType() == Material.RED_STAINED_GLASS_PANE)
+                {
+                    _player.closeInventory();
+                    InGameUtilities.playPlayerSound(_player, Sound.UI_BUTTON_CLICK, SoundCategory.AMBIENT, 1, 0.8f);
                 }
                 break;
 
-            default:
+            default :
                 // Other navigation slots - prevent interaction
-                InGameUtilities.playPlayerSound(player, Sound.ITEM_SHIELD_BREAK, SoundCategory.AMBIENT, 1, 0.6f);
+                InGameUtilities.playPlayerSound(_player, Sound.ITEM_SHIELD_BREAK, SoundCategory.AMBIENT, 1, 0.6f);
                 break;
         }
     }
 
     /**
-     * Save current page and open a new one
+     * Save curent page and open a new one
+     *
+     * @param _player
+     *            The player
+     * @param _storage
+     *            The storage instance
+     * @param _newPage
+     *            The new page to open
      */
-    private void saveCurrentPageAndOpen(Player player, AbstractStorage storage, int newPage) {
-        String currentTitle = player.getOpenInventory().getTitle();
-        int currentPage = storage.getCurrentPage(currentTitle);
+    private void saveCurrentPageAndOpen(Player _player, AbstractStorage _storage, int _newPage)
+    {
+        String currentTitle = _player.getOpenInventory().getTitle();
+        int currentPage = _storage.getCurrentPage(currentTitle);
 
-        // Save current page data
-        storage.saveAndClosePage(currentPage);
-
-        // Track player's current page
-        playerCurrentPage.put(player.getUniqueId(), newPage);
-
-        // Open new page
-        storage.openStoragePage(player, newPage);
+        _storage.saveAndClosePage(currentPage);
+        m_playerCurrentPage.put(_player.getUniqueId(), _newPage);
+        _storage.openStoragePage(_player, _newPage);
     }
 
     /**
      * Get the storage instance for a player
+     *
+     * @param _player
+     *            The player
+     *
+     * @return The storage instance or null if none
      */
-    private AbstractStorage getPlayerStorage(Player player) {
-        String inventoryTitle = player.getOpenInventory().getTitle();
+    private AbstractStorage getPlayerStorage(Player _player)
+    {
+        String inventoryTitle = _player.getOpenInventory().getTitle();
 
-        if (inventoryTitle.contains("Stockage de la banque") || inventoryTitle.contains("banque")) {
-            // Utiliser la méthode statique de Bank pour obtenir le storage
-            return Bank.getBankStorage(player.getUniqueId(), main);
+        if (inventoryTitle.contains("Stockage de la banque") || inventoryTitle.contains("banque"))
+        {
+            return Bank.getBankStorage(_player.getUniqueId(), m_fireland);
         }
-
-        // Add other storage types here as needed
         return null;
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onInventoryClose(InventoryCloseEvent e) {
+    public void onInventoryClose(InventoryCloseEvent e)
+    {
         Player player = (Player) e.getPlayer();
         String inventoryTitle = e.getView().getTitle();
 
-        // Gérer uniquement les inventaires de stockage paginé
-        if (inventoryTitle.contains("Stockage de la banque") ||
-                (inventoryTitle.contains("Stockage") && (inventoryTitle.contains("(") || inventoryTitle.contains("/")))) {
+        if (inventoryTitle.contains("Stockage de la banque")
+                || (inventoryTitle.contains("Stockage") && (inventoryTitle.contains("(") || inventoryTitle.contains("/"))))
+        {
 
             AbstractStorage storage = getPlayerStorage(player);
-            if (storage != null) {
-                // Save the current page when closing
+            if (storage != null)
+            {
                 int currentPage = storage.getCurrentPage(inventoryTitle);
                 storage.saveAndClosePage(currentPage);
 
-                // Remove player from tracking
-                playerCurrentPage.remove(player.getUniqueId());
-
-                // Play close sound
+                m_playerCurrentPage.remove(player.getUniqueId());
                 InGameUtilities.playPlayerSound(player, "entity.villager.yes", SoundCategory.AMBIENT, 1, 1);
             }
         }
@@ -179,22 +201,38 @@ public class StorageEvent implements Listener {
 
     /**
      * Get the current page a player is viewing
+     *
+     * @param _player
+     *            The player
+     *
+     * @return The page number
      */
-    public int getPlayerCurrentPage(Player player) {
-        return playerCurrentPage.getOrDefault(player.getUniqueId(), 0);
+    public int getPlayerCurrentPage(Player _player)
+    {
+        return m_playerCurrentPage.getOrDefault(_player.getUniqueId(), 0);
     }
 
     /**
      * Set the current page a player is viewing
+     *
+     * @param _player
+     *            The player
+     * @param _page
+     *            The page number
      */
-    public void setPlayerCurrentPage(Player player, int page) {
-        playerCurrentPage.put(player.getUniqueId(), page);
+    public void setPlayerCurrentPage(Player _player, int _page)
+    {
+        m_playerCurrentPage.put(_player.getUniqueId(), _page);
     }
 
     /**
      * Clean up tracking when player leaves
+     *
+     * @param _player
+     *            The player
      */
-    public void cleanupPlayer(Player player) {
-        playerCurrentPage.remove(player.getUniqueId());
+    public void cleanupPlayer(Player _player)
+    {
+        m_playerCurrentPage.remove(_player.getUniqueId());
     }
 }

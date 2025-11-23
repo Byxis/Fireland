@@ -1,16 +1,17 @@
 package fr.byxis.player.items.notes;
 
 import fr.byxis.fireland.Fireland;
+import java.io.File;
+import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-
-public class NotesConfig {
+public class NotesConfig
+{
 
     private final Fireland plugin;
-    public NotesConfig(Fireland _plugin, boolean log) {
+    public NotesConfig(Fireland _plugin, boolean log)
+    {
         this.plugin = _plugin;
         this.name = "note";
         setup(log);
@@ -20,19 +21,27 @@ public class NotesConfig {
     private File file;
     private final String name;
 
-    public void setup(boolean log) {
+    public void setup(boolean log)
+    {
         file = new File(plugin.getDataFolder(), name + ".yml");
-        if (!file.exists()) {
-            try {
+        if (!file.exists())
+        {
+            try
+            {
                 file.createNewFile();
-                if (log) plugin.getLogger().info(name + ".yml has been created !");
-            } catch (IOException e) {
-                if (log) System.err.println("/!\\ Could not create " + name + ".yml");
+                if (log)
+                    plugin.getLogger().info(name + ".yml has been created !");
+            }
+            catch (IOException e)
+            {
+                if (log)
+                    System.err.println("/!\\ Could not create " + name + ".yml");
             }
         }
 
         config = YamlConfiguration.loadConfiguration(file);
-        if (log) plugin.getLogger().info(name + ".yml has been loaded !");
+        if (log)
+            plugin.getLogger().info(name + ".yml has been loaded !");
     }
 
     public FileConfiguration getConfig()

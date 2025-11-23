@@ -2,40 +2,47 @@ package fr.byxis.player.bank;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.PermissionUtilities;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
+public class BankAccount
+{
+    private final Fireland m_fireland;
+    private final String m_ownerId;
 
-public class BankAccount {
-    private final Fireland main;
-    private final String ownerId;
-
-    public BankAccount(Fireland main, String ownerId) {
-        this.main = main;
-        this.ownerId = ownerId;
+    public BankAccount(Fireland _fireland, String _ownerId)
+    {
+        this.m_fireland = _fireland;
+        this.m_ownerId = _ownerId;
     }
 
-    public int getMoney() {
-        return main.getCfgm().getEnderchest().getInt("bank." + ownerId + ".money", 0);
+    public int getMoney()
+    {
+        return m_fireland.getCfgm().getEnderchest().getInt("bank." + m_ownerId + ".money", 0);
     }
 
-    public void setMoney(int amount) {
-        main.getCfgm().getEnderchest().set("bank." + ownerId + ".money", amount);
-        main.getCfgm().saveEnderchest();
+    public void setMoney(int amount)
+    {
+        m_fireland.getCfgm().getEnderchest().set("bank." + m_ownerId + ".money", amount);
+        m_fireland.getCfgm().saveEnderchest();
     }
 
-    public int getUpgradeLevel() {
-        return main.getCfgm().getEnderchest().getInt("bank." + ownerId + ".upgrade", 0);
+    public int getUpgradeLevel()
+    {
+        return m_fireland.getCfgm().getEnderchest().getInt("bank." + m_ownerId + ".upgrade", 0);
     }
 
-    public void setUpgradeLevel(int level) {
-        main.getCfgm().getEnderchest().set("bank." + ownerId + ".upgrade", level);
-        main.getCfgm().saveEnderchest();
+    public void setUpgradeLevel(int level)
+    {
+        m_fireland.getCfgm().getEnderchest().set("bank." + m_ownerId + ".upgrade", level);
+        m_fireland.getCfgm().saveEnderchest();
     }
 
-    public int getMaxMoney() {
+    public int getMaxMoney()
+    {
         int upgrade = getUpgradeLevel();
-        return switch (upgrade) {
+        return switch (upgrade)
+        {
             case 1 -> 2500;
             case 2 -> 5000;
             case 3 -> 10000;
@@ -46,9 +53,11 @@ public class BankAccount {
         };
     }
 
-    public int getMaxSlots() {
+    public int getMaxSlots()
+    {
         int upgrade = getUpgradeLevel();
-        int baseMax = switch (upgrade) {
+        int baseMax = switch (upgrade)
+        {
             case 0 -> 9;
             case 1 -> 18;
             case 2 -> 27;
@@ -58,16 +67,21 @@ public class BankAccount {
             default -> 0;
         };
 
-        if (baseMax == 54) {
-            Player player = main.getServer().getPlayer(UUID.fromString(ownerId));
-            if (player != null) {
-                if (PermissionUtilities.hasPermission(player, "fireland.bank.bonus.1")) {
+        if (baseMax == 54)
+        {
+            Player player = m_fireland.getServer().getPlayer(UUID.fromString(m_ownerId));
+            if (player != null)
+            {
+                if (PermissionUtilities.hasPermission(player, "fireland.bank.bonus.1"))
+                {
                     baseMax += 54;
                 }
-                if (PermissionUtilities.hasPermission(player, "fireland.bank.bonus.2")) {
+                if (PermissionUtilities.hasPermission(player, "fireland.bank.bonus.2"))
+                {
                     baseMax += 54;
                 }
-                if (PermissionUtilities.hasPermission(player, "fireland.bank.bonus.3")) {
+                if (PermissionUtilities.hasPermission(player, "fireland.bank.bonus.3"))
+                {
                     baseMax += 54;
                 }
             }

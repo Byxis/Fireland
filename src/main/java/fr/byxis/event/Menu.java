@@ -1,7 +1,10 @@
 package fr.byxis.event;
 
+import static fr.byxis.fireland.Fireland.getEco;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -18,10 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-
-import static fr.byxis.fireland.Fireland.getEco;
-
 public class Menu implements Listener, CommandExecutor
 {
     private final Fireland main;
@@ -31,7 +30,8 @@ public class Menu implements Listener, CommandExecutor
         this.main = _main;
     }
 
-    private void setItems(Inventory inv) {
+    private void setItems(Inventory inv)
+    {
         ItemStack centreVille = new ItemStack(Material.WHEAT_SEEDS);
 
         ItemMeta modifiedCentreVille = centreVille.getItemMeta();
@@ -43,7 +43,7 @@ public class Menu implements Listener, CommandExecutor
         centreVille.setItemMeta(modifiedCentreVille);
         inv.setItem(11, centreVille);
         inv.setItem(12, centreVille);
-        
+
         ItemStack zoneNordEst = new ItemStack(Material.WHEAT_SEEDS);
         ItemMeta modifiedzoneNordEst = zoneNordEst.getItemMeta();
         modifiedzoneNordEst.setCustomModelData(200);
@@ -54,7 +54,7 @@ public class Menu implements Listener, CommandExecutor
         zoneNordEst.setItemMeta(modifiedzoneNordEst);
         inv.setItem(14, zoneNordEst);
         inv.setItem(15, zoneNordEst);
-        
+
         ItemStack zoneSud = new ItemStack(Material.WHEAT_SEEDS);
         ItemMeta modifiedzoneSud = zoneNordEst.getItemMeta();
         modifiedzoneSud.setCustomModelData(200);
@@ -65,7 +65,7 @@ public class Menu implements Listener, CommandExecutor
         zoneSud.setItemMeta(modifiedzoneSud);
         inv.setItem(48, zoneSud);
         inv.setItem(49, zoneSud);
-        
+
         ItemStack zoneMili = new ItemStack(Material.WHEAT_SEEDS);
         ItemMeta modifiedzoneMili = zoneNordEst.getItemMeta();
         modifiedzoneMili.setCustomModelData(200);
@@ -77,13 +77,16 @@ public class Menu implements Listener, CommandExecutor
         inv.setItem(51, zoneMili);
         inv.setItem(52, zoneMili);
     }
-    
+
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
-        if (sender instanceof Player) {
+    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args)
+    {
+        if (sender instanceof Player)
+        {
             Player player = (Player) sender;
-            if (cmd.getName().equalsIgnoreCase("menu") || cmd.getName().equalsIgnoreCase("heliport")) {
-                //"\uD83E\uDED4"
+            if (cmd.getName().equalsIgnoreCase("menu") || cmd.getName().equalsIgnoreCase("heliport"))
+            {
+                // "\uD83E\uDED4"
                 Inventory inv = Bukkit.createInventory(null, 54, "§f\uD83C\uDFA0");
                 setItems(inv);
                 player.openInventory(inv);
@@ -95,50 +98,57 @@ public class Menu implements Listener, CommandExecutor
     }
 
     @EventHandler
-    public void onClick(InventoryClickEvent e) {
+    public void onClick(InventoryClickEvent e)
+    {
         Player player = (Player) e.getWhoClicked();
         ItemStack current = e.getCurrentItem();
-        Location centreville = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.centreville.x"), main.getConfig().getDouble("heliport.centreville.y"), main.getConfig().getDouble("heliport.centreville.z"));
-        //-444.5D, 81.0D, -434.5D
-        Location zoneNE = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.zonene.x"), main.getConfig().getDouble("heliport.zonene.y"), main.getConfig().getDouble("heliport.zonene.z"));
-        //349.5D, 84.0D, -393.5D
-        Location zoneS = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.zones.x"), main.getConfig().getDouble("heliport.zones.y"), main.getConfig().getDouble("heliport.zones.z"));
-        //-179.5D, 97.0D, 605.5D
-        Location zoneMilli = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.zonemilli.x"), main.getConfig().getDouble("heliport.zonemilli.y"), main.getConfig().getDouble("heliport.zonemilli.z"));
-        //553.5D, 76.0D, 704.5D
-        if (current != null) {
+        Location centreville = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.centreville.x"),
+                main.getConfig().getDouble("heliport.centreville.y"), main.getConfig().getDouble("heliport.centreville.z"));
+        // -444.5D, 81.0D, -434.5D
+        Location zoneNE = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.zonene.x"),
+                main.getConfig().getDouble("heliport.zonene.y"), main.getConfig().getDouble("heliport.zonene.z"));
+        // 349.5D, 84.0D, -393.5D
+        Location zoneS = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.zones.x"),
+                main.getConfig().getDouble("heliport.zones.y"), main.getConfig().getDouble("heliport.zones.z"));
+        // -179.5D, 97.0D, 605.5D
+        Location zoneMilli = new Location(Bukkit.getWorld("world"), main.getConfig().getDouble("heliport.zonemilli.x"),
+                main.getConfig().getDouble("heliport.zonemilli.y"), main.getConfig().getDouble("heliport.zonemilli.z"));
+        // 553.5D, 76.0D, 704.5D
+        if (current != null)
+        {
             if (e.getView().getTitle().equalsIgnoreCase("§f\uD83C\uDFA0"))
             {
                 switch (current.getItemMeta().getDisplayName())
                 {
-                    case "§lCentre-Ville":
+                    case "§lCentre-Ville" :
                         teleportPlayer(player, current, centreville, main.getConfig().getInt("heliport.centreville.price"));
                         break;
-                    case "§lZone Nord-Est":
+                    case "§lZone Nord-Est" :
                         teleportPlayer(player, current, zoneNE, main.getConfig().getInt("heliport.zonene.price"));
                         break;
-                    case "§lZone Sud":
+                    case "§lZone Sud" :
                         teleportPlayer(player, current, zoneS, main.getConfig().getInt("heliport.zones.price"));
                         break;
-                    case "§lBase Militaire":
+                    case "§lBase Militaire" :
                         teleportPlayer(player, current, zoneMilli, main.getConfig().getInt("heliport.zonemilli.price"));
                         break;
-                        
                 }
                 e.setCancelled(true);
             }
         }
     }
-    
+
     private void teleportPlayer(Player player, ItemStack current, Location loc, int price)
     {
-        if ((player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) && !main.getHashMapManager().isTeleporting(player.getUniqueId()))
+        if ((player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)
+                && !main.getHashMapManager().isTeleporting(player.getUniqueId()))
         {
             InGameUtilities.teleportPlayer(player, loc, 0, "");
         }
         else if (getEco().hasAccount(player) && !main.getHashMapManager().isTeleporting(player.getUniqueId()))
         {
-            if (getEco().getBalance(player) >= price) {
+            if (getEco().getBalance(player) >= price)
+            {
                 player.closeInventory();
                 player.sendMessage("§8La téléportation commence, veuillez ne pas bougez.");
                 teleportPlayer(player, loc, 15, "gun.hub.helico", main, price);
@@ -157,11 +167,13 @@ public class Menu implements Listener, CommandExecutor
         player.playSound(player.getLocation(), "minecraft:" + sound, (float) 0.1, (float) 1);
         _main.getHashMapManager().addTeleporting(player.getUniqueId());
 
-        new BukkitRunnable() {
+        new BukkitRunnable()
+        {
             private int i = -1;
 
             @Override
-            public void run() {
+            public void run()
+            {
                 i++;
                 if (InGameUtilities.isPlayerMoving(player.getUniqueId()))
                 {
@@ -187,7 +199,6 @@ public class Menu implements Listener, CommandExecutor
                         cancel();
                     }
                 }
-
             }
         }.runTaskTimer(_main, 0L, 20L);
     }

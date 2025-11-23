@@ -12,7 +12,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener implements Listener
 {
-    
+
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e)
     {
@@ -25,7 +25,8 @@ public class ChatListener implements Listener
 
             if (e.getMessage().contains(on.getName()) && !on.getName().equals(e.getPlayer().getName()))
             {
-                e.setMessage(e.getMessage().replaceAll(on.getName(), ChatColor.GOLD + "@" + ChatColor.RESET + "" + ChatColor.BOLD + "" + ChatColor.YELLOW + on.getName() + ChatColor.RESET));
+                e.setMessage(e.getMessage().replaceAll(on.getName(), ChatColor.GOLD + "@" + ChatColor.RESET + "" + ChatColor.BOLD + ""
+                        + ChatColor.YELLOW + on.getName() + ChatColor.RESET));
                 on.playNote(on.getLocation(), Instrument.PIANO, Note.natural(1, Tone.A));
             }
         }
@@ -38,14 +39,14 @@ public class ChatListener implements Listener
             }
             if (e.getMessage().contains("everyone"))
             {
-                e.setMessage(e.getMessage().replaceAll("everyone", ChatColor.GOLD + "@" + ChatColor.RESET + "" + ChatColor.BOLD + "" + ChatColor.YELLOW + "everyone " + ChatColor.RESET));
+                e.setMessage(e.getMessage().replaceAll("everyone", ChatColor.GOLD + "@" + ChatColor.RESET + "" + ChatColor.BOLD + ""
+                        + ChatColor.YELLOW + "everyone " + ChatColor.RESET));
                 for (Player on : Bukkit.getServer().getOnlinePlayers())
                 {
                     on.playNote(on.getLocation(), Instrument.PIANO, Note.natural(1, Tone.A));
                 }
             }
-            //e.setMessage(e.getMessage().replaceAll("&", "§"));
+            // e.setMessage(e.getMessage().replaceAll("&", "§"));
         }
     }
-
 }

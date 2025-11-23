@@ -1,7 +1,13 @@
 package fr.byxis.jeton;
 
+import static fr.byxis.fireland.utilities.BasicUtilities.getUuid;
+import static fr.byxis.fireland.utilities.ListUtilities.tabList;
+import static fr.byxis.jeton.JetonManager.sendPlayerFacture;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,21 +17,17 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static fr.byxis.fireland.utilities.BasicUtilities.getUuid;
-import static fr.byxis.fireland.utilities.ListUtilities.tabList;
-import static fr.byxis.jeton.JetonManager.sendPlayerFacture;
-
-public class FactureCommand implements @Nullable CommandExecutor, @Nullable TabCompleter {
+public class FactureCommand implements @Nullable CommandExecutor, @Nullable TabCompleter
+{
     private final Fireland m_main;
-    public FactureCommand(Fireland fireland) {
+    public FactureCommand(Fireland fireland)
+    {
         m_main = fireland;
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args)
+    {
         if (!(commandSender instanceof Player))
             return false;
         Player p = (Player) commandSender;
@@ -84,7 +86,9 @@ public class FactureCommand implements @Nullable CommandExecutor, @Nullable TabC
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,
+            @NotNull String[] args)
+    {
         List<String> list = new ArrayList<String>();
 
         if (!(commandSender instanceof Player))

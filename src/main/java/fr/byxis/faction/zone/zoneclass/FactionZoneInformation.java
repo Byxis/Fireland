@@ -2,7 +2,8 @@ package fr.byxis.faction.zone.zoneclass;
 
 import java.sql.Timestamp;
 
-public class FactionZoneInformation {
+public class FactionZoneInformation
+{
 
     private String factionName;
     private String zoneName;
@@ -17,35 +18,43 @@ public class FactionZoneInformation {
         this.totalDuration = _totalDuration;
     }
 
-    public String getFactionName() {
+    public String getFactionName()
+    {
         return factionName;
     }
 
-    public void setFactionName(String _factionName) {
+    public void setFactionName(String _factionName)
+    {
         this.factionName = _factionName;
     }
 
-    public String getZoneName() {
+    public String getZoneName()
+    {
         return zoneName;
     }
 
-    public void setZoneName(String _zoneName) {
+    public void setZoneName(String _zoneName)
+    {
         this.zoneName = _zoneName;
     }
 
-    public Timestamp getClaimedAt() {
+    public Timestamp getClaimedAt()
+    {
         return claimedAt;
     }
 
-    public void setClaimedAt(Timestamp _claimedAt) {
+    public void setClaimedAt(Timestamp _claimedAt)
+    {
         this.claimedAt = _claimedAt;
     }
 
-    public long getTotalDuration() {
+    public long getTotalDuration()
+    {
         return totalDuration;
     }
 
-    public void setTotalDuration(long _totalDuration) {
+    public void setTotalDuration(long _totalDuration)
+    {
         this.totalDuration = _totalDuration;
     }
 

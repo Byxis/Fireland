@@ -2,6 +2,7 @@ package fr.byxis.player.items.water;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -22,15 +23,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 /**
  * Manages the thirst system for players.
  * <p>
- * This system tracks player hydration levels using the experience bar,
- * allowing players to drink water bottles to restore thirst. Clean water
- * (blue potions) provide more hydration than dirty water, which can also
- * apply negative effects.
+ * This system tracks player hydration levels using the experience bar, allowing
+ * players to drink water bottles to restore thirst. Clean water (blue potions)
+ * provide more hydration than dirty water, which can also apply negative
+ * effects.
  */
 public class Thirst implements Listener, CommandExecutor
 {
@@ -40,7 +39,8 @@ public class Thirst implements Listener, CommandExecutor
     /**
      * Constructs a new Thirst handler.
      *
-     * @param _main Main instance of the Fireland plugin
+     * @param _main
+     *            Main instance of the Fireland plugin
      */
     public Thirst(Fireland _main)
     {
@@ -52,22 +52,26 @@ public class Thirst implements Listener, CommandExecutor
      * <p>
      * Usage:
      * <ul>
-     *   <li>/thirst - Reset your thirst to 100</li>
-     *   <li>/thirst [value] - Set your thirst to a specific value (0-100)</li>
-     *   <li>/thirst [player] - Reset target player's thirst to 100</li>
-     *   <li>/thirst [player] [value] - Set target player's thirst to a specific value</li>
+     * <li>/thirst - Reset your thirst to 100</li>
+     * <li>/thirst [value] - Set your thirst to a specific value (0-100)</li>
+     * <li>/thirst [player] - Reset target player's thirst to 100</li>
+     * <li>/thirst [player] [value] - Set target player's thirst to a specific
+     * value</li>
      * </ul>
      *
-     * @param _sender The command sender
-     * @param _cmd The command
-     * @param _msg The command label
-     * @param _args The command arguments
+     * @param _sender
+     *            The command sender
+     * @param _cmd
+     *            The command
+     * @param _msg
+     *            The command label
+     * @param _args
+     *            The command arguments
      *
      * @return true if command was handled, false otherwise
      */
     @Override
-    public boolean onCommand(@NotNull CommandSender _sender, @NotNull Command _cmd, @NotNull String _msg,
-                             String @NotNull [] _args)
+    public boolean onCommand(@NotNull CommandSender _sender, @NotNull Command _cmd, @NotNull String _msg, String @NotNull [] _args)
     {
         if (_sender instanceof Player p && p.hasPermission("fireland.thirst.admin"))
         {
@@ -167,7 +171,8 @@ public class Thirst implements Listener, CommandExecutor
      * <p>
      * Sets thirst to 100 if the player doesn't have a thirst value stored.
      *
-     * @param _e The player join event
+     * @param _e
+     *            The player join event
      */
     @EventHandler
     public void onPlayerfirstJoin(PlayerJoinEvent _e)
@@ -185,7 +190,8 @@ public class Thirst implements Listener, CommandExecutor
      * <p>
      * Cancels the SATIATED health regeneration if thirst is at or below 10.
      *
-     * @param _event The entity regain health event
+     * @param _event
+     *            The entity regain health event
      */
     @EventHandler
     public void onPlayerRegainHealth(EntityRegainHealthEvent _event)
@@ -193,10 +199,11 @@ public class Thirst implements Listener, CommandExecutor
         if (_event.getRegainReason() == RegainReason.SATIATED && _event.getEntity() instanceof Player p)
         {
             FileConfiguration config = m_fireland.getCfgm().getPlayerDB();
-            
+
             Float thirst = (float) config.getDouble("thirst." + p.getUniqueId());
-            
-            if (config.getString("thirst." + p.getUniqueId()) != null) {
+
+            if (config.getString("thirst." + p.getUniqueId()) != null)
+            {
                 if (thirst <= 10)
                 {
                     _event.setCancelled(true);
@@ -210,13 +217,14 @@ public class Thirst implements Listener, CommandExecutor
      * <p>
      * Drinking behavior:
      * <ul>
-     *   <li>Clean water (blue/null color): +35 thirst, no side effects</li>
-     *   <li>Dirty water (other colors): +10 thirst, applies slowness, hunger, and potentially wither</li>
+     * <li>Clean water (blue/null color): +35 thirst, no side effects</li>
+     * <li>Dirty water (other colors): +10 thirst, applies slowness, hunger, and
+     * potentially wither</li>
      * </ul>
      *
-     * @param _e The player item consume event
+     * @param _e
+     *            The player item consume event
      */
-    @SuppressWarnings({ "deprecation" })
     @EventHandler
     public void playerDrink(PlayerItemConsumeEvent _e)
     {
@@ -226,14 +234,18 @@ public class Thirst implements Listener, CommandExecutor
 
         config.getDouble("thirst." + p.getUniqueId());
         float thirst;
-        if ((i.getType() == Material.POTION && _e.getItem().getDurability() == 0)) {
+        if ((i.getType() == Material.POTION && _e.getItem().getDurability() == 0))
+        {
             if (((PotionMeta) i.getItemMeta()).getColor() == null || ((PotionMeta) i.getItemMeta()).getColor().getBlue() >= 100)
             {
                 // Clean water
-                if (config.getString("thirst." + p.getUniqueId()) != null && config.getInt("thirst." + p.getUniqueId()) <= 75) {
+                if (config.getString("thirst." + p.getUniqueId()) != null && config.getInt("thirst." + p.getUniqueId()) <= 75)
+                {
                     config.set("thirst." + p.getUniqueId(), config.getDouble("thirst." + p.getUniqueId()) + 35);
                     m_fireland.getCfgm().savePlayerDB();
-                } else {
+                }
+                else
+                {
                     thirst = 100f;
                     config.set("thirst." + p.getUniqueId(), thirst);
                     m_fireland.getCfgm().savePlayerDB();
@@ -243,7 +255,8 @@ public class Thirst implements Listener, CommandExecutor
             else
             {
                 // Dirty water
-                if (config.getString("thirst." + p.getUniqueId()) != null && config.getInt("thirst." + p.getUniqueId()) <= 75) {
+                if (config.getString("thirst." + p.getUniqueId()) != null && config.getInt("thirst." + p.getUniqueId()) <= 75)
+                {
                     config.set("thirst." + p.getUniqueId(), config.getDouble("thirst." + p.getUniqueId()) + 10);
                     m_fireland.getCfgm().savePlayerDB();
                 }
@@ -268,7 +281,8 @@ public class Thirst implements Listener, CommandExecutor
     /**
      * Resets player thirst to 100 on respawn.
      *
-     * @param _e The player respawn event
+     * @param _e
+     *            The player respawn event
      */
     @EventHandler
     public void playerDeath(PlayerRespawnEvent _e)

@@ -1,5 +1,8 @@
 package fr.byxis.faction.bunker;
 
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.sk89q.worldedit.EditSession;
@@ -20,12 +23,6 @@ import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.player.level.LevelStorage;
 import fr.byxis.player.level.PlayerLevel;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -34,11 +31,14 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Set;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-
-public class BunkerClass {
+public class BunkerClass
+{
 
     private final String m_name;
     private Location m_location;
@@ -47,11 +47,11 @@ public class BunkerClass {
 
     private final HashMap<Player, Location> m_playerInsideOldLocation;
     private final Multimap<Player, Player> m_invitations;
-                  //Inviteur, invite
+    // Inviteur, invite
     private final Fireland m_main;
 
     private final int padding = 200;
-    private static final int DELAY_BETWEEN_SKIN_CHANGE = 7; //in days
+    private static final int DELAY_BETWEEN_SKIN_CHANGE = 7; // in days
 
     private final BunkerStorage m_storage;
 
@@ -64,11 +64,11 @@ public class BunkerClass {
         m_storage = new BunkerStorage(_main, _name);
         m_location = null;
 
-
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT number, level, skin FROM faction_housing WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT number, level, skin FROM faction_housing WHERE faction = ?");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
             if (result.next())
@@ -81,7 +81,9 @@ public class BunkerClass {
             {
                 create();
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -91,7 +93,8 @@ public class BunkerClass {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET level = ? WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE faction_housing SET level = ? WHERE faction = ?");
             m_level += 1;
             preparedStatement.setInt(1, m_level);
             preparedStatement.setString(2, m_name);
@@ -106,7 +109,9 @@ public class BunkerClass {
             {
                 loadFileAndPaste("default " + m_level + ".schem");
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -140,7 +145,8 @@ public class BunkerClass {
         {
             for (Player p : m_invitations.get(_p))
             {
-                InGameUtilities.sendPlayerError(p, "Vous avez quitté le bunker de " + m_name + " car la personne qui vous a invité est partie.");
+                InGameUtilities.sendPlayerError(p,
+                        "Vous avez quitté le bunker de " + m_name + " car la personne qui vous a invité est partie.");
                 teleportBack(p, false);
             }
             m_invitations.removeAll(_p);
@@ -153,7 +159,8 @@ public class BunkerClass {
         InGameUtilities.sendPlayerError(_p, "Vous avez quitté le bunker de " + m_name);
     }
 
-    private void teleportBack(Player p, boolean doTpBackSpawn) {
+    private void teleportBack(Player p, boolean doTpBackSpawn)
+    {
         if (m_playerInsideOldLocation.containsKey(p))
         {
             debugp(6, "TpLoc");
@@ -187,13 +194,16 @@ public class BunkerClass {
             {
                 number = result.getInt(1) + 1;
             }
-            final PreparedStatement insert = connection.prepareStatement("INSERT INTO faction_housing(faction, number, level, skin) VALUES(?,?,?,?);");
+            final PreparedStatement insert = connection
+                    .prepareStatement("INSERT INTO faction_housing(faction, number, level, skin) VALUES(?,?,?,?);");
             insert.setString(1, m_name);
             insert.setInt(2, number);
             insert.setInt(3, 1);
             insert.setString(4, "default");
             insert.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
             return;
         }
@@ -215,25 +225,28 @@ public class BunkerClass {
             final PreparedStatement removeBk = connection.prepareStatement("DELETE FROM faction_housing WHERE faction = ?");
             removeBk.setString(1, m_name);
             removeBk.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
 
-    public boolean loadFileAndPaste(String fileName) {
+    public boolean loadFileAndPaste(String fileName)
+    {
         Path filePath = m_main.getDataFolder().toPath().resolve("bunker/" + fileName);
-        if (Files.exists(filePath)) {
+        if (Files.exists(filePath))
+        {
             ClipboardFormat format = ClipboardFormats.findByFile(filePath.toFile());
             try (InputStream inputStream = Files.newInputStream(filePath); ClipboardReader reader = format.getReader(inputStream))
             {
                 Clipboard clipboard = reader.read();
 
-                try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(m_location.getWorld()), -1)) {
-                    Operation operation = new ClipboardHolder(clipboard)
-                            .createPaste(editSession)
-                            .to(BlockVector3.at(m_location.getX(), m_location.getY(), m_location.getZ()))
-                            .ignoreAirBlocks(false)
-                            .build();
+                try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory()
+                        .getEditSession(new BukkitWorld(m_location.getWorld()), -1))
+                {
+                    Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
+                            .to(BlockVector3.at(m_location.getX(), m_location.getY(), m_location.getZ())).ignoreAirBlocks(false).build();
                     Operations.complete(operation);
                     return true;
                 }
@@ -247,30 +260,21 @@ public class BunkerClass {
     }
 
     /*
-    boolean loadFileAndPaste2(String fileName)
-    {
-        File file = new File(m_main.getDataFolder(), "bunker/" + fileName);
-        if (file.exists())
-        {
-            ClipboardFormat format = ClipboardFormats.findByFile(file);
-            try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
-                Clipboard clipboard = reader.read();
-
-                try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(m_location.getWorld()), -1)) {
-                    Operation operation = new ClipboardHolder(clipboard)
-                            .createPaste(editSession)
-                            .to(BlockVector3.at(m_location.getX(), m_location.getY(), m_location.getZ()))
-                            .ignoreAirBlocks(false)
-                            .build();
-                    Operations.complete(operation);
-                    return true;
-                }
-            } catch (IOException | WorldEditException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return false;
-    }*/
+     * boolean loadFileAndPaste2(String fileName) { File file = new
+     * File(m_main.getDataFolder(), "bunker/" + fileName); if (file.exists()) {
+     * ClipboardFormat format = ClipboardFormats.findByFile(file); try
+     * (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
+     * Clipboard clipboard = reader.read();
+     * 
+     * try (EditSession editSession =
+     * WorldEdit.getInstance().getEditSessionFactory().getEditSession(new
+     * BukkitWorld(m_location.getWorld()), -1)) { Operation operation = new
+     * ClipboardHolder(clipboard) .createPaste(editSession)
+     * .to(BlockVector3.at(m_location.getX(), m_location.getY(), m_location.getZ()))
+     * .ignoreAirBlocks(false) .build(); Operations.complete(operation); return
+     * true; } } catch (IOException | WorldEditException e) { throw new
+     * RuntimeException(e); } } return false; }
+     */
 
     Location getLocationFromNumber(int _number)
     {
@@ -278,10 +282,13 @@ public class BunkerClass {
         int p = n * n - _number; // position dans la grille
         int x, y;
 
-        if (p < n) {
+        if (p < n)
+        {
             x = p;
             y = n - 1;
-        } else {
+        }
+        else
+        {
             x = n - 1;
             y = 2 * n - p - 2;
         }
@@ -301,7 +308,8 @@ public class BunkerClass {
 
     public int getAmeliorationPriceMoney()
     {
-        return switch (m_level) {
+        return switch (m_level)
+        {
             case 8 -> 10000;
             case 9 -> 15000;
             case 1, 10 -> 20000;
@@ -314,9 +322,11 @@ public class BunkerClass {
             default -> -1;
         };
     }
+
     public int getAmeliorationPriceJetons()
     {
-        return switch (m_level) {
+        return switch (m_level)
+        {
             case 1, 2, 3, 4, 5, 6 -> 0;
             case 7 -> 250;
             case 8 -> 275;
@@ -327,9 +337,11 @@ public class BunkerClass {
             default -> -1;
         };
     }
+
     public int getAmeliorationFactionLevel()
     {
-        return switch (m_level) {
+        return switch (m_level)
+        {
             case 1, 2 -> 5;
             case 3 -> 6;
             case 4, 5 -> 7;
@@ -347,14 +359,12 @@ public class BunkerClass {
         switch (m_level)
         {
             case 2 -> claimFood(null);
-            case 5 ->
-            {
+            case 5 -> {
                 claimScrap(null);
                 claimPowder(null);
                 claimRepairKit(null);
             }
-            case 7 ->
-            {
+            case 7 -> {
                 claimSerum(null);
                 claimMeds(null);
                 claimAntiDouleur(null);
@@ -368,14 +378,17 @@ public class BunkerClass {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT food_claim FROM faction_housing WHERE faction = ?;");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT food_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
             if (result.next())
             {
                 claimed = result.getTimestamp(1);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
@@ -400,20 +413,23 @@ public class BunkerClass {
     public void claimFood(Player _p)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
-        try (Connection connection = firelandConnection.getConnection()){
+        try (Connection connection = firelandConnection.getConnection())
+        {
             if (_p != null)
             {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getFoodAmount() + " steaks !");
                 _p.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, getFoodAmount()));
             }
-            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET food_claim = ? WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE faction_housing SET food_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
-
     }
 
     public int getScrapAmount()
@@ -422,14 +438,17 @@ public class BunkerClass {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT scrap_claim FROM faction_housing WHERE faction = ?;");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT scrap_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
             if (result.next())
             {
                 claimed = result.getTimestamp(1);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
@@ -461,14 +480,16 @@ public class BunkerClass {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getScrapAmount() + " scraps !");
                 _p.getInventory().addItem(new ItemStack(Material.NETHERITE_SCRAP, getScrapAmount()));
             }
-            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET scrap_claim = ? WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE faction_housing SET scrap_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
-
     }
 
     public int getPowderAmount()
@@ -477,18 +498,22 @@ public class BunkerClass {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT powder_claim FROM faction_housing WHERE faction = ?;");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT powder_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
             if (result.next())
             {
                 claimed = result.getTimestamp(1);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
-        int itemAmount = (int) ((getMaxPowder() * (new Timestamp(System.currentTimeMillis()).getTime() - claimed.getTime()) / 1000) / 86400);
+        int itemAmount = (int) ((getMaxPowder() * (new Timestamp(System.currentTimeMillis()).getTime() - claimed.getTime()) / 1000)
+                / 86400);
         if (itemAmount < 0)
         {
             itemAmount = 0;
@@ -516,11 +541,14 @@ public class BunkerClass {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getPowderAmount() + " poudre !");
                 _p.getInventory().addItem(new ItemStack(Material.GUNPOWDER, getPowderAmount()));
             }
-            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET powder_claim = ? WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE faction_housing SET powder_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -531,18 +559,22 @@ public class BunkerClass {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT repairkit_claim FROM faction_housing WHERE faction = ?;");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT repairkit_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
             if (result.next())
             {
                 claimed = result.getTimestamp(1);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
-        int itemAmount = (int) ((getMaxRepairKit() * (new Timestamp(System.currentTimeMillis()).getTime() - claimed.getTime()) / 1000) / 604800);
+        int itemAmount = (int) ((getMaxRepairKit() * (new Timestamp(System.currentTimeMillis()).getTime() - claimed.getTime()) / 1000)
+                / 604800);
         if (itemAmount < 0)
         {
             itemAmount = 0;
@@ -570,11 +602,14 @@ public class BunkerClass {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getRepairKitAmount() + " kit de réparations !");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give " + _p.getName() + " Kitreparation " + getRepairKitAmount());
             }
-            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET repairkit_claim = ? WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE faction_housing SET repairkit_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -585,14 +620,17 @@ public class BunkerClass {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT meds_claim FROM faction_housing WHERE faction = ?;");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT meds_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
             if (result.next())
             {
                 claimed = result.getTimestamp(1);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
@@ -623,11 +661,14 @@ public class BunkerClass {
                 InGameUtilities.sendPlayerSucces(_p, "Vous avez récupéré " + getMedsAmount() + " médicaments !");
                 _p.getInventory().addItem(new ItemStack(Material.HONEYCOMB, getMedsAmount()));
             }
-            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET meds_claim = ? WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE faction_housing SET meds_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -638,18 +679,22 @@ public class BunkerClass {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT antidouleur_claim FROM faction_housing WHERE faction = ?;");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT antidouleur_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
             if (result.next())
             {
                 claimed = result.getTimestamp(1);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
-        int itemAmount = (int) ((getMaxAntiDouleur() * (new Timestamp(System.currentTimeMillis()).getTime() - claimed.getTime()) / 1000) / 86400);
+        int itemAmount = (int) ((getMaxAntiDouleur() * (new Timestamp(System.currentTimeMillis()).getTime() - claimed.getTime()) / 1000)
+                / 86400);
         if (itemAmount < 0)
         {
             itemAmount = 0;
@@ -677,11 +722,14 @@ public class BunkerClass {
 
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give " + _p.getName() + " Antidouleur " + getAntiDouleurAmount());
             }
-            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET antidouleur_claim = ? WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE faction_housing SET antidouleur_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -692,18 +740,22 @@ public class BunkerClass {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT serum_claim FROM faction_housing WHERE faction = ?;");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT serum_claim FROM faction_housing WHERE faction = ?;");
             preparedStatement.setString(1, m_name);
             final ResultSet result = preparedStatement.executeQuery();
             if (result.next())
             {
                 claimed = result.getTimestamp(1);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
-        int itemAmount = (int) ((getMaxSerum() * (new Timestamp(System.currentTimeMillis()).getTime() - claimed.getTime()) / 1000) / 604800);
+        int itemAmount = (int) ((getMaxSerum() * (new Timestamp(System.currentTimeMillis()).getTime() - claimed.getTime()) / 1000)
+                / 604800);
         if (itemAmount < 0)
         {
             itemAmount = 0;
@@ -720,7 +772,6 @@ public class BunkerClass {
         };
     }
 
-
     public void claimSerum(Player _p)
     {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
@@ -732,11 +783,14 @@ public class BunkerClass {
 
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give " + _p.getName() + " Serumberserker " + getSerumAmount());
             }
-            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET serum_claim = ? WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE faction_housing SET serum_claim = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -757,7 +811,8 @@ public class BunkerClass {
         long delay = getDelayForSkinChange();
         if (delay > 0)
         {
-            InGameUtilities.sendPlayerError(p, "Vous ne pouvez pas encore changer de skin, veuillez patienter " + BasicUtilities.getStringTime(delay));
+            InGameUtilities.sendPlayerError(p,
+                    "Vous ne pouvez pas encore changer de skin, veuillez patienter " + BasicUtilities.getStringTime(delay));
             return;
         }
         setSkinChanged();
@@ -768,7 +823,8 @@ public class BunkerClass {
         }
         if (!loadFileAndPaste(m_skin + m_level + ".schem"))
         {
-            InGameUtilities.sendPlayerError(p, "Le skin de bunker a été équipé. Cependant, il n'est pas disponible pour ce niveau. Le skin sera appliqué quand vous atteindrez le niveau requis");
+            InGameUtilities.sendPlayerError(p,
+                    "Le skin de bunker a été équipé. Cependant, il n'est pas disponible pour ce niveau. Le skin sera appliqué quand vous atteindrez le niveau requis");
         }
         else
         {
@@ -792,14 +848,17 @@ public class BunkerClass {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT last_skin_change FROM faction_housing WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT last_skin_change FROM faction_housing WHERE faction = ?");
             preparedStatement.setString(1, m_name);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next())
             {
                 time = result.getTimestamp(1);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
         return time;
@@ -810,11 +869,14 @@ public class BunkerClass {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE faction_housing SET last_skin_change = ? WHERE faction = ?");
+            final PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE faction_housing SET last_skin_change = ? WHERE faction = ?");
             preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(2, m_name);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -833,6 +895,4 @@ public class BunkerClass {
     {
         return m_location;
     }
-
-
 }

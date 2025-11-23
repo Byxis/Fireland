@@ -2,12 +2,12 @@ package fr.byxis.player.advancements;
 
 import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.api.mobs.entities.MythicEntityType;
+import java.util.Objects;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
-
-public class AdvancementsClass {
+public class AdvancementsClass
+{
 
     private final AdvancementsManager m_manager;
     private final String m_id;
@@ -19,7 +19,8 @@ public class AdvancementsClass {
     private final int m_jetons;
     private final String m_permission;
 
-    public AdvancementsClass(AdvancementsManager _manager, String _id) {
+    public AdvancementsClass(AdvancementsManager _manager, String _id)
+    {
         this.m_manager = _manager;
         m_id = _id;
 
@@ -32,35 +33,43 @@ public class AdvancementsClass {
         m_permission = _manager.getConfig().getString("success." + m_id + ".reward.permission");
     }
 
-    public String getTitle() {
+    public String getTitle()
+    {
         return m_title;
     }
 
-    public String getDesc() {
+    public String getDesc()
+    {
         return m_desc;
     }
 
-    public AdvancementsManager.Success getType() {
+    public AdvancementsManager.Success getType()
+    {
         return m_type;
     }
 
-    public Material getMaterial() {
+    public Material getMaterial()
+    {
         return m_material;
     }
 
-    public int getMoney() {
+    public int getMoney()
+    {
         return m_money;
     }
 
-    public int getJetons() {
+    public int getJetons()
+    {
         return m_jetons;
     }
 
-    public String getPermission() {
+    public String getPermission()
+    {
         return m_permission;
     }
 
-    public String getId() {
+    public String getId()
+    {
         return m_id;
     }
 
@@ -84,7 +93,8 @@ class KillAdvancements extends AdvancementsClass
 {
     private final MythicEntityType m_mobType;
     private final int m_amount;
-    public KillAdvancements(AdvancementsManager _manager, String _id) {
+    public KillAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_mobType = MythicEntityType.get(_manager.getConfig().getString("success." + getId() + ".objective.type"));
         m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
@@ -111,7 +121,8 @@ class KillAdvancements extends AdvancementsClass
 class PlayTimeAdvancements extends AdvancementsClass
 {
     private final int m_amount;
-    public PlayTimeAdvancements(AdvancementsManager _manager, String _id) {
+    public PlayTimeAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
@@ -129,7 +140,8 @@ class PlayTimeAdvancements extends AdvancementsClass
 class LearnRecipeAdvancements extends AdvancementsClass
 {
     private final int m_amount;
-    public LearnRecipeAdvancements(AdvancementsManager _manager, String _id) {
+    public LearnRecipeAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
@@ -152,7 +164,8 @@ class LearnRecipeAdvancements extends AdvancementsClass
 class CraftAdvancements extends AdvancementsClass
 {
     private final int m_amount;
-    public CraftAdvancements(AdvancementsManager _manager, String _id) {
+    public CraftAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
@@ -175,7 +188,8 @@ class CraftAdvancements extends AdvancementsClass
 class CraftSuccessAdvancements extends AdvancementsClass
 {
     private final int m_amount;
-    public CraftSuccessAdvancements(AdvancementsManager _manager, String _id) {
+    public CraftSuccessAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
@@ -198,7 +212,8 @@ class CraftSuccessAdvancements extends AdvancementsClass
 class CraftBreakAdvancements extends AdvancementsClass
 {
     private final int m_amount;
-    public CraftBreakAdvancements(AdvancementsManager _manager, String _id) {
+    public CraftBreakAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }
@@ -221,7 +236,8 @@ class CraftBreakAdvancements extends AdvancementsClass
 class GradeChangeAdvancements extends AdvancementsClass
 {
     private final String m_grade;
-    public GradeChangeAdvancements(AdvancementsManager _manager, String _id) {
+    public GradeChangeAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_grade = _manager.getConfig().getString("success." + getId() + ".objective.grade");
     }
@@ -239,7 +255,8 @@ class GradeChangeAdvancements extends AdvancementsClass
 class RankChangeAdvancements extends AdvancementsClass
 {
     private final String m_rank;
-    public RankChangeAdvancements(AdvancementsManager _manager, String _id) {
+    public RankChangeAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_rank = _manager.getConfig().getString("success." + getId() + ".objective.rank");
     }
@@ -257,7 +274,8 @@ class RankChangeAdvancements extends AdvancementsClass
 class SkinEquipAdvancements extends AdvancementsClass
 {
     private final String m_skin;
-    public SkinEquipAdvancements(AdvancementsManager _manager, String _id) {
+    public SkinEquipAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_skin = _manager.getConfig().getString("success." + getId() + ".objective.skin");
     }
@@ -277,7 +295,8 @@ class UseBoosterAdvancements extends AdvancementsClass
     private final int m_duration;
     private final int m_level;
     private final int m_amount;
-    public UseBoosterAdvancements(AdvancementsManager _manager, String _id) {
+    public UseBoosterAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_duration = _manager.getConfig().getInt("success." + getId() + ".objective.duration");
         m_level = _manager.getConfig().getInt("success." + getId() + ".objective.level");
@@ -286,7 +305,8 @@ class UseBoosterAdvancements extends AdvancementsClass
 
     public void updatePlayer(Player p, int duration, int level, int amount)
     {
-        if ((m_level == level && duration == -1) || (m_level == -1 && duration == m_duration) || (m_level == level && duration == m_duration))
+        if ((m_level == level && duration == -1) || (m_level == -1 && duration == m_duration)
+                || (m_level == level && duration == m_duration))
         {
             int current = getManager().getSuccessInt(getPath(p));
             if (current + amount >= m_amount)
@@ -305,7 +325,8 @@ class UseBoosterAdvancements extends AdvancementsClass
 class PossessJetonsAdvancements extends AdvancementsClass
 {
     private final int m_amount;
-    public PossessJetonsAdvancements(AdvancementsManager _manager, String _id) {
+    public PossessJetonsAdvancements(AdvancementsManager _manager, String _id)
+    {
         super(_manager, _id);
         m_amount = _manager.getConfig().getInt("success." + getId() + ".objective.amount");
     }

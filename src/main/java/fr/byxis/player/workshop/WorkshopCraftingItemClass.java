@@ -1,8 +1,7 @@
 package fr.byxis.player.workshop;
 
-import org.bukkit.Material;
-
 import java.sql.Timestamp;
+import org.bukkit.Material;
 
 public class WorkshopCraftingItemClass
 {
@@ -17,8 +16,8 @@ public class WorkshopCraftingItemClass
     private final int customModelData;
     private final String planName;
 
-
-    public WorkshopCraftingItemClass(String _itemName, String _type, Material _mat, short _dura, String _command, Timestamp _creationDate, Timestamp _finishDate, int _customModelData, String _planName)
+    public WorkshopCraftingItemClass(String _itemName, String _type, Material _mat, short _dura, String _command, Timestamp _creationDate,
+            Timestamp _finishDate, int _customModelData, String _planName)
     {
         this.itemName = _itemName;
         this.planName = _planName;

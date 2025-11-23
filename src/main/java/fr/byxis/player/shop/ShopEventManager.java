@@ -10,10 +10,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class ShopEventManager implements Listener {
+public class ShopEventManager implements Listener
+{
 
     private final Fireland main;
-    public ShopEventManager(Fireland _main) {
+    public ShopEventManager(Fireland _main)
+    {
         this.main = _main;
     }
 
@@ -26,7 +28,8 @@ public class ShopEventManager implements Listener {
             InventoryUtilities.clickManager(e);
 
             ItemStack itemclicked = e.getCurrentItem();
-            if (itemclicked == null) {
+            if (itemclicked == null)
+            {
                 return;
             }
             ShopFunction sf = new ShopFunction(main, p);
@@ -42,7 +45,8 @@ public class ShopEventManager implements Listener {
             }
             else if (itemclicked.getType() != Material.WHITE_STAINED_GLASS_PANE || itemclicked.getType() != Material.BOOK)
             {
-                if (e.getClickedInventory() == e.getView().getTopInventory()) {
+                if (e.getClickedInventory() == e.getView().getTopInventory())
+                {
                     if (e.isLeftClick())
                     {
                         sf.buyItem(itemclicked, p, sf.getShopName(e.getView()).replaceAll(" ", "_"), e.getView().getTitle());

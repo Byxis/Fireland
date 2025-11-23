@@ -9,8 +9,9 @@ public class SpeedFly implements CommandExecutor
 {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
-        
+    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args)
+    {
+
         if (sender instanceof Player player)
         {
             float speed = Float.parseFloat(args[0]);
@@ -31,5 +32,4 @@ public class SpeedFly implements CommandExecutor
         }
         return false;
     }
-
 }

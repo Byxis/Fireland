@@ -6,36 +6,41 @@ import fr.byxis.faction.essaim.enums.JoinResult;
 import fr.byxis.faction.essaim.enums.LeaveResult;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.TextUtilities;
-import net.md_5.bungee.api.chat.ClickEvent;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.entity.Player;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import net.md_5.bungee.api.chat.ClickEvent;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.entity.Player;
 
 /**
  * Represents a group (essaim) of players undertaking an expedition together.
  * <p>
  * The EssaimGroup class manages the core functionalities of a player group,
- * including inviting players, joining/leaving the group, starting/finishing expeditions,
- * handling player deaths, and calculating rewards based on difficulty and group size.
+ * including inviting players, joining/leaving the group, starting/finishing
+ * expeditions, handling player deaths, and calculating rewards based on
+ * difficulty and group size.
  * </p>
  * <p>
  * Key Features:
  * <ul>
- *     <li>Group Management: Invite, join, leave, and disband the group.</li>
- *     <li>Expedition Lifecycle: Start, finish, and track the state of the expedition.</li>
- *     <li>Adaptive Difficulty: Adjust difficulty multipliers based on group size.</li>
- *     <li>Reward Calculation: Determine jeton rewards based on expedition completion and difficulty.</li>
- *     <li>Player Death Handling: Manage player deaths and their impact on the group.</li>
+ * <li>Group Management: Invite, join, leave, and disband the group.</li>
+ * <li>Expedition Lifecycle: Start, finish, and track the state of the
+ * expedition.</li>
+ * <li>Adaptive Difficulty: Adjust difficulty multipliers based on group
+ * size.</li>
+ * <li>Reward Calculation: Determine jeton rewards based on expedition
+ * completion and difficulty.</li>
+ * <li>Player Death Handling: Manage player deaths and their impact on the
+ * group.</li>
  * </ul>
  * </p>
  * <p>
  * Example Usage:
+ * 
  * <pre>
  * Player leader = ...; // Obtain a Player object for the leader
  * EssaimGroup group = new EssaimGroup("MyEssaim", leader);
@@ -44,7 +49,8 @@ import java.util.Objects;
  * </pre>
  * </p>
  */
-public class EssaimGroup {
+public class EssaimGroup
+{
 
     // Constants
     private static final int MAX_GROUP_SIZE = 4;
@@ -64,8 +70,8 @@ public class EssaimGroup {
     private int m_difficultyLevel;
     private Timestamp m_expeditionStartTime;
 
-
-    public EssaimGroup(String _essaimName, Player _initialLeader) {
+    public EssaimGroup(String _essaimName, Player _initialLeader)
+    {
         this.m_essaimName = validateEssaimName(_essaimName);
         this.m_leader = validatePlayer(_initialLeader, "Initial leader");
         this.m_members = new ArrayList<>();
@@ -80,23 +86,29 @@ public class EssaimGroup {
     /**
      * Invites a player to join this group
      *
-     * @param _invitee The player to invite
+     * @param _invitee
+     *            The player to invite
      * @return InvitationResult indicating success or failure reason
      */
-    public InvitationResult invitePlayer(Player _invitee) {
-        if (_invitee == null) {
+    public InvitationResult invitePlayer(Player _invitee)
+    {
+        if (_invitee == null)
+        {
             return InvitationResult.INVALID_PLAYER;
         }
 
-        if (isGroupFull()) {
+        if (isGroupFull())
+        {
             return InvitationResult.GROUP_FULL;
         }
 
-        if (m_members.contains(_invitee)) {
+        if (m_members.contains(_invitee))
+        {
             return InvitationResult.ALREADY_IN_GROUP;
         }
 
-        if (m_state != ExpeditionState.PREPARING) {
+        if (m_state != ExpeditionState.PREPARING)
+        {
             return InvitationResult.EXPEDITION_STARTED;
         }
 
@@ -107,7 +119,10 @@ public class EssaimGroup {
     /**
      * Adds a player to the group (typically after accepting invitation)
      *
-     * @param _joiner The player who wants to join
+     * @param _joiner
+     *            The player who wants to join
+     *
+     * @return JoinResult indicating success or failure reason
      */
     public JoinResult joinGroup(Player _joiner)
     {
@@ -146,7 +161,8 @@ public class EssaimGroup {
     /**
      * Removes a player from the group
      *
-     * @param _leaver The player who wants to leave
+     * @param _leaver
+     *            The player who wants to leave
      * @return LeaveResult indicating success or failure reason
      */
     public LeaveResult leaveGroup(Player _leaver)
@@ -180,7 +196,8 @@ public class EssaimGroup {
     /**
      * Handles a player death during expedition
      *
-     * @param _player The player who died
+     * @param _player
+     *            The player who died
      */
     public void handlePlayerDeath(Player _player)
     {
@@ -206,7 +223,8 @@ public class EssaimGroup {
             }
         }
 
-        if (m_members.isEmpty()) {
+        if (m_members.isEmpty())
+        {
             m_state = ExpeditionState.FAILED;
         }
     }
@@ -214,7 +232,8 @@ public class EssaimGroup {
     /**
      * Starts the expedition with specified difficulty
      *
-     * @param _difficulty Difficulty level (1-3)
+     * @param _difficulty
+     *            Difficulty level (1-3)
      * @return true if the expedition started successfully, false otherwise
      */
     public boolean startExpedition(int _difficulty)
@@ -254,7 +273,8 @@ public class EssaimGroup {
      */
     public float getAdaptiveDifficultyMultiplier()
     {
-        return switch (m_members.size()) {
+        return switch (m_members.size())
+        {
             case 1 -> SOLO_MULTIPLIER;
             case 2 -> DUO_MULTIPLIER;
             case 3 -> TRIO_MULTIPLIER;
@@ -266,7 +286,8 @@ public class EssaimGroup {
     /**
      * Calculates jeton reward based on difficulty and completion
      *
-     * @param _baseJetons Base jeton reward
+     * @param _baseJetons
+     *            Base jeton reward
      * @return int total jeton reward
      */
     public int calculateJetonReward(int _baseJetons)
@@ -322,9 +343,7 @@ public class EssaimGroup {
 
     public List<String> getMemberNames()
     {
-        return m_members.stream()
-                .map(Player::getName)
-                .toList();
+        return m_members.stream().map(Player::getName).toList();
     }
 
     public int getSize()
@@ -382,12 +401,16 @@ public class EssaimGroup {
     /**
      * Validates and cleans the essaim name
      *
-     * @param name The essaim name to validate
+     * @param name
+     *            The essaim name to validate
      * @return Cleaned essaim name
-     * @throws IllegalArgumentException if name is null or empty
+     * @throws IllegalArgumentException
+     *             if name is null or empty
      */
-    private String validateEssaimName(String name) {
-        if (name == null || name.trim().isEmpty()) {
+    private String validateEssaimName(String name)
+    {
+        if (name == null || name.trim().isEmpty())
+        {
             throw new IllegalArgumentException("Essaim name cannot be null or empty");
         }
         return name.trim();
@@ -396,13 +419,18 @@ public class EssaimGroup {
     /**
      * Validates a player object
      *
-     * @param player The player to validate
-     * @param context Contextual information for error messages
+     * @param player
+     *            The player to validate
+     * @param context
+     *            Contextual information for error messages
      * @return The validated player
-     * @throws IllegalArgumentException if player is null
+     * @throws IllegalArgumentException
+     *             if player is null
      */
-    private Player validatePlayer(Player player, String context) {
-        if (player == null) {
+    private Player validatePlayer(Player player, String context)
+    {
+        if (player == null)
+        {
             throw new IllegalArgumentException(context + " cannot be null");
         }
         return player;
@@ -411,82 +439,81 @@ public class EssaimGroup {
     /**
      * Sends an interactive invitation message to the invitee
      *
-     * @param invitee The player to invite
+     * @param invitee
+     *            The player to invite
      */
-    private void sendInvitationMessage(Player invitee) {
+    private void sendInvitationMessage(Player invitee)
+    {
         String cleanEssaimName = TextUtilities.convertStorableToClean(m_essaimName);
-        String message = String.format(
-                "Vous avez été invité dans l'essaim %s par %s. Cliquez sur ce message pour rejoindre.",
-                cleanEssaimName,
-                m_leader.getName()
-        );
+        String message = String.format("Vous avez été invité dans l'essaim %s par %s. Cliquez sur ce message pour rejoindre.",
+                cleanEssaimName, m_leader.getName());
 
         String command = String.format("/essaim join %s %s", m_essaimName, INVITATION_TOKEN);
 
-        InGameUtilities.sendInteractivePlayerMessage(
-                invitee,
-                message,
-                command,
-                "§aCliquez ici pour rejoindre l'essaim",
-                ClickEvent.Action.RUN_COMMAND
-        );
+        InGameUtilities.sendInteractivePlayerMessage(invitee, message, command, "§aCliquez ici pour rejoindre l'essaim",
+                ClickEvent.Action.RUN_COMMAND);
     }
 
     /**
      * Notifies all group members that a new player has joined
      *
-     * @param joiner The player who joined
+     * @param joiner
+     *            The player who joined
      */
-    private void notifyGroupJoin(Player joiner) {
-        for (Player member : m_members) {
-            InGameUtilities.sendPlayerInformation(member,
-                    joiner.getName() + " a rejoint l'expédition.");
+    private void notifyGroupJoin(Player joiner)
+    {
+        for (Player member : m_members)
+        {
+            InGameUtilities.sendPlayerInformation(member, joiner.getName() + " a rejoint l'expédition.");
         }
     }
 
     /**
      * Notifies all group members that a player has left
      *
-     * @param leaver The player who left
+     * @param leaver
+     *            The player who left
      */
-    private void notifyGroupLeave(Player leaver) {
-        for (Player member : m_members) {
-            InGameUtilities.sendPlayerInformation(member,
-                    leaver.getName() + " a quitté l'expédition.");
+    private void notifyGroupLeave(Player leaver)
+    {
+        for (Player member : m_members)
+        {
+            InGameUtilities.sendPlayerInformation(member, leaver.getName() + " a quitté l'expédition.");
         }
     }
 
     /**
      * Notifies all group members about the new leader
      */
-    private void notifyNewLeader() {
-        for (Player member : m_members) {
-            InGameUtilities.sendPlayerInformation(member,
-                    "§e" + m_leader.getName() + " est maintenant le leader du groupe.");
+    private void notifyNewLeader()
+    {
+        for (Player member : m_members)
+        {
+            InGameUtilities.sendPlayerInformation(member, "§e" + m_leader.getName() + " est maintenant le leader du groupe.");
         }
     }
 
     @Override
-    public String toString() {
-        return "EssaimGroup{" +
-                "essaimName='" + m_essaimName + '\'' +
-                ", leader=" + (m_leader != null ? m_leader.getName() : "null") +
-                ", memberCount=" + m_members.size() +
-                ", state=" + m_state +
-                ", difficulty=" + m_difficultyLevel +
-                '}';
+    public String toString()
+    {
+        return "EssaimGroup{" + "essaimName='" + m_essaimName + '\'' + ", leader=" + (m_leader != null ? m_leader.getName() : "null")
+                + ", memberCount=" + m_members.size() + ", state=" + m_state + ", difficulty=" + m_difficultyLevel + '}';
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
         EssaimGroup that = (EssaimGroup) obj;
         return Objects.equals(m_essaimName, that.m_essaimName);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(m_essaimName);
     }
 }

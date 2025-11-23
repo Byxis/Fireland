@@ -13,8 +13,10 @@ public class LevelCondition implements EssaimCondition
     /**
      * Creates a new level condition.
      *
-     * @param _minLevel The minimum level required
-     * @param _scope The scope of this condition
+     * @param _minLevel
+     *            The minimum level required
+     * @param _scope
+     *            The scope of this condition
      */
     public LevelCondition(int _minLevel, ConditionScope _scope)
     {
@@ -60,4 +62,3 @@ public class LevelCondition implements EssaimCondition
         return m_minLevel;
     }
 }
-

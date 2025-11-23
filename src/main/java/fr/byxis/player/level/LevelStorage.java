@@ -1,22 +1,19 @@
 package fr.byxis.player.level;
 
 import fr.byxis.fireland.Fireland;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-
-public class LevelStorage {
+public class LevelStorage
+{
 
     private static Fireland m_main;
 
     public enum Nation
     {
-        Etat,
-        Bannis,
-        Neutre,
-        Null
+        Etat, Bannis, Neutre, Null
     }
 
     private static Map<UUID, PlayerLevel> m_levelMap;
@@ -69,7 +66,8 @@ public class LevelStorage {
 
     public static void saveLevels()
     {
-        if (m_levelMap.isEmpty()) return;
+        if (m_levelMap.isEmpty())
+            return;
         List<UUID> uuidList = new ArrayList<UUID>();
         for (PlayerLevel pl : m_levelMap.values())
         {
@@ -135,8 +133,7 @@ public class LevelStorage {
 
             if (m_main.getCfgm().getPlayerDB().contains("levelmap.uuid"))
             {
-                for (String uuid : m_main.getCfgm().getPlayerDB()
-                        .getConfigurationSection("levelmap.uuid").getKeys(false))
+                for (String uuid : m_main.getCfgm().getPlayerDB().getConfigurationSection("levelmap.uuid").getKeys(false))
                 {
                     if (uuid != null && !uuid.equalsIgnoreCase(""))
                     {

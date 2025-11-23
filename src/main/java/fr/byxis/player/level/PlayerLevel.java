@@ -1,14 +1,12 @@
 package fr.byxis.player.level;
 
+import static fr.byxis.jeton.JetonManager.addJetonsPlayer;
+
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.skytasul.quests.api.QuestsAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.SoundCategory;
-import org.bukkit.entity.Player;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +16,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.bukkit.Bukkit;
+import org.bukkit.SoundCategory;
+import org.bukkit.entity.Player;
 
-import static fr.byxis.jeton.JetonManager.addJetonsPlayer;
-
-public class PlayerLevel {
+public class PlayerLevel
+{
 
     private final UUID m_uuid;
     private int m_level;
@@ -39,7 +39,7 @@ public class PlayerLevel {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            //Préparation de la commande
+            // Préparation de la commande
             PreparedStatement getInfos = connection.prepareStatement("SELECT level, xp, nation, rang FROM player_level WHERE uuid = ?");
             getInfos.setString(1, uuid.toString());
             ResultSet rs = getInfos.executeQuery();
@@ -54,12 +54,15 @@ public class PlayerLevel {
             {
                 createPlayerLevel(connection, m_uuid);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
 
-    private void createPlayerLevel(Connection connection, UUID uuid) throws SQLException {
+    private void createPlayerLevel(Connection connection, UUID uuid) throws SQLException
+    {
         m_level = 0;
         m_xp = 0;
         m_nation = LevelStorage.Nation.Neutre;
@@ -160,7 +163,8 @@ public class PlayerLevel {
         return m_rang;
     }
 
-    public LevelStorage.Nation getNation() {
+    public LevelStorage.Nation getNation()
+    {
         return m_nation;
     }
     public void setNation(LevelStorage.Nation _nation)
@@ -198,8 +202,9 @@ public class PlayerLevel {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            //Préparation de la commande
-            PreparedStatement updateInfos = connection.prepareStatement("UPDATE player_level SET level = ?, xp = ?, nation = ?, rang = ?, can_change = ? WHERE uuid = ?");
+            // Préparation de la commande
+            PreparedStatement updateInfos = connection
+                    .prepareStatement("UPDATE player_level SET level = ?, xp = ?, nation = ?, rang = ?, can_change = ? WHERE uuid = ?");
             updateInfos.setInt(1, m_level);
             updateInfos.setInt(2, m_xp);
             updateInfos.setString(3, m_nation.name());
@@ -207,7 +212,9 @@ public class PlayerLevel {
             updateInfos.setBoolean(5, m_canChange);
             updateInfos.setString(6, m_uuid.toString());
             updateInfos.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -313,10 +320,11 @@ public class PlayerLevel {
         if (!m_rewardsClaimed.containsKey(_lvl))
         {
             final DbConnection firelandConnection = _main.getDatabaseManager().getFirelandConnection();
-        try (Connection connection = firelandConnection.getConnection())
-        {
-                //Préparation de la commande
-                PreparedStatement hasClaimedReward = connection.prepareStatement("SELECT * FROM player_level_rewards WHERE uuid = ? AND level = ?");
+            try (Connection connection = firelandConnection.getConnection())
+            {
+                // Préparation de la commande
+                PreparedStatement hasClaimedReward = connection
+                        .prepareStatement("SELECT * FROM player_level_rewards WHERE uuid = ? AND level = ?");
                 hasClaimedReward.setString(1, m_uuid.toString());
                 hasClaimedReward.setInt(2, _lvl);
                 ResultSet rs = hasClaimedReward.executeQuery();
@@ -328,7 +336,9 @@ public class PlayerLevel {
                 {
                     m_rewardsClaimed.put(_lvl, false);
                 }
-            } catch (SQLException e) {
+            }
+            catch (SQLException e)
+            {
                 e.printStackTrace();
             }
         }
@@ -345,7 +355,9 @@ public class PlayerLevel {
             setClaimedReward.setString(1, m_uuid.toString());
             setClaimedReward.setInt(2, _lvl);
             setClaimedReward.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -381,7 +393,6 @@ public class PlayerLevel {
             InGameUtilities.sendPlayerError(p, "Vous avez déjà récupéré cette récompense.");
         }
     }
-
 
     public int getRewardsJetons(int lvl)
     {
@@ -434,8 +445,7 @@ public class PlayerLevel {
     {
         String hasPet = getRewardsPets(lvl);
         return Arrays.stream(hasPet.split("\\.")[2].replace("-", " ").split(" "))
-                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
-                .collect(Collectors.joining(" "));
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase()).collect(Collectors.joining(" "));
     }
 
     public void givePlayerMission(int _level)
@@ -443,7 +453,7 @@ public class PlayerLevel {
         ArrayList<Integer> questIds = new ArrayList<Integer>();
         switch (_level)
         {
-            //case 1 -> questIds.add(1);
+            // case 1 -> questIds.add(1);
         };
         if (!questIds.isEmpty())
         {
@@ -487,11 +497,13 @@ public class PlayerLevel {
         };
     }
 
-    public void setCanChange(boolean _canChange) {
+    public void setCanChange(boolean _canChange)
+    {
         this.m_canChange = _canChange;
     }
 
-    public Boolean canChange() {
+    public Boolean canChange()
+    {
         return m_canChange;
     }
 }

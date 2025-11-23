@@ -12,19 +12,18 @@ public class VillagerInteraction implements Listener
 
     public VillagerInteraction()
     {
-
     }
 
     @EventHandler
     public void onInteractionWithVillager(PlayerInteractEntityEvent e)
     {
-        Player p = e .getPlayer();
-        
+        Player p = e.getPlayer();
+
         if (!(e.getRightClicked() instanceof Villager) || e.getRightClicked().getCustomName() == null)
         {
             return;
         }
-        
+
         if (e.getRightClicked().getCustomName().contains("Utilitaire"))
         {
             PermissionUtilities.commandExecutor(p, "shop utilitaire", "fireland.command.shop");
@@ -74,5 +73,4 @@ public class VillagerInteraction implements Listener
             PermissionUtilities.commandExecutor(p, "shop passr", "fireland.command.shop");
         }
     }
-    
 }

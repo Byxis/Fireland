@@ -1,5 +1,7 @@
 package fr.byxis.faction.bunker;
 
+import static fr.byxis.fireland.utilities.WGUtilities.isWithinRegion;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import org.bukkit.command.Command;
@@ -8,9 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static fr.byxis.fireland.utilities.WGUtilities.isWithinRegion;
-
-public class BunkerCommand implements CommandExecutor {
+public class BunkerCommand implements CommandExecutor
+{
 
     private final Fireland main;
 
@@ -20,7 +21,8 @@ public class BunkerCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings)
+    {
         if (commandSender instanceof Player p)
         {
             if (p.hasPermission("fireland.bunker.mod") && strings.length >= 2 && strings[0].equalsIgnoreCase("join"))
@@ -43,7 +45,8 @@ public class BunkerCommand implements CommandExecutor {
                     sb.append(pl.getName()).append(" ");
                 }
                 p.sendMessage(sb.toString());
-                p.sendMessage("§8Location : x§7 " + bk.getBunkerLocation().getBlockX() + "§8 y§7 " + bk.getBunkerLocation().getBlockZ() + "§8 z§7 " + bk.getBunkerLocation().getBlockZ());
+                p.sendMessage("§8Location : x§7 " + bk.getBunkerLocation().getBlockX() + "§8 y§7 " + bk.getBunkerLocation().getBlockZ()
+                        + "§8 z§7 " + bk.getBunkerLocation().getBlockZ());
                 return true;
             }
             else if (p.hasPermission("fireland.bunker.mod") && strings.length == 1 && strings[0].equalsIgnoreCase("info"))
@@ -80,7 +83,6 @@ public class BunkerCommand implements CommandExecutor {
                 }
                 InGameUtilities.sendPlayerError(p, "Utilisation: /bunker <join/info> <faction>");
             }
-
         }
         return false;
     }

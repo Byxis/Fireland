@@ -1,5 +1,7 @@
 package fr.byxis.faction.zone;
 
+import static fr.byxis.player.level.LevelStorage.addPlayerXp;
+
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.faction.zone.zoneclass.FactionCapturingClass;
 import fr.byxis.faction.zone.zoneclass.ZoneClass;
@@ -7,21 +9,19 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BlockUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.player.level.LevelStorage;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
-import static fr.byxis.player.level.LevelStorage.addPlayerXp;
-
-public class CaptureZone {
+public class CaptureZone
+{
 
     private static Fireland main;
     private final DataZone data;
@@ -175,7 +175,8 @@ public class CaptureZone {
         new BukkitRunnable()
         {
             @Override
-            public void run() {
+            public void run()
+            {
                 if (data.getZones().isEmpty())
                 {
                     return;
@@ -183,15 +184,14 @@ public class CaptureZone {
 
                 for (ZoneClass zone : data.getZones())
                 {
-                    if (data.getZoneInCapture().containsKey(zone.getName()) &&
-                            !data.getZoneInCapture().get(zone.getName()).isEmpty() &&
-                            (!zone.isClaimed() || (zone.isClaimed() && zone.isClaimable()))
-                    )
+                    if (data.getZoneInCapture().containsKey(zone.getName()) && !data.getZoneInCapture().get(zone.getName()).isEmpty()
+                            && (!zone.isClaimed() || (zone.isClaimed() && zone.isClaimable())))
                     {
                         HashMap<FactionCapturingClass, Integer> capture = new HashMap<>();
 
                         Iterator<FactionCapturingClass> iterator = data.getZoneInCapture().get(zone.getName()).iterator();
-                        while (iterator.hasNext()) {
+                        while (iterator.hasNext())
+                        {
                             FactionCapturingClass factionCapturing = iterator.next();
                             capture.put(factionCapturing, factionCapturing.getPlayerList().size());
                             if (factionCapturing.getPlayerList().isEmpty())
@@ -199,7 +199,7 @@ public class CaptureZone {
                                 if (zone.getClaimer() == null || !zone.getClaimer().equalsIgnoreCase(factionCapturing.getName()))
                                 {
                                     addProgressionTime(zone, factionCapturing, -2 * captureRefreshRate * boosterCapture);
-                                    //Décapture automatique
+                                    // Décapture automatique
                                 }
                             }
                             if (factionCapturing.getProgression() <= 0 && factionCapturing.getPlayerList().isEmpty())
@@ -249,7 +249,8 @@ public class CaptureZone {
                                     factionToUncapture = factionCapturingClass;
                                 }
                             }
-                            else if (zone.isClaimed() && factionCapturingClass.getName().equalsIgnoreCase(zone.getClaimer()) && zone.isClaimable())
+                            else if (zone.isClaimed() && factionCapturingClass.getName().equalsIgnoreCase(zone.getClaimer())
+                                    && zone.isClaimable())
                             {
                                 if (factionToUncapture == null)
                                 {
@@ -265,27 +266,28 @@ public class CaptureZone {
                                 if (factionToUncapture.getName().equalsIgnoreCase(factionCapturing.getName()))
                                 {
                                     addProgressionTime(zone, factionToUncapture, 2 * captureRefreshRate * boosterCapture);
-                                    //Si tu proteges ta faction, ça capture
+                                    // Si tu proteges ta faction, ça capture
                                 }
                                 else
                                 {
                                     addProgressionTime(zone, factionToUncapture, -2 * captureRefreshRate * boosterCapture);
-                                    //Si tu décaptures une faction, ça décapture
+                                    // Si tu décaptures une faction, ça décapture
                                 }
                             }
                             else
                             {
                                 addProgressionTime(zone, factionCapturing, boosterCapture * captureRefreshRate);
-                                //Si t'es tout seul, tu captures
+                                // Si t'es tout seul, tu captures
                             }
                         }
                         if (!factionInMinority.isEmpty())
                         {
                             for (FactionCapturingClass factionMonority : factionInMinority)
                             {
-                                if (zone.getClaimer() == null || (zone.getClaimer() != null && !factionMonority.getName().equalsIgnoreCase(zone.getClaimer())))
+                                if (zone.getClaimer() == null
+                                        || (zone.getClaimer() != null && !factionMonority.getName().equalsIgnoreCase(zone.getClaimer())))
                                 {
-                                    //Si t'es minoritaire, tu décaptures
+                                    // Si t'es minoritaire, tu décaptures
                                     addProgressionTime(zone, factionCapturing, -2 * captureRefreshRate);
                                 }
                             }
@@ -362,12 +364,15 @@ public class CaptureZone {
         {
             for (Player p : Bukkit.getOnlinePlayers())
             {
-                InGameUtilities.sendPlayerError(p, "La faction " + color + faction.getName() + "§R§c est en train de capturer la zone " + zone.getFormattedName() + " ! Allez-y vite pour contester la capture !");
+                InGameUtilities.sendPlayerError(p, "La faction " + color + faction.getName() + "§R§c est en train de capturer la zone "
+                        + zone.getFormattedName() + " ! Allez-y vite pour contester la capture !");
             }
         }
         if (prog >= 100)
         {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "summon firework_rocket " + (zone.getLocation().getX()) + " " + (zone.getLocation().getY() + 2) + " " + (zone.getLocation().getZ() - 1) + " {LifeTime:30,FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:1,Flicker:1,Trail:1,Colors:[I;11743532],FadeColors:[I;15435844]}],Flight:2}}}}");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "summon firework_rocket " + (zone.getLocation().getX()) + " "
+                    + (zone.getLocation().getY() + 2) + " " + (zone.getLocation().getZ() - 1)
+                    + " {LifeTime:30,FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:1,Flicker:1,Trail:1,Colors:[I;11743532],FadeColors:[I;15435844]}],Flight:2}}}}");
             zone.removeAllBar();
             for (ZoneClass zoneClass : data.getZones())
             {
@@ -391,7 +396,8 @@ public class CaptureZone {
                     addPlayerXp(p.getUniqueId(), 300, LevelStorage.Nation.Bannis);
                 }
                 InGameUtilities.playPlayerSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.AMBIENT, 1, 1);
-                InGameUtilities.sendPlayerInformation(p, "La faction " + color + faction.getName() + "§R§7 a capturé la zone " + zone.getFormattedName() + " !");
+                InGameUtilities.sendPlayerInformation(p,
+                        "La faction " + color + faction.getName() + "§R§7 a capturé la zone " + zone.getFormattedName() + " !");
             }
 
             data.getZoneInCapture().get(zone.getName()).clear();

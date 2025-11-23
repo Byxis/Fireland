@@ -5,6 +5,13 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.fireland.utilities.ItemSerializer;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -13,15 +20,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-public class BunkerStorage {
+public class BunkerStorage
+{
 
     private final HashMap<Integer, ItemStack> m_items;
 
@@ -40,7 +40,8 @@ public class BunkerStorage {
 
     private final Fireland m_main;
 
-    public BunkerStorage(Fireland _main, String _name) {
+    public BunkerStorage(Fireland _main, String _name)
+    {
         m_main = _main;
         m_name = _name;
         m_items = new HashMap<Integer, ItemStack>();
@@ -53,13 +54,16 @@ public class BunkerStorage {
         try (Connection connection = firelandConnection.getConnection())
         {
 
-            final PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE faction_storage SET item = ? WHERE faction = ? AND index_item = ?");
+            final PreparedStatement preparedStatement2 = connection
+                    .prepareStatement("UPDATE faction_storage SET item = ? WHERE faction = ? AND index_item = ?");
             preparedStatement2.setString(2, m_name);
             preparedStatement2.setInt(3, index);
             preparedStatement2.setString(1, ItemSerializer.serialize(item));
-            //On exécute la requete SQL
+            // On exécute la requete SQL
             preparedStatement2.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -70,13 +74,16 @@ public class BunkerStorage {
         try (Connection connection = firelandConnection.getConnection())
         {
 
-            final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO faction_storage(faction,index_item,item) VALUES(?,?,?)");
+            final PreparedStatement preparedStatement2 = connection
+                    .prepareStatement("INSERT INTO faction_storage(faction,index_item,item) VALUES(?,?,?)");
             preparedStatement2.setString(1, m_name);
             preparedStatement2.setInt(2, index);
             preparedStatement2.setString(3, ItemSerializer.serialize(item));
-            //On exécute la requete SQL
+            // On exécute la requete SQL
             preparedStatement2.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -87,16 +94,19 @@ public class BunkerStorage {
         try (Connection connection = firelandConnection.getConnection())
         {
 
-            final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT index_item FROM faction_storage WHERE faction = ? AND index_item = ?");
+            final PreparedStatement preparedStatement2 = connection
+                    .prepareStatement("SELECT index_item FROM faction_storage WHERE faction = ? AND index_item = ?");
             preparedStatement2.setString(1, m_name);
             preparedStatement2.setInt(2, index);
-            //On exécute la requete SQL
+            // On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
             if (rs.next())
             {
                 return true;
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
         return false;
@@ -108,12 +118,15 @@ public class BunkerStorage {
         try (Connection connection = firelandConnection.getConnection())
         {
 
-            final PreparedStatement preparedStatement2 = connection.prepareStatement("DELETE FROM faction_storage WHERE faction_storage.faction = ? AND faction_storage.index_item = ?;");
+            final PreparedStatement preparedStatement2 = connection
+                    .prepareStatement("DELETE FROM faction_storage WHERE faction_storage.faction = ? AND faction_storage.index_item = ?;");
             preparedStatement2.setString(1, m_name);
             preparedStatement2.setInt(2, index);
-            //On exécute la requete SQL
+            // On exécute la requete SQL
             preparedStatement2.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -298,7 +311,6 @@ public class BunkerStorage {
                 }
             }
         }
-
     }
 
     public void loadAllItems()
@@ -306,15 +318,18 @@ public class BunkerStorage {
         final DbConnection firelandConnection = m_main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT index_item, item FROM faction_storage WHERE faction = ?");
+            final PreparedStatement preparedStatement2 = connection
+                    .prepareStatement("SELECT index_item, item FROM faction_storage WHERE faction = ?");
             preparedStatement2.setString(1, m_name);
-            //On exécute la requete SQL
+            // On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
             while (rs.next())
             {
                 m_items.put(rs.getInt(1), ItemSerializer.deserialize(m_main, rs.getString(2)));
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -351,8 +366,7 @@ public class BunkerStorage {
         InGameUtilities.playPlayerSound(_p, Sound.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 1, 0);
         switch (_storage)
         {
-            case 0 ->
-            {
+            case 0 -> {
                 if (m_storage0 == null)
                 {
                     m_storage0 = Bukkit.createInventory(null, 36, "§8Stockage 1 du bunker");
@@ -360,8 +374,7 @@ public class BunkerStorage {
                 }
                 _p.openInventory(m_storage0);
             }
-            case 1 ->
-            {
+            case 1 -> {
                 if (m_storage1 == null)
                 {
                     m_storage1 = Bukkit.createInventory(null, 36, "§8Stockage 2 du bunker");
@@ -369,8 +382,7 @@ public class BunkerStorage {
                 }
                 _p.openInventory(m_storage1);
             }
-            case 2 ->
-            {
+            case 2 -> {
                 if (m_storage2 == null)
                 {
                     m_storage2 = Bukkit.createInventory(null, 36, "§8Stockage 3 du bunker");
@@ -378,8 +390,7 @@ public class BunkerStorage {
                 }
                 _p.openInventory(m_storage2);
             }
-            case 3 ->
-            {
+            case 3 -> {
                 if (m_storage3 == null)
                 {
                     m_storage3 = Bukkit.createInventory(null, 36, "§8Stockage 4 du bunker");
@@ -387,8 +398,7 @@ public class BunkerStorage {
                 }
                 _p.openInventory(m_storage3);
             }
-            case 4 ->
-            {
+            case 4 -> {
                 if (m_storage4 == null)
                 {
                     m_storage4 = Bukkit.createInventory(null, 36, "§8Stockage 5 du bunker");
@@ -396,8 +406,7 @@ public class BunkerStorage {
                 }
                 _p.openInventory(m_storage4);
             }
-            case 5 ->
-            {
+            case 5 -> {
                 if (m_storage5 == null)
                 {
                     m_storage5 = Bukkit.createInventory(null, 36, "§8Stockage 6 du bunker");
@@ -405,8 +414,7 @@ public class BunkerStorage {
                 }
                 _p.openInventory(m_storage5);
             }
-            case 6 ->
-            {
+            case 6 -> {
                 if (m_storage6 == null)
                 {
                     m_storage6 = Bukkit.createInventory(null, 36, "§8Stockage 7 du bunker");
@@ -414,8 +422,7 @@ public class BunkerStorage {
                 }
                 _p.openInventory(m_storage6);
             }
-            case 7 ->
-            {
+            case 7 -> {
                 if (m_storage7 == null)
                 {
                     m_storage7 = Bukkit.createInventory(null, 36, "§8Stockage 8 du bunker");
@@ -423,8 +430,7 @@ public class BunkerStorage {
                 }
                 _p.openInventory(m_storage7);
             }
-            case 8 ->
-            {
+            case 8 -> {
                 if (m_storage8 == null)
                 {
                     m_storage8 = Bukkit.createInventory(null, 36, "§8Stockage 9 du bunker");
@@ -432,8 +438,7 @@ public class BunkerStorage {
                 }
                 _p.openInventory(m_storage8);
             }
-            case 9 ->
-            {
+            case 9 -> {
                 if (m_storage9 == null)
                 {
                     m_storage9 = Bukkit.createInventory(null, 36, "§8Stockage 10 du bunker");

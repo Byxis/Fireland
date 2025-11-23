@@ -1,11 +1,10 @@
 package fr.byxis.player.items.infection.virus;
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-
 import java.time.Instant;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 /**
  * Repository for managing player infection data.
@@ -28,7 +27,8 @@ public class InfectionRepository
 
     public void loadAll()
     {
-        if (!m_config.contains("infected")) return;
+        if (!m_config.contains("infected"))
+            return;
 
         for (String uuidStr : m_config.getConfigurationSection("infected").getKeys(false))
         {

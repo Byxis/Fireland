@@ -1,15 +1,17 @@
 package fr.byxis.player.quest.questclass;
 
-public class SellQuestClass extends QuestClass {
+public class SellQuestClass extends QuestClass
+{
     private final int amount;
 
-    public SellQuestClass(int questId, String title, String description, double reward, double jetons, String objective, int _amount) {
+    public SellQuestClass(int questId, String title, String description, double reward, double jetons, String objective, int _amount)
+    {
         super(questId, title, description, reward, jetons, objective);
         this.amount = _amount;
     }
 
-
-    public int getAmount() {
+    public int getAmount()
+    {
         return amount;
     }
 }

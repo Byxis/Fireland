@@ -39,7 +39,6 @@ public class WorldGuardEvent implements Listener
             }
             PermissionUtilities.removePermission(p, "crazyauctions.sell");
         }
-        
     }
 
     @EventHandler
@@ -60,9 +59,8 @@ public class WorldGuardEvent implements Listener
             }
             PermissionUtilities.addPermission(p, "crazyauctions.sell");
         }
-        
     }
-    
+
     @EventHandler
     public void playerPVP(EntityDamageByEntityEvent e)
     {
@@ -71,7 +69,7 @@ public class WorldGuardEvent implements Listener
             e.setCancelled(true);
         }
     }
-    
+
     @EventHandler
     public void playerJoin(PlayerJoinEvent e)
     {
@@ -80,5 +78,4 @@ public class WorldGuardEvent implements Listener
         main.getCfgm().savePlayerDB();
         e.getPlayer().setInvulnerable(false);
     }
-
 }

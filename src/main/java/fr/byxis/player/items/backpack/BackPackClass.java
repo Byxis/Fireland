@@ -2,6 +2,9 @@ package fr.byxis.player.items.backpack;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -13,19 +16,17 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
-
-public class BackPackClass {
+public class BackPackClass
+{
     private final int maxInventorySize;
     private final NamespacedKey backpackKey;
     private final Gson gson = new Gson();
-    private final Type itemListType = new TypeToken<List<String>>() { } .getType();
+    private final Type itemListType = new TypeToken<List<String>>()
+    {
+    }.getType();
 
-    public BackPackClass(int level) {
+    public BackPackClass(int level)
+    {
         this.backpackKey = new NamespacedKey("fireland", "backpack");
 
         if (level == 1 || level > 8)
@@ -59,26 +60,33 @@ public class BackPackClass {
         return true;
 
     }
-    public Inventory loadBackPack(ItemStack item) {
+    public Inventory loadBackPack(ItemStack item)
+    {
         PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
         if (!item.getItemMeta().hasCustomModelData())
             return createEmptyInventory(1);
         Inventory inventory = createEmptyInventory(item.getItemMeta().getCustomModelData());
 
-        if (container.has(backpackKey, PersistentDataType.STRING)) {
-            try {
+        if (container.has(backpackKey, PersistentDataType.STRING))
+        {
+            try
+            {
                 String data = container.get(backpackKey, PersistentDataType.STRING);
                 List<String> itemList = gson.fromJson(data, itemListType);
                 ItemStack[] items = new ItemStack[itemList.size()];
-                for (int i = 0; i < itemList.size(); i++) {
-                    if (itemList.get(i) != null) {
+                for (int i = 0; i < itemList.size(); i++)
+                {
+                    if (itemList.get(i) != null)
+                    {
                         YamlConfiguration config = new YamlConfiguration();
                         config.loadFromString(itemList.get(i));
                         items[i] = config.getItemStack("item");
                     }
                 }
                 inventory.setContents(items);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }
@@ -101,23 +109,29 @@ public class BackPackClass {
         return inventory;
     }
 
-    public void saveBackPack(ItemStack item, Inventory inventory) {
+    public void saveBackPack(ItemStack item, Inventory inventory)
+    {
         BundleMeta bundleMeta = (BundleMeta) item.getItemMeta();
         bundleMeta.setItems(new ArrayList<>());
 
         PersistentDataContainer container = bundleMeta.getPersistentDataContainer();
-        try {
+        try
+        {
             ItemStack[] items = inventory.getContents();
             List<String> itemList = new ArrayList<>();
-            for (ItemStack itemStack : items) {
-                if (itemStack != null) {
+            for (ItemStack itemStack : items)
+            {
+                if (itemStack != null)
+                {
                     if (itemStack.getType() != Material.WHITE_STAINED_GLASS_PANE)
                         bundleMeta.addItem(itemStack);
 
                     YamlConfiguration config = new YamlConfiguration();
                     config.set("item", itemStack);
                     itemList.add(config.saveToString());
-                } else {
+                }
+                else
+                {
                     itemList.add(null);
                 }
             }
@@ -126,20 +140,23 @@ public class BackPackClass {
             container.set(backpackKey, PersistentDataType.STRING, data);
 
             item.setItemMeta(bundleMeta);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
-
-
-    public void createBackPack(ItemStack item) {
+    public void createBackPack(ItemStack item)
+    {
         Inventory inventory = createEmptyInventory(item.getItemMeta().getCustomModelData());
         saveBackPack(item, inventory);
     }
 
-    private Inventory createEmptyInventory(int level) {
-        String name = switch (level) {
+    private Inventory createEmptyInventory(int level)
+    {
+        String name = switch (level)
+        {
             case 1 -> "§cPochette";
             case 2 -> "§cSacoche";
             case 3 -> "§cSac à dos";

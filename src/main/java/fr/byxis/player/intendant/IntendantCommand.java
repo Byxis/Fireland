@@ -1,5 +1,8 @@
 package fr.byxis.player.intendant;
 
+import static fr.byxis.player.intendant.menu.MenuChoixNation.openChoixNation;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.player.intendant.menu.MenuIntendant;
 import org.bukkit.Bukkit;
@@ -9,10 +12,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static fr.byxis.player.intendant.menu.MenuChoixNation.openChoixNation;
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-
-public class IntendantCommand implements CommandExecutor {
+public class IntendantCommand implements CommandExecutor
+{
 
     private final Fireland main;
 
@@ -22,7 +23,8 @@ public class IntendantCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings)
+    {
         if (commandSender instanceof Player p)
         {
             if (p.hasPermission("fireland.admin.intendant"))

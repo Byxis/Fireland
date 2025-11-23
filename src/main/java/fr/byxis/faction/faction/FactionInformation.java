@@ -3,7 +3,8 @@ package fr.byxis.faction.faction;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class FactionInformation {
+public class FactionInformation
+{
 
     private final String name;
     private final int currentNbrOfPlayers;
@@ -24,11 +25,9 @@ public class FactionInformation {
     private final String colorcode;
     private final boolean hasZoneTpPerk;
 
-    public FactionInformation(String _name, int _nbrOfPlayers, int _maxNbrOfPlayers, int _currentUpgrade,
-                              int _currentMoney, int _maxMoney, int _currentChestSize, Timestamp _createdAt,
-                              UUID _leader, boolean _hasFriendlyFirePerk, boolean _hasNicknameVisibilityPerk,
-                              boolean _hasSkinPerk, boolean _showPrefix, boolean _hasCapturePerk, String _colorcode,
-                              boolean _hasZoneTpPerk)
+    public FactionInformation(String _name, int _nbrOfPlayers, int _maxNbrOfPlayers, int _currentUpgrade, int _currentMoney, int _maxMoney,
+            int _currentChestSize, Timestamp _createdAt, UUID _leader, boolean _hasFriendlyFirePerk, boolean _hasNicknameVisibilityPerk,
+            boolean _hasSkinPerk, boolean _showPrefix, boolean _hasCapturePerk, String _colorcode, boolean _hasZoneTpPerk)
     {
         this.name = _name;
         this.currentNbrOfPlayers = _nbrOfPlayers;
@@ -53,63 +52,78 @@ public class FactionInformation {
         return name;
     }
 
-    public int getCurrentNbrOfPlayers() {
+    public int getCurrentNbrOfPlayers()
+    {
         return currentNbrOfPlayers;
     }
 
-    public int getCurrentUpgrade() {
+    public int getCurrentUpgrade()
+    {
         return currentUpgrade;
     }
 
-    public int getCurrentMoney() {
+    public int getCurrentMoney()
+    {
         return currentMoney;
     }
 
-    public int getCurrentChestSize() {
+    public int getCurrentChestSize()
+    {
         return currentChestSize;
     }
 
-    public int getMaxMoney() {
+    public int getMaxMoney()
+    {
         return maxMoney;
     }
 
-    public int getMaxNbrOfPlayers() {
+    public int getMaxNbrOfPlayers()
+    {
         return maxNbrOfPlayers;
     }
 
-    public Timestamp getCreatedAt() {
+    public Timestamp getCreatedAt()
+    {
         return createdAt;
     }
 
-    public UUID getLeader() {
+    public UUID getLeader()
+    {
         return leader;
     }
 
-    public boolean hasNicknameVisibilityPerk() {
+    public boolean hasNicknameVisibilityPerk()
+    {
         return hasNicknameVisibilityPerk;
     }
 
-    public boolean hasFriendlyFirePerk() {
+    public boolean hasFriendlyFirePerk()
+    {
         return hasFriendlyFirePerk;
     }
 
-    public String getColorcode() {
+    public String getColorcode()
+    {
         return colorcode;
     }
 
-    public boolean hasSkinPerk() {
+    public boolean hasSkinPerk()
+    {
         return hasSkinPerk;
     }
 
-    public boolean doShowPrefix() {
+    public boolean doShowPrefix()
+    {
         return showPrefix;
     }
 
-    public boolean hasCapturePerk() {
+    public boolean hasCapturePerk()
+    {
         return hasCapturePerk;
     }
 
-    public boolean hasZoneTpPerk() {
+    public boolean hasZoneTpPerk()
+    {
         return hasZoneTpPerk;
     }
 }

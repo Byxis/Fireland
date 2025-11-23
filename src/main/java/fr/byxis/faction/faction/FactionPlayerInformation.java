@@ -3,7 +3,8 @@ package fr.byxis.faction.faction;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class FactionPlayerInformation {
+public class FactionPlayerInformation
+{
 
     private final String name;
     private final String factionName;
@@ -11,7 +12,7 @@ public class FactionPlayerInformation {
 
     private final UUID uuid;
     private final Timestamp joinDate;
-    
+
     public FactionPlayerInformation(String _name, String _factionName, int _role, UUID _uuid, Timestamp _joinDate)
     {
         this.name = _name;
@@ -38,7 +39,8 @@ public class FactionPlayerInformation {
         return this.uuid;
     }
 
-    public Timestamp getJoinDate() {
+    public Timestamp getJoinDate()
+    {
         return joinDate;
     }
 }

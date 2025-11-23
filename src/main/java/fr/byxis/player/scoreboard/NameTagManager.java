@@ -1,10 +1,14 @@
 package fr.byxis.player.scoreboard;
 
+import static fr.byxis.fireland.utilities.InGameUtilities.getStringColor;
+import static fr.byxis.player.scoreboard.PlayerScoreboardManager.getMainScoreboard;
+
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.faction.faction.events.FactionBuyPerkEvent;
 import fr.byxis.faction.faction.events.PlayerJoinFactionEvent;
 import fr.byxis.faction.faction.events.PlayerLeaveFactionEvent;
 import fr.byxis.fireland.Fireland;
+import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,16 +16,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scoreboard.Team;
 
-import java.util.HashMap;
-
-import static fr.byxis.fireland.utilities.InGameUtilities.getStringColor;
-import static fr.byxis.player.scoreboard.PlayerScoreboardManager.getMainScoreboard;
-
-public class NameTagManager implements Listener {
+public class NameTagManager implements Listener
+{
 
     private final HashMap<String, Team> m_factionTeams;
     private final FactionFunctions m_ff;
-    public NameTagManager(Fireland fireland) {
+    public NameTagManager(Fireland fireland)
+    {
         m_factionTeams = new HashMap<>();
         m_ff = new FactionFunctions(fireland, null);
         m_factionTeams.put("", createFactionTeam("server"));

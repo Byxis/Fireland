@@ -2,6 +2,8 @@ package fr.byxis.player.items.parachute;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import java.util.HashMap;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
@@ -15,14 +17,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 public class Parachute implements Listener
 {
 
     private final HashMap<UUID, Boolean> parachuting;
-    
+
     private final Fireland main;
 
     public Parachute(Fireland _main)
@@ -31,11 +30,15 @@ public class Parachute implements Listener
         parachuting = new HashMap<UUID, Boolean>();
         loop();
     }
-    
+
     @EventHandler
-    public void rightClickEvent(PlayerInteractEvent e) {
-        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (e.getItem() != null && e.getPlayer().getLocation().add(0, -1, 0).getBlock().getType() == Material.AIR && e.getPlayer().getLocation().add(0, -2, 0).getBlock().getType() == Material.AIR) {
+    public void rightClickEvent(PlayerInteractEvent e)
+    {
+        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
+        {
+            if (e.getItem() != null && e.getPlayer().getLocation().add(0, -1, 0).getBlock().getType() == Material.AIR
+                    && e.getPlayer().getLocation().add(0, -2, 0).getBlock().getType() == Material.AIR)
+            {
                 if (e.getItem().getType() == Material.POPPY)
                 {
                     if (e.getPlayer().getWorld().getName().equalsIgnoreCase("essaim"))
@@ -59,7 +62,7 @@ public class Parachute implements Listener
                 }
             }
         }
-        
+
     }
 
     private void setParachuting(Player p, Boolean b)
@@ -78,7 +81,8 @@ public class Parachute implements Listener
         new BukkitRunnable()
         {
             @Override
-            public void run() {
+            public void run()
+            {
                 for (Player p : Bukkit.getOnlinePlayers())
                 {
                     if (parachuting.containsKey(p.getUniqueId()))

@@ -1,26 +1,24 @@
 package fr.byxis.player.intendant.menu;
 
+import static fr.byxis.fireland.utilities.BasicUtilities.getStringTime;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevelSavings;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.player.level.LevelSavings;
 import fr.byxis.player.level.PlayerLevel;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static fr.byxis.fireland.utilities.BasicUtilities.getStringTime;
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-import static fr.byxis.player.level.LevelStorage.getPlayerLevelSavings;
-
-public class MenuLevel {
+public class MenuLevel
+{
 
     public static void openLevelMenu(Fireland main, Player p, int page)
     {
@@ -46,12 +44,14 @@ public class MenuLevel {
                     {
                         lore.clear();
                         lore.add("§9Récompense déjà récupérée");
-                        inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.DIAMOND_BLOCK, "§dNiveau " + pos, lore));
+                        inv.setItem(pos - 1 - page * 45,
+                                InventoryUtilities.setItemMetaLore(Material.DIAMOND_BLOCK, "§dNiveau " + pos, lore));
                     }
                     else
                     {
                         getLore(pl, lore, pos, "§a", main);
-                        inv.setItem(pos - 1 - page * 45, InventoryUtilities.setItemMetaLore(Material.DIAMOND_BLOCK, "§dNiveau " + pos, lore));
+                        inv.setItem(pos - 1 - page * 45,
+                                InventoryUtilities.setItemMetaLore(Material.DIAMOND_BLOCK, "§dNiveau " + pos, lore));
                     }
                 }
                 else
@@ -110,7 +110,8 @@ public class MenuLevel {
                 }
                 lore.add("");
                 lore.add("§c§lCliquez ici pour changer de nation");
-                lore.add("§8Prix de changement : §d" + pl.getJetonPriceNationChange() + "§f⛁ §8et §7" + pl.getMoneyPriceNationChange() + "§f$");
+                lore.add("§8Prix de changement : §d" + pl.getJetonPriceNationChange() + "§f⛁ §8et §7" + pl.getMoneyPriceNationChange()
+                        + "§f$");
                 inv.setItem(46, InventoryUtilities.getEtatBanner("§7Nation: Etat", lore));
             }
             case Bannis -> {
@@ -130,14 +131,16 @@ public class MenuLevel {
 
                 lore.add("");
                 lore.add("§c§lCliquez ici pour changer de nation");
-                lore.add("§8Prix de changement : §d" + pl.getJetonPriceNationChange() + "§f⛁ §8et §7" + pl.getMoneyPriceNationChange() + "§f$");
+                lore.add("§8Prix de changement : §d" + pl.getJetonPriceNationChange() + "§f⛁ §8et §7" + pl.getMoneyPriceNationChange()
+                        + "§f$");
                 inv.setItem(46, InventoryUtilities.getBannisBanner("§cNation: Bannis", lore));
             }
             case Neutre -> {
                 lore.add("§8Aucune tâche à accomplir.");
                 lore.add("");
                 lore.add("§c§lCliquez ici pour changer de nation");
-                lore.add("§8Prix de changement : §d" + pl.getJetonPriceNationChange() + "§f⛁ §8et §7" + pl.getMoneyPriceNationChange() + "§f$");
+                lore.add("§8Prix de changement : §d" + pl.getJetonPriceNationChange() + "§f⛁ §8et §7" + pl.getMoneyPriceNationChange()
+                        + "§f$");
                 inv.setItem(46, InventoryUtilities.getNeutreBanner("§fNation: Neutre", lore));
             }
             default -> {
@@ -173,11 +176,16 @@ public class MenuLevel {
     /**
      * Generates the lore for a level item in the menu.
      *
-     * @param _playerLevel The player's level data
-     * @param _lore The list to populate with lore lines
-     * @param _level The level number
-     * @param _color The color code to use for the text
-     * @param _main The main plugin instance
+     * @param _playerLevel
+     *            The player's level data
+     * @param _lore
+     *            The list to populate with lore lines
+     * @param _level
+     *            The level number
+     * @param _color
+     *            The color code to use for the text
+     * @param _main
+     *            The main plugin instance
      */
     private static void getLore(PlayerLevel _playerLevel, ArrayList<String> _lore, int _level, String _color, Fireland _main)
     {
@@ -191,11 +199,16 @@ public class MenuLevel {
     /**
      * Adds the claim status message to the lore.
      *
-     * @param _playerLevel The player's level data
-     * @param _lore The list to populate with lore lines
-     * @param _level The level number
-     * @param _color The color code to use for the text
-     * @param _main The main plugin instance
+     * @param _playerLevel
+     *            The player's level data
+     * @param _lore
+     *            The list to populate with lore lines
+     * @param _level
+     *            The level number
+     * @param _color
+     *            The color code to use for the text
+     * @param _main
+     *            The main plugin instance
      */
     private static void addClaimStatusLore(PlayerLevel _playerLevel, ArrayList<String> _lore, int _level, String _color, Fireland _main)
     {
@@ -215,10 +228,14 @@ public class MenuLevel {
     /**
      * Adds the rewards information to the lore.
      *
-     * @param _playerLevel The player's level data
-     * @param _lore The list to populate with lore lines
-     * @param _level The level number
-     * @param _color The color code to use for the text
+     * @param _playerLevel
+     *            The player's level data
+     * @param _lore
+     *            The list to populate with lore lines
+     * @param _level
+     *            The level number
+     * @param _color
+     *            The color code to use for the text
      */
     private static void addRewardsLore(PlayerLevel _playerLevel, ArrayList<String> _lore, int _level, String _color)
     {
@@ -274,8 +291,10 @@ public class MenuLevel {
     /**
      * Adds the pass access information to the lore for milestone levels.
      *
-     * @param _lore The list to populate with lore lines
-     * @param _level The level number
+     * @param _lore
+     *            The list to populate with lore lines
+     * @param _level
+     *            The level number
      */
     private static void addPassAccessLore(ArrayList<String> _lore, int _level)
     {

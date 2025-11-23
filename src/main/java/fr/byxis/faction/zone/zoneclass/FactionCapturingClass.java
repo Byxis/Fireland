@@ -1,13 +1,13 @@
 package fr.byxis.faction.zone.zoneclass;
 
 import fr.byxis.fireland.utilities.BlockUtilities;
+import java.util.Arrays;
+import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class FactionCapturingClass {
+public class FactionCapturingClass
+{
 
     private String name;
     private final List<Player> playerList;
@@ -31,8 +31,8 @@ public class FactionCapturingClass {
         this.material = BlockUtilities.getGlassPaneColor(Arrays.toString(_color));
     }
 
-
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
@@ -41,32 +41,39 @@ public class FactionCapturingClass {
         this.name = _name;
     }
 
-    public List<Player> getPlayerList() {
+    public List<Player> getPlayerList()
+    {
         return playerList;
     }
 
-    public void addPlayerList(Player p) {
+    public void addPlayerList(Player p)
+    {
         this.playerList.add(p);
     }
 
-    public void removePlayerList(Player p) {
+    public void removePlayerList(Player p)
+    {
         this.playerList.remove(p);
     }
 
-    public double getProgression() {
+    public double getProgression()
+    {
         return progression;
     }
 
-    public void addProgression(int totalProgressionNeeded, double seconds) {
+    public void addProgression(int totalProgressionNeeded, double seconds)
+    {
         int totalTime = totalProgressionNeeded * 60;
         this.progression += (seconds / totalTime) * 100;
     }
 
-    public void setProgression(int _progression) {
+    public void setProgression(int _progression)
+    {
         this.progression = _progression;
     }
 
-    public double getNextProgression(int totalProgressionNeeded, double seconds) {
+    public double getNextProgression(int totalProgressionNeeded, double seconds)
+    {
         int totalTime = totalProgressionNeeded * 60;
         return this.progression + (seconds / totalTime) * 100;
     }

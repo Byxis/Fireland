@@ -1,6 +1,9 @@
 package fr.byxis.fireland.utilities;
 
 import fr.byxis.fireland.Fireland;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -14,19 +17,16 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.fusesource.jansi.Ansi;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Supplier;
-
-public class    InGameUtilities implements Listener {
-
+public class InGameUtilities implements Listener
+{
 
     private static Fireland main;
 
     private static final Map<UUID, Boolean> PLAYER_MOVING = new ConcurrentHashMap<>();
     private static final Map<UUID, Date> PLAYER_COOLDOWN = new ConcurrentHashMap<>();
 
-    public InGameUtilities(Fireland fireland) {
+    public InGameUtilities(Fireland fireland)
+    {
         if (InGameUtilities.main == null)
             InGameUtilities.main = fireland;
     }
@@ -89,11 +89,13 @@ public class    InGameUtilities implements Listener {
         InGameUtilities.setPlayerMoving(player.getUniqueId(), false);
         player.playSound(player.getLocation(), "minecraft:" + sound, (float) 0.1, (float) 1);
 
-        new BukkitRunnable() {
+        new BukkitRunnable()
+        {
             private int i = -1;
 
             @Override
-            public void run() {
+            public void run()
+            {
                 i++;
                 if (isPlayerMoving(player.getUniqueId()))
                 {
@@ -139,17 +141,20 @@ public class    InGameUtilities implements Listener {
     {
         if (hasPlayerCooldown(player.getUniqueId()))
         {
-            InGameUtilities.sendPlayerError(player, "Vous êtes en cooldown. Vous pourrez vous téléporter dans " + BasicUtilities.getStringTime(new Date().getTime() - getPlayerCooldown(player.getUniqueId())));
+            InGameUtilities.sendPlayerError(player, "Vous êtes en cooldown. Vous pourrez vous téléporter dans "
+                    + BasicUtilities.getStringTime(new Date().getTime() - getPlayerCooldown(player.getUniqueId())));
             return;
         }
         InGameUtilities.removePlayerCooldown(player.getUniqueId());
         player.playSound(player.getLocation(), "minecraft:" + sound, (float) 0.1, (float) 1);
 
-        new BukkitRunnable() {
+        new BukkitRunnable()
+        {
             private int i = -1;
 
             @Override
-            public void run() {
+            public void run()
+            {
                 i++;
                 if (isPlayerMoving(player.getUniqueId()))
                 {
@@ -194,13 +199,15 @@ public class    InGameUtilities implements Listener {
 
     public static void playPlayerSound(Player p, String sound, SoundCategory category, float vol, float pitch)
     {
-        if (p != null) {
+        if (p != null)
+        {
             p.playSound(p.getLocation(), "minecraft:" + sound, category, vol, pitch);
         }
     }
     public static void playPlayerSound(Player p, Sound sound, SoundCategory category, float vol, float pitch)
     {
-        if (p != null) {
+        if (p != null)
+        {
             p.playSound(p.getLocation(), sound, category, vol, pitch);
         }
     }
@@ -272,8 +279,10 @@ public class    InGameUtilities implements Listener {
         }
     }
 
-    public static void sendMessageToAdmin(String msg) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
+    public static void sendMessageToAdmin(String msg)
+    {
+        for (Player p : Bukkit.getOnlinePlayers())
+        {
             if (p.hasPermission("group.admin"))
             {
                 p.sendMessage(msg);
@@ -325,7 +334,8 @@ public class    InGameUtilities implements Listener {
         }
         else
         {
-            _sender.sendMessage(Ansi.ansi().fg(Ansi.Color.RED).toString() + "[Fireland] " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + _msg);
+            _sender.sendMessage(
+                    Ansi.ansi().fg(Ansi.Color.RED).toString() + "[Fireland] " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + _msg);
         }
     }
 
@@ -337,7 +347,8 @@ public class    InGameUtilities implements Listener {
         }
         else
         {
-            _sender.sendMessage(Ansi.ansi().fg(Ansi.Color.YELLOW).toString() + "[Fireland] " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + _msg);
+            _sender.sendMessage(
+                    Ansi.ansi().fg(Ansi.Color.YELLOW).toString() + "[Fireland] " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + _msg);
         }
     }
 
@@ -349,7 +360,8 @@ public class    InGameUtilities implements Listener {
         }
         else
         {
-            _sender.sendMessage(Ansi.ansi().fg(Ansi.Color.GREEN).toString() + "[Fireland] " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + _msg);
+            _sender.sendMessage(
+                    Ansi.ansi().fg(Ansi.Color.GREEN).toString() + "[Fireland] " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + _msg);
         }
     }
 
@@ -373,12 +385,14 @@ public class    InGameUtilities implements Listener {
 
     public static void debug(int _code, String _txt)
     {
-        main.getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString() + "Debug " + _code + " " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + ">> " + _txt);
+        main.getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString() + "Debug " + _code + " "
+                + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + ">> " + _txt);
     }
 
     public static void debug(String txt)
     {
-        main.getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).toString() + "Debug " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + ">> " + txt);
+        main.getLogger()
+                .info(Ansi.ansi().fg(Ansi.Color.GREEN).toString() + "Debug " + Ansi.ansi().fg(Ansi.Color.WHITE).toString() + ">> " + txt);
     }
 
     public static void sendInteractivePlayerMessage(Player p, String msg, String cmd, String hover, ClickEvent.Action action)
@@ -425,7 +439,8 @@ public class    InGameUtilities implements Listener {
 
     public static ChatColor getStringColor(String color)
     {
-        return switch (color) {
+        return switch (color)
+        {
             case "§0" -> ChatColor.BLACK;
             case "§1" -> ChatColor.DARK_BLUE;
             case "§2" -> ChatColor.DARK_GREEN;
@@ -439,7 +454,7 @@ public class    InGameUtilities implements Listener {
             case "§d" -> ChatColor.LIGHT_PURPLE;
             case "§e" -> ChatColor.YELLOW;
             case "§r" -> ChatColor.WHITE;
-            default   -> ChatColor.GRAY;
+            default -> ChatColor.GRAY;
         };
     }
 }

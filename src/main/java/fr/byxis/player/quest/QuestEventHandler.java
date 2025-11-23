@@ -1,5 +1,7 @@
 package fr.byxis.player.quest;
 
+import static fr.byxis.player.quest.QuestManager.*;
+
 import de.netzkronehd.wgregionevents.events.RegionEnterEvent;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
@@ -15,9 +17,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.jetbrains.annotations.NotNull;
 
-import static fr.byxis.player.quest.QuestManager.*;
-
-public class QuestEventHandler implements @NotNull Listener {
+public class QuestEventHandler implements @NotNull Listener
+{
 
     private final Fireland main;
 
@@ -29,7 +30,8 @@ public class QuestEventHandler implements @NotNull Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void playerJoin(PlayerJoinEvent e)
     {
-        if (!QuestManager.getPlayerQuest().containsKey(e.getPlayer().getUniqueId()) || !QuestManager.getPlayerQuest().get(e.getPlayer().getUniqueId()).hasFinished())
+        if (!QuestManager.getPlayerQuest().containsKey(e.getPlayer().getUniqueId())
+                || !QuestManager.getPlayerQuest().get(e.getPlayer().getUniqueId()).hasFinished())
         {
             if (e.getPlayer().hasPlayedBefore())
             {

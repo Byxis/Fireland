@@ -1,5 +1,10 @@
 package fr.byxis.player.shop;
 
+import static fr.byxis.fireland.Fireland.getEco;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+import static fr.byxis.player.quest.QuestManager.actualiseBuyProgress;
+import static fr.byxis.player.quest.QuestManager.actualiseSellProgress;
+
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
@@ -7,13 +12,6 @@ import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
 import fr.byxis.jeton.JetonManager;
 import fr.byxis.player.level.PlayerLevel;
-import org.bukkit.*;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,13 +19,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.bukkit.*;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
-import static fr.byxis.fireland.Fireland.getEco;
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-import static fr.byxis.player.quest.QuestManager.actualiseBuyProgress;
-import static fr.byxis.player.quest.QuestManager.actualiseSellProgress;
-
-public class ShopFunction {
+public class ShopFunction
+{
 
     private final Fireland main;
     private final Player sender;
@@ -38,56 +38,65 @@ public class ShopFunction {
         this.sender = _sender;
     }
 
-    public ArrayList<ShopItemClass> getAllItemsOnShop(String _shop) {
+    public ArrayList<ShopItemClass> getAllItemsOnShop(String _shop)
+    {
         ArrayList<ShopItemClass> items = new ArrayList<>();
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show, item_shop.currency" +
-                    " FROM item_shop INNER JOIN items" +
-                    " ON item_shop.item_name = items.item_name" +
-                    " WHERE item_shop.shop = ?;");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement(
+                    "SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show, item_shop.currency"
+                            + " FROM item_shop INNER JOIN items" + " ON item_shop.item_name = items.item_name"
+                            + " WHERE item_shop.shop = ?;");
             preparedStatement1.setString(1, _shop.replaceAll(" ", "_"));
             final ResultSet rs = preparedStatement1.executeQuery();
-            //On vérifie s'il y a un résultat à la requête
-            while (rs.next()) {
-                ShopItemClass item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getString(9));
+            // On vérifie s'il y a un résultat à la requête
+            while (rs.next())
+            {
+                ShopItemClass item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3),
+                        rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getString(9));
                 if (item.isShow())
                 {
                     items.add(item);
                 }
             }
             return items;
-        } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
+        }
+        catch (SQLException e)
+        {
+            // Une erreur est survenue (Problème de connexion à la BD)
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #S001");
             e.printStackTrace();
         }
         return items;
     }
 
-    public ShopItemClass getAnItemOnShop(String _shop, String _itemName) {
+    public ShopItemClass getAnItemOnShop(String _shop, String _itemName)
+    {
         ShopItemClass item = null;
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show, item_shop.currency" +
-                    " FROM item_shop INNER JOIN items" +
-                    " ON item_shop.item_name = items.item_name" +
-                    " WHERE item_shop.shop = ?" +
-                    " AND items.item_name = ?");
+            final PreparedStatement preparedStatement1 = connection.prepareStatement(
+                    "SELECT items.item_name, items.item, items.durability, items.command, item_shop.price, item_shop.sell, items.custom_model_data, item_shop.do_show, item_shop.currency"
+                            + " FROM item_shop INNER JOIN items" + " ON item_shop.item_name = items.item_name" + " WHERE item_shop.shop = ?"
+                            + " AND items.item_name = ?");
             preparedStatement1.setString(1, _shop);
             preparedStatement1.setString(2, _itemName);
             final ResultSet rs = preparedStatement1.executeQuery();
-            //On vérifie s'il y a un résultat à la requête
-            if (rs.next()) {
-                item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getString(9));
+            // On vérifie s'il y a un résultat à la requête
+            if (rs.next())
+            {
+                item = new ShopItemClass(rs.getString(1), Material.getMaterial(rs.getString(2)), rs.getShort(3), rs.getString(4),
+                        rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getString(9));
             }
             return item;
-        } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
+        }
+        catch (SQLException e)
+        {
+            // Une erreur est survenue (Problème de connexion à la BD)
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #S002");
             e.printStackTrace();
         }
@@ -103,22 +112,26 @@ public class ShopFunction {
             {
                 if (_currentPage == 1)
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + _currentPage + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE,
+                            "§a[" + _currentPage + "/" + _pageMax + "]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE, "§a[" + (_currentPage - 1) + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.LIME_STAINED_GLASS_PANE,
+                            "§a[" + (_currentPage - 1) + "/" + _pageMax + "]", (short) 1));
                 }
             }
             else if (i + 45 == 53)
             {
                 if (_currentPage == _pageMax)
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c[" + _currentPage + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE,
+                            "§c[" + _currentPage + "/" + _pageMax + "]", (short) 1));
                 }
                 else
                 {
-                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE, "§c[" + (_currentPage + 1) + "/" + _pageMax + "]", (short) 1));
+                    _inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.RED_STAINED_GLASS_PANE,
+                            "§c[" + (_currentPage + 1) + "/" + _pageMax + "]", (short) 1));
                 }
             }
             else
@@ -161,9 +174,10 @@ public class ShopFunction {
                 lore.add("§8Achat: §6" + getPriceText(item, p, _shop));
                 lore.add("§8Vente: §6" + getSellText(item));
             }
-            _inv.setItem(spot + i, InventoryUtilities.setItemCustomModelData(
-                    InventoryUtilities.setItemMetaLore(item.getMat(), "§r§7" + item.getItemName(),
-                            item.getDura(), lore), item.getCustomModelData()));
+            _inv.setItem(spot + i,
+                    InventoryUtilities.setItemCustomModelData(
+                            InventoryUtilities.setItemMetaLore(item.getMat(), "§r§7" + item.getItemName(), item.getDura(), lore),
+                            item.getCustomModelData()));
         }
     }
 
@@ -288,7 +302,8 @@ public class ShopFunction {
             nbrItems -= 14;
             maxPage++;
         }
-        Inventory craftMenu = Bukkit.createInventory(null, 54, "Marchand de " + _shop.replaceAll("_", " ") + " (" + page + "/" + maxPage + ")");
+        Inventory craftMenu = Bukkit.createInventory(null, 54,
+                "Marchand de " + _shop.replaceAll("_", " ") + " (" + page + "/" + maxPage + ")");
         setItemsOnShopInv(craftMenu, items, page, maxPage, _p, _shop);
         _p.openInventory(craftMenu);
     }
@@ -306,12 +321,11 @@ public class ShopFunction {
                 {
                     InGameUtilities.sendPlayerError(_p, "Vous avez déjà ce skin !");
                 }
-                else if (JetonManager.payJetons(_p, item.getPrice(),
-                        "Achat du skin " + item.getItemName(), false, true))
+                else if (JetonManager.payJetons(_p, item.getPrice(), "Achat du skin " + item.getItemName(), false, true))
                 {
                     PermissionUtilities.addPermission(_p, item.getCommand());
-                    InGameUtilities.sendPlayerInformation(_p, "Vous avez acheté le skin " + item.getItemName()
-                            + " pour " + item.getPrice() + "§f⛁ ! Merci pour votre achat !");
+                    InGameUtilities.sendPlayerInformation(_p, "Vous avez acheté le skin " + item.getItemName() + " pour " + item.getPrice()
+                            + "§f⛁ ! Merci pour votre achat !");
                     InGameUtilities.playPlayerSound(_p, "gun.hud.money_drop", SoundCategory.AMBIENT, 1, 1);
                 }
             }
@@ -333,7 +347,9 @@ public class ShopFunction {
                     String command = item.getCommand().replaceAll("Player", _p.getName());
                     if (command.contains("mcgive"))
                     {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give " + _p.getName() + " minecraft:" + item.getMat().name().toLowerCase() + "{display:{Name:'[{\"text\":\"§r" + "§r " + item.getItemName() + "\"}]'}} 1");
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                "minecraft:give " + _p.getName() + " minecraft:" + item.getMat().name().toLowerCase()
+                                        + "{display:{Name:'[{\"text\":\"§r" + "§r " + item.getItemName() + "\"}]'}} 1");
                     }
                     else
                     {
@@ -348,7 +364,9 @@ public class ShopFunction {
                     String command = item.getCommand().replaceAll("Player", _p.getName());
                     if (command.contains("mcgive"))
                     {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give " + _p.getName() + " minecraft:" + item.getMat().name().toLowerCase() + "{display:{Name:'[{\"text\":\"§r" + "§r " + item.getItemName() + "\"}]'}} 1");
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                "minecraft:give " + _p.getName() + " minecraft:" + item.getMat().name().toLowerCase()
+                                        + "{display:{Name:'[{\"text\":\"§r" + "§r " + item.getItemName() + "\"}]'}} 1");
                         getEco().withdrawPlayer(_p, prix);
                         _p.sendMessage("§aVous avez acheté : " + item.getItemName() + "§r§a pour §c" + prix + "$ §a!");
                     }
@@ -388,19 +406,23 @@ public class ShopFunction {
 
         String[] words = name.split(" ");
         StringBuilder sbb = new StringBuilder();
-        for (int i = 0; i < words.length; i++) {
+        for (int i = 0; i < words.length; i++)
+        {
             if (i + 1 != words.length)
             {
 
-                if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                if (words[i + 1].contains("«") || words[i + 1].contains("»"))
+                {
                     sbb.append(words[i]);
                     break;
                 }
-                else {
+                else
+                {
                     sbb.append(words[i]).append(" ");
                 }
             }
-            else {
+            else
+            {
                 sbb.append(words[i]);
             }
         }
@@ -418,25 +440,31 @@ public class ShopFunction {
                 {
                     if (itemInv != null)
                     {
-                        words = itemInv.getItemMeta().getDisplayName().replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "").split(" ");
+                        words = itemInv.getItemMeta().getDisplayName().replaceAll("§7", "").replaceAll("\\u25ab", "")
+                                .replaceAll("\\u25aa", "").replaceAll("\\u02D7", "").split(" ");
                         sbb = new StringBuilder();
-                        for (int i = 0; i < words.length; i++) {
+                        for (int i = 0; i < words.length; i++)
+                        {
                             if (i + 1 != words.length)
                             {
-                                if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                                if (words[i + 1].contains("«") || words[i + 1].contains("»"))
+                                {
                                     sbb.append(words[i]);
                                     break;
                                 }
-                                else {
+                                else
+                                {
                                     sbb.append(words[i]).append(" ");
                                 }
                             }
-                            else {
+                            else
+                            {
                                 sbb.append(words[i]);
                             }
                         }
                         String itemName = sbb.toString().trim();
-                        if (ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.getItemName())) || ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.getItemName()) + " B"))
+                        if (ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.getItemName()))
+                                || ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.getItemName()) + " B"))
                         {
                             if (nbr + itemInv.getAmount() >= 64)
                             {
@@ -467,26 +495,32 @@ public class ShopFunction {
                         String itemName;
                         if (itemInv.hasItemMeta())
                         {
-                            words = itemInv.getItemMeta().getDisplayName().replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "").split(" ");
+                            words = itemInv.getItemMeta().getDisplayName().replaceAll("§7", "").replaceAll("\\u25ab", "")
+                                    .replaceAll("\\u25aa", "").replaceAll("\\u02D7", "").split(" ");
                             sbb = new StringBuilder();
-                            for (int i = 0; i < words.length; i++) {
+                            for (int i = 0; i < words.length; i++)
+                            {
                                 if (i + 1 != words.length)
                                 {
 
-                                    if (words[i + 1].contains("«") || words[i + 1].contains("»")) {
+                                    if (words[i + 1].contains("«") || words[i + 1].contains("»"))
+                                    {
                                         sbb.append(words[i]);
                                         break;
                                     }
-                                    else {
+                                    else
+                                    {
                                         sbb.append(words[i]).append(" ");
                                     }
                                 }
-                                else {
+                                else
+                                {
                                     sbb.append(words[i]);
                                 }
                             }
                             itemName = sbb.toString().trim();
-                            if (ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.getItemName())) || ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.getItemName()) + " B"))
+                            if (ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.getItemName()))
+                                    || ChatColor.stripColor(itemName).equalsIgnoreCase(ChatColor.stripColor(item.getItemName()) + " B"))
                             {
                                 itemInv.setAmount(itemInv.getAmount() - 1);
                                 founded = true;
@@ -526,23 +560,23 @@ public class ShopFunction {
         return amount;
     }
 
-    public void addItemOnShop(String _name, Material _item, short _dura, int _price, int _sell, String _shop, String _command, int _custommodeldata)
+    public void addItemOnShop(String _name, Material _item, short _dura, int _price, int _sell, String _shop, String _command,
+            int _custommodeldata)
     {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
 
-            final PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT item_name" +
-                    " FROM items" +
-                    " WHERE items.item_name = ?");
+            final PreparedStatement preparedStatement1 = connection
+                    .prepareStatement("SELECT item_name" + " FROM items" + " WHERE items.item_name = ?");
             preparedStatement1.setString(1, _name);
             final ResultSet rs = preparedStatement1.executeQuery();
-            //On vérifie s'il y a un résultat à la requête
+            // On vérifie s'il y a un résultat à la requête
             if (!rs.next())
             {
                 sender.sendMessage("§aNouvel item créé :" + _item.name());
-                final PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO items(item_name, item, durability, command, custom_model_data)" +
-                        " VALUES(?,?,?,?,?)");
+                final PreparedStatement preparedStatement2 = connection.prepareStatement(
+                        "INSERT INTO items(item_name, item, durability, command, custom_model_data)" + " VALUES(?,?,?,?,?)");
                 preparedStatement2.setString(1, _name);
                 preparedStatement2.setString(2, _item.toString());
                 preparedStatement2.setShort(3, _dura);
@@ -551,8 +585,8 @@ public class ShopFunction {
                 preparedStatement2.executeUpdate();
             }
             sender.sendMessage("§aItem " + _item.name() + " ajouté au shop " + _shop);
-            final PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO item_shop(item_name, shop, price, sell, currency)" +
-                    " VALUES(?,?,?,?,?)");
+            final PreparedStatement preparedStatement3 = connection
+                    .prepareStatement("INSERT INTO item_shop(item_name, shop, price, sell, currency)" + " VALUES(?,?,?,?,?)");
             preparedStatement3.setString(1, _name);
             preparedStatement3.setString(2, _shop);
             preparedStatement3.setInt(3, _price);
@@ -560,8 +594,10 @@ public class ShopFunction {
             preparedStatement3.setString(5, "$");
             preparedStatement3.executeUpdate();
 
-        } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
+        }
+        catch (SQLException e)
+        {
+            // Une erreur est survenue (Problème de connexion à la BD)
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #S003");
             e.printStackTrace();
         }
@@ -574,16 +610,17 @@ public class ShopFunction {
         final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
         try (Connection connection = firelandConnection.getConnection())
         {
-            final PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT DISTINCT item_shop.shop" +
-                    " FROM item_shop");
+            final PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT DISTINCT item_shop.shop" + " FROM item_shop");
             ResultSet rs = preparedStatement3.executeQuery();
             while (rs.next())
             {
                 l.add(rs.getString(1));
             }
 
-        } catch (SQLException e) {
-            //Une erreur est survenue (Problème de connexion à la BD)
+        }
+        catch (SQLException e)
+        {
+            // Une erreur est survenue (Problème de connexion à la BD)
             sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #S003");
             e.printStackTrace();
         }
@@ -596,19 +633,21 @@ public class ShopFunction {
 
         List<ItemStack> items = new ArrayList<>();
 
-        for (int i = 0; i < 36; i++) {
+        for (int i = 0; i < 36; i++)
+        {
             ItemStack item = inventory.getItem(i);
-            if (item != null) {
+            if (item != null)
+            {
                 items.add(item);
             }
         }
 
         ItemStack offHandItem = inventory.getItemInOffHand();
-        if (offHandItem != null) {
+        if (offHandItem != null)
+        {
             items.add(offHandItem);
         }
         return items;
     }
-
 
 }

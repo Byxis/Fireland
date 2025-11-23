@@ -2,7 +2,8 @@ package fr.byxis.player.quest.questclass;
 
 import java.util.UUID;
 
-public class PlayerQuests {
+public class PlayerQuests
+{
 
     private final UUID uuid;
     private ProgressQuest first;
@@ -114,8 +115,8 @@ public class PlayerQuests {
         return fourth;
     }
 
-
-    public UUID getUuid() {
+    public UUID getUuid()
+    {
         return uuid;
     }
     public boolean isQuestFinished(int i)
@@ -132,11 +133,13 @@ public class PlayerQuests {
         return first.getProgress() == -1 && second.getProgress() == -1 && third.getProgress() == -1 && fourth.getProgress() == -1;
     }
 
-    public boolean isClaimed() {
+    public boolean isClaimed()
+    {
         return isClaimed;
     }
 
-    public void setClaimed(boolean claimed) {
+    public void setClaimed(boolean claimed)
+    {
         isClaimed = claimed;
     }
 }

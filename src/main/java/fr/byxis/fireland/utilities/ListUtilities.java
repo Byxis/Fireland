@@ -1,13 +1,13 @@
 package fr.byxis.fireland.utilities;
 
+import java.util.*;
+import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-public class ListUtilities {
+public class ListUtilities
+{
 
     public static Collection<String> tabList(String arg, String defaultText, Material[] values)
     {
@@ -16,7 +16,8 @@ public class ListUtilities {
         {
             l.add(defaultText);
         }
-        for (Object str : values) {
+        for (Object str : values)
+        {
             if (str.toString().toLowerCase().startsWith(arg.toLowerCase()))
             {
                 l.add(str.toString());
@@ -32,7 +33,8 @@ public class ListUtilities {
         {
             l.add(defaultText);
         }
-        for (Object str : list) {
+        for (Object str : list)
+        {
             if (str.toString().toLowerCase().startsWith(arg.toLowerCase()))
             {
                 l.add(str.toString());
@@ -48,7 +50,8 @@ public class ListUtilities {
         {
             l.add(defaultText);
         }
-        for (Object str : list) {
+        for (Object str : list)
+        {
             if (str.toString().toLowerCase().startsWith(arg.toLowerCase()))
             {
                 l.add(str.toString());
@@ -64,7 +67,8 @@ public class ListUtilities {
         {
             l.add(defaultText);
         }
-        for (Player p : list) {
+        for (Player p : list)
+        {
             if (p.getName().toLowerCase().startsWith(arg.toLowerCase()))
             {
                 l.add(p.getName());
@@ -80,7 +84,8 @@ public class ListUtilities {
         {
             l.add(defaultText);
         }
-        for (Object str : collection) {
+        for (Object str : collection)
+        {
             if (str.toString().toLowerCase().startsWith(arg.toLowerCase()))
             {
                 l.add(str.toString());
@@ -96,7 +101,8 @@ public class ListUtilities {
         {
             l.add(defaultText);
         }
-        for (Object str : set.keySet()) {
+        for (Object str : set.keySet())
+        {
             if (str.toString().toLowerCase().startsWith(arg.toLowerCase()))
             {
                 l.add(str.toString());
@@ -105,12 +111,15 @@ public class ListUtilities {
         return l;
     }
 
-    public static List<String> filterSuggestions(String input, List<String> options) {
+    public static List<String> filterSuggestions(String input, List<String> options)
+    {
         List<String> filtered = new ArrayList<>();
         String lowerInput = input.toLowerCase();
 
-        for (String option : options) {
-            if (option.toLowerCase().startsWith(lowerInput)) {
+        for (String option : options)
+        {
+            if (option.toLowerCase().startsWith(lowerInput))
+            {
                 filtered.add(option);
             }
         }
@@ -120,9 +129,7 @@ public class ListUtilities {
 
     public static List<String> getOnlinePlayerNames()
     {
-        return Bukkit.getOnlinePlayers().stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
+        return Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
     }
 
 }

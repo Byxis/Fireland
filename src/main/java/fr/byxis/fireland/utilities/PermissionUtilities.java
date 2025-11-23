@@ -1,6 +1,10 @@
 package fr.byxis.fireland.utilities;
 
 import fr.byxis.fireland.Fireland;
+import java.time.Duration;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.context.DefaultContextKeys;
@@ -11,12 +15,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
-import java.time.Duration;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.UUID;
-
-public class PermissionUtilities {
+public class PermissionUtilities
+{
 
     private static Fireland main;
     private static final LuckPerms API = LuckPermsProvider.get();;
@@ -27,7 +27,8 @@ public class PermissionUtilities {
             PermissionUtilities.main = _main;
     }
 
-    public static void addPermission(Player p, String permission) {
+    public static void addPermission(Player p, String permission)
+    {
 
         User user = API.getPlayerAdapter(Player.class).getUser(p);
         // Add the permission
@@ -40,8 +41,10 @@ public class PermissionUtilities {
     /**
      * Checks if a player has a specific permission.
      *
-     * @param _player The player to check
-     * @param _permission The permission to check for
+     * @param _player
+     *            The player to check
+     * @param _permission
+     *            The permission to check for
      *
      * @return true if the player has the permission, false otherwise
      */
@@ -57,8 +60,10 @@ public class PermissionUtilities {
     /**
      * Checks if a player has a specific permission.
      *
-     * @param _playerUUID The uuid of the player to check
-     * @param _permission The permission to check for
+     * @param _playerUUID
+     *            The uuid of the player to check
+     * @param _permission
+     *            The permission to check for
      *
      * @return true if the player has the permission, false otherwise
      */
@@ -90,16 +95,15 @@ public class PermissionUtilities {
         API.getUserManager().saveUser(user);
     }
 
-    public static void removePermission(Player p, String permission) {
+    public static void removePermission(Player p, String permission)
+    {
 
         User user = API.getUserManager().getUser(p.getUniqueId());
-        if (user != null) {
-            PermissionNode node = PermissionNode.builder(permission)
-                    .withContext(DefaultContextKeys.SERVER_KEY, "fireland")
-                    .build();
+        if (user != null)
+        {
+            PermissionNode node = PermissionNode.builder(permission).withContext(DefaultContextKeys.SERVER_KEY, "fireland").build();
             user.data().remove(node);
-            node = PermissionNode.builder(permission)
-                    .build();
+            node = PermissionNode.builder(permission).build();
             user.data().remove(node);
             API.getUserManager().saveUser(user);
         }
@@ -107,15 +111,16 @@ public class PermissionUtilities {
         attachment.unsetPermission(permission);
     }
 
-    public static void removePermission(UUID playerUUID, String permission) {
+    public static void removePermission(UUID playerUUID, String permission)
+    {
         LuckPerms api = LuckPermsProvider.get();
-        api.getUserManager().loadUser(playerUUID).thenAcceptAsync(user -> {
+        api.getUserManager().loadUser(playerUUID).thenAcceptAsync(user ->
+        {
             PermissionNode node = PermissionNode.builder(permission).build();
             user.data().remove(node);
             api.getUserManager().saveUser(user);
         });
     }
-
 
     public static void commandExecutor(Player p, String cmd, String perm)
     {

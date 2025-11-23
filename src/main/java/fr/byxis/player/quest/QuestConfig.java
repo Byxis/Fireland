@@ -1,16 +1,17 @@
 package fr.byxis.player.quest;
 
 import fr.byxis.fireland.Fireland;
+import java.io.File;
+import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-
-public class QuestConfig {
+public class QuestConfig
+{
 
     private final Fireland plugin;
-    public QuestConfig(Fireland _plugin) {
+    public QuestConfig(Fireland _plugin)
+    {
         this.plugin = _plugin;
         this.name = "quest";
         setup();
@@ -20,13 +21,18 @@ public class QuestConfig {
     private File file;
     private final String name;
 
-    public void setup() {
+    public void setup()
+    {
         file = new File(plugin.getDataFolder(), name + ".yml");
-        if (!file.exists()) {
-            try {
+        if (!file.exists())
+        {
+            try
+            {
                 file.createNewFile();
                 plugin.getLogger().info(name + ".yml has been created !");
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 System.err.println("/!\\ Could not create " + name + ".yml");
             }
         }

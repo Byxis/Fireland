@@ -10,14 +10,18 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-
-public class WGUtilities {
+public class WGUtilities
+{
 
     public static boolean isWithinRegion(Player player, String region)
-    { return isWithinRegion(player.getLocation(), region); }
+    {
+        return isWithinRegion(player.getLocation(), region);
+    }
 
     public static boolean isWithinRegion(Block block, String region)
-    { return isWithinRegion(block.getLocation(), region); }
+    {
+        return isWithinRegion(block.getLocation(), region);
+    }
 
     public static boolean isWithinRegion(Location loc, String region)
     {

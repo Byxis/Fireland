@@ -3,14 +3,14 @@ package fr.byxis.fireland;
 import fr.byxis.player.booster.BoosterClass;
 import fr.byxis.player.discretion.DiscretionClass;
 import fr.byxis.player.karma.PlayerKarmaClass;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.UUID;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
-public class HashMapManager {
+public class HashMapManager
+{
     private HashMap<UUID, String> factionMap;
     private HashMap<UUID, Inventory> storageMap;
     private static HashMap<UUID, DiscretionClass> discretionMap;
@@ -22,7 +22,8 @@ public class HashMapManager {
     private BoosterClass booster;
     private static Fireland main;
 
-    public HashMapManager(Fireland _main) {
+    public HashMapManager(Fireland _main)
+    {
         if (HashMapManager.main == null)
             HashMapManager.main = _main;
         init();
@@ -84,63 +85,78 @@ public class HashMapManager {
         this.storageMap.replace(uuid, i);
     }
 
-    public static HashMap<UUID, DiscretionClass> getDiscretionMap() {
+    public static HashMap<UUID, DiscretionClass> getDiscretionMap()
+    {
         return discretionMap;
     }
 
-    public static void addDiscretionMap(UUID uuid) {
+    public static void addDiscretionMap(UUID uuid)
+    {
         discretionMap.put(uuid, new DiscretionClass());
     }
 
-    public void removeDiscretionMap(UUID uuid) {
+    public void removeDiscretionMap(UUID uuid)
+    {
         this.discretionMap.remove(uuid, new DiscretionClass());
     }
 
-    public void replaceDiscretionMap(UUID uuid, DiscretionClass discretion) {
+    public void replaceDiscretionMap(UUID uuid, DiscretionClass discretion)
+    {
         this.discretionMap.replace(uuid, discretion);
     }
 
-    public HashMap<UUID, PlayerKarmaClass> getRangMap() {
+    public HashMap<UUID, PlayerKarmaClass> getRangMap()
+    {
         return rangMap;
     }
 
-    public void setRangMap(HashMap<UUID, PlayerKarmaClass> _rangMap) {
+    public void setRangMap(HashMap<UUID, PlayerKarmaClass> _rangMap)
+    {
         this.rangMap = _rangMap;
     }
 
-    public HashMap<String, Inventory> getStorageFactionMap() {
+    public HashMap<String, Inventory> getStorageFactionMap()
+    {
         return storageFactionMap;
     }
 
-    public void addStorageFactionMap(String name, Inventory i) {
+    public void addStorageFactionMap(String name, Inventory i)
+    {
         this.storageFactionMap.put(name, i);
     }
 
-    public void removeStorageFactionMap(String name) {
+    public void removeStorageFactionMap(String name)
+    {
         this.storageFactionMap.remove(name);
     }
 
-    public void replaceStorageFactionMap(String name, Inventory i) {
+    public void replaceStorageFactionMap(String name, Inventory i)
+    {
         this.storageFactionMap.replace(name, i);
     }
 
-    public HashMap<UUID, String> getFactionPrefixMap() {
+    public HashMap<UUID, String> getFactionPrefixMap()
+    {
         return factionPrefixMap;
     }
 
-    public void addFactionPrefixMap(UUID uuid, String prefix) {
+    public void addFactionPrefixMap(UUID uuid, String prefix)
+    {
         this.factionPrefixMap.put(uuid, prefix);
     }
 
-    public void removeFactionPrefixMap(UUID uuid) {
+    public void removeFactionPrefixMap(UUID uuid)
+    {
         this.factionPrefixMap.remove(uuid);
     }
 
-    public BoosterClass getBooster() {
+    public BoosterClass getBooster()
+    {
         return booster;
     }
 
-    public void setBooster(BoosterClass _booster) {
+    public void setBooster(BoosterClass _booster)
+    {
         this.booster = _booster;
     }
 
@@ -172,7 +188,8 @@ public class HashMapManager {
         }
     }
 
-    public boolean isTeleporting(UUID uuid) {
+    public boolean isTeleporting(UUID uuid)
+    {
         if (isTeleporting.containsKey(uuid))
         {
             return isTeleporting.get(uuid);
@@ -180,7 +197,8 @@ public class HashMapManager {
         return false;
     }
 
-    public void addTeleporting(UUID uuid) {
+    public void addTeleporting(UUID uuid)
+    {
         if (isTeleporting.containsKey(uuid))
         {
             isTeleporting.replace(uuid, true);
@@ -191,7 +209,8 @@ public class HashMapManager {
         }
     }
 
-    public void removeTeleporting(UUID uuid) {
+    public void removeTeleporting(UUID uuid)
+    {
         if (isTeleporting.containsKey(uuid))
         {
             isTeleporting.replace(uuid, false);
@@ -206,8 +225,7 @@ public class HashMapManager {
     {
         if (main.getCfgm().getPlayerDB().contains("booster.player"))
         {
-            booster = new BoosterClass(
-                    new Date(main.getCfgm().getPlayerDB().getLong("booster.started")),
+            booster = new BoosterClass(new Date(main.getCfgm().getPlayerDB().getLong("booster.started")),
                     new Date(main.getCfgm().getPlayerDB().getLong("booster.finished")),
                     UUID.fromString(main.getCfgm().getPlayerDB().getString("booster.player")),
                     main.getCfgm().getPlayerDB().getInt("booster.level"));

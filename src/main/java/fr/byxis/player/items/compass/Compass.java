@@ -31,11 +31,11 @@ public class Compass implements @NotNull Listener
     {
         if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem() != null)
         {
-            if (e.getItem().getType() == Material.COMPASS && e.getPlayer().getCooldown(Material.COMPASS) <= 0) {
+            if (e.getItem().getType() == Material.COMPASS && e.getPlayer().getCooldown(Material.COMPASS) <= 0)
+            {
                 e.getPlayer().setCooldown(Material.COMPASS, 200);
-                InGameUtilities.sendPlayerInformation(e.getPlayer(),
-                        "X:" + e.getPlayer().getLocation().getBlockX() + "   Y:" + e.getPlayer().getLocation().getBlockY() + "   Z:" +
-                                e.getPlayer().getLocation().getBlockZ());
+                InGameUtilities.sendPlayerInformation(e.getPlayer(), "X:" + e.getPlayer().getLocation().getBlockX() + "   Y:"
+                        + e.getPlayer().getLocation().getBlockY() + "   Z:" + e.getPlayer().getLocation().getBlockZ());
                 FactionFunctions ff = new FactionFunctions(main, e.getPlayer());
                 String faction = ff.playerFactionName(e.getPlayer());
 
@@ -48,8 +48,8 @@ public class Compass implements @NotNull Listener
                         {
                             InGameUtilities.sendPlayerInformation(bukkitPlayer,
                                     e.getPlayer().getName() + " se trouve aux coordonnées :   X:" + e.getPlayer().getLocation().getBlockX()
-                                            + "   Y:" + e.getPlayer().getLocation().getBlockY()
-                                            + "   Z:" + e.getPlayer().getLocation().getBlockZ());
+                                            + "   Y:" + e.getPlayer().getLocation().getBlockY() + "   Z:"
+                                            + e.getPlayer().getLocation().getBlockZ());
                         }
                     }
                 }
@@ -66,9 +66,11 @@ public class Compass implements @NotNull Listener
             main.getCfgm().getPlayerDB().set("hasplayedbefore." + e.getPlayer().getUniqueId(), true);
             main.getCfgm().savePlayerDB();
             e.getPlayer().teleport(new Location(Bukkit.getWorld("tutorial"), 0.5, -51, -0.5));
-            new BukkitRunnable() {
+            new BukkitRunnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wm give " + e.getPlayer().getName() + " Boussole");
                 }
             }.runTaskLater(main, 20);

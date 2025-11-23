@@ -1,5 +1,9 @@
 package fr.byxis.player.intendant.menu;
 
+import static fr.byxis.player.items.notes.OpenNotes.usingSubstringMethod;
+import static fr.byxis.player.quest.QuestManager.getAvailableQuests;
+import static fr.byxis.player.quest.QuestManager.getPlayerQuest;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
@@ -7,19 +11,15 @@ import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.player.quest.QuestManager;
 import fr.byxis.player.quest.questclass.PlayerQuests;
 import fr.byxis.player.quest.questclass.QuestClass;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import java.util.List;
-
-import static fr.byxis.player.items.notes.OpenNotes.usingSubstringMethod;
-import static fr.byxis.player.quest.QuestManager.getAvailableQuests;
-import static fr.byxis.player.quest.QuestManager.getPlayerQuest;
-
-public class MenuQuest {
+public class MenuQuest
+{
 
     public static void openQuestMenu(Fireland main, Player p)
     {
@@ -56,7 +56,8 @@ public class MenuQuest {
             {
                 List<String> desc = usingSubstringMethod(quest.getDesc(), 52, "§7");
                 desc.add("§7Progrès : §aFini.");
-                inv.setItem(17 + 2 * i, InventoryUtilities.setItemMetaLore(Material.GLOW_ITEM_FRAME, "§a" + quest.getTitle(), (short) 0, desc));
+                inv.setItem(17 + 2 * i,
+                        InventoryUtilities.setItemMetaLore(Material.GLOW_ITEM_FRAME, "§a" + quest.getTitle(), (short) 0, desc));
             }
             else
             {
@@ -70,16 +71,25 @@ public class MenuQuest {
         {
             if (pq.isClaimed())
             {
-                inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§aVous avez déjà récupérer les récompenses", (short) 0, BasicUtilities.listMaker("§8Après avoir effectué les 4 missions", "§8quotidiennes, vous pouvez récupérer", "§6200$ §8et §b1§8 jetons.", "")));
+                inv.setItem(45,
+                        InventoryUtilities.setItemMetaLore(Material.BARRIER, "§aVous avez déjà récupérer les récompenses", (short) 0,
+                                BasicUtilities.listMaker("§8Après avoir effectué les 4 missions", "§8quotidiennes, vous pouvez récupérer",
+                                        "§6200$ §8et §b1§8 jetons.", "")));
             }
             else
             {
-                inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.STRUCTURE_VOID, "§aRécupérer les récompenses", (short) 0, BasicUtilities.listMaker("§8Après avoir effectué les 4 missions", "§8quotidiennes, vous pouvez récupérer", "§6200$ §8et §b1§8 jetons.", "")));
+                inv.setItem(45,
+                        InventoryUtilities.setItemMetaLore(Material.STRUCTURE_VOID, "§aRécupérer les récompenses", (short) 0,
+                                BasicUtilities.listMaker("§8Après avoir effectué les 4 missions", "§8quotidiennes, vous pouvez récupérer",
+                                        "§6200$ §8et §b1§8 jetons.", "")));
             }
         }
         else
         {
-            inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BARRIER, "§cRécupérer les récompenses", (short) 0, BasicUtilities.listMaker("§8Après avoir effectué les 4 missions", "§8quotidiennes, vous pouvez récupérer", "§6200$ §8et §b1§8 jetons.", "")));
+            inv.setItem(45,
+                    InventoryUtilities.setItemMetaLore(Material.BARRIER, "§cRécupérer les récompenses", (short) 0,
+                            BasicUtilities.listMaker("§8Après avoir effectué les 4 missions", "§8quotidiennes, vous pouvez récupérer",
+                                    "§6200$ §8et §b1§8 jetons.", "")));
         }
 
     }

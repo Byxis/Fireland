@@ -1,6 +1,7 @@
 package fr.byxis.event;
 
 import fr.byxis.fireland.utilities.InGameUtilities;
+import java.util.ArrayList;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -8,9 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.ArrayList;
-
-public class InteractionManager implements Listener {
+public class InteractionManager implements Listener
+{
 
     private final ArrayList<Material> m_forbiddenMats;
 
@@ -50,10 +50,11 @@ public class InteractionManager implements Listener {
         m_forbiddenMats.add(Material.CAVE_VINES);
         m_forbiddenMats.add(Material.CAVE_VINES_PLANT);
     }
-    
+
     @SuppressWarnings("deprecation")
     @EventHandler
-    public void removeInteraction(PlayerInteractEvent e) {
+    public void removeInteraction(PlayerInteractEvent e)
+    {
         if (e.getClickedBlock() == null || e.isCancelled() || e.getPlayer().getGameMode() == GameMode.CREATIVE)
         {
             return;
@@ -67,11 +68,12 @@ public class InteractionManager implements Listener {
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
             Block blk = e.getClickedBlock();
-            if ((blk.getType().name().startsWith("POTTED_") || blk.getType() == Material.FLOWER_POT) && !(e.getPlayer().getGameMode() == GameMode.CREATIVE)) {
+            if ((blk.getType().name().startsWith("POTTED_") || blk.getType() == Material.FLOWER_POT)
+                    && !(e.getPlayer().getGameMode() == GameMode.CREATIVE))
+            {
                 e.setCancelled(true);
                 return;
             }
-
         }
     }
 
@@ -86,13 +88,16 @@ public class InteractionManager implements Listener {
         switch (e.getClickedBlock().getType())
         {
             case PURPUR_STAIRS -> InGameUtilities.playWorldSound(loc, Sound.BLOCK_IRON_DOOR_OPEN, SoundCategory.PLAYERS, 0.5f, 1);
-            case DEAD_FIRE_CORAL, DEAD_HORN_CORAL ->  InGameUtilities.playWorldSound(loc, Sound.BLOCK_CHEST_OPEN, SoundCategory.PLAYERS, 0.5f, 0.8f);
-            case DEAD_BUBBLE_CORAL, DEAD_BUBBLE_CORAL_FAN ->  InGameUtilities.playWorldSound(loc, "gun.hud.bag_open", SoundCategory.PLAYERS, 0.5f, 1f);
-            case DEAD_HORN_CORAL_FAN -> InGameUtilities.playWorldSound(loc, Sound.BLOCK_GILDED_BLACKSTONE_HIT, SoundCategory.PLAYERS, 0.5f, 1f);
+            case DEAD_FIRE_CORAL, DEAD_HORN_CORAL ->
+                    InGameUtilities.playWorldSound(loc, Sound.BLOCK_CHEST_OPEN, SoundCategory.PLAYERS, 0.5f, 0.8f);
+            case DEAD_BUBBLE_CORAL, DEAD_BUBBLE_CORAL_FAN ->
+                    InGameUtilities.playWorldSound(loc, "gun.hud.bag_open", SoundCategory.PLAYERS, 0.5f, 1f);
+            case DEAD_HORN_CORAL_FAN ->
+                    InGameUtilities.playWorldSound(loc, Sound.BLOCK_GILDED_BLACKSTONE_HIT, SoundCategory.PLAYERS, 0.5f, 1f);
             case PURPLE_CANDLE -> InGameUtilities.playWorldSound(loc, "gun.hud.scraps", SoundCategory.PLAYERS, 0.5f, 2f);
             case PINK_CANDLE -> InGameUtilities.playWorldSound(loc, "gun.unload.barrettm107", SoundCategory.PLAYERS, 0.5f, 2f);
-            case DEAD_FIRE_CORAL_FAN, DEAD_TUBE_CORAL_FAN, DEAD_BRAIN_CORAL -> InGameUtilities.playWorldSound(loc, Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 0.5f, 0f);
+            case DEAD_FIRE_CORAL_FAN, DEAD_TUBE_CORAL_FAN, DEAD_BRAIN_CORAL ->
+                    InGameUtilities.playWorldSound(loc, Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 0.5f, 0f);
         }
     }
-
 }

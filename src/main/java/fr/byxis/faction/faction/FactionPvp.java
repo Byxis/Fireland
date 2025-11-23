@@ -6,7 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class FactionPvp implements Listener {
+public class FactionPvp implements Listener
+{
 
     private final Fireland main;
 
@@ -14,7 +15,6 @@ public class FactionPvp implements Listener {
     {
         this.main = _main;
     }
-
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event)
@@ -27,9 +27,11 @@ public class FactionPvp implements Listener {
             if (p.getName().equalsIgnoreCase(d.getName()))
                 return;
 
-            if (main.getHashMapManager().getFactionMap().containsKey(p.getUniqueId()) && main.getHashMapManager().getFactionMap().containsKey(d.getUniqueId()))
+            if (main.getHashMapManager().getFactionMap().containsKey(p.getUniqueId())
+                    && main.getHashMapManager().getFactionMap().containsKey(d.getUniqueId()))
             {
-                if (main.getHashMapManager().getFactionMap().get(p.getUniqueId()).equals(main.getHashMapManager().getFactionMap().get(d.getUniqueId())))
+                if (main.getHashMapManager().getFactionMap().get(p.getUniqueId())
+                        .equals(main.getHashMapManager().getFactionMap().get(d.getUniqueId())))
                 {
                     event.setCancelled(true);
                 }

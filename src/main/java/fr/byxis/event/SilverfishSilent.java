@@ -7,7 +7,7 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 
 public class SilverfishSilent implements Listener
 {
-    
+
     @EventHandler
     public void entitySpawn(EntitySpawnEvent e)
     {
@@ -16,5 +16,4 @@ public class SilverfishSilent implements Listener
             e.getEntity().setSilent(true);
         }
     }
-
 }

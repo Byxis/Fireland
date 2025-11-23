@@ -11,7 +11,8 @@ import org.jetbrains.annotations.Nullable;
 public class RestartCommand implements @Nullable CommandExecutor
 {
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings)
+    {
         if (commandSender instanceof Player p && p.isOp() || commandSender instanceof ConsoleCommandSender)
         {
             if (strings.length != 1)

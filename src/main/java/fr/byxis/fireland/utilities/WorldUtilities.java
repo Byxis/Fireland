@@ -2,7 +2,8 @@ package fr.byxis.fireland.utilities;
 
 import org.bukkit.Location;
 
-public class WorldUtilities {
+public class WorldUtilities
+{
 
     public static Vector2 getPrimaryAxe(int x, int y)
     {
@@ -34,7 +35,7 @@ public class WorldUtilities {
     {
         double produitScalaire = (a.getX() * b.getX()) + (a.getY() * b.getY());
         double autre = Math.sqrt(Math.pow(a.getX(), 2) + Math.pow(a.getY(), 2)) * Math.sqrt(Math.pow(b.getX(), 2) + Math.pow(b.getY(), 2));
-        return  produitScalaire / autre;
+        return produitScalaire / autre;
     }
 
     public static int getWorldBorderDistance(Location loc, Location loc2)

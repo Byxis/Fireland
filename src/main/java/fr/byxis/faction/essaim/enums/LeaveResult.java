@@ -5,7 +5,5 @@ package fr.byxis.faction.essaim.enums;
  */
 public enum LeaveResult
 {
-    SUCCESS,
-    NOT_IN_GROUP,
-    GROUP_DISBANDED
+    SUCCESS, NOT_IN_GROUP, GROUP_DISBANDED
 }

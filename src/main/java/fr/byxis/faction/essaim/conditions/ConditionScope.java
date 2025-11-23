@@ -22,7 +22,8 @@ public enum ConditionScope
     /**
      * Constructs a ConditionScope.
      *
-     * @param _configKey The key used in configuration files
+     * @param _configKey
+     *            The key used in configuration files
      */
     ConditionScope(String _configKey)
     {
@@ -42,7 +43,8 @@ public enum ConditionScope
     /**
      * Gets a ConditionScope from a configuration key.
      *
-     * @param _configKey The key to look up
+     * @param _configKey
+     *            The key to look up
      * @return The corresponding ConditionScope, or LEADER_ONLY if not found
      */
     public static ConditionScope fromConfigKey(String _configKey)
@@ -61,4 +63,3 @@ public enum ConditionScope
         return LEADER_ONLY;
     }
 }
-

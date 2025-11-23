@@ -15,9 +15,12 @@ public class HasItemCondition implements EssaimCondition
     /**
      * Creates a new item condition with an optional display name.
      *
-     * @param _requiredMaterial The material the player must have
-     * @param _scope The scope of this condition
-     * @param _displayName Optional display name for custom items (null to auto-format)
+     * @param _requiredMaterial
+     *            The material the player must have
+     * @param _scope
+     *            The scope of this condition
+     * @param _displayName
+     *            Optional display name for custom items (null to auto-format)
      */
     public HasItemCondition(Material _requiredMaterial, ConditionScope _scope, String _displayName)
     {
@@ -80,7 +83,8 @@ public class HasItemCondition implements EssaimCondition
      * <p>
      * Converts SCREAMING_SNAKE_CASE to Title Case.
      *
-     * @param _material The material to format
+     * @param _material
+     *            The material to format
      * @return A human-readable material name
      */
     private static String formatMaterialName(Material _material)
@@ -102,4 +106,3 @@ public class HasItemCondition implements EssaimCondition
         return sb.toString();
     }
 }
-

@@ -1,5 +1,9 @@
 package fr.byxis.faction.zone.zoneclass;
 
+import static fr.byxis.faction.zone.WorldGuardEnterZoneEvent.isTimeToCapture;
+import static fr.byxis.fireland.utilities.BlockUtilities.getBossBarColor;
+
+import java.sql.Timestamp;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
@@ -7,12 +11,8 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 
-import java.sql.Timestamp;
-
-import static fr.byxis.faction.zone.WorldGuardEnterZoneEvent.isTimeToCapture;
-import static fr.byxis.fireland.utilities.BlockUtilities.getBossBarColor;
-
-public class ZoneClass {
+public class ZoneClass
+{
     private final String name;
 
     private final Location location;
@@ -22,7 +22,6 @@ public class ZoneClass {
     private final int finalDollarsGain;
     private final int finalJetonsGain;
     private final double captureTime;
-
 
     private final double privationDuration;
     private final double autoRelease;
@@ -34,7 +33,8 @@ public class ZoneClass {
     private final BossBar bar;
     private String barColor;
 
-    public ZoneClass(String _name, Location _loc, int _price, int _dailyGain, int _finalDollarsGain, int _finalJetonsGain, double _privationDuration, double _autoRelease, double _captureTime, boolean _claimable)
+    public ZoneClass(String _name, Location _loc, int _price, int _dailyGain, int _finalDollarsGain, int _finalJetonsGain,
+            double _privationDuration, double _autoRelease, double _captureTime, boolean _claimable)
     {
         this.name = _name;
         this.location = _loc;
@@ -56,35 +56,43 @@ public class ZoneClass {
         }
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public Location getLocation() {
+    public Location getLocation()
+    {
         return location;
     }
 
-    public int getPrice() {
+    public int getPrice()
+    {
         return price;
     }
 
-    public int getDailyGain() {
+    public int getDailyGain()
+    {
         return dailyGain;
     }
 
-    public int getFinalDollarsGain() {
+    public int getFinalDollarsGain()
+    {
         return finalDollarsGain;
     }
 
-    public int getFinalJetonsGain() {
+    public int getFinalJetonsGain()
+    {
         return finalJetonsGain;
     }
 
-    public double getPrivationDuration() {
+    public double getPrivationDuration()
+    {
         return privationDuration;
     }
 
-    public double getAutoRelease() {
+    public double getAutoRelease()
+    {
         return autoRelease;
     }
 
@@ -122,7 +130,8 @@ public class ZoneClass {
         return this.claimedAt;
     }
 
-    public double getCaptureTime() {
+    public double getCaptureTime()
+    {
         return captureTime;
     }
 

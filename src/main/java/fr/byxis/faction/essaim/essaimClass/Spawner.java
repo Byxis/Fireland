@@ -18,7 +18,8 @@ public class Spawner
     private final double m_spawnDelay;
     private final boolean m_isAffectedByDifficulty;
 
-    public Spawner(String _name, String _essaim, Location _loc, String _mob, int _amount, double _activationDelay, double _spawnDelay, String _command, Boolean _isAffecteByDifficulty)
+    public Spawner(String _name, String _essaim, Location _loc, String _mob, int _amount, double _activationDelay, double _spawnDelay,
+            String _command, Boolean _isAffecteByDifficulty)
     {
         this.m_name = _name;
         this.m_essaim = _essaim;

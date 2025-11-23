@@ -1,8 +1,12 @@
 package fr.byxis.event;
 
+import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
+
 import fr.byxis.faction.bunker.BunkerClass;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.player.level.LevelStorage;
+import java.util.Iterator;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
@@ -10,16 +14,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.Iterator;
-import java.util.UUID;
-
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
-
-public class SaveEvent implements Listener {
+public class SaveEvent implements Listener
+{
 
     private static Fireland main;
 
-    public SaveEvent(Fireland _main) {
+    public SaveEvent(Fireland _main)
+    {
         if (main == null)
         {
             SaveEvent.main = _main;
@@ -58,7 +59,8 @@ public class SaveEvent implements Listener {
             return;
         }
         Iterator<UUID> iterator = main.getHashMapManager().getStorageMap().keySet().iterator();
-        while (iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             UUID uuid = iterator.next();
             if (main.getHashMapManager().getStorageMap().containsKey(uuid))
             {

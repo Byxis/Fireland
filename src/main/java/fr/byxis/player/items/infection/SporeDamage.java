@@ -1,8 +1,12 @@
 package fr.byxis.player.items.infection;
 
+import static fr.byxis.player.items.infection.Mask.hasGazMask;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.player.items.infection.virus.InfectionManager;
 import fr.byxis.player.items.infection.virus.InfectionType;
+import java.util.HashMap;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -11,12 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.UUID;
-
-import static fr.byxis.player.items.infection.Mask.hasGazMask;
-
-public class SporeDamage {
+public class SporeDamage
+{
 
     private final Fireland m_main;
     private final InfectionManager m_manager;
@@ -35,7 +35,8 @@ public class SporeDamage {
         new BukkitRunnable()
         {
             @Override
-            public void run() {
+            public void run()
+            {
                 for (Player p : Bukkit.getOnlinePlayers())
                 {
                     toxicityDamageHandler(p);
@@ -43,7 +44,6 @@ public class SporeDamage {
             }
         }.runTaskTimer(m_main, 0, 20);
     }
-
 
     private void toxicityDamageHandler(Player p)
     {
@@ -77,7 +77,8 @@ public class SporeDamage {
         }
     }
 
-    private boolean isAffected(Player p) {
+    private boolean isAffected(Player p)
+    {
         Location loc = p.getLocation();
         if (hasGazMask(p))
         {
@@ -85,11 +86,15 @@ public class SporeDamage {
         }
         boolean detected = false;
         int h = 0;
-        for (int x = -10; x <= 10; x++) {
-            for (int y = 0; y <= 20; y++) {
-                for (int z = -10; z <= 10; z++) {
+        for (int x = -10; x <= 10; x++)
+        {
+            for (int y = 0; y <= 20; y++)
+            {
+                for (int z = -10; z <= 10; z++)
+                {
                     Location newLoc = new Location(loc.getWorld(), loc.getX() + x, loc.getY() + y, loc.getZ() + z);
-                    if (newLoc.getBlock().getType() == Material.SPORE_BLOSSOM) {
+                    if (newLoc.getBlock().getType() == Material.SPORE_BLOSSOM)
+                    {
                         detected = true;
                         h = y;
                         break;
@@ -115,7 +120,8 @@ public class SporeDamage {
                 {
                     for (int z = -1; z <= 1; z++)
                     {
-                        if (new Location(loc.getWorld(), loc.getX() + x, loc.getY() + h, loc.getZ() + z).getBlock().getType() == Material.AIR)
+                        if (new Location(loc.getWorld(), loc.getX() + x, loc.getY() + h, loc.getZ() + z).getBlock()
+                                .getType() == Material.AIR)
                         {
                             return true;
                         }

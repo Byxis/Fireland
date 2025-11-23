@@ -1,6 +1,8 @@
 package fr.byxis.player.level;
 
 import fr.byxis.fireland.utilities.ListUtilities;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -9,12 +11,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class LevelTabCompleter implements TabCompleter {
+public class LevelTabCompleter implements TabCompleter
+{
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,
+            @NotNull String[] args)
+    {
         ArrayList<String> list = new ArrayList<String>();
 
         if (commandSender instanceof Player p && !p.hasPermission("fireland.admin.level"))

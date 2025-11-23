@@ -2,7 +2,8 @@ package fr.byxis.player.shop;
 
 import org.bukkit.Material;
 
-public class ShopItemClass {
+public class ShopItemClass
+{
 
     private final String m_itemName;
     private final Material m_mat;
@@ -14,7 +15,8 @@ public class ShopItemClass {
     private final boolean m_show;
     private final String m_currency;
 
-    public ShopItemClass(String _itemName, Material _mat, short _dura, String _command, int _price, int _sell, int _customModelData, boolean _show, String _currency)
+    public ShopItemClass(String _itemName, Material _mat, short _dura, String _command, int _price, int _sell, int _customModelData,
+            boolean _show, String _currency)
     {
         this.m_itemName = _itemName;
         this.m_mat = _mat;
@@ -67,7 +69,8 @@ public class ShopItemClass {
         return m_show;
     }
 
-    public String getCurrency() {
+    public String getCurrency()
+    {
         return m_currency;
     }
 

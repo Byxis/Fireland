@@ -1,5 +1,7 @@
 package fr.byxis.player.level;
 
+import static fr.byxis.player.level.LevelStorage.*;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import io.lumine.mythic.bukkit.events.MythicMobDeathEvent;
@@ -9,12 +11,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import static fr.byxis.player.level.LevelStorage.*;
-
-public class LevelEvent implements Listener {
+public class LevelEvent implements Listener
+{
 
     private final Fireland m_main;
-    public LevelEvent(Fireland main) {
+    public LevelEvent(Fireland main)
+    {
         m_main = main;
     }
 
@@ -25,34 +27,28 @@ public class LevelEvent implements Listener {
         {
             switch (e.getMob().getMobType())
             {
-                case "Infecte" ->
-                {
+                case "Infecte" -> {
                     addPlayerXp(p.getUniqueId(), 3, LevelStorage.Nation.Etat);
                     addPlayerZombieKill(p);
                 }
-                case "Exploseur", "Blinde" ->
-                {
+                case "Exploseur", "Blinde" -> {
                     addPlayerXp(p.getUniqueId(), 10, LevelStorage.Nation.Etat);
                     addPlayerZombieKill(p);
                 }
-                case "Hurleur", "Chien Infecte" ->
-                {
+                case "Hurleur", "Chien Infecte" -> {
                     addPlayerXp(p.getUniqueId(), 5, LevelStorage.Nation.Etat);
                     addPlayerZombieKill(p);
                 }
-                case "Vautour" ->
-                {
+                case "Vautour" -> {
                     addPlayerXp(p.getUniqueId(), 20, LevelStorage.Nation.Etat);
                     addPlayerZombieKill(p);
                 }
-                case "Malabar" ->
-                {
+                case "Malabar" -> {
                     addPlayerXp(p.getUniqueId(), 500, LevelStorage.Nation.Etat);
                     addPlayerZombieKill(p);
                 }
 
-                case "Chimere" ->
-                {
+                case "Chimere" -> {
                     addPlayerXp(p.getUniqueId(), 1000, LevelStorage.Nation.Etat);
                     addPlayerZombieKill(p);
                 }
@@ -82,8 +78,10 @@ public class LevelEvent implements Listener {
     }
 
     @EventHandler
-    public void onPlayerHit(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player damager && event.getEntity() instanceof Player target) {
+    public void onPlayerHit(EntityDamageByEntityEvent event)
+    {
+        if (event.getDamager() instanceof Player damager && event.getEntity() instanceof Player target)
+        {
 
             if (getPlayerLevel(target.getUniqueId()).getLevel() < 10)
             {
@@ -97,6 +95,5 @@ public class LevelEvent implements Listener {
             }
         }
     }
-
 
 }

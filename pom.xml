@@ -25,6 +25,13 @@
 
 
     <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>3.5.3</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -67,6 +74,15 @@
                 <configuration>
                     <configLocation>config/checkstyle.xml</configLocation>
                 </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>10.20.0</version>
+                    </dependency>
+                </dependencies>
+
                 <executions>
                     <execution>
                         <phase>verify</phase>
@@ -94,15 +110,14 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.7.3.0</version>
+                <version>4.9.8.0</version>
                 <configuration>
                     <effort>Max</effort>
                     <threshold>High</threshold>
-                    <failOnError>false</failOnError>
+                    <failOnError>true</failOnError>
                 </configuration>
                 <executions>
                     <execution>
@@ -113,12 +128,72 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>ca.bkaw</groupId>
                 <artifactId>paper-nms-maven-plugin</artifactId>
                 <version>1.4.10</version>
             </plugin>
+            <!--plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.43.0</version>
+                <configuration>
+                    <java>
+                        <removeUnusedImports />
+                        <importOrder />
+
+                        <eclipse>
+                            <version>4.34</version>
+                            <file>${project.basedir}/config/intellij-style.xml</file>
+                        </eclipse>
+
+                        <formatAnnotations />
+                    </java>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>auto-format</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>wagon-maven-plugin</artifactId>
+                <version>2.0.2</version>
+                <executions>
+                    <execution>
+                        <id>upload-jar-to-server</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>upload-single</goal>
+                        </goals>
+                        <configuration>
+                            <serverId>Fireland</serverId>
+                            <fromFile>${project.build.directory}/${project.build.finalName}.jar</fromFile>
+                            <url>sftp://5032.mystrator.com:2022/plugins/</url>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.mwiede</groupId>
+                        <artifactId>jsch</artifactId>
+                        <version>0.2.16</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.maven.wagon</groupId>
+                        <artifactId>wagon-ssh</artifactId>
+                        <version>3.5.3</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
+
         <!--                                 TESTS                                  -->
         <resources>
             <resource>
@@ -193,7 +268,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.8-R0.1-SNAPSHOT</version>
+            <version>1.21.10-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

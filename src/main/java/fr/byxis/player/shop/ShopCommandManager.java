@@ -1,7 +1,11 @@
 package fr.byxis.player.shop;
 
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,12 +15,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-
-public class ShopCommandManager implements CommandExecutor, TabCompleter {
+public class ShopCommandManager implements CommandExecutor, TabCompleter
+{
 
     private final Fireland main;
 
@@ -26,19 +26,25 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args) {
-        if (sender instanceof Player player) {
-            if (cmd.getName().equalsIgnoreCase("shop") && args.length == 1) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args)
+    {
+        if (sender instanceof Player player)
+        {
+            if (cmd.getName().equalsIgnoreCase("shop") && args.length == 1)
+            {
                 ShopFunction sf = new ShopFunction(main, player);
                 String name = "";
                 ArrayList<String> l = sf.getAllShop();
-                for (String str : l) {
-                    if (str.equalsIgnoreCase(args[0])) {
+                for (String str : l)
+                {
+                    if (str.equalsIgnoreCase(args[0]))
+                    {
                         name = str;
                         break;
                     }
                 }
-                if (name.equalsIgnoreCase("")) {
+                if (name.equalsIgnoreCase(""))
+                {
                     player.sendMessage("§cCe shop n'existe pas.");
                     return true;
                 }
@@ -46,38 +52,47 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     sf.openInv(player, name.replaceAll("_", " "), 1);
                 else
                 {
-                    InGameUtilities.sendPlayerError(player, "Vous n'avez pas encore accès à ce shop. Pour y avoir accès, augmentez votre niveau.");
+                    InGameUtilities.sendPlayerError(player,
+                            "Vous n'avez pas encore accès à ce shop. Pour y avoir accès, augmentez votre niveau.");
                 }
 
-            } else if (args[0].equalsIgnoreCase("newitem") && player.hasPermission("fireland.admin")) {
-                if (player.getItemInHand() != null && player.getItemInHand().hasItemMeta()) {
+            }
+            else if (args[0].equalsIgnoreCase("newitem") && player.hasPermission("fireland.admin"))
+            {
+                if (player.getItemInHand() != null && player.getItemInHand().hasItemMeta())
+                {
                     String name = player.getItemInHand().getItemMeta().getDisplayName();
-                        /*name = name.replaceAll("[?.{1}]", "");
-                        name = name.replaceAll("[^a-zA-Z0-9]", " ");*/
+                    /*
+                     * name = name.replaceAll("[?.{1}]", ""); name = name.replaceAll("[^a-zA-Z0-9]",
+                     * " ");
+                     */
                     name = name.replaceAll("§7", "").replaceAll("\\u25ab", "").replaceAll("\\u25aa", "").replaceAll("\\u02D7", "");
 
                     name = name.replaceAll("_", " ");
 
                     String[] words = name.split(" ");
                     StringBuilder sbb = new StringBuilder();
-                    for (int i = 0; i < words.length; i++) {
+                    for (int i = 0; i < words.length; i++)
+                    {
                         if (i + 1 != words.length)
                         {
 
-                            if (words[i + 1].contains("§") || words[i + 1].contains("§")) {
+                            if (words[i + 1].contains("§") || words[i + 1].contains("§"))
+                            {
                                 sbb.append(words[i]);
                                 break;
-                            } //§
-                            else {
+                            } // §
+                            else
+                            {
                                 sbb.append(words[i]).append(" ");
                             }
                         }
-                        else {
+                        else
+                        {
                             sbb.append(words[i]);
                         }
                     }
                     name = sbb.toString().trim();
-
 
                     Material item = player.getItemInHand().getType();
                     short dura = player.getItemInHand().getDurability();
@@ -86,7 +101,8 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                     String shop = args[3];
 
                     StringBuilder sb = new StringBuilder();
-                    for (int i = 4; i < args.length; i++) {
+                    for (int i = 4; i < args.length; i++)
+                    {
                         sb.append(args[i]).append(" ");
                     }
                     int custommodeldata = 0;
@@ -113,7 +129,9 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
                 {
                     player.sendMessage("L'item dans votre main est invalide.");
                 }
-            } else {
+            }
+            else
+            {
                 player.sendMessage("§cUsage : /shop <shop/newitem>");
             }
             return true;
@@ -121,9 +139,10 @@ public class ShopCommandManager implements CommandExecutor, TabCompleter {
         return false;
     }
 
-    @Nullable
-    @Override
-    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    @Nullable @Override
+    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,
+            @NotNull String[] strings)
+    {
         ArrayList<String> l = new ArrayList<>();
         if (strings.length == 1 && commandSender.hasPermission("fireland.shop.admin"))
         {

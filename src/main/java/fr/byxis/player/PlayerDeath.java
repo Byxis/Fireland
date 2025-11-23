@@ -1,8 +1,13 @@
 package fr.byxis.player;
 
+import static fr.byxis.fireland.Fireland.getEco;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.player.level.LevelStorage;
 import fr.byxis.player.level.PlayerLevel;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -10,12 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
-import static fr.byxis.fireland.Fireland.getEco;
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
 
 public class PlayerDeath implements Listener
 {
@@ -26,9 +25,11 @@ public class PlayerDeath implements Listener
     {
         this.main = _main;
     }
-    
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
+
+    public static double round(double value, int places)
+    {
+        if (places < 0)
+            throw new IllegalArgumentException();
 
         BigDecimal bd = BigDecimal.valueOf(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
@@ -45,7 +46,7 @@ public class PlayerDeath implements Listener
             e.setRespawnLocation(loc);
         }
     }
-    
+
     @EventHandler
     public void playerDeath(PlayerDeathEvent e)
     {
@@ -53,7 +54,7 @@ public class PlayerDeath implements Listener
 
         if (e.getEntity().getLastDamageCause() == null || !(e.getEntity().getLastDamageCause().getEntity() instanceof Player killer))
             return;
-        
+
         double money = getEco().getBalance(killed);
         double pay = money / 2;
         if (main.getHashMapManager().getBooster() != null)
@@ -69,5 +70,5 @@ public class PlayerDeath implements Listener
             getEco().depositPlayer(killer, pay);
         }
     }
-    
+
 }

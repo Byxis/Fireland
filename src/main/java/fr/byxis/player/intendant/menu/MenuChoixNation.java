@@ -3,16 +3,16 @@ package fr.byxis.player.intendant.menu;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MenuChoixNation {
+public class MenuChoixNation
+{
 
     public static void openChoixNation(Fireland main, Player p)
     {

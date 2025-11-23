@@ -2,18 +2,16 @@ package fr.byxis.player.items.infection.virus;
 
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.player.packet.PacketFunctions;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.GameMode;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class InfectionTickSystem extends BukkitRunnable
 {
@@ -37,89 +35,51 @@ public class InfectionTickSystem extends BukkitRunnable
 
     private void initializeInfectionLevels()
     {
-        m_levelConfigs.put(InfectionType.PRIMARY, InfectionLevelConfig.builder()
-                .deathTime(5)
-                .continuousDamage(1)
-                .addWarning(1, "§8Votre infection commence à se faire sentir...", 3)
-                .addWarning(2, "§8Votre infection s'aggrave !", 3)
-                .addWarning(3, "§8Votre infection devient douloureuse !", 3)
-                .addWarning(4, "§8Votre infection est critique !", 3)
+        m_levelConfigs.put(InfectionType.PRIMARY, InfectionLevelConfig.builder().deathTime(5).continuousDamage(1)
+                .addWarning(1, "§8Votre infection commence à se faire sentir...", 3).addWarning(2, "§8Votre infection s'aggrave !", 3)
+                .addWarning(3, "§8Votre infection devient douloureuse !", 3).addWarning(4, "§8Votre infection est critique !", 3)
                 .addWarning(5, "§8Votre infection est très grave ! Cherchez vite une seringue !", 3)
-                .addEffectProgression(PotionEffectType.SLOWNESS, 3, 0)
-                .build()
-        );
+                .addEffectProgression(PotionEffectType.SLOWNESS, 3, 0).build());
 
-        m_levelConfigs.put(InfectionType.BUBONIC, InfectionLevelConfig.builder()
-                .deathTime(5)
-                .continuousDamage(1)
-                .addWarning(1, "§8Vous sentez une douleur sourde dans vos membres...", 2)
-                .addWarning(2, "§8L'infection bubonique progresse !", 3)
-                .addWarning(3, "§8Vos ganglions commencent à enfler !", 3)
-                .addWarning(4, "§8Vous vous sentez de plus en plus mal ! Trouvez une seringue !", 4)
-                .addProgressiveEffect(PotionEffectType.WEAKNESS, 0)
-                .addEffectProgression(PotionEffectType.WEAKNESS, 2, 1)
-                .addEffectProgression(PotionEffectType.POISON, 3, 0)
-                .addEffectProgression(PotionEffectType.WEAKNESS, 4, 1)
-                .build()
-        );
+        m_levelConfigs.put(InfectionType.BUBONIC,
+                InfectionLevelConfig.builder().deathTime(5).continuousDamage(1)
+                        .addWarning(1, "§8Vous sentez une douleur sourde dans vos membres...", 2)
+                        .addWarning(2, "§8L'infection bubonique progresse !", 3).addWarning(3, "§8Vos ganglions commencent à enfler !", 3)
+                        .addWarning(4, "§8Vous vous sentez de plus en plus mal ! Trouvez une seringue !", 4)
+                        .addProgressiveEffect(PotionEffectType.WEAKNESS, 0).addEffectProgression(PotionEffectType.WEAKNESS, 2, 1)
+                        .addEffectProgression(PotionEffectType.POISON, 3, 0).addEffectProgression(PotionEffectType.WEAKNESS, 4, 1).build());
 
-        m_levelConfigs.put(InfectionType.KERATINIC, InfectionLevelConfig.builder()
-                .deathTime(4)
-                .continuousDamage(2)
-                .addWarning(1, "§8Vos membres commencent à se rigidifier...", 2)
-                .addWarning(2, "§8L'infection kératinienne progresse !", 3)
+        m_levelConfigs.put(InfectionType.KERATINIC, InfectionLevelConfig.builder().deathTime(4).continuousDamage(2)
+                .addWarning(1, "§8Vos membres commencent à se rigidifier...", 2).addWarning(2, "§8L'infection kératinienne progresse !", 3)
                 .addWarning(3, "§8Vos articulations deviennent douloureuses !", 3)
-                .addWarning(4, "§8Vous avez du mal à bouger ! Trouvez une seringue !", 4)
-                .addProgressiveEffect(PotionEffectType.SLOWNESS, 0)
-                .addEffectProgression(PotionEffectType.SLOWNESS, 1, 1)
-                .addEffectProgression(PotionEffectType.SLOWNESS, 2, 2)
-                .addEffectProgression(PotionEffectType.SLOWNESS, 3, 3)
-                .addProgressiveEffect(PotionEffectType.MINING_FATIGUE, 0)
-                .addEffectProgression(PotionEffectType.MINING_FATIGUE, 2, 1)
-                .build()
-        );
+                .addWarning(4, "§8Vous avez du mal à bouger ! Trouvez une seringue !", 4).addProgressiveEffect(PotionEffectType.SLOWNESS, 0)
+                .addEffectProgression(PotionEffectType.SLOWNESS, 1, 1).addEffectProgression(PotionEffectType.SLOWNESS, 2, 2)
+                .addEffectProgression(PotionEffectType.SLOWNESS, 3, 3).addProgressiveEffect(PotionEffectType.MINING_FATIGUE, 0)
+                .addEffectProgression(PotionEffectType.MINING_FATIGUE, 2, 1).build());
 
-        m_levelConfigs.put(InfectionType.NECROPHAGIC, InfectionLevelConfig.builder()
-                .deathTime(3)
-                .continuousDamage(2)
+        m_levelConfigs.put(InfectionType.NECROPHAGIC, InfectionLevelConfig.builder().deathTime(3).continuousDamage(2)
                 .addWarning(1, "§8Vous sentez une faiblesse s'installer...", 3)
                 .addWarning(2, "§8Votre force vous abandonne ! Cherchez vite une seringue !", 4)
-                .addWarning(3, "§8Votre transformation est bientôt aboutie...", 4)
-                .addProgressiveEffect(PotionEffectType.WEAKNESS, 0)
-                .addEffectProgression(PotionEffectType.WEAKNESS, 2, 1)
-                .addProgressiveEffect(PotionEffectType.HUNGER, 0)
-                .addEffectProgression(PotionEffectType.HUNGER, 1, 1)
-                .addEffectProgression(PotionEffectType.HUNGER, 2, 2)
-                .addEffectProgression(PotionEffectType.BLINDNESS, 2, 0)
-                .build()
-        );
+                .addWarning(3, "§8Votre transformation est bientôt aboutie...", 4).addProgressiveEffect(PotionEffectType.WEAKNESS, 0)
+                .addEffectProgression(PotionEffectType.WEAKNESS, 2, 1).addProgressiveEffect(PotionEffectType.HUNGER, 0)
+                .addEffectProgression(PotionEffectType.HUNGER, 1, 1).addEffectProgression(PotionEffectType.HUNGER, 2, 2)
+                .addEffectProgression(PotionEffectType.BLINDNESS, 2, 0).build());
 
-        m_levelConfigs.put(InfectionType.MYCELIAL, InfectionLevelConfig.builder()
-                .deathTime(4)
-                .continuousDamage(3)
+        m_levelConfigs.put(InfectionType.MYCELIAL, InfectionLevelConfig.builder().deathTime(4).continuousDamage(3)
                 .addWarning(0, "§8Des spores commencent à envahir vos poumons...", 3)
                 .addWarning(1, "§8Le mycélium se propage dans votre organisme !", 4)
                 .addWarning(2, "§8Votre vision se trouble, les spores attaquent vos sens !", 4)
                 .addWarning(3, "§8L'infection fongique devient critique ! Seule une seringue peut vous sauver !", 5)
-                .addProgressiveEffect(PotionEffectType.POISON, 0)
-                .addEffectProgression(PotionEffectType.POISON, 1, 1)
-                .addEffectProgression(PotionEffectType.BLINDNESS, 2, 0)
-                .addEffectProgression(PotionEffectType.NAUSEA, 3, 0)
-                .build()
-        );
+                .addProgressiveEffect(PotionEffectType.POISON, 0).addEffectProgression(PotionEffectType.POISON, 1, 1)
+                .addEffectProgression(PotionEffectType.BLINDNESS, 2, 0).addEffectProgression(PotionEffectType.NAUSEA, 3, 0).build());
 
-        m_levelConfigs.put(InfectionType.BRUTAL, InfectionLevelConfig.builder()
-                .deathTime(2)
-                .continuousDamage(4)
-                .addWarning(0, "§8Votre corps commence une transformation horrifiante...", 5)
-                .addWarning(1, "§8La mutation progresse rapidement ! Cherchez de l'aide immédiatement !", 6)
-                .addProgressiveEffect(PotionEffectType.WITHER, 0)
-                .addEffectProgression(PotionEffectType.WITHER, 1, 2)
-                .addProgressiveEffect(PotionEffectType.SLOWNESS, 1)
-                .addEffectProgression(PotionEffectType.SLOWNESS, 1, 2)
-                .addEffectProgression(PotionEffectType.BLINDNESS, 1, 0)
-                .build()
-        );
+        m_levelConfigs.put(InfectionType.BRUTAL,
+                InfectionLevelConfig.builder().deathTime(2).continuousDamage(4)
+                        .addWarning(0, "§8Votre corps commence une transformation horrifiante...", 5)
+                        .addWarning(1, "§8La mutation progresse rapidement ! Cherchez de l'aide immédiatement !", 6)
+                        .addProgressiveEffect(PotionEffectType.WITHER, 0).addEffectProgression(PotionEffectType.WITHER, 1, 2)
+                        .addProgressiveEffect(PotionEffectType.SLOWNESS, 1).addEffectProgression(PotionEffectType.SLOWNESS, 1, 2)
+                        .addEffectProgression(PotionEffectType.BLINDNESS, 1, 0).build());
     }
 
     public void start()
@@ -132,7 +92,8 @@ public class InfectionTickSystem extends BukkitRunnable
     {
         for (Player player : m_plugin.getServer().getOnlinePlayers())
         {
-            if (!isValidGameMode(player)) continue;
+            if (!isValidGameMode(player))
+                continue;
 
             InfectionData data = m_manager.getData(player);
             if (!data.isInfected())
@@ -203,9 +164,12 @@ public class InfectionTickSystem extends BukkitRunnable
     /**
      * Applique un effet de bordure mondiale progressif (teinte rouge)
      *
-     * @param _player Le joueur infecté
-     * @param _currentMinute La minute actuelle d'infection
-     * @param _deathTime Le temps de mort configuré
+     * @param _player
+     *            Le joueur infecté
+     * @param _currentMinute
+     *            La minute actuelle d'infection
+     * @param _deathTime
+     *            Le temps de mort configuré
      */
     private void applyWorldBorderEffect(Player _player, long _currentMinute, long _deathTime)
     {
@@ -219,9 +183,12 @@ public class InfectionTickSystem extends BukkitRunnable
     /**
      * Joue le son "entity.player.sick" avec une probabilité croissante
      *
-     * @param _player Le joueur infecté
-     * @param _currentMinute La minute actuelle d'infection
-     * @param _deathTime Le temps de mort configuré
+     * @param _player
+     *            Le joueur infecté
+     * @param _currentMinute
+     *            La minute actuelle d'infection
+     * @param _deathTime
+     *            Le temps de mort configuré
      */
     private void playSickSound(Player _player, long _currentMinute, long _deathTime)
     {
@@ -271,9 +238,7 @@ public class InfectionTickSystem extends BukkitRunnable
                 }
             }
 
-            _player.addPotionEffect(
-                    new PotionEffect(effectType, 240, currentAmplifier, false, false)
-            );
+            _player.addPotionEffect(new PotionEffect(effectType, 240, currentAmplifier, false, false));
         }
     }
 
@@ -357,8 +322,7 @@ public class InfectionTickSystem extends BukkitRunnable
 
             public Builder addEffectProgression(PotionEffectType _type, long _minute, int _amplifier)
             {
-                m_effectProgressions.computeIfAbsent(_type, k -> new TreeMap<>())
-                        .put(_minute, _amplifier);
+                m_effectProgressions.computeIfAbsent(_type, k -> new TreeMap<>()).put(_minute, _amplifier);
                 return this;
             }
 

@@ -1,16 +1,16 @@
 package fr.byxis.player.booster;
 
 import fr.byxis.fireland.Fireland;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class BoosterCommandCompleter implements TabCompleter {
+public class BoosterCommandCompleter implements TabCompleter
+{
 
     private final Fireland main;
 
@@ -20,7 +20,9 @@ public class BoosterCommandCompleter implements TabCompleter {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,
+            @NotNull String[] strings)
+    {
         List<String> l = new ArrayList<>();
         if (commandSender.hasPermission("fireland.command.booster"))
         {

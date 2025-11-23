@@ -6,7 +6,7 @@ import org.bukkit.event.inventory.CraftItemEvent;
 
 public class PreventCrafting implements Listener
 {
-    
+
     @EventHandler
     public void onCraft(CraftItemEvent e)
     {
@@ -15,5 +15,4 @@ public class PreventCrafting implements Listener
             e.setCancelled(true);
         }
     }
-    
 }

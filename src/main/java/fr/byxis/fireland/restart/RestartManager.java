@@ -1,5 +1,7 @@
 package fr.byxis.fireland.restart;
 
+import static fr.byxis.fireland.Save.saveAll;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
@@ -10,9 +12,8 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static fr.byxis.fireland.Save.saveAll;
-
-public class RestartManager {
+public class RestartManager
+{
 
     private static double m_timeRemaining = -1;
     private static double m_timeTotal = -1;
@@ -28,9 +29,11 @@ public class RestartManager {
         m_bar = Bukkit.createBossBar("§a§lRedémarrage du serveur", BarColor.GREEN, BarStyle.SOLID);
         m_bar.setProgress(1);
 
-        new BukkitRunnable() {
+        new BukkitRunnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 if (isServerRestartingSoon())
                 {
                     m_timeRemaining -= 1;
@@ -74,9 +77,11 @@ public class RestartManager {
             p.kickPlayer("§cLe serveur redémarre.");
         }
         saveAll(_main);
-        new BukkitRunnable() {
+        new BukkitRunnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
             }
         }.runTaskLater(_main, 15 * 20);
@@ -117,7 +122,6 @@ public class RestartManager {
         }
     }
 
-
     public static boolean isServerRestartingSoon()
     {
         return m_timeRemaining > 0;
@@ -132,8 +136,5 @@ public class RestartManager {
     {
         m_bar.addPlayer(p);
     }
-
-
-
 
 }

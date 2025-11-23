@@ -1,13 +1,12 @@
 package fr.byxis.faction.faction;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FactionManagerTabCompleter implements TabCompleter
 {
@@ -38,9 +37,7 @@ public class FactionManagerTabCompleter implements TabCompleter
         }
         else if (args.length == 2)
         {
-            if (args[0].equalsIgnoreCase("invite")
-                    || args[0].equalsIgnoreCase("promote")
-                    || args[0].equalsIgnoreCase("demote"))
+            if (args[0].equalsIgnoreCase("invite") || args[0].equalsIgnoreCase("promote") || args[0].equalsIgnoreCase("demote"))
             {
                 for (Player player : Bukkit.getServer().getOnlinePlayers())
                 {

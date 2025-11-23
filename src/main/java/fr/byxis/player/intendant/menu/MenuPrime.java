@@ -1,10 +1,16 @@
 package fr.byxis.player.intendant.menu;
 
+import static fr.byxis.player.primes.PrimeEvent.*;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
 import fr.byxis.player.primes.PrimeEvent;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
@@ -13,14 +19,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import static fr.byxis.player.primes.PrimeEvent.*;
-
-public class MenuPrime {
+public class MenuPrime
+{
 
     public static void openPrime(Fireland main, Player p)
     {
@@ -57,7 +57,8 @@ public class MenuPrime {
             inv.setItem(i + 45, InventoryUtilities.setItemMeta(Material.WHITE_STAINED_GLASS_PANE, " ", (short) 1));
         }
 
-        //TODO: si il y a bcp de joueurs, faire un meilleur systeme pour voir tous les joueurs
+        // TODO: si il y a bcp de joueurs, faire un meilleur systeme pour voir tous les
+        // joueurs
         int i = 0;
         for (Player player : Bukkit.getOnlinePlayers())
         {
@@ -136,12 +137,14 @@ public class MenuPrime {
             ItemMeta meta = item.getItemMeta();
             ArrayList<String> lore = new ArrayList<String>();
             lore.add("§8Valeur: §6" + getPrime(uuid) + "$");
-            lore.add("§8Durée restante: §7" + BasicUtilities.getStringTime(getPrimeMaxDay() * 24 * 60 * 60 * 1000 + getPrimeDate(sUuid).getTime() - System.currentTimeMillis()));
+            lore.add("§8Durée restante: §7" + BasicUtilities
+                    .getStringTime(getPrimeMaxDay() * 24 * 60 * 60 * 1000 + getPrimeDate(sUuid).getTime() - System.currentTimeMillis()));
             meta.setLore(lore);
 
             item.setItemMeta(meta);
 
-            if (new Timestamp(getPrimeDate(sUuid).getTime() + getPrimeMaxDay() * 24 * 60 * 60 * 1000).after(new Timestamp(System.currentTimeMillis())))
+            if (new Timestamp(getPrimeDate(sUuid).getTime() + getPrimeMaxDay() * 24 * 60 * 60 * 1000)
+                    .after(new Timestamp(System.currentTimeMillis())))
             {
                 inv.setItem(i, item);
                 i++;

@@ -15,7 +15,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RecyclerFunction {
+public class RecyclerFunction
+{
 
     private final Fireland main;
 
@@ -54,26 +55,30 @@ public class RecyclerFunction {
         return amount;
     }
 
-    public int getItemScrapNumber(ItemStack item) {
+    public int getItemScrapNumber(ItemStack item)
+    {
         int amount = 0;
-        for (int i = 0; i < item.getAmount(); i++) {
-            int increment = switch (item.getType()) {
+        for (int i = 0; i < item.getAmount(); i++)
+        {
+            int increment = switch (item.getType())
+            {
                 case NETHERITE_SCRAP -> 1;
                 case NETHERITE_HOE -> BasicUtilities.generateInt(2, 10);
                 case ARROW -> BasicUtilities.generateInt(1, 2);
-                case NETHERITE_CHESTPLATE, CHAINMAIL_CHESTPLATE, DIAMOND_CHESTPLATE, GOLDEN_CHESTPLATE, IRON_CHESTPLATE, LEATHER_CHESTPLATE
-                        -> BasicUtilities.generateInt(1, 8);
-                case NETHERITE_HELMET, CHAINMAIL_HELMET, DIAMOND_HELMET, GOLDEN_HELMET, IRON_HELMET, LEATHER_HELMET
-                        -> BasicUtilities.generateInt(1, 5);
-                case NETHERITE_BOOTS, CHAINMAIL_BOOTS, DIAMOND_BOOTS, GOLDEN_BOOTS, IRON_BOOTS, LEATHER_BOOTS
-                        -> BasicUtilities.generateInt(1, 4);
-                case NETHERITE_LEGGINGS, CHAINMAIL_LEGGINGS, DIAMOND_LEGGINGS, GOLDEN_LEGGINGS, IRON_LEGGINGS, LEATHER_LEGGINGS
-                        -> BasicUtilities.generateInt(1, 7);
+                case NETHERITE_CHESTPLATE, CHAINMAIL_CHESTPLATE, DIAMOND_CHESTPLATE, GOLDEN_CHESTPLATE, IRON_CHESTPLATE,
+                     LEATHER_CHESTPLATE -> BasicUtilities.generateInt(1, 8);
+                case NETHERITE_HELMET, CHAINMAIL_HELMET, DIAMOND_HELMET, GOLDEN_HELMET, IRON_HELMET, LEATHER_HELMET ->
+                        BasicUtilities.generateInt(1, 5);
+                case NETHERITE_BOOTS, CHAINMAIL_BOOTS, DIAMOND_BOOTS, GOLDEN_BOOTS, IRON_BOOTS, LEATHER_BOOTS ->
+                        BasicUtilities.generateInt(1, 4);
+                case NETHERITE_LEGGINGS, CHAINMAIL_LEGGINGS, DIAMOND_LEGGINGS, GOLDEN_LEGGINGS, IRON_LEGGINGS,
+                     LEATHER_LEGGINGS -> BasicUtilities.generateInt(1, 7);
                 case WHEAT_SEEDS -> BasicUtilities.generateInt(0, 3);
                 case IRON_NUGGET -> BasicUtilities.generateInt(0, 2);
                 case IRON_INGOT -> BasicUtilities.generateInt(0, 5);
-                case WOODEN_SWORD, STONE_SWORD, GOLDEN_SWORD, IRON_SWORD, IRON_HOE, STONE_SHOVEL, IRON_PICKAXE, STONE_AXE, STONE_PICKAXE, DIAMOND_SWORD, STONE_HOE
-                        -> BasicUtilities.generateInt(1, 6);
+                case WOODEN_SWORD, STONE_SWORD, GOLDEN_SWORD, IRON_SWORD, IRON_HOE, STONE_SHOVEL, IRON_PICKAXE,
+                     STONE_AXE, STONE_PICKAXE,
+                     DIAMOND_SWORD, STONE_HOE -> BasicUtilities.generateInt(1, 6);
                 default -> 0;
             };
             amount += increment;
@@ -81,10 +86,13 @@ public class RecyclerFunction {
         return amount;
     }
 
-    public int getItemGunpowderNumber(ItemStack item) {
+    public int getItemGunpowderNumber(ItemStack item)
+    {
         int amount = 0;
-        for (int i = 0; i < item.getAmount(); i++) {
-            int increment = switch (item.getType()) {
+        for (int i = 0; i < item.getAmount(); i++)
+        {
+            int increment = switch (item.getType())
+            {
                 case GUNPOWDER -> 1;
                 case WHEAT_SEEDS -> BasicUtilities.generateInt(0, 2);
                 case IRON_NUGGET -> BasicUtilities.generateInt(0, 1);
@@ -95,13 +103,13 @@ public class RecyclerFunction {
         return amount;
     }
 
-
     public int getItemMedsNumber(ItemStack item)
     {
         int amount = 0;
         for (int i = 0; i < item.getAmount(); i++)
         {
-            switch (item.getType()) {
+            switch (item.getType())
+            {
                 case QUARTZ:
                     amount += BasicUtilities.generateInt(1, 3);
                     break;
@@ -144,7 +152,8 @@ public class RecyclerFunction {
         _inv.setItem(45, InventoryUtilities.setItemMetaLore(Material.BOOK, "§r- Informations -", (short) 1, l));
     }
 
-    public void recycle(InventoryView inv, Player p) {
+    public void recycle(InventoryView inv, Player p)
+    {
         ItemStack scrap = new ItemStack(Material.NETHERITE_SCRAP);
         ItemStack gp = new ItemStack(Material.GUNPOWDER);
 
@@ -155,26 +164,31 @@ public class RecyclerFunction {
             if (inv.getItem(i) != null)
             {
                 ItemStack item = inv.getItem(i);
-                if (item == null) continue;
+                if (item == null)
+                    continue;
                 int scrapNbr = (getItemScrapNumber(item));
                 int gbNbr = (getItemGunpowderNumber(item));
                 if (scrapNbr != 0)
                 {
                     if (gbNbr != 0)
                     {
-                        if (hasGived(p, gp, space, item, gbNbr)) break;
+                        if (hasGived(p, gp, space, item, gbNbr))
+                            break;
                     }
-                    if (hasGived(p, scrap, space, item, scrapNbr)) break;
+                    if (hasGived(p, scrap, space, item, scrapNbr))
+                        break;
                 }
                 else if (gbNbr > 0)
                 {
-                    if (hasGived(p, gp, space, item, gbNbr)) break;
+                    if (hasGived(p, gp, space, item, gbNbr))
+                        break;
                 }
             }
         }
     }
 
-    private boolean hasGived(Player p, ItemStack component, int space, ItemStack item, int scrapNbr) {
+    private boolean hasGived(Player p, ItemStack component, int space, ItemStack item, int scrapNbr)
+    {
         if (scrapNbr > space)
         {
             p.sendMessage("§cVous n'avez pas assez d'espace pour recycler cet item !");

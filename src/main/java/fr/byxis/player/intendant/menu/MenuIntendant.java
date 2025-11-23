@@ -1,5 +1,7 @@
 package fr.byxis.player.intendant.menu;
 
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.InventoryUtilities;
@@ -9,9 +11,8 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-
-public class MenuIntendant {
+public class MenuIntendant
+{
 
     public static void openIntendant(Fireland main, Player p)
     {

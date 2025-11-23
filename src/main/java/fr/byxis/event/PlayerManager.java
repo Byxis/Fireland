@@ -1,5 +1,7 @@
 package fr.byxis.event;
 
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.player.level.LevelStorage;
@@ -21,9 +23,6 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-
-
 public class PlayerManager implements Listener
 {
 
@@ -41,8 +40,8 @@ public class PlayerManager implements Listener
         {
             Player player = e.getPlayer();
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§a" + interacted.getName() +
-                    ": §c" + Math.round(interacted.getHealth()) + "❤"));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                    new TextComponent("§a" + interacted.getName() + ": §c" + Math.round(interacted.getHealth()) + "❤"));
         }
     }
 
@@ -64,12 +63,14 @@ public class PlayerManager implements Listener
         if (e.getEntity().getKiller() != null && main.getHashMapManager().getBooster() != null)
         {
             Player killer = e.getEntity().getKiller();
-            int money = BasicUtilities.generateInt((int) main.getHashMapManager().getBooster().getMoneyMin(), (int) main.getHashMapManager().getBooster().getMoneyMax() + 1);
+            int money = BasicUtilities.generateInt((int) main.getHashMapManager().getBooster().getMoneyMin(),
+                    (int) main.getHashMapManager().getBooster().getMoneyMax() + 1);
             if (money > 0)
             {
                 Fireland.getEco().depositPlayer(killer, money);
-                killer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Vous avez gagné " + money + "$ grâce au boost de " + ((Player) Bukkit.getOfflinePlayer(main.getHashMapManager().getBooster().getUuid())).getName() + "."));
-
+                killer.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                        new TextComponent("§7Vous avez gagné " + money + "$ grâce au boost de "
+                                + ((Player) Bukkit.getOfflinePlayer(main.getHashMapManager().getBooster().getUuid())).getName() + "."));
             }
         }
     }

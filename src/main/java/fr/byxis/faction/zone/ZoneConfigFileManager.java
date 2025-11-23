@@ -1,13 +1,13 @@
 package fr.byxis.faction.zone;
 
 import fr.byxis.fireland.Fireland;
+import java.io.File;
+import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-
-public class ZoneConfigFileManager {
+public class ZoneConfigFileManager
+{
 
     private final Fireland plugin;
 
@@ -19,13 +19,18 @@ public class ZoneConfigFileManager {
     private FileConfiguration config;
     private File file;
 
-    public void setup() {
+    public void setup()
+    {
         file = new File(plugin.getDataFolder(), "zone-capture.yml");
-        if (!file.exists()) {
-            try {
+        if (!file.exists())
+        {
+            try
+            {
                 file.createNewFile();
                 plugin.getLogger().info("zone-capture.yml has been created !");
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 System.err.println("/!\\ Could not create zone-capture.yml");
             }
         }

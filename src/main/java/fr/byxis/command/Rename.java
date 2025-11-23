@@ -11,7 +11,8 @@ public class Rename implements CommandExecutor
 {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    {
         if (sender instanceof Player player)
         {
             ItemStack current = player.getItemInHand();
@@ -21,9 +22,9 @@ public class Rename implements CommandExecutor
                 int i = 1;
                 for (String part : args)
                 {
-                    
+
                     String part2 = part.replace('&', '§');
-                    
+
                     if (i < args.length)
                         hl.append(part2).append(" ");
                     else
@@ -31,13 +32,14 @@ public class Rename implements CommandExecutor
                     i++;
                 }
                 ItemMeta itm = current.getItemMeta();
-                if (itm != null) {
+                if (itm != null)
+                {
                     itm.setDisplayName("§r" + hl);
                 }
                 current.setItemMeta(itm);
 
                 player.sendMessage("You have Rename this item to :" + hl + "§r.");
-                
+
             }
             else
             {
@@ -46,5 +48,4 @@ public class Rename implements CommandExecutor
         }
         return false;
     }
-
 }

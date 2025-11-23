@@ -1,5 +1,7 @@
 package fr.byxis.player.level;
 
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
@@ -11,23 +13,25 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-
-public class LevelCommand implements CommandExecutor {
+public class LevelCommand implements CommandExecutor
+{
     private final Fireland m_main;
-    public LevelCommand(Fireland main) {
+    public LevelCommand(Fireland main)
+    {
         m_main = main;
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args)
+    {
         if (commandSender instanceof Player p)
         {
             PlayerLevel pl = null;
             if (args.length == 0)
             {
                 pl = getPlayerLevel(p.getUniqueId());
-                InGameUtilities.sendPlayerInformation(p, "Votre niveau :" + pl.getLevel() + " (" + pl.getXp() + "/" + pl.getRemainingXp() + ")");
+                InGameUtilities.sendPlayerInformation(p,
+                        "Votre niveau :" + pl.getLevel() + " (" + pl.getXp() + "/" + pl.getRemainingXp() + ")");
                 InGameUtilities.sendPlayerInformation(p, "Votre rang: " + pl.getStringRank() + " (" + pl.getNation().name() + ")");
                 return true;
             }
@@ -36,9 +40,11 @@ public class LevelCommand implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("changeNation8484"))
                 {
                     pl = getPlayerLevel(p.getUniqueId());
-                    if (JetonManager.getJetonsPlayer(p.getUniqueId()) > pl.getJetonPriceNationChange() && Fireland.getEco().has(p, pl.getMoneyPriceNationChange()))
+                    if (JetonManager.getJetonsPlayer(p.getUniqueId()) > pl.getJetonPriceNationChange()
+                            && Fireland.getEco().has(p, pl.getMoneyPriceNationChange()))
                     {
-                        InGameUtilities.sendPlayerSucces(p, "Vous avez acheté un changement de nation. Pour changer, votre nation, allez voir l'intendant");
+                        InGameUtilities.sendPlayerSucces(p,
+                                "Vous avez acheté un changement de nation. Pour changer, votre nation, allez voir l'intendant");
                         JetonManager.payJetons(p, pl.getJetonPriceNationChange(), "Changement de Nation", false, true);
                         Fireland.getEco().withdrawPlayer(p, pl.getMoneyPriceNationChange());
                         pl.setCanChange(true);
@@ -53,15 +59,18 @@ public class LevelCommand implements CommandExecutor {
                     return false;
                 }
                 pl = getPlayerLevel(BasicUtilities.getUuid(args[0]));
-                InGameUtilities.sendPlayerInformation(p, "Niveau de " + args[0] + ": " + pl.getLevel() + " (" + pl.getXp() + "/" + pl.getRemainingXp() + ")");
-                InGameUtilities.sendPlayerInformation(p, "Rang de " + args[0] + ": " + pl.getStringRank() + " (" + pl.getNation().name() + ")");
+                InGameUtilities.sendPlayerInformation(p,
+                        "Niveau de " + args[0] + ": " + pl.getLevel() + " (" + pl.getXp() + "/" + pl.getRemainingXp() + ")");
+                InGameUtilities.sendPlayerInformation(p,
+                        "Rang de " + args[0] + ": " + pl.getStringRank() + " (" + pl.getNation().name() + ")");
                 return true;
             }
             else if (p.hasPermission("fireland.admin.level"))
             {
                 if (args.length != 4)
                 {
-                    InGameUtilities.sendPlayerError(p, "Utilisation: /level <set/add/remove> <level/xp/nation/rang/canchange> <amount/nation/true/false> <player>");
+                    InGameUtilities.sendPlayerError(p,
+                            "Utilisation: /level <set/add/remove> <level/xp/nation/rang/canchange> <amount/nation/true/false> <player>");
                     return false;
                 }
                 if (BasicUtilities.getUuid(args[3]) == null)

@@ -36,59 +36,58 @@ public class InfectionListeners implements Listener
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent _event)
     {
-        if (!(_event.getEntity() instanceof Player _victim)) return;
-        if (_victim.isInvulnerable()) return;
+        if (!(_event.getEntity() instanceof Player _victim))
+            return;
+        if (_victim.isInvulnerable())
+            return;
 
         Entity damager = _event.getDamager();
+        String internalName = "";
 
-        MobExecutor mobExecutor = MythicBukkit.inst().getMobManager();
-
-        boolean isMythicMob = mobExecutor.isMythicMob(damager);
-
-        if (isMythicMob)
+        try (MythicBukkit mythicBukkit = MythicBukkit.inst())
         {
-            String internalName = mobExecutor.getMythicMobInstance(damager).getType().getInternalName();
-            switch (internalName)
+            MobExecutor mobExecutor = mythicBukkit.getMobManager();
+            if (mobExecutor.isMythicMob(damager))
             {
-                case "Infecte" ->
+                internalName = mobExecutor.getMythicMobInstance(damager).getType().getInternalName();
+            }
+        }
+        switch (internalName)
+        {
+            case "Infecte" -> {
+                if (m_manager.tryInfect(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE))
                 {
-                    if (m_manager.tryInfect(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE))
-                    {
-                        notifyInfection(_victim);
-                    }
+                    notifyInfection(_victim);
                 }
-                case "Blinde", "Malabar" ->
+            }
+            case "Blinde", "Malabar" -> {
+                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.KERATINIC))
                 {
-                    if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.KERATINIC))
-                    {
-                        notifyInfection(_victim);
-                    }
+                    notifyInfection(_victim);
                 }
-                case "Vautour" ->
+            }
+            case "Vautour" -> {
+                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.NECROPHAGIC))
                 {
-                    if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.NECROPHAGIC))
-                    {
-                        notifyInfection(_victim);
-                    }
+                    notifyInfection(_victim);
                 }
-                case "Mycoris", "Rejeton" ->
+            }
+            case "Mycoris", "Rejeton" -> {
+                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.MYCELIAL))
                 {
-                    if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.MYCELIAL))
-                    {
-                        notifyInfection(_victim);
-                    }
+                    notifyInfection(_victim);
                 }
-                case "Exploseur", "Hurleur", "Putrifieur" ->
+            }
+            case "Exploseur", "Hurleur", "Putrifieur" -> {
+                if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.BUBONIC))
                 {
-                    if (m_manager.tryInfectWithLevel(_victim, InfectionConstants.ZOMBIE_INFECTION_CHANCE, InfectionType.BUBONIC))
-                    {
-                        notifyInfection(_victim);
-                    }
+                    notifyInfection(_victim);
                 }
             }
         }
+
         // Infection by player with bare hands
-        else if (damager instanceof Player _attacker)
+        if (internalName.isEmpty() && damager instanceof Player _attacker)
         {
             if (m_manager.isInfected(_attacker) && _attacker.getInventory().getItemInMainHand().getType() == Material.AIR)
             {
@@ -190,8 +189,10 @@ public class InfectionListeners implements Listener
 
     private void handleSyringeUse(Player _player)
     {
-        if (!m_manager.isInfected(_player)) return;
-        if (m_manager.getData(_player).m_infectionType() == InfectionType.MYCELIAL) return;
+        if (!m_manager.isInfected(_player))
+            return;
+        if (m_manager.getData(_player).m_infectionType() == InfectionType.MYCELIAL)
+            return;
 
         m_manager.cure(_player);
         InGameUtilities.playWorldSound(_player.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
@@ -202,8 +203,10 @@ public class InfectionListeners implements Listener
 
     private void handleFungalSyringeUse(Player _player)
     {
-        if (!m_manager.isInfected(_player)) return;
-        if (m_manager.getData(_player).m_infectionType() != InfectionType.MYCELIAL) return;
+        if (!m_manager.isInfected(_player))
+            return;
+        if (m_manager.getData(_player).m_infectionType() != InfectionType.MYCELIAL)
+            return;
 
         m_manager.cure(_player);
         InGameUtilities.playWorldSound(_player.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
@@ -235,8 +238,10 @@ public class InfectionListeners implements Listener
 
     private void handleSyringeOnFriend(Player _healer, Player _target)
     {
-        if (m_manager.isInfected(_healer)) return; // An infected player cannot heal others
-        if (!m_manager.isInfected(_target)) return; // The target is not infected
+        if (m_manager.isInfected(_healer))
+            return; // An infected player cannot heal others
+        if (!m_manager.isInfected(_target))
+            return; // The target is not infected
 
         m_manager.cure(_target);
         InGameUtilities.playWorldSound(_target.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
@@ -249,8 +254,10 @@ public class InfectionListeners implements Listener
 
     private void handleFungalSyringeOnFriend(Player _healer, Player _target)
     {
-        if (!m_manager.isInfected(_target)) return;
-        if (m_manager.getData(_target).m_infectionType() != InfectionType.MYCELIAL) return;
+        if (!m_manager.isInfected(_target))
+            return;
+        if (m_manager.getData(_target).m_infectionType() != InfectionType.MYCELIAL)
+            return;
 
         m_manager.cure(_target);
         InGameUtilities.playWorldSound(_target.getLocation(), "gun.hud.seringue", SoundCategory.PLAYERS, 1, 1);
@@ -324,15 +331,21 @@ public class InfectionListeners implements Listener
 
             _player.addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.SPEED, 20 * 120, 4, true, false));
             _player.addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.HASTE, 20 * 120, 4, true, false));
-            _player.addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.REGENERATION, 20 * 20, 4, true, false));
-            _player.addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.RESISTANCE, 20 * 40, 1, true, false));
+            _player.addPotionEffect(
+                    new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.REGENERATION, 20 * 20, 4, true, false));
+            _player.addPotionEffect(
+                    new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.RESISTANCE, 20 * 40, 1, true, false));
 
-            _player.addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.WEAKNESS, 20 * 120, 1, true, false));
+            _player.addPotionEffect(
+                    new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.WEAKNESS, 20 * 120, 1, true, false));
             _player.addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.NAUSEA, 20 * 5, 0, true, false));
 
-            _player.addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.SLOWNESS, 20 * 300, 2, true, false));
-            _player.addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.MINING_FATIGUE, 20 * 300, 2, true, false));
-            _player.addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.NIGHT_VISION, 20 * 300, 2, true, false));
+            _player.addPotionEffect(
+                    new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.SLOWNESS, 20 * 300, 2, true, false));
+            _player.addPotionEffect(
+                    new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.MINING_FATIGUE, 20 * 300, 2, true, false));
+            _player.addPotionEffect(
+                    new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.NIGHT_VISION, 20 * 300, 2, true, false));
         }
         else
         {
@@ -385,17 +398,20 @@ public class InfectionListeners implements Listener
 
     private boolean hasCustomModelData(ItemStack _item, int _modelData)
     {
-        if (_item == null || _item.getType() != Material.WHEAT_SEEDS) return false;
+        if (_item == null || _item.getType() != Material.WHEAT_SEEDS)
+            return false;
 
         ItemMeta meta = _item.getItemMeta();
-        if (meta == null || !meta.hasCustomModelData()) return false;
+        if (meta == null || !meta.hasCustomModelData())
+            return false;
 
         return meta.getCustomModelData() == _modelData;
     }
 
     private void consumeItem(Player _player)
     {
-        if (_player.getGameMode() == GameMode.CREATIVE) return;
+        if (_player.getGameMode() == GameMode.CREATIVE)
+            return;
 
         ItemStack item = _player.getInventory().getItemInMainHand();
         item.setAmount(item.getAmount() - 1);

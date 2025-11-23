@@ -1,5 +1,8 @@
 package fr.byxis.fireland.utilities;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -16,13 +19,11 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+public class InventoryUtilities
+{
 
-public class InventoryUtilities {
-
-    public static ItemStack setItemMeta(Material mat, String name, short dura) {
+    public static ItemStack setItemMeta(Material mat, String name, short dura)
+    {
         ItemStack item = new ItemStack(mat);
         ItemMeta itemMeta = item.getItemMeta();
         assert itemMeta != null;
@@ -32,7 +33,8 @@ public class InventoryUtilities {
         return item;
     }
 
-    public static ItemStack setItemMeta(Material mat, String name) {
+    public static ItemStack setItemMeta(Material mat, String name)
+    {
         ItemStack item = new ItemStack(mat);
         ItemMeta itemMeta = item.getItemMeta();
         assert itemMeta != null;
@@ -41,7 +43,8 @@ public class InventoryUtilities {
         return item;
     }
 
-    public static ItemStack setItemMeta(Material mat, String name, short dura, int modelData) {
+    public static ItemStack setItemMeta(Material mat, String name, short dura, int modelData)
+    {
         ItemStack item = new ItemStack(mat);
         ItemMeta itemMeta = item.getItemMeta();
         assert itemMeta != null;
@@ -54,23 +57,19 @@ public class InventoryUtilities {
 
     public static void clickManager(InventoryClickEvent e)
     {
-        if ((e.getClickedInventory() != null && e.getClickedInventory().getType() != InventoryType.PLAYER) || e.getView().getTopInventory().getType() != InventoryType.PLAYER)
+        if ((e.getClickedInventory() != null && e.getClickedInventory().getType() != InventoryType.PLAYER)
+                || e.getView().getTopInventory().getType() != InventoryType.PLAYER)
             e.setCancelled(true);
         if (e.getClick().isKeyboardClick() && e.getView().getPlayer().getInventory().getItem(e.getHotbarButton()) != null)
             e.setCancelled(true);
         /*
-        if (e.getClickedInventory() != e.getView().getTopInventory() || e.getClick().isKeyboardClick()) {
-            e.setCancelled(true);
-        }
-        else
-        {
-            if (e.isShiftClick())
-            {
-                e.setCancelled(true);
-            }
-        }*/
+         * if (e.getClickedInventory() != e.getView().getTopInventory() ||
+         * e.getClick().isKeyboardClick()) { e.setCancelled(true); } else { if
+         * (e.isShiftClick()) { e.setCancelled(true); } }
+         */
     }
-    public static ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore) {
+    public static ItemStack setItemMetaLore(Material mat, String name, short dura, List<String> lore)
+    {
         ItemStack item = new ItemStack(mat);
 
         if (mat.equals(Material.POTION))
@@ -98,7 +97,8 @@ public class InventoryUtilities {
         return item;
     }
 
-    public static ItemStack setItemMetaLore(Material mat, String name,  List<String> lore) {
+    public static ItemStack setItemMetaLore(Material mat, String name, List<String> lore)
+    {
         ItemStack item = new ItemStack(mat);
 
         if (mat.equals(Material.POTION))

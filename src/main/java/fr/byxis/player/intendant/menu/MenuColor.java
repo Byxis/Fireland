@@ -11,7 +11,8 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-public class MenuColor {
+public class MenuColor
+{
 
     public static void openColorMenu(Fireland main, Player p, FactionInformation infos)
     {

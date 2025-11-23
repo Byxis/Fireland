@@ -3,6 +3,8 @@ package fr.byxis.player.primes;
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import java.sql.Timestamp;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,18 +12,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.world.WorldSaveEvent;
 
-import java.sql.Timestamp;
-import java.util.UUID;
-
-import static fr.byxis.fireland.utilities.InGameUtilities.debugp;
-
-public class PrimeEvent implements Listener {
+public class PrimeEvent implements Listener
+{
 
     private static PrimesConfig config;
     private final Fireland main;
 
     private static final long DAY = 14;
-
 
     public PrimeEvent(Fireland _main)
     {
@@ -39,7 +36,8 @@ public class PrimeEvent implements Listener {
         {
             for (String uuid : config.getConfig().getConfigurationSection("").getKeys(false))
             {
-                if (new Timestamp(getPrimeDate(uuid).getTime() + getPrimeMaxDay() * 24 * 60 * 60 * 1000).before(new Timestamp(System.currentTimeMillis())))
+                if (new Timestamp(getPrimeDate(uuid).getTime() + getPrimeMaxDay() * 24 * 60 * 60 * 1000)
+                        .before(new Timestamp(System.currentTimeMillis())))
                 {
                     setPrime(uuid, 0);
                 }
@@ -146,11 +144,13 @@ public class PrimeEvent implements Listener {
                 {
                     if (!player.getName().equals(killer.getName()) && !player.getName().equals(p.getName()))
                     {
-                        InGameUtilities.sendPlayerInformation(player, "Le joueur " + killer.getName() + " a gagné §6" + prime + "$§7 de prime en tuant " + p.getName() + ".");
+                        InGameUtilities.sendPlayerInformation(player,
+                                "Le joueur " + killer.getName() + " a gagné §6" + prime + "$§7 de prime en tuant " + p.getName() + ".");
                     }
                     else if (player.getName().equals(killer.getName()))
                     {
-                        InGameUtilities.sendPlayerSucces(player, "Vous avez gagné §6" + prime + "$§7 de prime en tuant " + p.getName() + ".");
+                        InGameUtilities.sendPlayerSucces(player,
+                                "Vous avez gagné §6" + prime + "$§7 de prime en tuant " + p.getName() + ".");
                     }
                     else if (player.getName().equals(p.getName()))
                     {

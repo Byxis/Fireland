@@ -2,6 +2,9 @@ package fr.byxis.player.pvpmanager;
 
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -19,11 +22,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-public class PvPManager implements Listener {
+public class PvPManager implements Listener
+{
 
     private static Map<UUID, Integer> pvpTimer;
     private final Fireland main;
@@ -82,14 +82,16 @@ public class PvPManager implements Listener {
         {
             Entity d = e.getDamager();
             ItemStack itemCrackData = new ItemStack(Material.REDSTONE_BLOCK);
-            p.getWorld().spawnParticle(Particle.ITEM, p.getLocation().add(0, 1, 0), 20, 0, 0, 0, 0.1,  itemCrackData);
+            p.getWorld().spawnParticle(Particle.ITEM, p.getLocation().add(0, 1, 0), 20, 0, 0, 0, 0.1, itemCrackData);
 
             if (p.getName().equalsIgnoreCase(d.getName()))
                 return;
 
-            if (main.getHashMapManager().getFactionMap().containsKey(p.getUniqueId()) && main.getHashMapManager().getFactionMap().containsKey(d.getUniqueId()))
+            if (main.getHashMapManager().getFactionMap().containsKey(p.getUniqueId())
+                    && main.getHashMapManager().getFactionMap().containsKey(d.getUniqueId()))
             {
-                if (main.getHashMapManager().getFactionMap().get(p.getUniqueId()).equals(main.getHashMapManager().getFactionMap().get(d.getUniqueId())))
+                if (main.getHashMapManager().getFactionMap().get(p.getUniqueId())
+                        .equals(main.getHashMapManager().getFactionMap().get(d.getUniqueId())))
                 {
                     return;
                 }
@@ -99,7 +101,8 @@ public class PvPManager implements Listener {
             {
                 if (!pvpTimer.containsKey(d.getUniqueId()))
                 {
-                    InGameUtilities.sendPlayerError(dp, "Vous entrez en combat pendant 30s. Ne vous déconnectez pas où vous perdrez votre stuff.");
+                    InGameUtilities.sendPlayerError(dp,
+                            "Vous entrez en combat pendant 30s. Ne vous déconnectez pas où vous perdrez votre stuff.");
                 }
                 putPvpTimer(dp);
             }
@@ -108,7 +111,8 @@ public class PvPManager implements Listener {
             {
                 if (!pvpTimer.containsKey(p.getUniqueId()))
                 {
-                    InGameUtilities.sendPlayerError(p, "Vous entrez en combat pendant 30s. Ne vous déconnectez pas où vous perdrez votre stuff.");
+                    InGameUtilities.sendPlayerError(p,
+                            "Vous entrez en combat pendant 30s. Ne vous déconnectez pas où vous perdrez votre stuff.");
                 }
                 putPvpTimer(p);
             }
@@ -138,9 +142,11 @@ public class PvPManager implements Listener {
 
     private void loop()
     {
-        new BukkitRunnable() {
+        new BukkitRunnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 if (pvpTimer.keySet().isEmpty())
                 {
                     return;
@@ -163,14 +169,18 @@ public class PvPManager implements Listener {
         }.runTaskTimer(main, 0, 20);
     }
 
-    private void showTimerBar(Player p) {
-        BossBar bar = Bukkit.createBossBar("§c§lEn combat pendant " + (pvpTimer.get(p.getUniqueId()) + 1) + "s", BarColor.RED, BarStyle.SOLID);
+    private void showTimerBar(Player p)
+    {
+        BossBar bar = Bukkit.createBossBar("§c§lEn combat pendant " + (pvpTimer.get(p.getUniqueId()) + 1) + "s", BarColor.RED,
+                BarStyle.SOLID);
         bar.setVisible(true);
         bar.setProgress((double) (pvpTimer.get(p.getUniqueId()) + 1) / 30);
         bar.addPlayer(p);
-        new BukkitRunnable() {
+        new BukkitRunnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 bar.removeAll();
             }
         }.runTaskLater(main, 20);

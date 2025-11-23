@@ -3,7 +3,6 @@ package fr.byxis.faction.zone;
 import fr.byxis.db.DbConnection;
 import fr.byxis.faction.zone.zoneclass.FactionZoneInformation;
 import fr.byxis.fireland.Fireland;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZoneManager {
+public class ZoneManager
+{
 
     private final DataZone data;
 
@@ -42,20 +42,21 @@ public class ZoneManager {
         try (Connection connection = firelandConnection.getConnection())
         {
             /*
-            *
-            * Partie zones claims
-            *
-            */
-            //Préparation de la commande
-            PreparedStatement isInDb = connection.prepareStatement("SELECT capture_zone.zone, capture_zone.capture_time FROM capture_zone " +
-                    "WHERE capture_zone.faction_name = ?;");
+             *
+             * Partie zones claims
+             *
+             */
+            // Préparation de la commande
+            PreparedStatement isInDb = connection.prepareStatement(
+                    "SELECT capture_zone.zone, capture_zone.capture_time FROM capture_zone " + "WHERE capture_zone.faction_name = ?;");
             isInDb.setString(1, name);
             ResultSet rs = isInDb.executeQuery();
             int i = 0;
             while (rs.next())
             {
                 i++;
-                FactionZoneInformation factionZoneInformation = new FactionZoneInformation(name, rs.getString(1), rs.getTimestamp(2), System.currentTimeMillis() - rs.getTimestamp(2).getTime());
+                FactionZoneInformation factionZoneInformation = new FactionZoneInformation(name, rs.getString(1), rs.getTimestamp(2),
+                        System.currentTimeMillis() - rs.getTimestamp(2).getTime());
                 list.add(factionZoneInformation);
             }
             /*
@@ -64,8 +65,8 @@ public class ZoneManager {
              *
              */
 
-            isInDb = connection.prepareStatement("SELECT faction_zone.zone, faction_zone.duration FROM faction_zone " +
-                    "WHERE faction_zone.faction_name = ?;");
+            isInDb = connection.prepareStatement(
+                    "SELECT faction_zone.zone, faction_zone.duration FROM faction_zone " + "WHERE faction_zone.faction_name = ?;");
 
             isInDb.setString(1, name);
             rs = isInDb.executeQuery();
@@ -91,7 +92,9 @@ public class ZoneManager {
                     list.add(factionZoneInformation);
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
 

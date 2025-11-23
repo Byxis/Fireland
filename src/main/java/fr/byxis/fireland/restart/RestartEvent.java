@@ -7,7 +7,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class RestartEvent implements Listener
 {
 
-
     @EventHandler
     public void playerJoin(PlayerJoinEvent e)
     {
@@ -20,6 +19,5 @@ public class RestartEvent implements Listener
             e.getPlayer().kickPlayer("§cLe serveur est en train de redémarrer.");
         }
     }
-
 
 }

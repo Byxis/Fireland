@@ -1,7 +1,8 @@
 package fr.byxis.faction.essaim.conditions;
 
 /**
- * Enum representing the different types of conditions that can be applied to essaims.
+ * Enum representing the different types of conditions that can be applied to
+ * essaims.
  */
 public enum ConditionType
 {
@@ -20,7 +21,8 @@ public enum ConditionType
     /**
      * Constructs a ConditionType.
      *
-     * @param _configKey The key used in configuration files
+     * @param _configKey
+     *            The key used in configuration files
      */
     ConditionType(String _configKey)
     {
@@ -40,7 +42,8 @@ public enum ConditionType
     /**
      * Gets a ConditionType from a configuration key.
      *
-     * @param _configKey The key to look up
+     * @param _configKey
+     *            The key to look up
      * @return The corresponding ConditionType, or null if not found
      */
     public static ConditionType fromConfigKey(String _configKey)
@@ -59,4 +62,3 @@ public enum ConditionType
         return null;
     }
 }
-

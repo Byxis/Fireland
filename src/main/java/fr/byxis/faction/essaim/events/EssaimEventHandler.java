@@ -1,11 +1,9 @@
 package fr.byxis.faction.essaim.events;
 
 import fr.byxis.faction.essaim.EssaimManager;
-import fr.byxis.faction.essaim.conditions.ConditionType;
+import fr.byxis.faction.essaim.conditions.EssaimCondition;
 import fr.byxis.faction.essaim.essaimClass.EssaimClass;
 import fr.byxis.faction.essaim.essaimClass.EssaimGroup;
-import fr.byxis.faction.essaim.conditions.ConditionScope;
-import fr.byxis.faction.essaim.conditions.EssaimCondition;
 import fr.byxis.faction.essaim.managers.GroupManager;
 import fr.byxis.faction.essaim.managers.SpawnerManager;
 import fr.byxis.faction.essaim.services.EssaimConfigService;
@@ -20,6 +18,9 @@ import fr.byxis.fireland.utilities.TextUtilities;
 import io.lumine.mythic.bukkit.events.MythicMobDeathEvent;
 import io.lumine.mythic.bukkit.events.MythicMobDespawnEvent;
 import io.lumine.mythic.bukkit.events.MythicMobSpawnEvent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import org.bukkit.*;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.ItemFrame;
@@ -33,30 +34,25 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * Event handler for the Essaim (essaim) functionality.
  * <p>
  * This class handles all events related to essaims, including:
  * <ul>
- *   <li>MythicMobs mob events (spawn, despawn, death)</li>
- *   <li>Player events (death, login, logout, world change)</li>
- *   <li>Entity and block interactions</li>
- *   <li>Inventory interactions (menus)</li>
- *   <li>World save events</li>
+ * <li>MythicMobs mob events (spawn, despawn, death)</li>
+ * <li>Player events (death, login, logout, world change)</li>
+ * <li>Entity and block interactions</li>
+ * <li>Inventory interactions (menus)</li>
+ * <li>World save events</li>
  * </ul>
  *
  * @author Byxis
  * @version 1.0
  * @since 5.0
  */
-public class EssaimEventHandler implements Listener {
+public class EssaimEventHandler implements Listener
+{
 
     private static final long INTERACTION_COOLDOWN = 500;
     private final Fireland m_fireland;
@@ -69,14 +65,16 @@ public class EssaimEventHandler implements Listener {
     private final FactionFunctions m_factionFunctions;
     private final Map<UUID, Long> m_interactCooldowns = new HashMap<>();
 
-
     /**
      * Constructs a new event handler for essaims.
      * <p>
-     * Initializes all necessary managers and services from the provided EssaimManager.
+     * Initializes all necessary managers and services from the provided
+     * EssaimManager.
      *
-     * @param _fireland Main instance of the Fireland plugin
-     * @param _essaimManager Main essaim manager
+     * @param _fireland
+     *            Main instance of the Fireland plugin
+     * @param _essaimManager
+     *            Main essaim manager
      */
     public EssaimEventHandler(Fireland _fireland, EssaimManager _essaimManager)
     {
@@ -97,9 +95,11 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles the death event of a MythicMobs mob.
      * <p>
-     * Notifies the SpawnerManager of the mob's disappearance if it's in the "essaim" world.
+     * Notifies the SpawnerManager of the mob's disappearance if it's in the
+     * "essaim" world.
      *
-     * @param _event MythicMobs death event
+     * @param _event
+     *            MythicMobs death event
      */
     @EventHandler
     public void onMythicMobDeath(MythicMobDeathEvent _event)
@@ -110,9 +110,11 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles the despawn event of a MythicMobs mob.
      * <p>
-     * Notifies the SpawnerManager of the mob's disappearance if it's in the "essaim" world.
+     * Notifies the SpawnerManager of the mob's disappearance if it's in the
+     * "essaim" world.
      *
-     * @param _event MythicMobs despawn event
+     * @param _event
+     *            MythicMobs despawn event
      */
     @EventHandler
     public void onMythicMobDespawn(MythicMobDespawnEvent _event)
@@ -123,9 +125,11 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles the canceled spawn event of a MythicMobs mob.
      * <p>
-     * If the spawn is canceled, notifies the SpawnerManager of the mob's disappearance.
+     * If the spawn is canceled, notifies the SpawnerManager of the mob's
+     * disappearance.
      *
-     * @param _event MythicMobs spawn event
+     * @param _event
+     *            MythicMobs spawn event
      */
     @EventHandler
     public void onMythicMobSpawnCancelled(MythicMobSpawnEvent _event)
@@ -139,9 +143,11 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles the disappearance of a mob (death, despawn, or canceled spawn).
      * <p>
-     * Checks that the mob is in the "essaim" world before notifying the SpawnerManager.
+     * Checks that the mob is in the "essaim" world before notifying the
+     * SpawnerManager.
      *
-     * @param _mob The MythicMobs mob that is disappearing
+     * @param _mob
+     *            The MythicMobs mob that is disappearing
      */
     private void handleMobDisappearing(io.lumine.mythic.core.mobs.ActiveMob _mob)
     {
@@ -160,12 +166,14 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * If the player is in an essaim group:
      * <ul>
-     *   <li>Keeps their inventory if the group has started and this option is enabled</li>
-     *   <li>Displays an expedition failure message</li>
-     *   <li>Notifies the GroupManager of the player's death</li>
+     * <li>Keeps their inventory if the group has started and this option is
+     * enabled</li>
+     * <li>Displays an expedition failure message</li>
+     * <li>Notifies the GroupManager of the player's death</li>
      * </ul>
      *
-     * @param _event Player death event
+     * @param _event
+     *            Player death event
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent _event)
@@ -191,7 +199,8 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * Delegates handling to the leaving handler with the quit flag.
      *
-     * @param _event Player quit event
+     * @param _event
+     *            Player quit event
      */
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent _event)
@@ -204,7 +213,8 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * Removes the player from any groups they might be in from a previous session.
      *
-     * @param _event Player join event
+     * @param _event
+     *            Player join event
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent _event)
@@ -223,9 +233,11 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles the player world change event.
      * <p>
-     * If the player leaves the "essaim" world, handles their departure from the group.
+     * If the player leaves the "essaim" world, handles their departure from the
+     * group.
      *
-     * @param _event Player world change event
+     * @param _event
+     *            Player world change event
      */
     @EventHandler
     public void onPlayerChangeWorld(PlayerChangedWorldEvent _event)
@@ -243,12 +255,14 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * Behaviors depending on context:
      * <ul>
-     *   <li>If disconnecting during an ongoing expedition: kills the player</li>
-     *   <li>Otherwise: removes the player from the group normally</li>
+     * <li>If disconnecting during an ongoing expedition: kills the player</li>
+     * <li>Otherwise: removes the player from the group normally</li>
      * </ul>
      *
-     * @param _player The player who is leaving
-     * @param _isQuit True if this is a disconnect, false if it's a world change
+     * @param _player
+     *            The player who is leaving
+     * @param _isQuit
+     *            True if this is a disconnect, false if it's a world change
      */
     private void handlePlayerLeaving(Player _player, boolean _isQuit)
     {
@@ -275,14 +289,15 @@ public class EssaimEventHandler implements Listener {
         });
     }
 
-
     /**
      * Handles the player interact with entity event.
      * <p>
-     * Detects interaction with ItemFrames containing dead fire coral (essaim portals).
-     * Checks cooldowns, faction permissions, and opens the appropriate essaim.
+     * Detects interaction with ItemFrames containing dead fire coral (essaim
+     * portals). Checks cooldowns, faction permissions, and opens the appropriate
+     * essaim.
      *
-     * @param _event Player interact with entity event
+     * @param _event
+     *            Player interact with entity event
      */
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent _event)
@@ -334,10 +349,11 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles the player interact with block event.
      * <p>
-     * Detects the use of keys (ECHO_SHARD) on iron doors to open
-     * locked doors in essaims.
+     * Detects the use of keys (ECHO_SHARD) on iron doors to open locked doors in
+     * essaims.
      *
-     * @param _event Player interact event
+     * @param _event
+     *            Player interact event
      */
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent _event)
@@ -368,12 +384,13 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * Detects and handles clicks in different essaim menus:
      * <ul>
-     *   <li>Main essaim menu</li>
-     *   <li>Invitation menu</li>
-     *   <li>Difficulty selection menu</li>
+     * <li>Main essaim menu</li>
+     * <li>Invitation menu</li>
+     * <li>Difficulty selection menu</li>
      * </ul>
      *
-     * @param _event Inventory click event
+     * @param _event
+     *            Inventory click event
      */
     @EventHandler
     public void onInventoryClick(InventoryClickEvent _event)
@@ -412,7 +429,8 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * Saves the state of all essaims when the main world is saved.
      *
-     * @param _event World save event
+     * @param _event
+     *            World save event
      */
     @EventHandler
     public void onWorldSave(WorldSaveEvent _event)
@@ -430,7 +448,8 @@ public class EssaimEventHandler implements Listener {
     /**
      * Checks if a player is a member of a faction.
      *
-     * @param _player The player to check
+     * @param _player
+     *            The player to check
      *
      * @return true if the player is in a faction, false otherwise
      */
@@ -442,11 +461,13 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles a player's interaction with a essaim portal.
      * <p>
-     * Checks that the essaim is active, that the player can join, and opens the appropriate menu
-     * or creates a new group.
+     * Checks that the essaim is active, that the player can join, and opens the
+     * appropriate menu or creates a new group.
      *
-     * @param _player The player interacting
-     * @param _essaimName The essaim name
+     * @param _player
+     *            The player interacting
+     * @param _essaimName
+     *            The essaim name
      */
     private void handleEssaimInteraction(Player _player, String _essaimName)
     {
@@ -477,7 +498,8 @@ public class EssaimEventHandler implements Listener {
             if (!cooldownService.canPlayerEnter(_player, essaim))
             {
                 long minutesRemaining = cooldownService.getRemainingParticipationCooldownMinutes(_player, _essaimName);
-                InGameUtilities.sendPlayerInformation(_player, "§cVous devez attendre encore " + minutesRemaining + " minutes avant de rejoindre cet essaim.");
+                InGameUtilities.sendPlayerInformation(_player,
+                        "§cVous devez attendre encore " + minutesRemaining + " minutes avant de rejoindre cet essaim.");
             }
             else if (EssaimCondition.checkEssaimConditions(m_configService, _player, _essaimName))
             {
@@ -486,9 +508,8 @@ public class EssaimEventHandler implements Listener {
             }
             else
             {
-                InGameUtilities.sendPlayerError(_player, "Vous ne remplissez pas les conditions pour entrer " +
-                        "dans cet essaim : " + EssaimCondition.getUnsatisfiedConditionDescription(m_configService,
-                        _player, _essaimName));
+                InGameUtilities.sendPlayerError(_player, "Vous ne remplissez pas les conditions pour entrer " + "dans cet essaim : "
+                        + EssaimCondition.getUnsatisfiedConditionDescription(m_configService, _player, _essaimName));
             }
         }
     }
@@ -496,11 +517,13 @@ public class EssaimEventHandler implements Listener {
     /**
      * Creates a new group and teleports the player to the essaim hub.
      * <p>
-     * Checks permissions, handles teleportation with delay (except in creative mode),
-     * and creates the group after teleportation using a callback.
+     * Checks permissions, handles teleportation with delay (except in creative
+     * mode), and creates the group after teleportation using a callback.
      *
-     * @param _player The player to teleport
-     * @param _essaimName The essaim name
+     * @param _player
+     *            The player to teleport
+     * @param _essaimName
+     *            The essaim name
      */
     private void createNewGroupAndTeleport(Player _player, String _essaimName)
     {
@@ -522,7 +545,8 @@ public class EssaimEventHandler implements Listener {
         }
 
         Location hubLocation = m_configService.getEssaimLocation(_essaimName, EssaimConfigService.LocationType.HUB);
-        InGameUtilities.teleportPlayer(_player, hubLocation, 10, "gun.hub.helico", () -> {
+        InGameUtilities.teleportPlayer(_player, hubLocation, 10, "gun.hub.helico", () ->
+        {
             if (_player.isOnline() && !m_groupManager.hasGroup(_essaimName))
             {
                 try
@@ -530,7 +554,8 @@ public class EssaimEventHandler implements Listener {
                     EssaimGroup newGroup = m_groupManager.createGroup(_essaimName, _player);
                     m_fireland.getLogger().info("Group created for player: " + _player.getName() + " in essaim: " + _essaimName);
 
-                    InGameUtilities.sendPlayerInformation(_player, "§aBienvenue dans l'essaim " + TextUtilities.convertStorableToClean(_essaimName) + " !");
+                    InGameUtilities.sendPlayerInformation(_player,
+                            "§aBienvenue dans l'essaim " + TextUtilities.convertStorableToClean(_essaimName) + " !");
                     return true;
                 }
                 catch (IllegalStateException e)
@@ -554,12 +579,15 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles clicks in the main essaim menu.
      * <p>
-     * Distinguishes between a finished essaim (exit option only) and an active essaim
-     * (launch, invitation, exit options).
+     * Distinguishes between a finished essaim (exit option only) and an active
+     * essaim (launch, invitation, exit options).
      *
-     * @param _event Inventory click event
-     * @param _player The clicking player
-     * @param _clickedItem The clicked item
+     * @param _event
+     *            Inventory click event
+     * @param _player
+     *            The clicking player
+     * @param _clickedItem
+     *            The clicked item
      */
     private void handleEssaimMenuClick(InventoryClickEvent _event, Player _player, ItemStack _clickedItem)
     {
@@ -588,22 +616,26 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * Available options :
      * <ul>
-     *   <li>LIME_STAINED_GLASS_PANE: Open difficulty selection menu (leader only)</li>
-     *   <li>RED_STAINED_GLASS_PANE: Leave the group</li>
-     *   <li>YELLOW_STAINED_GLASS_PANE: Open invitation menu (leader only)</li>
+     * <li>LIME_STAINED_GLASS_PANE: Open difficulty selection menu (leader
+     * only)</li>
+     * <li>RED_STAINED_GLASS_PANE: Leave the group</li>
+     * <li>YELLOW_STAINED_GLASS_PANE: Open invitation menu (leader only)</li>
      * </ul>
      *
-     * @param _clickedItem The clicked item
-     * @param _player The clicking player
-     * @param _essaimName The essaim name
-     * @param _group The current group
+     * @param _clickedItem
+     *            The clicked item
+     * @param _player
+     *            The clicking player
+     * @param _essaimName
+     *            The essaim name
+     * @param _group
+     *            The current group
      */
     private void handleActiveEssaimMenuClick(ItemStack _clickedItem, Player _player, String _essaimName, EssaimGroup _group)
     {
         switch (_clickedItem.getType())
         {
-            case LIME_STAINED_GLASS_PANE ->
-            {
+            case LIME_STAINED_GLASS_PANE -> {
                 if (_group.getLeader().equals(_player))
                 {
                     _player.openInventory(m_menuBuilder.createDifficultyMenu(_essaimName));
@@ -614,12 +646,10 @@ public class EssaimEventHandler implements Listener {
                     InGameUtilities.sendPlayerError(_player, "§cVous n'êtes pas le leader du groupe.");
                 }
             }
-            case RED_STAINED_GLASS_PANE ->
-            {
+            case RED_STAINED_GLASS_PANE -> {
                 m_groupManager.leaveGroup(_essaimName, _player);
             }
-            case YELLOW_STAINED_GLASS_PANE ->
-            {
+            case YELLOW_STAINED_GLASS_PANE -> {
                 if (_group.getLeader().equals(_player))
                 {
                     _player.openInventory(m_menuBuilder.createInvitationMenu(_essaimName, _group, _player));
@@ -637,11 +667,15 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles clicks in the invitation menu.
      * <p>
-     * Allows inviting players by clicking on their head or returning to the main menu.
+     * Allows inviting players by clicking on their head or returning to the main
+     * menu.
      *
-     * @param _event Inventory click event
-     * @param _player The clicking player
-     * @param _clickedItem The clicked item
+     * @param _event
+     *            Inventory click event
+     * @param _player
+     *            The clicking player
+     * @param _clickedItem
+     *            The clicked item
      */
     private void handleInvitationMenuClick(InventoryClickEvent _event, Player _player, ItemStack _clickedItem)
     {
@@ -651,8 +685,7 @@ public class EssaimEventHandler implements Listener {
 
         switch (_clickedItem.getType())
         {
-            case PLAYER_HEAD ->
-            {
+            case PLAYER_HEAD -> {
                 if (_clickedItem.hasItemMeta() && _clickedItem.getItemMeta().hasDisplayName())
                 {
                     String targetName = ChatColor.stripColor(_clickedItem.getItemMeta().getDisplayName());
@@ -666,8 +699,7 @@ public class EssaimEventHandler implements Listener {
                     }
                 }
             }
-            case RED_STAINED_GLASS_PANE ->
-            {
+            case RED_STAINED_GLASS_PANE -> {
                 EssaimGroup group = m_groupManager.getGroup(essaimName);
                 boolean isFinished = m_essaimService.getActiveEssaim(essaimName).isFinished();
                 _player.openInventory(m_menuBuilder.createGroupMenu(essaimName, group, isFinished));
@@ -679,13 +711,15 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles clicks in the difficulty selection menu.
      * <p>
-     * Difficulty 1: PLAYER_HEAD
-     * Difficulty 2: SKELETON_SKULL
-     * Difficulty 3: WITHER_SKELETON_SKULL (not available)
+     * Difficulty 1: PLAYER_HEAD Difficulty 2: SKELETON_SKULL Difficulty 3:
+     * WITHER_SKELETON_SKULL (not available)
      *
-     * @param _event Inventory click event
-     * @param _player The clicking player
-     * @param _clickedItem The clicked item
+     * @param _event
+     *            Inventory click event
+     * @param _player
+     *            The clicking player
+     * @param _clickedItem
+     *            The clicked item
      */
     private void handleDifficultyMenuClick(InventoryClickEvent _event, Player _player, ItemStack _clickedItem)
     {
@@ -703,8 +737,7 @@ public class EssaimEventHandler implements Listener {
         {
             case PLAYER_HEAD -> 1;
             case SKELETON_SKULL -> 2;
-            case WITHER_SKELETON_SKULL ->
-            {
+            case WITHER_SKELETON_SKULL -> {
                 InGameUtilities.sendPlayerError(_player, "Cette difficulté n'est pas encore disponible.");
                 yield -1;
             }
@@ -720,10 +753,11 @@ public class EssaimEventHandler implements Listener {
     /**
      * Handles the use of a essaim key on a door.
      * <p>
-     * Retrieves the essaim name from the key's CustomModelData
-     * and attempts to open the associated door.
+     * Retrieves the essaim name from the key's CustomModelData and attempts to open
+     * the associated door.
      *
-     * @param _event Player interact event
+     * @param _event
+     *            Player interact event
      */
     private void handleKeyUsage(PlayerInteractEvent _event)
     {
@@ -755,20 +789,21 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * ID mapping:
      * <ul>
-     *   <li>1: bunker-de-latus</li>
-     *   <li>2: usine-portuaire</li>
-     *   <li>3: station-de-traitement-des-eaux</li>
-     *   <li>4: entrepot-militaire</li>
-     *   <li>5: immeuble-infeste</li>
-     *   <li>6: hangar-silencieux</li>
-     *   <li>8: centrale-nucleaire</li>
-     *   <li>9: epave-du-porte-avion</li>
-     *   <li>10: crypte</li>
-     *   <li>11: station-petroliere</li>
-     *   <li>12: laboratoire</li>
+     * <li>1: bunker-de-latus</li>
+     * <li>2: usine-portuaire</li>
+     * <li>3: station-de-traitement-des-eaux</li>
+     * <li>4: entrepot-militaire</li>
+     * <li>5: immeuble-infeste</li>
+     * <li>6: hangar-silencieux</li>
+     * <li>8: centrale-nucleaire</li>
+     * <li>9: epave-du-porte-avion</li>
+     * <li>10: crypte</li>
+     * <li>11: station-petroliere</li>
+     * <li>12: laboratoire</li>
      * </ul>
      *
-     * @param _customModelData The key's CustomModelData ID
+     * @param _customModelData
+     *            The key's CustomModelData ID
      *
      * @return The corresponding essaim name, or an empty string if not found
      */
@@ -794,11 +829,13 @@ public class EssaimEventHandler implements Listener {
     /**
      * Opens a door with a essaim key.
      * <p>
-     * Checks that the door is at the correct position, that it's closed,
-     * opens it and consumes the key (except in creative mode).
+     * Checks that the door is at the correct position, that it's closed, opens it
+     * and consumes the key (except in creative mode).
      *
-     * @param _event Player interact event
-     * @param _keyLocation The configured door position for this essaim
+     * @param _event
+     *            Player interact event
+     * @param _keyLocation
+     *            The configured door position for this essaim
      */
     private void openDoorWithKey(PlayerInteractEvent _event, Location _keyLocation)
     {
@@ -833,9 +870,12 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * Starts the essaim via the service and notifies all group members.
      *
-     * @param _essaimName The essaim name to launch
-     * @param _difficulty The selected difficulty (1, 2, or 3)
-     * @param _player The player launching the essaim (must be the leader)
+     * @param _essaimName
+     *            The essaim name to launch
+     * @param _difficulty
+     *            The selected difficulty (1, 2, or 3)
+     * @param _player
+     *            The player launching the essaim (must be the leader)
      */
     private void launchEssaim(String _essaimName, int _difficulty, Player _player)
     {
@@ -855,8 +895,10 @@ public class EssaimEventHandler implements Listener {
     /**
      * Invites a player to join a essaim group.
      *
-     * @param _essaimName The essaim name
-     * @param _target The player to invite
+     * @param _essaimName
+     *            The essaim name
+     * @param _target
+     *            The player to invite
      */
     private void invitePlayerToGroup(String _essaimName, Player _target)
     {
@@ -872,8 +914,10 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * If it's the last player, completely cleans up the essaim.
      *
-     * @param _essaimName The essaim name
-     * @param _player The player leaving
+     * @param _essaimName
+     *            The essaim name
+     * @param _player
+     *            The player leaving
      */
     private void handleFinishedEssaimLeave(String _essaimName, Player _player)
     {
@@ -903,7 +947,8 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * Disbands the group and resets the essaim state if it's an event.
      *
-     * @param _essaimName The essaim name to clean up
+     * @param _essaimName
+     *            The essaim name to clean up
      */
     private void cleanupFinishedEssaim(String _essaimName)
     {
@@ -936,9 +981,11 @@ public class EssaimEventHandler implements Listener {
     /**
      * Extracts the essaim name from a menu title.
      * <p>
-     * Converts the formatted title to a storable essaim name (lowercase with dashes).
+     * Converts the formatted title to a storable essaim name (lowercase with
+     * dashes).
      *
-     * @param _title The menu title
+     * @param _title
+     *            The menu title
      *
      * @return The essaim name in storable format
      */
@@ -962,13 +1009,15 @@ public class EssaimEventHandler implements Listener {
     /**
      * Finds the essaim name corresponding to a given group.
      *
-     * @param _group The group to search for
+     * @param _group
+     *            The group to search for
      *
      * @return The essaim name, or null if not found
      */
     private String findEssaimNameByGroup(EssaimGroup _group)
     {
-        return m_groupManager.getAllGroups().entrySet().stream().filter(entry -> entry.getValue().equals(_group)).map(Map.Entry::getKey).findFirst().orElse(null);
+        return m_groupManager.getAllGroups().entrySet().stream().filter(entry -> entry.getValue().equals(_group)).map(Map.Entry::getKey)
+                .findFirst().orElse(null);
     }
 
     /**
@@ -976,14 +1025,17 @@ public class EssaimEventHandler implements Listener {
      * <p>
      * Required permission: {@code fireland.essaim.access.<essaim-name>}
      *
-     * @param _player The player to check
-     * @param _essaimName The essaim name
+     * @param _player
+     *            The player to check
+     * @param _essaimName
+     *            The essaim name
      *
      * @return true if the player has permission, false otherwise
      */
     private boolean hasEssaimPermission(Player _player, String _essaimName)
     {
-        return fr.byxis.fireland.utilities.PermissionUtilities.hasPermission(_player.getUniqueId(), "fireland.essaim.access." + _essaimName);
+        return fr.byxis.fireland.utilities.PermissionUtilities.hasPermission(_player.getUniqueId(),
+                "fireland.essaim.access." + _essaimName);
     }
 
     /**

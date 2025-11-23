@@ -1,5 +1,11 @@
 package fr.byxis.player.intendant;
 
+import static fr.byxis.player.intendant.menu.MenuEssaim.openEssaimMenu;
+import static fr.byxis.player.intendant.menu.MenuIntendant.openIntendant;
+import static fr.byxis.player.intendant.menu.MenuLevel.openLevelMenu;
+import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
+import static fr.byxis.player.primes.PrimeEvent.addPrime;
+
 import fr.byxis.faction.faction.FactionFunctions;
 import fr.byxis.faction.faction.FactionInformation;
 import fr.byxis.faction.faction.FactionPlayerInformation;
@@ -11,6 +17,7 @@ import fr.byxis.player.intendant.menu.*;
 import fr.byxis.player.level.LevelStorage;
 import fr.byxis.player.level.PlayerLevel;
 import fr.byxis.player.quest.QuestManager;
+import java.util.List;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -21,15 +28,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.List;
-
-import static fr.byxis.player.intendant.menu.MenuEssaim.openEssaimMenu;
-import static fr.byxis.player.intendant.menu.MenuIntendant.openIntendant;
-import static fr.byxis.player.intendant.menu.MenuLevel.openLevelMenu;
-import static fr.byxis.player.level.LevelStorage.getPlayerLevel;
-import static fr.byxis.player.primes.PrimeEvent.addPrime;
-
-public class Manager implements Listener {
+public class Manager implements Listener
+{
 
     private final Fireland main;
 
@@ -46,16 +46,16 @@ public class Manager implements Listener {
         {
             if (inv.getTitle().contains("Intendant"))
             {
-                /**       Click check        **/
+                /** Click check **/
                 InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
+                if (itemclicked == null)
+                {
                     return;
                 }
 
-                /**       Click check        **/
-
+                /** Click check **/
 
                 switch (itemclicked.getType())
                 {
@@ -77,7 +77,7 @@ public class Manager implements Listener {
                         MenuQuest.openQuestMenu(main, p);
                     }
                     case NETHER_STAR -> {
-                        //TODO: Succès
+                        // TODO: Succès
                     }
                     case WHITE_BANNER, BLACK_BANNER -> {
                         openLevelMenu(main, p, 0);
@@ -92,21 +92,22 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().contains("Votre faction"))
             {
-                /**       Click check        **/
+                /** Click check **/
                 InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
+                if (itemclicked == null)
+                {
                     return;
                 }
 
-                /**       Click check        **/
-
+                /** Click check **/
 
                 FactionFunctions ff = new FactionFunctions(main, p);
                 FactionPlayerInformation infos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
                 FactionInformation finfos = ff.getFactionInfo(infos.getFactionName());
-                switch (itemclicked.getType()) {
+                switch (itemclicked.getType())
+                {
                     case RED_STAINED_GLASS_PANE -> {
                         openIntendant(main, p);
                     }
@@ -122,24 +123,37 @@ public class Manager implements Listener {
                         p.closeInventory();
                     }
                     case ENDER_CHEST -> {
-                        if (ff.getAmeliorationsUpgrades(finfos.getCurrentUpgrade())[2] != 0) {
+                        if (ff.getAmeliorationsUpgrades(finfos.getCurrentUpgrade())[2] != 0)
+                        {
 
                             InGameUtilities.playPlayerSound(p, "ui.button.click", SoundCategory.BLOCKS, 1, 2);
                             p.openInventory(ff.loadStorage(infos.getFactionName(), finfos.getCurrentUpgrade()));
-                        } else {
+                        }
+                        else
+                        {
                             InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
                         }
-                    } case GOLD_INGOT -> {
-                        if (e.isRightClick() && infos.getRole() == 2) {
-                            if (e.isShiftClick()) {
+                    }
+                    case GOLD_INGOT -> {
+                        if (e.isRightClick() && infos.getRole() == 2)
+                        {
+                            if (e.isShiftClick())
+                            {
                                 PermissionUtilities.commandExecutor(p, "faction withdraw 1000", "fireland.command.faction.withdraw");
-                            } else {
+                            }
+                            else
+                            {
                                 PermissionUtilities.commandExecutor(p, "faction withdraw 100", "fireland.command.faction.withdraw");
                             }
-                        } else if (e.isLeftClick()) {
-                            if (e.isShiftClick()) {
+                        }
+                        else if (e.isLeftClick())
+                        {
+                            if (e.isShiftClick())
+                            {
                                 PermissionUtilities.commandExecutor(p, "faction deposit 1000", "fireland.command.faction.deposit");
-                            } else {
+                            }
+                            else
+                            {
                                 PermissionUtilities.commandExecutor(p, "faction deposit 100", "fireland.command.faction.deposit");
                             }
                         }
@@ -158,16 +172,16 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().contains("Membres de "))
             {
-                /**       Click check        **/
+                /** Click check **/
                 InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
+                if (itemclicked == null)
+                {
                     return;
                 }
 
-                /**       Click check        **/
-
+                /** Click check **/
 
                 switch (itemclicked.getType())
                 {
@@ -178,16 +192,16 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().contains("Améliorations pour"))
             {
-                /**       Click check        **/
+                /** Click check **/
                 InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
+                if (itemclicked == null)
+                {
                     return;
                 }
 
-                /**       Click check        **/
-
+                /** Click check **/
 
                 FactionFunctions ff = new FactionFunctions(main, p);
                 FactionPlayerInformation pInfos = ff.getInformationOfPlayerInAFaction(p.getUniqueId(), p.getName());
@@ -207,7 +221,8 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 2)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
+                                InGameUtilities.sendPlayerError(p,
+                                        "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -224,7 +239,8 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 5)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 5 pour débloquer cette amélioration.");
+                                InGameUtilities.sendPlayerError(p,
+                                        "Vous devez être niveau de faction 5 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -245,7 +261,8 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 4)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 4 pour débloquer cette amélioration.");
+                                InGameUtilities.sendPlayerError(p,
+                                        "Vous devez être niveau de faction 4 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -266,7 +283,8 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 3)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
+                                InGameUtilities.sendPlayerError(p,
+                                        "Vous devez être niveau de faction 3 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -287,7 +305,8 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 2)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
+                                InGameUtilities.sendPlayerError(p,
+                                        "Vous devez être niveau de faction 2 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -308,7 +327,8 @@ public class Manager implements Listener {
                             if (finfos.getCurrentUpgrade() < 6)
                             {
                                 InGameUtilities.playPlayerSound(p, "item.shield.break", SoundCategory.BLOCKS, 1, 0);
-                                InGameUtilities.sendPlayerError(p, "Vous devez être niveau de faction 6 pour débloquer cette amélioration.");
+                                InGameUtilities.sendPlayerError(p,
+                                        "Vous devez être niveau de faction 6 pour débloquer cette amélioration.");
                             }
                             else
                             {
@@ -324,7 +344,8 @@ public class Manager implements Listener {
                         return;
                     }
                 }
-                if (itemclicked.getType() == color && PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.command.faction.color") && !itemclicked.getItemMeta().getDisplayName().contains("Améliorer la faction au rang")
+                if (itemclicked.getType() == color && PermissionUtilities.hasPermission(p.getUniqueId(), "fireland.command.faction.color")
+                        && !itemclicked.getItemMeta().getDisplayName().contains("Améliorer la faction au rang")
                         && !itemclicked.getItemMeta().getDisplayName().contains("Retour au menu Faction") && pInfos.getRole() == 2)
                 {
                     MenuColor.openColorMenu(main, p, finfos);
@@ -332,17 +353,19 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().contains("Changement de couleur"))
             {
-                /**       Click check        **/
+                /** Click check **/
                 InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
+                if (itemclicked == null)
+                {
                     return;
                 }
 
-                /**       Click check        **/
+                /** Click check **/
 
-                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
+                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE
+                        && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
                 {
                     MenuPerks.openPerks(main, p);
                 }
@@ -358,15 +381,16 @@ public class Manager implements Listener {
             else if (inv.getTitle().contains("Zones"))
             {
 
-                /**       Click check        **/
+                /** Click check **/
                 InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
+                if (itemclicked == null)
+                {
                     return;
                 }
 
-                /**       Click check        **/
+                /** Click check **/
 
                 if (itemclicked.getType().toString().endsWith("_BANNER"))
                 {
@@ -384,11 +408,13 @@ public class Manager implements Listener {
                             break;
                         }
                     }
-                    if (zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk() && !main.getHashMapManager().isTeleporting(p.getUniqueId()))
+                    if (zoneinfo != null && zoneinfo.getClaimedAt() != null && finfos.hasZoneTpPerk()
+                            && !main.getHashMapManager().isTeleporting(p.getUniqueId()))
                     {
                         ZoneConfigFileManager configManager = new ZoneConfigFileManager(main);
                         configManager.notSafeSetup();
-                        Location loc = new Location(Bukkit.getWorld("world"), configManager.getConfig().getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.x"),
+                        Location loc = new Location(Bukkit.getWorld("world"),
+                                configManager.getConfig().getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.x"),
                                 configManager.getConfig().getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.y"),
                                 configManager.getConfig().getDouble("zone." + zoneinfo.getZoneName() + ".teleportation.z"));
 
@@ -396,25 +422,28 @@ public class Manager implements Listener {
                     }
                 }
 
-                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour au menu Faction"))
+                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE
+                        && itemclicked.getItemMeta().getDisplayName().contains("Retour au menu Faction"))
                 {
                     MenuFaction.openFaction(main, p, true);
                 }
             }
             else if (inv.getTitle().contains("Boosters"))
             {
-                /**       Click check        **/
+                /** Click check **/
 
                 InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
+                if (itemclicked == null)
+                {
                     return;
                 }
 
-                /**       Click check        **/
+                /** Click check **/
 
-                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
+                if (itemclicked.getType() == Material.RED_STAINED_GLASS_PANE
+                        && itemclicked.getItemMeta().getDisplayName().contains("Retour à l'intendant"))
                 {
                     openIntendant(main, p);
                 }
@@ -445,7 +474,7 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().contains("Quêtes quotidiennes"))
             {
-                /**       Click check        **/
+                /** Click check **/
 
                 InventoryUtilities.clickManager(e);
 
@@ -453,8 +482,7 @@ public class Manager implements Listener {
                 if (itemclicked == null)
                     return;
 
-                /**       Click check        **/
-
+                /** Click check **/
 
                 switch (itemclicked.getType())
                 {
@@ -469,7 +497,7 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().equalsIgnoreCase("§4Primes"))
             {
-                /**       Click check        **/
+                /** Click check **/
 
                 InventoryUtilities.clickManager(e);
 
@@ -477,8 +505,7 @@ public class Manager implements Listener {
                 if (itemclicked == null)
                     return;
 
-                /**       Click check        **/
-
+                /** Click check **/
 
                 switch (itemclicked.getType())
                 {
@@ -495,7 +522,7 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().equalsIgnoreCase("§4Primes: Sélectionner un joueur"))
             {
-                /**       Click check        **/
+                /** Click check **/
 
                 InventoryUtilities.clickManager(e);
 
@@ -503,8 +530,7 @@ public class Manager implements Listener {
                 if (itemclicked == null)
                     return;
 
-                /**       Click check        **/
-
+                /** Click check **/
 
                 switch (itemclicked.getType())
                 {
@@ -518,7 +544,7 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().equalsIgnoreCase("§4Primes: Ajouter un montant"))
             {
-                /**       Click check        **/
+                /** Click check **/
 
                 InventoryUtilities.clickManager(e);
 
@@ -526,9 +552,10 @@ public class Manager implements Listener {
                 if (itemclicked == null)
                     return;
 
-                /**       Click check        **/
+                /** Click check **/
                 String player = ChatColor.stripColor(e.getClickedInventory().getItem(13).getItemMeta().getDisplayName());
-                int money = Integer.parseInt(ChatColor.stripColor(e.getClickedInventory().getItem(13).getItemMeta().getLore().get(0).split(" ")[1]));
+                int money = Integer
+                        .parseInt(ChatColor.stripColor(e.getClickedInventory().getItem(13).getItemMeta().getLore().get(0).split(" ")[1]));
 
                 switch (itemclicked.getType())
                 {
@@ -589,8 +616,7 @@ public class Manager implements Listener {
                             MenuPrime.openPrimeMoney(main, p, player, money + 10);
                         }
                     }
-                    case STRUCTURE_VOID, BARRIER ->
-                    {
+                    case STRUCTURE_VOID, BARRIER -> {
                         if (Fireland.getEco().getBalance(p) > money)
                         {
                             if (money > 0)
@@ -599,7 +625,8 @@ public class Manager implements Listener {
                                 addPrime(BasicUtilities.getUuid(player), money);
                                 if (Bukkit.getPlayer(player) != null && Bukkit.getPlayer(player).isOnline())
                                 {
-                                    InGameUtilities.sendPlayerError(Bukkit.getPlayer(player), "Une prime de " + money + "$ vous a été attribuée.");
+                                    InGameUtilities.sendPlayerError(Bukkit.getPlayer(player),
+                                            "Une prime de " + money + "$ vous a été attribuée.");
                                 }
                                 InGameUtilities.sendPlayerSucces(p, "Une prime de " + money + "$ a été attribuée à " + player + ".");
                             }
@@ -613,7 +640,7 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().equalsIgnoreCase("§4Primes disponibles"))
             {
-                /**       Click check        **/
+                /** Click check **/
 
                 InventoryUtilities.clickManager(e);
 
@@ -621,8 +648,7 @@ public class Manager implements Listener {
                 if (itemclicked == null)
                     return;
 
-                /**       Click check        **/
-
+                /** Click check **/
 
                 switch (itemclicked.getType())
                 {
@@ -633,7 +659,7 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().equalsIgnoreCase("Calendrier des Essaims"))
             {
-                /**       Click check        **/
+                /** Click check **/
 
                 InventoryUtilities.clickManager(e);
 
@@ -641,8 +667,7 @@ public class Manager implements Listener {
                 if (itemclicked == null)
                     return;
 
-                /**       Click check        **/
-
+                /** Click check **/
 
                 switch (itemclicked.getType())
                 {
@@ -653,15 +678,16 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().contains("Choisir sa nation"))
             {
-                /**       Click check        **/
+                /** Click check **/
                 InventoryUtilities.clickManager(e);
 
                 ItemStack itemclicked = e.getCurrentItem();
-                if (itemclicked == null) {
+                if (itemclicked == null)
+                {
                     return;
                 }
 
-                /**       Click check        **/
+                /** Click check **/
 
                 if (itemclicked.getType().name().contains("_BANNER"))
                 {
@@ -704,7 +730,7 @@ public class Manager implements Listener {
             }
             else if (inv.getTitle().contains("Votre niveau : "))
             {
-                /**       Click check        **/
+                /** Click check **/
 
                 InventoryUtilities.clickManager(e);
 
@@ -712,8 +738,7 @@ public class Manager implements Listener {
                 if (itemclicked == null)
                     return;
 
-                /**       Click check        **/
-
+                /** Click check **/
 
                 switch (itemclicked.getType())
                 {
@@ -721,12 +746,16 @@ public class Manager implements Listener {
                         openLevelMenu(main, p, getPageNumber(itemclicked) - 1);
                     }
                     case DIAMOND_BLOCK, DIAMOND -> {
-                        getPlayerLevel(p.getUniqueId()).claimRewards(main, Integer.parseInt(itemclicked.getItemMeta().getDisplayName().split(" ")[1]));
+                        getPlayerLevel(p.getUniqueId()).claimRewards(main,
+                                Integer.parseInt(itemclicked.getItemMeta().getDisplayName().split(" ")[1]));
                         openLevelMenu(main, p, Integer.parseInt(itemclicked.getItemMeta().getDisplayName().split(" ")[1]) / 44);
                     }
                     case WHITE_BANNER, BLACK_BANNER -> {
                         PlayerLevel pl = getPlayerLevel(p.getUniqueId());
-                        InGameUtilities.sendInteractivePlayerMessage(p, "§cPour changer de nation, cliquez sur ce message. Vous devez payer " + pl.getJetonPriceNationChange() + "§f⛁§c et " + pl.getMoneyPriceNationChange() + "§f$", "/level changeNation8484", "§cCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
+                        InGameUtilities.sendInteractivePlayerMessage(p,
+                                "§cPour changer de nation, cliquez sur ce message. Vous devez payer " + pl.getJetonPriceNationChange()
+                                        + "§f⛁§c et " + pl.getMoneyPriceNationChange() + "§f$",
+                                "/level changeNation8484", "§cCliquez ici pour changer de nation", ClickEvent.Action.RUN_COMMAND);
                         p.closeInventory();
                     }
                 }
@@ -734,7 +763,8 @@ public class Manager implements Listener {
         }
     }
 
-    public int getPageNumber(ItemStack item) {
+    public int getPageNumber(ItemStack item)
+    {
         // Remove color codes
         String strippedInput = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 

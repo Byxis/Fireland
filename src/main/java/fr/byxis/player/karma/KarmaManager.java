@@ -4,6 +4,9 @@ import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.BasicUtilities;
 import fr.byxis.fireland.utilities.InGameUtilities;
 import fr.byxis.fireland.utilities.PermissionUtilities;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
@@ -19,10 +22,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class KarmaManager implements Listener, CommandExecutor, TabCompleter
 {
@@ -137,7 +136,8 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
         }
         if (!main.getHashMapManager().getRangMap().containsKey(_uuid))
         {
-            main.getHashMapManager().getRangMap().put(_uuid, new PlayerKarmaClass(main.getCfgm().getKarmaDB().getDouble(_uuid.toString()), main.getCfgm().getKarmaDB().getDouble("max." + _uuid)));
+            main.getHashMapManager().getRangMap().put(_uuid, new PlayerKarmaClass(main.getCfgm().getKarmaDB().getDouble(_uuid.toString()),
+                    main.getCfgm().getKarmaDB().getDouble("max." + _uuid)));
         }
     }
 
@@ -256,7 +256,8 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args)
+    {
         if (sender instanceof Player)
         {
             if (args.length == 0)
@@ -281,7 +282,9 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
                 {
                     int amount = Integer.parseInt(args[1]);
 
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e)
+                {
                     sender.sendMessage("§cErreur ! Utilisation: /rang (set/add/remove) (int) [player]");
                     return false;
                 }
@@ -300,13 +303,14 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
                         }
                         else
                         {
-                            final Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
+                            final Player victim = (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
                             setKarma(victim.getUniqueId(), Integer.parseInt(args[1]));
                             sender.sendMessage("§aLe nouveau rang de " + victim.getName() + " est " + rangText(victim));
                             victim.sendMessage("§aVotre rang est maintenant : " + rangText(victim));
                         }
                     }
-                    else {
+                    else
+                    {
                         Player p = (Player) sender;
                         setKarma(p.getUniqueId(), Integer.parseInt(args[1]));
                         p.sendMessage("§aVotre rang est maintenant : " + rangText((Player) sender));
@@ -327,13 +331,14 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
                         }
                         else
                         {
-                            final Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
+                            final Player victim = (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
                             goodAction(victim.getUniqueId(), Integer.parseInt(args[1]));
                             sender.sendMessage("§aLe nouveau rang de " + victim.getName() + " est " + rangText(victim));
                             victim.sendMessage("§aVotre rang est maintenant : " + rangText(victim));
                         }
                     }
-                    else {
+                    else
+                    {
                         Player p = (Player) sender;
                         goodAction(p.getUniqueId(), Integer.parseInt(args[1]));
                         p.sendMessage("§aVotre rang est maintenant : " + rangText((Player) sender));
@@ -354,13 +359,14 @@ public class KarmaManager implements Listener, CommandExecutor, TabCompleter
                         }
                         else
                         {
-                            final Player victim =  (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
+                            final Player victim = (Player) Bukkit.getOfflinePlayer(BasicUtilities.getUuid(args[2]));
                             badAction(victim.getUniqueId(), Integer.parseInt(args[1]));
                             sender.sendMessage("§aLe nouveau rang de " + victim.getName() + " est " + rangText(victim));
                             victim.sendMessage("§aVotre rang est maintenant : " + rangText(victim));
                         }
                     }
-                    else {
+                    else
+                    {
                         Player p = (Player) sender;
                         badAction(p.getUniqueId(), Integer.parseInt(args[1]));
                         p.sendMessage("§aVotre rang est maintenant : " + rangText((Player) sender));

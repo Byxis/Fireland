@@ -10,7 +10,8 @@ import fr.byxis.player.quest.QuestManager;
 import fr.byxis.player.rank.RankCustomMessage;
 import fr.byxis.player.scoreboard.PlayerScoreboardManager;
 
-public class PlayerAddonsEnabler {
+public class PlayerAddonsEnabler
+{
 
     private final Fireland m_fireland;
     private final ItemEnabler m_itemEnabler;
@@ -30,15 +31,19 @@ public class PlayerAddonsEnabler {
         _fireland.getCommand("rank").setTabCompleter(rankCustomMessage);
         _fireland.getServer().getPluginManager().registerEvents(new PvPManager(_fireland), _fireland);
         _fireland.getServer().getPluginManager().registerEvents(new ProtectionManager(), _fireland);
-        _fireland.getServer().getPluginManager().registerEvents(new PlayerScoreboardManager(_fireland, m_itemEnabler.getInfectionManager()), _fireland);
+        _fireland.getServer().getPluginManager().registerEvents(new PlayerScoreboardManager(_fireland, m_itemEnabler.getInfectionManager()),
+                _fireland);
     }
 
-    public void SaveAll()
+    public void saveAll()
     {
-        m_itemEnabler.SaveAll();
+        m_itemEnabler.saveAll();
         QuestManager.saveProgress();
         PrimeEvent.savePrime();
     }
 
-    public ItemEnabler getItemEnabler() { return m_itemEnabler; }
+    public ItemEnabler getItemEnabler()
+    {
+        return m_itemEnabler;
+    }
 }

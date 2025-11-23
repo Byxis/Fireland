@@ -20,7 +20,8 @@ public class AmbientSound implements Listener, CommandExecutor
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    {
         if (sender instanceof Player)
         {
             Player p = (Player) sender;
@@ -39,13 +40,13 @@ public class AmbientSound implements Listener, CommandExecutor
         }
         return false;
     }
-    
+
     public void playSound()
     {
         Integer random = (int) (Math.random() * 10);
         World world = main.getServer().getWorld("world");
         long time = world.getTime();
-        
+
         if ((random < 1 && (time > 23000) || (time > 0 && time < 12500)) || (random <= 2 && (time > 12500 && time < 23000)))
         {
             for (Player p : main.getServer().getOnlinePlayers())

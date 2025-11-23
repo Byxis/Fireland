@@ -3,6 +3,9 @@ package fr.byxis.faction.essaim.services;
 import fr.byxis.faction.essaim.conditions.*;
 import fr.byxis.faction.essaim.essaimClass.Spawner;
 import fr.byxis.fireland.Fireland;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,21 +13,17 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-
 /**
  * Service for handling all Essaim (essaim) configuration operations.
  * <p>
- * This service provides type-safe access to configuration values with validation,
- * managing all aspects of essaim configuration including:
+ * This service provides type-safe access to configuration values with
+ * validation, managing all aspects of essaim configuration including:
  * <ul>
- *   <li>Location management (hub, start, reset, entry, etc.)</li>
- *   <li>Spawner configuration</li>
- *   <li>Reward system with cooldowns</li>
- *   <li>Event settings</li>
- *   <li>General essaim properties</li>
+ * <li>Location management (hub, start, reset, entry, etc.)</li>
+ * <li>Spawner configuration</li>
+ * <li>Reward system with cooldowns</li>
+ * <li>Event settings</li>
+ * <li>General essaim properties</li>
  * </ul>
  */
 public class EssaimConfigService
@@ -38,7 +37,8 @@ public class EssaimConfigService
      * <p>
      * Initializes the configuration file and loads it from disk.
      *
-     * @param _fireland Main instance of the Fireland plugin
+     * @param _fireland
+     *            Main instance of the Fireland plugin
      */
     public EssaimConfigService(Fireland _fireland)
     {
@@ -50,12 +50,16 @@ public class EssaimConfigService
     /**
      * Gets a location for a specific essaim and location type.
      * <p>
-     * Validates that the location exists in configuration and that the world is loaded.
+     * Validates that the location exists in configuration and that the world is
+     * loaded.
      *
-     * @param _essaimName The essaim name
-     * @param _locationType The type of location (hub, start, reset, etc.)
+     * @param _essaimName
+     *            The essaim name
+     * @param _locationType
+     *            The type of location (hub, start, reset, etc.)
      * @return The location
-     * @throws ConfigurationException if location is not properly configured or world is not found
+     * @throws ConfigurationException
+     *             if location is not properly configured or world is not found
      */
     public Location getEssaimLocation(String _essaimName, LocationType _locationType)
     {
@@ -87,9 +91,12 @@ public class EssaimConfigService
      * <p>
      * Saves the location coordinates and world name to the configuration file.
      *
-     * @param _essaimName The essaim name
-     * @param _locationType The type of location to set
-     * @param _location The location to save
+     * @param _essaimName
+     *            The essaim name
+     * @param _locationType
+     *            The type of location to set
+     * @param _location
+     *            The location to save
      */
     public void setEssaimLocation(String _essaimName, LocationType _locationType, Location _location)
     {
@@ -106,11 +113,14 @@ public class EssaimConfigService
     /**
      * Gets all spawners for a specific essaim.
      * <p>
-     * Returns a map of spawner names to Spawner objects containing all spawner configuration.
+     * Returns a map of spawner names to Spawner objects containing all spawner
+     * configuration.
      *
-     * @param _essaimName The essaim name
+     * @param _essaimName
+     *            The essaim name
      *
-     * @return Map of spawner names to Spawner objects (empty map if no spawners configured)
+     * @return Map of spawner names to Spawner objects (empty map if no spawners
+     *         configured)
      */
     public Map<String, Spawner> getEssaimSpawners(String _essaimName)
     {
@@ -137,7 +147,8 @@ public class EssaimConfigService
      * <p>
      * Iterates through all essaims to find a spawner with the specified name.
      *
-     * @param _spawnerName The spawner name to search for
+     * @param _spawnerName
+     *            The spawner name to search for
      * @return The Spawner object if found, null otherwise
      */
     public Spawner getSpawnerByName(String _spawnerName)
@@ -158,19 +169,27 @@ public class EssaimConfigService
      * <p>
      * Saves all spawner properties to the configuration file.
      *
-     * @param _essaimName The essaim name
-     * @param _spawnerName The spawner name (unique identifier)
-     * @param _mobType The MythicMobs mob type to spawn
-     * @param _amount The number of mobs to spawn
-     * @param _activationDelay Delay before the spawner activates (in seconds)
-     * @param _spawnDelay Delay between each mob spawn (in seconds)
-     * @param _command Optional command to execute when spawner activates
-     * @param _location The spawner location
-     * @param _affectedByDifficulty Whether this spawner's behavior changes with difficulty
+     * @param _essaimName
+     *            The essaim name
+     * @param _spawnerName
+     *            The spawner name (unique identifier)
+     * @param _mobType
+     *            The MythicMobs mob type to spawn
+     * @param _amount
+     *            The number of mobs to spawn
+     * @param _activationDelay
+     *            Delay before the spawner activates (in seconds)
+     * @param _spawnDelay
+     *            Delay between each mob spawn (in seconds)
+     * @param _command
+     *            Optional command to execute when spawner activates
+     * @param _location
+     *            The spawner location
+     * @param _affectedByDifficulty
+     *            Whether this spawner's behavior changes with difficulty
      */
-    public void createSpawner(String _essaimName, String _spawnerName, String _mobType,
-                              int _amount, double _activationDelay, double _spawnDelay,
-                              String _command, Location _location, boolean _affectedByDifficulty)
+    public void createSpawner(String _essaimName, String _spawnerName, String _mobType, int _amount, double _activationDelay,
+            double _spawnDelay, String _command, Location _location, boolean _affectedByDifficulty)
     {
 
         String basePath = _essaimName + ".spawners." + _spawnerName;
@@ -195,8 +214,10 @@ public class EssaimConfigService
      * <p>
      * Deletes the spawner from the configuration file.
      *
-     * @param _essaimName The essaim name
-     * @param _spawnerName The spawner name to remove
+     * @param _essaimName
+     *            The essaim name
+     * @param _spawnerName
+     *            The spawner name to remove
      */
     public void removeSpawner(String _essaimName, String _spawnerName)
     {
@@ -209,9 +230,12 @@ public class EssaimConfigService
      * <p>
      * Initializes a new essaim with the basic required properties.
      *
-     * @param _essaimName The essaim name (unique identifier)
-     * @param _region The WorldGuard region name for this essaim
-     * @param _hubLocation The hub location where players spawn when entering
+     * @param _essaimName
+     *            The essaim name (unique identifier)
+     * @param _region
+     *            The WorldGuard region name for this essaim
+     * @param _hubLocation
+     *            The hub location where players spawn when entering
      */
     public void createEssaim(String _essaimName, String _region, Location _hubLocation)
     {
@@ -227,7 +251,8 @@ public class EssaimConfigService
      * Retrieves all essential information about an essaim including region, state,
      * event configuration, and reward settings.
      *
-     * @param _essaimName The essaim name
+     * @param _essaimName
+     *            The essaim name
      * @return EssaimInfo object containing all essaim data, or null if not found
      */
     public EssaimInfo getEssaimInfo(String _essaimName)
@@ -240,14 +265,10 @@ public class EssaimConfigService
         // Parse rewards with the new system
         RewardConfiguration rewardConfig = parseEssaimRewards(_essaimName);
 
-        return new EssaimInfo(
-                _essaimName,
-                m_config.getString(_essaimName + ".region"),
-                m_config.getBoolean(_essaimName + ".closed", false),
-                m_config.getBoolean(_essaimName + ".event.isevent", false),
-                m_config.getInt(_essaimName + ".event.delay", 180), // 6 months default
-                rewardConfig
-        );
+        return new EssaimInfo(_essaimName, m_config.getString(_essaimName + ".region"), m_config.getBoolean(_essaimName + ".closed", false),
+                m_config.getBoolean(_essaimName + ".event.isevent", false), m_config.getInt(_essaimName + ".event.delay", 180), // 6 months
+                                                                                                                                // default
+                rewardConfig);
     }
 
     /**
@@ -256,7 +277,8 @@ public class EssaimConfigService
      * Reads both token rewards and command rewards, supporting both legacy format
      * (simple values) and new format (with cooldown specifications).
      *
-     * @param _essaimName The essaim name
+     * @param _essaimName
+     *            The essaim name
      * @return RewardConfiguration object with all reward settings
      */
     private RewardConfiguration parseEssaimRewards(String _essaimName)
@@ -324,8 +346,10 @@ public class EssaimConfigService
      * <p>
      * Sets whether the essaim is currently accessible to players.
      *
-     * @param _essaimName The essaim name
-     * @param _closed True to close the essaim, false to open it
+     * @param _essaimName
+     *            The essaim name
+     * @param _closed
+     *            True to close the essaim, false to open it
      */
     public void setEssaimClosed(String _essaimName, boolean _closed)
     {
@@ -348,7 +372,8 @@ public class EssaimConfigService
      * <p>
      * Removes all associated data including spawners, locations, and rewards.
      *
-     * @param _essaimName The essaim name to delete
+     * @param _essaimName
+     *            The essaim name to delete
      */
     public void deleteEssaim(String _essaimName)
     {
@@ -361,7 +386,8 @@ public class EssaimConfigService
      * <p>
      * Loads and parses all conditions from the configuration file.
      *
-     * @param _essaimName The essaim name
+     * @param _essaimName
+     *            The essaim name
      * @return A list of EssaimCondition objects (empty if none configured)
      */
     public List<EssaimCondition> getEssaimConditions(String _essaimName)
@@ -398,10 +424,10 @@ public class EssaimConfigService
 
                 EssaimCondition condition = switch (type)
                 {
-                    case LEVEL:
+                    case LEVEL :
                         int level = ((Number) conditionMap.get("level")).intValue();
                         yield new LevelCondition(level, scope);
-                    case HAS_ITEM:
+                    case HAS_ITEM :
                         String materialStr = (String) conditionMap.get("material");
                         String displayName = (String) conditionMap.get("display-name");
                         try
@@ -425,14 +451,14 @@ public class EssaimConfigService
     /**
      * Checks if an essaim has any conditions configured.
      *
-     * @param _essaimName The essaim name
+     * @param _essaimName
+     *            The essaim name
      * @return true if the essaim has conditions, false otherwise
      */
     public boolean hasConditions(String _essaimName)
     {
         return m_config.contains(_essaimName + ".conditions");
     }
-
 
     // Configuration management
 
@@ -505,26 +531,30 @@ public class EssaimConfigService
     /**
      * Validates that a location exists in the configuration.
      *
-     * @param _basePath The base configuration path
-     * @param _essaimName The essaim name (for error messages)
-     * @param _locationType The location type (for error messages)
-     * @throws ConfigurationException if the location is not configured
+     * @param _basePath
+     *            The base configuration path
+     * @param _essaimName
+     *            The essaim name (for error messages)
+     * @param _locationType
+     *            The location type (for error messages)
+     * @throws ConfigurationException
+     *             if the location is not configured
      */
     private void validateLocationExists(String _basePath, String _essaimName, LocationType _locationType)
     {
         if (!m_config.contains(_basePath + ".world"))
         {
-            throw new ConfigurationException(
-                    String.format("Missing world configuration for %s %s", _essaimName, _locationType)
-            );
+            throw new ConfigurationException(String.format("Missing world configuration for %s %s", _essaimName, _locationType));
         }
     }
 
     /**
      * Creates a Spawner object from configuration data.
      *
-     * @param _essaimName The essaim name
-     * @param _spawnerName The spawner name
+     * @param _essaimName
+     *            The essaim name
+     * @param _spawnerName
+     *            The spawner name
      * @return Configured Spawner object
      */
     private Spawner createSpawnerFromConfig(String _essaimName, String _spawnerName)
@@ -532,24 +562,14 @@ public class EssaimConfigService
         String basePath = _essaimName + ".spawners." + _spawnerName;
 
         // Get position
-        Location location = new Location(
-                Bukkit.getWorld("essaim"), // Default world for spawners
-                m_config.getInt(basePath + ".position.x"),
-                m_config.getInt(basePath + ".position.y"),
-                m_config.getInt(basePath + ".position.z")
-        );
+        Location location = new Location(Bukkit.getWorld("essaim"), // Default world for spawners
+                m_config.getInt(basePath + ".position.x"), m_config.getInt(basePath + ".position.y"),
+                m_config.getInt(basePath + ".position.z"));
 
-        return new Spawner(
-                _spawnerName,
-                _essaimName,
-                location,
-                m_config.getString(basePath + ".type"),
-                m_config.getInt(basePath + ".amount"),
-                m_config.getDouble(basePath + ".activation-delay"),
-                m_config.getDouble(basePath + ".spawn-delay"),
-                m_config.getString(basePath + ".command", ""),
-                m_config.getBoolean(basePath + ".affected-by-difficulty", false)
-        );
+        return new Spawner(_spawnerName, _essaimName, location, m_config.getString(basePath + ".type"),
+                m_config.getInt(basePath + ".amount"), m_config.getDouble(basePath + ".activation-delay"),
+                m_config.getDouble(basePath + ".spawn-delay"), m_config.getString(basePath + ".command", ""),
+                m_config.getBoolean(basePath + ".affected-by-difficulty", false));
     }
 
     // Enums and data classes
@@ -593,7 +613,8 @@ public class EssaimConfigService
         /**
          * Constructs a LocationType.
          *
-         * @param _configPath The configuration path for this location type
+         * @param _configPath
+         *            The configuration path for this location type
          */
         LocationType(String _configPath)
         {
@@ -629,8 +650,10 @@ public class EssaimConfigService
         /**
          * Sets the token (jetons) reward amount and cooldown.
          *
-         * @param _amount Number of tokens to award
-         * @param _cooldown Cooldown period (e.g., "1w", "3d", "12h")
+         * @param _amount
+         *            Number of tokens to award
+         * @param _cooldown
+         *            Cooldown period (e.g., "1w", "3d", "12h")
          */
         public void setJetons(int _amount, String _cooldown)
         {
@@ -641,8 +664,10 @@ public class EssaimConfigService
         /**
          * Adds a command reward with cooldown.
          *
-         * @param _command The command to execute (without leading slash)
-         * @param _cooldown Cooldown period (e.g., "1w", "3d", "12h")
+         * @param _command
+         *            The command to execute (without leading slash)
+         * @param _cooldown
+         *            Cooldown period (e.g., "1w", "3d", "12h")
          */
         public void addCommand(String _command, String _cooldown)
         {
@@ -708,7 +733,8 @@ public class EssaimConfigService
     /**
      * Represents a command reward with its cooldown.
      * <p>
-     * Stores a command to execute and the cooldown period before it can be claimed again.
+     * Stores a command to execute and the cooldown period before it can be claimed
+     * again.
      */
     public static class CommandReward
     {
@@ -718,8 +744,10 @@ public class EssaimConfigService
         /**
          * Constructs a new CommandReward.
          *
-         * @param _command The command to execute
-         * @param _cooldown The cooldown period
+         * @param _command
+         *            The command to execute
+         * @param _cooldown
+         *            The cooldown period
          */
         public CommandReward(String _command, String _cooldown)
         {
@@ -751,19 +779,23 @@ public class EssaimConfigService
     /**
      * Record containing essential essaim information.
      * <p>
-     * Immutable data structure holding all basic essaim properties including
-     * name, region, state, event settings, and reward configuration.
+     * Immutable data structure holding all basic essaim properties including name,
+     * region, state, event settings, and reward configuration.
      *
-     * @param name The essaim name
-     * @param region The WorldGuard region name
-     * @param closed Whether the essaim is currently closed
-     * @param isEvent Whether this essaim is an event
-     * @param eventDelay Event delay in days
-     * @param rewards The reward configuration
+     * @param name
+     *            The essaim name
+     * @param region
+     *            The WorldGuard region name
+     * @param closed
+     *            Whether the essaim is currently closed
+     * @param isEvent
+     *            Whether this essaim is an event
+     * @param eventDelay
+     *            Event delay in days
+     * @param rewards
+     *            The reward configuration
      */
-    public record EssaimInfo(String name, String region, boolean closed, boolean isEvent,
-                             int eventDelay, RewardConfiguration rewards)
-    {
+    public record EssaimInfo(String name, String region, boolean closed, boolean isEvent, int eventDelay, RewardConfiguration rewards) {
     }
 
     /**
@@ -774,7 +806,8 @@ public class EssaimConfigService
         /**
          * Constructs a new ConfigurationException.
          *
-         * @param _message The error message
+         * @param _message
+         *            The error message
          */
         public ConfigurationException(String _message)
         {
@@ -784,8 +817,10 @@ public class EssaimConfigService
         /**
          * Constructs a new ConfigurationException with a cause.
          *
-         * @param _message The error message
-         * @param _cause The underlying cause
+         * @param _message
+         *            The error message
+         * @param _cause
+         *            The underlying cause
          */
         public ConfigurationException(String _message, Throwable _cause)
         {

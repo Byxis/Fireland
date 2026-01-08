@@ -71,7 +71,7 @@ public record RallyCommand(Fireland main, DiscretionManager discretionManager) i
 
                 final Player finalSender = (Player) sender;
 
-                int distance = changeDistanceIfHasSilencer(Integer.parseInt(args[1]), finalSender);
+                int distance = changeDistanceIfHasSilencer(Integer.parseInt(args[0]), finalSender);
 
                 if (main.getCfgm().getPlayerDB().getBoolean("safezone." + finalSender.getUniqueId() + ".state"))
                 {

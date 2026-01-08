@@ -1,6 +1,10 @@
 package fr.byxis.player.level;
 
 import fr.byxis.fireland.Fireland;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
@@ -23,7 +27,10 @@ public class LevelStorage
     public LevelStorage(Fireland main)
     {
         if (m_main == null)
+        {
             m_main = main;
+            initializeDatabase();
+        }
         if (m_levelMap == null)
             m_levelMap = new ConcurrentHashMap<>();
         if (m_levelSavingsMap == null)
@@ -150,5 +157,39 @@ public class LevelStorage
             }
         }
         m_main.getCfgm().getPlayerDB().set("levelmap.date", new Date());
+    }
+
+    private void initializeDatabase()
+    {
+        try (Connection con = m_main.getDatabaseManager().getFirelandConnection().getConnection();
+                Statement stmt = con.createStatement())
+        {
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS player_level (" +
+                    "uuid VARCHAR(36) NOT NULL PRIMARY KEY," +
+                    "level INT(4) NOT NULL," +
+                    "xp INT(10) NOT NULL," +
+                    "rang INT(1) NOT NULL DEFAULT 0," +
+                    "nation VARCHAR(16) NOT NULL," +
+                    "can_change TINYINT(1) NOT NULL DEFAULT 1," +
+                    "FOREIGN KEY (uuid) REFERENCES players(uuid) ON DELETE CASCADE" +
+                    ")"
+            );
+
+
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS player_level_rewards (" +
+                    "uuid VARCHAR(36) NOT NULL," +
+                    "level INT(3) NOT NULL," +
+                    "PRIMARY KEY (uuid, level)," +
+                    "FOREIGN KEY (uuid) REFERENCES player_level(uuid) ON DELETE CASCADE" +
+                    ")"
+            );
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,10 +3,8 @@ package fr.byxis.jeton;
 import fr.byxis.db.DbConnection;
 import fr.byxis.fireland.Fireland;
 import fr.byxis.fireland.utilities.InGameUtilities;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -25,7 +23,10 @@ public class JetonManager
         if (JetonManager.jt == null)
             JetonManager.jt = new JetonSql(_main);
         if (JetonManager.main == null)
+        {
             JetonManager.main = _main;
+            initializeDatabase();
+        }
     }
 
     public static void updatePlayer(UUID _uuid)
@@ -193,6 +194,28 @@ public class JetonManager
         {
             // Une erreur est survenue (Problème de connexion à la BD)
             InGameUtilities.sendPlayerError(consulter, "Une erreur est survenue.");
+            e.printStackTrace();
+        }
+    }
+
+    private void initializeDatabase()
+    {
+        try (Connection connection = main.getDatabaseManager().getFirelandConnection().getConnection();
+                Statement stmt = connection.createStatement())
+        {
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS jeton_history (" +
+                    "number INT(32) NOT NULL PRIMARY KEY," +
+                    "player_uuid VARCHAR(36) NOT NULL," +
+                    "amount INT(32) NOT NULL," +
+                    "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()," +
+                    "description VARCHAR(1024) NOT NULL" +
+                    ")"
+            );
+
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }

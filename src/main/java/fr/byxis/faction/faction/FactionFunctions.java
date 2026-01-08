@@ -30,11 +30,7 @@ public class FactionFunctions
 
     public FactionFunctions(Fireland _main, Player _sender)
     {
-        // Récupération du main, pour pouvoir avoir envoyer des requêtes à la base de
-        // données
         this.main = _main;
-        // Récupération de la personne qui envoie la commande, pour lui envoyer les
-        // messages d'erreurs
         this.sender = _sender;
     }
 
@@ -155,7 +151,7 @@ public class FactionFunctions
         {
             // On prépare la requête sql
             final PreparedStatement preparedStatement1 = connection
-                    .prepareStatement("SELECT available_time,faction_name FROM invite WHERE player_uuid = ? AND faction_name=?");
+                    .prepareStatement("SELECT available_time,faction_name FROM faction_invite WHERE player_uuid = ? AND faction_name=?");
             preparedStatement1.setString(1, uuid.toString());
             preparedStatement1.setString(2, factionName);
 
@@ -176,7 +172,7 @@ public class FactionFunctions
                 {
                     // Sinon, on invite le joueur
                     final PreparedStatement preparedStatement2 = connection
-                            .prepareStatement("DELETE FROM invite WHERE player_uuid = ? AND faction_name=?");
+                            .prepareStatement("DELETE FROM faction_invite WHERE player_uuid = ? AND faction_name=?");
                     preparedStatement2.setString(1, uuid.toString());
                     preparedStatement2.setString(2, factionName);
                     preparedStatement2.executeUpdate();
@@ -249,7 +245,7 @@ public class FactionFunctions
         try (Connection connection = firelandConnection.getConnection())
         {
             final PreparedStatement preparedStatement1 = connection
-                    .prepareStatement("SELECT available_time FROM invite WHERE player_uuid  = ? AND faction_name = ?");
+                    .prepareStatement("SELECT available_time FROM faction_invite WHERE player_uuid  = ? AND faction_name = ?");
             preparedStatement1.setString(1, uuid.toString());
             preparedStatement1.setString(2, name);
             // Réalisation de la requête SQL
@@ -287,7 +283,7 @@ public class FactionFunctions
         try (Connection connection = firelandConnection.getConnection())
         {
             final PreparedStatement preparedStatement1 = connection
-                    .prepareStatement("SELECT faction_name FROM invite WHERE player_uuid  = ? AND faction_name = ?");
+                    .prepareStatement("SELECT faction_name FROM faction_invite WHERE player_uuid  = ? AND faction_name = ?");
             preparedStatement1.setString(1, uuid.toString());
             preparedStatement1.setString(2, name);
             // Réalisation de la requête SQL
@@ -527,7 +523,7 @@ public class FactionFunctions
                 {"DELETE FROM faction WHERE name = ?", "DELETE FROM player_faction WHERE player_faction.player_faction = ?",
                         "DELETE FROM faction_zone WHERE faction_zone.faction_name = ?", "DELETE FROM capture_zone WHERE faction_name = ?",
                         "DELETE FROM faction_storage WHERE faction = ?", "DELETE FROM faction_housing WHERE faction = ?",
-                        "DELETE FROM invite WHERE invite.faction_name = ?"};
+                        "DELETE FROM faction_invite WHERE invite.faction_name = ?"};
 
                 for (String query : queries)
                 {
@@ -1311,7 +1307,7 @@ public class FactionFunctions
         try (Connection connection = firelandConnection.getConnection())
         {
             final PreparedStatement preparedStatement2 = connection
-                    .prepareStatement("SELECT index_item, item FROM faction_storage WHERE faction = ?");
+                        .prepareStatement("SELECT index_item, item FROM faction_storage WHERE faction = ?");
             preparedStatement2.setString(1, factionName);
             // On exécute la requete SQL
             ResultSet rs = preparedStatement2.executeQuery();
@@ -1545,5 +1541,123 @@ public class FactionFunctions
     public void setSender(Player _p)
     {
         sender = _p;
+    }
+
+    private void initTable()
+    {
+        try (Connection conn = main.getDatabaseManager().getFirelandConnection().getConnection();
+                Statement stmt = conn.createStatement())
+        {
+            // Faction table
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS faction (" +
+                            "name VARCHAR(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_uca1400_ai_ci NOT NULL PRIMARY KEY," +
+                            "leader_uuid VARCHAR(36) NOT NULL," +
+                            "money INT(11) NOT NULL DEFAULT 0," +
+                            "created_at DATETIME NOT NULL," +
+                            "upgrade INT(2) NOT NULL DEFAULT 0," +
+                            "color_code VARCHAR(2) NOT NULL DEFAULT '§7'" +
+                            ")"
+            );
+
+            // Perks table
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS perks (" +
+                            "perk VARCHAR(255) NOT NULL PRIMARY KEY" +
+                            ")"
+            );
+
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS capture_zone (" +
+                            "zone VARCHAR(16) NOT NULL PRIMARY KEY," +
+                            "faction_name VARCHAR(16) NOT NULL," +
+                            "capture_time TIMESTAMP NULL DEFAULT NULL," +
+                            "rewarded_at TIMESTAMP NULL DEFAULT NULL," +
+                            "FOREIGN KEY (faction_name) REFERENCES faction(name) ON DELETE CASCADE" +
+                            ")"
+            );
+
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS faction_zone (" +
+                    "zone VARCHAR(16) NOT NULL," +
+                    "faction_name VARCHAR(16) NOT NULL," +
+                    "duration BIGINT(50) NOT NULL," +
+                    "PRIMARY KEY (zone, faction_name)," +
+                    "FOREIGN KEY (faction_name) REFERENCES faction(name) ON DELETE CASCADE" +
+                    ")"
+            );
+
+
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS player_faction (" +
+                    "player_uuid VARCHAR(36) NOT NULL PRIMARY KEY," +
+                    "player_faction VARCHAR(16) NOT NULL," +
+                    "joined_at DATE NOT NULL," +
+                    "role INT(2) NOT NULL," +
+                    "FOREIGN KEY (player_uuid) REFERENCES players(uuid) ON DELETE CASCADE," +
+                    "FOREIGN KEY (player_faction) REFERENCES faction(name) ON DELETE CASCADE" +
+                    ")"
+            );
+
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS faction_invite (" +
+                    "faction_name VARCHAR(16) NOT NULL," +
+                    "player_uuid VARCHAR(36) NOT NULL," +
+                    "available_time DATETIME NOT NULL," +
+                    "PRIMARY KEY (faction_name, player_uuid)," +
+                    "FOREIGN KEY (faction_name) REFERENCES faction(name) ON DELETE CASCADE" +
+                    ")"
+            );
+
+
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS faction_housing (" +
+                    "faction VARCHAR(16) NOT NULL PRIMARY KEY," +
+                    "number INT(10) NOT NULL," +
+                    "level INT(2) NOT NULL," +
+                    "skin VARCHAR(256) NOT NULL," +
+                    "food_claim TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'," +
+                    "scrap_claim TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'," +
+                    "powder_claim TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'," +
+                    "repairkit_claim TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'," +
+                    "meds_claim TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'," +
+                    "antidouleur_claim TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'," +
+                    "serum_claim TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'," +
+                    "last_skin_change TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'," +
+                    "FOREIGN KEY (faction) REFERENCES faction(name) ON DELETE CASCADE" +
+                    ")"
+            );
+
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS faction_storage (" +
+                    "owner VARCHAR(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_uca1400_ai_ci NOT NULL," +
+                    "index_item INT(8) NOT NULL," +
+                    "item VARCHAR(5000) NOT NULL," +
+                    "PRIMARY KEY (owner, index_item)," +
+                    "FOREIGN KEY (owner) REFERENCES faction(name) ON DELETE CASCADE" +
+                    ")"
+            );
+
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS faction_perks (" +
+                    "faction_name VARCHAR(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_uca1400_ai_ci NOT NULL," +
+                    "perk_name VARCHAR(255) NOT NULL," +
+                    "enabled TINYINT(1) NOT NULL DEFAULT 0," +
+                    "PRIMARY KEY (faction_name, perk_name)," +
+                    "FOREIGN KEY (faction_name) REFERENCES faction(name) ON DELETE CASCADE," +
+                    "FOREIGN KEY (perk_name) REFERENCES perks(perk) ON DELETE CASCADE" +
+                    ")"
+            );
+
+
+
+
+
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

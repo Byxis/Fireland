@@ -38,4 +38,25 @@ public class DbCredentials
     {
         return m_pass;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DbCredentials that = (DbCredentials) o;
+
+        return m_port == that.m_port &&
+                m_type == that.m_type &&
+                m_host.equals(that.m_host) &&
+                m_user.equals(that.m_user) &&
+                m_pass.equals(that.m_pass) &&
+                m_dbName.equals(that.m_dbName);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return java.util.Objects.hash(m_host, m_user, m_pass, m_dbName, m_port, m_type);
+    }
 }

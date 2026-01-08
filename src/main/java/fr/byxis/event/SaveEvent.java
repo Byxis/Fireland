@@ -17,23 +17,23 @@ import org.bukkit.inventory.Inventory;
 public class SaveEvent implements Listener
 {
 
-    private static Fireland main;
+    private static Fireland m_fireland;
 
     public SaveEvent(Fireland _main)
     {
-        if (main == null)
+        if (m_fireland == null)
         {
-            SaveEvent.main = _main;
+            SaveEvent.m_fireland = _main;
         }
     }
 
     private static void saveEnderchest(Inventory inv, UUID uuid)
     {
-        if (inv != null && main.getHashMapManager().getStorageMap().containsKey(uuid))
+        if (inv != null && m_fireland.getHashMapManager().getStorageMap().containsKey(uuid))
         {
             for (int i = 0; i < inv.getSize(); i++)
             {
-                main.getCfgm().getEnderchest().set("stockage." + uuid + "." + i, inv.getItem(i));
+                m_fireland.getCfgm().getEnderchest().set("stockage." + uuid + "." + i, inv.getItem(i));
             }
         }
     }
@@ -54,17 +54,20 @@ public class SaveEvent implements Listener
 
     private static void saveAllEnderchest()
     {
-        if (main.getHashMapManager().getStorageMap().isEmpty())
+        if (m_fireland == null)
+            return;
+
+        if (m_fireland.getHashMapManager().getStorageMap().isEmpty())
         {
             return;
         }
-        Iterator<UUID> iterator = main.getHashMapManager().getStorageMap().keySet().iterator();
+        Iterator<UUID> iterator = m_fireland.getHashMapManager().getStorageMap().keySet().iterator();
         while (iterator.hasNext())
         {
             UUID uuid = iterator.next();
-            if (main.getHashMapManager().getStorageMap().containsKey(uuid))
+            if (m_fireland.getHashMapManager().getStorageMap().containsKey(uuid))
             {
-                saveEnderchest(main.getHashMapManager().getStorageMap().get(uuid), uuid);
+                saveEnderchest(m_fireland.getHashMapManager().getStorageMap().get(uuid), uuid);
                 if (!Bukkit.getOfflinePlayer(uuid).isOnline())
                 {
                     iterator.remove();
@@ -72,52 +75,52 @@ public class SaveEvent implements Listener
             }
         }
 
-        main.getCfgm().saveEnderchest();
+        m_fireland.getCfgm().saveEnderchest();
     }
 
     private static void saveKarma(UUID uuid)
     {
-        if (main.getHashMapManager().getRangMap().containsKey(uuid))
+        if (m_fireland.getHashMapManager().getRangMap().containsKey(uuid))
         {
-            FileConfiguration config = main.getCfgm().getKarmaDB();
-            config.set(uuid.toString(), main.getHashMapManager().getRangMap().get(uuid).getRang());
-            config.set("max." + uuid, main.getHashMapManager().getRangMap().get(uuid).getMax());
+            FileConfiguration config = m_fireland.getCfgm().getKarmaDB();
+            config.set(uuid.toString(), m_fireland.getHashMapManager().getRangMap().get(uuid).getRang());
+            config.set("max." + uuid, m_fireland.getHashMapManager().getRangMap().get(uuid).getMax());
         }
     }
 
     private static void saveAllKarma()
     {
-        if (main.getHashMapManager().getRangMap().isEmpty())
+        if (m_fireland.getHashMapManager().getRangMap().isEmpty())
         {
             return;
         }
-        for (UUID uuid : main.getHashMapManager().getRangMap().keySet())
+        for (UUID uuid : m_fireland.getHashMapManager().getRangMap().keySet())
         {
             saveKarma(uuid);
         }
-        main.getCfgm().saveKarmaDB();
+        m_fireland.getCfgm().saveKarmaDB();
     }
 
     private static void saveAllFactionStorages()
     {
         StringBuilder sb = new StringBuilder();
-        for (String str : main.getBunkerManager().getLoadedBunker().keySet())
+        for (String str : m_fireland.getBunkerManager().getLoadedBunker().keySet())
         {
             sb.append('"').append(str).append('"').append("  ");
         }
         debugp(2, "Values :" + sb);
-        for (BunkerClass bk : main.getBunkerManager().getLoadedBunker().values())
+        for (BunkerClass bk : m_fireland.getBunkerManager().getLoadedBunker().values())
         {
             debugp(2, "Saving storage of bunker " + bk.getName());
             bk.getStorage().saveAllItems();
         }
 
-        for (BunkerClass bk : main.getBunkerManager().getLoadedBunker().values())
+        for (BunkerClass bk : m_fireland.getBunkerManager().getLoadedBunker().values())
         {
             if (bk.getPlayerInsideSize() <= 0)
             {
                 debugp(2, "Suppression of bunker " + bk.getName());
-                main.getBunkerManager().getLoadedBunker().remove(bk.getName());
+                m_fireland.getBunkerManager().getLoadedBunker().remove(bk.getName());
             }
         }
     }

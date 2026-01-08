@@ -1199,4 +1199,56 @@ public class WorkshopFunction
             e.printStackTrace();
         }
     }
+
+    public void initializeDatabase()
+    {
+        final DbConnection firelandConnection = main.getDatabaseManager().getFirelandConnection();
+        try (Connection connection = firelandConnection.getConnection();
+                Statement stmt = connection.createStatement())
+        {
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS workshop_recipes (" +
+                     "name VARCHAR(128) NOT NULL PRIMARY KEY," +
+                    "type VARCHAR(1) NOT NULL," +
+                    "scrap INT(3) NOT NULL DEFAULT 0," +
+                    "gunpowder INT(3) NOT NULL DEFAULT 0," +
+                    "medicine INT(10) NOT NULL DEFAULT 0," +
+                    "duration INT(11) NOT NULL DEFAULT -1" +
+                    ")"
+            );
+
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS player_crafting (" +
+                    "player_uuid VARCHAR(36) NOT NULL," +
+                    "item VARCHAR(512) NOT NULL," +
+                    "creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()," +
+                    "finish_date TIMESTAMP NULL DEFAULT NULL," +
+                    "is_breakable TINYINT(1) NOT NULL DEFAULT 1," +
+                    "PRIMARY KEY (player_uuid, creation_date)," +
+                    "FOREIGN KEY (player_uuid) REFERENCES players(uuid) ON DELETE CASCADE" +
+                    ")"
+            );
+
+            stmt.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS player_workshop (" +
+                    "player_uuid VARCHAR(36) NOT NULL," +
+                    "recipe_name VARCHAR(512) NOT NULL," +
+                    "crafted_time INT(10) NOT NULL," +
+                    "know TINYINT(1) NOT NULL DEFAULT 0," +
+                    "PRIMARY KEY (player_uuid, recipe_name)," +
+                    "FOREIGN KEY (player_uuid) REFERENCES players(uuid) ON DELETE CASCADE" +
+                    ")"
+            );
+
+
+
+
+        }
+        catch (SQLException e)
+        {
+            // Une erreur est survenue (Problème de connexion à la BD)
+            sender.sendMessage("§cUne erreur est survenue. Merci de contacter le staff pour résoudre ce problème.  Erreur : #W020");
+            e.printStackTrace();
+        }
+    }
 }

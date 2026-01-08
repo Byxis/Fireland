@@ -34,6 +34,8 @@ public class WorkshopManagerEvent implements Listener
     public WorkshopManagerEvent(Fireland _main)
     {
         this.main = _main;
+        WorkshopFunction workshopFunction = new WorkshopFunction(main, null);
+        workshopFunction.initializeDatabase();
     }
 
     @EventHandler
